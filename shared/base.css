@@ -758,3 +758,73 @@ body.dark #back-to-top { background: var(--amber); color: #1A1A1A; }
 @media (max-width: 480px) {
   #back-to-top { width: 40px; height: 40px; bottom: 16px; right: 16px; }
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   ACTIVITY GRID — chapter hub pages (Lesson / Practice / Game / Printables)
+   ══════════════════════════════════════════════════════════════════ */
+
+.activity-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+  margin-top: 28px;
+  margin-bottom: 40px;
+}
+.activity-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 22px 20px 18px;
+  background: var(--paper);
+  border: 1.5px solid var(--border-soft);
+  border-radius: 10px;
+  text-decoration: none;
+  transition: border-color .15s, box-shadow .15s, transform .12s;
+  position: relative;
+}
+.activity-card:hover {
+  border-color: var(--teal);
+  box-shadow: 0 4px 16px rgba(26,122,138,.12);
+  transform: translateY(-2px);
+}
+.ac-icon { font-size: 1.5rem; margin-bottom: 4px; }
+.ac-title {
+  font-family: var(--font-sans);
+  font-size: .82rem;
+  font-weight: 800;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.ac-desc {
+  font-size: .8rem;
+  color: var(--muted);
+  line-height: 1.45;
+  flex: 1;
+}
+.ac-arrow {
+  font-size: 1rem;
+  color: var(--teal);
+  margin-top: 8px;
+  align-self: flex-end;
+}
+
+/* Dark mode */
+body.dark .activity-card {
+  background: rgba(255,255,255,.04);
+  border-color: rgba(255,255,255,.1);
+}
+body.dark .activity-card:hover {
+  border-color: var(--teal);
+  box-shadow: 0 4px 16px rgba(74,171,184,.15);
+}
+body.dark .ac-title { color: #F0F0F0; }
+body.dark .ac-desc  { color: #A8B8C8; }
+
+@media (max-width: 480px) {
+  .activity-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .activity-card { padding: 16px 14px; }
+}
+@media (max-width: 340px) {
+  .activity-grid { grid-template-columns: 1fr; }
+}

@@ -3,10 +3,28 @@
    ══════════════════════════════════════════════════════════════════ */
 
 .deck-body {
-  background: var(--navy);
+  background: #0F1A2B; /* fixed dark — never changes with dark mode toggle */
   overflow-x: hidden;
   overscroll-behavior: none;
 }
+
+/* ─── PRE-DECK ELEMENTS ON ALWAYS-DARK BACKGROUND ─────────────── */
+.deck-body h1,
+.deck-body .chapter-h1 { color: #FFFFFF !important; }
+.deck-body .chapter-num { color: var(--amber); }
+.deck-body .chapter-subtitle {
+  color: rgba(255,255,255,.62);
+  border-bottom-color: rgba(255,255,255,.1);
+}
+.deck-body .breadcrumb,
+.deck-body .breadcrumb a,
+.deck-body .breadcrumb span { color: rgba(255,255,255,.5); }
+.deck-body .breadcrumb a:hover { color: rgba(255,255,255,.85); text-decoration: underline; }
+.deck-body .breadcrumb strong { color: rgba(255,255,255,.88); }
+.deck-body .chapter-nav { background: rgba(255,255,255,.04); border-bottom-color: rgba(255,255,255,.08); }
+.deck-body .chapter-nav-btn { color: rgba(255,255,255,.6); }
+.deck-body .chapter-nav-btn.active { color: var(--amber); border-bottom-color: var(--amber); }
+.deck-body .chapter-nav-btn:hover { color: #FFFFFF; }
 
 /* ─── DECK NAV BAR ─────────────────────────────────────────────── */
 .deck-nav {
