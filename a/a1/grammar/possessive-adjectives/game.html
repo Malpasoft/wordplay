@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Word Play — Cambridge English grammar, vocabulary and writing practice.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A1 · Possessive Adjectives — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../../index.html" class="back back-link">A1 Grammar</a>
+    <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  </div>
+</header>
+<div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../../../a/a1/index.html">A1</a><span>›</span><a href="../index.html">Grammar</a><span>›</span><strong>Possessive Adjectives</strong></div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Practice</a>
+  <a href="game.html" class="chapter-nav-btn active">Game</a>
+  <a href="printables.html" class="chapter-nav-btn">Printables</a>
+</nav>
+<div class="game-wrap" id="gameWrap">
+  <div id="gameStart" class="game-screen active">
+    <div class="game-start">
+      <h2>4-Stage Mastery</h2>
+      <p>Each item passes through four stages: meaning, synonym, identification and sentence completion.</p>
+      <p>A wrong answer drops you back one stage — never to zero.</p>
+      <div id="gStartMastered" style="font-family:var(--font-sans);font-size:.9rem;margin:12px 0;color:var(--muted)"></div>
+      <div id="gResumeSection" style="display:none;margin-bottom:12px">
+        <button id="gBtnResume" class="game-btn primary">Resume</button>
+        <button id="gBtnNewFromResume" class="game-btn">Start fresh</button>
+      </div>
+      <button id="gBtnStart" class="game-btn primary">Start</button>
+      <a href="../../../../a/a1/index.html" class="game-btn" style="text-align:center;text-decoration:none;margin-top:8px">← Back to hub</a>
+    </div>
+  </div>
+  <div id="gamePlay" class="game-screen">
+    <div class="game-hud">
+      <span id="gModeTag" class="game-mode-tag"></span>
+      <span class="hud-sep">·</span>
+      <span id="gScore" class="hud-val">0</span> <span class="hud-label">mastered</span>
+      <span class="hud-sep">·</span>
+      <span id="gStreak" class="hud-val">0</span>
+    </div>
+    <div class="game-progress-bar"><div id="gProgressBar" class="game-progress-fill"></div></div>
+    <div id="gProgressTxt" class="game-progress-txt"></div>
+    <div class="game-card">
+      <div id="gTerm" class="game-term"></div>
+      <div id="gPrompt" class="game-prompt"></div>
+      <div id="gOptions" class="game-options"></div>
+      <div id="gFeedback" class="game-feedback"></div>
+      <div id="gExample" class="game-example" style="display:none"></div>
+      <div class="game-card-actions">
+        <button id="gBtnHint" class="game-btn small">Hint</button>
+        <button id="gBtnReveal" class="game-btn small">Reveal</button>
+        <button id="gBtnKnow" class="game-btn small ghost" style="display:none" title="Skip to context stage">I know this</button>
+        <button id="gBtnNext" class="game-btn primary" style="display:none">Next</button>
+      </div>
+    </div>
+    <div class="game-ref">
+      <button id="gRefToggle" class="game-ref-toggle">Reference ▾</button>
+      <div id="gRefBody" class="game-ref-body" style="display:none">
+        <ul id="gRefList"></ul>
+      </div>
+    </div>
+    <button id="gBtnSaveQuit" class="game-btn small" style="margin-top:12px">Save &amp; Exit</button>
+  </div>
+  <div id="gameCompletion" class="game-screen">
+    <div class="game-complete">
+      <div style="font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:8px">&#10003; Ch 5 complete</div>
+      <h2>All mastered!</h2>
+      <p>Score: <strong id="gFinalScore"></strong> · Streak: <strong id="gFinalStreak"></strong></p>
+      <a href="worksheet.html" class="game-btn primary" style="text-decoration:none;text-align:center">Practice worksheet</a>
+      <a href="../../../../a/a1/index.html" class="game-btn" style="text-decoration:none;text-align:center">← Back to hub</a>
+    
+      <a href="../articles-basic/slides.html" class="game-btn primary" style="text-decoration:none;text-align:center">Next &#8594; Ch 6 Articles Basic</a>
+    </div>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>
+window.GAME_DATA={chapterId:"possessive-adjectives",level:"a1",title:"Possessive Adjectives",storageKey:"wordplay_game_a1_possessive-adjectives",items:[
+  {"id": "my", "term": "my", "meaning": "belonging to me", "synonym": "(I → my)", "example": "<b>My</b> name is Anna.", "completion": "_____ name is Anna.", "answer": "My"},
+  {"id": "your", "term": "your", "meaning": "belonging to you", "synonym": "(you → your)", "example": "What is <b>your</b> name?", "completion": "What is _____ name?", "answer": "your"},
+  {"id": "his", "term": "his", "meaning": "belonging to him", "synonym": "(he → his)", "example": "<b>His</b> car is blue.", "completion": "_____ car is blue.", "answer": "His"},
+  {"id": "her", "term": "her", "meaning": "belonging to her", "synonym": "(she → her)", "example": "<b>Her</b> book is here.", "completion": "_____ book is here.", "answer": "Her"},
+  {"id": "its", "term": "its", "meaning": "belonging to it", "synonym": "(it → its)", "example": "The cat ate <b>its</b> food.", "completion": "The cat ate _____ food.", "answer": "its"},
+  {"id": "our", "term": "our", "meaning": "belonging to us", "synonym": "(we → our)", "example": "<b>Our</b> house is big.", "completion": "_____ house is big.", "answer": "Our"},
+  {"id": "their", "term": "their", "meaning": "belonging to them", "synonym": "(they → their)", "example": "<b>Their</b> dog is small.", "completion": "_____ dog is small.", "answer": "Their"},
+  {"id": "itsvsits", "term": "its (no ')", "meaning": "possessive, no apostrophe", "synonym": "(≠ it's)", "example": "<b>Its</b> colour is red. (NOT it's)", "completion": "_____ colour is red.", "answer": "Its"},
+  {"id": "mine", "term": "mine", "meaning": "possessive pronoun", "synonym": "(pronoun)", "example": "This book is <b>mine</b>.", "completion": "This book is _____.", "answer": "mine"},
+  {"id": "yours", "term": "yours", "meaning": "possessive pronoun", "synonym": "(pronoun)", "example": "Is this pen <b>yours</b>?", "completion": "Is this pen _____?", "answer": "yours"}
+]};
+</script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body>
+</html>

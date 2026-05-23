@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Word Play — Cambridge English grammar, vocabulary and writing practice.">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#1A1A1A">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>B1 &amp; B2 | Word Play</title>
+<link rel="stylesheet" href="../shared/base.css?v=v100">
+<script src="../shared/dark-init.js?v=v100"></script>
+<style>
+.b-page { max-width: 920px; margin: 0 auto; padding: 24px 20px 60px; }
+.level-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 24px; }
+@media (max-width: 700px) { .level-panels { grid-template-columns: 1fr; } }
+.level-panel { border: 1px solid var(--hairline); border-radius: 10px; padding: 24px 24px 20px; background: var(--paper); }
+.panel-badge { font-family: var(--font-sans); font-size: .65rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.panel-title { font-family: var(--font-sans); font-size: 2rem; font-weight: 800; color: var(--ink); line-height: 1; margin-bottom: 6px; }
+.panel-sub { font-size: .88rem; color: var(--navy-light, var(--muted)); margin-bottom: 18px; line-height: 1.4; }
+.panel-stats { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 18px; padding: 12px; border-radius: 6px; background: rgba(26,26,26,0.03); }
+.pstat { text-align: center; }
+.pstat-val { font-family: var(--font-sans); font-size: 1.2rem; font-weight: 800; color: var(--ink); line-height: 1; }
+.pstat-label { font-family: var(--font-sans); font-size: .58rem; font-weight: 700; letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+.section-links { display: flex; flex-direction: column; gap: 6px; }
+.section-link { display: flex; align-items: center; gap: 10px; padding: 11px 14px; border: 1px solid var(--hairline); border-radius: 6px; text-decoration: none; color: var(--ink); font-family: var(--font-sans); font-size: .82rem; font-weight: 600; transition: border-color .15s, background .15s; }
+.section-link:hover { border-color: var(--ink); background: rgba(26,26,26,0.03); }
+.section-link.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.section-link.primary:hover { background: var(--ink); opacity: .9; }
+.sl-count { margin-left: auto; font-family: var(--font-sans); font-size: .68rem; font-weight: 700; letter-spacing: .5px; color: var(--muted); }
+.section-link.primary .sl-count { color: rgba(250,250,250,0.7); }
+body.dark .panel-stats { background: rgba(255,255,255,0.04); }
+body.dark .section-link:hover { background: rgba(255,255,255,0.05); }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../index.html" class="back back-link">Home</a>
+    <a href="../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  </div>
+</header>
+
+<div class="b-page">
+  <div class="breadcrumb"><a href="../index.html">Home</a><span>›</span><strong>B1 &amp; B2</strong></div>
+  <h1 style="font-size:1.8rem;color:var(--ink);margin:0 0 8px">Cambridge English — B Levels</h1>
+  <p style="color:var(--muted);font-size:.92rem;margin-bottom:8px">Pre-intermediate to upper-intermediate. PET, FCE and Trinity ISE preparation.</p>
+
+  <div class="level-panels">
+
+    <div class="level-panel">
+      <div class="panel-badge">B1 · Pre-intermediate</div>
+      <div class="panel-title">B1</div>
+      <div class="panel-sub">PET / Trinity ISE I level. Core grammar, vocabulary topics, and writing forms.</div>
+      <div class="panel-stats">
+        <div class="pstat"><div class="pstat-val" id="b1Done">—</div><div class="pstat-label">Tried</div></div>
+        <div class="pstat"><div class="pstat-val" id="b1Avg">—</div><div class="pstat-label">Avg</div></div>
+        <div class="pstat"><div class="pstat-val" id="b1Best">—</div><div class="pstat-label">Best</div></div>
+      </div>
+      <div class="section-links">
+        <a href="b1/index.html" class="section-link primary">All Topics<span class="sl-count">30 chapters</span></a>
+        <a href="b1/grammar/index.html" class="section-link">Grammar<span class="sl-count">17 chapters</span></a>
+        <a href="b1/vocabulary/index.html" class="section-link">Vocabulary<span class="sl-count">10 chapters</span></a>
+        <a href="b1/writing/index.html" class="section-link">Writing<span class="sl-count">3 chapters</span></a>
+      </div>
+    </div>
+
+    <div class="level-panel">
+      <div class="panel-badge">B2 · Upper-intermediate</div>
+      <div class="panel-title">B2</div>
+      <div class="panel-sub">Cambridge FCE / First Certificate. Grammar, vocabulary and writing for the exam.</div>
+      <div class="panel-stats">
+        <div class="pstat"><div class="pstat-val" id="b2Done">—</div><div class="pstat-label">Tried</div></div>
+        <div class="pstat"><div class="pstat-val" id="b2Avg">—</div><div class="pstat-label">Avg</div></div>
+        <div class="pstat"><div class="pstat-val" id="b2Best">—</div><div class="pstat-label">Best</div></div>
+      </div>
+      <div class="section-links">
+        <a href="b2/index.html" class="section-link primary">All Topics<span class="sl-count">38 chapters</span></a>
+        <a href="b2/grammar/index.html" class="section-link">Grammar<span class="sl-count">18 chapters</span></a>
+        <a href="b2/vocabulary/index.html" class="section-link">Vocabulary<span class="sl-count">15 chapters</span></a>
+        <a href="b2/writing/index.html" class="section-link">Writing<span class="sl-count">5 chapters</span></a>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="text-align:center;margin-top:32px">
+    <a href="../dashboard.html" style="display:inline-block;padding:9px 22px;background:var(--paper);border:1.5px solid var(--hairline);color:var(--ink);font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;text-decoration:none;border-radius:4px">☰ Dashboard</a>
+  </div>
+</div>
+
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+
+<script src="../shared/store.js?v=v100"></script>
+<script>
+(function() {
+  if (typeof FCEStore === 'undefined') return;
+  ['b1','b2'].forEach(function(level) {
+    var data = FCEStore.getLevel(level);
+    var results = data.results || {};
+    var chs = (data.chapters.grammar || []).concat(data.chapters.vocabulary || [], data.chapters.writing || []);
+    var attempted = chs.filter(function(ch) { return results[ch.slug]; });
+    var pcts = attempted.map(function(ch) { return results[ch.slug].pct || 0; });
+    var avg = pcts.length ? Math.round(pcts.reduce(function(a,b){return a+b;}, 0) / pcts.length) : null;
+    var best = pcts.length ? Math.max.apply(null, pcts) : null;
+    document.getElementById(level + 'Done').textContent = attempted.length + '/' + chs.length;
+    document.getElementById(level + 'Avg').textContent  = avg !== null ? avg + '%' : '—';
+    document.getElementById(level + 'Best').textContent = best !== null ? best + '%' : '—';
+  });
+})();
+</script>
+</body>
+</html>

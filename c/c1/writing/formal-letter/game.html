@@ -1,0 +1,111 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>C1 Writing · The Formal Letter — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner"><a href="../index.html" class="back back-link">C1 Writing</a><a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">C1</a><span>›</span><a href="../index.html">Writing</a><span>›</span><strong>The Formal Letter — Key Phrases Game</strong></div>
+  <div class="chapter-num">Writing</div>
+  <h1>The Formal Letter</h1>
+  <p class="chapter-subtitle">Application · complaint · enquiry · strict register · 140–190 words</p>
+  <nav class="chapter-nav"><a href="slides.html" class="chapter-nav-btn">Lesson</a><a href="worksheet.html" class="chapter-nav-btn">Practice</a><a href="game.html" class="chapter-nav-btn active">Game</a><a href="printables.html" class="chapter-nav-btn">Printables</a></nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">The Formal Letter — Key Phrases</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / <span id="gStartTotal">5</span> mastered</div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Resume</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Start over</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Start</button>
+  </div></div>
+  <div id="gamePlay" class="game-screen"><div class="game-play-card">
+    <div class="game-top-bar"><div class="game-progress-wrap"><div class="game-progress-bar" id="gProgressBar" style="width:0%"></div></div>
+    <div class="game-top-stats"><span>Score <strong id="gScore">0</strong></span><span>Streak <strong id="gStreak">0</strong></span></div></div>
+    <div id="gModeTag" class="game-mode-tag"></div>
+    <div id="gTerm" class="game-term"></div><div id="gPrompt" class="game-prompt"></div>
+    <div id="gOptions" class="game-options"></div><div id="gFeedback" class="game-feedback"></div>
+    <div id="gExample" class="game-example" style="display:none"></div>
+    <div class="game-btn-row">
+          <a href="../proposal/slides.html" class="game-btn primary" style="text-decoration:none;text-align:center">Next: Proposal &#8594;</a>
+                <button id="gBtnHint" class="game-btn ghost">Hint [H]</button>
+      <button id="gBtnKnow" class="game-btn know" style="display:none">I know this [K]</button>
+      <button id="gBtnReveal" class="game-btn ghost">Reveal</button>
+      <button id="gBtnNext" class="game-btn primary" style="display:none">Next &#8594;</button>
+    </div>
+    <div class="game-progress-txt" id="gProgressTxt">0 / 5 mastered</div>
+    <button id="gBtnSaveQuit" class="game-btn ghost" style="margin-top:12px;width:100%">Save &amp; quit</button>
+  </div>
+  <div class="game-ref-panel"><button id="gRefToggle" class="game-ref-head">&#9660; Reference</button>
+  <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div></div></div>
+  <div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Complete!</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats">
+      <div>Score <strong id="gFinalScore">0</strong></div>
+      <div>Best streak <strong id="gFinalStreak">0</strong></div>
+      <div>Mastery <strong id="gFinalPct">0%</strong></div>
+    </div>
+    <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>
+window.LEVEL="c1"; window.CHAPTER_ID="formal-letter";
+window.GAME_DATA={chapterId:"formal-letter",level:"c1",title:"The Formal Letter",
+  storageKey:"wordplay_game_c1_writing_formal-letter",items:[
+  {
+    "id": "regard",
+    "term": "I am writing with regard to",
+    "meaning": "formal opening phrase introducing the purpose",
+    "synonym": "with reference to",
+    "example": "<b>I am writing with regard to</b> your recent advertisement.",
+    "completion": "______ your recent advertisement.",
+    "answer": "I am writing with regard to"
+  },
+  {
+    "id": "grateful",
+    "term": "I would be grateful if",
+    "meaning": "formal indirect request phrase",
+    "synonym": "I would appreciate it if",
+    "example": "<b>I would be grateful if</b> you could confirm the delivery date.",
+    "completion": "______ you could confirm the delivery date.",
+    "answer": "I would be grateful if"
+  },
+  {
+    "id": "should",
+    "term": "Should you require",
+    "meaning": "formal conditional meaning if you happen to need",
+    "synonym": "if you require",
+    "example": "<b>Should you require</b> further information, please contact me.",
+    "completion": "______ further information, please contact me.",
+    "answer": "Should you require"
+  },
+  {
+    "id": "draw",
+    "term": "I wish to draw your attention to",
+    "meaning": "formal phrase for introducing a complaint",
+    "synonym": "I would like to bring to your attention",
+    "example": "<b>I wish to draw your attention to</b> a serious error in my bill.",
+    "completion": "______ a serious error in my bill.",
+    "answer": "I wish to draw your attention to"
+  },
+  {
+    "id": "yours",
+    "term": "Yours sincerely / Yours faithfully",
+    "meaning": "formal closing — sincerely for named, faithfully for Dear Sir/Madam",
+    "synonym": "Yours truly",
+    "example": "Dear Mr Smith… <b>Yours sincerely</b>. / Dear Sir or Madam… <b>Yours faithfully</b>.",
+    "completion": "Dear Sir or Madam… ______.",
+    "answer": "Yours faithfully"
+  }
+]};
+</script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body></html>

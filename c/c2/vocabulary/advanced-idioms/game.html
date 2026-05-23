@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>C2 Vocab · Advanced Idioms & Fixed Phrases — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100"><link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link">C2 Vocabulary</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../../index.html">C2</a><span>›</span><a href="../index.html">Vocabulary</a><span>›</span><strong>Advanced Idioms & Fixed Phrases</strong></div>
+  <div class="chapter-num">V2</div><h1>Advanced Idioms & Fixed Phrases</h1>
+  <p class="chapter-subtitle">CPE-level idioms · formal fixed phrases · proverbial expressions</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">Advanced Idioms & Fixed Phrases</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / 12 mastered</div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Resume</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Start over</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Start</button>
+  </div></div>
+  <div id="gamePlay" class="game-screen"><div class="game-play-card">
+    <div class="game-top-bar"><div class="game-progress-wrap"><div class="game-progress-bar" id="gProgressBar" style="width:0%"></div></div>
+    <div class="game-top-stats"><span>Score <strong id="gScore">0</strong></span><span>Streak <strong id="gStreak">0</strong></span></div></div>
+    <div id="gModeTag" class="game-mode-tag"></div><div id="gTerm" class="game-term"></div>
+    <div id="gPrompt" class="game-prompt"></div><div id="gOptions" class="game-options"></div>
+    <div id="gFeedback" class="game-feedback"></div><div id="gExample" class="game-example" style="display:none"></div>
+    <div class="game-btn-row">
+      <button id="gBtnHint" class="game-btn ghost">Hint [H]</button>
+      <button id="gBtnKnow" class="game-btn know" style="display:none">I know this [K]</button>
+      <button id="gBtnReveal" class="game-btn ghost">Reveal</button>
+      <button id="gBtnNext" class="game-btn primary" style="display:none">Next →</button>
+    </div>
+    <div class="game-progress-txt" id="gProgressTxt">0 / 12 mastered</div>
+    <button id="gBtnSaveQuit" class="game-btn ghost" style="margin-top:12px;width:100%">Save &amp; quit</button>
+  </div>
+  <div class="game-ref-panel"><button id="gRefToggle" class="game-ref-head">▼ Reference</button>
+  <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div></div></div>
+  <div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Complete!</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats"><div>Score <strong id="gFinalScore">0</strong></div><div>Mastery <strong id="gFinalPct">0%</strong></div></div>
+    <a href="../applied-grammar-collocation/index.html" class="game-btn primary" style="text-decoration:none;text-align:center;display:block;margin-bottom:8px">Next: Applied Grammar Collocation &#8594;</a>
+    <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>window.LEVEL="c2";window.CHAPTER_ID="advanced-idioms";
+window.GAME_DATA={chapterId:"advanced-idioms",level:"c2",title:"Advanced Idioms & Fixed Phrases",storageKey:"wordplay_game_c2_advanced-idioms",items:[
+  {
+    "id": "cut_corners",
+    "term": "Cut corners",
+    "meaning": "to do something the easy way, sacrificing quality or thoroughness",
+    "synonym": "take shortcuts / compromise quality",
+    "example": "The contractor <b>cut corners</b> to finish ahead of schedule, and the building was unsafe.",
+    "completion": "The contractor ______ to finish ahead of schedule.",
+    "answer": "cut corners"
+  },
+  {
+    "id": "move_goalposts",
+    "term": "Move the goalposts",
+    "meaning": "to change the rules or criteria during a process, making it harder to succeed",
+    "synonym": "shift the criteria / change the terms",
+    "example": "Every time we met their demands, they <b>moved the goalposts</b>.",
+    "completion": "Every time we met their demands, they ______.",
+    "answer": "moved the goalposts"
+  },
+  {
+    "id": "paradigm_shift",
+    "term": "Paradigm shift",
+    "meaning": "a fundamental change in approach or underlying assumptions in a field",
+    "synonym": "revolutionary change / fundamental shift",
+    "example": "The internet caused a complete <b>paradigm shift</b> in how information is distributed.",
+    "completion": "The internet caused a complete ______ in how information is distributed.",
+    "answer": "paradigm shift"
+  },
+  {
+    "id": "double_edged",
+    "term": "Double-edged sword",
+    "meaning": "something that has both advantages and disadvantages",
+    "synonym": "two-sided issue / mixed blessing",
+    "example": "Social media is a <b>double-edged sword</b>: it connects but also isolates.",
+    "completion": "Social media is a ______ — it connects but also isolates.",
+    "answer": "double-edged sword"
+  },
+  {
+    "id": "vicious_circle",
+    "term": "Vicious circle",
+    "meaning": "a sequence of problems where each one makes the others worse",
+    "synonym": "downward spiral / self-reinforcing problem",
+    "example": "Poverty leads to poor education, which leads to more poverty — a <b>vicious circle</b>.",
+    "completion": "Poverty leading to poor education leading to more poverty is a ______.",
+    "answer": "vicious circle"
+  },
+  {
+    "id": "watershed",
+    "term": "Watershed moment",
+    "meaning": "a turning point that marks a fundamental change",
+    "synonym": "turning point / pivotal moment",
+    "example": "The moon landing was a <b>watershed moment</b> in human history.",
+    "completion": "The moon landing was a ______ in human history.",
+    "answer": "watershed moment"
+  },
+  {
+    "id": "straw_man",
+    "term": "Straw man argument",
+    "meaning": "misrepresenting someone’s position to make it easier to attack",
+    "synonym": "false representation / distortion of argument",
+    "example": "Claiming your opponent wants to abolish all law is a <b>straw man argument</b>.",
+    "completion": "Misrepresenting your opponent’s view to attack it is a ______.",
+    "answer": "straw man argument"
+  },
+  {
+    "id": "red_herring",
+    "term": "Red herring",
+    "meaning": "something introduced to divert attention from the real issue",
+    "synonym": "distraction / misleading clue",
+    "example": "The politician’s personal life is a <b>red herring</b> in the policy debate.",
+    "completion": "The politician’s personal life is a ______ in the policy debate.",
+    "answer": "red herring"
+  },
+  {
+    "id": "foregone",
+    "term": "Foregone conclusion",
+    "meaning": "a result that is certain or was decided before it began",
+    "synonym": "inevitable outcome / predetermined result",
+    "example": "Given the evidence, the verdict was a <b>foregone conclusion</b>.",
+    "completion": "Given the evidence, the verdict was a ______.",
+    "answer": "foregone conclusion"
+  },
+  {
+    "id": "carte_blanche",
+    "term": "Carte blanche",
+    "meaning": "complete freedom to act however one wishes",
+    "synonym": "free rein / unlimited authority",
+    "example": "The board gave the new CEO <b>carte blanche</b> to restructure the company.",
+    "completion": "The board gave the new CEO ______ to restructure the company.",
+    "answer": "carte blanche"
+  },
+  {
+    "id": "sine_qua_non",
+    "term": "Sine qua non",
+    "meaning": "something absolutely essential; an indispensable condition",
+    "synonym": "essential requirement / prerequisite",
+    "example": "Trust is the <b>sine qua non</b> of any effective working relationship.",
+    "completion": "Trust is the ______ of any effective working relationship.",
+    "answer": "sine qua non"
+  },
+  {
+    "id": "zeitgeist",
+    "term": "Zeitgeist",
+    "meaning": "the defining spirit or mood of a particular period of history",
+    "synonym": "spirit of the age / cultural moment",
+    "example": "The film perfectly captured the <b>zeitgeist</b> of the 1960s counterculture.",
+    "completion": "The film perfectly captured the ______ of the 1960s.",
+    "answer": "zeitgeist"
+  }
+]};
+</script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body></html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A2 Vocab · Health & Body — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100"><link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../../index.html" class="back back-link">A2 Vocabulary</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">A2</a><span>›</span><a href="../index.html">Vocabulary</a><span>›</span><strong>Health & Body</strong></div>
+  <div class="chapter-num">V7</div><h1>Health & Body</h1>
+  <p class="chapter-subtitle">Body parts · illness · at the doctor</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">Health & Body</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / 10 mastered</div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Resume</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Start over</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Start</button>
+  </div></div>
+  <div id="gamePlay" class="game-screen"><div class="game-play-card">
+    <div class="game-top-bar"><div class="game-progress-wrap"><div class="game-progress-bar" id="gProgressBar" style="width:0%"></div></div>
+    <div class="game-top-stats"><span>Score <strong id="gScore">0</strong></span><span>Streak <strong id="gStreak">0</strong></span></div></div>
+    <div id="gModeTag" class="game-mode-tag"></div><div id="gTerm" class="game-term"></div>
+    <div id="gPrompt" class="game-prompt"></div><div id="gOptions" class="game-options"></div>
+    <div id="gFeedback" class="game-feedback"></div><div id="gExample" class="game-example" style="display:none"></div>
+    <div class="game-btn-row">
+      <button id="gBtnHint" class="game-btn ghost">Hint [H]</button>
+      <button id="gBtnKnow" class="game-btn know" style="display:none">I know this [K]</button>
+      <button id="gBtnReveal" class="game-btn ghost">Reveal</button>
+      <button id="gBtnNext" class="game-btn primary" style="display:none">Next →</button>
+    </div>
+    <div class="game-progress-txt" id="gProgressTxt">0 / 10 mastered</div>
+    <button id="gBtnSaveQuit" class="game-btn ghost" style="margin-top:12px;width:100%">Save &amp; quit</button>
+  </div>
+  <div class="game-ref-panel"><button id="gRefToggle" class="game-ref-head">▼ Reference</button>
+  <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div></div></div>
+  <div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Complete!</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats"><div>Score <strong id="gFinalScore">0</strong></div><div>Mastery <strong id="gFinalPct">0%</strong></div></div>
+    <a href="../school-subjects/index.html" class="game-btn primary" style="text-decoration:none;text-align:center;display:block;margin-bottom:8px">Next: School Subjects &#8594;</a>
+    <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>window.LEVEL="a2";window.CHAPTER_ID="feelings-emotions";
+window.GAME_DATA={chapterId:"feelings-emotions",level:"a2",title:"Feelings and Emotions",storageKey:"wordplay_game_a2_feelings-emotions",items:[
+  {"id": "excited", "term": "excited", "meaning": "very happy about something coming", "synonym": "/ɪkˈsaɪ.tɪd/", "example": "I am <b>excited</b> about the trip.", "completion": "I am _____ about the trip.", "answer": "excited"},
+  {"id": "worried", "term": "worried", "meaning": "feeling nervous or anxious", "synonym": "/ˈwʌr.id/", "example": "She is <b>worried</b> about the exam.", "completion": "She is _____ about the exam.", "answer": "worried"},
+  {"id": "disappointed", "term": "disappointed", "meaning": "sad because something did not happen", "synonym": "/ˌdɪs.əˈpɔɪn.tɪd/", "example": "He was <b>disappointed</b> with the result.", "completion": "He was _____ with the result.", "answer": "disappointed"},
+  {"id": "proud", "term": "proud", "meaning": "pleased about an achievement", "synonym": "/praʊd/", "example": "I am <b>proud</b> of you.", "completion": "I am _____ of you.", "answer": "proud"},
+  {"id": "nervous", "term": "nervous", "meaning": "worried about something", "synonym": "/ˈnɜː.vəs/", "example": "She feels <b>nervous</b> before exams.", "completion": "She feels _____ before exams.", "answer": "nervous"},
+  {"id": "confused", "term": "confused", "meaning": "unable to understand", "synonym": "/kənˈfjuːzd/", "example": "I am <b>confused</b> by this question.", "completion": "I am _____ by this question.", "answer": "confused"},
+  {"id": "surprised", "term": "surprised", "meaning": "not expecting something", "synonym": "/səˈpraɪzd/", "example": "I was <b>surprised</b> to see her.", "completion": "I was _____ to see her.", "answer": "surprised"},
+  {"id": "lonely", "term": "lonely", "meaning": "feeling alone and sad", "synonym": "/ˈləʊn.li/", "example": "He feels <b>lonely</b> sometimes.", "completion": "He feels _____ sometimes.", "answer": "lonely"},
+  {"id": "relaxed", "term": "relaxed", "meaning": "calm and not worried", "synonym": "/rɪˈlækst/", "example": "I feel <b>relaxed</b> on holiday.", "completion": "I feel _____ on holiday.", "answer": "relaxed"},
+  {"id": "jealous", "term": "jealous", "meaning": "wanting what someone else has", "synonym": "/ˈdʒel.əs/", "example": "She is <b>jealous</b> of her sister.", "completion": "She is _____ of her sister.", "answer": "jealous"}
+]};
+</script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body></html>

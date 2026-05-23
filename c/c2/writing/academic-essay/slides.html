@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>C2 Writing · The Academic Essay — Lesson | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100"><link rel="stylesheet" href="../../../../shared/slides.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head><body>
+<div class="deck-progress"><div class="deck-progress-fill" id="deck-progress-fill"></div></div>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link">C2 Writing</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../../index.html">C2</a><span>›</span><a href="../index.html">Writing</a><span>›</span><strong>The Academic Essay</strong></div>
+  <div class="chapter-num">Writing</div><h1>The Academic Essay</h1>
+  <p class="chapter-subtitle">CPE discursive writing · 180–220 words · formal register · argumentation</p>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn active">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Practice</a>
+    <a href="game.html" class="chapter-nav-btn">Key Phrases</a>
+  </nav>
+  <div id="slide-deck"><div class="slide"><div class="slide-card"><div class="slide-header"><h2>The CPE academic essay</h2></div><p style="font-size:1.05rem;color:var(--ink);margin-bottom:14px">The CPE discursive essay demands a higher standard than the B2 FCE equivalent. At C2 you are expected to demonstrate a sophisticated argument, a wider range of cohesive devices, and complete register consistency.</p><div class="overview-row"><div class="overview-label">Word target</div><div class="overview-desc">180–220 words (longer than FCE — more space for argument development)</div></div><div class="overview-row"><div class="overview-label">Register</div><div class="overview-desc">Fully formal throughout: no contractions, no colloquial vocabulary, no personal register shifts</div></div><div class="overview-row"><div class="overview-label">Argumentation</div><div class="overview-desc">State, support, acknowledge, respond, conclude — a 5-move structure</div></div><div class="overview-row"><div class="overview-label">C2 marker</div><div class="overview-desc">Sophisticated cohesion, nominalisation, hedging, impersonal structures, varied sentence architecture</div></div></div></div><div class="slide"><div class="slide-card"><div class="slide-header"><h2>The C2 essay argument structure</h2></div><div class="overview-row"><div class="overview-label">Introduction</div><div class="overview-desc">Frame the debate. Avoid taking a side immediately. Show the complexity.</div></div><div class="overview-row"><div class="overview-label">Position 1 + evidence</div><div class="overview-desc">First view, with specific example. Use: It could be argued that … / There is evidence to suggest …</div></div><div class="overview-row"><div class="overview-label">Concession + Position 2</div><div class="overview-desc">Acknowledge the other side — NOT dismiss it. Use: Notwithstanding this … / That said …</div></div><div class="overview-row"><div class="overview-label">Position 2 + evidence</div><div class="overview-desc">Develop the second view with its own specific, credible support.</div></div><div class="overview-row"><div class="overview-label">Conclusion</div><div class="overview-desc">Reasoned synthesis, not just repetition. On balance … / Taking all factors into account …</div></div></div></div><div class="slide"><div class="slide-card"><div class="slide-header"><h2>C2 language features in essays</h2></div><div class="overview-row"><div class="overview-label">Impersonal framing</div><div class="overview-desc">It could be argued that … / It has been widely observed that … / There is growing evidence that …</div></div><div class="overview-row"><div class="overview-label">Hedged modality</div><div class="overview-desc">may well · would appear to · tends to · cannot be discounted</div></div><div class="overview-row"><div class="overview-label">Concession connectors</div><div class="overview-desc">notwithstanding this · that said · be that as it may · for all that</div></div><div class="overview-row"><div class="overview-label">Nominalisation</div><div class="overview-desc">the deterioration of … / widespread displacement / the erosion of privacy</div></div><div class="overview-row"><div class="overview-label">Discourse meta-commentary</div><div class="overview-desc">What is more … / What ultimately determines … / The question, then, is not … but …</div></div><div class="watch-out">At C2, the conclusion must do more than restate. It should offer a synthesis — a position that emerges from the tension between the two sides rather than simply choosing one. "On balance" means you have genuinely weighed up both.</div></div></div></div>
+  <div class="deck-nav">
+    <button class="deck-btn" onclick="prevSlide()" id="deck-prev" disabled>← Prev</button>
+    <span class="deck-counter" id="slide-counter">1 / 3</span>
+    <button class="deck-btn primary" onclick="nextSlide()" id="deck-next">Next →</button>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>window.LEVEL="c2";window.CHAPTER_ID="academic-essay";</script>
+<script src="../../../../shared/deck.js?v=v100"></script>
+
+// Scroll first slide into view on load
+(function() {
+  var dk = document.getElementById('slide-deck');
+  if (dk) setTimeout(function() { dk.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 150);
+})();
+
+// ✓ badges on Practice / Game nav tabs
+(function() {
+  try {
+    var p = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+    var lv = p['c2'] || {};
+    var ws = lv['academic-essay'];
+    if (ws && ws.pct >= 70) {
+      var pt = document.querySelector('.chapter-nav-btn[href="worksheet.html"]');
+      if (pt) pt.textContent = 'Practice ✓';
+    }
+    var gm = lv['wordplay_game_academic-essay'];
+    if (gm && gm.pct >= 70) {
+      var gt = document.querySelector('.chapter-nav-btn[href="game.html"]');
+      if (gt) gt.textContent = 'Game ✓';
+    }
+  } catch(e) {}
+})();
+</body></html>

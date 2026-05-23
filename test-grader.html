@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Writing Grader Tests | Word Play</title>
+<link rel="stylesheet" href="shared/base.css">
+<style>
+.test{padding:10px 14px;margin:5px 0;border-radius:4px;font-family:var(--font-sans);font-size:.82rem}
+.pass{background:rgba(46,125,82,.1);border-left:3px solid var(--green)}
+.fail{background:rgba(192,57,43,.1);border-left:3px solid var(--red)}
+.summary{font-size:1.2rem;font-weight:700;margin:20px 0;font-family:var(--font-sans)}
+</style>
+</head>
+<body style="padding:24px;max-width:720px;margin:0 auto">
+<a href="index.html" style="font-family:var(--font-sans);font-size:.75rem;color:var(--muted)">← Home</a>
+<h1 style="margin:16px 0 6px;font-size:1.5rem">Writing Grader — Unit Tests</h1>
+<p style="color:var(--muted);font-family:var(--font-sans);font-size:.85rem;margin-bottom:24px">10 automated tests for writing-grader.js</p>
+<div id="results"></div>
+<div class="summary" id="summary"></div>
+<script src="shared/writing-grader.js"></script>
+<script>
+var tests = [
+  {name:'Word count too short',input:'This is a short essay.',config:{taskType:'essay',register:'formal',minWords:140,maxWords:190},
+   expect:function(r){return r.issues.some(function(i){return i.text.includes('Too short');})},desc:'flags short word count'},
+  {name:'Word count in range',input:Array(150).fill('word').join(' '),config:{taskType:'essay',register:'formal',minWords:140,maxWords:190},
+   expect:function(r){return r.positives.some(function(p){return p.includes('Word count');})},desc:'praises count in range'},
+  {name:'Contraction flagged in formal',input:"I can't agree. She won't come. It's a problem.",config:{taskType:'essay',register:'formal',minWords:5,maxWords:999},
+   expect:function(r){return r.issues.some(function(i){return i.text.includes('contraction');})},desc:'flags contractions in formal'},
+  {name:'Contraction OK in informal',input:"I can't come but it's fine.",config:{taskType:'informal-letter',register:'informal',minWords:5,maxWords:999},
+   expect:function(r){return !r.issues.some(function(i){return i.text.includes('contraction');})},desc:'no flag in informal'},
+  {name:'Linking words detected',input:'However, the results were surprising. Furthermore, they were incomplete. Nevertheless, conclusions were drawn.',config:{taskType:'essay',register:'formal',minWords:5,maxWords:999},
+   expect:function(r){return r.positives.some(function(p){return p.includes('linking');})},desc:'praises linkers'},
+  {name:'Missing linkers tip',input:Array(90).fill('word').join(' '),config:{taskType:'essay',register:'formal',minWords:5,maxWords:999},
+   expect:function(r){return r.tips.some(function(t){return t.includes('linking');})},desc:'tips about missing linkers'},
+  {name:'Informal vocab flagged in formal',input:'This stuff is really gonna cause lots of problems.',config:{taskType:'essay',register:'formal',minWords:5,maxWords:999},
+   expect:function(r){return r.issues.some(function(i){return i.text.includes('Informal');})},desc:'flags stuff/gonna in formal'},
+  {name:'Essay opinion detected',input:'Technology has changed society. In my opinion, this is largely positive.',config:{taskType:'essay',register:'formal',minWords:5,maxWords:999},
+   expect:function(r){return r.positives.some(function(p){return p.includes('opinion');})},desc:'praises opinion phrase'},
+  {name:'Essay missing opinion gets tip',input:Array(90).fill('word').join(' '),config:{taskType:'essay',register:'formal',minWords:5,maxWords:999},
+   expect:function(r){return r.tips.some(function(t){return t.includes('opinion');})},desc:'tips about missing opinion'},
+  {name:'Review recommendation detected',input:'The film is excellent. I would highly recommend it to anyone who enjoys drama.',config:{taskType:'review',register:'semi-formal',minWords:5,maxWords:999},
+   expect:function(r){return !r.tips.some(function(t){return t.includes('recommend');})},desc:'no tip when recommendation present'},
+];
+var passed=0,html='';
+tests.forEach(function(test,idx){
+  try{
+    var r=WritingGrader.analyse(test.input,test.config);
+    var ok=test.expect(r);
+    if(ok)passed++;
+    html+='<div class="test '+(ok?'pass':'fail')+'">';
+    html+='<strong>'+(ok?'PASS':'FAIL')+'</strong> '+(idx+1)+'. '+test.name;
+    html+=' <span style="opacity:.7">— '+test.desc+'</span>';
+    if(!ok)html+='<details style="margin-top:6px"><summary style="cursor:pointer">Debug</summary><pre style="font-size:.72rem;overflow:auto">'+JSON.stringify(r,null,2)+'</pre></details>';
+    html+='</div>';
+  }catch(e){html+='<div class="test fail"><strong>ERROR</strong> '+(idx+1)+'. '+test.name+': '+e.message+'</div>';}
+});
+document.getElementById('results').innerHTML=html;
+var col=passed===tests.length?'var(--green)':'var(--red)';
+document.getElementById('summary').innerHTML='<span style="color:'+col+'">'+passed+' / '+tests.length+' tests passed</span>';
+</script>
+</body>
+</html>

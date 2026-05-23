@@ -1,0 +1,47 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<title>C2 Writing — Word Play</title>
+<link rel="stylesheet" href="../../../shared/base.css?v=v100">
+<script src="../../../shared/dark-init.js?v=v100"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link">C2</a>
+  <a href="../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="section-page">
+  <div class="breadcrumb"><a href="../../../index.html">Home</a><span>›</span><a href="../index.html">C2</a><span>›</span><strong>Writing (2)</strong></div>
+  <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:8px">C2 · WRITING</div>
+  <h1 style="font-family:Georgia,serif;font-size:2.5rem;font-weight:700;color:var(--ink);margin:0 0 6px">Writing</h1>
+  <p style="color:var(--muted);font-size:.85rem;margin:0 0 28px">2 CPE-level tasks · 180–220 words · Live grader + model answers</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px"><div id="wpw_academic-essay" onclick="location.href='academic-essay/slides.html'" style="background:#1A1A1A;border-radius:10px;padding:22px 20px;cursor:pointer;transition:transform .15s,box-shadow .15s" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(0,0,0,.3)'" onmouseout="this.style.transform='';this.style.boxShadow=''"><div style="font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:6px">W1</div><h2 style="font-family:Georgia,serif;font-size:1.25rem;font-weight:700;color:white;margin:0 0 6px;line-height:1.25">The Academic Essay</h2><div style="font-family:var(--font-sans);font-size:.78rem;color:rgba(255,255,255,.5);margin-bottom:14px;line-height:1.4">CPE discursive writing · 180–220 words · formal register · argumentation</div><div style="display:flex;gap:6px;flex-wrap:wrap"><a href="academic-essay/slides.html" onclick="event.stopPropagation()" style="font-family:var(--font-sans);font-size:.65rem;font-weight:700;color:rgba(255,255,255,.6);text-decoration:none;padding:5px 10px;border:1px solid rgba(255,255,255,.15);border-radius:3px">Lesson</a><a href="academic-essay/worksheet.html" onclick="event.stopPropagation()" style="font-family:var(--font-sans);font-size:.65rem;font-weight:700;color:rgba(255,255,255,.6);text-decoration:none;padding:5px 10px;border:1px solid rgba(255,255,255,.15);border-radius:3px">Practice</a><a href="academic-essay/game.html" onclick="event.stopPropagation()" style="font-family:var(--font-sans);font-size:.65rem;font-weight:700;color:rgba(255,255,255,.6);text-decoration:none;padding:5px 10px;border:1px solid rgba(255,255,255,.15);border-radius:3px">Key phrases</a></div></div><div id="wpw_critical-review" onclick="location.href='critical-review/slides.html'" style="background:#1A1A1A;border-radius:10px;padding:22px 20px;cursor:pointer;transition:transform .15s,box-shadow .15s" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 6px 20px rgba(0,0,0,.3)'" onmouseout="this.style.transform='';this.style.boxShadow=''"><div style="font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:6px">W2</div><h2 style="font-family:Georgia,serif;font-size:1.25rem;font-weight:700;color:white;margin:0 0 6px;line-height:1.25">The Critical Review</h2><div style="font-family:var(--font-sans);font-size:.78rem;color:rgba(255,255,255,.5);margin-bottom:14px;line-height:1.4">CPE review writing · sustained evaluation · precise vocabulary · semi-formal</div><div style="display:flex;gap:6px;flex-wrap:wrap"><a href="critical-review/slides.html" onclick="event.stopPropagation()" style="font-family:var(--font-sans);font-size:.65rem;font-weight:700;color:rgba(255,255,255,.6);text-decoration:none;padding:5px 10px;border:1px solid rgba(255,255,255,.15);border-radius:3px">Lesson</a><a href="critical-review/worksheet.html" onclick="event.stopPropagation()" style="font-family:var(--font-sans);font-size:.65rem;font-weight:700;color:rgba(255,255,255,.6);text-decoration:none;padding:5px 10px;border:1px solid rgba(255,255,255,.15);border-radius:3px">Practice</a><a href="critical-review/game.html" onclick="event.stopPropagation()" style="font-family:var(--font-sans);font-size:.65rem;font-weight:700;color:rgba(255,255,255,.6);text-decoration:none;padding:5px 10px;border:1px solid rgba(255,255,255,.15);border-radius:3px">Key phrases</a></div></div></div>
+</div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+
+<script>
+(function() {
+  try {
+    var prog = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+    var lvl = prog['c2'] || {};
+    ["academic-essay", "critical-review"].forEach(function(slug) {
+      var card = document.getElementById('wpw_' + slug);
+      if (!card) return;
+      var parts = [];
+      if (lvl['slides_' + slug] && lvl['slides_' + slug].done) parts.push('\u2713 lesson');
+      var ws = lvl[slug];
+      if (ws && ws.pct >= 70) parts.push('\u2713 practice');
+      if (parts.length) {
+        var badge = document.createElement('div');
+        badge.style.cssText = 'font-family:var(--font-sans);font-size:.62rem;font-weight:700;color:var(--amber);margin-bottom:10px;letter-spacing:.5px';
+        badge.textContent = parts.join(' \u00b7 ');
+        var h2 = card.querySelector('h2');
+        if (h2 && h2.nextSibling) h2.parentNode.insertBefore(badge, h2.nextSibling);
+        if (parts.length === 2) card.style.border = '1.5px solid var(--amber)';
+      }
+    });
+  } catch(e) {}
+})();
+</script>
+</body></html>

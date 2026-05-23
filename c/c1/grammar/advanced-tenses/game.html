@@ -1,0 +1,109 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>C1 · Advanced Tense Use — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner"><a href="../../index.html" class="back back-link">C1 Grammar</a><a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header><div class="container">
+<div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">C1</a><span>›</span><a href="../index.html">Grammar</a><span>›</span><strong>Advanced Tense Use — Game</strong></div>
+<div class="chapter-num">Ch 15</div>
+<h1>Advanced Tense Use</h1>
+<p class="chapter-subtitle">Future perfect · perfect continuous · habitual past · aspect precision</p>
+<nav class="chapter-nav"><a href="slides.html" class="chapter-nav-btn">Lesson</a><a href="worksheet.html" class="chapter-nav-btn">Practice</a><a href="game.html" class="chapter-nav-btn active">Game</a><a href="printables.html" class="chapter-nav-btn">Printables</a></nav>
+<div id="gameStart" class="game-screen active"><div class="game-start-card">
+  <div class="game-start-title">Advanced Tense Use</div>
+  <div class="game-start-meta"><span id="gStartMastered">0</span> / <span id="gStartTotal">5</span> mastered &nbsp;&middot;&nbsp; Lifetime: <span id="gStartLifetime">&#8212;</span></div>
+  <div id="gResumeSection" style="display:none" class="resume-section">
+    <button id="gBtnResume" class="game-btn primary">Resume</button>
+    <button id="gBtnNewFromResume" class="game-btn ghost">Start over</button>
+  </div>
+  <button id="gBtnStart" class="game-btn primary">Start</button>
+</div></div>
+<div id="gamePlay" class="game-screen"><div class="game-play-card">
+  <div class="game-top-bar"><div class="game-progress-wrap"><div class="game-progress-bar" id="gProgressBar" style="width:0%"></div></div>
+  <div class="game-top-stats"><span>Score <strong id="gScore">0</strong></span><span>Streak <strong id="gStreak">0</strong></span></div></div>
+  <div id="gModeTag" class="game-mode-tag"></div>
+  <div id="gTerm" class="game-term"></div><div id="gPrompt" class="game-prompt"></div>
+  <div id="gOptions" class="game-options"></div><div id="gFeedback" class="game-feedback"></div>
+  <div id="gExample" class="game-example" style="display:none"></div>
+  <div class="game-btn-row">
+          <a href="../subjunctive/slides.html" class="game-btn primary" style="text-decoration:none;text-align:center">Ch 17 Subjunctive &#8594;</a>
+              <button id="gBtnHint" class="game-btn ghost">Hint [H]</button>
+      <button id="gBtnKnow" class="game-btn know" style="display:none">I know this [K]</button>
+    <button id="gBtnReveal" class="game-btn ghost">Reveal</button>
+    <button id="gBtnNext" class="game-btn primary" style="display:none">Next &#8594;</button>
+  </div>
+  <div class="game-progress-txt" id="gProgressTxt">0 / 5 mastered</div>
+  <button id="gBtnSaveQuit" class="game-btn ghost" style="margin-top:12px;width:100%">Save &amp; quit</button>
+</div>
+<div class="game-ref-panel"><button id="gRefToggle" class="game-ref-head">&#9660; Reference</button>
+<div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div></div></div>
+<div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+  <div class="completion-title">Complete!</div>
+  <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats">
+    <div>Score <strong id="gFinalScore">0</strong></div>
+    <div>Best streak <strong id="gFinalStreak">0</strong></div>
+    <div>Mastery <strong id="gFinalPct">0%</strong></div>
+  </div>
+  <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+</div></div></div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>
+window.LEVEL='c1'; window.CHAPTER_ID='advanced-tenses';
+window.GAME_DATA={chapterId:'advanced-tenses',level:'c1',title:'Advanced Tense Use',
+  storageKey:'wordplay_game_c1_advanced-tenses',items:[
+  {
+    "id": "fut_perf",
+    "term": "Future perfect",
+    "meaning": "will have + V3, completed before a specific future point",
+    "synonym": "completed future",
+    "example": "By next year, I <b>will have finished</b> my degree.",
+    "completion": "By next year, I ______ my degree.",
+    "answer": "will have finished"
+  },
+  {
+    "id": "fut_cont",
+    "term": "Future continuous",
+    "meaning": "will be + V-ing, in progress at a specific future moment",
+    "synonym": "future in progress",
+    "example": "This time tomorrow, we <b>will be flying</b> to Rome.",
+    "completion": "This time tomorrow, we ______ to Rome.",
+    "answer": "will be flying"
+  },
+  {
+    "id": "past_perf_cont",
+    "term": "Past perfect continuous",
+    "meaning": "had been + V-ing, ongoing before a past event",
+    "synonym": "pre-past ongoing",
+    "example": "She <b>had been studying</b> for hours before the exam.",
+    "completion": "She ______ for hours before the exam.",
+    "answer": "had been studying"
+  },
+  {
+    "id": "would_habit",
+    "term": "Would for habitual past",
+    "meaning": "would + base form, describing a repeated past action",
+    "synonym": "habitual past would",
+    "example": "We <b>would walk</b> to school together every morning.",
+    "completion": "We ______ to school together every morning.",
+    "answer": "would walk"
+  },
+  {
+    "id": "pres_perf_cont",
+    "term": "Present perfect continuous",
+    "meaning": "have been + V-ing, ongoing action with current relevance",
+    "synonym": "present ongoing perfect",
+    "example": "I <b>have been reading</b> this book all week.",
+    "completion": "I ______ this book all week.",
+    "answer": "have been reading"
+  }
+]};
+</script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body></html>

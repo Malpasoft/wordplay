@@ -1,0 +1,87 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>C2 Writing · The Critical Review — Practice | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100"><link rel="stylesheet" href="../../../../shared/worksheet.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link">C2 Writing</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../../index.html">C2</a><span>›</span><a href="../index.html">Writing</a><span>›</span><strong>The Critical Review</strong></div>
+  <div class="chapter-num">Writing</div><h1>The Critical Review</h1>
+  <p class="chapter-subtitle">CPE review writing · sustained evaluation · precise vocabulary · semi-formal</p>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn active">Practice</a>
+    <a href="game.html" class="chapter-nav-btn">Key Phrases</a>
+  </nav>
+  <div style="background:var(--cream-deep);border:1px solid var(--hairline);border-radius:8px;padding:20px;margin-bottom:24px">
+    <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:8px">Writing Task</div>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:10px">Write a critical review of a book, article, film, cultural event, or academic work:</p>
+    <p style="font-size:.92rem;color:var(--ink);font-style:italic">Your review must provide context, develop a sustained critical evaluation supported by specific examples, and give a nuanced recommendation. Avoid unsupported generalisation.</p>
+    <p style="font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin-top:10px">Write 180–220 words. Fully formal or semi-formal register as appropriate.</p>
+  </div>
+  <div style="margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
+    <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted)">Your answer</div>
+    <span id="wc_critical-review" class="wc-pill">0 words</span>
+  </div>
+  <textarea id="ta_critical-review" rows="12" placeholder="Write your answer here..."
+    style="width:100%;padding:14px;font-family:Georgia,serif;font-size:.95rem;color:var(--ink);background:var(--paper);border:1.5px solid var(--hairline);border-radius:6px;resize:vertical;line-height:1.65;margin-bottom:12px"></textarea>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px">
+    <button id="saveBtn" onclick="saveDraft()" style="padding:9px 20px;font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:var(--ink);color:var(--paper);border:0;border-radius:3px;cursor:pointer">Save draft</button>
+    <button onclick="toggleModel()" style="padding:9px 20px;font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);border-radius:3px;cursor:pointer">Show model answer</button>
+  </div>
+  <div id="modelPanel" style="display:none;background:rgba(184,134,11,.06);border:1.5px solid rgba(184,134,11,.25);border-radius:6px;padding:18px;margin-bottom:24px">
+    <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:10px">Model answer (CPE register)</div>
+    <div id="modelText" style="font-size:.9rem;line-height:1.75;color:var(--ink);white-space:pre-line"></div>
+  </div>
+  <div>
+    <div style="background:var(--cream-deep);padding:10px 14px;font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);border:1px solid var(--hairline);border-radius:6px 6px 0 0;border-bottom:0">Live feedback &amp; rubric</div>
+    <div id="wg_feedback" class="writing-feedback"></div>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script src="../../../../shared/writing-grader.js?v=v100"></script>
+<script>
+var DRAFT_KEY='wordplay_writing_c2_critical-review';
+var ta=document.getElementById('ta_critical-review');
+var wc=document.getElementById('wc_critical-review');
+window.WRITING_CONFIG={"taskType": "review", "register": "semi-formal", "minWords": 180, "maxWords": 220, "level": "c2"};
+function countW(s){return s.trim()?s.trim().split(/\s+/).length:0;}
+if(ta){
+  try{var sv=localStorage.getItem(DRAFT_KEY);if(sv)ta.value=sv;}catch(e){}
+  ta.addEventListener('input',function(){
+    var n=countW(ta.value);wc.textContent=n+' words';wc.className='wc-pill';
+    if(n>=180&&n<=220)wc.classList.add('good');
+    else if(n>0&&n<180)wc.classList.add('short');
+    else if(n>220)wc.classList.add('warn');
+  });
+  WritingGrader.init('ta_critical-review','wg_feedback',window.WRITING_CONFIG);
+}
+function saveDraft(){
+  if(!ta)return;
+  try{localStorage.setItem(DRAFT_KEY,ta.value);}catch(e){}
+  var btn=document.getElementById('saveBtn');
+  var orig=btn.textContent;btn.textContent='Saved!';
+  setTimeout(function(){btn.textContent=orig;},1500);
+}
+function toggleModel(){
+  var p=document.getElementById('modelPanel');
+  var t=document.getElementById('modelText');
+  if(p.style.display==='none'){
+    p.style.display='block';
+    t.textContent='Chimamanda Ngozi Adichie\'s essay collection We Should All Be Feminists, derived from her widely viewed TED talk, is a slim but compelling work that makes its argument with characteristic precision and warmth. Adichie\'s central contention — that feminism is not an ideology of grievance but a straightforward demand for equal humanity — is articulated through personal anecdote and cultural observation rather than academic argument.\n\nWhat distinguishes this work is its accessibility without sacrificing intellectual rigour. Adichie has an enviable gift for finding the specific detail that illuminates a general truth: the observation that boys are raised to cultivate fear rather than belonging, for instance, is both economical and devastating. The prose is precise and controlled; there is no rhetorical excess.\n\nThat said, readers seeking a comprehensive theoretical engagement with feminist scholarship will not find it here. The work is deliberately conversational in scope, and those already well-read in the field may find certain arguments underdeveloped. This is, however, a feature rather than a flaw: the explicit intention is to reach those who might resist the label.\n\nFor anyone seeking an elegant and persuasive introduction to contemporary feminist thought, this comes unreservedly recommended. For the specialist, it offers a masterclass in public intellectual writing at its most effective.'.replace(/\\n/g,'\n');
+    event.target.textContent='Hide model answer';
+  }else{
+    p.style.display='none';
+    event.target.textContent='Show model answer';
+  }
+}
+</script>
+</body></html>

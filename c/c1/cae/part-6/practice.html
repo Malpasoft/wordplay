@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>CAE Cross-text Reading — Practice | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100">
+<link rel="stylesheet" href="../../../../shared/worksheet.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+<style>
+.cloze-input{width:110px;padding:2px 8px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-size:.82rem;background:var(--cream-deep)}
+.kw-input{width:100%;max-width:380px;padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-size:.85rem;background:var(--cream-deep)}
+.gap-select{padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-weight:700;background:var(--cream-deep);color:var(--ink);cursor:pointer}
+.word-form-line{display:flex;padding:10px 0;border-top:1px solid var(--hairline);align-items:flex-start;gap:14px}
+.wf-text{flex:1;font-size:.92rem;line-height:1.6}
+.wf-prompt{font-family:var(--font-sans);font-size:.75rem;font-weight:800;letter-spacing:1px;color:var(--muted);padding:4px 10px;border:1px solid var(--hairline);border-radius:3px;min-width:90px;text-align:center}
+.kw-q{display:flex;gap:12px;padding:14px 0;border-top:1px solid var(--hairline)}
+.kw-content p{margin:0 0 6px;font-size:.9rem}
+.kw-key{font-family:var(--font-sans);font-weight:800;letter-spacing:1px;color:var(--amber)}
+.kw-first{color:var(--muted)}
+.q-num{font-family:var(--font-sans);font-weight:800;color:var(--amber);min-width:24px;padding-top:2px}
+.passage{font-size:.92rem;line-height:1.8;margin-bottom:18px;padding:18px;background:rgba(26,42,64,.04);border-radius:8px}
+body.dark .passage{background:rgba(255,255,255,.05)}
+body.dark .cloze-input,body.dark .kw-input,body.dark .gap-select{background:#1A1A1A;color:#F0F0F0;border-color:rgba(255,255,255,.15)}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link">CAE</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">C1</a><span>›</span><a href="../index.html">CAE</a><span>›</span><a href="index.html">Cross-text Reading</a><span>›</span><strong>Practice</strong></div>
+  <div class="chapter-num">CAE · Part 6</div>
+  <h1>Cross-text Reading — Practice</h1>
+  <p class="chapter-subtitle">Sample exam questions with auto-grading</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Strategy</a>
+    <a href="practice.html" class="chapter-nav-btn active">Practice</a>
+  </nav>
+  <form id="worksheet">
+    <section class="exercise" id="ex1">
+      <div class="ex-head">Part 6 — Cross-text Multiple Matching</div>
+      <p style="font-size:.85rem;color:var(--muted);margin-bottom:12px">Four writers comment on whether universities should focus more on employability. Which writer...</p>
+      <div style="background:rgba(26,42,64,.04);border-radius:8px;padding:16px;margin-bottom:16px;font-size:.88rem;line-height:1.6">
+        <p><strong style="color:var(--amber)">A — Dr Patel:</strong> Universities have always been places of intellectual exploration. Reducing them to job-training centres would be a cultural catastrophe.</p>
+        <p><strong style="color:var(--amber)">B — Ms Chen:</strong> Students leave with enormous debts. It is only fair that their courses equip them for the workplace. Theory without practice is a luxury few can afford.</p>
+        <p><strong style="color:var(--amber)">C — Prof. Harris:</strong> The best graduates are those who can think critically. Employability skills are important, but they should complement, not replace, academic rigour.</p>
+        <p><strong style="color:var(--amber)">D — Mr Okafor:</strong> I struggled to find work after my degree precisely because the curriculum was out of touch with industry needs. Universities must modernise.</p>
+      </div>
+      <p style="font-size:.9rem;margin:8px 0"><strong>1.</strong> ...shares Mr Okafor's view that university curricula need updating?</p>
+      <select class='gap-select' data-q='x1' style="margin-bottom:10px"><option value=''>—</option><option>A</option><option>B</option><option>C</option><option>D</option></select>
+      <p style="font-size:.9rem;margin:8px 0"><strong>2.</strong> ...has the most similar view to Dr Patel about the purpose of universities?</p>
+      <select class='gap-select' data-q='x2' style="margin-bottom:10px"><option value=''>—</option><option>A</option><option>B</option><option>C</option><option>D</option></select>
+      <p style="font-size:.9rem;margin:8px 0"><strong>3.</strong> ...takes the view that financial realities should shape what universities teach?</p>
+      <select class='gap-select' data-q='x3' style="margin-bottom:10px"><option value=''>—</option><option>A</option><option>B</option><option>C</option><option>D</option></select>
+      <p style="font-size:.9rem;margin:8px 0"><strong>4.</strong> ...suggests a balanced approach combining academic and practical elements?</p>
+      <select class='gap-select' data-q='x4' style="margin-bottom:10px"><option value=''>—</option><option>A</option><option>B</option><option>C</option><option>D</option></select>
+    </section>
+    <div class="submit-wrap" style="margin-top:20px">
+      <button type="submit" class="submit-btn">Check answers</button>
+    </div>
+  </form>
+  <div id="results" class="results-panel">
+    <div class="score-row"><span class="score-label">Score</span><span id="score-got">0</span><span class="score-sep">/</span><span id="score-total">0</span><span class="score-pct-badge" id="score-pct">0%</span></div>
+    <div id="exercise-breakdown"></div><div id="breakdown"></div>
+    <button class="try-again-btn" onclick="tryAgain()">Try again</button>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>
+window.LEVEL='c1';window.CHAPTER_ID='cae-part-6-practice';
+window.TOTAL_POINTS=4;
+window.ANSWERS={"x1": "B", "x2": "C", "x3": "B", "x4": "C"};
+window.EXPLANATIONS={"x1": "Ms Chen (B) and Mr Okafor (D) both want change, but B specifically argues courses should 'equip them for the workplace' — matching D's point about curricula being 'out of touch'.", "x2": "Prof. Harris (C) values 'academic rigour' and 'critical thinking' — closest to Dr Patel's defence of 'intellectual exploration'.", "x3": "Ms Chen (B) explicitly ties her argument to student debt: 'enormous debts' → 'equip them for the workplace'.", "x4": "Prof. Harris (C) says employability skills 'should complement, not replace, academic rigour' — the balanced position."};
+window.EXERCISE_TITLES={ex1:'CAE Cross-text Reading Practice'};
+</script>
+<script src="../../../../shared/worksheet.js?v=v100"></script>
+</body>
+</html>

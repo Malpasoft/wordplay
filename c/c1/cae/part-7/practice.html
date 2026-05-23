@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>CAE Gapped Text — Practice | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100">
+<link rel="stylesheet" href="../../../../shared/worksheet.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+<style>
+.cloze-input{width:110px;padding:2px 8px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-size:.82rem;background:var(--cream-deep)}
+.kw-input{width:100%;max-width:380px;padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-size:.85rem;background:var(--cream-deep)}
+.gap-select{padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-weight:700;background:var(--cream-deep);color:var(--ink);cursor:pointer}
+.word-form-line{display:flex;padding:10px 0;border-top:1px solid var(--hairline);align-items:flex-start;gap:14px}
+.wf-text{flex:1;font-size:.92rem;line-height:1.6}
+.wf-prompt{font-family:var(--font-sans);font-size:.75rem;font-weight:800;letter-spacing:1px;color:var(--muted);padding:4px 10px;border:1px solid var(--hairline);border-radius:3px;min-width:90px;text-align:center}
+.kw-q{display:flex;gap:12px;padding:14px 0;border-top:1px solid var(--hairline)}
+.kw-content p{margin:0 0 6px;font-size:.9rem}
+.kw-key{font-family:var(--font-sans);font-weight:800;letter-spacing:1px;color:var(--amber)}
+.kw-first{color:var(--muted)}
+.q-num{font-family:var(--font-sans);font-weight:800;color:var(--amber);min-width:24px;padding-top:2px}
+.passage{font-size:.92rem;line-height:1.8;margin-bottom:18px;padding:18px;background:rgba(26,42,64,.04);border-radius:8px}
+body.dark .passage{background:rgba(255,255,255,.05)}
+body.dark .cloze-input,body.dark .kw-input,body.dark .gap-select{background:#1A1A1A;color:#F0F0F0;border-color:rgba(255,255,255,.15)}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link">CAE</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">C1</a><span>›</span><a href="../index.html">CAE</a><span>›</span><a href="index.html">Gapped Text</a><span>›</span><strong>Practice</strong></div>
+  <div class="chapter-num">CAE · Part 7</div>
+  <h1>Gapped Text — Practice</h1>
+  <p class="chapter-subtitle">Sample exam questions with auto-grading</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Strategy</a>
+    <a href="practice.html" class="chapter-nav-btn active">Practice</a>
+  </nav>
+  <form id="worksheet">
+    <section class="exercise" id="ex1">
+      <div class="ex-head">Part 7 — Gapped Text</div>
+      <p style="font-size:.85rem;color:var(--muted);margin-bottom:12px">Choose the correct sentence (A-E) for each gap. One sentence is extra.</p>
+      <div class="passage">
+The history of coffee is one of the great tales of global trade. (<strong style='color:var(--amber)'>1</strong>) <select class='gap-select' data-q='g1'><option value=''>—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select> From there, it spread to Egypt, Turkey and Persia, becoming a central part of social life. (<strong style='color:var(--amber)'>2</strong>) <select class='gap-select' data-q='g2'><option value=''>—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select> These establishments quickly became centres of intellectual debate and political discussion. (<strong style='color:var(--amber)'>3</strong>) <select class='gap-select' data-q='g3'><option value=''>—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select> Today, coffee is the second most traded commodity in the world after oil. (<strong style='color:var(--amber)'>4</strong>) <select class='gap-select' data-q='g4'><option value=''>—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option></select>
+      </div>
+      <div style="background:rgba(26,42,64,.04);border-radius:8px;padding:16px;margin-top:14px;font-size:.88rem;line-height:1.6">
+        <p><strong>A</strong> — The plant was first cultivated in Ethiopia in the 9th century.</p>
+        <p><strong>B</strong> — By the 17th century, coffee houses had appeared across Europe.</p>
+        <p><strong>C</strong> — Indeed, some historians credit coffee houses with sparking the Enlightenment.</p>
+        <p><strong>D</strong> — Its production supports the livelihoods of over 25 million farmers worldwide.</p>
+        <p><strong>E</strong> — Tea, however, remains more popular in many Asian countries.</p>
+      </div>
+    </section>
+    <div class="submit-wrap" style="margin-top:20px">
+      <button type="submit" class="submit-btn">Check answers</button>
+    </div>
+  </form>
+  <div id="results" class="results-panel">
+    <div class="score-row"><span class="score-label">Score</span><span id="score-got">0</span><span class="score-sep">/</span><span id="score-total">0</span><span class="score-pct-badge" id="score-pct">0%</span></div>
+    <div id="exercise-breakdown"></div><div id="breakdown"></div>
+    <button class="try-again-btn" onclick="tryAgain()">Try again</button>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>
+window.LEVEL='c1';window.CHAPTER_ID='cae-part-7-practice';
+window.TOTAL_POINTS=4;
+window.ANSWERS={"g1": "A", "g2": "B", "g3": "C", "g4": "D"};
+window.EXPLANATIONS={"g1": "Gap 1 needs the origin of coffee — 'first cultivated in Ethiopia' leads into 'from there, it spread'.", "g2": "Gap 2 must introduce European coffee houses — 'by the 17th century, coffee houses appeared across Europe' links to 'these establishments' in the next sentence.", "g3": "Gap 3 follows 'intellectual debate and political discussion' — 'historians credit coffee houses with sparking the Enlightenment' extends this point.", "g4": "Gap 4 follows 'second most traded commodity' — 'supports the livelihoods of 25 million farmers' adds related economic detail. Sentence E (about tea) is the distractor."};
+window.EXERCISE_TITLES={ex1:'CAE Gapped Text Practice'};
+</script>
+<script src="../../../../shared/worksheet.js?v=v100"></script>
+</body>
+</html>

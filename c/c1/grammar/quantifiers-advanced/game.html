@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>C1 · Quantifiers — Advanced — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="../../index.html" class="back back-link">C1 Grammar</a><a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">C1</a><span>›</span><a href="../index.html">Grammar</a><span>›</span><strong>Quantifiers — Advanced — Game</strong></div>
+  <div class="chapter-num">Ch 11</div>
+  <h1>Quantifiers — Advanced</h1>
+  <p class="chapter-subtitle">Each/every/all · few/little vs a few/a little · formal use of much/many</p>
+  <nav class="chapter-nav"><a href="slides.html" class="chapter-nav-btn">Lesson</a><a href="worksheet.html" class="chapter-nav-btn">Practice</a><a href="game.html" class="chapter-nav-btn active">Game</a><a href="printables.html" class="chapter-nav-btn">Printables</a></nav>
+  <div id="gameStart" class="game-screen active">
+    <div class="game-start-card">
+      <div class="game-start-title">Quantifiers — Advanced</div>
+      <div class="game-start-meta">
+        <span id="gStartMastered">0</span> / <span id="gStartTotal">6</span> mastered
+        &nbsp;&middot;&nbsp; Lifetime: <span id="gStartLifetime">&#8212;</span>
+      </div>
+      <div id="gResumeSection" style="display:none" class="resume-section">
+        <button id="gBtnResume" class="game-btn primary">Resume</button>
+        <button id="gBtnNewFromResume" class="game-btn ghost">Start over</button>
+      </div>
+      <button id="gBtnStart" class="game-btn primary">Start</button>
+    </div>
+  </div>
+  <div id="gamePlay" class="game-screen">
+    <div class="game-play-card">
+      <div class="game-top-bar">
+        <div class="game-progress-wrap">
+          <div class="game-progress-bar" id="gProgressBar" style="width:0%"></div>
+        </div>
+        <div class="game-top-stats">
+          <span>Score <strong id="gScore">0</strong></span>
+          <span>Streak <strong id="gStreak">0</strong></span>
+        </div>
+      </div>
+      <div id="gModeTag" class="game-mode-tag"></div>
+      <div id="gTerm" class="game-term"></div>
+      <div id="gPrompt" class="game-prompt"></div>
+      <div id="gOptions" class="game-options"></div>
+      <div id="gFeedback" class="game-feedback"></div>
+      <div id="gExample" class="game-example" style="display:none"></div>
+      <div class="game-btn-row">
+          <a href="../causative-advanced/slides.html" class="game-btn primary" style="text-decoration:none;text-align:center">Ch 13 Causative Advanced &#8594;</a>
+                  <button id="gBtnHint" class="game-btn ghost">Hint [H]</button>
+      <button id="gBtnKnow" class="game-btn know" style="display:none">I know this [K]</button>
+        <button id="gBtnReveal" class="game-btn ghost">Reveal</button>
+        <button id="gBtnNext" class="game-btn primary" style="display:none">Next &#8594;</button>
+      </div>
+      <div class="game-progress-txt" id="gProgressTxt">0 / 6 mastered</div>
+      <button id="gBtnSaveQuit" class="game-btn ghost" style="margin-top:12px;width:100%">Save &amp; quit</button>
+    </div>
+    <div class="game-ref-panel">
+      <button id="gRefToggle" class="game-ref-head">&#9660; Reference</button>
+      <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div>
+    </div>
+  </div>
+  <div id="gameCompletion" class="game-screen">
+    <div class="game-completion-card">
+      <div class="completion-title">Complete!</div>
+      <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats">
+        <div>Score <strong id="gFinalScore">0</strong></div>
+        <div>Best streak <strong id="gFinalStreak">0</strong></div>
+        <div>Mastery <strong id="gFinalPct">0%</strong></div>
+      </div>
+      <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+    </div>
+  </div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>
+window.LEVEL = 'c1';
+window.CHAPTER_ID = 'quantifiers-advanced';
+window.GAME_DATA = {
+  chapterId: 'quantifiers-advanced',
+  level: 'c1',
+  title: 'Quantifiers — Advanced',
+  storageKey: 'wordplay_game_c1_quantifiers-advanced',
+  items: [
+  {
+    "id": "each_ind",
+    "term": "Each",
+    "meaning": "refers to individual members of a group, one by one",
+    "synonym": "individual quantifier",
+    "example": "<b>Each</b> applicant was interviewed separately.",
+    "completion": "______ applicant was interviewed separately.",
+    "answer": "Each"
+  },
+  {
+    "id": "every_grp",
+    "term": "Every",
+    "meaning": "refers to all members of a group or expresses frequency",
+    "synonym": "group / frequency quantifier",
+    "example": "<b>Every</b> seat was taken.",
+    "completion": "______ seat was taken.",
+    "answer": "Every"
+  },
+  {
+    "id": "few_neg",
+    "term": "Few",
+    "meaning": "a negative quantifier — almost none, fewer than expected",
+    "synonym": "negative scarcity (countable)",
+    "example": "<b>Few</b> people responded to the survey.",
+    "completion": "______ people responded to the survey.",
+    "answer": "Few"
+  },
+  {
+    "id": "a_few_pos",
+    "term": "A few",
+    "meaning": "a positive quantifier — some, enough to be useful",
+    "synonym": "positive small number",
+    "example": "<b>A few</b> volunteers helped with the event.",
+    "completion": "______ volunteers helped with the event.",
+    "answer": "A few"
+  },
+  {
+    "id": "little_neg",
+    "term": "Little",
+    "meaning": "a negative quantifier for uncountable nouns — almost none",
+    "synonym": "negative scarcity (uncountable)",
+    "example": "<b>Little</b> progress has been made.",
+    "completion": "______ progress has been made.",
+    "answer": "Little"
+  },
+  {
+    "id": "a_little_pos",
+    "term": "A little",
+    "meaning": "a positive quantifier for uncountable — some, enough",
+    "synonym": "positive small amount",
+    "example": "<b>A little</b> patience goes a long way.",
+    "completion": "______ patience goes a long way.",
+    "answer": "A little"
+  }
+]
+};
+</script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body>
+</html>

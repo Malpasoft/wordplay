@@ -1,0 +1,155 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A2 Vocab · Technology & Media — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100"><link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../../index.html" class="back back-link">A2 Vocabulary</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">A2</a><span>›</span><a href="../index.html">Vocabulary</a><span>›</span><strong>Technology & Media</strong></div>
+  <div class="chapter-num">V2</div><h1>Technology & Media</h1>
+  <p class="chapter-subtitle">Devices · internet · social media · news</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">Technology & Media</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / 10 mastered</div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Resume</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Start over</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Start</button>
+  </div></div>
+  <div id="gamePlay" class="game-screen"><div class="game-play-card">
+    <div class="game-top-bar"><div class="game-progress-wrap"><div class="game-progress-bar" id="gProgressBar" style="width:0%"></div></div>
+    <div class="game-top-stats"><span>Score <strong id="gScore">0</strong></span><span>Streak <strong id="gStreak">0</strong></span></div></div>
+    <div id="gModeTag" class="game-mode-tag"></div><div id="gTerm" class="game-term"></div>
+    <div id="gPrompt" class="game-prompt"></div><div id="gOptions" class="game-options"></div>
+    <div id="gFeedback" class="game-feedback"></div><div id="gExample" class="game-example" style="display:none"></div>
+    <div class="game-btn-row">
+      <button id="gBtnHint" class="game-btn ghost">Hint [H]</button>
+      <button id="gBtnKnow" class="game-btn know" style="display:none">I know this [K]</button>
+      <button id="gBtnReveal" class="game-btn ghost">Reveal</button>
+      <button id="gBtnNext" class="game-btn primary" style="display:none">Next →</button>
+    </div>
+    <div class="game-progress-txt" id="gProgressTxt">0 / 10 mastered</div>
+    <button id="gBtnSaveQuit" class="game-btn ghost" style="margin-top:12px;width:100%">Save &amp; quit</button>
+  </div>
+  <div class="game-ref-panel"><button id="gRefToggle" class="game-ref-head">▼ Reference</button>
+  <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div></div></div>
+  <div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Complete!</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats"><div>Score <strong id="gFinalScore">0</strong></div><div>Mastery <strong id="gFinalPct">0%</strong></div></div>
+    <a href="../transport-and-travel/index.html" class="game-btn primary" style="text-decoration:none;text-align:center;display:block;margin-bottom:8px">Next: Transport And Travel &#8594;</a>
+    <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>window.LEVEL="a2";window.CHAPTER_ID="technology-and-media";
+window.GAME_DATA={chapterId:"technology-and-media",level:"a2",title:"Technology & Media",storageKey:"wordplay_game_a2_technology-and-media",items:[
+  {
+    "id": "download",
+    "term": "download",
+    "meaning": "to save data from the internet to your device",
+    "synonym": "/ˈdaʊnləʊd/",
+    "example": "<b>Download</b>: I downloaded the app yesterday.",
+    "completion": "I ______ed the app yesterday.",
+    "answer": "download"
+  },
+  {
+    "id": "upload",
+    "term": "upload",
+    "meaning": "to send data from your device to the internet",
+    "synonym": "/ˈʊpləʊd/",
+    "example": "<b>Upload</b>: She uploaded the video to YouTube.",
+    "completion": "She ______ed the video to YouTube.",
+    "answer": "upload"
+  },
+  {
+    "id": "password",
+    "term": "password",
+    "meaning": "a secret word or number used to access something",
+    "synonym": "/ˈpɑːswɜːrd/",
+    "example": "<b>Password</b>: Never share your password with anyone.",
+    "completion": "Never share your ______ with anyone.",
+    "answer": "password"
+  },
+  {
+    "id": "software",
+    "term": "software",
+    "meaning": "computer programs and applications",
+    "synonym": "/ˈsɒftweər/",
+    "example": "<b>Software</b>: I need to update the software.",
+    "completion": "I need to update the ______.",
+    "answer": "software"
+  },
+  {
+    "id": "search_engine",
+    "term": "search engine",
+    "meaning": "a website that finds information on the internet",
+    "synonym": "/sɜːrtʃ ˈendʒɪn/",
+    "example": "<b>Search engine</b>: I used a search engine to find the answer.",
+    "completion": "I used a ______ to find the answer.",
+    "answer": "search engine"
+  },
+  {
+    "id": "social_media",
+    "term": "social media",
+    "meaning": "websites and apps for sharing and communicating",
+    "synonym": "/ˈsəʊʃəl ˈmiːdiə/",
+    "example": "<b>Social media</b>: Many teenagers use social media every day.",
+    "completion": "Many teenagers use ______ every day.",
+    "answer": "social media"
+  },
+  {
+    "id": "broadcast",
+    "term": "broadcast",
+    "meaning": "to send a programme on TV or radio to many people",
+    "synonym": "/ˈbrɔːdkɑːst/",
+    "example": "<b>Broadcast</b>: The match will be broadcast live tonight.",
+    "completion": "The match will be ______ live tonight.",
+    "answer": "broadcast"
+  },
+  {
+    "id": "headline",
+    "term": "headline",
+    "meaning": "the title of a news story, printed in large letters",
+    "synonym": "/ˈhedlaɪn/",
+    "example": "<b>Headline</b>: The headline said \"Record temperatures in Spain\".",
+    "completion": "The ______ said \"Record temperatures in Spain\".",
+    "answer": "headline"
+  },
+  {
+    "id": "wifi",
+    "term": "Wi-Fi",
+    "meaning": "a system for connecting devices to the internet without wires",
+    "synonym": "/ˈwaɪ faɪ/",
+    "example": "<b>Wi-fi</b>: Is there Wi-Fi in this hotel?",
+    "completion": "Is there ______ in this hotel?",
+    "answer": "Wi-Fi"
+  },
+  {
+    "id": "charge",
+    "term": "charge (a device)",
+    "meaning": "to put electricity into a battery",
+    "synonym": "/tʃɑːrdʒ/",
+    "example": "<b>Charge (a device)</b>: I need to charge my phone — it’s nearly dead.",
+    "completion": "I need to charge my phone — it’s nearly dead.",
+    "answer": "charge (a device)"
+  }
+]};
+</script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body></html>

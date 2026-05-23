@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>B2 Vocab · Technology and Innovation — Flashcards | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+<style>
+.vocab-page{max-width:800px;margin:0 auto;padding:20px 0}
+.mode-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.mode-tab{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:8px 16px;border-radius:4px;cursor:pointer;border:1.5px solid var(--hairline);background:transparent;color:var(--ink);transition:all .15s}
+.mode-tab.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.flashcard-wrap{perspective:800px;margin:0 auto 20px;max-width:480px}
+.flashcard{width:100%;height:220px;position:relative;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;border-radius:10px}
+.flashcard.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;border:1px solid var(--hairline)}
+.fc-front{background:var(--paper)}
+.fc-back{background:var(--paper);transform:rotateY(180deg)}
+.fc-word{font-size:1.8rem;font-weight:700;color:var(--ink);margin-bottom:6px}
+.fc-def{font-size:.95rem;color:var(--ink);margin-bottom:8px}
+.fc-ex{font-size:.85rem;color:var(--muted);font-style:italic}
+.fc-hint{font-family:var(--font-sans);font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:12px}
+.fc-nav{display:flex;align-items:center;gap:16px;justify-content:center;margin-bottom:20px}
+.fc-btn{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 18px;border-radius:4px;cursor:pointer;border:1.5px solid var(--hairline);background:transparent;color:var(--ink)}
+.fc-btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.fc-counter{font-family:var(--font-sans);font-size:.75rem;color:var(--muted);font-weight:600}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.match-col{display:flex;flex-direction:column;gap:8px}
+.match-item{padding:12px 14px;border:1.5px solid var(--hairline);border-radius:6px;cursor:pointer;font-size:.9rem;color:var(--ink);transition:border-color .15s,background .15s;user-select:none}
+.match-item.selected{border-color:var(--amber);background:rgba(184,134,11,.08)}
+.match-item.correct{border-color:var(--green);background:rgba(46,125,82,.08);pointer-events:none}
+.match-item.wrong{border-color:var(--red);background:rgba(192,57,43,.08)}
+.match-score{font-family:var(--font-sans);font-size:.85rem;color:var(--muted);text-align:center;margin-bottom:16px}
+.mastery-badge{display:inline-block;padding:8px 18px;background:rgba(184,134,11,.12);color:var(--amber);font-family:var(--font-sans);font-size:.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:4px;margin-bottom:16px}
+.word-list-item{display:flex;align-items:baseline;gap:12px;padding:10px 0;border-bottom:1px solid var(--hairline)}
+.wl-word{font-weight:700;font-size:1rem;min-width:160px}
+.wl-def{font-size:.88rem;color:var(--ink)}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../index.html" class="back back-link">B2 Vocabulary</a>
+    <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  </div>
+</header>
+<div class="container">
+  <div class="breadcrumb">
+    <a href="../../../../index.html">Home</a><span>›</span>
+    <a href="../../index.html">B2</a><span>›</span>
+    <a href="../index.html">Vocabulary</a><span>›</span>
+    <strong>Technology and Innovation</strong>
+  </div>
+  <div class="chapter-num">V11</div>
+  <h1>Technology and Innovation</h1>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn active">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Practice</a>
+    <a href="game.html" class="chapter-nav-btn">Game</a>
+  </nav>
+
+  <div class="vocab-page">
+    <div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">Topic mastered</span></div>
+    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; tap card to reveal</div>
+
+    <div class="mode-tabs">
+      <button class="mode-tab active" onclick="setMode('flash',this)">Flashcards</button>
+      <button class="mode-tab" onclick="setMode('match',this)">Match</button>
+      <button class="mode-tab" onclick="setMode('list',this)">Word list</button>
+    </div>
+
+    <div id="modeFlash">
+      <div class="flashcard-wrap">
+        <div class="flashcard" id="flashcard" onclick="flipCard()">
+          <div class="fc-face fc-front">
+            <div class="fc-word" id="fcWord"></div>
+            <div class="fc-hint">tap to reveal</div>
+          </div>
+          <div class="fc-face fc-back">
+            <div class="fc-def" id="fcDef"></div>
+            <div class="fc-ex" id="fcEx"></div>
+          </div>
+        </div>
+      </div>
+      <div class="fc-nav">
+        <button class="fc-btn" onclick="fcPrev()">&#8592; Prev</button>
+        <span class="fc-counter" id="fcCounter"></span>
+        <button class="fc-btn" onclick="fcNext()">Next &#8594;</button>
+      </div>
+      <div style="text-align:center">
+        <button class="fc-btn primary" onclick="markMastered()" id="btnMastered">Mark topic as mastered</button>
+    <div style="text-align:center;margin-top:12px"><a href="../word-formation-adjectives/index.html" id="nextTopicBtn" class="fc-btn primary" style="text-decoration:none;display:none">Next: Word Formation Adjectives &#8594;</a></div>
+      </div>
+    </div>
+
+    <div id="modeMatch" style="display:none">
+      <div class="match-score" id="matchScore">Match each word to its definition</div>
+      <div class="match-grid">
+        <div class="match-col" id="matchWords"></div>
+        <div class="match-col" id="matchDefs"></div>
+      </div>
+      <div style="text-align:center">
+        <button class="fc-btn" onclick="initMatch()">New round</button>
+      </div>
+    </div>
+
+    <div id="modeList" style="display:none">
+      <div id="wordList"></div>
+    </div>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>
+var SLUG = 'technology-innovation';
+var LEVEL = 'b2';
+var MASTERY_KEY = 'wordplay_vocab_b2_technology-innovation_mastered';
+var WORDS = [{"id": "ai", "word": "Artificial intelligence", "def": "machines that perform tasks requiring human intelligence", "ipa": "", "ex": "<b>Artificial intelligence</b> is transforming healthcare."}, {"id": "auto", "word": "Automation", "def": "using technology to do tasks without human involvement", "ipa": "", "ex": "<b>Automation</b> is causing redundancy in manufacturing."}, {"id": "cyber", "word": "Cybersecurity", "def": "protecting computer systems and data from digital attacks", "ipa": "", "ex": "Companies must invest in <b>cybersecurity</b>."}, {"id": "dp", "word": "Data privacy", "def": "the right to control how your personal information is used", "ipa": "", "ex": "<b>Data privacy</b> laws protect users from misuse of their information."}, {"id": "df", "word": "Digital footprint", "def": "the trail of data left by someone using the internet", "ipa": "", "ex": "Be aware of your <b>digital footprint</b> — it is permanent."}, {"id": "disrupt", "word": "Disruptive technology", "def": "technology that fundamentally changes an existing industry", "ipa": "", "ex": "The smartphone was a truly <b>disruptive technology</b>."}, {"id": "algo", "word": "Algorithm", "def": "a set of rules a computer uses to process information or solve problems", "ipa": "", "ex": "The <b>algorithm</b> determines what content you see."}, {"id": "redund", "word": "Redundancy", "def": "job loss caused by automation or company restructuring", "ipa": "", "ex": "Many workers fear <b>redundancy</b> as automation spreads."},
+  {"word":"Disruptive technology","def":"a new technology that significantly changes an existing market or industry","ipa":"","ex":"The smartphone was a truly disruptive technology."},
+  {"word":"Scale up","def":"to increase the size, scope or capacity of something","ipa":"","ex":"The company plans to scale up production next year."},
+  {"word":"User experience","def":"how a person feels when using a product, especially a digital one","ipa":"","ex":"Good user experience is central to the app's success."},
+  {"word":"Seamless","def":"smooth and continuous, with no problems or interruptions","ipa":"","ex":"The transition between devices was completely seamless."}];
+var fcIdx = 0, flipped = false;
+
+function setMode(mode, btn) {
+  document.querySelectorAll('.mode-tab').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  document.getElementById('modeFlash').style.display = mode==='flash'?'':'none';
+  document.getElementById('modeMatch').style.display = mode==='match'?'':'none';
+  document.getElementById('modeList').style.display = mode==='list'?'':'none';
+  if(mode==='match') initMatch();
+  if(mode==='list') renderList();
+}
+
+function flipCard(){
+  flipped=!flipped;
+  document.getElementById('flashcard').classList.toggle('flipped',flipped);
+}
+
+function showCard(idx){
+  flipped=false;
+  document.getElementById('flashcard').classList.remove('flipped');
+  var w=WORDS[idx];
+  document.getElementById('fcWord').textContent=w.word;
+  document.getElementById('fcDef').textContent=w.def;
+  document.getElementById('fcEx').innerHTML=w.ex||'';
+  document.getElementById('fcCounter').textContent=(idx+1)+' / '+WORDS.length;
+}
+
+function fcNext(){fcIdx=(fcIdx+1)%WORDS.length;showCard(fcIdx);}
+function fcPrev(){fcIdx=(fcIdx-1+WORDS.length)%WORDS.length;showCard(fcIdx);}
+
+function markMastered(){
+  try{localStorage.setItem(MASTERY_KEY,'1');}catch(e){}
+  document.getElementById('masteryBadge').style.display='block';
+  var btn=document.getElementById('btnMastered');
+  btn.textContent='Mastered!'; btn.disabled=true;
+  if(window.FCEStore){FCEStore.saveResult(SLUG,1,1,{});}
+}
+
+function checkMastered(){
+  try{
+    if(localStorage.getItem(MASTERY_KEY)==='1'){
+      document.getElementById('masteryBadge').style.display='block';
+      var btn=document.getElementById('btnMastered');
+      btn.textContent='Mastered!'; btn.disabled=true;
+    }
+  }catch(e){}
+}
+
+var matchSelected=null;
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t;}return b;}
+
+function initMatch(){
+  var sample=shuffle(WORDS).slice(0,6);
+  var words=shuffle(sample.map(function(w){return{id:w.word,text:w.word,type:'word'};}));
+  var defs=shuffle(sample.map(function(w){return{id:w.word,text:w.def,type:'def'};}));
+  matchSelected=null;
+  document.getElementById('matchScore').textContent='Match each word to its definition';
+  function renderCol(col,items){
+    col.innerHTML='';
+    items.forEach(function(item){
+      var el=document.createElement('div');
+      el.className='match-item'; el.textContent=item.text;
+      el.dataset.id=item.id; el.dataset.type=item.type;
+      el.addEventListener('click',handleMatch);
+      col.appendChild(el);
+    });
+  }
+  renderCol(document.getElementById('matchWords'),words);
+  renderCol(document.getElementById('matchDefs'),defs);
+}
+
+function handleMatch(e){
+  var el=e.currentTarget;
+  if(el.classList.contains('correct')) return;
+  if(!matchSelected){
+    if(matchSelected&&matchSelected!==el) matchSelected.classList.remove('selected');
+    matchSelected=el; el.classList.add('selected');
+  }else{
+    var prev=matchSelected; matchSelected=null;
+    var correct=prev.dataset.id===el.dataset.id&&prev.dataset.type!==el.dataset.type;
+    if(correct){
+      prev.classList.remove('selected'); prev.classList.add('correct');
+      el.classList.add('correct');
+      var remaining=document.querySelectorAll('.match-item:not(.correct)').length;
+      if(remaining===0) document.getElementById('matchScore').textContent='All matched!';
+    }else{
+      prev.classList.remove('selected');
+      prev.classList.add('wrong'); el.classList.add('wrong');
+      setTimeout(function(){prev.classList.remove('wrong');el.classList.remove('wrong');},600);
+    }
+  }
+}
+
+function renderList(){
+  var html=WORDS.map(function(w){
+    return '<div class="word-list-item"><span class="wl-word">'+w.word+'</span><span class="wl-def">'+w.def+'</span></div>';
+  }).join('');
+  document.getElementById('wordList').innerHTML=html;
+}
+
+showCard(0);
+checkMastered();
+</script>
+
+<div style="margin-top:24px;border-top:1px solid var(--hairline);padding-top:20px">
+  <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">My notes &amp; examples</div>
+  <textarea id="my-notes-area" maxlength="500" placeholder="Write your own example sentence, a memory trick, or a note in your language…" style="width:100%;min-height:80px;padding:10px 12px;font-family:Georgia,serif;font-size:.88rem;color:var(--ink);background:var(--paper);border:1.5px solid var(--hairline);border-radius:6px;resize:vertical;line-height:1.6;box-sizing:border-box"></textarea>
+  <div style="font-family:var(--font-sans);font-size:.65rem;color:var(--muted);margin-top:4px;text-align:right"><span id="notes-chars">0</span>/500 · auto-saved</div>
+</div>
+<script>
+(function(){
+  var ta = document.getElementById('my-notes-area');
+  var cc = document.getElementById('notes-chars');
+  if (!ta) return;
+  var KEY = 'wp_notes_b2_technology-innovation';
+  try { ta.value = localStorage.getItem(KEY) || ''; cc.textContent = ta.value.length; } catch(e){}
+  var t;
+  ta.addEventListener('input', function() {
+    cc.textContent = ta.value.length;
+    clearTimeout(t);
+    t = setTimeout(function() {
+      try { localStorage.setItem(KEY, ta.value); } catch(e) {}
+    }, 600);
+  });
+})();
+</script>
+</body>
+</html>

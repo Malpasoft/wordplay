@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>My Progress Certificate | Word Play</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Georgia, serif; background: #0E0E0E; color: #F0F0F0; min-height: 100vh; }
+  
+  .page-wrap {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 32px 20px;
+  }
+  
+  /* ── Top nav (hidden on print) ── */
+  .top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    font-family: 'Helvetica Neue', sans-serif;
+  }
+  .back-btn {
+    font-size: .75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.5);
+    text-decoration: none;
+  }
+  .print-btn {
+    padding: 8px 20px;
+    background: #B8860B;
+    color: white;
+    border: 0;
+    border-radius: 4px;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  
+  /* ── Certificate card ── */
+  .cert {
+    background: #FAFAF8;
+    color: #1A1A1A;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(0,0,0,.5);
+  }
+  
+  /* Gold top bar */
+  .cert-topbar {
+    height: 8px;
+    background: linear-gradient(90deg, #8B6914, #C9A050, #8B6914);
+  }
+  
+  .cert-body {
+    padding: 48px 56px;
+  }
+  
+  /* Header */
+  .cert-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 36px;
+    padding-bottom: 24px;
+    border-bottom: 1.5px solid #E8E4DC;
+  }
+  .cert-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .cert-brand-logo {
+    width: 36px; height: 36px;
+    background: #1A1A1A;
+    border-radius: 5px;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: -.5px;
+  }
+  .cert-brand-name {
+    font-family: Georgia, serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1A1A1A;
+  }
+  .cert-meta {
+    text-align: right;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: .72rem;
+    color: #9A9A9A;
+    line-height: 1.6;
+  }
+  
+  /* Title */
+  .cert-title-row {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .cert-eyebrow {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: .6rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #B8860B;
+    margin-bottom: 10px;
+  }
+  .cert-title {
+    font-family: Georgia, serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #1A1A1A;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .cert-subtitle {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: .85rem;
+    color: #6B6B6B;
+  }
+  
+  /* Name field */
+  .cert-name-wrap {
+    text-align: center;
+    margin-bottom: 36px;
+    padding: 20px;
+    border: 1.5px solid #E8E4DC;
+    border-radius: 6px;
+    background: #F5F2EC;
+  }
+  .cert-name-label {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: .65rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #9A9A9A;
+    margin-bottom: 6px;
+  }
+  .cert-name-input {
+    font-family: Georgia, serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1A1A1A;
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid #B8860B;
+    width: 100%;
+    text-align: center;
+    padding: 4px 0;
+    outline: none;
+  }
+  .cert-name-input::placeholder {
+    color: #C8C0B0;
+    font-weight: 400;
+  }
+  
+  /* Level progress grid */
+  .cert-levels {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .cert-level-card {
+    border: 1.5px solid #E8E4DC;
+    border-radius: 8px;
+    padding: 14px 16px;
+    text-align: center;
+  }
+  .cert-level-card.active {
+    border-color: #B8860B;
+    background: rgba(184,134,11,.04);
+  }
+  .cert-level-card.locked {
+    opacity: .4;
+  }
+  .cert-level-badge {
+    font-family: Georgia, serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1A1A1A;
+    margin-bottom: 4px;
+  }
+  .cert-level-badge.gold { color: #B8860B; }
+  .cert-level-name {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    color: #9A9A9A;
+    margin-bottom: 8px;
+  }
+  .cert-level-stats {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: .7rem;
+    color: #6B6B6B;
+    line-height: 1.6;
+  }
+  .cert-level-complete {
+    display: inline-block;
+    background: #B8860B;
+    color: white;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: .6rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-top: 4px;
+  }
+  
+  /* Stats row */
+  .cert-stats {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 1px;
+    background: #E8E4DC;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+  .cert-stat {
+    background: #FAFAF8;
+    padding: 16px;
+    text-align: center;
+  }
+  .cert-stat-num {
+    font-family: Georgia, serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #B8860B;
+    margin-bottom: 4px;
+  }
+  .cert-stat-label {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: .65rem;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    color: #9A9A9A;
+  }
+  
+  /* Footer */
+  .cert-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    border-top: 1.5px solid #E8E4DC;
+  }
+  .cert-footer-text {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: .7rem;
+    color: #9A9A9A;
+    line-height: 1.5;
+  }
+  .cert-seal {
+    width: 64px; height: 64px;
+    border: 2px solid #B8860B;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+  }
+  .cert-seal-inner {
+    font-family: Georgia, serif;
+    font-size: .55rem;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    color: #B8860B;
+    line-height: 1.4;
+  }
+
+  /* Gold bottom bar */
+  .cert-bottombar {
+    height: 4px;
+    background: linear-gradient(90deg, #8B6914, #C9A050, #8B6914);
+  }
+  
+  @media print {
+    body { background:var(--paper); }
+    .top-nav { display: none !important; }
+    .cert { box-shadow: none; }
+    .cert-name-input { border-bottom-color: #B8860B; }
+  }
+  @media (max-width: 600px) {
+    .cert-body { padding: 28px 24px; }
+    .cert-levels { grid-template-columns: repeat(2,1fr); }
+    .cert-stats { grid-template-columns: repeat(2,1fr); }
+    .cert-title { font-size: 1.6rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page-wrap">
+  <div class="top-nav no-print">
+    <a href="dashboard.html" class="back-btn">← Dashboard</a>
+    <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+  </div>
+  
+  <div class="cert" id="cert">
+    <div class="cert-topbar"></div>
+    <div class="cert-body">
+      
+      <div class="cert-header">
+        <div class="cert-brand">
+          <div class="cert-brand-logo">WP</div>
+          <div class="cert-brand-name">Word Play</div>
+        </div>
+        <div class="cert-meta">
+          Cambridge English A1→C2<br>
+          <span id="certDate"></span>
+        </div>
+      </div>
+      
+      <div class="cert-title-row">
+        <div class="cert-eyebrow">Progress Certificate</div>
+        <div class="cert-title">English Language Progress</div>
+        <div class="cert-subtitle">This certificate records study progress on the Word Play platform</div>
+      </div>
+      
+      <div class="cert-name-wrap">
+        <div class="cert-name-label">Student name</div>
+        <input class="cert-name-input" id="studentName" type="text" 
+               placeholder="Enter your name" 
+               oninput="try{localStorage.setItem('wordplay_student_name',this.value)}catch(e){}">
+      </div>
+      
+      <div class="cert-levels" id="certLevels">
+        <!-- populated by JS -->
+      </div>
+      
+      <div class="cert-stats" id="certStats">
+        <div class="cert-stat"><div class="cert-stat-num" id="statChapters">0</div><div class="cert-stat-label">Chapters started</div></div>
+        <div class="cert-stat"><div class="cert-stat-num" id="statMastered">0</div><div class="cert-stat-label">Game items mastered</div></div>
+        <div class="cert-stat"><div class="cert-stat-num" id="statWriting">0</div><div class="cert-stat-label">Writing drafts</div></div>
+        <div class="cert-stat"><div class="cert-stat-num" id="statVocab">0</div><div class="cert-stat-label">Vocab topics</div></div>
+      </div>
+      
+      <div class="cert-footer">
+        <div class="cert-footer-text">
+          Word Play · Cambridge English A1→C2<br>
+          wordplay.emi-dom123.workers.dev · Generated <span id="certDateFooter"></span>
+        </div>
+        <div class="cert-seal">
+          <div class="cert-seal-inner">Word<br>Play<br>★</div>
+        </div>
+      </div>
+      
+    </div>
+    <div class="cert-bottombar"></div>
+  </div>
+</div>
+
+<script>
+var LEVEL_META = [
+  {id:'a1', band:'a', label:'A1', name:'Beginner',        grammar:25, vocab:6, writing:3},
+  {id:'a2', band:'a', label:'A2', name:'Elementary',      grammar:18, vocab:6, writing:3},
+  {id:'b1', band:'b', label:'B1', name:'Pre-intermediate',grammar:17, vocab:10,writing:3},
+  {id:'b2', band:'b', label:'B2', name:'Upper-inter.',    grammar:18, vocab:15,writing:5},
+  {id:'c1', band:'c', label:'C1', name:'Advanced',        grammar:17, vocab:6, writing:5},
+  {id:'c2', band:'c', label:'C2', name:'Proficiency',     grammar:11, vocab:6, writing:2},
+];
+
+function loadCertData() {
+  var prog = {};
+  try { prog = JSON.parse(localStorage.getItem('wordplay_progress') || '{}'); } catch(e) {}
+  
+  // Student name
+  try {
+    var name = localStorage.getItem('wordplay_student_name') || '';
+    if (name) document.getElementById('studentName').value = name;
+  } catch(e) {}
+  
+  // Date
+  var now = new Date();
+  var dateStr = now.toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('certDate').textContent = dateStr;
+  document.getElementById('certDateFooter').textContent = dateStr;
+  
+  // Level cards
+  var levelsEl = document.getElementById('certLevels');
+  var totalChapters = 0, totalMastered = 0;
+  var levelHtml = '';
+  
+  LEVEL_META.forEach(function(lm) {
+    var lvlProg = prog[lm.id] || {};
+    var started = Object.keys(lvlProg).length;
+    var complete = Object.keys(lvlProg).filter(function(k){
+      return lvlProg[k].slides && lvlProg[k].gameMastered;
+    }).length;
+    totalChapters += started;
+    
+    var isActive = started > 0;
+    var isComplete = complete >= (lm.grammar * 0.8); // 80% = complete
+    
+    levelHtml += '<div class="cert-level-card ' + (isActive ? 'active' : 'locked') + '">';
+    levelHtml += '<div class="cert-level-badge ' + (isComplete ? 'gold' : '') + '">' + lm.label + '</div>';
+    levelHtml += '<div class="cert-level-name">' + lm.name + '</div>';
+    if (isActive) {
+      levelHtml += '<div class="cert-level-stats">' + started + ' chapters<br>' + complete + ' complete</div>';
+      if (isComplete) levelHtml += '<div class="cert-level-complete">✓ Complete</div>';
+    } else {
+      levelHtml += '<div class="cert-level-stats">Not started</div>';
+    }
+    levelHtml += '</div>';
+  });
+  levelsEl.innerHTML = levelHtml;
+  
+  // Count game mastery across all levels
+  Object.keys(prog).forEach(function(level) {
+    var lvl = prog[level];
+    Object.keys(lvl).forEach(function(slug) {
+      if (lvl[slug].gameMastered) totalMastered++;
+    });
+  });
+  
+  // Count writing drafts
+  var writingCount = 0;
+  try {
+    for (var key in localStorage) {
+      if (key.startsWith('wordplay_writing_')) writingCount++;
+    }
+  } catch(e) {}
+  
+  // Count vocab mastered topics
+  var vocabCount = 0;
+  try {
+    for (var key in localStorage) {
+      if (key.includes('_mastered') && key.startsWith('wordplay_vocab')) vocabCount++;
+    }
+  } catch(e) {}
+  
+  document.getElementById('statChapters').textContent = totalChapters;
+  document.getElementById('statMastered').textContent = totalMastered;
+  document.getElementById('statWriting').textContent = writingCount;
+  document.getElementById('statVocab').textContent = vocabCount;
+}
+
+loadCertData();
+</script>
+</body>
+</html>

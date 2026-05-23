@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>C2 Vocab · Lexical Sophistication — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100"><link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link">C2 Vocabulary</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../../index.html">C2</a><span>›</span><a href="../index.html">Vocabulary</a><span>›</span><strong>Lexical Sophistication</strong></div>
+  <div class="chapter-num">V1</div><h1>Lexical Sophistication</h1>
+  <p class="chapter-subtitle">Connotation · register-shifting synonyms · precision of word choice</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">Lexical Sophistication</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / 12 mastered</div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Resume</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Start over</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Start</button>
+  </div></div>
+  <div id="gamePlay" class="game-screen"><div class="game-play-card">
+    <div class="game-top-bar"><div class="game-progress-wrap"><div class="game-progress-bar" id="gProgressBar" style="width:0%"></div></div>
+    <div class="game-top-stats"><span>Score <strong id="gScore">0</strong></span><span>Streak <strong id="gStreak">0</strong></span></div></div>
+    <div id="gModeTag" class="game-mode-tag"></div><div id="gTerm" class="game-term"></div>
+    <div id="gPrompt" class="game-prompt"></div><div id="gOptions" class="game-options"></div>
+    <div id="gFeedback" class="game-feedback"></div><div id="gExample" class="game-example" style="display:none"></div>
+    <div class="game-btn-row">
+      <button id="gBtnHint" class="game-btn ghost">Hint [H]</button>
+      <button id="gBtnKnow" class="game-btn know" style="display:none">I know this [K]</button>
+      <button id="gBtnReveal" class="game-btn ghost">Reveal</button>
+      <button id="gBtnNext" class="game-btn primary" style="display:none">Next →</button>
+    </div>
+    <div class="game-progress-txt" id="gProgressTxt">0 / 12 mastered</div>
+    <button id="gBtnSaveQuit" class="game-btn ghost" style="margin-top:12px;width:100%">Save &amp; quit</button>
+  </div>
+  <div class="game-ref-panel"><button id="gRefToggle" class="game-ref-head">▼ Reference</button>
+  <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div></div></div>
+  <div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Complete!</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats"><div>Score <strong id="gFinalScore">0</strong></div><div>Mastery <strong id="gFinalPct">0%</strong></div></div>
+    <a href="../nuanced-synonyms/index.html" class="game-btn primary" style="text-decoration:none;text-align:center;display:block;margin-bottom:8px">Next: Nuanced Synonyms &#8594;</a>
+    <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>window.LEVEL="c2";window.CHAPTER_ID="lexical-sophistication";
+window.GAME_DATA={chapterId:"lexical-sophistication",level:"c2",title:"Lexical Sophistication",storageKey:"wordplay_game_c2_lexical-sophistication",items:[
+  {
+    "id": "connotation",
+    "term": "Connotation",
+    "meaning": "the emotional or cultural associations a word carries beyond its literal meaning",
+    "synonym": "implication / undertone",
+    "example": "<b>Connotation</b>: \"house\" is neutral; \"home\" has warm connotations.",
+    "completion": "\"House\" is neutral; \"home\" has warm ______.",
+    "answer": "connotations"
+  },
+  {
+    "id": "denotation",
+    "term": "Denotation",
+    "meaning": "the literal, dictionary meaning of a word, without emotional associations",
+    "synonym": "literal meaning / primary sense",
+    "example": "The <b>denotation</b> of \"snake\" is a reptile; its connotation may be treachery.",
+    "completion": "The ______ of \"snake\" is a reptile.",
+    "answer": "denotation"
+  },
+  {
+    "id": "amelioration",
+    "term": "Amelioration",
+    "meaning": "a process by which a word gains a more positive meaning over time",
+    "synonym": "semantic elevation / meaning improvement",
+    "example": "<b>Amelioration</b>: \"knight\" originally meant servant; it later gained prestige.",
+    "completion": "Knight originally meant servant — an example of ______.",
+    "answer": "amelioration"
+  },
+  {
+    "id": "pejoration",
+    "term": "Pejoration",
+    "meaning": "a process by which a word gains a more negative meaning over time",
+    "synonym": "semantic degradation / meaning worsening",
+    "example": "<b>Pejoration</b>: \"villain\" originally meant farm worker; now it means evil person.",
+    "completion": "\"Villain\" worsening over time is called ______.",
+    "answer": "pejoration"
+  },
+  {
+    "id": "hyperbole",
+    "term": "Hyperbole",
+    "meaning": "deliberate exaggeration for rhetorical or emphatic effect",
+    "synonym": "overstatement / exaggeration",
+    "example": "<b>Hyperbole</b>: \"I’ve told you a million times.\"",
+    "completion": "\"I’ve told you a million times\" is an example of ______.",
+    "answer": "hyperbole"
+  },
+  {
+    "id": "litotes",
+    "term": "Litotes",
+    "meaning": "understatement using a negative to affirm a positive, often for emphasis or irony",
+    "synonym": "understatement / negative affirmation",
+    "example": "<b>Litotes</b>: \"not bad\" meaning \"very good\" / \"not unlike\" meaning \"similar\"",
+    "completion": "\"Not bad\" used to mean \"very good\" is ______.",
+    "answer": "litotes"
+  },
+  {
+    "id": "euphemism",
+    "term": "Euphemism",
+    "meaning": "a mild or indirect word used in place of one that might seem harsh or offensive",
+    "synonym": "indirect expression / softening term",
+    "example": "<b>Euphemism</b>: \"passed away\" instead of \"died\"",
+    "completion": "\"Passed away\" instead of \"died\" is a ______.",
+    "answer": "euphemism"
+  },
+  {
+    "id": "dysphemism",
+    "term": "Dysphemism",
+    "meaning": "a harsh or deliberately offensive word used in place of a neutral or positive one",
+    "synonym": "offensive substitute / blunt term",
+    "example": "<b>Dysphemism</b>: \"croak\" for \"die\" / \"shrink\" for \"therapist\"",
+    "completion": "\"Croak\" used for \"die\" is a ______.",
+    "answer": "dysphemism"
+  },
+  {
+    "id": "synecdoche",
+    "term": "Synecdoche",
+    "meaning": "a figure of speech where a part represents the whole, or vice versa",
+    "synonym": "part-for-whole substitution",
+    "example": "<b>Synecdoche</b>: \"All hands on deck\" — hands = sailors",
+    "completion": "\"All hands on deck\" where hands means sailors is ______.",
+    "answer": "synecdoche"
+  },
+  {
+    "id": "metonymy",
+    "term": "Metonymy",
+    "meaning": "using a closely associated concept to refer to something else",
+    "synonym": "name substitution / associated reference",
+    "example": "<b>Metonymy</b>: \"The Crown\" for the monarchy / \"The press\" for journalism",
+    "completion": "\"The Crown\" used to mean the monarchy is ______.",
+    "answer": "metonymy"
+  },
+  {
+    "id": "register_shift",
+    "term": "Register shift",
+    "meaning": "changing the formality level of language to suit the audience or context",
+    "synonym": "style shift / code-switching",
+    "example": "A <b>register shift</b> from \"I wish to enquire\" to \"Can I ask?\" signals informality.",
+    "completion": "Changing from \"I wish to enquire\" to \"Can I ask?\" is a ______.",
+    "answer": "register shift"
+  },
+  {
+    "id": "semantic_field",
+    "term": "Semantic field",
+    "meaning": "a group of words all related to the same topic or concept",
+    "synonym": "lexical field / word family",
+    "example": "The <b>semantic field</b> of medicine: diagnosis, treatment, prognosis, recovery.",
+    "completion": "All the words related to medicine form a ______.",
+    "answer": "semantic field"
+  }
+]};
+</script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body></html>

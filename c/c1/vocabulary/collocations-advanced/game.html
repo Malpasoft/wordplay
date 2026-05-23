@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>C1 Vocab · Collocations — Advanced — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link">C1 Vocabulary</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">C1</a><span>›</span><a href="../index.html">Vocabulary</a><span>›</span><strong>Collocations — Advanced</strong></div>
+  <div class="chapter-num">Vocabulary</div>
+  <h1>Collocations — Advanced</h1>
+  <p class="chapter-subtitle">C1-level verb-noun and adjective-noun collocations</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">Collocations — Advanced</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / <span id="gStartTotal">12</span> mastered &nbsp;&middot;&nbsp; Lifetime: <span id="gStartLifetime">&#8212;</span></div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Resume</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Start over</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Start</button>
+  </div></div>
+  <div id="gamePlay" class="game-screen"><div class="game-play-card">
+    <div class="game-top-bar"><div class="game-progress-wrap"><div class="game-progress-bar" id="gProgressBar" style="width:0%"></div></div>
+    <div class="game-top-stats"><span>Score <strong id="gScore">0</strong></span><span>Streak <strong id="gStreak">0</strong></span></div></div>
+    <div id="gModeTag" class="game-mode-tag"></div>
+    <div id="gTerm" class="game-term"></div><div id="gPrompt" class="game-prompt"></div>
+    <div id="gOptions" class="game-options"></div><div id="gFeedback" class="game-feedback"></div>
+    <div id="gExample" class="game-example" style="display:none"></div>
+    <div class="game-btn-row">
+      <button id="gBtnHint" class="game-btn ghost">Hint [H]</button>
+      <button id="gBtnKnow" class="game-btn know" style="display:none">I know this [K]</button>
+      <button id="gBtnReveal" class="game-btn ghost">Reveal</button>
+      <button id="gBtnNext" class="game-btn primary" style="display:none">Next &#8594;</button>
+    </div>
+    <div class="game-progress-txt" id="gProgressTxt">0 / 12 mastered</div>
+    <button id="gBtnSaveQuit" class="game-btn ghost" style="margin-top:12px;width:100%">Save &amp; quit</button>
+  </div>
+  <div class="game-ref-panel"><button id="gRefToggle" class="game-ref-head">&#9660; Reference</button>
+  <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div></div></div>
+  <div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Complete!</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats">
+      <div>Score <strong id="gFinalScore">0</strong></div>
+      <div>Best streak <strong id="gFinalStreak">0</strong></div>
+      <div>Mastery <strong id="gFinalPct">0%</strong></div>
+    </div>
+    <a href="../idioms-fixed-expressions/index.html" class="game-btn primary" style="text-decoration:none;text-align:center;display:block;margin-bottom:8px">Next: Idioms Fixed Expressions &#8594;</a>
+    <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>
+window.LEVEL="c1"; window.CHAPTER_ID="collocations-advanced";
+window.GAME_DATA={chapterId:"collocations-advanced",level:"c1",title:"Collocations — Advanced",
+  storageKey:"wordplay_game_c1_collocations-advanced",items:[
+  {
+    "id": "raise_concern",
+    "term": "Raise concerns",
+    "meaning": "to express worries or doubts about something",
+    "synonym": "voice concerns / flag issues",
+    "example": "The report <b>raised serious concerns</b> about data security.",
+    "completion": "The report ______ about data security.",
+    "answer": "raised serious concerns"
+  },
+  {
+    "id": "pose_threat",
+    "term": "Pose a threat",
+    "meaning": "to present a danger or risk to something",
+    "synonym": "represent a risk / threaten",
+    "example": "Antibiotic resistance <b>poses a serious threat</b> to public health.",
+    "completion": "Antibiotic resistance ______ to public health.",
+    "answer": "poses a serious threat"
+  },
+  {
+    "id": "draw_conclusion",
+    "term": "Draw a conclusion",
+    "meaning": "to arrive at a judgement based on evidence",
+    "synonym": "reach a conclusion / infer",
+    "example": "From the data, we can <b>draw the conclusion</b> that prices will rise.",
+    "completion": "From the data, we can ______ that prices will rise.",
+    "answer": "draw the conclusion"
+  },
+  {
+    "id": "reach_consensus",
+    "term": "Reach a consensus",
+    "meaning": "for a group to arrive at a shared agreement",
+    "synonym": "come to an agreement / agree",
+    "example": "After hours of debate, the committee <b>reached a consensus</b>.",
+    "completion": "After hours of debate, the committee ______.",
+    "answer": "reached a consensus"
+  },
+  {
+    "id": "exert_pressure",
+    "term": "Exert pressure",
+    "meaning": "to apply force or influence to make something happen",
+    "synonym": "put pressure on / press",
+    "example": "Lobby groups <b>exerted pressure</b> on the government to change the law.",
+    "completion": "Lobby groups ______ on the government to change the law.",
+    "answer": "exerted pressure"
+  },
+  {
+    "id": "spark_debate",
+    "term": "Spark a debate",
+    "meaning": "to start or trigger a discussion or controversy",
+    "synonym": "trigger debate / ignite discussion",
+    "example": "The new policy <b>sparked a heated debate</b> in parliament.",
+    "completion": "The new policy ______ in parliament.",
+    "answer": "sparked a heated debate"
+  },
+  {
+    "id": "bear_resemblance",
+    "term": "Bear a resemblance",
+    "meaning": "to look similar to or share characteristics with something else",
+    "synonym": "resemble / look like",
+    "example": "The painting <b>bears a striking resemblance</b> to a Rembrandt.",
+    "completion": "The painting ______ to a Rembrandt.",
+    "answer": "bears a striking resemblance"
+  },
+  {
+    "id": "come_effect",
+    "term": "Come into effect",
+    "meaning": "(of a law or policy) to start being applied",
+    "synonym": "take effect / become law",
+    "example": "The new regulations <b>come into effect</b> on 1 January.",
+    "completion": "The new regulations ______ on 1 January.",
+    "answer": "come into effect"
+  },
+  {
+    "id": "make_strides",
+    "term": "Make strides",
+    "meaning": "to make significant progress towards a goal",
+    "synonym": "progress rapidly / advance",
+    "example": "The company has <b>made great strides</b> in reducing its emissions.",
+    "completion": "The company has ______ in reducing its emissions.",
+    "answer": "made great strides"
+  },
+  {
+    "id": "place_emphasis",
+    "term": "Place emphasis",
+    "meaning": "to give special importance to something",
+    "synonym": "stress / highlight",
+    "example": "The curriculum <b>places strong emphasis</b> on critical thinking.",
+    "completion": "The curriculum ______ on critical thinking.",
+    "answer": "places strong emphasis"
+  },
+  {
+    "id": "harbour_doubts",
+    "term": "Harbour doubts",
+    "meaning": "to hold private worries or uncertainties about something",
+    "synonym": "have doubts / nurse suspicions",
+    "example": "Many scientists <b>harbour doubts</b> about the theory.",
+    "completion": "Many scientists ______ about the theory.",
+    "answer": "harbour doubts"
+  },
+  {
+    "id": "tackle_issue",
+    "term": "Tackle an issue",
+    "meaning": "to deal with a problem directly and energetically",
+    "synonym": "address / confront / deal with",
+    "example": "Governments must <b>tackle the issue</b> of income inequality.",
+    "completion": "Governments must ______ of income inequality.",
+    "answer": "tackle the issue"
+  }
+]};
+</script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body></html>

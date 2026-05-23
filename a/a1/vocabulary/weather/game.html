@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A1 Vocab · Weather — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../../index.html" class="back back-link">A1 Vocabulary</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">A1</a><span>›</span><a href="../index.html">Vocabulary</a><span>›</span><strong>Weather</strong></div>
+  <div class="chapter-num">V5</div>
+  <h1>Weather</h1>
+  <p class="chapter-subtitle">Sun, rain, cloud · describing the weather</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">Weather</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / 10 mastered</div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Resume</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Start over</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Start</button>
+  </div></div>
+  <div id="gamePlay" class="game-screen"><div class="game-play-card">
+    <div class="game-top-bar"><div class="game-progress-wrap"><div class="game-progress-bar" id="gProgressBar" style="width:0%"></div></div>
+    <div class="game-top-stats"><span>Score <strong id="gScore">0</strong></span><span>Streak <strong id="gStreak">0</strong></span></div></div>
+    <div id="gModeTag" class="game-mode-tag"></div>
+    <div id="gTerm" class="game-term"></div><div id="gPrompt" class="game-prompt"></div>
+    <div id="gOptions" class="game-options"></div><div id="gFeedback" class="game-feedback"></div>
+    <div id="gExample" class="game-example" style="display:none"></div>
+    <div class="game-btn-row">
+          <a href="../index.html" class="game-btn primary" style="text-decoration:none;text-align:center">All vocab &#10003;</a>
+                <button id="gBtnHint" class="game-btn ghost">Hint [H]</button>
+      <button id="gBtnKnow" class="game-btn know" style="display:none">I know this [K]</button>
+      <button id="gBtnReveal" class="game-btn ghost">Reveal</button>
+      <button id="gBtnNext" class="game-btn primary" style="display:none">Next →</button>
+    </div>
+    <div class="game-progress-txt" id="gProgressTxt">0 / 10 mastered</div>
+    <button id="gBtnSaveQuit" class="game-btn ghost" style="margin-top:12px;width:100%">Save &amp; quit</button>
+  </div>
+  <div class="game-ref-panel"><button id="gRefToggle" class="game-ref-head">▼ Reference</button>
+  <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div></div></div>
+  <div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Complete!</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats">
+      <div>Score <strong id="gFinalScore">0</strong></div>
+      <div>Best streak <strong id="gFinalStreak">0</strong></div>
+      <div>Mastery <strong id="gFinalPct">0%</strong></div>
+    </div>
+    <a href="../index.html" class="game-btn primary" style="text-decoration:none;text-align:center;display:block;margin-bottom:8px">A1 Vocab &#10003;</a>
+    <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>window.LEVEL="a1";window.CHAPTER_ID="weather";
+window.GAME_DATA={chapterId:"weather",level:"a1",title:"Weather",storageKey:"wordplay_game_a1_weather",items:[
+  {
+    "id": "sunny",
+    "term": "sunny",
+    "meaning": "bright and with a lot of sunshine",
+    "synonym": "/ˈsʌni/",
+    "example": "<b>Sunny</b> — It's sunny today. Let's go to the park.",
+    "completion": "It's _____ today. Let's go to the park.",
+    "answer": "sunny"
+  },
+  {
+    "id": "cloudy",
+    "term": "cloudy",
+    "meaning": "with many clouds in the sky",
+    "synonym": "/ˈklaʊdi/",
+    "example": "<b>Cloudy</b> — It's cloudy but it's not raining.",
+    "completion": "It's _____ but it's not raining.",
+    "answer": "cloudy"
+  },
+  {
+    "id": "rainy",
+    "term": "rainy",
+    "meaning": "with a lot of rain",
+    "synonym": "/ˈreɪni/",
+    "example": "<b>Rainy</b> — It's rainy. Take an umbrella.",
+    "completion": "It's _____. Take an umbrella.",
+    "answer": "rainy"
+  },
+  {
+    "id": "windy",
+    "term": "windy",
+    "meaning": "with a lot of wind",
+    "synonym": "/ˈwɪndi/",
+    "example": "<b>Windy</b> — It's very windy today.",
+    "completion": "It's very _____ today.",
+    "answer": "windy"
+  },
+  {
+    "id": "hot",
+    "term": "hot",
+    "meaning": "having a high temperature",
+    "synonym": "/hɒt/",
+    "example": "<b>Hot</b> — It's very hot in summer.",
+    "completion": "It's very _____ in summer.",
+    "answer": "hot"
+  },
+  {
+    "id": "cold",
+    "term": "cold",
+    "meaning": "having a low temperature",
+    "synonym": "/kəʊld/",
+    "example": "<b>Cold</b> — It's cold in winter. Wear a coat.",
+    "completion": "It's _____ in winter. Wear a coat.",
+    "answer": "cold"
+  },
+  {
+    "id": "snowy",
+    "term": "snowy",
+    "meaning": "with snow falling or covered with snow",
+    "synonym": "/ˈsnəʊi/",
+    "example": "<b>Snowy</b> — It's snowy in the mountains.",
+    "completion": "It's _____ in the mountains.",
+    "answer": "snowy"
+  },
+  {
+    "id": "foggy",
+    "term": "foggy",
+    "meaning": "difficult to see because of fog",
+    "synonym": "/ˈfɒɡi/",
+    "example": "<b>Foggy</b> — Be careful — it's foggy today.",
+    "completion": "Be careful — it's _____ today.",
+    "answer": "foggy"
+  },
+  {
+    "id": "warm",
+    "term": "warm",
+    "meaning": "pleasantly hot, not too hot or cold",
+    "synonym": "/wɔːm/",
+    "example": "<b>Warm</b> — It's warm in spring.",
+    "completion": "It's _____ in spring.",
+    "answer": "warm"
+  },
+  {
+    "id": "temperature",
+    "term": "temperature",
+    "meaning": "a measure of how hot or cold something is",
+    "synonym": "/ˈtempərətʃər/",
+    "example": "<b>Temperature</b> — The temperature is 25 degrees today.",
+    "completion": "The _____ is 25 degrees today.",
+    "answer": "temperature"
+  }
+]};
+</script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body></html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Word Play — Cambridge English grammar, vocabulary and writing practice.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="var(--ink)">
+<title>A1 · There is / There are — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../../index.html" class="back back-link">A1 Grammar</a>
+    <a href="../../../../a/a1/index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play <span>A1</span></a>
+    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:white;font-family:var(--font-sans);font-size:0.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border-radius:4px;cursor:pointer;">&#9680; Dark</button>
+  </div>
+</header>
+<div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">A1</a><span>›</span><a href="../index.html">Grammar</a><span>›</span><strong>There Is There Are</strong></div>
+<div class="container">
+  <div class="eyebrow">A1 · Grammar</div>
+  <h1>There is / There are</h1>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Practice</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  </nav>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>4-Stage Mastery</h2>
+        <p>Each item passes through four stages: meaning, synonym, identification and sentence completion. Answer correctly to advance — a wrong answer drops you back one stage.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved session.</p>
+          <div class="game-btn-row">
+          <a href="../present-continuous/slides.html" class="game-btn primary" style="text-decoration:none;text-align:center">Ch 10 Present Continuous &#8594;</a>
+                    
+          
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All 7 items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play">
+        <div class="game-mode-tag" id="gModeTag"></div>
+        <div class="game-term" id="gTerm"></div>
+        <div class="game-prompt" id="gPrompt"></div>
+        <div class="game-options" id="gOptions"></div>
+        <div class="game-feedback" id="gFeedback"></div>
+        <div class="game-example" id="gExample" style="display:none;"></div>
+        <div style="text-align:center;margin:12px 0;">
+          <button id="gBtnNext" class="game-btn primary" style="display:none;">Next &#8594;</button>
+        </div>
+        <div class="game-helpers">
+          <button id="gBtnHint" class="game-btn ghost small">Hint</button>
+          <button id="gBtnReveal" class="game-btn ghost small">Show answer</button>
+          <button id="gBtnKnow" class="game-btn know small" style="display:none">I know this</button>
+        </div>
+        <div class="game-progress-strip">
+          <div class="game-progress-bar"><div class="game-progress-fill" id="gProgressBar" style="width:0%"></div></div>
+          <div class="game-progress-text" id="gProgressTxt">0 / 0 mastered</div>
+        </div>
+        <div class="game-score-streak">Score: <strong id="gScore">0</strong>&nbsp;&nbsp;Streak: <strong id="gStreak">0</strong></div>
+        <div style="text-align:center;margin-top:14px;">
+          <button id="gBtnSaveQuit" class="game-btn ghost small">Save &amp; quit</button>
+        </div>
+      </div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You have completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+        </div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Worksheet</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>
+window.GAME_DATA={chapterId:"there-is-there-are",level:"a1",title:"There Is There Are",storageKey:"wordplay_game_a1_there-is-there-are",items:[
+  {"id": "thereis", "term": "there is", "meaning": "singular existence", "synonym": "(singular)", "example": "<b>There is</b> a book.", "completion": "_____ a book.", "answer": "There is"},
+  {"id": "thereare", "term": "there are", "meaning": "plural existence", "synonym": "(plural)", "example": "<b>There are</b> three books.", "completion": "_____ three books.", "answer": "There are"},
+  {"id": "theres", "term": "there's", "meaning": "contraction", "synonym": "(short)", "example": "<b>There's</b> a problem.", "completion": "_____ a problem.", "answer": "There's"},
+  {"id": "thereisnt", "term": "there isn't", "meaning": "negative singular", "synonym": "(negative)", "example": "<b>There isn't</b> any sugar.", "completion": "_____ any sugar.", "answer": "There isn't"},
+  {"id": "therearent", "term": "there aren't", "meaning": "negative plural", "synonym": "(negative)", "example": "<b>There aren't</b> any apples.", "completion": "_____ any apples.", "answer": "There aren't"},
+  {"id": "isthere", "term": "Is there", "meaning": "question singular", "synonym": "(question)", "example": "<b>Is there</b> a bank near here?", "completion": "_____ a bank near here?", "answer": "Is there"},
+  {"id": "arethere", "term": "Are there", "meaning": "question plural", "synonym": "(question)", "example": "<b>Are there</b> any shops?", "completion": "_____ any shops?", "answer": "Are there"},
+  {"id": "yesthereis", "term": "Yes, there is.", "meaning": "positive answer", "synonym": "(answer)", "example": "<b>Yes, there is.</b>", "completion": "_____", "answer": "Yes, there is."},
+  {"id": "somemilk", "term": "there is some", "meaning": "uncountable", "synonym": "(uncountable)", "example": "<b>There is</b> some milk.", "completion": "_____ some milk.", "answer": "There is"},
+  {"id": "manypeople", "term": "there are many", "meaning": "large quantity", "synonym": "(quantity)", "example": "<b>There are</b> many people.", "completion": "_____ many people.", "answer": "There are"}
+]};
+</script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body>
+</html>

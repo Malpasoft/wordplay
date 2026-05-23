@@ -1,0 +1,155 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A2 Vocab · Work & Jobs — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100"><link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../../index.html" class="back back-link">A2 Vocabulary</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">A2</a><span>›</span><a href="../index.html">Vocabulary</a><span>›</span><strong>Work & Jobs</strong></div>
+  <div class="chapter-num">V6</div><h1>Work & Jobs</h1>
+  <p class="chapter-subtitle">Occupations · workplace vocabulary · employment</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">Work & Jobs</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / 10 mastered</div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Resume</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Start over</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Start</button>
+  </div></div>
+  <div id="gamePlay" class="game-screen"><div class="game-play-card">
+    <div class="game-top-bar"><div class="game-progress-wrap"><div class="game-progress-bar" id="gProgressBar" style="width:0%"></div></div>
+    <div class="game-top-stats"><span>Score <strong id="gScore">0</strong></span><span>Streak <strong id="gStreak">0</strong></span></div></div>
+    <div id="gModeTag" class="game-mode-tag"></div><div id="gTerm" class="game-term"></div>
+    <div id="gPrompt" class="game-prompt"></div><div id="gOptions" class="game-options"></div>
+    <div id="gFeedback" class="game-feedback"></div><div id="gExample" class="game-example" style="display:none"></div>
+    <div class="game-btn-row">
+      <button id="gBtnHint" class="game-btn ghost">Hint [H]</button>
+      <button id="gBtnKnow" class="game-btn know" style="display:none">I know this [K]</button>
+      <button id="gBtnReveal" class="game-btn ghost">Reveal</button>
+      <button id="gBtnNext" class="game-btn primary" style="display:none">Next →</button>
+    </div>
+    <div class="game-progress-txt" id="gProgressTxt">0 / 10 mastered</div>
+    <button id="gBtnSaveQuit" class="game-btn ghost" style="margin-top:12px;width:100%">Save &amp; quit</button>
+  </div>
+  <div class="game-ref-panel"><button id="gRefToggle" class="game-ref-head">▼ Reference</button>
+  <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div></div></div>
+  <div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Complete!</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats"><div>Score <strong id="gFinalScore">0</strong></div><div>Mastery <strong id="gFinalPct">0%</strong></div></div>
+    <a href="../index.html" class="game-btn primary" style="text-decoration:none;text-align:center;display:block;margin-bottom:8px">A2 Vocab &#10003;</a>
+    <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>window.LEVEL="a2";window.CHAPTER_ID="work-and-jobs";
+window.GAME_DATA={chapterId:"work-and-jobs",level:"a2",title:"Work & Jobs",storageKey:"wordplay_game_a2_work-and-jobs",items:[
+  {
+    "id": "colleague",
+    "term": "colleague",
+    "meaning": "a person you work with",
+    "synonym": "/ˈkɒliːɡ/",
+    "example": "<b>Colleague</b>: My colleagues are very helpful.",
+    "completion": "My ______s are very helpful.",
+    "answer": "colleague"
+  },
+  {
+    "id": "salary",
+    "term": "salary",
+    "meaning": "the regular payment someone receives for their job",
+    "synonym": "/ˈsæləri/",
+    "example": "<b>Salary</b>: Her salary is €35,000 per year.",
+    "completion": "Her ______ is €35,000 per year.",
+    "answer": "salary"
+  },
+  {
+    "id": "promotion",
+    "term": "promotion",
+    "meaning": "moving to a higher or more important job",
+    "synonym": "/prəˈməʊʃən/",
+    "example": "<b>Promotion</b>: He got a promotion and is now the manager.",
+    "completion": "He got a ______ and is now the manager.",
+    "answer": "promotion"
+  },
+  {
+    "id": "deadline",
+    "term": "deadline",
+    "meaning": "the time by which something must be done",
+    "synonym": "/ˈdedlaɪn/",
+    "example": "<b>Deadline</b>: The report deadline is next Monday.",
+    "completion": "The report ______ is next Monday.",
+    "answer": "deadline"
+  },
+  {
+    "id": "resign",
+    "term": "resign",
+    "meaning": "to officially leave your job",
+    "synonym": "/rɪˈzaɪn/",
+    "example": "<b>Resign</b>: She resigned from her position last month.",
+    "completion": "She ______ed from her position last month.",
+    "answer": "resign"
+  },
+  {
+    "id": "cv",
+    "term": "CV (curriculum vitae)",
+    "meaning": "a document listing your education and work experience",
+    "synonym": "/siː viː/",
+    "example": "<b>Cv (curriculum vitae)</b>: Send your CV and a cover letter.",
+    "completion": "Send your CV and a cover letter.",
+    "answer": "CV (curriculum vitae)"
+  },
+  {
+    "id": "interview",
+    "term": "interview",
+    "meaning": "a formal meeting where you are asked questions for a job",
+    "synonym": "/ˈɪntəvjuː/",
+    "example": "<b>Interview</b>: I have a job interview tomorrow morning.",
+    "completion": "I have a job ______ tomorrow morning.",
+    "answer": "interview"
+  },
+  {
+    "id": "freelance",
+    "term": "freelance",
+    "meaning": "working independently for different companies, not employed by one",
+    "synonym": "/ˈfriːlɑːns/",
+    "example": "<b>Freelance</b>: She works freelance as a graphic designer.",
+    "completion": "She works ______ as a graphic designer.",
+    "answer": "freelance"
+  },
+  {
+    "id": "overtime",
+    "term": "overtime",
+    "meaning": "extra hours worked beyond the normal working day",
+    "synonym": "/ˈəʊvtətaɪm/",
+    "example": "<b>Overtime</b>: I worked overtime to finish the project.",
+    "completion": "I worked ______ to finish the project.",
+    "answer": "overtime"
+  },
+  {
+    "id": "remote",
+    "term": "remote working",
+    "meaning": "working from home or another location, not in the office",
+    "synonym": "/rɪˈməʊt ˈwɜːrkɪŋ/",
+    "example": "<b>Remote working</b>: Remote working became common after 2020.",
+    "completion": "Remote working became common after 2020.",
+    "answer": "remote working"
+  }
+]};
+</script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body></html>

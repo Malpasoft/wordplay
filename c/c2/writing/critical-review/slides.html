@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>C2 Writing · The Critical Review — Lesson | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100"><link rel="stylesheet" href="../../../../shared/slides.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head><body>
+<div class="deck-progress"><div class="deck-progress-fill" id="deck-progress-fill"></div></div>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link">C2 Writing</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../../index.html">C2</a><span>›</span><a href="../index.html">Writing</a><span>›</span><strong>The Critical Review</strong></div>
+  <div class="chapter-num">Writing</div><h1>The Critical Review</h1>
+  <p class="chapter-subtitle">CPE review writing · sustained evaluation · precise vocabulary · semi-formal</p>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn active">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Practice</a>
+    <a href="game.html" class="chapter-nav-btn">Key Phrases</a>
+  </nav>
+  <div id="slide-deck"><div class="slide"><div class="slide-card"><div class="slide-header"><h2>The CPE critical review</h2></div><p style="font-size:1.05rem;color:var(--ink);margin-bottom:14px">A CPE review is not a summary. It is a critical evaluation: an informed, balanced, and precisely argued response to a text, work, or event. The word "critical" means analytical, not negative.</p><div class="overview-row"><div class="overview-label">What to review</div><div class="overview-desc">Book · film · article · TV series · cultural event · academic work · album</div></div><div class="overview-row"><div class="overview-label">Register</div><div class="overview-desc">Semi-formal: personal voice is allowed, but slang is not. Evaluative, precise, measured.</div></div><div class="overview-row"><div class="overview-label">Word target</div><div class="overview-desc">180–220 words</div></div><div class="overview-row"><div class="overview-label">C2 requirement</div><div class="overview-desc">Sustained critical evaluation with specific textual evidence — not just personal opinion</div></div></div></div><div class="slide"><div class="slide-card"><div class="slide-header"><h2>Structure of a C2 critical review</h2></div><div class="overview-row"><div class="overview-label">Opening</div><div class="overview-desc">Identify the work and its context. Do not start with "I read..." — use a noun phrase or impersonal construction.</div></div><div class="overview-row"><div class="overview-label">Core strength</div><div class="overview-desc">Identify the most significant achievement with specific evidence. Use nuanced evaluative vocabulary.</div></div><div class="overview-row"><div class="overview-label">Limitation or qualification</div><div class="overview-desc">A review that has no criticism is not credible. One measured, specific limitation.</div></div><div class="overview-row"><div class="overview-label">Audience and recommendation</div><div class="overview-desc">Who should read/watch/attend? What will they gain? Be specific, not generic.</div></div><div class="overview-row"><div class="overview-label">Register consistency</div><div class="overview-desc">Every sentence must hold the semi-formal register. Slips to casual language cost marks.</div></div></div></div><div class="slide"><div class="slide-card"><div class="slide-header"><h2>Evaluative vocabulary at C2</h2></div><div class="overview-row"><div class="overview-label">Strong praise</div><div class="overview-desc">masterly · incisive · penetrating · luminous · forensic · authoritative · devastating (in the best sense)</div></div><div class="overview-row"><div class="overview-label">Qualified praise</div><div class="overview-desc">accomplished if uneven · assured if occasionally overreaching · compelling despite its flaws</div></div><div class="overview-row"><div class="overview-label">Measured criticism</div><div class="overview-desc">underdeveloped · uneven in places · occasional lapses in rigour · not without its weaknesses</div></div><div class="overview-row"><div class="overview-label">Recommendation language</div><div class="overview-desc">comes unreservedly recommended · essential reading for · of limited use to specialists but ideal for …</div></div><div class="overview-row"><div class="overview-label">Avoid</div><div class="overview-desc">amazing, great, terrible, boring, interesting — all too vague for C2 register</div></div><div class="watch-out">A common C2 mistake: writing a book report (summary) instead of a review (evaluation). Ask yourself after every sentence: am I evaluating, or just describing? If describing, cut it or transform it into a critical observation.</div></div></div></div>
+  <div class="deck-nav">
+    <button class="deck-btn" onclick="prevSlide()" id="deck-prev" disabled>← Prev</button>
+    <span class="deck-counter" id="slide-counter">1 / 3</span>
+    <button class="deck-btn primary" onclick="nextSlide()" id="deck-next">Next →</button>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>window.LEVEL="c2";window.CHAPTER_ID="critical-review";</script>
+<script src="../../../../shared/deck.js?v=v100"></script>
+
+// Scroll first slide into view on load
+(function() {
+  var dk = document.getElementById('slide-deck');
+  if (dk) setTimeout(function() { dk.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 150);
+})();
+
+// ✓ badges on Practice / Game nav tabs
+(function() {
+  try {
+    var p = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+    var lv = p['c2'] || {};
+    var ws = lv['critical-review'];
+    if (ws && ws.pct >= 70) {
+      var pt = document.querySelector('.chapter-nav-btn[href="worksheet.html"]');
+      if (pt) pt.textContent = 'Practice ✓';
+    }
+    var gm = lv['wordplay_game_critical-review'];
+    if (gm && gm.pct >= 70) {
+      var gt = document.querySelector('.chapter-nav-btn[href="game.html"]');
+      if (gt) gt.textContent = 'Game ✓';
+    }
+  } catch(e) {}
+})();
+</body></html>

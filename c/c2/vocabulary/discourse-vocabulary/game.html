@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>C2 Vocab · Discourse Vocabulary — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100"><link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link">C2 Vocabulary</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../../index.html">C2</a><span>›</span><a href="../index.html">Vocabulary</a><span>›</span><strong>Discourse Vocabulary</strong></div>
+  <div class="chapter-num">V5</div><h1>Discourse Vocabulary</h1>
+  <p class="chapter-subtitle">Text-level connectors · meta-commentary · academic stance language</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">Discourse Vocabulary</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / 12 mastered</div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Resume</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Start over</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Start</button>
+  </div></div>
+  <div id="gamePlay" class="game-screen"><div class="game-play-card">
+    <div class="game-top-bar"><div class="game-progress-wrap"><div class="game-progress-bar" id="gProgressBar" style="width:0%"></div></div>
+    <div class="game-top-stats"><span>Score <strong id="gScore">0</strong></span><span>Streak <strong id="gStreak">0</strong></span></div></div>
+    <div id="gModeTag" class="game-mode-tag"></div><div id="gTerm" class="game-term"></div>
+    <div id="gPrompt" class="game-prompt"></div><div id="gOptions" class="game-options"></div>
+    <div id="gFeedback" class="game-feedback"></div><div id="gExample" class="game-example" style="display:none"></div>
+    <div class="game-btn-row">
+      <button id="gBtnHint" class="game-btn ghost">Hint [H]</button>
+      <button id="gBtnKnow" class="game-btn know" style="display:none">I know this [K]</button>
+      <button id="gBtnReveal" class="game-btn ghost">Reveal</button>
+      <button id="gBtnNext" class="game-btn primary" style="display:none">Next →</button>
+    </div>
+    <div class="game-progress-txt" id="gProgressTxt">0 / 12 mastered</div>
+    <button id="gBtnSaveQuit" class="game-btn ghost" style="margin-top:12px;width:100%">Save &amp; quit</button>
+  </div>
+  <div class="game-ref-panel"><button id="gRefToggle" class="game-ref-head">▼ Reference</button>
+  <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div></div></div>
+  <div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Complete!</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats"><div>Score <strong id="gFinalScore">0</strong></div><div>Mastery <strong id="gFinalPct">0%</strong></div></div>
+    <a href="../lexical-sophistication/index.html" class="game-btn primary" style="text-decoration:none;text-align:center;display:block;margin-bottom:8px">Next: Lexical Sophistication &#8594;</a>
+    <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>window.LEVEL="c2";window.CHAPTER_ID="discourse-vocabulary";
+window.GAME_DATA={chapterId:"discourse-vocabulary",level:"c2",title:"Discourse Vocabulary",storageKey:"wordplay_game_c2_discourse-vocabulary",items:[
+  {
+    "id": "notwithstanding",
+    "term": "Notwithstanding",
+    "meaning": "formal connector meaning despite or regardless of",
+    "synonym": "despite / in spite of / nevertheless",
+    "example": "<b>Notwithstanding</b> the difficulties, the project was completed on time.",
+    "completion": "______ the difficulties, the project was completed on time.",
+    "answer": "Notwithstanding"
+  },
+  {
+    "id": "hitherto",
+    "term": "Hitherto",
+    "meaning": "until now or until a particular point in time",
+    "synonym": "until now / previously / up to this point",
+    "example": "This relationship has been <b>hitherto</b> unexplored in the literature.",
+    "completion": "This relationship has been ______ unexplored in the literature.",
+    "answer": "hitherto"
+  },
+  {
+    "id": "insofar_as",
+    "term": "Insofar as",
+    "meaning": "to the extent that; to the degree that",
+    "synonym": "to the extent that / in so far as",
+    "example": "The policy succeeded <b>insofar as</b> it reduced costs, but failed on quality.",
+    "completion": "The policy succeeded ______ it reduced costs, but failed on quality.",
+    "answer": "insofar as"
+  },
+  {
+    "id": "by_the_same_token",
+    "term": "By the same token",
+    "meaning": "for the same reason; in the same way; similarly",
+    "synonym": "similarly / by the same logic / equally",
+    "example": "She values honesty; <b>by the same token</b>, she expects it from others.",
+    "completion": "She values honesty; ______, she expects it from others.",
+    "answer": "by the same token"
+  },
+  {
+    "id": "it_follows_that",
+    "term": "It follows that",
+    "meaning": "as a logical consequence or conclusion",
+    "synonym": "consequently / therefore / as a result",
+    "example": "If demand falls, <b>it follows that</b> prices will also decrease.",
+    "completion": "If demand falls, ______ prices will also decrease.",
+    "answer": "it follows that"
+  },
+  {
+    "id": "in_light_of",
+    "term": "In light of",
+    "meaning": "taking something into account; considering something as relevant",
+    "synonym": "given / considering / in view of",
+    "example": "<b>In light of</b> new evidence, the original conclusion must be revised.",
+    "completion": "______ new evidence, the original conclusion must be revised.",
+    "answer": "In light of"
+  },
+  {
+    "id": "to_this_end",
+    "term": "To this end",
+    "meaning": "in order to achieve this purpose",
+    "synonym": "for this purpose / with this aim",
+    "example": "The government launched a new programme. <b>To this end</b>, £500m was allocated.",
+    "completion": "The government launched a new programme. ______, £500m was allocated.",
+    "answer": "To this end"
+  },
+  {
+    "id": "inasmuch_as",
+    "term": "Inasmuch as",
+    "meaning": "to the extent that; because; for the reason that",
+    "synonym": "insofar as / in that / because",
+    "example": "The study is relevant <b>inasmuch as</b> it provides baseline data.",
+    "completion": "The study is relevant ______ it provides baseline data.",
+    "answer": "inasmuch as"
+  },
+  {
+    "id": "caveat",
+    "term": "Caveat",
+    "meaning": "a warning or qualification added to a statement to limit its scope",
+    "synonym": "qualification / reservation / proviso",
+    "example": "The results are positive, with one important <b>caveat</b>: the sample was small.",
+    "completion": "The results are positive, with one important ______: the sample was small.",
+    "answer": "caveat"
+  },
+  {
+    "id": "prima_facie",
+    "term": "Prima facie",
+    "meaning": "at first sight; based on initial evidence, before deeper examination",
+    "synonym": "on the face of it / apparently / seemingly",
+    "example": "<b>Prima facie</b>, the data supports the hypothesis; further analysis is needed.",
+    "completion": "______, the data supports the hypothesis; further analysis is needed.",
+    "answer": "Prima facie"
+  },
+  {
+    "id": "by_contrast",
+    "term": "By contrast",
+    "meaning": "used to highlight a difference between two things",
+    "synonym": "on the other hand / conversely / in contrast",
+    "example": "The north saw growth. <b>By contrast</b>, the south experienced decline.",
+    "completion": "The north saw growth. ______, the south experienced decline.",
+    "answer": "By contrast"
+  },
+  {
+    "id": "in_tandem",
+    "term": "In tandem",
+    "meaning": "alongside and at the same time; together and simultaneously",
+    "synonym": "simultaneously / together / in conjunction",
+    "example": "Economic and social reforms must proceed <b>in tandem</b>.",
+    "completion": "Economic and social reforms must proceed ______.",
+    "answer": "in tandem"
+  }
+]};
+</script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body></html>

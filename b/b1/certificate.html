@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+<title>B1 Pre-intermediate Certificate | Word Play</title>
+<link rel="stylesheet" href="../../shared/base.css?v=v100">
+<script src="../../shared/dark-init.js?v=v100"></script>
+<style>
+.cert-wrap { max-width:640px;margin:40px auto;padding:0 20px; }
+.cert-card {
+  border:3px solid var(--amber);
+  border-radius:12px;
+  padding:48px 40px;
+  text-align:center;
+  background:var(--paper);
+  position:relative;
+}
+.cert-card::before, .cert-card::after {
+  content:'';
+  position:absolute;
+  inset:6px;
+  border:1px solid rgba(184,134,11,.25);
+  border-radius:8px;
+  pointer-events:none;
+}
+.cert-eyebrow { font-family:var(--font-sans);font-size:.62rem;font-weight:800;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:16px; }
+.cert-logo { font-family:Georgia,serif;font-size:1.5rem;font-weight:700;color:var(--navy);margin-bottom:32px; }
+.cert-declares { font-family:var(--font-sans);font-size:.8rem;color:var(--muted);margin-bottom:12px; }
+.cert-name { font-family:Georgia,serif;font-size:2.2rem;font-weight:700;color:var(--ink);margin-bottom:16px;min-height:56px;border-bottom:2px solid var(--hairline);padding-bottom:8px; }
+.cert-desc { font-family:Georgia,serif;font-size:1rem;color:var(--ink);line-height:1.6;margin-bottom:32px; }
+.cert-level { display:inline-block;padding:6px 20px;background:var(--amber);color:#1A1A1A;font-family:var(--font-sans);font-size:.75rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;border-radius:4px;margin-bottom:32px; }
+.cert-date { font-family:var(--font-sans);font-size:.75rem;color:var(--muted);margin-bottom:24px; }
+.cert-footer { font-family:var(--font-sans);font-size:.65rem;color:var(--muted);letter-spacing:1px;text-transform:uppercase; }
+@media print {
+  body { background:var(--paper); }
+  .no-print { display:none !important; }
+  .cert-card { border-color:#B8860B; }
+}
+</style>
+</head>
+<body>
+<header class="site-header no-print">
+  <div class="site-header-inner">
+    <a href="index.html" class="back back-link">B1 Hub</a>
+    <a href="../../index.html" class="brand">Word Play</a>
+  </div>
+</header>
+<div class="breadcrumb" style="background:transparent;padding:12px 20px;font-size:.75rem"><a href="../../index.html">Home</a><span>›</span><a href="index.html">B1</a><span>›</span><strong>Certificate</strong></div>
+
+<div class="cert-wrap">
+  <div id="certCard" class="cert-card">
+    <div class="cert-eyebrow">Certificate of Completion</div>
+    <div class="cert-logo">Word Play</div>
+    <div class="cert-declares">This certifies that</div>
+    <div class="cert-name" id="certName" contenteditable="true" title="Click to enter your name">Your Name</div>
+    <div class="cert-desc">has successfully completed the study of<br><strong>English at pre-intermediate level</strong><br>through the Word Play grammar, vocabulary and writing curriculum.</div>
+    <div class="cert-level">B1 Pre-intermediate</div>
+    <div class="cert-date" id="certDate"></div>
+    <div class="cert-footer">Word Play · Cambridge English A1→C2</div>
+  </div>
+  <div class="no-print" style="margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+    <button onclick="window.print()" style="padding:10px 24px;background:var(--ink);color:var(--paper);font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:4px;cursor:pointer">&#128438; Print certificate</button>
+    <a href="index.html" style="padding:10px 20px;background:transparent;border:1.5px solid var(--hairline);color:var(--ink);font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none;border-radius:4px">&#8592; Back to hub</a>
+  </div>
+  <p class="no-print" style="text-align:center;font-family:var(--font-sans);font-size:.75rem;color:var(--muted);margin-top:12px">Click on your name to edit it before printing.</p>
+</div>
+<script>
+// Set today's date
+var d = new Date();
+var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+document.getElementById('certDate').textContent = months[d.getMonth()] + ' ' + d.getFullYear();
+// Pre-fill name from localStorage if saved
+try {
+  var saved = localStorage.getItem('wp_cert_name');
+  if (saved) document.getElementById('certName').textContent = saved;
+  document.getElementById('certName').addEventListener('blur', function() {
+    localStorage.setItem('wp_cert_name', this.textContent);
+  });
+} catch(e) {}
+</script>
+</body>
+</html>

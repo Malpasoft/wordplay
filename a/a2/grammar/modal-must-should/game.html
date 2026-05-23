@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A2 · Modals: must, should — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../../index.html" class="back back-link">A2 Grammar</a>
+    <a href="../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  </div>
+</header>
+<div class="container">
+  <div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>›</span>
+  <a href="../../index.html">A2</a><span>›</span>
+  <a href="../index.html">Grammar</a><span>›</span>
+  <strong>Modals: must, should — Game</strong>
+</div>
+  <div class="chapter-num">Ch 7</div>
+  <h1>Modals: must, should</h1>
+  <p class="chapter-subtitle">You must stop · You should rest · Obligation and advice</p>
+  <nav class="chapter-nav"><a href="slides.html" class="chapter-nav-btn">Lesson</a><a href="worksheet.html" class="chapter-nav-btn">Practice</a><a href="game.html" class="chapter-nav-btn active">Game</a><a href="printables.html" class="chapter-nav-btn">Printables</a></nav>
+  
+  <div class="game-wrap" id="gameWrap">
+  <div id="gameStart" class="game-screen active">
+    <div class="game-start-card">
+      <div class="game-start-title">Modals: must, should</div>
+      <div class="game-start-meta"><span id="gStartMastered">0</span> / <span id="gStartTotal">0</span> mastered &nbsp;&middot;&nbsp; Lifetime: <span id="gStartLifetime">&#8212;</span></div>
+      <div id="gResumeSection" style="display:none">
+        <button id="gBtnResume" class="game-btn primary">Resume</button>
+        <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+      </div>
+      <div class="game-btn-row">
+        <a href="../comparatives-basic/slides.html" class="game-btn primary" style="text-decoration:none;text-align:center">Ch 8 Comparatives Basic &#8594;</a>
+          <button id="gBtnStart" class="game-btn primary">Start</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="gamePlay" class="game-screen">
+    <div class="game-hud">
+      <span id="gModeTag" class="game-mode-tag"></span>
+      <span class="hud-sep">·</span>
+      <span id="gScore" class="hud-val">0</span> <span class="hud-label">mastered</span>
+      <span class="hud-sep">·</span>
+      <span id="gStreak" class="hud-val">0</span>
+    </div>
+    <div class="game-progress-bar"><div id="gProgressBar" class="game-progress-fill"></div></div>
+    <div id="gProgressTxt" class="game-progress-txt"></div>
+    <div class="game-card">
+      <div id="gTerm" class="game-term"></div>
+      <div id="gPrompt" class="game-prompt"></div>
+      <div id="gOptions" class="game-options"></div>
+      <div id="gFeedback" class="game-feedback"></div>
+      <div id="gExample" class="game-example" style="display:none"></div>
+      <div class="game-card-actions">
+        <button id="gBtnHint" class="game-btn ghost small">Hint</button>
+        <button id="gBtnReveal" class="game-btn ghost small">Show answer</button>
+        <button id="gBtnKnow" class="game-btn know small" style="display:none">I know this</button>
+        <button id="gBtnNext" class="game-btn primary" style="display:none">Next &#8594;</button>
+      </div>
+    </div>
+    <div class="game-ref-panel">
+      <button id="gRefToggle" class="game-ref-head">&#9660; Reference</button>
+      <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div>
+    </div>
+    <button id="gBtnSaveQuit" class="game-btn ghost small" style="margin-top:12px">Save &amp; quit</button>
+  </div>
+
+  <div id="gameCompletion" class="game-screen">
+    <div class="game-completion">
+      <h2>Mastered!</h2>
+      <p>You have completed all items in this chapter.</p>
+      <div class="game-stats-row" style="margin:20px 0">
+        <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+        <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+        <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastery</div></div>
+      </div>
+      <div id="gMasteryMap"></div>
+      <div class="game-btn-row">
+        <a href="../comparatives-basic/slides.html" class="game-btn primary" style="text-decoration:none;text-align:center">Ch 8 Comparatives Basic &#8594;</a>
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+        <a href="worksheet.html" class="game-btn secondary">Worksheet</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+</div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: 'modal-must-should',
+  level: 'a2',
+  title: 'Modals: must, should',
+  storageKey: 'wordplay_game_a2_modal-must-should',
+  items: [
+    {id:"must_rule",term:"must (obligation)",meaning:"strong obligation — a rule or requirement",synonym:"have to (external rule)",example:"You <b>must</b> wear a seat belt.",completion:"You ______ show your ID at the door.",answer:"must"},
+    {id:"should_adv",term:"should (advice)",meaning:"recommendation — a good idea or the right thing to do",synonym:"ought to",example:"You <b>should</b> see a doctor.",completion:"You ______ eat more vegetables.",answer:"should"},
+    {id:"mustnt",term:"mustn't",meaning:"prohibition — you are NOT allowed to do this",synonym:"it is forbidden to",example:"You <b>mustn't</b> smoke here.",completion:"You ______ use your phone while driving.",answer:"mustn't"},
+    {id:"dont_have",term:"don't have to",meaning:"no obligation — it is not necessary, but you can if you want",synonym:"it's not necessary",example:"You <b>don't have to</b> come — it's optional.",completion:"On Saturday you ______ get up early.",answer:"don't have to"},
+    {id:"shouldnt",term:"shouldn't",meaning:"negative advice — it is a bad idea",synonym:"had better not",example:"You <b>shouldn't</b> eat so much sugar.",completion:"You ______ stay up so late.",answer:"shouldn't"},
+    {id:"should_q",term:"Should I...?",meaning:"asking for advice or a recommendation",synonym:"What do you recommend?",example:"<b>Should</b> I call her?",completion:"______ I take the train or fly?",answer:"Should"}
+  ]
+};
+</script>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body>
+</html>

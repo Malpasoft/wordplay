@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A1 Writing · Short Note or Message — Lesson | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100">
+<link rel="stylesheet" href="../../../../shared/slides.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head>
+<body>
+<div class="deck-progress"><div class="deck-progress-fill" id="deck-progress-fill"></div></div>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../../index.html" class="back back-link">A1</a>
+    <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  </div>
+</header>
+<div class="container">
+  <div class="breadcrumb">
+    <a href="../../../../index.html">Home</a><span>&#8250;</span>
+    <a href="../../index.html">A1</a><span>&#8250;</span>
+    <strong>Short Note or Message — Lesson</strong>
+  </div>
+  <div class="chapter-num">Writing</div>
+  <h1>Short Note or Message</h1>
+  <p class="chapter-subtitle">Write a simple informal note</p>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn active">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Practice</a>
+    <a href="game.html" class="chapter-nav-btn">Game</a>
+  </nav>
+  <div id="slide-deck"><div class="slide"><div class="slide-card"><div class="slide-header"><h2>What is a short note?</h2></div><div class="overview-row"><div class="overview-label">Purpose</div><div class="overview-desc">Leave a quick message for someone you know</div></div><div class="overview-row"><div class="overview-label">Length</div><div class="overview-desc">20–30 words</div></div><div class="overview-row"><div class="overview-label">Register</div><div class="overview-desc">Informal — relaxed language</div></div><div class="overview-row"><div class="overview-label">Where used</div><div class="overview-desc">Leaving a message at home, at work, for a friend</div></div></div></div>
+<div class="slide"><div class="slide-card"><div class="slide-header"><h2>Structure of a note</h2></div><div class="overview-row"><div class="overview-label">Greeting</div><div class="overview-desc">Hi! / Hello! / Dear [Name],</div></div><div class="overview-row"><div class="overview-label">Main message</div><div class="overview-desc">I am at... / I went to... / I will be back at...</div></div><div class="overview-row"><div class="overview-label">Closing</div><div class="overview-desc">See you later! / Back soon! / Love, [Name]</div></div><div class="watch-out">Keep it short. Use simple sentences. You do not need to explain everything — just the key information.</div></div></div>
+<div class="slide"><div class="slide-card"><div class="slide-header"><h2>Model answer</h2></div><div class="overview-row"><div class="overview-label">Example</div><div class="overview-desc">Hi Tom! I went to the supermarket. I will be back at 5pm. There is food in the fridge. See you later! Ana</div></div><div class="overview-row"><div class="overview-label">Check</div><div class="overview-desc">Is the message clear? Does it say what, where, and when?</div></div></div></div></div>
+  <div class="deck-nav">
+    <button class="deck-btn" onclick="prevSlide()" id="deck-prev" disabled>&#8592; Prev</button>
+    <span class="deck-counter" id="slide-counter">1 / 3</span>
+    <button class="deck-btn primary" onclick="nextSlide()" id="deck-next">Next &#8594;</button>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>window.LEVEL="a1";window.CHAPTER_ID="short-note";</script>
+<script src="../../../../shared/deck.js?v=v100"></script>
+
+<script>
+/* track-last-chapter */
+// Scroll first slide into view on load
+(function() {
+  var dk = document.getElementById('slide-deck');
+  if (dk) setTimeout(function() { dk.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 150);
+})();
+// ✓ badges on Practice / Game nav tabs
+(function() {
+  try {
+    var p = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+    var lv = p['a1'] || {};
+    var ws = lv['short-note'];
+    if (ws && ws.pct >= 70) {
+      var pt = document.querySelector('.chapter-nav-btn[href="worksheet.html"]');
+      if (pt) pt.textContent = 'Practice ✓';
+    }
+    var gm = lv['wordplay_game_short-note'];
+    if (gm && gm.pct >= 70) {
+      var gt = document.querySelector('.chapter-nav-btn[href="game.html"]');
+      if (gt) gt.textContent = 'Game ✓';
+    }
+  } catch(e) {}
+})();
+try {
+  localStorage.setItem('wordplay_last_chapter_a1', JSON.stringify({
+    slug: 'short-note', section: 'writing', title: 'Short Note or Message', page: 'slides.html'
+  }));
+} catch(e) {}
+</script>
+</body>
+</html>

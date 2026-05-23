@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A2 Writing · Informal Email — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../../index.html" class="back back-link">A2</a>
+    <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  </div>
+</header>
+<div class="container">
+  <div class="breadcrumb">
+    <a href="../../../../index.html">Home</a><span>&#8250;</span>
+    <a href="../../index.html">A2</a><span>&#8250;</span>
+    <strong>Informal Email — Game</strong>
+  </div>
+  <div class="chapter-num">Writing</div>
+  <h1>Informal Email</h1>
+  <p class="chapter-subtitle">Key phrases for informal emails</p>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Practice</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  </nav>
+  <div id="gameStart" class="game-screen active">
+    <div class="game-start-card">
+      <div class="game-start-title">Informal Email</div>
+      <div class="game-start-meta">
+        <span id="gStartMastered">0</span> / <span id="gStartTotal">5</span> mastered
+        &nbsp;&middot;&nbsp; Lifetime: <span id="gStartLifetime">&#8212;</span>
+      </div>
+      <div id="gResumeSection" style="display:none" class="resume-section">
+        <button id="gBtnResume" class="game-btn primary">Resume</button>
+        <button id="gBtnNewFromResume" class="game-btn ghost">Start over</button>
+      </div>
+      <button id="gBtnStart" class="game-btn primary">Start</button>
+    </div>
+  </div>
+  <div id="gamePlay" class="game-screen">
+    <div class="game-play-card">
+      <div class="game-top-bar">
+        <div class="game-progress-wrap">
+          <div class="game-progress-bar" id="gProgressBar" style="width:0%"></div>
+        </div>
+        <div class="game-top-stats">
+          <span>Score <strong id="gScore">0</strong></span>
+          <span>Streak <strong id="gStreak">0</strong></span>
+        </div>
+      </div>
+      <div id="gModeTag" class="game-mode-tag"></div>
+      <div id="gTerm" class="game-term"></div>
+      <div id="gPrompt" class="game-prompt"></div>
+      <div id="gOptions" class="game-options"></div>
+      <div id="gFeedback" class="game-feedback"></div>
+      <div id="gExample" class="game-example" style="display:none"></div>
+      <div class="game-btn-row">
+          <a href="../postcard/slides.html" class="game-btn primary" style="text-decoration:none;text-align:center">Next: Postcard &#8594;</a>
+                  <button id="gBtnHint" class="game-btn ghost">Hint [H]</button>
+      <button id="gBtnKnow" class="game-btn know" style="display:none">I know this [K]</button>
+        <button id="gBtnReveal" class="game-btn ghost">Reveal</button>
+        <button id="gBtnNext" class="game-btn primary" style="display:none">Next &#8594;</button>
+      </div>
+      <div class="game-progress-txt" id="gProgressTxt">0 / 5 mastered</div>
+      <button id="gBtnSaveQuit" class="game-btn ghost" style="margin-top:12px;width:100%">Save &amp; quit</button>
+    </div>
+    <div class="game-ref-panel">
+      <button id="gRefToggle" class="game-ref-head">&#9660; Reference</button>
+      <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div>
+    </div>
+  </div>
+  <div id="gameCompletion" class="game-screen">
+    <div class="game-completion-card">
+      <div class="completion-title">Complete!</div>
+      <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats">
+        <div>Score <strong id="gFinalScore">0</strong></div>
+        <div>Best streak <strong id="gFinalStreak">0</strong></div>
+        <div>Mastery <strong id="gFinalPct">0%</strong></div>
+      </div>
+      <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+    </div>
+  </div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>
+window.LEVEL = 'a2';
+window.CHAPTER_ID = 'informal-email';
+window.GAME_DATA = {
+  chapterId: 'informal-email', level: 'a2', title: 'Informal Email',
+  storageKey: 'wordplay_game_a2_informal-email',
+  items: [
+  {
+    "id": "how_are",
+    "term": "How are you?",
+    "meaning": "a friendly opening question in an informal email",
+    "synonym": "informal enquiry opener",
+    "example": "<b>How are you?</b> I hope everything is going well.",
+    "completion": "______ I hope everything is going well.",
+    "answer": "How are you?"
+  },
+  {
+    "id": "writing_to",
+    "term": "I am writing to tell you...",
+    "meaning": "explains the purpose of the email",
+    "synonym": "reason for writing",
+    "example": "<b>I am writing to tell you</b> about my new job!",
+    "completion": "______ about my new job!",
+    "answer": "I am writing to tell you"
+  },
+  {
+    "id": "by_the_way",
+    "term": "By the way,...",
+    "meaning": "used to introduce a new piece of news informally",
+    "synonym": "informal topic shift",
+    "example": "<b>By the way</b>, I moved to a new flat last month.",
+    "completion": "______, I moved to a new flat last month.",
+    "answer": "By the way"
+  },
+  {
+    "id": "what_about",
+    "term": "What about you?",
+    "meaning": "a friendly question that invites the reader to share news",
+    "synonym": "reciprocal question",
+    "example": "<b>What about you?</b> How is your new job going?",
+    "completion": "______ How is your new job going?",
+    "answer": "What about you?"
+  },
+  {
+    "id": "write_soon",
+    "term": "Write soon!",
+    "meaning": "a common informal closing in an email or letter",
+    "synonym": "informal sign-off",
+    "example": "<b>Write soon!</b> Best wishes, Maria.",
+    "completion": "______ Best wishes, Maria.",
+    "answer": "Write soon!"
+  }
+]
+};
+</script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body>
+</html>

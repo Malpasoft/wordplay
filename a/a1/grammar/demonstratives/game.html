@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Word Play — Cambridge English grammar, vocabulary and writing practice.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A1 · Demonstratives — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../../index.html" class="back back-link">A1 Grammar</a>
+    <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  </div>
+</header>
+<div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../../../a/a1/index.html">A1</a><span>›</span><a href="../index.html">Grammar</a><span>›</span><strong>Demonstratives</strong></div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Practice</a>
+  <a href="game.html" class="chapter-nav-btn active">Game</a>
+  <a href="printables.html" class="chapter-nav-btn">Printables</a>
+</nav>
+<div class="game-wrap" id="gameWrap">
+  <div id="gameStart" class="game-screen active">
+    <div class="game-start">
+      <h2>4-Stage Mastery</h2>
+      <p>Each item passes through four stages: meaning, synonym, identification and sentence completion.</p>
+      <p>A wrong answer drops you back one stage — never to zero.</p>
+      <div id="gStartMastered" style="font-family:var(--font-sans);font-size:.9rem;margin:12px 0;color:var(--muted)"></div>
+      <div id="gResumeSection" style="display:none;margin-bottom:12px">
+        <button id="gBtnResume" class="game-btn primary">Resume</button>
+        <button id="gBtnNewFromResume" class="game-btn">Start fresh</button>
+      </div>
+      <button id="gBtnStart" class="game-btn primary">Start</button>
+      <a href="../../../../a/a1/index.html" class="game-btn" style="text-align:center;text-decoration:none;margin-top:8px">← Back to hub</a>
+    </div>
+  </div>
+  <div id="gamePlay" class="game-screen">
+    <div class="game-hud">
+      <span id="gModeTag" class="game-mode-tag"></span>
+      <span class="hud-sep">·</span>
+      <span id="gScore" class="hud-val">0</span> <span class="hud-label">mastered</span>
+      <span class="hud-sep">·</span>
+      <span id="gStreak" class="hud-val">0</span>
+    </div>
+    <div class="game-progress-bar"><div id="gProgressBar" class="game-progress-fill"></div></div>
+    <div id="gProgressTxt" class="game-progress-txt"></div>
+    <div class="game-card">
+      <div id="gTerm" class="game-term"></div>
+      <div id="gPrompt" class="game-prompt"></div>
+      <div id="gOptions" class="game-options"></div>
+      <div id="gFeedback" class="game-feedback"></div>
+      <div id="gExample" class="game-example" style="display:none"></div>
+      <div class="game-card-actions">
+        <button id="gBtnHint" class="game-btn small">Hint</button>
+        <button id="gBtnReveal" class="game-btn small">Reveal</button>
+        <button id="gBtnKnow" class="game-btn small ghost" style="display:none" title="Skip to context stage">I know this</button>
+        <button id="gBtnNext" class="game-btn primary" style="display:none">Next</button>
+      </div>
+    </div>
+    <div class="game-ref">
+      <button id="gRefToggle" class="game-ref-toggle">Reference ▾</button>
+      <div id="gRefBody" class="game-ref-body" style="display:none">
+        <ul id="gRefList"></ul>
+      </div>
+    </div>
+    <button id="gBtnSaveQuit" class="game-btn small" style="margin-top:12px">Save &amp; Exit</button>
+  </div>
+  <div id="gameCompletion" class="game-screen">
+    <div class="game-complete">
+      <div style="font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:8px">&#10003; Ch 21 complete</div>
+      <h2>All mastered!</h2>
+      <p>Score: <strong id="gFinalScore"></strong> · Streak: <strong id="gFinalStreak"></strong></p>
+      <a href="worksheet.html" class="game-btn primary" style="text-decoration:none;text-align:center">Practice worksheet</a>
+      <a href="../../../../a/a1/index.html" class="game-btn" style="text-decoration:none;text-align:center">← Back to hub</a>
+    
+      <a href="../prepositions-of-place/slides.html" class="game-btn primary" style="text-decoration:none;text-align:center">Next &#8594; Ch 22 Prepositions Of Place</a>
+    </div>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script>
+window.GAME_DATA={chapterId:"demonstratives",level:"a1",title:"Demonstratives",storageKey:"wordplay_game_a1_demonstratives",items:[
+  {"id": "this", "term": "this", "meaning": "near, singular", "synonym": "(near)", "example": "<b>This</b> is my book.", "completion": "_____ is my book.", "answer": "This"},
+  {"id": "that", "term": "that", "meaning": "far, singular", "synonym": "(far)", "example": "<b>That</b> is your car.", "completion": "_____ is your car.", "answer": "That"},
+  {"id": "these", "term": "these", "meaning": "near, plural", "synonym": "(near)", "example": "<b>These</b> are my friends.", "completion": "_____ are my friends.", "answer": "These"},
+  {"id": "those", "term": "those", "meaning": "far, plural", "synonym": "(far)", "example": "<b>Those</b> are your shoes.", "completion": "_____ are your shoes.", "answer": "Those"},
+  {"id": "thisbook", "term": "this book", "meaning": "near singular + noun", "synonym": "(near)", "example": "I like <b>this</b> book.", "completion": "I like _____ book.", "answer": "this"},
+  {"id": "thatcar", "term": "that car", "meaning": "far singular + noun", "synonym": "(far)", "example": "Look at <b>that</b> car!", "completion": "Look at _____ car!", "answer": "that"},
+  {"id": "thesekids", "term": "these children", "meaning": "near plural + noun", "synonym": "(near)", "example": "<b>These</b> children are nice.", "completion": "_____ children are nice.", "answer": "These"},
+  {"id": "thosemts", "term": "those mountains", "meaning": "far plural + noun", "synonym": "(far)", "example": "<b>Those</b> mountains are beautiful.", "completion": "_____ mountains are beautiful.", "answer": "Those"},
+  {"id": "whatsthis", "term": "What's this?", "meaning": "asking about near thing", "synonym": "(question)", "example": "<b>What's this</b>? It's a pen.", "completion": "_____? It's a pen.", "answer": "What's this"},
+  {"id": "whatsthat", "term": "What's that?", "meaning": "asking about far thing", "synonym": "(question)", "example": "<b>What's that</b>? It's a bird.", "completion": "_____? It's a bird.", "answer": "What's that"}
+]};
+</script>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>C1 Writing · The Proposal — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner"><a href="../index.html" class="back back-link">C1 Writing</a><a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">C1</a><span>›</span><a href="../index.html">Writing</a><span>›</span><strong>The Proposal — Key Phrases Game</strong></div>
+  <div class="chapter-num">Writing</div>
+  <h1>The Proposal</h1>
+  <p class="chapter-subtitle">Formal document · headed sections · recommendations · persuasive</p>
+  <nav class="chapter-nav"><a href="slides.html" class="chapter-nav-btn">Lesson</a><a href="worksheet.html" class="chapter-nav-btn">Practice</a><a href="game.html" class="chapter-nav-btn active">Game</a><a href="printables.html" class="chapter-nav-btn">Printables</a></nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">The Proposal — Key Phrases</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / <span id="gStartTotal">5</span> mastered</div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Resume</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Start over</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Start</button>
+  </div></div>
+  <div id="gamePlay" class="game-screen"><div class="game-play-card">
+    <div class="game-top-bar"><div class="game-progress-wrap"><div class="game-progress-bar" id="gProgressBar" style="width:0%"></div></div>
+    <div class="game-top-stats"><span>Score <strong id="gScore">0</strong></span><span>Streak <strong id="gStreak">0</strong></span></div></div>
+    <div id="gModeTag" class="game-mode-tag"></div>
+    <div id="gTerm" class="game-term"></div><div id="gPrompt" class="game-prompt"></div>
+    <div id="gOptions" class="game-options"></div><div id="gFeedback" class="game-feedback"></div>
+    <div id="gExample" class="game-example" style="display:none"></div>
+    <div class="game-btn-row">
+          <a href="../report/slides.html" class="game-btn primary" style="text-decoration:none;text-align:center">Next: Report &#8594;</a>
+                <button id="gBtnHint" class="game-btn ghost">Hint [H]</button>
+      <button id="gBtnKnow" class="game-btn know" style="display:none">I know this [K]</button>
+      <button id="gBtnReveal" class="game-btn ghost">Reveal</button>
+      <button id="gBtnNext" class="game-btn primary" style="display:none">Next &#8594;</button>
+    </div>
+    <div class="game-progress-txt" id="gProgressTxt">0 / 5 mastered</div>
+    <button id="gBtnSaveQuit" class="game-btn ghost" style="margin-top:12px;width:100%">Save &amp; quit</button>
+  </div>
+  <div class="game-ref-panel"><button id="gRefToggle" class="game-ref-head">&#9660; Reference</button>
+  <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div></div></div>
+  <div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Complete!</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats">
+      <div>Score <strong id="gFinalScore">0</strong></div>
+      <div>Best streak <strong id="gFinalStreak">0</strong></div>
+      <div>Mastery <strong id="gFinalPct">0%</strong></div>
+    </div>
+    <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>
+window.LEVEL="c1"; window.CHAPTER_ID="proposal";
+window.GAME_DATA={chapterId:"proposal",level:"c1",title:"The Proposal",
+  storageKey:"wordplay_game_c1_writing_proposal",items:[
+  {
+    "id": "aim",
+    "term": "The aim of this proposal",
+    "meaning": "formal opening phrase stating the purpose",
+    "synonym": "this proposal seeks to",
+    "example": "<b>The aim of this proposal</b> is to improve facilities for students.",
+    "completion": "______ is to improve facilities for students.",
+    "answer": "The aim of this proposal"
+  },
+  {
+    "id": "rec",
+    "term": "It is recommended that",
+    "meaning": "formal phrase to introduce a specific recommendation",
+    "synonym": "I would suggest that",
+    "example": "<b>It is recommended that</b> the library extend its opening hours.",
+    "completion": "______ the library extend its opening hours.",
+    "answer": "It is recommended that"
+  },
+  {
+    "id": "noted",
+    "term": "It has been noted that",
+    "meaning": "impersonal phrase to describe an observed problem",
+    "synonym": "it is apparent that",
+    "example": "<b>It has been noted that</b> attendance has declined significantly.",
+    "completion": "______ attendance has declined significantly.",
+    "answer": "It has been noted that"
+  },
+  {
+    "id": "result",
+    "term": "This would result in",
+    "meaning": "formal phrase describing the expected outcome",
+    "synonym": "this would lead to",
+    "example": "<b>This would result in</b> greater efficiency across all departments.",
+    "completion": "______ greater efficiency across all departments.",
+    "answer": "This would result in"
+  },
+  {
+    "id": "hoped",
+    "term": "It is hoped that",
+    "meaning": "formal closing phrase expressing expectation",
+    "synonym": "we trust that",
+    "example": "<b>It is hoped that</b> these recommendations will be given full consideration.",
+    "completion": "______ these recommendations will be given full consideration.",
+    "answer": "It is hoped that"
+  }
+]};
+</script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body></html>

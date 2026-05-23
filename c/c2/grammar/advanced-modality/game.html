@@ -1,0 +1,71 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>C2 · Advanced Modality — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100"><link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script></head><body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../../index.html" class="back back-link">C2 Grammar</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../../index.html">C2</a><span>›</span><a href="../../index.html">Grammar</a><span>›</span><strong>Advanced Modality</strong></div>
+  <div class="chapter-num">Ch 8</div><h1>Advanced Modality</h1>
+  <p class="chapter-subtitle">Epistemic · deontic · dynamic modality · semi-modals · marginal modals</p>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Practice</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+    <a href="printables.html" class="chapter-nav-btn">Printables</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">Advanced Modality</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / 5 mastered</div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Resume</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Start over</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Start</button>
+  </div></div>
+  <div id="gamePlay" class="game-screen"><div class="game-play-card">
+    <div class="game-top-bar"><div class="game-progress-wrap"><div class="game-progress-bar" id="gProgressBar" style="width:0%"></div></div>
+    <div class="game-top-stats"><span>Score <strong id="gScore">0</strong></span><span>Streak <strong id="gStreak">0</strong></span></div></div>
+    <div id="gModeTag" class="game-mode-tag"></div><div id="gTerm" class="game-term"></div>
+    <div id="gPrompt" class="game-prompt"></div><div id="gOptions" class="game-options"></div>
+    <div id="gFeedback" class="game-feedback"></div><div id="gExample" class="game-example" style="display:none"></div>
+    <div class="game-btn-row">
+          <a href="../grammar-in-text/slides.html" class="game-btn primary" style="text-decoration:none;text-align:center">Ch 9 Grammar In Text &#8594;</a>
+                <button id="gBtnHint" class="game-btn ghost">Hint [H]</button>
+      <button id="gBtnKnow" class="game-btn know" style="display:none">I know this [K]</button>
+      <button id="gBtnReveal" class="game-btn ghost">Reveal</button>
+      <button id="gBtnNext" class="game-btn primary" style="display:none">Next →</button>
+    </div>
+    <div class="game-progress-txt" id="gProgressTxt">0 / 5 mastered</div>
+    <button id="gBtnSaveQuit" class="game-btn ghost" style="margin-top:12px;width:100%">Save &amp; quit</button>
+  </div>
+  <div class="game-ref-panel"><button id="gRefToggle" class="game-ref-head">▼ Reference</button>
+  <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div></div></div>
+  <div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Complete!</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats"><div>Score <strong id="gFinalScore">0</strong></div><div>Mastery <strong id="gFinalPct">0%</strong></div></div>
+    <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>window.LEVEL="c2";window.CHAPTER_ID="advanced-modality";
+window.GAME_DATA={chapterId:"advanced-modality",level:"c2",title:"Advanced Modality",storageKey:"wordplay_game_c2_advanced-modality",items:[
+    {"id":"epistemic","term":"Epistemic modality","meaning":"expressing certainty or possibility — what the speaker believes is true","synonym":"certainty / possibility meaning","example":"She <b>must</b> be tired. (certain) / It <b>might</b> rain. (possible)","completion":"'It ______ be true — the evidence is overwhelming.' — epistemic certainty","answer":"must"},
+    {"id":"deontic","term":"Deontic modality","meaning":"expressing obligation, permission, or prohibition — what is required or allowed","synonym":"obligation / permission meaning","example":"You <b>must</b> leave by 6. (obligation) / You <b>may</b> sit. (permission)","completion":"'You ______ submit your essay by Friday.' — deontic obligation","answer":"must"},
+    {"id":"dynamic","term":"Dynamic modality","meaning":"expressing ability or willingness — what someone is capable of or chooses to do","synonym":"ability / willingness meaning","example":"She <b>can</b> speak five languages. (ability) / I <b>will</b> help. (willingness)","completion":"'He ______ lift 200kg — he's incredibly strong.' — dynamic ability","answer":"can"},
+    {"id":"ambiguity","term":"Modal ambiguity","meaning":"modals often carry more than one meaning — context determines which reading applies","synonym":"multiple modal meanings","example":"'You <b>must</b> see this film.' = obligation OR strong recommendation?","completion":"'Students <b>must</b> arrive early.' Is this epistemic or ______?","answer":"deontic"},
+    {"id":"scale","term":"Certainty scale",meaning:"modals on a scale: will (certain) > must > should > may > might > could (least certain)","synonym":"epistemic scale","example":"It <b>will</b> rain (100%) → it <b>might</b> rain (30%)","completion":"On the certainty scale, 'must be' is ______ certain than 'might be'.","answer":"more"},
+    {"id":"perfect_modal","term":"Perfect modal (past deduction)","meaning":"modal + have + past participle — deduction about a past situation","synonym":"modal + have + PP","example":"She <b>must have left</b> already. / He <b>can't have seen</b> it.","completion":"She ______ the key — it was in her hand all along! (can't — past deduction)","answer":"can't have lost"}
+  ]};
+</script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body></html>

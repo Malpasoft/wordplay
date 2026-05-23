@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Word Play — Cambridge English grammar, vocabulary and writing practice.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="var(--ink)">
+<title>A1 · Some and Any — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../../index.html" class="back back-link">A1 Grammar</a>
+    <a href="../../../../a/a1/index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play <span>A1</span></a>
+    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:white;font-family:var(--font-sans);font-size:0.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border-radius:4px;cursor:pointer;">&#9680; Dark</button>
+  </div>
+</header>
+<div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">A1</a><span>›</span><a href="../index.html">Grammar</a><span>›</span><strong>Some Any</strong></div>
+<div class="container">
+  <div class="eyebrow">A1 · Grammar</div>
+  <h1>Some and Any</h1>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Practice</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  </nav>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>4-Stage Mastery</h2>
+        <p>Each item passes through four stages: meaning, synonym, identification and sentence completion. Answer correctly to advance — a wrong answer drops you back one stage.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved session.</p>
+          <div class="game-btn-row">
+          <a href="../simple-past-regular/slides.html" class="game-btn primary" style="text-decoration:none;text-align:center">Ch 18 Simple Past Regular &#8594;</a>
+                    
+          
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All 5 items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play">
+        <div class="game-mode-tag" id="gModeTag"></div>
+        <div class="game-term" id="gTerm"></div>
+        <div class="game-prompt" id="gPrompt"></div>
+        <div class="game-options" id="gOptions"></div>
+        <div class="game-feedback" id="gFeedback"></div>
+        <div class="game-example" id="gExample" style="display:none;"></div>
+        <div style="text-align:center;margin:12px 0;">
+          <button id="gBtnNext" class="game-btn primary" style="display:none;">Next &#8594;</button>
+        </div>
+        <div class="game-helpers">
+          <button id="gBtnHint" class="game-btn ghost small">Hint</button>
+          <button id="gBtnReveal" class="game-btn ghost small">Show answer</button>
+          <button id="gBtnKnow" class="game-btn know small" style="display:none">I know this</button>
+        </div>
+        <div class="game-progress-strip">
+          <div class="game-progress-bar"><div class="game-progress-fill" id="gProgressBar" style="width:0%"></div></div>
+          <div class="game-progress-text" id="gProgressTxt">0 / 0 mastered</div>
+        </div>
+        <div class="game-score-streak">Score: <strong id="gScore">0</strong>&nbsp;&nbsp;Streak: <strong id="gStreak">0</strong></div>
+        <div style="text-align:center;margin-top:14px;">
+          <button id="gBtnSaveQuit" class="game-btn ghost small">Save &amp; quit</button>
+        </div>
+      </div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You have completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+        </div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Worksheet</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script>
+window.GAME_DATA={chapterId:"some-any",level:"a1",title:"Some Any",storageKey:"wordplay_game_a1_some-any",items:[
+  {"id": "some", "term": "some", "meaning": "positive, uncountable/plural", "synonym": "(positive)", "example": "I have <b>some</b> water.", "completion": "I have _____ water.", "answer": "some"},
+  {"id": "any", "term": "any", "meaning": "negative/question", "synonym": "(neg/question)", "example": "I don't have <b>any</b> money.", "completion": "I don't have _____ money.", "answer": "any"},
+  {"id": "someq", "term": "some", "meaning": "offers/requests", "synonym": "(offer)", "example": "Would you like <b>some</b> tea?", "completion": "Would you like _____ tea?", "answer": "some"},
+  {"id": "anyq", "term": "any", "meaning": "general question", "synonym": "(question)", "example": "Are there <b>any</b> apples?", "completion": "Are there _____ apples?", "answer": "any"},
+  {"id": "somemilk", "term": "some milk", "meaning": "uncountable positive", "synonym": "(uncountable)", "example": "There is <b>some</b> milk.", "completion": "There is _____ milk.", "answer": "some"},
+  {"id": "anybread", "term": "any bread", "meaning": "uncountable negative", "synonym": "(uncountable)", "example": "There isn't <b>any</b> bread.", "completion": "There isn't _____ bread.", "answer": "any"},
+  {"id": "somebooks", "term": "some books", "meaning": "plural positive", "synonym": "(plural)", "example": "I bought <b>some</b> books.", "completion": "I bought _____ books.", "answer": "some"},
+  {"id": "anybody", "term": "anybody", "meaning": "negative person", "synonym": "(person)", "example": "There isn't <b>anybody</b> here.", "completion": "There isn't _____ here.", "answer": "anybody"},
+  {"id": "something", "term": "something", "meaning": "positive thing", "synonym": "(thing)", "example": "I want <b>something</b> to eat.", "completion": "I want _____ to eat.", "answer": "something"},
+  {"id": "anything", "term": "anything", "meaning": "negative/question thing", "synonym": "(thing)", "example": "Is there <b>anything</b> to drink?", "completion": "Is there _____ to drink?", "answer": "anything"}
+]};
+</script>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body>
+</html>

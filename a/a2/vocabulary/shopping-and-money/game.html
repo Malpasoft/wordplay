@@ -1,0 +1,155 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A2 Vocab · Shopping & Money — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100"><link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../../index.html" class="back back-link">A2 Vocabulary</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">A2</a><span>›</span><a href="../index.html">Vocabulary</a><span>›</span><strong>Shopping & Money</strong></div>
+  <div class="chapter-num">V4</div><h1>Shopping & Money</h1>
+  <p class="chapter-subtitle">Buying and selling · prices · banking</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">Shopping & Money</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / 10 mastered</div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Resume</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Start over</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Start</button>
+  </div></div>
+  <div id="gamePlay" class="game-screen"><div class="game-play-card">
+    <div class="game-top-bar"><div class="game-progress-wrap"><div class="game-progress-bar" id="gProgressBar" style="width:0%"></div></div>
+    <div class="game-top-stats"><span>Score <strong id="gScore">0</strong></span><span>Streak <strong id="gStreak">0</strong></span></div></div>
+    <div id="gModeTag" class="game-mode-tag"></div><div id="gTerm" class="game-term"></div>
+    <div id="gPrompt" class="game-prompt"></div><div id="gOptions" class="game-options"></div>
+    <div id="gFeedback" class="game-feedback"></div><div id="gExample" class="game-example" style="display:none"></div>
+    <div class="game-btn-row">
+      <button id="gBtnHint" class="game-btn ghost">Hint [H]</button>
+      <button id="gBtnKnow" class="game-btn know" style="display:none">I know this [K]</button>
+      <button id="gBtnReveal" class="game-btn ghost">Reveal</button>
+      <button id="gBtnNext" class="game-btn primary" style="display:none">Next →</button>
+    </div>
+    <div class="game-progress-txt" id="gProgressTxt">0 / 10 mastered</div>
+    <button id="gBtnSaveQuit" class="game-btn ghost" style="margin-top:12px;width:100%">Save &amp; quit</button>
+  </div>
+  <div class="game-ref-panel"><button id="gRefToggle" class="game-ref-head">▼ Reference</button>
+  <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div></div></div>
+  <div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Complete!</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats"><div>Score <strong id="gFinalScore">0</strong></div><div>Mastery <strong id="gFinalPct">0%</strong></div></div>
+    <a href="../technology-and-media/index.html" class="game-btn primary" style="text-decoration:none;text-align:center;display:block;margin-bottom:8px">Next: Technology And Media &#8594;</a>
+    <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>window.LEVEL="a2";window.CHAPTER_ID="shopping-and-money";
+window.GAME_DATA={chapterId:"shopping-and-money",level:"a2",title:"Shopping & Money",storageKey:"wordplay_game_a2_shopping-and-money",items:[
+  {
+    "id": "receipt",
+    "term": "receipt",
+    "meaning": "a piece of paper showing what you bought and how much you paid",
+    "synonym": "/rɪˈsiːt/",
+    "example": "<b>Receipt</b>: Keep your receipt in case you want to return it.",
+    "completion": "Keep your ______ in case you want to return it.",
+    "answer": "receipt"
+  },
+  {
+    "id": "discount",
+    "term": "discount",
+    "meaning": "a reduction in the price of something",
+    "synonym": "/ˈdɪskʊʊnt/",
+    "example": "<b>Discount</b>: I got a 20% discount on the jacket.",
+    "completion": "I got a 20% ______ on the jacket.",
+    "answer": "discount"
+  },
+  {
+    "id": "refund",
+    "term": "refund",
+    "meaning": "money that is given back when you return something",
+    "synonym": "/ˈriːfʊnd/",
+    "example": "<b>Refund</b>: I asked for a refund because the shirt was damaged.",
+    "completion": "I asked for a ______ because the shirt was damaged.",
+    "answer": "refund"
+  },
+  {
+    "id": "budget",
+    "term": "budget",
+    "meaning": "the amount of money you plan to spend",
+    "synonym": "/ˈbʊdʒɪt/",
+    "example": "<b>Budget</b>: I have a budget of €100 for Christmas gifts.",
+    "completion": "I have a ______ of €100 for Christmas gifts.",
+    "answer": "budget"
+  },
+  {
+    "id": "cashback",
+    "term": "cashback",
+    "meaning": "money you get back after a purchase, or cash from a card at a shop",
+    "synonym": "/ˈkæʃbæk/",
+    "example": "<b>Cashback</b>: Can I get cashback with this card?",
+    "completion": "Can I get ______ with this card?",
+    "answer": "cashback"
+  },
+  {
+    "id": "bargain",
+    "term": "bargain",
+    "meaning": "something that costs less than usual; a good deal",
+    "synonym": "/ˈbɑːɡɪn/",
+    "example": "<b>Bargain</b>: This coat was a real bargain — only €30!",
+    "completion": "This coat was a real ______ — only €30!",
+    "answer": "bargain"
+  },
+  {
+    "id": "invoice",
+    "term": "invoice",
+    "meaning": "a document asking for payment for goods or services",
+    "synonym": "/ˈɪnvɔɪs/",
+    "example": "<b>Invoice</b>: Please send me an invoice for the work.",
+    "completion": "Please send me an ______ for the work.",
+    "answer": "invoice"
+  },
+  {
+    "id": "currency",
+    "term": "currency",
+    "meaning": "the system of money used in a country",
+    "synonym": "/ˈkʊrənsi/",
+    "example": "<b>Currency</b>: The currency in Japan is the yen.",
+    "completion": "The ______ in Japan is the yen.",
+    "answer": "currency"
+  },
+  {
+    "id": "transaction",
+    "term": "transaction",
+    "meaning": "an act of buying or selling something",
+    "synonym": "/trænˈzækʃən/",
+    "example": "<b>Transaction</b>: The transaction took three days to process.",
+    "completion": "The ______ took three days to process.",
+    "answer": "transaction"
+  },
+  {
+    "id": "affordable",
+    "term": "affordable",
+    "meaning": "cheap enough for most people to buy",
+    "synonym": "/əˈfɔːrdəbəl/",
+    "example": "<b>Affordable</b>: We need more affordable housing in this city.",
+    "completion": "We need more ______ housing in this city.",
+    "answer": "affordable"
+  }
+]};
+</script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body></html>

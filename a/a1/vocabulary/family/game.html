@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A1 Vocab · Family — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../../index.html" class="back back-link">A1 Vocabulary</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">A1</a><span>›</span><a href="../index.html">Vocabulary</a><span>›</span><strong>Family</strong></div>
+  <div class="chapter-num">V1</div>
+  <h1>Family</h1>
+  <p class="chapter-subtitle">Parents, siblings, relatives · family verbs</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">Family</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / 10 mastered</div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Resume</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Start over</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Start</button>
+  </div></div>
+  <div id="gamePlay" class="game-screen"><div class="game-play-card">
+    <div class="game-top-bar"><div class="game-progress-wrap"><div class="game-progress-bar" id="gProgressBar" style="width:0%"></div></div>
+    <div class="game-top-stats"><span>Score <strong id="gScore">0</strong></span><span>Streak <strong id="gStreak">0</strong></span></div></div>
+    <div id="gModeTag" class="game-mode-tag"></div>
+    <div id="gTerm" class="game-term"></div><div id="gPrompt" class="game-prompt"></div>
+    <div id="gOptions" class="game-options"></div><div id="gFeedback" class="game-feedback"></div>
+    <div id="gExample" class="game-example" style="display:none"></div>
+    <div class="game-btn-row">
+          <a href="../food/index.html" class="game-btn primary" style="text-decoration:none;text-align:center">Next: Food and Drink &#8594;</a>
+                <button id="gBtnHint" class="game-btn ghost">Hint [H]</button>
+      <button id="gBtnKnow" class="game-btn know" style="display:none">I know this [K]</button>
+      <button id="gBtnReveal" class="game-btn ghost">Reveal</button>
+      <button id="gBtnNext" class="game-btn primary" style="display:none">Next →</button>
+    </div>
+    <div class="game-progress-txt" id="gProgressTxt">0 / 10 mastered</div>
+    <button id="gBtnSaveQuit" class="game-btn ghost" style="margin-top:12px;width:100%">Save &amp; quit</button>
+  </div>
+  <div class="game-ref-panel"><button id="gRefToggle" class="game-ref-head">▼ Reference</button>
+  <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div></div></div>
+  <div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Complete!</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats">
+      <div>Score <strong id="gFinalScore">0</strong></div>
+      <div>Best streak <strong id="gFinalStreak">0</strong></div>
+      <div>Mastery <strong id="gFinalPct">0%</strong></div>
+    </div>
+    <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>window.LEVEL="a1";window.CHAPTER_ID="family";
+window.GAME_DATA={chapterId:"family",level:"a1",title:"Family",storageKey:"wordplay_game_a1_family",items:[
+  {
+    "id": "mother",
+    "term": "mother",
+    "meaning": "a female parent",
+    "synonym": "/ˈmʌðər/",
+    "example": "<b>Mother</b> — My mother is a teacher.",
+    "completion": "My _____ is a teacher.",
+    "answer": "mother"
+  },
+  {
+    "id": "father",
+    "term": "father",
+    "meaning": "a male parent",
+    "synonym": "/ˈfɑːðər/",
+    "example": "<b>Father</b> — My father works in a hospital.",
+    "completion": "My _____ works in a hospital.",
+    "answer": "father"
+  },
+  {
+    "id": "sister",
+    "term": "sister",
+    "meaning": "a female sibling",
+    "synonym": "/ˈsɪstər/",
+    "example": "<b>Sister</b> — I have one sister. She is 12.",
+    "completion": "I have one _____. She is 12.",
+    "answer": "sister"
+  },
+  {
+    "id": "brother",
+    "term": "brother",
+    "meaning": "a male sibling",
+    "synonym": "/ˈbrʌðər/",
+    "example": "<b>Brother</b> — My brother plays football.",
+    "completion": "My _____ plays football.",
+    "answer": "brother"
+  },
+  {
+    "id": "grandmother",
+    "term": "grandmother",
+    "meaning": "a parent's mother",
+    "synonym": "/ˈɡrænˌmʌðər/",
+    "example": "<b>Grandmother</b> — My grandmother lives in the country.",
+    "completion": "My _____ lives in the country.",
+    "answer": "grandmother"
+  },
+  {
+    "id": "grandfather",
+    "term": "grandfather",
+    "meaning": "a parent's father",
+    "synonym": "/ˈɡrænˌfɑːðər/",
+    "example": "<b>Grandfather</b> — My grandfather is 75 years old.",
+    "completion": "My _____ is 75 years old.",
+    "answer": "grandfather"
+  },
+  {
+    "id": "aunt",
+    "term": "aunt",
+    "meaning": "a parent's sister",
+    "synonym": "/ɑːnt/",
+    "example": "<b>Aunt</b> — My aunt has three children.",
+    "completion": "My _____ has three children.",
+    "answer": "aunt"
+  },
+  {
+    "id": "uncle",
+    "term": "uncle",
+    "meaning": "a parent's brother",
+    "synonym": "/ˈʌŋkəl/",
+    "example": "<b>Uncle</b> — My uncle is very funny.",
+    "completion": "My _____ is very funny.",
+    "answer": "uncle"
+  },
+  {
+    "id": "cousin",
+    "term": "cousin",
+    "meaning": "a child of an aunt or uncle",
+    "synonym": "/ˈkʌzən/",
+    "example": "<b>Cousin</b> — I have six cousins.",
+    "completion": "I have six _____s.",
+    "answer": "cousin"
+  },
+  {
+    "id": "husband",
+    "term": "husband",
+    "meaning": "a married man",
+    "synonym": "/ˈhʌzbənd/",
+    "example": "<b>Husband</b> — Her husband is a doctor.",
+    "completion": "Her _____ is a doctor.",
+    "answer": "husband"
+  }
+]};
+</script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body></html>

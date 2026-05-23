@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>FCE Mock Exam 3 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+<style>
+.mock-container { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+.timer-bar { position: sticky; top: 0; background: var(--ink); color: var(--paper); padding: 12px 16px; border-radius: 0 0 8px 8px; display: flex; justify-content: space-between; align-items: center; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,.15); margin-bottom: 24px; }
+.timer-display { font-family: var(--font-sans); font-size: 1.1rem; font-weight: 700; letter-spacing: .5px; }
+.timer-display.warning { color: #FFD700; }
+.timer-display.critical { color: #FF6B6B; animation: pulse 1s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .6; } }
+.timer-meta { font-family: var(--font-sans); font-size: .72rem; opacity: .85; letter-spacing: 1px; text-transform: uppercase; }
+.start-screen, .results-screen { background: var(--paper); border: 1px solid var(--hairline); border-radius: 8px; padding: 28px; margin-bottom: 24px; }
+.start-screen h2, .results-screen h2 { font-size: 1.4rem; margin: 0 0 12px; }
+.start-btn { display: inline-block; padding: 12px 28px; background: var(--ink); color: var(--paper); border: 0; font-family: var(--font-sans); font-size: .82rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; border-radius: 4px; cursor: pointer; margin-top: 12px; }
+.start-btn:hover { opacity: .85; }
+.exam-area { display: none; }
+.exam-area.active { display: block; }
+.part-section { background: var(--paper); border: 1px solid var(--hairline); border-radius: 8px; padding: 24px; margin-bottom: 28px; }
+.part-header { font-family: var(--font-sans); font-size: .68rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--amber); margin-bottom: 6px; }
+.part-section h2 { font-size: 1.2rem; margin: 0 0 8px; color: var(--ink); }
+.part-section .instructions { font-size: .85rem; color: var(--muted); margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--hairline); }
+.text-title { font-weight: 700; text-align: center; font-size: 1.05rem; margin: 12px 0; color: var(--ink); }
+.text-content { font-size: .92rem; line-height: 1.7; color: var(--ink); margin-bottom: 18px; }
+.text-content p { margin: 0 0 12px; }
+.mc-q { display: flex; gap: 12px; padding: 10px 0; border-top: 1px solid var(--hairline); }
+.mc-q .q-num { font-family: var(--font-sans); font-size: .85rem; font-weight: 800; color: var(--amber); min-width: 28px; }
+.mc-q .opts { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.mc-q .q-text { flex: 1; }
+.mc-q .q-text + .opts { margin-top: 8px; }
+.opt { display: flex; gap: 6px; align-items: flex-start; padding: 4px 0; cursor: pointer; font-size: .9rem; }
+.opt:hover { background: rgba(184,134,11,.05); }
+.opt-letter { font-family: var(--font-sans); font-weight: 700; color: var(--amber); min-width: 18px; }
+.opt input { margin-top: 4px; }
+.cloze-input { width: 110px; padding: 2px 8px; border: 1.5px solid var(--hairline); border-radius: 3px; font-family: var(--font-sans); font-size: .82rem; background: var(--cream-deep); }
+.cloze-input:focus { outline: none; border-color: var(--amber); }
+.kw-input { width: 100%; max-width: 380px; padding: 4px 10px; border: 1.5px solid var(--hairline); border-radius: 3px; font-family: var(--font-sans); font-size: .85rem; background: var(--cream-deep); }
+.word-form-line { display: flex; padding: 10px 0; border-top: 1px solid var(--hairline); align-items: flex-start; gap: 14px; }
+.wf-text { flex: 1; font-size: .92rem; line-height: 1.6; }
+.wf-prompt { font-family: var(--font-sans); font-size: .75rem; font-weight: 800; letter-spacing: 1px; color: var(--muted); padding: 4px 10px; border: 1px solid var(--hairline); border-radius: 3px; min-width: 90px; text-align: center; }
+.kw-q { display: flex; gap: 12px; padding: 14px 0; border-top: 1px solid var(--hairline); }
+.kw-content { flex: 1; }
+.kw-content p { margin: 0 0 6px; font-size: .9rem; }
+.kw-key { font-family: var(--font-sans); font-weight: 800; letter-spacing: 1px; color: var(--amber); }
+.gap-select, .match-select { padding: 4px 10px; border: 1.5px solid var(--hairline); border-radius: 3px; font-family: var(--font-sans); font-weight: 700; background: var(--cream-deep); color: var(--ink); cursor: pointer; }
+.gap-option { display: flex; gap: 12px; padding: 10px 0; border-top: 1px solid var(--hairline); font-size: .88rem; line-height: 1.5; }
+.mm-q { display: flex; gap: 12px; align-items: center; padding: 8px 0; border-top: 1px solid var(--hairline); font-size: .88rem; }
+.mm-q .q-text { flex: 1; }
+.mm-text { display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid var(--hairline); }
+.mm-letter { font-family: var(--font-sans); font-weight: 800; color: var(--amber); font-size: 1rem; min-width: 24px; }
+.mm-body { flex: 1; font-size: .88rem; line-height: 1.55; }
+.submit-area { background: var(--ink); color: var(--paper); border-radius: 8px; padding: 20px; text-align: center; margin: 32px 0; }
+.submit-area p { margin: 0 0 12px; opacity: .9; }
+.submit-btn { display: inline-block; padding: 14px 36px; background: var(--amber); color: var(--ink); border: 0; font-family: var(--font-sans); font-size: .9rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; border-radius: 4px; cursor: pointer; }
+.submit-btn:hover { opacity: .9; }
+.results-screen { display: none; }
+.results-screen.active { display: block; }
+.score-big { font-size: 3rem; font-weight: 800; color: var(--amber); text-align: center; font-family: Georgia, serif; }
+.score-label { font-family: var(--font-sans); font-size: .72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); text-align: center; margin-bottom: 18px; }
+.part-breakdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin: 20px 0; }
+.part-score { background: var(--cream-deep); border: 1px solid var(--hairline); border-radius: 6px; padding: 12px; text-align: center; }
+.part-score .name { font-family: var(--font-sans); font-size: .65rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+.part-score .val { font-size: 1.3rem; font-weight: 700; color: var(--ink); margin-top: 4px; }
+.part-score .pct { font-family: var(--font-sans); font-size: .72rem; color: var(--muted); margin-top: 2px; }
+.exam-area input:disabled, .exam-area select:disabled { background: rgba(184,134,11,.05); }
+.correct-mark { color: var(--green); font-weight: 700; margin-left: 6px; }
+.wrong-mark { color: var(--red); font-weight: 700; margin-left: 6px; }
+.show-answer { font-family: var(--font-sans); font-size: .75rem; color: var(--muted); margin-top: 4px; padding-left: 28px; }
+.show-answer strong { color: var(--green); }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../index.html" class="back back-link">FCE</a>
+    <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  </div>
+</header>
+<div class="mock-container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">B2</a><span>›</span><a href="../index.html">FCE</a><span>›</span><strong>Mock Exam 3</strong></div>
+  <div id="startScreen" class="start-screen">
+    <div class="part-header">FCE Mock Exam 3</div>
+    <h2>Reading &amp; Use of English — Mock 3</h2>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Duration:</strong> 75 minutes &nbsp;·&nbsp; <strong>Questions:</strong> 52 across 7 parts</p>
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:18px">Timed or practice mode. Save &amp; resume supported.</p>
+    <button class="start-btn" onclick="startExam(false)">Start exam (timed)</button>
+    <button class="start-btn" onclick="startExam(true)" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Practice mode</button>
+    <div id="resumeSection" style="display:none;margin-top:18px;padding:14px;background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px">
+      <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--amber);margin-bottom:6px">Saved progress found</div>
+      <div id="resumeInfo" style="font-size:.88rem;margin-bottom:10px"></div>
+      <button class="start-btn" onclick="resumeExam()" style="background:var(--amber);color:var(--ink)">Resume</button>
+      <button class="start-btn" onclick="clearSave()" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Start fresh</button>
+    </div>
+    <div id="prevAttempt" style="display:none;margin-top:12px;font-family:var(--font-sans);font-size:.78rem;color:var(--muted)">Previous best: <strong id="prevScore"></strong></div>
+  </div>
+
+  <div id="examArea" class="exam-area">
+    <div class="timer-bar">
+      <div class="timer-display" id="timerDisplay">75:00</div>
+      <div class="timer-meta">Time remaining</div>
+      <button onclick="saveProgress()" style="background:transparent;border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.85);font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border-radius:3px;cursor:pointer">Save &amp; quit</button>
+    </div>
+
+    <!-- PART 1 -->
+    <div class="part-section">
+      <div class="part-header">Part 1 — Multiple-choice Cloze</div>
+      <h2>Questions 1–8</h2>
+      <p class="instructions">Read the text and decide which answer (A, B, C or D) best fits each gap.</p>
+      <div class="text-title">The science of sleep</div>
+      <div class="text-content"><p>For most of human history, sleep was poorly (<strong style='color:var(--amber)'>1</strong>) _____ by scientists. People simply accepted that they became tired and needed to rest. But recent decades have (<strong style='color:var(--amber)'>2</strong>) _____ a revolution in our understanding of what happens while we sleep.</p><p>It turns out that sleep is a highly (<strong style='color:var(--amber)'>3</strong>) _____ process. The brain goes through several distinct stages, each serving a different (<strong style='color:var(--amber)'>4</strong>) _____. During the deepest phase, the body repairs tissue and strengthens the immune system. During a lighter phase known as REM sleep, the brain (<strong style='color:var(--amber)'>5</strong>) _____ information gathered during the day, consolidating memories.</p><p>Lack of sleep has serious (<strong style='color:var(--amber)'>6</strong>) _____. Even losing one hour a night for a week can significantly (<strong style='color:var(--amber)'>7</strong>) _____ concentration, mood, and physical performance. Yet millions of people worldwide regularly (<strong style='color:var(--amber)'>8</strong>) _____ fewer than the recommended seven hours.</p></div>
+      <div class="mc-q"><div class="q-num">1</div><div class="opts"><label class="opt"><input type="radio" name="q1" value="recognised"> <span class="opt-letter">A</span> <span>recognised</span></label><label class="opt"><input type="radio" name="q1" value="understood"> <span class="opt-letter">B</span> <span>understood</span></label><label class="opt"><input type="radio" name="q1" value="believed"> <span class="opt-letter">C</span> <span>believed</span></label><label class="opt"><input type="radio" name="q1" value="noticed"> <span class="opt-letter">D</span> <span>noticed</span></label></div></div><div class="mc-q"><div class="q-num">2</div><div class="opts"><label class="opt"><input type="radio" name="q2" value="brought"> <span class="opt-letter">A</span> <span>brought</span></label><label class="opt"><input type="radio" name="q2" value="taken"> <span class="opt-letter">B</span> <span>taken</span></label><label class="opt"><input type="radio" name="q2" value="produced"> <span class="opt-letter">C</span> <span>produced</span></label><label class="opt"><input type="radio" name="q2" value="seen"> <span class="opt-letter">D</span> <span>seen</span></label></div></div><div class="mc-q"><div class="q-num">3</div><div class="opts"><label class="opt"><input type="radio" name="q3" value="active"> <span class="opt-letter">A</span> <span>active</span></label><label class="opt"><input type="radio" name="q3" value="busy"> <span class="opt-letter">B</span> <span>busy</span></label><label class="opt"><input type="radio" name="q3" value="lively"> <span class="opt-letter">C</span> <span>lively</span></label><label class="opt"><input type="radio" name="q3" value="moving"> <span class="opt-letter">D</span> <span>moving</span></label></div></div><div class="mc-q"><div class="q-num">4</div><div class="opts"><label class="opt"><input type="radio" name="q4" value="aim"> <span class="opt-letter">A</span> <span>aim</span></label><label class="opt"><input type="radio" name="q4" value="role"> <span class="opt-letter">B</span> <span>role</span></label><label class="opt"><input type="radio" name="q4" value="target"> <span class="opt-letter">C</span> <span>target</span></label><label class="opt"><input type="radio" name="q4" value="task"> <span class="opt-letter">D</span> <span>task</span></label></div></div><div class="mc-q"><div class="q-num">5</div><div class="opts"><label class="opt"><input type="radio" name="q5" value="deals"> <span class="opt-letter">A</span> <span>deals</span></label><label class="opt"><input type="radio" name="q5" value="sorts"> <span class="opt-letter">B</span> <span>sorts</span></label><label class="opt"><input type="radio" name="q5" value="handles"> <span class="opt-letter">C</span> <span>handles</span></label><label class="opt"><input type="radio" name="q5" value="processes"> <span class="opt-letter">D</span> <span>processes</span></label></div></div><div class="mc-q"><div class="q-num">6</div><div class="opts"><label class="opt"><input type="radio" name="q6" value="outcomes"> <span class="opt-letter">A</span> <span>outcomes</span></label><label class="opt"><input type="radio" name="q6" value="results"> <span class="opt-letter">B</span> <span>results</span></label><label class="opt"><input type="radio" name="q6" value="effects"> <span class="opt-letter">C</span> <span>effects</span></label><label class="opt"><input type="radio" name="q6" value="consequences"> <span class="opt-letter">D</span> <span>consequences</span></label></div></div><div class="mc-q"><div class="q-num">7</div><div class="opts"><label class="opt"><input type="radio" name="q7" value="affect"> <span class="opt-letter">A</span> <span>affect</span></label><label class="opt"><input type="radio" name="q7" value="damage"> <span class="opt-letter">B</span> <span>damage</span></label><label class="opt"><input type="radio" name="q7" value="harm"> <span class="opt-letter">C</span> <span>harm</span></label><label class="opt"><input type="radio" name="q7" value="reduce"> <span class="opt-letter">D</span> <span>reduce</span></label></div></div><div class="mc-q"><div class="q-num">8</div><div class="opts"><label class="opt"><input type="radio" name="q8" value="get"> <span class="opt-letter">A</span> <span>get</span></label><label class="opt"><input type="radio" name="q8" value="have"> <span class="opt-letter">B</span> <span>have</span></label><label class="opt"><input type="radio" name="q8" value="take"> <span class="opt-letter">C</span> <span>take</span></label><label class="opt"><input type="radio" name="q8" value="make"> <span class="opt-letter">D</span> <span>make</span></label></div></div>
+    </div>
+
+    <!-- PART 2 -->
+    <div class="part-section">
+      <div class="part-header">Part 2 — Open Cloze</div>
+      <h2>Questions 9–16</h2>
+      <p class="instructions">Think of the word which best fits each gap. Use only one word in each gap.</p>
+      <div class="text-title">The appeal of long-distance hiking</div>
+      <div class="text-content"><p>In recent years, long-distance hiking has (<strong style='color:var(--amber)'>9</strong>) <input type='text' class='cloze-input' data-q='9' maxlength='20' autocomplete='off' spellcheck='false'> in popularity across the world. Trails that (<strong style='color:var(--amber)'>10</strong>) <input type='text' class='cloze-input' data-q='10' maxlength='20' autocomplete='off' spellcheck='false'> once taken weeks to complete by a handful of experienced walkers are now followed each year by thousands of people of (<strong style='color:var(--amber)'>11</strong>) <input type='text' class='cloze-input' data-q='11' maxlength='20' autocomplete='off' spellcheck='false'> ages and fitness levels.</p><p>The appeal is (<strong style='color:var(--amber)'>12</strong>) <input type='text' class='cloze-input' data-q='12' maxlength='20' autocomplete='off' spellcheck='false'> to understand. Hiking offers a rare chance to disconnect (<strong style='color:var(--amber)'>13</strong>) <input type='text' class='cloze-input' data-q='13' maxlength='20' autocomplete='off' spellcheck='false'> technology, reconnect with nature, and push personal boundaries. Many walkers report that completing a long trail gives (<strong style='color:var(--amber)'>14</strong>) <input type='text' class='cloze-input' data-q='14' maxlength='20' autocomplete='off' spellcheck='false'> a sense of achievement that they struggle to find in everyday life.</p><p>Of course, long-distance hiking is not (<strong style='color:var(--amber)'>15</strong>) <input type='text' class='cloze-input' data-q='15' maxlength='20' autocomplete='off' spellcheck='false'> challenge. Blisters, fatigue, and unexpected weather are common companions on any serious trail. Yet it is (<strong style='color:var(--amber)'>16</strong>) <input type='text' class='cloze-input' data-q='16' maxlength='20' autocomplete='off' spellcheck='false'> these difficulties that many hikers say the experience becomes most meaningful.</p></div>
+    </div>
+
+    <!-- PART 3 -->
+    <div class="part-section">
+      <div class="part-header">Part 3 — Word Formation</div>
+      <h2>Questions 17–24</h2>
+      <p class="instructions">Use the word given in capitals to form a word that fits in the gap.</p>
+      <div class="text-title">The growing world of competitive gaming</div>
+      <div class="word-form-line"><div class="wf-text">Competitive gaming — often called esports — has undergone a (<strong style='color:var(--amber)'>17</strong>) <input type='text' class='cloze-input' data-q='17' maxlength='25' autocomplete='off' spellcheck='false'></div><div class="wf-prompt">REMARK</div></div><div class="word-form-line"><div class="wf-text">transformation over the past decade. What was once a (<strong style='color:var(--amber)'>18</strong>) <input type='text' class='cloze-input' data-q='18' maxlength='25' autocomplete='off' spellcheck='false'> hobby</div><div class="wf-prompt">NICHE</div></div><div class="word-form-line"><div class="wf-text">enjoyed by a small community has evolved into a (<strong style='color:var(--amber)'>19</strong>) <input type='text' class='cloze-input' data-q='19' maxlength='25' autocomplete='off' spellcheck='false'> industry</div><div class="wf-prompt">GLOBE</div></div><div class="word-form-line"><div class="wf-text">worth billions. Professional players now compete for prizes of (<strong style='color:var(--amber)'>20</strong>) <input type='text' class='cloze-input' data-q='20' maxlength='25' autocomplete='off' spellcheck='false'></div><div class="wf-prompt">CONSIDER</div></div><div class="word-form-line"><div class="wf-text">size in front of audiences that would (<strong style='color:var(--amber)'>21</strong>) <input type='text' class='cloze-input' data-q='21' maxlength='25' autocomplete='off' spellcheck='false'> many traditional sports.</div><div class="wf-prompt">RIVAL</div></div><div class="word-form-line"><div class="wf-text">Critics point to the (<strong style='color:var(--amber)'>22</strong>) <input type='text' class='cloze-input' data-q='22' maxlength='25' autocomplete='off' spellcheck='false'> of young people who spend excessive</div><div class="wf-prompt">DANGER</div></div><div class="word-form-line"><div class="wf-text">hours in front of screens, raising questions about physical (<strong style='color:var(--amber)'>23</strong>) <input type='text' class='cloze-input' data-q='23' maxlength='25' autocomplete='off' spellcheck='false'>.</div><div class="wf-prompt">HEALTHY</div></div><div class="word-form-line"><div class="wf-text">Yet supporters argue that the (<strong style='color:var(--amber)'>24</strong>) <input type='text' class='cloze-input' data-q='24' maxlength='25' autocomplete='off' spellcheck='false'> benefits of teamwork, strategy</div><div class="wf-prompt">COGNITION</div></div>
+    </div>
+
+    <!-- PART 4 -->
+    <div class="part-section">
+      <div class="part-header">Part 4 — Key Word Transformation</div>
+      <h2>Questions 25–30</h2>
+      <p class="instructions">Complete the second sentence using the word given. Use 2–5 words including the key word.</p>
+      <div class="kw-q"><div class="q-num">25</div><div class="kw-content"><p class="kw-first">People say that the director wrote the screenplay in just two weeks.</p><p class="kw-key">SAID</p><p class="kw-second">The director <input type=text class=kw-input data-q=25 maxlength=60 autocomplete=off spellcheck=false> the screenplay in just two weeks.</p></div></div><div class="kw-q"><div class="q-num">26</div><div class="kw-content"><p class="kw-first">She did not expect the exam to be so difficult.</p><p class="kw-key">TAKEN</p><p class="kw-second">She <input type=text class=kw-input data-q=26 maxlength=60 autocomplete=off spellcheck=false> by how difficult the exam was.</p></div></div><div class="kw-q"><div class="q-num">27</div><div class="kw-content"><p class="kw-first">The construction will begin as soon as the funding is confirmed.</p><p class="kw-key">ONCE</p><p class="kw-second">Construction <input type=text class=kw-input data-q=27 maxlength=60 autocomplete=off spellcheck=false> the funding is confirmed.</p></div></div><div class="kw-q"><div class="q-num">28</div><div class="kw-content"><p class="kw-first">Running is far better exercise than cycling, in my opinion.</p><p class="kw-key">NEARLY</p><p class="kw-second">Cycling is <input type=text class=kw-input data-q=28 maxlength=60 autocomplete=off spellcheck=false> as good exercise as running, in my opinion.</p></div></div><div class="kw-q"><div class="q-num">29</div><div class="kw-content"><p class="kw-first">He had never visited a country where he could not speak the language.</p><p class="kw-key">TIME</p><p class="kw-second">It <input type=text class=kw-input data-q=29 maxlength=60 autocomplete=off spellcheck=false> he had visited a country where he could not speak the language.</p></div></div><div class="kw-q"><div class="q-num">30</div><div class="kw-content"><p class="kw-first">The manager insisted that no one leave before the meeting ended.</p><p class="kw-key">ALLOWED</p><p class="kw-second">No one <input type=text class=kw-input data-q=30 maxlength=60 autocomplete=off spellcheck=false> before the meeting ended.</p></div></div>
+    </div>
+
+    <!-- PART 5 -->
+    <div class="part-section">
+      <div class="part-header">Part 5 — Multiple Choice</div>
+      <h2>Questions 31–36</h2>
+      <p class="instructions">Choose the answer which fits best according to the text.</p>
+      <div class="text-content"><p>The scientist who sculpts with light</p><p>For the first fifteen years of her career, Dr Hana Novak published peer-reviewed papers on optical physics. She attended conferences in Geneva, Tokyo, and Cape Town. She wore the same grey cardigan to every talk. And then, at the age of forty-three, she decided to become a sculptor.</p><p>Her colleagues were puzzled. Some were quietly dismissive. One mentor told her, not unkindly, that it seemed 'a waste of a perfectly good physicist'. Novak smiled and thanked him. She had expected this reaction, and it did not change anything. She had already rented the studio.</p><p>What Novak makes is difficult to describe in ordinary terms. Her sculptures are built from glass, fibre optic cable, and precisely positioned light sources. In the dark, they resemble bioluminescent sea creatures; in daylight, they are almost invisible. She spent two years learning glassblowing before she felt confident enough to produce work she was willing to show publicly. This period, she now says, was the most important of her life — more important, even, than her doctorate.</p><p>The science had not been abandoned, she is quick to point out. 'Everything I understand about refraction, wavelengths, and the behaviour of light in different media comes directly from the physics. I just stopped writing about it and started building with it.' When reviewers noted that her work displayed an unusually precise grasp of optics, she was amused rather than surprised.</p><p>Her first solo exhibition attracted modest attendance. The second sold out within a week. Critics praised what one described as 'a completely original visual language'. Novak, characteristically, was more interested in the technical problem she had not yet solved: how to create the impression of motion in a completely static object.</p><p>She has no plans to return to academic physics. The cardigan still hangs in her wardrobe. But the conference lanyards have been cleared out. She does not miss them.</p></div>
+      <div class="mc-q"><div class="q-num">31</div><div class="q-text">What is the writer's main purpose in the first paragraph?</div><div class="opts"><label class="opt"><input type="radio" name="q31" value="A"> <span class="opt-letter">A</span> <span>To suggest Novak had an unusual personality</span></label><label class="opt"><input type="radio" name="q31" value="B"> <span class="opt-letter">B</span> <span>To establish the contrast with what follows</span></label><label class="opt"><input type="radio" name="q31" value="C"> <span class="opt-letter">C</span> <span>To criticise academic life as monotonous</span></label><label class="opt"><input type="radio" name="q31" value="D"> <span class="opt-letter">D</span> <span>To explain why Novak left physics</span></label></div></div><div class="mc-q"><div class="q-num">32</div><div class="q-text">How did Novak respond to her mentor's reaction?</div><div class="opts"><label class="opt"><input type="radio" name="q32" value="A"> <span class="opt-letter">A</span> <span>She was hurt but hid it</span></label><label class="opt"><input type="radio" name="q32" value="B"> <span class="opt-letter">B</span> <span>She tried to change his mind</span></label><label class="opt"><input type="radio" name="q32" value="C"> <span class="opt-letter">C</span> <span>She had anticipated it and was unaffected</span></label><label class="opt"><input type="radio" name="q32" value="D"> <span class="opt-letter">D</span> <span>She found it insulting</span></label></div></div><div class="mc-q"><div class="q-num">33</div><div class="q-text">What does Novak say about the two years learning glassblowing?</div><div class="opts"><label class="opt"><input type="radio" name="q33" value="A"> <span class="opt-letter">A</span> <span>It was necessary but frustrating</span></label><label class="opt"><input type="radio" name="q33" value="B"> <span class="opt-letter">B</span> <span>It was more significant than any other period in her life</span></label><label class="opt"><input type="radio" name="q33" value="C"> <span class="opt-letter">C</span> <span>It was a step she could have skipped</span></label><label class="opt"><input type="radio" name="q33" value="D"> <span class="opt-letter">D</span> <span>It taught her that sculpture was harder than science</span></label></div></div><div class="mc-q"><div class="q-num">34</div><div class="q-text">What does Novak mean when she says she stopped writing about it and started building with it?</div><div class="opts"><label class="opt"><input type="radio" name="q34" value="A"> <span class="opt-letter">A</span> <span>She abandoned her scientific knowledge</span></label><label class="opt"><input type="radio" name="q34" value="B"> <span class="opt-letter">B</span> <span>She applied her scientific expertise in a new practical form</span></label><label class="opt"><input type="radio" name="q34" value="C"> <span class="opt-letter">C</span> <span>She found physics too abstract to continue</span></label><label class="opt"><input type="radio" name="q34" value="D"> <span class="opt-letter">D</span> <span>She believed sculpture was more important than science</span></label></div></div><div class="mc-q"><div class="q-num">35</div><div class="q-text">What did critics praise about her second exhibition?</div><div class="opts"><label class="opt"><input type="radio" name="q35" value="A"> <span class="opt-letter">A</span> <span>The commercial success of the show</span></label><label class="opt"><input type="radio" name="q35" value="B"> <span class="opt-letter">B</span> <span>The use of unusual materials</span></label><label class="opt"><input type="radio" name="q35" value="C"> <span class="opt-letter">C</span> <span>Her individual and recognisable artistic style</span></label><label class="opt"><input type="radio" name="q35" value="D"> <span class="opt-letter">D</span> <span>Her understanding of physics</span></label></div></div><div class="mc-q"><div class="q-num">36</div><div class="q-text">What does the final paragraph suggest about Novak?</div><div class="opts"><label class="opt"><input type="radio" name="q36" value="A"> <span class="opt-letter">A</span> <span>She regrets leaving academic life</span></label><label class="opt"><input type="radio" name="q36" value="B"> <span class="opt-letter">B</span> <span>She has fully committed to her new direction</span></label><label class="opt"><input type="radio" name="q36" value="C"> <span class="opt-letter">C</span> <span>She plans to combine physics and art in future</span></label><label class="opt"><input type="radio" name="q36" value="D"> <span class="opt-letter">D</span> <span>She misses attending conferences</span></label></div></div>
+    </div>
+
+    <!-- PART 6 -->
+    <div class="part-section">
+      <div class="part-header">Part 6 — Gapped Text</div>
+      <h2>Questions 37–42</h2>
+      <p class="instructions">Choose from sentences A–G the one which fits each gap. There is one extra sentence.</p>
+      <div class="text-content"><p>Twenty years ago, traditional craft skills were widely regarded as relics of the past. Today, in a striking reversal, many of those same crafts are thriving.</p><p>The resurgence began quietly. Small workshops began to appear in city centres, offering courses in bookbinding, weaving, and blacksmithing. <strong style="color:var(--amber)">(37)</strong> <select class="gap-select" data-q="37"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select> At first, organisers expected only retired hobbyists. Instead, the typical participant turned out to be a professional in their thirties with a demanding desk job.</p><p>Social media played an unexpected role in accelerating this trend. <strong style="color:var(--amber)">(38)</strong> <select class="gap-select" data-q="38"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select> Photographs of hand-thrown pottery attracted tens of thousands of followers, creating communities of enthusiasts.</p><p>For many participants, the appeal is partly psychological. <strong style="color:var(--amber)">(39)</strong> <select class="gap-select" data-q="39"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select> When the product of a day's work is visible and tangible, satisfaction follows more immediately than it does after sending another round of emails.</p><p>Craft organisations have taken note. <strong style="color:var(--amber)">(40)</strong> <select class="gap-select" data-q="40"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select> Membership of guilds that were once in terminal decline has rebounded dramatically.</p><p>Not everyone is optimistic about the long-term prospects. <strong style="color:var(--amber)">(41)</strong> <select class="gap-select" data-q="41"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select> Some argue that the trend is more about lifestyle aspiration than genuine commitment to craft.</p><p>The craftspeople themselves are more sanguine. <strong style="color:var(--amber)">(42)</strong> <select class="gap-select" data-q="42"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select> Even if only a small proportion of today's enthusiasts remain committed in ten years' time, that group will be large enough to sustain the tradition.</p></div>
+      <div style="margin-top:20px;padding-top:16px;border-top:2px solid var(--hairline)">
+        <div style="font-family:var(--font-sans);font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Options (one is extra):</div>
+        <div class="gap-option"><div class="opt-letter">A</div><div>Critics point to the high dropout rate in evening classes as evidence of shallow engagement.</div></div><div class="gap-option"><div class="opt-letter">B</div><div>They argue that every revival in the history of craft began in exactly this way.</div></div><div class="gap-option"><div class="opt-letter">C</div><div>In a world dominated by abstract digital tasks, the making of a physical object offers a rare sense of completion.</div></div><div class="gap-option"><div class="opt-letter">D</div><div>These filled up almost immediately, often with long waiting lists.</div></div><div class="gap-option"><div class="opt-letter">E</div><div>They began to run courses aimed specifically at corporate teams looking for creative bonding activities.</div></div><div class="gap-option"><div class="opt-letter">F</div><div>Amateur makers began to document their projects online, sharing techniques and finished pieces.</div></div><div class="gap-option"><div class="opt-letter">G</div><div>Major museums have responded by opening dedicated craft galleries.</div></div>
+      </div>
+    </div>
+
+    <!-- PART 7 -->
+    <div class="part-section">
+      <div class="part-header">Part 7 — Multiple Matching</div>
+      <h2>Questions 43–52</h2>
+      <p class="instructions">Choose from profiles A–D. Profiles may be chosen more than once.</p>
+      <div style="font-weight:700;margin:14px 0 8px;color:var(--ink)">Which writer:</div>
+      <div class="mm-q"><div class="q-num">43</div><div class="q-text">who describes writing as a way of working through uncertainty?</div><select class="match-select" data-q="43"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div><div class="mm-q"><div class="q-num">44</div><div class="q-text">who takes a methodical approach to the writing process?</div><select class="match-select" data-q="44"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div><div class="mm-q"><div class="q-num">45</div><div class="q-text">who admits to struggling with self-doubt?</div><select class="match-select" data-q="45"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div><div class="mm-q"><div class="q-num">46</div><div class="q-text">who writes in a public space?</div><select class="match-select" data-q="46"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div><div class="mm-q"><div class="q-num">47</div><div class="q-text">who produces work in another language?</div><select class="match-select" data-q="47"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div><div class="mm-q"><div class="q-num">48</div><div class="q-text">whose background has shaped the themes of their work?</div><select class="match-select" data-q="48"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div><div class="mm-q"><div class="q-num">49</div><div class="q-text">who finds the ending the hardest part?</div><select class="match-select" data-q="49"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div><div class="mm-q"><div class="q-num">50</div><div class="q-text">who deliberately avoids reading reviews?</div><select class="match-select" data-q="50"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div><div class="mm-q"><div class="q-num">51</div><div class="q-text">who sets strict daily targets?</div><select class="match-select" data-q="51"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div><div class="mm-q"><div class="q-num">52</div><div class="q-text">who describes a specific ritual before writing?</div><select class="match-select" data-q="52"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div>
+      <div style="margin-top:24px;padding-top:18px;border-top:2px solid var(--hairline)"><div class="mm-text"><div class="mm-letter">A</div><div class="mm-body"><strong>Callum Shaw</strong> grew up in a fishing village on the west coast of Scotland, and the sea appears in almost everything he writes. He writes at a desk every day without exception, considers anything under five hundred words a wasted morning, and plans his novels in obsessive detail before beginning.</div></div><div class="mm-text"><div class="mm-letter">B</div><div class="mm-body"><strong>Yumi Tran</strong> was born in Vietnam and writes in both Vietnamese and French. For Tran, writing is less an act of expression than an act of inquiry — a way of exploring what she does not yet understand. 'I write toward the answer,' she says.</div></div><div class="mm-text"><div class="mm-letter">C</div><div class="mm-body"><strong>Priya Mehta</strong> approaches each new project with the same paralysing sense that she will not be able to do it. She is particularly afraid of conclusions. 'Endings are where I lose most books,' she admits.</div></div><div class="mm-text"><div class="mm-letter">D</div><div class="mm-body"><strong>Marcus Obi</strong> writes in a café near his flat — always the same café, always the same corner table. Before he begins, he drinks one espresso and reads a page of whichever novel he is currently reading. He deliberately avoids reading reviews of his work.</div></div></div>
+    </div>
+
+    <div class="submit-area">
+      <p>Ready to submit?</p>
+      <button class="submit-btn" onclick="submitExam()">Submit exam</button>
+    </div>
+  </div>
+
+  <div id="resultsScreen" class="results-screen">
+    <div class="part-header">Your results</div>
+    <h2>Mock Exam 3 — Complete</h2>
+    <div class="score-big" id="scoreFinal">0 / 52</div>
+    <div class="score-label" id="scorePctLabel">0%</div>
+    <div id="timeUsed" style="text-align:center;font-family:var(--font-sans);font-size:.78rem;color:var(--muted);margin-bottom:20px"></div>
+    <div class="part-breakdown" id="partBreakdown"></div>
+    <p style="font-size:.85rem;color:var(--ink);margin:16px 0 4px"><strong>Score guide:</strong> 42–52 = strong B2 · 32–41 = passing grade · below 32 = more practice needed</p>
+    <div style="text-align:center;display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px">
+      <button class="start-btn" onclick="reviewAnswers()">Review answers</button>
+      <a href="../index.html" class="start-btn" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);text-decoration:none;display:inline-block">Back to FCE</a>
+    </div>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>
+const ANSWERS = {"part1": {"1": "understood", "2": "seen", "3": "active", "4": "role", "5": "processes", "6": "consequences", "7": "affect", "8": "get"}, "part2": {"9": {"answer": "grown", "accept": ["GROWN", "risen"]}, "10": {"answer": "once", "accept": ["ONCE"]}, "11": {"answer": "all", "accept": ["ALL"]}, "12": {"answer": "easy", "accept": ["EASY", "simple"]}, "13": {"answer": "from", "accept": ["FROM"]}, "14": {"answer": "them", "accept": ["THEM"]}, "15": {"answer": "without", "accept": ["WITHOUT"]}, "16": {"answer": "through", "accept": ["THROUGH", "amid"]}}, "part3": {"17": "remarkable", "18": "niche", "19": "global", "20": "considerable", "21": "rival", "22": "danger", "23": "health", "24": "cognitive"}, "part4": {"25": {"answer": "is said to have written", "accept": ["is said to have written"]}, "26": {"answer": "was taken aback", "accept": ["was taken aback", "was taken by surprise"]}, "27": {"answer": "will begin once", "accept": ["will begin once", "will start once"]}, "28": {"answer": "not nearly", "accept": ["not nearly"]}, "29": {"answer": "was the first time", "accept": ["was the first time"]}, "30": {"answer": "was allowed to leave", "accept": ["was allowed to leave"]}}, "part5": {"31": "B", "32": "C", "33": "B", "34": "B", "35": "C", "36": "B"}, "part6": {"37": "D", "38": "F", "39": "C", "40": "G", "41": "A", "42": "B"}, "part7": {"43": "B", "44": "A", "45": "C", "46": "D", "47": "B", "48": "A", "49": "C", "50": "D", "51": "A", "52": "D"}};
+const DURATION_MS = 75*60*1000;
+const SAVE_KEY='wordplay_fce_mock_3', BEST_KEY='wordplay_fce_mock_3_best';
+let startTime=null,timerInterval=null,submitted=false,practiceMode=false;
+function startExam(p){practiceMode=p||false;clearSave();_startExam();}
+function resumeExam(){const s=getSave();if(!s)return;_startExam(s);}
+function _startExam(saved){
+  document.getElementById('startScreen').style.display='none';
+  document.getElementById('examArea').classList.add('active');
+  if(practiceMode){document.querySelector('.timer-bar').innerHTML='<div class="timer-display">Practice mode</div><div class="timer-meta">No timer</div>';startTime=Date.now();}
+  else{startTime=saved?saved.startTime:Date.now();timerInterval=setInterval(updateTimer,1000);updateTimer();}
+  if(saved)restoreAnswers(saved.answers);
+  window.scrollTo(0,0);
+}
+function getSave(){try{const s=localStorage.getItem(SAVE_KEY);return s?JSON.parse(s):null;}catch(e){return null;}}
+function clearSave(){try{localStorage.removeItem(SAVE_KEY);}catch(e){}}
+function saveProgress(){if(submitted)return;try{localStorage.setItem(SAVE_KEY,JSON.stringify({startTime,answers:collectAnswers(),savedAt:Date.now()}));}catch(e){}alert('Progress saved.');}
+function collectAnswers(){const a={};document.querySelectorAll('input[type=radio]:checked').forEach(r=>a[r.name]=r.value);document.querySelectorAll('input[type=text]').forEach(i=>{if(i.dataset.q)a['t'+i.dataset.q]=i.value;});document.querySelectorAll('select').forEach(s=>{if(s.dataset.q)a['s'+s.dataset.q]=s.value;});return a;}
+function restoreAnswers(ans){for(const[k,v]of Object.entries(ans)){if(k.startsWith('q')){const r=document.querySelector('input[name="'+k+'"][value="'+v+'"]');if(r)r.checked=true;}else if(k.startsWith('t')){const i=document.querySelector('input[data-q="'+k.slice(1)+'"]');if(i)i.value=v;}else if(k.startsWith('s')){const s=document.querySelector('select[data-q="'+k.slice(1)+'"]');if(s)s.value=v;}}}
+function updateTimer(){const rem=DURATION_MS-(Date.now()-startTime);if(rem<=0){submitExam(true);return;}const m=Math.floor(rem/60000),s=Math.floor((rem%60000)/1000);const el=document.getElementById('timerDisplay');el.textContent=m+':'+(s<10?'0':'')+s;el.classList.toggle('warning',rem<600000&&rem>=120000);el.classList.toggle('critical',rem<120000);}
+function norm(s){return(s||'').trim().toLowerCase().replace(/[\u2018\u2019]/g,"'");}
+function chk(part,q,v){const a=ANSWERS[part][q];if(typeof a==='string')return norm(v)===norm(a);if(norm(v)===norm(a.answer))return true;return(a.accept||[]).some(x=>norm(x)===norm(v));}
+function getR(name){const r=document.querySelector('input[name="'+name+'"]:checked');return r?r.value:null;}
+function getI(q){const el=document.querySelector('input[data-q="'+q+'"],select[data-q="'+q+'"]');return el?el.value:'';}
+function submitExam(timeUp){
+  if(submitted)return;
+  if(!timeUp&&!confirm('Submit your exam?'))return;
+  submitted=true;clearInterval(timerInterval);
+  const el=Date.now()-startTime;
+  document.querySelectorAll('input,select').forEach(e=>e.disabled=true);
+  const sc={};
+  sc.part1={correct:0,total:8};for(let i=1;i<=8;i++){const v=getR('q'+i);if(v&&chk('part1',i,v))sc.part1.correct++;}
+  sc.part2={correct:0,total:8};for(let i=9;i<=16;i++){const v=getI(i);if(v&&chk('part2',i,v))sc.part2.correct++;}
+  sc.part3={correct:0,total:8};for(let i=17;i<=24;i++){const v=getI(i);if(v&&chk('part3',i,v))sc.part3.correct++;}
+  sc.part4={correct:0,total:6};for(let i=25;i<=30;i++){const v=getI(i);if(v&&chk('part4',i,v))sc.part4.correct++;}
+  sc.part5={correct:0,total:6};for(let i=31;i<=36;i++){const v=getR('q'+i);if(v&&chk('part5',i,v))sc.part5.correct++;}
+  sc.part6={correct:0,total:6};for(let i=37;i<=42;i++){const v=getI(i);if(v&&v===ANSWERS.part6[String(i)])sc.part6.correct++;}
+  sc.part7={correct:0,total:10};for(let i=43;i<=52;i++){const v=getI(i);if(v&&v===ANSWERS.part7[String(i)])sc.part7.correct++;}
+  const tot=Object.values(sc).reduce((a,p)=>a+p.correct,0);
+  const pct=Math.round((tot/52)*100);
+  document.getElementById('scoreFinal').textContent=tot+' / 52';
+  document.getElementById('scorePctLabel').textContent=pct+'%';
+  const em=Math.floor(el/60000),es=Math.floor((el%60000)/1000);
+  document.getElementById('timeUsed').textContent='Time: '+em+' min '+es+' sec'+(timeUp?' (auto-submit)':'');
+  try{const p=parseInt(localStorage.getItem(BEST_KEY)||'0');if(tot>p)localStorage.setItem(BEST_KEY,tot+' / 52 ('+pct+'%)');}catch(e){}
+  try{ localStorage.setItem('wordplay_fce_mock_3_parts', JSON.stringify({part1:sc.part1.correct,part2:sc.part2.correct,part3:sc.part3.correct,part4:sc.part4.correct,part5:sc.part5.correct,part6:sc.part6.correct,part7:sc.part7.correct})); }catch(e){}
+  clearSave();
+  const labs={part1:'Part 1',part2:'Part 2',part3:'Part 3',part4:'Part 4',part5:'Part 5',part6:'Part 6',part7:'Part 7'};
+  let bd='';for(const[k,v]of Object.entries(sc)){const p2=Math.round((v.correct/v.total)*100);bd+='<div class="part-score"><div class="name">'+labs[k]+'</div><div class="val">'+v.correct+'/'+v.total+'</div><div class="pct">'+p2+'%</div></div>';}
+  document.getElementById('partBreakdown').innerHTML=bd;
+  document.getElementById('resultsScreen').classList.add('active');
+  document.getElementById('resultsScreen').scrollIntoView({behavior:'smooth'});
+}
+function reviewAnswers(){document.getElementById('examArea').scrollIntoView({behavior:'smooth'});}
+(function(){try{const b=localStorage.getItem(BEST_KEY);if(b){document.getElementById('prevAttempt').style.display='block';document.getElementById('prevScore').textContent=b;}const s=getSave();if(s){const age=Math.round((Date.now()-s.savedAt)/60000);document.getElementById('resumeSection').style.display='block';document.getElementById('resumeInfo').textContent='Saved '+age+' min ago';}}catch(e){}}
+)();
+window.addEventListener('beforeunload',function(e){if(startTime&&!submitted){e.preventDefault();e.returnValue='';}});
+</script>
+</body>
+</html>

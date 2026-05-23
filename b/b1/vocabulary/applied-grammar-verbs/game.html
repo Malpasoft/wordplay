@@ -1,0 +1,110 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>B1 · Applied Grammar: Verb Patterns — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100"><link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../../index.html" class="back back-link">B1 Vocabulary</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">B1</a><span>›</span><a href="../index.html">Vocabulary</a><span>›</span><strong>Applied Grammar: Verb Patterns</strong></div>
+  <div class="chapter-num">AG</div><h1>Applied Grammar: Verb Patterns</h1>
+  <p class="chapter-subtitle">Which verbs take gerunds? Which take infinitives? Which take both?</p>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Practice</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">Applied Grammar: Verb Patterns</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / 5 mastered</div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Resume</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Start over</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Start</button>
+  </div></div>
+  <div id="gamePlay" class="game-screen"><div class="game-play-card">
+    <div class="game-top-bar"><div class="game-progress-wrap"><div class="game-progress-bar" id="gProgressBar" style="width:0%"></div></div>
+    <div class="game-top-stats"><span>Score <strong id="gScore">0</strong></span><span>Streak <strong id="gStreak">0</strong></span></div></div>
+    <div id="gModeTag" class="game-mode-tag"></div><div id="gTerm" class="game-term"></div>
+    <div id="gPrompt" class="game-prompt"></div><div id="gOptions" class="game-options"></div>
+    <div id="gFeedback" class="game-feedback"></div><div id="gExample" class="game-example" style="display:none"></div>
+    <div class="game-btn-row">
+      <button id="gBtnHint" class="game-btn ghost">Hint [H]</button>
+      <button id="gBtnKnow" class="game-btn know" style="display:none">I know this [K]</button>
+      <button id="gBtnReveal" class="game-btn ghost">Reveal</button>
+      <button id="gBtnNext" class="game-btn primary" style="display:none">Next →</button>
+    </div>
+    <div class="game-progress-txt" id="gProgressTxt">0 / 5 mastered</div>
+    <button id="gBtnSaveQuit" class="game-btn ghost" style="margin-top:12px;width:100%">Save &amp; quit</button>
+  </div>
+  <div class="game-ref-panel"><button id="gRefToggle" class="game-ref-head">▼ Reference</button>
+  <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div></div></div>
+  <div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Complete!</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats"><div>Score <strong id="gFinalScore">0</strong></div><div>Mastery <strong id="gFinalPct">0%</strong></div></div>
+    <a href="../collocations-make-do/index.html" class="game-btn primary" style="text-decoration:none;text-align:center;display:block;margin-bottom:8px">Next: Collocations Make Do &#8594;</a>
+    <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>window.LEVEL="b1";window.CHAPTER_ID="applied-grammar-verbs";
+window.GAME_DATA={chapterId:"applied-grammar-verbs",level:"b1",title:"Applied Grammar: Verb Patterns",storageKey:"wordplay_game_b1_applied-grammar-verbs",items:[
+  {
+    "id": "enjoy",
+    "term": "enjoy",
+    "meaning": "takes gerund ONLY: enjoy + -ing",
+    "synonym": "enjoy doing (never enjoy to do)",
+    "example": "I <b>enjoy cooking</b> at the weekend.",
+    "completion": "I ______ cooking at the weekend.",
+    "answer": "enjoy"
+  },
+  {
+    "id": "want",
+    "term": "want",
+    "meaning": "takes infinitive ONLY: want + to + verb",
+    "synonym": "want to do (never want doing)",
+    "example": "She <b>wants to learn</b> Spanish.",
+    "completion": "She ______ to learn Spanish.",
+    "answer": "wants"
+  },
+  {
+    "id": "start",
+    "term": "start",
+    "meaning": "takes BOTH gerund and infinitive with no meaning change",
+    "synonym": "start doing / start to do",
+    "example": "It started <b>raining</b> / It started <b>to rain</b>.",
+    "completion": "It started ______ at midnight.",
+    "answer": "raining"
+  },
+  {
+    "id": "stop",
+    "term": "stop",
+    "meaning": "GERUND = cease the action; INFINITIVE = pause in order to do something else",
+    "synonym": "stop doing vs stop to do",
+    "example": "He stopped <b>smoking</b>. / He stopped <b>to smoke</b>.",
+    "completion": "He stopped ______ after 20 years.",
+    "answer": "smoking"
+  },
+  {
+    "id": "remember",
+    "term": "remember",
+    "meaning": "GERUND = recall a past action; INFINITIVE = remember to do something future",
+    "synonym": "remember doing (past) / remember to do (future)",
+    "example": "I remember <b>meeting</b> her. / Remember <b>to call</b> him.",
+    "completion": "Remember ______ the door when you leave.",
+    "answer": "to lock"
+  }
+]};
+</script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body></html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Word Play — Cambridge English grammar, vocabulary and writing practice.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A1 Vocabulary · Numbers and Time | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+<style>
+.vocab-page { max-width: 800px; margin: 0 auto; padding: 20px; }
+.vocab-status { font-family: var(--font-sans); font-size: .75rem; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
+.mode-tabs { display: flex; gap: 8px; margin-bottom: 24px; }
+.mode-tab { font-family: var(--font-sans); font-size: .72rem; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; padding: 8px 16px; border-radius: 4px; cursor: pointer;
+  border: 1.5px solid var(--hairline); background: transparent; color: var(--ink); transition: all .15s; }
+.mode-tab.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+/* Flashcard mode */
+.flashcard-wrap { perspective: 800px; margin: 0 auto 20px; max-width: 480px; }
+.flashcard { width: 100%; height: 220px; position: relative; transform-style: preserve-3d;
+  transition: transform .5s; cursor: pointer; border-radius: 10px; }
+.flashcard.flipped { transform: rotateY(180deg); }
+.fc-face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 10px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 20px; text-align: center; border: 1px solid var(--hairline); }
+.fc-front { background: var(--paper); }
+.fc-back { background: var(--paper); transform: rotateY(180deg); }
+.fc-word { font-size: 1.8rem; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+.fc-ipa { font-family: var(--font-sans); font-size: .85rem; color: var(--muted); margin-bottom: 8px; }
+.fc-def { font-size: .95rem; color: var(--ink); margin-bottom: 8px; }
+.fc-ex { font-size: .85rem; color: var(--muted); font-style: italic; }
+.fc-hint { font-family: var(--font-sans); font-size: .65rem; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 1px; margin-top: 12px; }
+.fc-nav { display: flex; align-items: center; gap: 16px; justify-content: center; margin-bottom: 20px; }
+.fc-btn { font-family: var(--font-sans); font-size: .72rem; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; padding: 9px 18px; border-radius: 4px; cursor: pointer;
+  border: 1.5px solid var(--hairline); background: transparent; color: var(--ink); }
+.fc-btn.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.fc-counter { font-family: var(--font-sans); font-size: .75rem; color: var(--muted); font-weight: 600; }
+/* Match game mode */
+.match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+.match-col { display: flex; flex-direction: column; gap: 8px; }
+.match-item { padding: 12px 14px; border: 1.5px solid var(--hairline); border-radius: 6px;
+  cursor: pointer; font-size: .9rem; color: var(--ink); transition: border-color .15s, background .15s;
+  user-select: none; }
+.match-item:hover { border-color: var(--ink); }
+.match-item.selected { border-color: var(--amber); background: rgba(184,134,11,.08); }
+.match-item.correct { border-color: #27ae60; background: rgba(39,174,96,.08); pointer-events: none; }
+.match-item.wrong { border-color: #c0392b; background: rgba(192,57,43,.08); }
+.match-score { font-family: var(--font-sans); font-size: .85rem; color: var(--muted);
+  text-align: center; margin-bottom: 16px; }
+.mastery-badge { display: inline-block; padding: 8px 18px; background: rgba(184,134,11,.12);
+  color: var(--amber); font-family: var(--font-sans); font-size: .78rem; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase; border-radius: 4px; margin-bottom: 16px; }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../../index.html" class="back back-link">A1 Vocabulary</a>
+    <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  </div>
+</header>
+<div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../../../a/a1/index.html">A1</a><span>›</span><strong>Numbers and Time</strong></div>
+
+<nav class="chapter-nav" style="margin-bottom:20px">
+  <a href="index.html" class="chapter-nav-btn active">Flashcards</a>
+  <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+  <a href="game.html" class="chapter-nav-btn">Game</a>
+</nav>
+<div class="vocab-page">
+  <div class="chapter-num">Vocabulary</div>
+  <h1>Numbers and Time</h1>
+  <div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">✓ Topic mastered</span></div>
+  <div class="vocab-status" id="vocabStatus">10 words · tap to flip</div>
+
+  <div class="mode-tabs">
+    <button class="mode-tab active" onclick="setMode('flash', this)">Flashcards</button>
+    <button class="mode-tab" onclick="setMode('match', this)">Match game</button>
+    <button class="mode-tab" onclick="setMode('list', this)">Word list</button>
+  </div>
+
+  <!-- FLASHCARD MODE -->
+  <div id="modeFlash">
+    <div class="flashcard-wrap">
+      <div class="flashcard" id="flashcard" onclick="flipCard()">
+        <div class="fc-face fc-front">
+          <div class="fc-word" id="fcWord"></div>
+          <div class="fc-ipa" id="fcIpa"></div>
+          <div class="fc-hint">tap to reveal definition</div>
+        </div>
+        <div class="fc-face fc-back">
+          <div class="fc-def" id="fcDef"></div>
+          <div class="fc-ex" id="fcEx"></div>
+        </div>
+      </div>
+    </div>
+    <div class="fc-nav">
+      <button class="fc-btn" onclick="fcPrev()">&#9664; Prev</button>
+      <span class="fc-counter" id="fcCounter"></span>
+      <button class="fc-btn primary" onclick="fcNext()">Next &#9654;</button>
+    </div>
+    <div style="text-align:center">
+      <button class="fc-btn" onclick="markMastered()" style="margin:0 auto">&#10003; Mark all as mastered</button>
+    </div>
+  </div>
+
+  <!-- MATCH MODE -->
+  <div id="modeMatch" style="display:none">
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:16px">Match each word to its definition. Tap a word, then tap the correct definition.</p>
+    <div class="match-score" id="matchScore">0 / 5 matched</div>
+    <div class="match-grid">
+      <div class="match-col" id="matchWords"></div>
+      <div class="match-col" id="matchDefs"></div>
+    </div>
+    <div style="text-align:center">
+      <button class="fc-btn primary" onclick="newMatchRound()" id="matchNextBtn" style="display:none">Next 5 words &#9654;</button>
+    </div>
+  </div>
+
+  <!-- WORD LIST MODE -->
+  <div id="modeList" style="display:none">
+    <table style="width:100%;border-collapse:collapse;font-size:.9rem">
+      <thead><tr style="border-bottom:2px solid var(--hairline)">
+        <th style="text-align:left;padding:8px;font-family:var(--font-sans);font-size:.65rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)">Word</th>
+        <th style="text-align:left;padding:8px;font-family:var(--font-sans);font-size:.65rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)">IPA</th>
+        <th style="text-align:left;padding:8px;font-family:var(--font-sans);font-size:.65rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)">Definition</th>
+      </tr></thead>
+      <tbody id="wordListBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+
+<script>
+var WORDS = [{"word": "bread", "ipa": "/brɛd/", "definition": "a baked food made from flour", "example": "I eat bread for breakfast."}, {"word": "apple", "ipa": "/ˈæp(ə)l/", "definition": "a round red or green fruit", "example": "She eats an apple every day."}, {"word": "chicken", "ipa": "/ˈtʃɪkɪn/", "definition": "meat from a chicken", "example": "I love roast chicken."}, {"word": "rice", "ipa": "/raɪs/", "definition": "small white or brown grains, a staple food", "example": "We have rice with every meal."}, {"word": "coffee", "ipa": "/ˈkɒfi/", "definition": "a hot dark drink made from coffee beans", "example": "I drink coffee in the morning."}, {"word": "water", "ipa": "/ˈwɔːtə/", "definition": "a clear liquid we drink", "example": "Drink eight glasses of water a day."}, {"word": "salad", "ipa": "/ˈsæləd/", "definition": "a cold dish of raw vegetables", "example": "I have a salad for lunch."}, {"word": "pasta", "ipa": "/ˈpæstə/", "definition": "an Italian food made from flour and water", "example": "My favourite food is pasta."}, {"word": "milk", "ipa": "/mɪlk/", "definition": "a white liquid from cows", "example": "I put milk in my tea."}, {"word": "orange", "ipa": "/ˈɒrɪndʒ/", "definition": "a round citrus fruit", "example": "She drinks orange juice every morning."}];
+var STORAGE_KEY = 'wordplay_vocab_a1_food_mastered';
+var fcIdx = 0;
+var matchSelected = null;
+var matchRound = 0;
+
+// ── Flashcard ──────────────────────────────────────────────────
+function renderCard() {
+  var w = WORDS[fcIdx];
+  document.getElementById('fcWord').textContent = w.word;
+  document.getElementById('fcIpa').textContent = w.ipa;
+  document.getElementById('fcDef').textContent = w.definition;
+  document.getElementById('fcEx').textContent = '"' + w.example + '"';
+  document.getElementById('fcCounter').textContent = (fcIdx + 1) + ' / ' + WORDS.length;
+  document.getElementById('flashcard').classList.remove('flipped');
+}
+function flipCard() { document.getElementById('flashcard').classList.toggle('flipped'); }
+function fcNext() { fcIdx = (fcIdx + 1) % WORDS.length; renderCard(); }
+function fcPrev() { fcIdx = (fcIdx - 1 + WORDS.length) % WORDS.length; renderCard(); }
+
+// ── Match game ─────────────────────────────────────────────────
+function newMatchRound() {
+  matchSelected = null;
+  var start = (matchRound * 5) % WORDS.length;
+  var roundWords = WORDS.slice(start, start + 5);
+  if (roundWords.length < 5) roundWords = WORDS.slice(0, 5);
+
+  var shuffledDefs = roundWords.map(function(w, i) { return { def: w.definition, idx: i }; });
+  shuffledDefs.sort(function() { return Math.random() - 0.5; });
+
+  var wordsCol = document.getElementById('matchWords');
+  var defsCol = document.getElementById('matchDefs');
+  wordsCol.innerHTML = '';
+  defsCol.innerHTML = '';
+  document.getElementById('matchNextBtn').style.display = 'none';
+  document.getElementById('matchScore').textContent = '0 / 5 matched';
+
+  roundWords.forEach(function(w, i) {
+    var el = document.createElement('div');
+    el.className = 'match-item';
+    el.textContent = w.word;
+    el.dataset.idx = i;
+    el.dataset.type = 'word';
+    el.onclick = function() { selectMatch(this); };
+    wordsCol.appendChild(el);
+  });
+  shuffledDefs.forEach(function(sd) {
+    var el = document.createElement('div');
+    el.className = 'match-item';
+    el.textContent = sd.def;
+    el.dataset.idx = sd.idx;
+    el.dataset.type = 'def';
+    el.onclick = function() { selectMatch(this); };
+    defsCol.appendChild(el);
+  });
+  matchRound++;
+}
+
+var matchCount = 0;
+function selectMatch(el) {
+  if (el.classList.contains('correct')) return;
+  if (!matchSelected) {
+    if (el.classList.contains('selected')) { el.classList.remove('selected'); matchSelected = null; return; }
+    matchSelected = el;
+    el.classList.add('selected');
+  } else {
+    if (matchSelected === el) { el.classList.remove('selected'); matchSelected = null; return; }
+    if (matchSelected.dataset.type === el.dataset.type) {
+      matchSelected.classList.remove('selected');
+      matchSelected = el;
+      el.classList.add('selected');
+      return;
+    }
+    var wordEl = matchSelected.dataset.type === 'word' ? matchSelected : el;
+    var defEl = matchSelected.dataset.type === 'def' ? matchSelected : el;
+    if (wordEl.dataset.idx === defEl.dataset.idx) {
+      wordEl.classList.remove('selected'); wordEl.classList.add('correct');
+      defEl.classList.remove('selected'); defEl.classList.add('correct');
+      matchCount++;
+      document.getElementById('matchScore').textContent = matchCount + ' / 5 matched';
+      if (matchCount >= 5) {
+        matchCount = 0;
+        document.getElementById('matchNextBtn').style.display = 'inline-block';
+      }
+    } else {
+      wordEl.classList.add('wrong'); defEl.classList.add('wrong');
+      setTimeout(function() {
+        wordEl.classList.remove('wrong','selected');
+        defEl.classList.remove('wrong','selected');
+      }, 600);
+    }
+    matchSelected = null;
+  }
+}
+
+// ── Word list ──────────────────────────────────────────────────
+function renderList() {
+  var tbody = document.getElementById('wordListBody');
+  WORDS.forEach(function(w) {
+    var tr = document.createElement('tr');
+    tr.style.borderBottom = '1px solid var(--hairline)';
+    tr.innerHTML = '<td style="padding:8px;font-weight:600">' + w.word + '</td><td style="padding:8px;color:var(--muted);font-size:.82rem">' + w.ipa + '</td><td style="padding:8px">' + w.definition + '</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+// ── Mode switching ──────────────────────────────────────────────
+function setMode(mode, btn) {
+  ['modeFlash','modeMatch','modeList'].forEach(function(id) {
+    document.getElementById(id).style.display = 'none';
+  });
+  document.querySelectorAll('.mode-tab').forEach(function(b) { b.classList.remove('active'); });
+  document.getElementById('mode' + mode.charAt(0).toUpperCase() + mode.slice(1)).style.display = '';
+  btn.classList.add('active');
+  if (mode === 'match' && !document.getElementById('matchWords').children.length) newMatchRound();
+  if (mode === 'list' && !document.getElementById('wordListBody').children.length) renderList();
+}
+
+// ── Mastery ─────────────────────────────────────────────────────
+function markMastered() {
+  try {
+    localStorage.setItem(STORAGE_KEY, '1');
+    // Save to FCEStore progress
+    var raw = localStorage.getItem('wordplay_progress');
+    var pd = raw ? JSON.parse(raw) : {};
+    pd['a1'] = pd['a1'] || {};
+    pd['a1']['vocab_mastered_food'] = { done: true, date: new Date().toISOString() };
+    localStorage.setItem('wordplay_progress', JSON.stringify(pd));
+    document.getElementById('masteryBadge').style.display = '';
+    document.getElementById('vocabStatus').textContent = '10 words · mastered \u2713';
+    // Show next topic CTA
+    var nb = document.getElementById('nextTopicBtn');
+    if (nb) nb.style.display = 'inline-block';
+  } catch(e) { console.warn('[WordPlay] localStorage failed:', e.message); }
+}
+
+function checkMastered() {
+  try {
+    if (localStorage.getItem(STORAGE_KEY) === '1') {
+      document.getElementById('masteryBadge').style.display = '';
+      document.getElementById('vocabStatus').textContent = '10 words · mastered \u2713';
+      var nb = document.getElementById('nextTopicBtn');
+      if (nb) nb.style.display = 'inline-block';
+    }
+  } catch(e) {}
+}
+
+// ── Init ────────────────────────────────────────────────────────
+renderCard();
+checkMastered();
+</script>
+
+<div style="margin-top:24px;border-top:1px solid var(--hairline);padding-top:20px">
+  <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">My notes &amp; examples</div>
+  <textarea id="my-notes-area" maxlength="500" placeholder="Write your own example sentence, a memory trick, or a note in your language…" style="width:100%;min-height:80px;padding:10px 12px;font-family:Georgia,serif;font-size:.88rem;color:var(--ink);background:var(--paper);border:1.5px solid var(--hairline);border-radius:6px;resize:vertical;line-height:1.6;box-sizing:border-box"></textarea>
+  <div style="font-family:var(--font-sans);font-size:.65rem;color:var(--muted);margin-top:4px;text-align:right"><span id="notes-chars">0</span>/500 · auto-saved</div>
+</div>
+<script>
+(function(){
+  var ta = document.getElementById('my-notes-area');
+  var cc = document.getElementById('notes-chars');
+  if (!ta) return;
+  var KEY = 'wp_notes_a1_food';
+  try { ta.value = localStorage.getItem(KEY) || ''; cc.textContent = ta.value.length; } catch(e){}
+  var t;
+  ta.addEventListener('input', function() {
+    cc.textContent = ta.value.length;
+    clearTimeout(t);
+    t = setTimeout(function() {
+      try { localStorage.setItem(KEY, ta.value); } catch(e) {}
+    }, 600);
+  });
+})();
+</script>
+</body>
+</html>

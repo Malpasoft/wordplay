@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>FCE Mock Exam 1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+<style>
+.mock-container { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+.timer-bar { position: sticky; top: 0; background: var(--ink); color: var(--paper); padding: 12px 16px; border-radius: 0 0 8px 8px; display: flex; justify-content: space-between; align-items: center; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,.15); margin-bottom: 24px; }
+.timer-display { font-family: var(--font-sans); font-size: 1.1rem; font-weight: 700; letter-spacing: .5px; }
+.timer-display.warning { color: #FFD700; }
+.timer-display.critical { color: #FF6B6B; animation: pulse 1s infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .6; } }
+.timer-meta { font-family: var(--font-sans); font-size: .72rem; opacity: .85; letter-spacing: 1px; text-transform: uppercase; }
+.start-screen, .results-screen { background: var(--paper); border: 1px solid var(--hairline); border-radius: 8px; padding: 28px; margin-bottom: 24px; }
+.start-screen h2, .results-screen h2 { font-size: 1.4rem; margin: 0 0 12px; }
+.start-btn { display: inline-block; padding: 12px 28px; background: var(--ink); color: var(--paper); border: 0; font-family: var(--font-sans); font-size: .82rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; border-radius: 4px; cursor: pointer; margin-top: 12px; }
+.start-btn:hover { opacity: .85; }
+.exam-area { display: none; }
+.exam-area.active { display: block; }
+.part-section { background: var(--paper); border: 1px solid var(--hairline); border-radius: 8px; padding: 24px; margin-bottom: 28px; }
+.part-header { font-family: var(--font-sans); font-size: .68rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; color: var(--amber); margin-bottom: 6px; }
+.part-section h2 { font-size: 1.2rem; margin: 0 0 8px; color: var(--ink); }
+.part-section .instructions { font-size: .85rem; color: var(--muted); margin-bottom: 16px; padding-bottom: 14px; border-bottom: 1px solid var(--hairline); }
+.text-title { font-weight: 700; text-align: center; font-size: 1.05rem; margin: 12px 0; color: var(--ink); }
+.text-content { font-size: .92rem; line-height: 1.7; color: var(--ink); margin-bottom: 18px; }
+.text-content p { margin: 0 0 12px; }
+.mc-q { display: flex; gap: 12px; padding: 10px 0; border-top: 1px solid var(--hairline); }
+.mc-q .q-num { font-family: var(--font-sans); font-size: .85rem; font-weight: 800; color: var(--amber); min-width: 28px; }
+.mc-q .opts { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.mc-q .q-text { flex: 1; }
+.mc-q .q-text + .opts { margin-top: 8px; }
+.opt { display: flex; gap: 6px; align-items: flex-start; padding: 4px 0; cursor: pointer; font-size: .9rem; }
+.opt:hover { background: rgba(184,134,11,.05); }
+.opt-letter { font-family: var(--font-sans); font-weight: 700; color: var(--amber); min-width: 18px; }
+.opt input { margin-top: 4px; }
+.cloze-input { width: 110px; padding: 2px 8px; border: 1.5px solid var(--hairline); border-radius: 3px; font-family: var(--font-sans); font-size: .82rem; background: var(--cream-deep); }
+.cloze-input:focus { outline: none; border-color: var(--amber); }
+.kw-input { width: 100%; max-width: 380px; padding: 4px 10px; border: 1.5px solid var(--hairline); border-radius: 3px; font-family: var(--font-sans); font-size: .85rem; background: var(--cream-deep); }
+.word-form-line { display: flex; padding: 10px 0; border-top: 1px solid var(--hairline); align-items: flex-start; gap: 14px; }
+.wf-text { flex: 1; font-size: .92rem; line-height: 1.6; }
+.wf-prompt { font-family: var(--font-sans); font-size: .75rem; font-weight: 800; letter-spacing: 1px; color: var(--muted); padding: 4px 10px; border: 1px solid var(--hairline); border-radius: 3px; min-width: 90px; text-align: center; }
+.kw-q { display: flex; gap: 12px; padding: 14px 0; border-top: 1px solid var(--hairline); }
+.kw-content { flex: 1; }
+.kw-content p { margin: 0 0 6px; font-size: .9rem; }
+.kw-key { font-family: var(--font-sans); font-weight: 800; letter-spacing: 1px; color: var(--amber); }
+.gap-select, .match-select { padding: 4px 10px; border: 1.5px solid var(--hairline); border-radius: 3px; font-family: var(--font-sans); font-weight: 700; background: var(--cream-deep); color: var(--ink); cursor: pointer; }
+.gap-option { display: flex; gap: 12px; padding: 10px 0; border-top: 1px solid var(--hairline); font-size: .88rem; line-height: 1.5; }
+.mm-q { display: flex; gap: 12px; align-items: center; padding: 8px 0; border-top: 1px solid var(--hairline); font-size: .88rem; }
+.mm-q .q-text { flex: 1; }
+.mm-text { display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid var(--hairline); }
+.mm-letter { font-family: var(--font-sans); font-weight: 800; color: var(--amber); font-size: 1rem; min-width: 24px; }
+.mm-body { flex: 1; font-size: .88rem; line-height: 1.55; }
+.submit-area { background: var(--ink); color: var(--paper); border-radius: 8px; padding: 20px; text-align: center; margin: 32px 0; }
+.submit-area p { margin: 0 0 12px; opacity: .9; }
+.submit-btn { display: inline-block; padding: 14px 36px; background: var(--amber); color: var(--ink); border: 0; font-family: var(--font-sans); font-size: .9rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; border-radius: 4px; cursor: pointer; }
+.submit-btn:hover { opacity: .9; }
+.results-screen { display: none; }
+.results-screen.active { display: block; }
+.score-big { font-size: 3rem; font-weight: 800; color: var(--amber); text-align: center; font-family: Georgia, serif; }
+.score-label { font-family: var(--font-sans); font-size: .72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); text-align: center; margin-bottom: 18px; }
+.part-breakdown { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin: 20px 0; }
+.part-score { background: var(--cream-deep); border: 1px solid var(--hairline); border-radius: 6px; padding: 12px; text-align: center; }
+.part-score .name { font-family: var(--font-sans); font-size: .65rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+.part-score .val { font-size: 1.3rem; font-weight: 700; color: var(--ink); margin-top: 4px; }
+.part-score .pct { font-family: var(--font-sans); font-size: .72rem; color: var(--muted); margin-top: 2px; }
+.exam-area input:disabled, .exam-area select:disabled { background: rgba(184,134,11,.05); }
+.correct-mark { color: var(--green); font-weight: 700; margin-left: 6px; }
+.wrong-mark { color: var(--red); font-weight: 700; margin-left: 6px; }
+.show-answer { font-family: var(--font-sans); font-size: .75rem; color: var(--muted); margin-top: 4px; padding-left: 28px; }
+.show-answer strong { color: var(--green); }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../index.html" class="back back-link">FCE</a>
+    <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  </div>
+</header>
+
+<div class="mock-container">
+  <div class="breadcrumb">
+    <a href="../../../../index.html">Home</a><span>›</span>
+    <a href="../../index.html">B2</a><span>›</span>
+    <a href="../index.html">FCE</a><span>›</span>
+    <strong>Mock Exam 1</strong>
+  </div>
+
+  <div id="startScreen" class="start-screen">
+    <div class="part-header">FCE Mock Exam 1</div>
+    <h2>Mock Exam 1 — Reading & Use of English</h2>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Duration:</strong> 75 minutes</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Total questions:</strong> 52 across 7 parts</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:16px">Once you click <strong>Start</strong>, the timer begins. The exam will auto-submit when time runs out. You can submit early at any point.</p>
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:18px">Tip: do not spend too long on one question. Move on and come back if there is time.</p>
+    <button class="start-btn" onclick="startExam(false)">Start exam (timed)</button>
+    <button class="start-btn" onclick="startExam(true)" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Practice mode (no timer)</button>
+
+  <div id="resumeSection" style="display:none;margin-top:18px;padding:14px 16px;background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--amber);margin-bottom:6px">Saved progress found</div><div id="resumeInfo" style="font-size:.88rem;color:var(--ink);margin-bottom:10px"></div><button class="start-btn" onclick="resumeExam()" style="background:var(--amber);color:var(--ink)">Resume</button><button class="start-btn" onclick="clearSave()" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Start fresh</button></div>
+  <div id="prevAttempt" style="display:none;margin-top:12px;font-family:var(--font-sans);font-size:.78rem;color:var(--muted)">Previous best: <strong id="prevScore"></strong></div>
+  </div>
+
+  <div id="examArea" class="exam-area">
+    <div class="timer-bar">
+      <div class="timer-display" id="timerDisplay">75:00</div>
+      <div class="timer-meta">Time remaining</div>
+      <button onclick="saveProgress()" style="background:transparent;border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.85);font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border-radius:3px;cursor:pointer">Save &amp; quit</button>
+    </div>
+
+    <!-- PART 1 -->
+    <div class="part-section">
+      <div class="part-header">Part 1 — Multiple-choice Cloze</div>
+      <h2>Questions 1–8</h2>
+      <p class="instructions">For questions 1–8, read the text below and decide which answer (A, B, C or D) best fits each gap.</p>
+      <div class="text-title">The hidden language of bees</div>
+      <div class="text-content"><p>Most people think of bees as simple insects, but they actually have a (<strong style="color:var(--amber)">1</strong>) _____ system of communication. When a worker bee finds a good source of food, she returns to the hive and performs what scientists (<strong style="color:var(--amber)">2</strong>) _____ a 'waggle dance'. By moving her body in specific patterns, she can (<strong style="color:var(--amber)">3</strong>) _____ her sisters about both the direction and the distance to the flowers.</p><p>What makes this even more (<strong style="color:var(--amber)">4</strong>) _____ is that bees adjust their dance based on the position of the sun. As the day (<strong style="color:var(--amber)">5</strong>) _____, the angle of their dance shifts to match. The (<strong style="color:var(--amber)">6</strong>) _____ of this discovery, made by Karl von Frisch in the 1940s, won him a Nobel Prize.</p><p>Recent research has gone further still. Some scientists now believe bees can (<strong style="color:var(--amber)">7</strong>) _____ basic mathematical concepts and may even understand the idea of zero. Whether or not we (<strong style="color:var(--amber)">8</strong>) _____ to fully understand them, bees clearly have far more going on than we ever imagined.</p></div>
+      <div class="mc-q"><div class="q-num">1</div><div class="opts"><label class="opt"><input type="radio" name="q1" value="complex"> <span class="opt-letter">A</span> <span>complex</span></label><label class="opt"><input type="radio" name="q1" value="complicated"> <span class="opt-letter">B</span> <span>complicated</span></label><label class="opt"><input type="radio" name="q1" value="difficult"> <span class="opt-letter">C</span> <span>difficult</span></label><label class="opt"><input type="radio" name="q1" value="hard"> <span class="opt-letter">D</span> <span>hard</span></label></div></div><div class="mc-q"><div class="q-num">2</div><div class="opts"><label class="opt"><input type="radio" name="q2" value="call"> <span class="opt-letter">A</span> <span>call</span></label><label class="opt"><input type="radio" name="q2" value="name"> <span class="opt-letter">B</span> <span>name</span></label><label class="opt"><input type="radio" name="q2" value="tell"> <span class="opt-letter">C</span> <span>tell</span></label><label class="opt"><input type="radio" name="q2" value="say"> <span class="opt-letter">D</span> <span>say</span></label></div></div><div class="mc-q"><div class="q-num">3</div><div class="opts"><label class="opt"><input type="radio" name="q3" value="explain"> <span class="opt-letter">A</span> <span>explain</span></label><label class="opt"><input type="radio" name="q3" value="tell"> <span class="opt-letter">B</span> <span>tell</span></label><label class="opt"><input type="radio" name="q3" value="inform"> <span class="opt-letter">C</span> <span>inform</span></label><label class="opt"><input type="radio" name="q3" value="say"> <span class="opt-letter">D</span> <span>say</span></label></div></div><div class="mc-q"><div class="q-num">4</div><div class="opts"><label class="opt"><input type="radio" name="q4" value="impressive"> <span class="opt-letter">A</span> <span>impressive</span></label><label class="opt"><input type="radio" name="q4" value="striking"> <span class="opt-letter">B</span> <span>striking</span></label><label class="opt"><input type="radio" name="q4" value="remarkable"> <span class="opt-letter">C</span> <span>remarkable</span></label><label class="opt"><input type="radio" name="q4" value="big"> <span class="opt-letter">D</span> <span>big</span></label></div></div><div class="mc-q"><div class="q-num">5</div><div class="opts"><label class="opt"><input type="radio" name="q5" value="passes"> <span class="opt-letter">A</span> <span>passes</span></label><label class="opt"><input type="radio" name="q5" value="goes"> <span class="opt-letter">B</span> <span>goes</span></label><label class="opt"><input type="radio" name="q5" value="moves"> <span class="opt-letter">C</span> <span>moves</span></label><label class="opt"><input type="radio" name="q5" value="progresses"> <span class="opt-letter">D</span> <span>progresses</span></label></div></div><div class="mc-q"><div class="q-num">6</div><div class="opts"><label class="opt"><input type="radio" name="q6" value="importance"> <span class="opt-letter">A</span> <span>importance</span></label><label class="opt"><input type="radio" name="q6" value="weight"> <span class="opt-letter">B</span> <span>weight</span></label><label class="opt"><input type="radio" name="q6" value="size"> <span class="opt-letter">C</span> <span>size</span></label><label class="opt"><input type="radio" name="q6" value="grandness"> <span class="opt-letter">D</span> <span>grandness</span></label></div></div><div class="mc-q"><div class="q-num">7</div><div class="opts"><label class="opt"><input type="radio" name="q7" value="grasp"> <span class="opt-letter">A</span> <span>grasp</span></label><label class="opt"><input type="radio" name="q7" value="catch"> <span class="opt-letter">B</span> <span>catch</span></label><label class="opt"><input type="radio" name="q7" value="take"> <span class="opt-letter">C</span> <span>take</span></label><label class="opt"><input type="radio" name="q7" value="seize"> <span class="opt-letter">D</span> <span>seize</span></label></div></div><div class="mc-q"><div class="q-num">8</div><div class="opts"><label class="opt"><input type="radio" name="q8" value="come"> <span class="opt-letter">A</span> <span>come</span></label><label class="opt"><input type="radio" name="q8" value="manage"> <span class="opt-letter">B</span> <span>manage</span></label><label class="opt"><input type="radio" name="q8" value="arrive"> <span class="opt-letter">C</span> <span>arrive</span></label><label class="opt"><input type="radio" name="q8" value="reach"> <span class="opt-letter">D</span> <span>reach</span></label></div></div>
+    </div>
+
+    <!-- PART 2 -->
+    <div class="part-section">
+      <div class="part-header">Part 2 — Open Cloze</div>
+      <h2>Questions 9–16</h2>
+      <p class="instructions">For questions 9–16, read the text below and think of the word which best fits each gap. Use only one word in each gap.</p>
+      <div class="text-title">The rise of urban gardening</div>
+      <div class="text-content"><p>City dwellers across the world are discovering the joys of growing their (<strong style="color:var(--amber)">9</strong>) <input type="text" class="cloze-input" data-q="9" maxlength="20" autocomplete="off" spellcheck="false"> vegetables. Even (<strong style="color:var(--amber)">10</strong>) <input type="text" class="cloze-input" data-q="10" maxlength="20" autocomplete="off" spellcheck="false"> they only have a balcony or a tiny patio, many people are finding creative ways to produce fresh food at home.</p><p>Urban gardening is not a new idea, (<strong style="color:var(--amber)">11</strong>) <input type="text" class="cloze-input" data-q="11" maxlength="20" autocomplete="off" spellcheck="false"> it has grown enormously in popularity over the (<strong style="color:var(--amber)">12</strong>) <input type="text" class="cloze-input" data-q="12" maxlength="20" autocomplete="off" spellcheck="false"> decade. Part of the appeal is environmental: home-grown food has a much smaller carbon footprint (<strong style="color:var(--amber)">13</strong>) <input type="text" class="cloze-input" data-q="13" maxlength="20" autocomplete="off" spellcheck="false"> produce shipped from distant farms. There is also the satisfaction (<strong style="color:var(--amber)">14</strong>) <input type="text" class="cloze-input" data-q="14" maxlength="20" autocomplete="off" spellcheck="false"> knowing exactly where your food came from.</p><p>For those (<strong style="color:var(--amber)">15</strong>) <input type="text" class="cloze-input" data-q="15" maxlength="20" autocomplete="off" spellcheck="false"> live in apartments without outdoor space, vertical gardens and indoor herb walls are becoming increasingly common. Tomatoes, lettuce and herbs all grow well in small containers, (<strong style="color:var(--amber)">16</strong>) <input type="text" class="cloze-input" data-q="16" maxlength="20" autocomplete="off" spellcheck="false"> long as they receive enough light and water.</p></div>
+    </div>
+
+    <!-- PART 3 -->
+    <div class="part-section">
+      <div class="part-header">Part 3 — Word Formation</div>
+      <h2>Questions 17–24</h2>
+      <p class="instructions">For questions 17–24, read the text below. Use the word given in capitals at the end of some of the lines to form a word that fits in the gap in the same line.</p>
+      <div class="text-title">Why we love stories</div>
+      <div class="word-form-line"><div class="wf-text">From the earliest cave paintings to modern films, humans have always told stories. There is something (<strong style="color:var(--amber)">17</strong>) <input type="text" class="cloze-input" data-q="17" maxlength="25" autocomplete="off" spellcheck="false"> about a good story — it draws us in</div><div class="wf-prompt">MAGIC</div></div><div class="word-form-line"><div class="wf-text">and holds our (<strong style="color:var(--amber)">18</strong>) <input type="text" class="cloze-input" data-q="18" maxlength="25" autocomplete="off" spellcheck="false"> in a way that nothing else does. Researchers have discovered that when we</div><div class="wf-prompt">ATTEND</div></div><div class="word-form-line"><div class="wf-text">listen to a well-told tale, our brains become (<strong style="color:var(--amber)">19</strong>) <input type="text" class="cloze-input" data-q="19" maxlength="25" autocomplete="off" spellcheck="false"> engaged. We do not just process the words; we</div><div class="wf-prompt">COMPLETE</div></div><div class="word-form-line"><div class="wf-text">actually experience the events alongside the characters. This (<strong style="color:var(--amber)">20</strong>) <input type="text" class="cloze-input" data-q="20" maxlength="25" autocomplete="off" spellcheck="false"> between storyteller and listener</div><div class="wf-prompt">CONNECT</div></div><div class="word-form-line"><div class="wf-text">explains why oral traditions have survived for thousands of years. Stories were the (<strong style="color:var(--amber)">21</strong>) <input type="text" class="cloze-input" data-q="21" maxlength="25" autocomplete="off" spellcheck="false"></div><div class="wf-prompt">ORIGIN</div></div><div class="word-form-line"><div class="wf-text">method of passing knowledge from one generation to the next, and they remain (<strong style="color:var(--amber)">22</strong>) <input type="text" class="cloze-input" data-q="22" maxlength="25" autocomplete="off" spellcheck="false"></div><div class="wf-prompt">SURPRISE</div></div><div class="word-form-line"><div class="wf-text">powerful even today. The (<strong style="color:var(--amber)">23</strong>) <input type="text" class="cloze-input" data-q="23" maxlength="25" autocomplete="off" spellcheck="false"> of digital media has not killed storytelling — it has</div><div class="wf-prompt">ARRIVE</div></div><div class="word-form-line"><div class="wf-text">simply given us new ways to share our stories. Whatever the medium, the human need for narrative remains (<strong style="color:var(--amber)">24</strong>) <input type="text" class="cloze-input" data-q="24" maxlength="25" autocomplete="off" spellcheck="false">.</div><div class="wf-prompt">CHANGE</div></div>
+    </div>
+
+    <!-- PART 4 -->
+    <div class="part-section">
+      <div class="part-header">Part 4 — Key Word Transformation</div>
+      <h2>Questions 25–30</h2>
+      <p class="instructions">For questions 25–30, complete the second sentence so that it has a similar meaning to the first sentence, using the word given. Do not change the word given. You must use between two and five words, including the word given.</p>
+      <div class="kw-q">
+<div class="q-num">25</div>
+<div class="kw-content">
+  <p class="kw-first">Marco hasn't played the guitar for three years.</p>
+  <p class="kw-key">SINCE</p>
+  <p class="kw-second">It <input type="text" class="kw-input" data-q="25" maxlength="60" autocomplete="off" spellcheck="false"> played the guitar.</p>
+</div>
+</div><div class="kw-q">
+<div class="q-num">26</div>
+<div class="kw-content">
+  <p class="kw-first">They will probably finish the project before Friday.</p>
+  <p class="kw-key">LIKELY</p>
+  <p class="kw-second">The project <input type="text" class="kw-input" data-q="26" maxlength="60" autocomplete="off" spellcheck="false"> before Friday.</p>
+</div>
+</div><div class="kw-q">
+<div class="q-num">27</div>
+<div class="kw-content">
+  <p class="kw-first">It was such a long film that I almost fell asleep.</p>
+  <p class="kw-key">SO</p>
+  <p class="kw-second">The film <input type="text" class="kw-input" data-q="27" maxlength="60" autocomplete="off" spellcheck="false"> that I almost fell asleep.</p>
+</div>
+</div><div class="kw-q">
+<div class="q-num">28</div>
+<div class="kw-content">
+  <p class="kw-first">You are not allowed to take photos in the museum.</p>
+  <p class="kw-key">PERMITTED</p>
+  <p class="kw-second">Taking photos in the museum <input type="text" class="kw-input" data-q="28" maxlength="60" autocomplete="off" spellcheck="false">.</p>
+</div>
+</div><div class="kw-q">
+<div class="q-num">29</div>
+<div class="kw-content">
+  <p class="kw-first">I last saw Sara at the wedding two years ago.</p>
+  <p class="kw-key">SEEN</p>
+  <p class="kw-second">I <input type="text" class="kw-input" data-q="29" maxlength="60" autocomplete="off" spellcheck="false"> the wedding two years ago.</p>
+</div>
+</div><div class="kw-q">
+<div class="q-num">30</div>
+<div class="kw-content">
+  <p class="kw-first">Mark started learning Japanese five years ago.</p>
+  <p class="kw-key">BEEN</p>
+  <p class="kw-second">Mark <input type="text" class="kw-input" data-q="30" maxlength="60" autocomplete="off" spellcheck="false"> for five years.</p>
+</div>
+</div>
+    </div>
+
+    <!-- PART 5 -->
+    <div class="part-section">
+      <div class="part-header">Part 5 — Multiple Choice (Long Text)</div>
+      <h2>Questions 31–36</h2>
+      <p class="instructions">You are going to read an extract from an article about a young chess player. For questions 31–36, choose the answer (A, B, C or D) which you think fits best according to the text.</p>
+      <div class="text-title">The youngest grandmaster</div>
+      <div class="text-content"><p>When my parents bought me a wooden chess set for my seventh birthday, they had no idea what they were starting. I remember unwrapping it on a quiet Sunday afternoon, more interested in the cardboard box than in the pieces inside. My father, who had played casually as a teenager, suggested we try a game. By the time my mother called us for dinner, three hours had passed and I had lost six games in a row — but I was completely hooked.</p><p>The months that followed are something of a blur. I read every chess book in the local library, then begged my parents for more. My father, who had at first delighted in our matches, soon found that he could no longer beat me. By my ninth birthday, I was playing in regional tournaments. By eleven, I had won the national junior championship. The newspapers started calling me 'the prodigy from Manchester' — a label I quietly hated, even then. I was just a kid who liked solving puzzles. But the attention brought sponsors, and the sponsors brought trainers, and suddenly I was being flown around Europe to compete in tournaments I barely understood.</p><p>My first international event was in Budapest, when I was twelve. I was the youngest player by several years, and I felt every inch of those years. The other competitors looked at me with a mixture of curiosity and pity. I lost my first three games badly. My trainer, a Russian woman called Irina, told me afterwards that I was thinking too much. 'Chess is not just calculation,' she said. 'It is also feeling.' I did not understand what she meant. I assumed I was simply not good enough.</p><p>Yet by the fourth game, something shifted. I stopped trying to remember the openings I had memorised and started playing more freely. I won. Then I won again. By the end of the tournament, I had finished fourth — beating two players ranked far above me. Irina nodded knowingly when I told her. 'You are starting to play like a chess player,' she said, 'not like a calculator.'</p><p>That tournament changed me. Not because of the result, which my parents proudly framed and which still hangs in our hallway, but because of what Irina had taught me. Chess, I realised, was not really about winning or losing. It was about thinking — really thinking — and being honest about what you saw on the board. The games I lost taught me far more than the ones I won.</p><p>Today, ten years later, I am a grandmaster. People still ask me what it takes to reach this level. They expect me to talk about hours of practice, or natural talent, or some mysterious gift. But the truth is simpler. You have to love the game enough to keep losing without giving up. Everything else follows.</p></div>
+      <div class="mc-q"><div class="q-num">31</div><div class="q-text">How did the writer feel after his first chess game?</div><div class="opts"><label class="opt"><input type="radio" name="q31" value="A"> <span class="opt-letter">A</span> <span>discouraged by his many losses</span></label><label class="opt"><input type="radio" name="q31" value="B"> <span class="opt-letter">B</span> <span>surprised by his interest in the game</span></label><label class="opt"><input type="radio" name="q31" value="C"> <span class="opt-letter">C</span> <span>annoyed at the time wasted</span></label><label class="opt"><input type="radio" name="q31" value="D"> <span class="opt-letter">D</span> <span>proud of his early progress</span></label></div></div><div class="mc-q"><div class="q-num">32</div><div class="q-text">What does the writer say about being called 'the prodigy from Manchester'?</div><div class="opts"><label class="opt"><input type="radio" name="q32" value="A"> <span class="opt-letter">A</span> <span>He found the title exciting</span></label><label class="opt"><input type="radio" name="q32" value="B"> <span class="opt-letter">B</span> <span>He felt he deserved it</span></label><label class="opt"><input type="radio" name="q32" value="C"> <span class="opt-letter">C</span> <span>He was uncomfortable with the label</span></label><label class="opt"><input type="radio" name="q32" value="D"> <span class="opt-letter">D</span> <span>He was confused by it</span></label></div></div><div class="mc-q"><div class="q-num">33</div><div class="q-text">At his first international tournament in Budapest, the writer initially</div><div class="opts"><label class="opt"><input type="radio" name="q33" value="A"> <span class="opt-letter">A</span> <span>felt confident among older players</span></label><label class="opt"><input type="radio" name="q33" value="B"> <span class="opt-letter">B</span> <span>struggled with the pressure of being youngest</span></label><label class="opt"><input type="radio" name="q33" value="C"> <span class="opt-letter">C</span> <span>was surprised to win his early games</span></label><label class="opt"><input type="radio" name="q33" value="D"> <span class="opt-letter">D</span> <span>had a clear strategy from the start</span></label></div></div><div class="mc-q"><div class="q-num">34</div><div class="q-text">What did Irina mean when she said chess is also 'feeling'?</div><div class="opts"><label class="opt"><input type="radio" name="q34" value="A"> <span class="opt-letter">A</span> <span>that emotions affect a player's results</span></label><label class="opt"><input type="radio" name="q34" value="B"> <span class="opt-letter">B</span> <span>that intuition matters as much as calculation</span></label><label class="opt"><input type="radio" name="q34" value="C"> <span class="opt-letter">C</span> <span>that players should enjoy themselves</span></label><label class="opt"><input type="radio" name="q34" value="D"> <span class="opt-letter">D</span> <span>that body language reveals the opponent's thoughts</span></label></div></div><div class="mc-q"><div class="q-num">35</div><div class="q-text">What did the Budapest tournament teach the writer?</div><div class="opts"><label class="opt"><input type="radio" name="q35" value="A"> <span class="opt-letter">A</span> <span>That winning is the most important goal</span></label><label class="opt"><input type="radio" name="q35" value="B"> <span class="opt-letter">B</span> <span>That natural talent is more important than practice</span></label><label class="opt"><input type="radio" name="q35" value="C"> <span class="opt-letter">C</span> <span>That defeats can be more valuable than victories</span></label><label class="opt"><input type="radio" name="q35" value="D"> <span class="opt-letter">D</span> <span>That memorising openings is essential</span></label></div></div><div class="mc-q"><div class="q-num">36</div><div class="q-text">In the final paragraph, what does the writer suggest about success in chess?</div><div class="opts"><label class="opt"><input type="radio" name="q36" value="A"> <span class="opt-letter">A</span> <span>It depends mainly on natural ability</span></label><label class="opt"><input type="radio" name="q36" value="B"> <span class="opt-letter">B</span> <span>It requires accepting failure as part of the process</span></label><label class="opt"><input type="radio" name="q36" value="C"> <span class="opt-letter">C</span> <span>It cannot be explained simply</span></label><label class="opt"><input type="radio" name="q36" value="D"> <span class="opt-letter">D</span> <span>It is mostly about hours of practice</span></label></div></div>
+    </div>
+
+    <!-- PART 6 -->
+    <div class="part-section">
+      <div class="part-header">Part 6 — Gapped Text</div>
+      <h2>Questions 37–42</h2>
+      <p class="instructions">You are going to read an article about a long-distance runner. Six sentences have been removed from the article. Choose from the sentences A–G the one which fits each gap (37–42). There is one extra sentence which you do not need to use.</p>
+      <div class="text-content"><p>Three years ago, Maria Garcia could barely run for ten minutes without stopping. Today, at the age of fifty-two, she has just completed her third ultramarathon — a 100-kilometre race through the Spanish mountains.</p><p>Maria's transformation began after a routine medical check-up. <strong style="color:var(--amber)">(37)</strong> <select class="gap-select" data-q="37"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select> Her cholesterol was high, her blood pressure was rising, and her doctor warned that she needed to make serious changes if she wanted to avoid heart problems in the years ahead.</p><p>At first, Maria found running painful and discouraging. <strong style="color:var(--amber)">(38)</strong> <select class="gap-select" data-q="38"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select> But she stuck with it, slowly building up her distance week by week. After six months, she could run five kilometres comfortably. After a year, she had completed her first half-marathon.</p><p>The shift from recreational runner to ultramarathoner was not planned. <strong style="color:var(--amber)">(39)</strong> <select class="gap-select" data-q="39"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select> It was a 50-kilometre trail race in the Pyrenees. Something about the description appealed to her — the idea of running through wild landscapes, far from roads and cars and noise.</p><p>She trained for the race for nine months. The training was demanding, but Maria found she enjoyed the rhythm of it: the long Sunday runs, the strength sessions, the gradual building of endurance. <strong style="color:var(--amber)">(40)</strong> <select class="gap-select" data-q="40"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select> She also began to notice changes in her mental state. The anxiety she had carried for years began to lift.</p><p>The race itself was harder than she had imagined. <strong style="color:var(--amber)">(41)</strong> <select class="gap-select" data-q="41"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select> But somewhere around kilometre forty, she experienced what runners call a 'second wind'. Her legs found a new rhythm, her breathing settled, and she finished the race in just under nine hours.</p><p>Now, three ultramarathons later, Maria has become an inspiration to other women her age. <strong style="color:var(--amber)">(42)</strong> <select class="gap-select" data-q="42"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option></select> Her message to them is simple: it is never too late to start.</p><p>Next year, she plans to attempt her first 100-mile race.</p></div>
+      <div style="margin-top:20px;padding-top:16px;border-top:2px solid var(--hairline)">
+        <div style="font-family:var(--font-sans);font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Choose from these options (one is extra):</div>
+        <div class="gap-option"><div class="opt-letter">A</div><div>She felt every kilometre in her legs and questioned several times whether she could continue.</div></div><div class="gap-option"><div class="opt-letter">B</div><div>Her early times were slower than she had hoped, and she wondered if she should give up entirely.</div></div><div class="gap-option"><div class="opt-letter">C</div><div>Her running club regularly receives messages from women in their fifties and sixties asking how to begin.</div></div><div class="gap-option"><div class="opt-letter">D</div><div>She had planned to retire from competitive running after her second race.</div></div><div class="gap-option"><div class="opt-letter">E</div><div>She had never seen herself as athletic, and the diagnosis came as a shock.</div></div><div class="gap-option"><div class="opt-letter">F</div><div>But after a friend mentioned a race they had spotted in a magazine, Maria became curious.</div></div><div class="gap-option"><div class="opt-letter">G</div><div>Her health markers improved dramatically, and she lost more than fifteen kilos.</div></div>
+      </div>
+    </div>
+
+    <!-- PART 7 -->
+    <div class="part-section">
+      <div class="part-header">Part 7 — Multiple Matching</div>
+      <h2>Questions 43–52</h2>
+      <p class="instructions">You are going to read four short reviews of museums. For questions 43–52, choose from reviews (A–D). The reviews may be chosen more than once.</p>
+      <div style="font-weight:700;margin:14px 0 8px;color:var(--ink)">Which review:</div>
+      <div class="mm-q"><div class="q-num">43</div><div class="q-text">is housed in a building with a noteworthy past?</div><select class="match-select" data-q="43"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div><div class="mm-q"><div class="q-num">44</div><div class="q-text">offers visitors a chance to handle objects?</div><select class="match-select" data-q="44"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div><div class="mm-q"><div class="q-num">45</div><div class="q-text">has restricted hours that can disappoint visitors?</div><select class="match-select" data-q="45"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div><div class="mm-q"><div class="q-num">46</div><div class="q-text">is praised for the quality of its food?</div><select class="match-select" data-q="46"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div><div class="mm-q"><div class="q-num">47</div><div class="q-text">is criticised for being expensive?</div><select class="match-select" data-q="47"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div><div class="mm-q"><div class="q-num">48</div><div class="q-text">holds a collection that is genuinely unique?</div><select class="match-select" data-q="48"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div><div class="mm-q"><div class="q-num">49</div><div class="q-text">makes good use of digital displays?</div><select class="match-select" data-q="49"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div><div class="mm-q"><div class="q-num">50</div><div class="q-text">is most suitable for younger visitors?</div><select class="match-select" data-q="50"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div><div class="mm-q"><div class="q-num">51</div><div class="q-text">hosts performances on a regular basis?</div><select class="match-select" data-q="51"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div><div class="mm-q"><div class="q-num">52</div><div class="q-text">is set in attractive grounds?</div><select class="match-select" data-q="52"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div>
+      <div style="margin-top:24px;padding-top:18px;border-top:2px solid var(--hairline)">
+        <div class="mm-text"><div class="mm-letter">A</div><div class="mm-body"><strong>The Cartwright Collection</strong> sits in beautiful parkland on the edge of the city, and the gardens alone are worth the visit. Inside, the museum holds the largest private collection of pre-Columbian textiles in Europe — pieces you genuinely cannot see anywhere else. What makes it special, though, is the hands-on policy: certain items, including replica pottery and woven samples, are offered to visitors to examine directly. The cafe is unremarkable but the gift shop has good books. Quiet on weekdays, busier at weekends.</div></div><div class="mm-text"><div class="mm-letter">B</div><div class="mm-body"><strong>The Maritime Heritage Museum</strong> has an impressive collection of model ships and naval artefacts, and the building itself is well-designed. However, the entry fee of £24 feels steep, especially given that the museum closes by 4pm and is shut entirely on Mondays — something that has frustrated many tourists I have spoken to. On the positive side, the auditorium hosts weekly concerts of sea shanties and folk music, and these are genuinely worth attending if your visit aligns.</div></div><div class="mm-text"><div class="mm-letter">C</div><div class="mm-body"><strong>The Discovery Centre</strong> is the kind of museum that makes children forget they are learning. Every exhibit is interactive: kids can dig for fossils, build bridges, programme simple robots, and pilot a virtual submarine. Adults will find some sections rewarding too, but the design is clearly aimed at the under-twelves. One unexpected highlight is the on-site restaurant, which has a thoughtful menu and serves food far better than the usual museum fare. Tickets are reasonably priced and the layout is easy to navigate.</div></div><div class="mm-text"><div class="mm-letter">D</div><div class="mm-body"><strong>The Penfold Library Museum</strong> occupies what was once the Victorian residence of the Penfold family, a building that played a small but significant role in the suffragette movement of the early twentieth century. The collection itself focuses on social history, with particular attention to women's rights and labour movements. The curators have invested heavily in screen-based exhibits — touchscreens, projected timelines, interactive maps — and these work well, bringing the documents and photographs to life. Worth at least two hours of your time.</div></div>
+      </div>
+    </div>
+
+    <div class="submit-area">
+      <p>Ready to submit?</p>
+      <button class="submit-btn" onclick="submitExam()">Submit exam</button>
+    </div>
+  </div>
+
+  <div id="resultsScreen" class="results-screen">
+    <div class="part-header">Your results</div>
+    <h2>Mock Exam 1 — Complete</h2>
+    <div class="score-big" id="scoreFinal">0 / 52</div>
+    <div class="score-label" id="scorePctLabel">0%</div>
+    <div id="timeUsed" style="text-align:center;font-family:var(--font-sans);font-size:.78rem;color:var(--muted);margin-bottom:20px"></div>
+    <div class="part-breakdown" id="partBreakdown"></div>
+    <p style="font-size:.85rem;color:var(--ink);margin:16px 0 4px"><strong>Score interpretation (rough guide):</strong></p>
+    <ul style="font-size:.85rem;color:var(--ink);line-height:1.7;padding-left:20px">
+      <li>42–52 (80%+) — strong B2, on track for grade A or B</li>
+      <li>32–41 (60–79%) — solid B2, likely passing grade C</li>
+      <li>22–31 (42–59%) — below pass threshold, more practice needed</li>
+      <li>Below 22 — focus on grammar and vocabulary first</li>
+    </ul>
+    <p style="font-size:.8rem;color:var(--muted);margin:12px 0 18px">Note: real FCE scoring uses a scaled score (140–190). This is a percentage-based guide.</p>
+    <div style="text-align:center;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="start-btn" onclick="reviewAnswers()">Review my answers</button>
+      <a href="../index.html" class="start-btn" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);text-decoration:none;display:inline-block">Back to FCE</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>
+const ANSWERS = {"part1": {"1": "complex", "2": "call", "3": "inform", "4": "remarkable", "5": "progresses", "6": "importance", "7": "grasp", "8": "manage"}, "part2": {"9": {"answer": "own", "accept": ["OWN"]}, "10": {"answer": "if", "accept": ["IF", "though", "THOUGH"]}, "11": {"answer": "but", "accept": ["BUT"]}, "12": {"answer": "past", "accept": ["PAST", "last", "LAST"]}, "13": {"answer": "than", "accept": ["THAN"]}, "14": {"answer": "of", "accept": ["OF"]}, "15": {"answer": "who", "accept": ["WHO"]}, "16": {"answer": "as", "accept": ["AS"]}}, "part3": {"17": "magical", "18": "attention", "19": "completely", "20": "connection", "21": "original", "22": "surprisingly", "23": "arrival", "24": "unchanged"}, "part4": {"25": {"answer": "has been three years since marco", "accept": ["has been three years since", "is three years since marco", "has been 3 years since marco"]}, "26": {"answer": "is likely to be finished", "accept": ["is likely to be completed", "is likely to be done", "will likely be finished"]}, "27": {"answer": "was so long", "accept": ["was so long"]}, "28": {"answer": "is not permitted", "accept": ["is not permitted", "isn't permitted"]}, "29": {"answer": "haven't seen sara since", "accept": ["have not seen sara since", "haven't seen sara since"]}, "30": {"answer": "has been learning japanese", "accept": ["has been learning japanese"]}}, "part5": {"31": "B", "32": "C", "33": "B", "34": "B", "35": "C", "36": "B"}, "part6": {"37": "E", "38": "B", "39": "F", "40": "G", "41": "A", "42": "C"}, "part7": {"43": "D", "44": "A", "45": "B", "46": "C", "47": "B", "48": "A", "49": "D", "50": "C", "51": "B", "52": "A"}};
+const DURATION_MS = 75 * 60 * 1000;
+let startTime = null;
+let timerInterval = null;
+let submitted = false;
+
+const SAVE_KEY = 'wordplay_fce_mock_1';
+const BEST_KEY = 'wordplay_fce_mock_1_best';
+let practiceMode = false;
+
+function startExam(practice) {
+  practiceMode = practice || false;
+  try{ localStorage.setItem('wordplay_fce_mock_1_parts', JSON.stringify({part1:sc.part1.correct,part2:sc.part2.correct,part3:sc.part3.correct,part4:sc.part4.correct,part5:sc.part5.correct,part6:sc.part6.correct,part7:sc.part7.correct})); }catch(e){}
+  clearSave();
+  _startExam();
+}
+
+function resumeExam() {
+  const saved = getSave();
+  if (!saved) return;
+  _startExam(saved);
+}
+
+function _startExam(saved) {
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('examArea').classList.add('active');
+  
+  if (practiceMode) {
+    document.querySelector('.timer-bar').innerHTML = '<div class="timer-display">Practice mode — no timer</div><div class="timer-meta">Answer at your own pace</div>';
+    startTime = Date.now();
+  } else {
+    startTime = saved ? saved.startTime : Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+    updateTimer();
+  }
+  
+  if (saved) restoreAnswers(saved.answers);
+  window.scrollTo(0, 0);
+}
+
+function getSave() {
+  try { const s = localStorage.getItem(SAVE_KEY); return s ? JSON.parse(s) : null; } catch(e) { return null; }
+}
+
+function clearSave() {
+  try { localStorage.removeItem(SAVE_KEY); } catch(e) {}
+}
+
+function saveProgress() {
+  if (submitted) return;
+  const answers = collectAnswers();
+  const save = { startTime: startTime, answers: answers, savedAt: Date.now() };
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(save)); } catch(e) {}
+  alert('Progress saved. You can close the tab and resume later.');
+}
+
+function collectAnswers() {
+  const a = {};
+  document.querySelectorAll('input[type=radio]:checked').forEach(r => a[r.name] = r.value);
+  document.querySelectorAll('input[type=text]').forEach(i => { if (i.dataset.q) a['t'+i.dataset.q] = i.value; });
+  document.querySelectorAll('select').forEach(s => { if (s.dataset.q) a['s'+s.dataset.q] = s.value; });
+  return a;
+}
+
+function restoreAnswers(answers) {
+  for (const [k, v] of Object.entries(answers)) {
+    if (k.startsWith('q')) {
+      const r = document.querySelector('input[name="'+k+'"][value="'+v+'"]');
+      if (r) r.checked = true;
+    } else if (k.startsWith('t')) {
+      const q = k.slice(1);
+      const inp = document.querySelector('input[data-q="'+q+'"]');
+      if (inp) inp.value = v;
+    } else if (k.startsWith('s')) {
+      const q = k.slice(1);
+      const sel = document.querySelector('select[data-q="'+q+'"]');
+      if (sel) sel.value = v;
+    }
+  }
+}
+
+function checkPrevAttempt() {
+  try {
+    const best = localStorage.getItem(BEST_KEY);
+    if (best) {
+      document.getElementById('prevAttempt').style.display = 'block';
+      document.getElementById('prevScore').textContent = best;
+    }
+    const saved = getSave();
+    if (saved) {
+      const ageMin = Math.round((Date.now() - saved.savedAt) / 60000);
+      document.getElementById('resumeSection').style.display = 'block';
+      document.getElementById('resumeInfo').textContent = 'Saved ' + ageMin + ' minutes ago';
+    }
+  } catch(e) {}
+}
+
+checkPrevAttempt();
+
+function startExam_OLD() {
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('examArea').classList.add('active');
+  startTime = Date.now();
+  timerInterval = setInterval(updateTimer, 1000);
+  updateTimer();
+  window.scrollTo(0, 0);
+}
+
+function updateTimer() {
+  const elapsed = Date.now() - startTime;
+  const remaining = DURATION_MS - elapsed;
+  if (remaining <= 0) {
+    submitExam(true);
+    return;
+  }
+  const mins = Math.floor(remaining / 60000);
+  const secs = Math.floor((remaining % 60000) / 1000);
+  const display = mins + ':' + (secs < 10 ? '0' : '') + secs;
+  const el = document.getElementById('timerDisplay');
+  el.textContent = display;
+  el.classList.toggle('warning', remaining < 10*60*1000 && remaining >= 2*60*1000);
+  el.classList.toggle('critical', remaining < 2*60*1000);
+}
+
+function normalize(s) {
+  return (s || '').trim().toLowerCase().replace(/[‘’]/g, "'").replace(/[“”]/g, '"');
+}
+
+function getRadioValue(name) {
+  const r = document.querySelector('input[name="' + name + '"]:checked');
+  return r ? r.value : null;
+}
+
+function getInputValue(q) {
+  const el = document.querySelector('input[data-q="' + q + '"], select[data-q="' + q + '"]');
+  return el ? el.value : '';
+}
+
+function checkAnswer(part, qNum, userValue) {
+  const ans = ANSWERS[part][qNum];
+  if (typeof ans === 'string') {
+    return normalize(userValue) === normalize(ans);
+  }
+  // Object with answer + accept array
+  const target = normalize(ans.answer);
+  const userN = normalize(userValue);
+  if (userN === target) return true;
+  if (ans.accept && ans.accept.some(a => normalize(a) === userN)) return true;
+  return false;
+}
+
+function submitExam(timeUp) {
+  if (submitted) return;
+  if (!timeUp && !confirm('Submit your exam now? You will not be able to change answers.')) return;
+  submitted = true;
+  clearInterval(timerInterval);
+  
+  const elapsedMs = Date.now() - startTime;
+  const elapsedMin = Math.floor(elapsedMs / 60000);
+  const elapsedSec = Math.floor((elapsedMs % 60000) / 1000);
+  
+  // Disable all inputs
+  document.querySelectorAll('input, select').forEach(el => el.disabled = true);
+  
+  // Grade each part
+  const scores = {};
+  
+  // Part 1: 8 MC
+  scores.part1 = { correct: 0, total: 8 };
+  for (let i = 1; i <= 8; i++) {
+    const v = getRadioValue('q' + i);
+    if (v && checkAnswer('part1', i, v)) scores.part1.correct++;
+  }
+  
+  // Part 2: 8 cloze
+  scores.part2 = { correct: 0, total: 8 };
+  for (let i = 9; i <= 16; i++) {
+    const v = getInputValue(i);
+    if (v && checkAnswer('part2', i, v)) scores.part2.correct++;
+  }
+  
+  // Part 3: 8 word formation
+  scores.part3 = { correct: 0, total: 8 };
+  for (let i = 17; i <= 24; i++) {
+    const v = getInputValue(i);
+    if (v && checkAnswer('part3', i, v)) scores.part3.correct++;
+  }
+  
+  // Part 4: 6 transformations
+  scores.part4 = { correct: 0, total: 6 };
+  for (let i = 25; i <= 30; i++) {
+    const v = getInputValue(i);
+    if (v && checkAnswer('part4', i, v)) scores.part4.correct++;
+  }
+  
+  // Part 5: 6 MC
+  scores.part5 = { correct: 0, total: 6 };
+  for (let i = 31; i <= 36; i++) {
+    const v = getRadioValue('q' + i);
+    if (v && checkAnswer('part5', i, v)) scores.part5.correct++;
+  }
+  
+  // Part 6: 6 gap
+  scores.part6 = { correct: 0, total: 6 };
+  for (let i = 37; i <= 42; i++) {
+    const v = getInputValue(i);
+    if (v && v === ANSWERS.part6[i]) scores.part6.correct++;
+  }
+  
+  // Part 7: 10 matching
+  scores.part7 = { correct: 0, total: 10 };
+  for (let i = 43; i <= 52; i++) {
+    const v = getInputValue(i);
+    if (v && v === ANSWERS.part7[i]) scores.part7.correct++;
+  }
+  
+  const totalCorrect = Object.values(scores).reduce((a, p) => a + p.correct, 0);
+  const pct = Math.round((totalCorrect / 52) * 100);
+  
+  document.getElementById('scoreFinal').textContent = totalCorrect + ' / 52';
+  document.getElementById('scorePctLabel').textContent = pct + '%';
+  document.getElementById('timeUsed').textContent = 'Time used: ' + elapsedMin + ' min ' + elapsedSec + ' sec' + (timeUp ? ' (auto-submit)' : '');
+  
+  let breakdown = '';
+  const partLabels = {
+    part1: 'Part 1 · MC Cloze',
+    part2: 'Part 2 · Open Cloze',
+    part3: 'Part 3 · Word Form',
+    part4: 'Part 4 · Transform',
+    part5: 'Part 5 · Multi-choice',
+    part6: 'Part 6 · Gapped Text',
+    part7: 'Part 7 · Multi-match'
+  };
+  for (const [k, v] of Object.entries(scores)) {
+    const p = Math.round((v.correct / v.total) * 100);
+    breakdown += '<div class="part-score"><div class="name">' + partLabels[k] + '</div><div class="val">' + v.correct + '/' + v.total + '</div><div class="pct">' + p + '%</div></div>';
+  }
+  document.getElementById('partBreakdown').innerHTML = breakdown;
+  
+  // Save XP via store
+  if (window.FCEStore) {
+    try {
+      FCEStore.saveResult('mock-1', totalCorrect, 52, {});
+    } catch(e) {}
+  }
+  
+  // Show results
+  document.getElementById('resultsScreen').classList.add('active');
+  document.getElementById('resultsScreen').scrollIntoView({ behavior: 'smooth' });
+}
+
+function reviewAnswers() {
+  // Mark each input/radio with correct/wrong indication
+  // Part 1: radios 1-8
+  for (let i = 1; i <= 8; i++) {
+    const v = getRadioValue('q' + i);
+    const qDiv = document.querySelectorAll('.mc-q')[i - 1];
+    if (qDiv && !qDiv.querySelector('.show-answer')) {
+      const correct = ANSWERS.part1[i];
+      const isRight = v && checkAnswer('part1', i, v);
+      const note = document.createElement('div');
+      note.className = 'show-answer';
+      note.innerHTML = isRight ? '<span class="correct-mark">✓ Correct</span>' : '<span class="wrong-mark">✗</span> Correct answer: <strong>' + correct + '</strong>';
+      qDiv.appendChild(note);
+    }
+  }
+  // Parts 2 & 3: inputs 9-24
+  for (let i = 9; i <= 24; i++) {
+    const inp = document.querySelector('input[data-q="' + i + '"]');
+    if (inp) {
+      const part = i <= 16 ? 'part2' : 'part3';
+      const v = inp.value;
+      const isRight = v && checkAnswer(part, i, v);
+      const ans = ANSWERS[part][i];
+      const correctText = (typeof ans === 'string') ? ans : ans.answer;
+      const parent = inp.closest('.word-form-line') || inp.parentElement;
+      if (!parent.querySelector('.show-answer')) {
+        const note = document.createElement('div');
+        note.className = 'show-answer';
+        note.innerHTML = isRight ? '<span class="correct-mark">✓</span>' : '<span class="wrong-mark">✗</span> Correct: <strong>' + correctText + '</strong>';
+        parent.appendChild(note);
+      }
+    }
+  }
+  // Part 4: kw inputs 25-30
+  document.querySelectorAll('.kw-q').forEach((qDiv, idx) => {
+    const i = 25 + idx;
+    if (qDiv.querySelector('.show-answer')) return;
+    const inp = qDiv.querySelector('.kw-input');
+    const v = inp ? inp.value : '';
+    const isRight = v && checkAnswer('part4', i, v);
+    const correctText = ANSWERS.part4[i].answer;
+    const note = document.createElement('div');
+    note.className = 'show-answer';
+    note.innerHTML = isRight ? '<span class="correct-mark">✓</span>' : '<span class="wrong-mark">✗</span> Correct: <strong>' + correctText + '</strong>';
+    qDiv.appendChild(note);
+  });
+  // Part 5: radios 31-36
+  for (let i = 31; i <= 36; i++) {
+    const v = getRadioValue('q' + i);
+    const isRight = v && checkAnswer('part5', i, v);
+    const correct = ANSWERS.part5[i];
+    const allMcQs = document.querySelectorAll('.mc-q');
+    const qDiv = allMcQs[8 + (i - 31)]; // first 8 are part 1, next 6 are part 5
+    if (qDiv && !qDiv.querySelector('.show-answer')) {
+      const note = document.createElement('div');
+      note.className = 'show-answer';
+      note.innerHTML = isRight ? '<span class="correct-mark">✓ Correct</span>' : '<span class="wrong-mark">✗</span> Correct answer: <strong>' + correct + '</strong>';
+      qDiv.appendChild(note);
+    }
+  }
+  // Part 6: gap selects
+  for (let i = 37; i <= 42; i++) {
+    const sel = document.querySelector('select[data-q="' + i + '"]');
+    if (sel && !sel.parentElement.querySelector('.show-answer')) {
+      const v = sel.value;
+      const correct = ANSWERS.part6[i];
+      const isRight = v === correct;
+      const note = document.createElement('span');
+      note.className = 'show-answer';
+      note.style.display = 'inline';
+      note.style.padding = '0';
+      note.innerHTML = isRight ? ' <span class="correct-mark">✓</span>' : ' <span class="wrong-mark">✗ ' + correct + '</span>';
+      sel.parentElement.appendChild(note);
+    }
+  }
+  // Part 7: matching
+  for (let i = 43; i <= 52; i++) {
+    const sel = document.querySelector('select[data-q="' + i + '"]');
+    if (sel && !sel.parentElement.querySelector('.show-answer')) {
+      const v = sel.value;
+      const correct = ANSWERS.part7[i];
+      const isRight = v === correct;
+      const note = document.createElement('span');
+      note.className = 'show-answer';
+      note.style.display = 'inline-block';
+      note.style.padding = '0';
+      note.style.marginLeft = '8px';
+      note.innerHTML = isRight ? '<span class="correct-mark">✓</span>' : '<span class="wrong-mark">✗ ' + correct + '</span>';
+      sel.parentElement.appendChild(note);
+    }
+  }
+  document.getElementById('examArea').scrollIntoView({ behavior: 'smooth' });
+}
+
+window.addEventListener('beforeunload', function(e) {
+  if (startTime && !submitted) {
+    e.preventDefault();
+    e.returnValue = '';
+  }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,624 @@
+/* ══════════════════════════════════════════════════════════════════
+   SLIDE VIEWER — swipeable browser-friendly slides
+   ══════════════════════════════════════════════════════════════════ */
+
+.deck-body {
+  background: var(--navy);
+  overflow-x: hidden;
+  overscroll-behavior: none;
+}
+
+/* ─── DECK NAV BAR ─────────────────────────────────────────────── */
+.deck-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(15, 26, 47, 0.96);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(184, 134, 11, 0.3);
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 50;
+  padding-bottom: calc(12px + env(safe-area-inset-bottom));
+}
+.deck-nav button {
+  cursor: pointer;
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.75);
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  min-width: 60px;
+  min-height: 40px;
+  transition: background 0.15s, transform 0.1s;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.deck-nav button:active {
+  transform: scale(0.96);
+  background: rgba(255,255,255,0.15);
+}
+.deck-nav button:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+.deck-nav .counter {
+  flex: 1;
+  text-align: center;
+  color: white;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+.deck-nav .counter span { color: var(--accent); font-weight: 700; }
+
+/* Progress bar at top of screen */
+.deck-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255,255,255,0.08);
+  z-index: 50;
+}
+.deck-progress-fill {
+  height: 100%;
+  background: var(--accent);
+  width: 0%;
+  transition: width 0.3s ease-out;
+}
+
+/* ─── SLIDE CONTAINER ──────────────────────────────────────────── */
+.deck-viewport {
+  padding: 60px 20px 90px;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.slide {
+  display: none;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  animation: slideIn 0.35s ease-out;
+}
+.slide.active { display: block; }
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ─── SLIDE CARD ───────────────────────────────────────────────── */
+.slide-card {
+  background: var(--paper);
+  border-radius: 8px;
+  padding: 32px 28px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  min-height: 60vh; min-height: 60dvh;
+  border-top: 4px solid var(--accent);
+}
+
+/* ─── TITLE SLIDE (dark) ───────────────────────────────────────── */
+.slide.title-slide .slide-card {
+  background: var(--navy-deep);
+  color: white;
+  border-top: 4px solid var(--accent);
+  text-align: left;
+  padding: 56px 32px;
+}
+.slide.title-slide .chapter-num {
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.slide.title-slide h1 {
+  color: white;
+  font-size: 3.2rem;
+  line-height: 1;
+  margin-bottom: 20px;
+}
+.slide.title-slide .deck-sub {
+  color: var(--accent);
+  font-size: 1.2rem;
+  margin-bottom: 32px;
+}
+.slide.title-slide .deck-level {
+  display: inline-block;
+  padding: 6px 14px;
+  background: var(--accent);
+  color: white;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 700;
+  border-radius: 3px;
+}
+
+/* ─── CONTENT SLIDE HEADER ────────────────────────────────────── */
+.slide-header {
+  border-left: 4px solid var(--accent);
+  padding: 6px 0 6px 16px;
+  margin-bottom: 24px;
+}
+.slide-header h2 {
+  font-size: 1.8rem;
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+.slide-header .slide-sub {
+  color: var(--muted-deep);
+  font-size: 0.95rem;
+  font-style: italic;
+}
+
+/* ─── FORMULA BLOCKS ───────────────────────────────────────────── */
+.formula-block {
+  background: var(--cream-deep);
+  border-left: 4px solid var(--accent);
+  padding: 12px 16px;
+  margin-bottom: 12px;
+  border-radius: 0 4px 4px 0;
+  font-weight: 700;
+  font-size: 0.98rem;
+}
+.formula-block .arrow {
+  color: var(--muted);
+  margin: 0 8px;
+}
+.formula-block .result {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* ─── EXPLANATION ─────────────────────────────────────────────── */
+.slide-explanation {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--navy);
+  margin: 20px 0;
+}
+.slide-explanation strong { color: var(--accent); }
+
+/* ─── EXAMPLE CARDS ──────────────────────────────────────────── */
+.examples-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 20px 0;
+}
+@media (min-width: 640px) {
+  .examples-row { grid-template-columns: repeat(3, 1fr); }
+}
+.example-card {
+  background: var(--paper);
+  border: 1.5px solid var(--accent);
+  border-radius: 4px;
+  padding: 14px 16px;
+}
+.example-card .ex-text {
+  font-style: italic;
+  color: var(--navy);
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+.example-card .ex-note {
+  font-family: var(--font-sans);
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+/* ─── WATCH OUT ──────────────────────────────────────────────── */
+.watch-out {
+  background: var(--cream-deep, #FFF4E8);
+  border: 1px solid var(--amber);
+  border-radius: 4px;
+  padding: 10px 14px;
+  margin-top: 16px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+.watch-out strong { color: var(--amber); }
+.watch-out::before { content: '⚠ '; color: var(--amber); font-weight: 700; }
+
+/* ─── OVERVIEW / SUMMARY ROWS ─────────────────────────────────── */
+.overview-row, .summary-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-soft);
+  border-left: 4px solid var(--accent);
+  border-radius: 0 4px 4px 0;
+  margin-bottom: 8px;
+  background: var(--paper);
+}
+.overview-row .num {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--accent);
+  width: 28px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.overview-row .title {
+  font-weight: 700;
+  color: var(--navy);
+  font-size: 0.95rem;
+}
+.overview-row .ex {
+  color: var(--muted);
+  font-style: italic;
+  font-size: 0.85rem;
+  margin-left: auto;
+  text-align: right;
+}
+@media (max-width: 520px) {
+  .overview-row { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .overview-row .ex { margin-left: 0; text-align: left; }
+  .overview-row .num { width: auto; }
+}
+
+/* ─── COMPARISON PANELS ───────────────────────────────────────── */
+.panel-pair {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+@media (min-width: 640px) {
+  .panel-pair { grid-template-columns: 1fr 1fr; }
+}
+.panel {
+  background: var(--paper);
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.panel-head {
+  padding: 12px 16px;
+  font-family: var(--font-sans);
+  letter-spacing: 2px;
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  color: white;
+}
+.panel-head.green { background: var(--green); }
+.panel-head.amber { background: var(--accent); }
+.panel-head.red { background: var(--red); }
+.panel-body { padding: 14px 16px; }
+.panel-body .ex {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-soft);
+  font-size: 0.9rem;
+}
+.panel-body .ex:last-child { border-bottom: none; }
+.panel-body .ex .sent { font-style: italic; color: var(--navy); margin-bottom: 4px; }
+.panel-body .ex .note { color: var(--muted); font-size: 0.82rem; }
+
+/* ─── FCE TRAPS GRID (row format) ────────────────────────────── */
+.trap-row {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 0.88rem;
+}
+.trap-wrong {
+  background: rgba(192,57,43,.08);
+  border: 1px solid var(--red);
+  padding: 8px 12px;
+  border-radius: 4px;
+  color: var(--red);
+  text-decoration: line-through;
+}
+.trap-wrong::before { content: '✗ '; text-decoration: none; font-weight: 700; }
+.trap-arrow { color: var(--muted); font-size: 1rem; }
+.trap-right {
+  background: rgba(39,174,96,.08);
+  border: 1px solid var(--green);
+  padding: 8px 12px;
+  border-radius: 4px;
+  color: var(--green);
+}
+.trap-right::before { content: '✓ '; font-weight: 700; }
+.trap-note {
+  grid-column: 1 / -1;
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-style: italic;
+  padding: 2px 4px 6px;
+}
+@media (max-width: 520px) {
+  .trap-row { grid-template-columns: 1fr; }
+  .trap-arrow { display: none; }
+}
+
+/* ─── SUMMARY SLIDE (dark) ───────────────────────────────────── */
+.slide.summary-slide .slide-card {
+  background: var(--navy-deep);
+  color: white;
+  padding: 40px 32px;
+}
+.slide.summary-slide h2 {
+  color: white;
+  font-size: 2rem;
+  margin-bottom: 24px;
+}
+.summary-row {
+  background: rgba(255,255,255,0.04);
+  border-color: rgba(255,255,255,0.1);
+  border-left-color: var(--accent);
+  color: white;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px 16px;
+}
+.summary-row .label {
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+}
+.summary-row .form {
+  font-family: var(--font-serif);
+  font-size: 0.88rem;
+  color: #D0D8E4;
+}
+.summary-row .ex {
+  color: #9AA8BE;
+  font-style: italic;
+  font-size: 0.85rem;
+  margin-left: 0;
+}
+
+/* ─── TWO-UP EXAMPLE PAIRS ───────────────────────────────────── */
+.compare-pair {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 16px 0;
+}
+@media (min-width: 640px) {
+  .compare-pair { grid-template-columns: 1fr 1fr; }
+}
+.compare-pair .side {
+  background: var(--paper);
+  border: 1.5px solid var(--border);
+  border-radius: 4px;
+  padding: 14px 16px;
+}
+.compare-pair .tag {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+.compare-pair .tag.green { color: var(--green); }
+.compare-pair .tag.amber { color: var(--accent); }
+.compare-pair .sent {
+  font-style: italic;
+  color: var(--navy);
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+.compare-pair .note {
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+/* ─── MODIFIERS LIST (Ch2 slide 8) ───────────────────────────── */
+.mod-list { display: flex; flex-direction: column; gap: 6px; }
+.mod-row {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 10px;
+  padding: 10px 12px;
+  background: var(--paper);
+  border: 1px solid var(--border-soft);
+  border-radius: 4px;
+  font-size: 0.88rem;
+}
+.mod-row .word { font-weight: 700; }
+.mod-row .word.red { color: var(--red); }
+.mod-row .word.green { color: var(--green); }
+.mod-row .example { color: var(--muted); font-style: italic; }
+
+/* ── Chapter subtitle ── */
+.chapter-subtitle {
+  font-family: var(--font-sans);
+  font-size: .85rem;
+  color: var(--muted);
+  margin: 2px 0 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--hairline);
+}
+
+/* ─── MOBILE SLIDE HEIGHT ────────────────────────────────────────── */
+@media (max-width: 520px) {
+  .slide-card { min-height: 50vh; padding: 22px 18px; }
+  .slide-header h2 { font-size: 1.4rem; }
+  .overview-label { font-size: .78rem; min-width: 80px !important; }
+}
+
+/* ─── SLIDE DECK CONTAINER ───────────────────────────────────────── */
+.slide-deck {
+  padding: 0 0 100px;  /* bottom clearance for fixed nav bar */
+}
+@media (max-width: 520px) {
+  .slide-deck { padding: 0 0 90px; }
+  .examples-row .example-card { padding: 10px 12px; }
+  .trap-row { font-size: .82rem; }
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   DARK MODE — DEFINITIVE OVERRIDES (Batch 21)
+   Strategy: every text-bearing element under .slide-card gets explicit
+   light color. Bold/strong tags get explicit color. No exceptions.
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Slide card — dark background, light text by default */
+body.dark .slide-card {
+  background: #1A2230 !important;
+  color: #F0F0F0 !important;
+  border-top-color: var(--amber);
+}
+body.dark .summary-slide .slide-card { background: #0D1520 !important; }
+body.dark .slide.title-slide .slide-card { background: #050810 !important; color: #FFFFFF !important; }
+
+/* Every direct text element inside slide-card → light */
+body.dark .slide-card *:not(a) {
+  color: inherit;
+}
+
+/* But these specific elements need explicit colors */
+body.dark .slide-card,
+body.dark .slide-card p,
+body.dark .slide-card div,
+body.dark .slide-card span,
+body.dark .slide-card li,
+body.dark .slide-card td,
+body.dark .slide-card h1,
+body.dark .slide-card h2,
+body.dark .slide-card h3,
+body.dark .slide-card h4 { color: #F0F0F0 !important; }
+
+/* Headings */
+body.dark .slide-card .slide-header h2 { color: #FFFFFF !important; }
+body.dark .slide-card .slide-sub        { color: #C8D4E0 !important; }
+body.dark .slide-card .slide-explanation { color: #E0E8F0 !important; }
+
+/* Bold/strong/em tags — keep amber for emphasis or white */
+body.dark .slide-card strong,
+body.dark .slide-card b { color: #FFE4A0 !important; }
+body.dark .slide-card em,
+body.dark .slide-card i { color: #C8D4E0 !important; }
+
+/* Overview rows */
+body.dark .slide-card .overview-row,
+body.dark .slide-card .summary-row {
+  background: rgba(255,255,255,.06) !important;
+  border-color: rgba(255,255,255,.12) !important;
+  border-left-color: var(--amber) !important;
+}
+body.dark .slide-card .overview-label   { color: #FFFFFF !important; font-weight: 700; }
+body.dark .slide-card .overview-desc    { color: #E0E8F0 !important; }
+body.dark .slide-card .overview-row .title { color: #FFFFFF !important; }
+body.dark .slide-card .overview-row .ex    { color: #B8C8D8 !important; }
+body.dark .slide-card .overview-row .num   { color: var(--amber) !important; }
+
+/* Summary rows */
+body.dark .slide-card .summary-row .label { color: var(--amber) !important; }
+body.dark .slide-card .summary-row .form  { color: #FFFFFF !important; }
+body.dark .slide-card .summary-row .ex    { color: #C8D4E0 !important; }
+
+/* Panel pairs */
+body.dark .slide-card .panel {
+  background: rgba(255,255,255,.05) !important;
+  border-color: rgba(255,255,255,.15) !important;
+}
+body.dark .slide-card .panel-head        { color: #FFFFFF !important; }
+body.dark .slide-card .panel-head.green  { background: #1a4a28 !important; color: #A0E8B0 !important; }
+body.dark .slide-card .panel-head.red    { background: #4a1a1a !important; color: #F0A0A0 !important; }
+body.dark .slide-card .panel-body .ex .sent { color: #F0F0F0 !important; font-style: italic; }
+body.dark .slide-card .panel-body .ex .note { color: #98A8B8 !important; }
+
+/* Example cards */
+body.dark .slide-card .example-card {
+  background: rgba(255,255,255,.06) !important;
+  border-color: rgba(201,160,80,.5) !important;
+}
+body.dark .slide-card .example-card .ex-text { color: #FFFFFF !important; }
+body.dark .slide-card .example-card .ex-note { color: #B8C8D8 !important; }
+
+/* Formula blocks */
+body.dark .slide-card .formula-block {
+  background: rgba(255,255,255,.08) !important;
+  color: #FFFFFF !important;
+  border-color: rgba(255,255,255,.2) !important;
+}
+body.dark .slide-card .formula-block .arrow  { color: var(--amber) !important; }
+body.dark .slide-card .formula-block .result { color: #4CAF82 !important; }
+
+/* Trap rows */
+body.dark .slide-card .trap-row { border-bottom-color: rgba(255,255,255,.08) !important; }
+body.dark .slide-card .trap-wrong { background: rgba(192,57,43,.25) !important; color: #FFB0A0 !important; }
+body.dark .slide-card .trap-right { background: rgba(39,174,96,.25) !important; color: #A0E8B0 !important; }
+body.dark .slide-card .trap-arrow { color: var(--amber) !important; }
+body.dark .slide-card .trap-note  { color: #98A8B8 !important; }
+
+/* Watch-out boxes */
+body.dark .slide-card .watch-out {
+  background: rgba(201,160,80,.18) !important;
+  border-color: var(--amber) !important;
+  color: #FFE4A0 !important;
+}
+body.dark .slide-card .watch-out strong { color: var(--amber) !important; }
+body.dark .slide-card .watch-out em     { color: #FFD080 !important; }
+
+/* Compare pair */
+body.dark .slide-card .compare-pair .side {
+  background: rgba(255,255,255,.06) !important;
+  border-color: rgba(255,255,255,.15) !important;
+  color: #F0F0F0 !important;
+}
+
+/* Mod rows */
+body.dark .slide-card .mod-row {
+  background: rgba(255,255,255,.06) !important;
+  border-color: rgba(255,255,255,.12) !important;
+  color: #F0F0F0 !important;
+}
+
+/* Preserve dark text on amber CTA buttons (intentional design) */
+body.dark .slide-card a[style*="background:var(--amber)"],
+body.dark .slide-card a[style*="background: var(--amber)"],
+body.dark a[style*="background:var(--amber)"],
+body.dark a[style*="background: var(--amber)"],
+body.dark button[style*="background:var(--amber)"],
+body.dark .lc-cta-btn {
+  color: #1A1A1A !important;
+  background: var(--amber) !important;
+}
+
+/* Header / chapter meta in dark */
+body.dark .chapter-num      { color: var(--amber) !important; }
+body.dark .chapter-subtitle { color: #B8C8D8 !important; }
+body.dark .breadcrumb       { color: #98A8B8 !important; }
+body.dark .breadcrumb a     { color: var(--teal) !important; }
+body.dark .breadcrumb strong { color: #FFFFFF !important; }
+
+/* Deck nav buttons (Prev/Next) */
+body.dark .deck-btn {
+  background: rgba(255,255,255,.08) !important;
+  color: #F0F0F0 !important;
+  border-color: rgba(255,255,255,.2) !important;
+}
+body.dark .deck-btn:hover { background: rgba(255,255,255,.15) !important; }
+body.dark .deck-btn:disabled { opacity: 0.4; color: #808080 !important; }
+body.dark .counter { color: #C8D4E0 !important; }
+
+/* Lesson complete banner — keep amber bg, dark text */
+body.dark .lc-banner {
+  background: var(--amber) !important;
+  color: #1A1A1A !important;
+}
+body.dark .lc-banner * { color: #1A1A1A !important; }

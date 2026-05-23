@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>C1 Writing · The Formal Report — Practice | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100">
+<link rel="stylesheet" href="../../../../shared/worksheet.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner"><a href="../index.html" class="back back-link">C1 Writing</a><a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">C1</a><span>›</span><a href="../index.html">Writing</a><span>›</span><strong>The Formal Report — Practice</strong></div>
+  <div class="chapter-num">Writing</div>
+  <h1>The Formal Report</h1>
+  <p class="chapter-subtitle">Headed sections · findings · impersonal tone · recommendations</p>
+  <nav class="chapter-nav"><a href="slides.html" class="chapter-nav-btn">Lesson</a><a href="worksheet.html" class="chapter-nav-btn active">Practice</a><a href="game.html" class="chapter-nav-btn">Game</a><a href="printables.html" class="chapter-nav-btn">Printables</a></nav>
+
+  <div style="background:var(--cream-deep);border:1px solid var(--hairline);border-radius:8px;padding:20px;margin-bottom:24px">
+    <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:8px">Writing Task</div>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:10px">Write a formal report on the following topic:</p>
+    <p style="font-size:.92rem;color:var(--ink);font-style:italic">Your report should include an introduction stating the purpose, a findings section, and a recommendations section.</p>
+    <p style="font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin-top:10px">Write 140–190 words. Formal register throughout.</p>
+  </div>
+
+  <div style="margin-bottom:8px;display:flex;justify-content:space-between;align-items:center">
+    <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted)">Your answer</div>
+    <span id="wc_report" class="wc-pill">0 words</span>
+  </div>
+  <textarea id="ta_report" rows="12" placeholder="Write your the formal report here..."
+    style="width:100%;padding:14px;font-family:Georgia,serif;font-size:.95rem;color:var(--ink);background:var(--paper);border:1.5px solid var(--hairline);border-radius:6px;resize:vertical;line-height:1.65;margin-bottom:12px"></textarea>
+
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px">
+    <button id="saveBtn_report" onclick="saveDraft()" style="padding:9px 20px;font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:var(--ink);color:var(--paper);border:0;border-radius:3px;cursor:pointer">Save draft</button>
+    <button onclick="toggleModel()" style="padding:9px 20px;font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);border-radius:3px;cursor:pointer">Show model answer</button>
+  </div>
+
+  <div id="modelPanel" style="display:none;background:rgba(184,134,11,.06);border:1.5px solid rgba(184,134,11,.25);border-radius:6px;padding:18px;margin-bottom:24px">
+    <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:10px">Model answer</div>
+    <div id="modelText" style="font-size:.9rem;line-height:1.7;color:var(--ink);white-space:pre-line"></div>
+  </div>
+
+  <div>
+    <div style="background:var(--cream-deep);padding:10px 14px;font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);border:1px solid var(--hairline);border-radius:6px 6px 0 0;border-bottom:0">Live feedback &amp; rubric</div>
+    <div id="wg_feedback" class="writing-feedback"></div>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script src="../../../../shared/writing-grader.js?v=v100"></script>
+<script>
+var DRAFT_KEY = 'wordplay_writing_c1_report';
+var ta = document.getElementById('ta_report');
+var wc = document.getElementById('wc_report');
+var MODEL = 'Introduction\nThe purpose of this report is to examine the effectiveness of the college canteen and make recommendations for improvement.\n\nFindings\nA survey of 120 students was conducted in October. The data indicates that while 78% of respondents were satisfied with the variety of food on offer, only 32% considered the prices to be reasonable. It was also found that queuing times at peak hours regularly exceed fifteen minutes.\n\nRecommendations\nIt is advisable that a pre-ordering system be introduced to reduce waiting times. Steps should also be taken to review pricing. It is further recommended that a weekly feedback form be introduced.\n\nConclusion\nTaking into account all the findings, targeted improvements to pricing and efficiency would enhance the student experience considerably.';
+window.WRITING_CONFIG = {"taskType": "report", "register": "formal", "minWords": 140, "maxWords": 195, "level": "c1"};
+
+function countW(s) { return s.trim() ? s.trim().split(/\s+/).length : 0; }
+if (ta) {
+  try { var sv = localStorage.getItem(DRAFT_KEY); if (sv) ta.value = sv; } catch(e) {}
+  ta.addEventListener('input', function() {
+    var n = countW(ta.value);
+    wc.textContent = n + ' words';
+    wc.className = 'wc-pill';
+    if (n >= 140 && n <= 195) wc.classList.add('good');
+    else if (n > 0 && n < 140) wc.classList.add('short');
+    else if (n > 195) wc.classList.add('warn');
+  });
+  WritingGrader.init('ta_report', 'wg_feedback', window.WRITING_CONFIG);
+}
+
+function saveDraft() {
+  if (!ta) return;
+  try { localStorage.setItem(DRAFT_KEY, ta.value); } catch(e) {}
+  if (window.FCEStore && ta.value.trim().length > 20) FCEStore.saveResult('report', 1, 1, {});
+  var btn = document.getElementById('saveBtn_report');
+  var orig = btn.textContent; btn.textContent = 'Saved!';
+  setTimeout(function() { btn.textContent = orig; }, 1500);
+}
+
+function toggleModel() {
+  var p = document.getElementById('modelPanel');
+  var t = document.getElementById('modelText');
+  if (p.style.display === 'none') {
+    p.style.display = 'block';
+    t.textContent = MODEL.replace(/\\n/g, '\n');
+    event.target.textContent = 'Hide model answer';
+  } else {
+    p.style.display = 'none';
+    event.target.textContent = 'Show model answer';
+  }
+}
+</script>
+</body></html>

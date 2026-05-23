@@ -1,0 +1,91 @@
+{
+  "slug": "example-chapter",
+  "num": 18,
+  "label": "Chapter Title",
+  "subtitle": "Short tagline · key concepts",
+  "slides": [
+    {
+      "h2": "Slide 1 — Introduction",
+      "intro": "Optional intro paragraph.",
+      "rows": [
+        [
+          "Label",
+          "Description"
+        ],
+        [
+          "Another",
+          "More content"
+        ]
+      ],
+      "wo": "Optional watch-out tip.",
+      "cta": false
+    },
+    {
+      "h2": "Slide 2 — Forms",
+      "rows": [
+        [
+          "Form 1",
+          "Example"
+        ],
+        [
+          "Form 2",
+          "Example"
+        ]
+      ],
+      "wo": "Common mistake note."
+    },
+    {
+      "h2": "Slide 3 — Practice",
+      "rows": [
+        [
+          "Usage 1",
+          "Example"
+        ],
+        [
+          "Usage 2",
+          "Example"
+        ]
+      ],
+      "cta": true
+    }
+  ],
+  "ws": {
+    "ex1": {
+      "title": "Choose the correct form",
+      "qs": [
+        {
+          "q": "Question?",
+          "opts": [
+            "A",
+            "B",
+            "C"
+          ],
+          "a": "A"
+        }
+      ]
+    },
+    "ex2": {
+      "title": "Fill in the blank",
+      "qs": [
+        {
+          "q": "Sentence with _____ gap.",
+          "a": "answer",
+          "acc": [
+            "alternative"
+          ]
+        }
+      ]
+    }
+  },
+  "game": [
+    {
+      "id": "item1",
+      "term": "Term",
+      "meaning": "Definition",
+      "synonym": "Related phrase",
+      "example": "Sentence with <b>bold</b>.",
+      "completion": "Sentence with ______.",
+      "answer": "answer"
+    }
+  ]
+}

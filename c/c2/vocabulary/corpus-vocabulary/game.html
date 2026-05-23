@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>C2 Vocab · Corpus-informed Vocabulary — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100"><link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link">C2 Vocabulary</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../../index.html">C2</a><span>›</span><a href="../index.html">Vocabulary</a><span>›</span><strong>Corpus-informed Vocabulary</strong></div>
+  <div class="chapter-num">V6</div><h1>Corpus-informed Vocabulary</h1>
+  <p class="chapter-subtitle">High-frequency academic words · the Academic Word List · corpus-based usage</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">Corpus-informed Vocabulary</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / 12 mastered</div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Resume</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Start over</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Start</button>
+  </div></div>
+  <div id="gamePlay" class="game-screen"><div class="game-play-card">
+    <div class="game-top-bar"><div class="game-progress-wrap"><div class="game-progress-bar" id="gProgressBar" style="width:0%"></div></div>
+    <div class="game-top-stats"><span>Score <strong id="gScore">0</strong></span><span>Streak <strong id="gStreak">0</strong></span></div></div>
+    <div id="gModeTag" class="game-mode-tag"></div><div id="gTerm" class="game-term"></div>
+    <div id="gPrompt" class="game-prompt"></div><div id="gOptions" class="game-options"></div>
+    <div id="gFeedback" class="game-feedback"></div><div id="gExample" class="game-example" style="display:none"></div>
+    <div class="game-btn-row">
+      <button id="gBtnHint" class="game-btn ghost">Hint [H]</button>
+      <button id="gBtnKnow" class="game-btn know" style="display:none">I know this [K]</button>
+      <button id="gBtnReveal" class="game-btn ghost">Reveal</button>
+      <button id="gBtnNext" class="game-btn primary" style="display:none">Next →</button>
+    </div>
+    <div class="game-progress-txt" id="gProgressTxt">0 / 12 mastered</div>
+    <button id="gBtnSaveQuit" class="game-btn ghost" style="margin-top:12px;width:100%">Save &amp; quit</button>
+  </div>
+  <div class="game-ref-panel"><button id="gRefToggle" class="game-ref-head">▼ Reference</button>
+  <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div></div></div>
+  <div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Complete!</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats"><div>Score <strong id="gFinalScore">0</strong></div><div>Mastery <strong id="gFinalPct">0%</strong></div></div>
+    <a href="../discourse-vocabulary/index.html" class="game-btn primary" style="text-decoration:none;text-align:center;display:block;margin-bottom:8px">Next: Discourse Vocabulary &#8594;</a>
+    <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>window.LEVEL="c2";window.CHAPTER_ID="corpus-vocabulary";
+window.GAME_DATA={chapterId:"corpus-vocabulary",level:"c2",title:"Corpus-informed Vocabulary",storageKey:"wordplay_game_c2_corpus-vocabulary",items:[
+  {
+    "id": "constitute",
+    "term": "Constitute",
+    "meaning": "to be or form the parts that make up something",
+    "synonym": "form / comprise / make up",
+    "example": "These findings <b>constitute</b> a significant contribution to the field.",
+    "completion": "These findings ______ a significant contribution to the field.",
+    "answer": "constitute"
+  },
+  {
+    "id": "albeit",
+    "term": "Albeit",
+    "meaning": "although; even though — used to introduce a concession",
+    "synonym": "although / even if / even though",
+    "example": "The results were encouraging, <b>albeit</b> inconclusive.",
+    "completion": "The results were encouraging, ______ inconclusive.",
+    "answer": "albeit"
+  },
+  {
+    "id": "whereby",
+    "term": "Whereby",
+    "meaning": "by which; through which; according to which",
+    "synonym": "through which / by means of which",
+    "example": "A system <b>whereby</b> students can access support 24 hours a day was introduced.",
+    "completion": "A system ______ students can access support was introduced.",
+    "answer": "whereby"
+  },
+  {
+    "id": "notably",
+    "term": "Notably",
+    "meaning": "in particular; especially; worth noting",
+    "synonym": "in particular / especially / specifically",
+    "example": "Several countries, <b>notably</b> Sweden and Finland, have adopted the model.",
+    "completion": "Several countries, ______ Sweden and Finland, have adopted the model.",
+    "answer": "notably"
+  },
+  {
+    "id": "pertinent",
+    "term": "Pertinent",
+    "meaning": "relevant or applicable to a particular matter",
+    "synonym": "relevant / applicable / germane",
+    "example": "She raised several <b>pertinent</b> questions about the methodology.",
+    "completion": "She raised several ______ questions about the methodology.",
+    "answer": "pertinent"
+  },
+  {
+    "id": "ostensibly",
+    "term": "Ostensibly",
+    "meaning": "apparently or seemingly, but perhaps not actually",
+    "synonym": "apparently / seemingly / on the surface",
+    "example": "The policy was <b>ostensibly</b> about safety, but critics saw other motives.",
+    "completion": "The policy was ______ about safety, but critics saw other motives.",
+    "answer": "ostensibly"
+  },
+  {
+    "id": "aggregate",
+    "term": "Aggregate",
+    "meaning": "a whole formed by combining several elements; taken as a whole",
+    "synonym": "total / combined / collective",
+    "example": "In the <b>aggregate</b>, the data shows a clear upward trend.",
+    "completion": "In the ______, the data shows a clear upward trend.",
+    "answer": "aggregate"
+  },
+  {
+    "id": "inherent",
+    "term": "Inherent",
+    "meaning": "existing as a permanent and essential quality of something",
+    "synonym": "intrinsic / built-in / fundamental",
+    "example": "There are <b>inherent</b> risks in any surgical procedure.",
+    "completion": "There are ______ risks in any surgical procedure.",
+    "answer": "inherent"
+  },
+  {
+    "id": "substantiate",
+    "term": "Substantiate",
+    "meaning": "to provide evidence to support or prove something",
+    "synonym": "verify / corroborate / support",
+    "example": "The researchers were unable to <b>substantiate</b> the original claim.",
+    "completion": "The researchers were unable to ______ the original claim.",
+    "answer": "substantiate"
+  },
+  {
+    "id": "dichotomy",
+    "term": "Dichotomy",
+    "meaning": "a division or contrast between two things that are opposed or entirely different",
+    "synonym": "divide / opposition / binary",
+    "example": "The false <b>dichotomy</b> between tradition and innovation must be rejected.",
+    "completion": "The false ______ between tradition and innovation must be rejected.",
+    "answer": "dichotomy"
+  },
+  {
+    "id": "commensurate",
+    "term": "Commensurate",
+    "meaning": "in proportion to; corresponding in size or degree",
+    "synonym": "proportional / equivalent / corresponding",
+    "example": "The salary should be <b>commensurate</b> with the level of responsibility.",
+    "completion": "The salary should be ______ with the level of responsibility.",
+    "answer": "commensurate"
+  },
+  {
+    "id": "proliferate",
+    "term": "Proliferate",
+    "meaning": "to grow or increase rapidly in number",
+    "synonym": "multiply / spread / increase rapidly",
+    "example": "Online platforms have <b>proliferated</b> over the past decade.",
+    "completion": "Online platforms have ______ over the past decade.",
+    "answer": "proliferated"
+  }
+]};
+</script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body></html>

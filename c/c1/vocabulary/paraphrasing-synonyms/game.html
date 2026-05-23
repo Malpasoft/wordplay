@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>C1 Vocab · Paraphrasing & Synonyms — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link">C1 Vocabulary</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">C1</a><span>›</span><a href="../index.html">Vocabulary</a><span>›</span><strong>Paraphrasing & Synonyms</strong></div>
+  <div class="chapter-num">Vocabulary</div>
+  <h1>Paraphrasing & Synonyms</h1>
+  <p class="chapter-subtitle">Avoiding repetition · reformulation · synonym precision</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">Paraphrasing & Synonyms</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / <span id="gStartTotal">12</span> mastered &nbsp;&middot;&nbsp; Lifetime: <span id="gStartLifetime">&#8212;</span></div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Resume</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Start over</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Start</button>
+  </div></div>
+  <div id="gamePlay" class="game-screen"><div class="game-play-card">
+    <div class="game-top-bar"><div class="game-progress-wrap"><div class="game-progress-bar" id="gProgressBar" style="width:0%"></div></div>
+    <div class="game-top-stats"><span>Score <strong id="gScore">0</strong></span><span>Streak <strong id="gStreak">0</strong></span></div></div>
+    <div id="gModeTag" class="game-mode-tag"></div>
+    <div id="gTerm" class="game-term"></div><div id="gPrompt" class="game-prompt"></div>
+    <div id="gOptions" class="game-options"></div><div id="gFeedback" class="game-feedback"></div>
+    <div id="gExample" class="game-example" style="display:none"></div>
+    <div class="game-btn-row">
+      <button id="gBtnHint" class="game-btn ghost">Hint [H]</button>
+      <button id="gBtnKnow" class="game-btn know" style="display:none">I know this [K]</button>
+      <button id="gBtnReveal" class="game-btn ghost">Reveal</button>
+      <button id="gBtnNext" class="game-btn primary" style="display:none">Next &#8594;</button>
+    </div>
+    <div class="game-progress-txt" id="gProgressTxt">0 / 12 mastered</div>
+    <button id="gBtnSaveQuit" class="game-btn ghost" style="margin-top:12px;width:100%">Save &amp; quit</button>
+  </div>
+  <div class="game-ref-panel"><button id="gRefToggle" class="game-ref-head">&#9660; Reference</button>
+  <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div></div></div>
+  <div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Complete!</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats">
+      <div>Score <strong id="gFinalScore">0</strong></div>
+      <div>Best streak <strong id="gFinalStreak">0</strong></div>
+      <div>Mastery <strong id="gFinalPct">0%</strong></div>
+    </div>
+    <a href="../register-style/index.html" class="game-btn primary" style="text-decoration:none;text-align:center;display:block;margin-bottom:8px">Next: Register Style &#8594;</a>
+    <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>
+window.LEVEL="c1"; window.CHAPTER_ID="paraphrasing-synonyms";
+window.GAME_DATA={chapterId:"paraphrasing-synonyms",level:"c1",title:"Paraphrasing & Synonyms",
+  storageKey:"wordplay_game_c1_paraphrasing-synonyms",items:[
+  {
+    "id": "in_other",
+    "term": "In other words",
+    "meaning": "used to reformulate or clarify a previous statement",
+    "synonym": "that is to say / to put it another way",
+    "example": "The experiment failed. <b>In other words</b>, the hypothesis was wrong.",
+    "completion": "The experiment failed. ______, the hypothesis was wrong.",
+    "answer": "In other words"
+  },
+  {
+    "id": "to_put",
+    "term": "To put it another way",
+    "meaning": "a phrase to reformulate what was just said, differently",
+    "synonym": "in other words / alternatively",
+    "example": "<b>To put it another way</b>, the plan was not financially viable.",
+    "completion": "______, the plan was not financially viable.",
+    "answer": "To put it another way"
+  },
+  {
+    "id": "that_is",
+    "term": "That is to say",
+    "meaning": "used to introduce a clarification or more precise statement",
+    "synonym": "namely / in other words",
+    "example": "She was unavailable — <b>that is to say</b>, she had declined the invitation.",
+    "completion": "She was unavailable — ______, she had declined the invitation.",
+    "answer": "that is to say"
+  },
+  {
+    "id": "namely",
+    "term": "Namely",
+    "meaning": "used to introduce a specific example or name of something",
+    "synonym": "specifically / that is",
+    "example": "Two countries participated, <b>namely</b> France and Germany.",
+    "completion": "Two countries participated, ______ France and Germany.",
+    "answer": "namely"
+  },
+  {
+    "id": "the_former",
+    "term": "The former / the latter",
+    "meaning": "the former = the first mentioned; the latter = the second mentioned",
+    "synonym": "the first / the second",
+    "example": "Between price and quality, <b>the latter</b> is more important.",
+    "completion": "Between price and quality, ______ is more important.",
+    "answer": "the latter"
+  },
+  {
+    "id": "paraphrase",
+    "term": "Paraphrase",
+    "meaning": "to restate something in different words while keeping the same meaning",
+    "synonym": "reword / rephrase",
+    "example": "A good student can <b>paraphrase</b> sources without copying them.",
+    "completion": "A good student can ______ sources without copying them.",
+    "answer": "paraphrase"
+  },
+  {
+    "id": "synonym",
+    "term": "Synonym",
+    "meaning": "a word or phrase that means exactly or nearly the same as another",
+    "synonym": "equivalent / alternative word",
+    "example": "\"Residence\" is a formal <b>synonym</b> for \"home\".",
+    "completion": "\"Residence\" is a formal ______ for \"home\".",
+    "answer": "synonym"
+  },
+  {
+    "id": "antonym",
+    "term": "Antonym",
+    "meaning": "a word with the opposite meaning to another",
+    "synonym": "opposite word / contrary",
+    "example": "\"Expand\" and \"contract\" are <b>antonyms</b>.",
+    "completion": "\"Expand\" and \"contract\" are ______.",
+    "answer": "antonyms"
+  },
+  {
+    "id": "avoid_rep",
+    "term": "Avoid repetition",
+    "meaning": "the technique of using different words/structures to express the same idea",
+    "synonym": "vary vocabulary / use synonyms",
+    "example": "Instead of repeating \"important\", use \"crucial\", \"vital\", or \"key\".",
+    "completion": "Instead of repeating \"important\", use \"crucial\", \"vital\", or ______.",
+    "answer": "key"
+  },
+  {
+    "id": "cross_ref",
+    "term": "Cross-reference",
+    "meaning": "to refer back to something already mentioned using pronouns or connectors",
+    "synonym": "reference back / anaphoric reference",
+    "example": "The study was published in 2020. <b>It</b> showed remarkable results. (\"It\" = the study)",
+    "completion": "The study was published in 2020. ______ showed remarkable results.",
+    "answer": "It"
+  },
+  {
+    "id": "hyponym",
+    "term": "Hyponym",
+    "meaning": "a word that is more specific than a more general word (its hypernym)",
+    "synonym": "specific term",
+    "example": "\"Rose\" is a <b>hyponym</b> of \"flower\" — it is a more specific category.",
+    "completion": "\"Rose\" is a ______ of \"flower\" — it is a more specific category.",
+    "answer": "hyponym"
+  },
+  {
+    "id": "hypernym",
+    "term": "Hypernym",
+    "meaning": "a word whose meaning includes the meanings of other more specific words",
+    "synonym": "general term / superordinate",
+    "example": "\"Vehicle\" is a <b>hypernym</b> of \"car\", \"bus\", and \"truck\".",
+    "completion": "\"Vehicle\" is a ______ of \"car\", \"bus\", and \"truck\".",
+    "answer": "hypernym"
+  }
+]};
+</script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body></html>

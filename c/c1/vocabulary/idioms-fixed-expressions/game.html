@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>C1 Vocab · Idioms & Fixed Expressions — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link">C1 Vocabulary</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">C1</a><span>›</span><a href="../index.html">Vocabulary</a><span>›</span><strong>Idioms & Fixed Expressions</strong></div>
+  <div class="chapter-num">Vocabulary</div>
+  <h1>Idioms & Fixed Expressions</h1>
+  <p class="chapter-subtitle">CAE-level idioms · fixed phrases · colourful language</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">Idioms & Fixed Expressions</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / <span id="gStartTotal">12</span> mastered &nbsp;&middot;&nbsp; Lifetime: <span id="gStartLifetime">&#8212;</span></div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Resume</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Start over</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Start</button>
+  </div></div>
+  <div id="gamePlay" class="game-screen"><div class="game-play-card">
+    <div class="game-top-bar"><div class="game-progress-wrap"><div class="game-progress-bar" id="gProgressBar" style="width:0%"></div></div>
+    <div class="game-top-stats"><span>Score <strong id="gScore">0</strong></span><span>Streak <strong id="gStreak">0</strong></span></div></div>
+    <div id="gModeTag" class="game-mode-tag"></div>
+    <div id="gTerm" class="game-term"></div><div id="gPrompt" class="game-prompt"></div>
+    <div id="gOptions" class="game-options"></div><div id="gFeedback" class="game-feedback"></div>
+    <div id="gExample" class="game-example" style="display:none"></div>
+    <div class="game-btn-row">
+      <button id="gBtnHint" class="game-btn ghost">Hint [H]</button>
+      <button id="gBtnKnow" class="game-btn know" style="display:none">I know this [K]</button>
+      <button id="gBtnReveal" class="game-btn ghost">Reveal</button>
+      <button id="gBtnNext" class="game-btn primary" style="display:none">Next &#8594;</button>
+    </div>
+    <div class="game-progress-txt" id="gProgressTxt">0 / 12 mastered</div>
+    <button id="gBtnSaveQuit" class="game-btn ghost" style="margin-top:12px;width:100%">Save &amp; quit</button>
+  </div>
+  <div class="game-ref-panel"><button id="gRefToggle" class="game-ref-head">&#9660; Reference</button>
+  <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div></div></div>
+  <div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Complete!</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats">
+      <div>Score <strong id="gFinalScore">0</strong></div>
+      <div>Best streak <strong id="gFinalStreak">0</strong></div>
+      <div>Mastery <strong id="gFinalPct">0%</strong></div>
+    </div>
+    <a href="../paraphrasing-synonyms/index.html" class="game-btn primary" style="text-decoration:none;text-align:center;display:block;margin-bottom:8px">Next: Paraphrasing Synonyms &#8594;</a>
+    <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>
+window.LEVEL="c1"; window.CHAPTER_ID="idioms-fixed-expressions";
+window.GAME_DATA={chapterId:"idioms-fixed-expressions",level:"c1",title:"Idioms & Fixed Expressions",
+  storageKey:"wordplay_game_c1_idioms-fixed-expressions",items:[
+  {
+    "id": "kick_bkt",
+    "term": "Kick the bucket",
+    "meaning": "to die (informal, humorous)",
+    "synonym": "pass away / die",
+    "example": "He almost <b>kicked the bucket</b> when he tried extreme skiing.",
+    "completion": "He almost ______ when he tried extreme skiing.",
+    "answer": "kicked the bucket"
+  },
+  {
+    "id": "bnt_mnt",
+    "term": "Bite the bullet",
+    "meaning": "to endure a painful or difficult situation with courage",
+    "synonym": "grit your teeth / persevere",
+    "example": "She had to <b>bite the bullet</b> and work through the night.",
+    "completion": "She had to ______ and work through the night.",
+    "answer": "bite the bullet"
+  },
+  {
+    "id": "brn_brdg",
+    "term": "Burn bridges",
+    "meaning": "to permanently destroy a relationship or opportunity",
+    "synonym": "cut ties / close doors",
+    "example": "He resigned rudely and <b>burned his bridges</b> with the company.",
+    "completion": "He resigned rudely and ______ with the company.",
+    "answer": "burned his bridges"
+  },
+  {
+    "id": "bll_pk",
+    "term": "Ballpark figure",
+    "meaning": "a rough approximate number or estimate",
+    "synonym": "rough estimate / approximation",
+    "example": "Can you give me a <b>ballpark figure</b> for the project cost?",
+    "completion": "Can you give me a ______ for the project cost?",
+    "answer": "ballpark figure"
+  },
+  {
+    "id": "the_tip",
+    "term": "The tip of the iceberg",
+    "meaning": "a small visible part of a much larger problem",
+    "synonym": "just the beginning / the surface",
+    "example": "These complaints are just <b>the tip of the iceberg</b>.",
+    "completion": "These complaints are just ______.",
+    "answer": "the tip of the iceberg"
+  },
+  {
+    "id": "thr_rope",
+    "term": "At the end of your rope",
+    "meaning": "having no more patience or strength to deal with something",
+    "synonym": "at your wits' end / exhausted",
+    "example": "After three sleepless nights, she was <b>at the end of her rope</b>.",
+    "completion": "After three sleepless nights, she was ______.",
+    "answer": "at the end of her rope"
+  },
+  {
+    "id": "cnt_chickn",
+    "term": "Count your chickens",
+    "meaning": "to plan for something that has not happened yet (usually a warning)",
+    "synonym": "don't assume / be realistic",
+    "example": "<b>Don't count your chickens</b> before the deal is signed.",
+    "completion": "______ before the deal is signed.",
+    "answer": "Don't count your chickens"
+  },
+  {
+    "id": "dfnt_ld",
+    "term": "Bite off more than you can chew",
+    "meaning": "to take on more than you can handle",
+    "synonym": "overcommit / overstretch",
+    "example": "He <b>bit off more than he could chew</b> managing three teams.",
+    "completion": "He ______ managing three teams.",
+    "answer": "bit off more than he could chew"
+  },
+  {
+    "id": "on_fenc",
+    "term": "Sit on the fence",
+    "meaning": "to avoid taking a position on a controversial issue",
+    "synonym": "be non-committal / hedge",
+    "example": "Politicians often <b>sit on the fence</b> on sensitive issues.",
+    "completion": "Politicians often ______ on sensitive issues.",
+    "answer": "sit on the fence"
+  },
+  {
+    "id": "pull_wgt",
+    "term": "Pull your weight",
+    "meaning": "to do your fair share of the work",
+    "synonym": "contribute equally / do your part",
+    "example": "Everyone in the team needs to <b>pull their weight</b>.",
+    "completion": "Everyone in the team needs to ______.",
+    "answer": "pull their weight"
+  },
+  {
+    "id": "rd_map",
+    "term": "Road map",
+    "meaning": "a plan showing how to achieve a goal step by step",
+    "synonym": "plan of action / strategy",
+    "example": "The government published a <b>road map</b> for economic recovery.",
+    "completion": "The government published a ______ for economic recovery.",
+    "answer": "road map"
+  },
+  {
+    "id": "gry_area",
+    "term": "Grey area",
+    "meaning": "a situation that is unclear or has no definitive rules",
+    "synonym": "unclear situation / ambiguous zone",
+    "example": "The legal status of the new drug remains a <b>grey area</b>.",
+    "completion": "The legal status of the new drug remains a ______.",
+    "answer": "grey area"
+  }
+]};
+</script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body></html>

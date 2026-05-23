@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A1 Vocab · Food and Drink — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../../index.html" class="back back-link">A1 Vocabulary</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">A1</a><span>›</span><a href="../index.html">Vocabulary</a><span>›</span><strong>Food and Drink</strong></div>
+  <div class="chapter-num">V2</div>
+  <h1>Food and Drink</h1>
+  <p class="chapter-subtitle">Common food and drink words · meals</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">Food and Drink</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / 10 mastered</div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Resume</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Start over</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Start</button>
+  </div></div>
+  <div id="gamePlay" class="game-screen"><div class="game-play-card">
+    <div class="game-top-bar"><div class="game-progress-wrap"><div class="game-progress-bar" id="gProgressBar" style="width:0%"></div></div>
+    <div class="game-top-stats"><span>Score <strong id="gScore">0</strong></span><span>Streak <strong id="gStreak">0</strong></span></div></div>
+    <div id="gModeTag" class="game-mode-tag"></div>
+    <div id="gTerm" class="game-term"></div><div id="gPrompt" class="game-prompt"></div>
+    <div id="gOptions" class="game-options"></div><div id="gFeedback" class="game-feedback"></div>
+    <div id="gExample" class="game-example" style="display:none"></div>
+    <div class="game-btn-row">
+          <a href="../places-in-town/index.html" class="game-btn primary" style="text-decoration:none;text-align:center">Next: Places in Town &#8594;</a>
+                <button id="gBtnHint" class="game-btn ghost">Hint [H]</button>
+      <button id="gBtnKnow" class="game-btn know" style="display:none">I know this [K]</button>
+      <button id="gBtnReveal" class="game-btn ghost">Reveal</button>
+      <button id="gBtnNext" class="game-btn primary" style="display:none">Next →</button>
+    </div>
+    <div class="game-progress-txt" id="gProgressTxt">0 / 10 mastered</div>
+    <button id="gBtnSaveQuit" class="game-btn ghost" style="margin-top:12px;width:100%">Save &amp; quit</button>
+  </div>
+  <div class="game-ref-panel"><button id="gRefToggle" class="game-ref-head">▼ Reference</button>
+  <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div></div></div>
+  <div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Complete!</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats">
+      <div>Score <strong id="gFinalScore">0</strong></div>
+      <div>Best streak <strong id="gFinalStreak">0</strong></div>
+      <div>Mastery <strong id="gFinalPct">0%</strong></div>
+    </div>
+    <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>window.LEVEL="a1";window.CHAPTER_ID="food";
+window.GAME_DATA={chapterId:"food",level:"a1",title:"Food and Drink",storageKey:"wordplay_game_a1_food",items:[
+  {
+    "id": "bread",
+    "term": "bread",
+    "meaning": "a baked food made from flour and water",
+    "synonym": "/bred/",
+    "example": "<b>Bread</b> — I eat bread every morning.",
+    "completion": "I eat _____ every morning.",
+    "answer": "bread"
+  },
+  {
+    "id": "rice",
+    "term": "rice",
+    "meaning": "a common grain, often eaten as a side dish",
+    "synonym": "/raɪs/",
+    "example": "<b>Rice</b> — We have rice with dinner.",
+    "completion": "We have _____ with dinner.",
+    "answer": "rice"
+  },
+  {
+    "id": "chicken",
+    "term": "chicken",
+    "meaning": "a bird, often eaten as meat",
+    "synonym": "/ˈtʃɪkɪn/",
+    "example": "<b>Chicken</b> — I like chicken with vegetables.",
+    "completion": "I like _____ with vegetables.",
+    "answer": "chicken"
+  },
+  {
+    "id": "milk",
+    "term": "milk",
+    "meaning": "a white drink that comes from cows",
+    "synonym": "/mɪlk/",
+    "example": "<b>Milk</b> — I drink a glass of milk every day.",
+    "completion": "I drink a glass of _____ every day.",
+    "answer": "milk"
+  },
+  {
+    "id": "water",
+    "term": "water",
+    "meaning": "a clear, colourless drink",
+    "synonym": "/ˈwɔːtər/",
+    "example": "<b>Water</b> — Drink eight glasses of water a day.",
+    "completion": "Drink eight glasses of _____ a day.",
+    "answer": "water"
+  },
+  {
+    "id": "apple",
+    "term": "apple",
+    "meaning": "a round fruit, often red or green",
+    "synonym": "/ˈæpəl/",
+    "example": "<b>Apple</b> — An apple a day keeps the doctor away.",
+    "completion": "An _____ a day keeps the doctor away.",
+    "answer": "apple"
+  },
+  {
+    "id": "fish",
+    "term": "fish",
+    "meaning": "an animal from the sea that you can eat",
+    "synonym": "/fɪʃ/",
+    "example": "<b>Fish</b> — We eat fish on Fridays.",
+    "completion": "We eat _____ on Fridays.",
+    "answer": "fish"
+  },
+  {
+    "id": "cheese",
+    "term": "cheese",
+    "meaning": "a solid food made from milk",
+    "synonym": "/tʃiːz/",
+    "example": "<b>Cheese</b> — I put cheese on my sandwich.",
+    "completion": "I put _____ on my sandwich.",
+    "answer": "cheese"
+  },
+  {
+    "id": "coffee",
+    "term": "coffee",
+    "meaning": "a hot brown drink made from coffee beans",
+    "synonym": "/ˈkɒfi/",
+    "example": "<b>Coffee</b> — She drinks coffee in the morning.",
+    "completion": "She drinks _____ in the morning.",
+    "answer": "coffee"
+  },
+  {
+    "id": "salad",
+    "term": "salad",
+    "meaning": "a cold dish of mixed vegetables",
+    "synonym": "/ˈsæləd/",
+    "example": "<b>Salad</b> — I have a salad for lunch.",
+    "completion": "I have a _____ for lunch.",
+    "answer": "salad"
+  }
+]};
+</script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body></html>

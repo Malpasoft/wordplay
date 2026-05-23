@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>C2 Vocab · Academic Collocations — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v100"><link rel="stylesheet" href="../../../../shared/game.css?v=v100">
+<script src="../../../../shared/dark-init.js?v=v100"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link">C2 Vocabulary</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../../index.html">C2</a><span>›</span><a href="../index.html">Vocabulary</a><span>›</span><strong>Academic Collocations</strong></div>
+  <div class="chapter-num">V3</div><h1>Academic Collocations</h1>
+  <p class="chapter-subtitle">Verb–noun · adjective–noun · adverb–verb collocations in academic prose</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">Academic Collocations</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / 12 mastered</div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Resume</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Start over</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Start</button>
+  </div></div>
+  <div id="gamePlay" class="game-screen"><div class="game-play-card">
+    <div class="game-top-bar"><div class="game-progress-wrap"><div class="game-progress-bar" id="gProgressBar" style="width:0%"></div></div>
+    <div class="game-top-stats"><span>Score <strong id="gScore">0</strong></span><span>Streak <strong id="gStreak">0</strong></span></div></div>
+    <div id="gModeTag" class="game-mode-tag"></div><div id="gTerm" class="game-term"></div>
+    <div id="gPrompt" class="game-prompt"></div><div id="gOptions" class="game-options"></div>
+    <div id="gFeedback" class="game-feedback"></div><div id="gExample" class="game-example" style="display:none"></div>
+    <div class="game-btn-row">
+      <button id="gBtnHint" class="game-btn ghost">Hint [H]</button>
+      <button id="gBtnKnow" class="game-btn know" style="display:none">I know this [K]</button>
+      <button id="gBtnReveal" class="game-btn ghost">Reveal</button>
+      <button id="gBtnNext" class="game-btn primary" style="display:none">Next →</button>
+    </div>
+    <div class="game-progress-txt" id="gProgressTxt">0 / 12 mastered</div>
+    <button id="gBtnSaveQuit" class="game-btn ghost" style="margin-top:12px;width:100%">Save &amp; quit</button>
+  </div>
+  <div class="game-ref-panel"><button id="gRefToggle" class="game-ref-head">▼ Reference</button>
+  <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div></div></div>
+  <div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Complete!</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats"><div>Score <strong id="gFinalScore">0</strong></div><div>Mastery <strong id="gFinalPct">0%</strong></div></div>
+    <a href="../advanced-idioms/index.html" class="game-btn primary" style="text-decoration:none;text-align:center;display:block;margin-bottom:8px">Next: Advanced Idioms &#8594;</a>
+    <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v100"></script>
+<script>window.LEVEL="c2";window.CHAPTER_ID="academic-collocations";
+window.GAME_DATA={chapterId:"academic-collocations",level:"c2",title:"Academic Collocations",storageKey:"wordplay_game_c2_academic-collocations",items:[
+  {
+    "id": "mount_evidence",
+    "term": "Mount evidence",
+    "meaning": "to accumulate an increasing body of supporting evidence",
+    "synonym": "build up evidence / amass data",
+    "example": "The evidence is <b>mounting</b> that early intervention is most effective.",
+    "completion": "The evidence is ______ that early intervention is most effective.",
+    "answer": "mounting"
+  },
+  {
+    "id": "yield_results",
+    "term": "Yield results",
+    "meaning": "to produce results, especially after research or effort",
+    "synonym": "produce results / generate findings",
+    "example": "The new methodology <b>yielded</b> surprising results.",
+    "completion": "The new methodology ______ surprising results.",
+    "answer": "yielded"
+  },
+  {
+    "id": "underpin_theory",
+    "term": "Underpin a theory",
+    "meaning": "to provide the foundation or support for a theory",
+    "synonym": "support / substantiate / ground",
+    "example": "Classical mechanics <b>underpins</b> much of modern engineering.",
+    "completion": "Classical mechanics ______ much of modern engineering.",
+    "answer": "underpins"
+  },
+  {
+    "id": "pervade_literature",
+    "term": "Pervade the literature",
+    "meaning": "to be present throughout an area of academic writing",
+    "synonym": "dominate / saturate / run through",
+    "example": "A lack of longitudinal data <b>pervades</b> the literature in this field.",
+    "completion": "A lack of longitudinal data ______ the literature in this field.",
+    "answer": "pervades"
+  },
+  {
+    "id": "compelling_evidence",
+    "term": "Compelling evidence",
+    "meaning": "evidence that is very convincing and difficult to dispute",
+    "synonym": "persuasive / overwhelming / strong evidence",
+    "example": "There is <b>compelling evidence</b> that diet affects cognitive function.",
+    "completion": "There is ______ that diet affects cognitive function.",
+    "answer": "compelling evidence"
+  },
+  {
+    "id": "nuanced_analysis",
+    "term": "Nuanced analysis",
+    "meaning": "analysis that takes account of fine distinctions and avoids oversimplification",
+    "synonym": "sophisticated / subtle analysis",
+    "example": "The paper offers a <b>nuanced analysis</b> of the political dynamics involved.",
+    "completion": "The paper offers a ______ of the political dynamics involved.",
+    "answer": "nuanced analysis"
+  },
+  {
+    "id": "rigorous_methodology",
+    "term": "Rigorous methodology",
+    "meaning": "a research method that is thorough, precise, and scientifically sound",
+    "synonym": "robust / systematic methodology",
+    "example": "The study employed a <b>rigorous methodology</b>, including blind peer review.",
+    "completion": "The study employed a ______, including blind peer review.",
+    "answer": "rigorous methodology"
+  },
+  {
+    "id": "widely_acknowledged",
+    "term": "Widely acknowledged",
+    "meaning": "accepted or recognised by the majority of people in a field",
+    "synonym": "broadly recognised / generally accepted",
+    "example": "It is <b>widely acknowledged</b> that the causes are multiple and interrelated.",
+    "completion": "It is ______ that the causes are multiple and interrelated.",
+    "answer": "widely acknowledged"
+  },
+  {
+    "id": "empirically_supported",
+    "term": "Empirically supported",
+    "meaning": "backed by evidence from observation or experiment, not just theory",
+    "synonym": "evidence-based / data-driven",
+    "example": "The hypothesis is <b>empirically supported</b> by three independent studies.",
+    "completion": "The hypothesis is ______ by three independent studies.",
+    "answer": "empirically supported"
+  },
+  {
+    "id": "profoundly_shaped",
+    "term": "Profoundly shaped",
+    "meaning": "fundamentally influenced or determined by something",
+    "synonym": "deeply influenced / fundamentally formed",
+    "example": "Modern science has been <b>profoundly shaped</b> by the digital revolution.",
+    "completion": "Modern science has been ______ by the digital revolution.",
+    "answer": "profoundly shaped"
+  },
+  {
+    "id": "scant_attention",
+    "term": "Scant attention",
+    "meaning": "very little attention or consideration given to something",
+    "synonym": "insufficient attention / neglect",
+    "example": "This area of research has received <b>scant attention</b> in the literature.",
+    "completion": "This area of research has received ______ in the literature.",
+    "answer": "scant attention"
+  },
+  {
+    "id": "call_into_question",
+    "term": "Call into question",
+    "meaning": "to cause doubts about the validity or truth of something",
+    "synonym": "challenge / cast doubt on / undermine",
+    "example": "New data <b>calls into question</b> the assumptions of the original model.",
+    "completion": "New data ______ the assumptions of the original model.",
+    "answer": "calls into question"
+  }
+]};
+</script>
+<script src="../../../../shared/game.js?v=v100"></script>
+</body></html>
