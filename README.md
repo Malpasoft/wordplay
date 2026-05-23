@@ -2,7 +2,7 @@
 
 A complete Cambridge English learning website, from A1 (beginner) to C2 (mastery). Built by Em — a freelance English teacher in Catalunya — with Claude (Anthropic's AI) as a coding collaborator.
 
-**Live site:** https://delicate-mode-2bce.emi-dom123.workers.dev/
+**Live site:** https://b1763a4c.wordplay-38t.pages.dev/
 
 ---
 
