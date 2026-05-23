@@ -348,10 +348,10 @@ button.reset {
 /* ─── DRAG & DROP (Wordwall-style) ─────────────────────────────── */
 .drag-pool{display:flex;flex-wrap:wrap;gap:8px;padding:14px;background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px;margin-bottom:12px;min-height:48px}
 .drag-chip{padding:6px 14px;background:var(--paper);border:1.5px solid var(--hairline);border-radius:20px;font-family:var(--font-sans);font-size:.82rem;font-weight:600;color:var(--ink);cursor:grab;user-select:none;transition:border-color .15s,box-shadow .15s}
-.drag-chip:hover{border-color:var(--teal);box-shadow:0 2px 8px rgba(0,0,0,.1)}
-.drag-chip.placed{background:rgba(26,122,138,.08);border-color:var(--teal)}
+.drag-chip:hover{border-color:var(--amber);box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.drag-chip.placed{background:rgba(26,122,138,.08);border-color:var(--amber)}
 .drag-drop-zone{display:inline-flex;align-items:center;min-width:100px;height:32px;border-bottom:2px solid var(--navy);margin:0 4px;padding:0 8px;font-family:var(--font-sans);font-size:.85rem;color:var(--ink);transition:border-color .15s,background .15s;vertical-align:middle}
-.drag-drop-zone.over{border-color:var(--teal);background:rgba(26,122,138,.06)}
+.drag-drop-zone.over{border-color:var(--amber);background:rgba(26,122,138,.06)}
 .drag-drop-zone.correct{border-color:var(--green,#27ae60);background:rgba(39,174,96,.08)}
 .drag-drop-zone.wrong{border-color:var(--red,#c0392b);background:rgba(192,57,43,.08)}
 

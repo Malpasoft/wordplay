@@ -1,0 +1,82 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>C2 Vocab · Discourse Vocabulary | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v103">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v103">
+<script src="../../../../shared/dark-init.js?v=v103"></script>
+<style>
+.vocab-page{max-width:800px;margin:0 auto;padding:20px 0}
+.mode-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.mode-tab{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:8px 16px;border-radius:4px;cursor:pointer;border:1.5px solid var(--hairline);background:transparent;color:var(--ink);transition:all .15s}
+.mode-tab.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.flashcard-wrap{perspective:800px;margin:0 auto 20px;max-width:480px}
+.flashcard{width:100%;height:220px;position:relative;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;border-radius:10px}
+.flashcard.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;border:1px solid var(--hairline)}
+.fc-front{background:var(--paper)}
+.fc-back{background:var(--paper);transform:rotateY(180deg)}
+.fc-word{font-size:1.4rem;font-weight:700;color:var(--ink);margin-bottom:6px}
+.fc-def{font-size:.88rem;color:var(--ink);margin-bottom:8px;line-height:1.5}
+.fc-ex{font-size:.8rem;color:var(--muted);font-style:italic}
+.fc-hint{font-family:var(--font-sans);font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:12px}
+.fc-nav{display:flex;align-items:center;gap:16px;justify-content:center;margin-bottom:20px}
+.fc-btn{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 18px;border-radius:4px;cursor:pointer;border:1.5px solid var(--hairline);background:transparent;color:var(--ink)}
+.fc-btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.fc-counter{font-family:var(--font-sans);font-size:.75rem;color:var(--muted);font-weight:600}
+.word-list-item{display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--hairline)}
+.wl-word{font-weight:700;font-size:.95rem;min-width:180px}
+.wl-def{font-size:.85rem;color:var(--ink)}
+</style>
+</head><body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link">C2 Vocabulary</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../../index.html">C2</a><span>›</span><a href="../index.html">Vocabulary</a><span>›</span><strong>Discourse Vocabulary</strong></div>
+  <div class="chapter-num">V5</div>
+  <h1>Discourse Vocabulary</h1>
+  <p class="chapter-subtitle">Text-level connectors · meta-commentary · academic stance language</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn active">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="game.html" class="chapter-nav-btn">Game</a>
+  </nav>
+  <div class="vocab-page">
+    <div class="mode-tabs">
+      <button class="mode-tab active" onclick="setMode('flash',this)">Flashcards</button>
+      <button class="mode-tab" onclick="setMode('list',this)">Word list</button>
+    </div>
+    <div id="modeFlash">
+      <div class="flashcard-wrap">
+        <div class="flashcard" id="flashcard" onclick="flipCard()">
+          <div class="fc-face fc-front"><div class="fc-word" id="fcWord"></div><div class="fc-hint">tap to reveal</div></div>
+          <div class="fc-face fc-back"><div class="fc-def" id="fcDef"></div><div class="fc-ex" id="fcEx"></div></div>
+        </div>
+      </div>
+      <div class="fc-nav">
+        <button class="fc-btn" onclick="fcPrev()">← Prev</button>
+        <span class="fc-counter" id="fcCounter"></span>
+        <button class="fc-btn" onclick="fcNext()">Next →</button>
+      </div>
+    </div>
+    <div id="modeList" style="display:none"><div id="wordList"></div></div>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v103"></script>
+<script>
+var WORDS=[{"id": "notwithstanding", "word": "Notwithstanding", "def": "formal connector meaning despite or regardless of", "ipa": "despite / in spite of / nevertheless", "ex": "Notwithstanding the difficulties, the project was completed on time."}, {"id": "hitherto", "word": "Hitherto", "def": "until now or until a particular point in time", "ipa": "until now / previously / up to this point", "ex": "This relationship has been hitherto unexplored in the literature."}, {"id": "insofar_as", "word": "Insofar as", "def": "to the extent that; to the degree that", "ipa": "to the extent that / in so far as", "ex": "The policy succeeded insofar as it reduced costs, but failed on quality."}, {"id": "by_the_same_token", "word": "By the same token", "def": "for the same reason; in the same way; similarly", "ipa": "similarly / by the same logic / equally", "ex": "She values honesty; by the same token, she expects it from others."}, {"id": "it_follows_that", "word": "It follows that", "def": "as a logical consequence or conclusion", "ipa": "consequently / therefore / as a result", "ex": "If demand falls, it follows that prices will also decrease."}, {"id": "in_light_of", "word": "In light of", "def": "taking something into account; considering something as relevant", "ipa": "given / considering / in view of", "ex": "In light of new evidence, the original conclusion must be revised."}, {"id": "to_this_end", "word": "To this end", "def": "in order to achieve this purpose", "ipa": "for this purpose / with this aim", "ex": "The government launched a new programme. To this end, £500m was allocated."}, {"id": "inasmuch_as", "word": "Inasmuch as", "def": "to the extent that; because; for the reason that", "ipa": "insofar as / in that / because", "ex": "The study is relevant inasmuch as it provides baseline data."}, {"id": "caveat", "word": "Caveat", "def": "a warning or qualification added to a statement to limit its scope", "ipa": "qualification / reservation / proviso", "ex": "The results are positive, with one important caveat: the sample was small."}, {"id": "prima_facie", "word": "Prima facie", "def": "at first sight; based on initial evidence, before deeper examination", "ipa": "on the face of it / apparently / seemingly", "ex": "Prima facie, the data supports the hypothesis; further analysis is needed."}, {"id": "by_contrast", "word": "By contrast", "def": "used to highlight a difference between two things", "ipa": "on the other hand / conversely / in contrast", "ex": "The north saw growth. By contrast, the south experienced decline."}, {"id": "in_tandem", "word": "In tandem", "def": "alongside and at the same time; together and simultaneously", "ipa": "simultaneously / together / in conjunction", "ex": "Economic and social reforms must proceed in tandem."}];
+var fcIdx=0,flipped=false;
+function setMode(mode,btn){document.querySelectorAll('.mode-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('modeFlash').style.display=mode==='flash'?'':'none';document.getElementById('modeList').style.display=mode==='list'?'':'none';if(mode==='list')renderList();}
+function flipCard(){flipped=!flipped;document.getElementById('flashcard').classList.toggle('flipped',flipped);}
+function showCard(idx){flipped=false;document.getElementById('flashcard').classList.remove('flipped');var w=WORDS[idx];document.getElementById('fcWord').textContent=w.word;document.getElementById('fcDef').textContent=w.def;document.getElementById('fcEx').textContent=w.ex||'';document.getElementById('fcCounter').textContent=(idx+1)+' / '+WORDS.length;}
+function fcNext(){fcIdx=(fcIdx+1)%WORDS.length;showCard(fcIdx);}
+function fcPrev(){fcIdx=(fcIdx-1+WORDS.length)%WORDS.length;showCard(fcIdx);}
+function renderList(){document.getElementById('wordList').innerHTML=WORDS.map(w=>'<div class="word-list-item"><span class="wl-word">'+w.word+'</span><span class="wl-def">'+w.def+'</span></div>').join('');}
+showCard(0);
+</script>
+</body></html>

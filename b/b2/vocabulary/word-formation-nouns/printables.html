@@ -24,13 +24,44 @@ h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-botto
 .answer{margin-bottom:3pt;font-size:10pt}
 .answer b{font-family:Arial,sans-serif;font-size:8pt;color:#333;margin-right:4pt}
 .footer{margin-top:16pt;font-family:Arial,sans-serif;font-size:7pt;color:#999;text-align:center;letter-spacing:1pt;text-transform:uppercase}
-@media print{.no-print{display:none!important}body{padding:10mm 15mm 15mm}}
+
+/* Print hub web view */
+.print-hub-web{font-family:Arial,sans-serif;margin-bottom:12pt;padding-bottom:10pt;border-bottom:1pt solid #eee}
+.phw-back{display:inline-block;font-size:8.5pt;color:#555;text-decoration:none;margin-bottom:8pt}
+.phw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8pt;margin-bottom:10pt}
+.phw-card{display:block;padding:10pt;border:1pt solid #ddd;border-radius:4pt;text-decoration:none;color:#1A1A1A;border-top:2.5pt solid #B8860B;transition:background .15s}
+.phw-card:hover{background:#fffbf0}
+.phw-title{font-weight:700;font-size:9pt;margin-bottom:3pt}
+.phw-desc{font-size:7.5pt;color:#777}
+.phw-print-btn{font-family:Arial,sans-serif;font-size:7.5pt;font-weight:700;letter-spacing:.5pt;text-transform:uppercase;background:#B8860B;color:#fff;padding:5pt 14pt;border-radius:3pt;cursor:pointer;border:none}
+@media(max-width:480px){.phw-grid{grid-template-columns:1fr}}
+@media print{.no-print{display:none!important}.print-hub{display:none!important}body{padding:10mm 15mm 15mm}}
 @page{size:A4;margin:12mm 15mm 15mm}
 </style>
 </head>
 <body>
-<div class="no-print" style="margin-bottom:12pt"><div style="font-family:Arial,sans-serif;font-size:9pt;margin-bottom:8pt"><a href="slides.html" style="color:var(--ink);text-decoration:none">&larr; Back to chapter</a> &nbsp;|&nbsp; <a href="javascript:window.print()" style="color:var(--ink);text-decoration:none">Print this page</a></div>
+<div class="no-print">
+  <div class="print-hub-web">
+    <a href="index.html" class="phw-back">&#8592; Back to chapter</a>
+    <div class="phw-grid">
+      <a href="#ph-lesson" class="phw-card">
+        <div class="phw-title">Lesson Reference</div>
+        <div class="phw-desc">Grammar rules, tables and examples</div>
+      </a>
+      <a href="#ph-worksheet" class="phw-card">
+        <div class="phw-title">Practice Worksheet</div>
+        <div class="phw-desc">Exercises to complete by hand</div>
+      </a>
+      <a href="#ph-key" class="phw-card">
+        <div class="phw-title">Answer Key</div>
+        <div class="phw-desc">All correct answers for marking</div>
+      </a>
+    </div>
+    <button onclick="window.print()" class="phw-print-btn">Print all pages</button>
+  </div>
 </div>
+<div id="ph-lesson"></div>
+
 <div class="meta">B2 · Vocabulary</div>
 <h1>Word Formation — Nouns</h1>
 <div class="meta" style="margin-top:2pt">Lesson Handout</div>
@@ -42,7 +73,7 @@ h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-botto
 <p style="margin:6pt 0;padding:6pt 10pt;background:#f5f0e8;border-left:2pt solid var(--amber);font-size:10pt">⚠ Step 1: Read the sentence for meaning. Step 2: Decide what form is needed (noun). Step 3: Check if negative prefix is needed (un-, in-, dis-). Step 4: Check for irregular forms.</p>
 <h2>Summary of noun suffixes</h2>
 <div class="footer">Word Play · Cambridge English</div>
-<div style="page-break-before:always"></div>
+<div id="ph-worksheet" style="page-break-before:always"></div>
 <div class="meta">B2 · Vocabulary</div>
 <h1>Word Formation — Nouns</h1>
 <div class="meta" style="margin-top:2pt">Worksheet</div>
@@ -71,7 +102,7 @@ h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-botto
 <div class="q"><span class="q-num">16.</span> <span class="q-text">WEAK → ___________ (suffix: -ness)</span></div>
 <div class="q"><span class="q-num">17.</span> <span class="q-text">DEPEND → ___________ (suffix: -ence)</span></div>
 <div class="footer">Word Play · Cambridge English</div>
-<div style="page-break-before:always"></div>
+<div id="ph-key" style="page-break-before:always"></div>
 <div class="meta">B2 · Vocabulary</div>
 <h1>Word Formation — Nouns</h1>
 <div class="meta" style="margin-top:2pt">Answer Key</div>
