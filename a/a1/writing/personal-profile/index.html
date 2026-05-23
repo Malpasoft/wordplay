@@ -26,33 +26,52 @@
   <h1 class="chapter-h1">Personal Profile</h1>
   <p class="chapter-subtitle">Write about yourself clearly and accurately</p>
   <div class="activity-grid">
-  <a href="slides.html" class="activity-card">
-    <div class="ac-icon" style="color:#1A7A8A">&#128214;</div>
-    <div class="ac-title">Lesson</div>
-    <div class="ac-desc">Read the grammar explanation and examples</div>
-    <div class="ac-arrow">&#8594;</div>
+  <a href="slides.html" class="activity-card" data-activity="lesson" style="--ac-color:#1A7A8A">
+    <span class="ac-icon">&#128214;</span>
+    <span class="ac-title">Lesson</span>
+    <p class="ac-desc">Read the explanation with examples and notes</p>
+    <span class="ac-arrow">&#8594;</span>
   </a>
-  <a href="worksheet.html" class="activity-card">
-    <div class="ac-icon" style="color:#B8860B">&#9997;&#65039;</div>
-    <div class="ac-title">Practice</div>
-    <div class="ac-desc">Fill-in exercises and sentence building</div>
-    <div class="ac-arrow">&#8594;</div>
+  <a href="worksheet.html" class="activity-card" data-activity="practice" style="--ac-color:#B8860B">
+    <span class="ac-icon">&#9997;</span>
+    <span class="ac-title">Practice</span>
+    <p class="ac-desc">Fill-in exercises and sentence building tasks</p>
+    <span class="ac-arrow">&#8594;</span>
   </a>
-  <a href="game.html" class="activity-card">
-    <div class="ac-icon" style="color:#2E7D52">&#9889;</div>
-    <div class="ac-title">Game</div>
-    <div class="ac-desc">Test yourself with the mastery game</div>
-    <div class="ac-arrow">&#8594;</div>
+  <a href="game.html" class="activity-card" data-activity="game" style="--ac-color:#2E7D52">
+    <span class="ac-icon">&#9889;</span>
+    <span class="ac-title">Game</span>
+    <p class="ac-desc">Challenge yourself with the mastery game</p>
+    <span class="ac-arrow">&#8594;</span>
   </a>
-  <a href="printables.html" class="activity-card">
-    <div class="ac-icon" style="color:#6B6B6B">&#128444;</div>
-    <div class="ac-title">Printables</div>
-    <div class="ac-desc">Download a printable worksheet PDF</div>
-    <div class="ac-arrow">&#8594;</div>
+  <a href="printables.html" class="activity-card" data-activity="print" style="--ac-color:#6B6B6B">
+    <span class="ac-icon">&#128444;</span>
+    <span class="ac-title">Printables</span>
+    <p class="ac-desc">Download a printer-ready study sheet</p>
+    <span class="ac-arrow">&#8594;</span>
   </a>
   </div>
 </div>
 <footer class="site-footer">Word Play · Cambridge English A1&#8594;C2</footer>
 <script src="../../../../shared/store.js?v=v100"></script>
+<script>
+(function(){
+  try {
+    var prog=JSON.parse(localStorage.getItem('wordplay_progress')||'{}');
+    var lvl=prog['a1']||{};
+    var defs=[
+      ['slides.html', lvl['slides_personal-profile']&&lvl['slides_personal-profile'].done],
+      ['worksheet.html', lvl['personal-profile']&&lvl['personal-profile'].pct>=70],
+      ['game.html', lvl['wordplay_game_personal-profile']&&lvl['wordplay_game_personal-profile'].pct>=70],
+      ['printables.html', false]
+    ];
+    defs.forEach(function(d){
+      if(!d[1]) return;
+      var card=document.querySelector('.activity-card[href="'+d[0]+'"]');
+      if(card) card.setAttribute('data-done','1');
+    });
+  }catch(e){}
+})();
+</script>
 </body>
 </html>

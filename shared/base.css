@@ -760,37 +760,175 @@ body.dark #back-to-top { background: var(--amber); color: #1A1A1A; }
 }
 
 /* ══════════════════════════════════════════════════════════════════
+   CH-GRID — chapter cards on section list pages (grammar / vocab / writing)
+   ══════════════════════════════════════════════════════════════════ */
+
+.ch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 14px;
+  margin: 24px 0 40px;
+}
+
+.ch-card {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 20px 16px;
+  background: var(--paper);
+  border: 1.5px solid var(--border-soft);
+  border-radius: 10px;
+  text-decoration: none;
+  transition: border-color .18s, box-shadow .18s, transform .14s;
+  position: relative;
+  overflow: hidden;
+}
+.ch-card:hover {
+  border-color: var(--amber);
+  box-shadow: 0 6px 20px rgba(184,134,11,.1);
+  transform: translateY(-2px);
+}
+.ch-card h2 {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0 0 5px;
+  line-height: 1.3;
+}
+.ch-num {
+  font-family: var(--font-sans);
+  font-size: .6rem;
+  font-weight: 800;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 7px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.ch-start {
+  font-size: .52rem;
+  font-weight: 900;
+  letter-spacing: 1px;
+  background: var(--amber);
+  color: #1A1A1A;
+  padding: 1px 5px;
+  border-radius: 2px;
+}
+.ch-desc {
+  font-size: .78rem;
+  color: var(--muted);
+  line-height: 1.5;
+  flex: 1;
+  margin: 0 0 12px;
+}
+.ch-prog {
+  height: 3px;
+  background: var(--hairline);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  display: none;
+}
+.ch-prog-fill {
+  height: 100%;
+  background: var(--amber);
+  border-radius: 2px;
+  transition: width .5s ease;
+  width: 0%;
+}
+.ch-cta {
+  font-family: var(--font-sans);
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .8px;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+.ch-card--done { border-color: rgba(184,134,11,.35); }
+.ch-card--done::after {
+  content: '✓';
+  position: absolute;
+  top: 14px; right: 14px;
+  font-size: .75rem;
+  font-weight: 800;
+  color: var(--amber);
+  font-family: var(--font-sans);
+}
+.ch-card--vocab .ch-cta { color: var(--teal); }
+
+/* Dark mode */
+body.dark .ch-card {
+  background: rgba(255,255,255,.04);
+  border-color: rgba(255,255,255,.1);
+}
+body.dark .ch-card:hover {
+  border-color: var(--amber);
+  box-shadow: 0 6px 20px rgba(184,134,11,.14);
+}
+body.dark .ch-card h2 { color: #F0F0F0; }
+body.dark .ch-card .ch-desc { color: #8A9AB0; }
+body.dark .ch-card--done { border-color: rgba(201,160,80,.35); }
+
+/* Section page subtitle */
+.section-desc {
+  font-family: var(--font-sans);
+  font-size: .78rem;
+  color: var(--muted);
+  margin: 2px 0 0;
+  letter-spacing: .2px;
+}
+
+@media (max-width: 520px) {
+  .ch-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+}
+@media (max-width: 360px) {
+  .ch-grid { grid-template-columns: 1fr; }
+}
+
+/* ══════════════════════════════════════════════════════════════════
    ACTIVITY GRID — chapter hub pages (Lesson / Practice / Game / Printables)
    ══════════════════════════════════════════════════════════════════ */
 
 .activity-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   gap: 14px;
   margin-top: 28px;
   margin-bottom: 40px;
 }
+@media (min-width: 640px) { .activity-grid { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 380px) { .activity-grid { grid-template-columns: 1fr; } }
+
 .activity-card {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 22px 20px 18px;
+  padding: 22px 18px 18px;
   background: var(--paper);
   border: 1.5px solid var(--border-soft);
+  border-top: 3px solid var(--ac-color, var(--teal));
   border-radius: 10px;
   text-decoration: none;
-  transition: border-color .15s, box-shadow .15s, transform .12s;
+  transition: box-shadow .18s, transform .14s;
   position: relative;
 }
 .activity-card:hover {
-  border-color: var(--teal);
-  box-shadow: 0 4px 16px rgba(26,122,138,.12);
-  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,.08);
+  transform: translateY(-3px);
 }
-.ac-icon { font-size: 1.5rem; margin-bottom: 4px; }
+.activity-card[data-done="1"] .ac-title::after {
+  content: ' ✓';
+  color: var(--green);
+}
+.ac-icon {
+  font-size: 1.6rem;
+  margin-bottom: 10px;
+  display: block;
+}
 .ac-title {
   font-family: var(--font-sans);
-  font-size: .82rem;
+  font-size: .78rem;
   font-weight: 800;
   letter-spacing: .5px;
   text-transform: uppercase;
@@ -811,20 +949,12 @@ body.dark #back-to-top { background: var(--amber); color: #1A1A1A; }
 
 /* Dark mode */
 body.dark .activity-card {
-  background: rgba(255,255,255,.04);
-  border-color: rgba(255,255,255,.1);
+  background: rgba(255,255,255,.05);
+  border-left-color: rgba(255,255,255,.06);
+  border-right-color: rgba(255,255,255,.06);
+  border-bottom-color: rgba(255,255,255,.06);
 }
-body.dark .activity-card:hover {
-  border-color: var(--teal);
-  box-shadow: 0 4px 16px rgba(74,171,184,.15);
-}
+body.dark .activity-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,.4); }
 body.dark .ac-title { color: #F0F0F0; }
-body.dark .ac-desc  { color: #A8B8C8; }
-
-@media (max-width: 480px) {
-  .activity-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .activity-card { padding: 16px 14px; }
-}
-@media (max-width: 340px) {
-  .activity-grid { grid-template-columns: 1fr; }
-}
+body.dark .ac-desc  { color: #8A9AB0; }
+body.dark .ac-arrow { color: var(--teal); }
