@@ -141,7 +141,7 @@ body.dark .level-card { background: rgba(255,255,255,.05); border-color: rgba(25
         document.body.prepend(banner);
       }
       localStorage.setItem('wordplay_version', v.version);
-    });
+    }).catch(function() {});
   } catch(e) {}
 })();
 </script>
