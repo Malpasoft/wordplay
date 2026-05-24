@@ -3,31 +3,55 @@
    ══════════════════════════════════════════════════════════════════ */
 
 .deck-body {
-  background: #0F1A2B; /* fixed dark — never changes with dark mode toggle */
+  background: var(--bg);
   overflow-x: hidden;
   overscroll-behavior: none;
 }
 
-/* ─── PRE-DECK ELEMENTS ON ALWAYS-DARK BACKGROUND ─────────────── */
-.deck-body h1,
-.deck-body .chapter-h1 { color: #FFFFFF !important; }
-.deck-body .chapter-num { color: var(--amber); }
-.deck-body .chapter-subtitle {
-  color: rgba(255,255,255,.62);
-  border-bottom-color: rgba(255,255,255,.1);
+/* ─── SLIDE ENTRY ANIMATION ─────────────────────────────────────── */
+@keyframes deckSlideIn {
+  from { opacity: 0; transform: translateX(22px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
-.deck-body .breadcrumb,
-.deck-body .breadcrumb a,
-.deck-body .breadcrumb span { color: rgba(255,255,255,.5); }
-.deck-body .breadcrumb a:hover { color: rgba(255,255,255,.85); text-decoration: underline; }
-.deck-body .breadcrumb strong { color: rgba(255,255,255,.88); }
-.deck-body .chapter-nav { background: rgba(255,255,255,.04); border-bottom-color: rgba(255,255,255,.08); }
-.deck-body .chapter-nav-btn { color: rgba(255,255,255,.6); }
-.deck-body .chapter-nav-btn.active { color: var(--amber); border-bottom-color: var(--amber); }
-.deck-body .chapter-nav-btn:hover { color: #FFFFFF; }
+.slide-anim { animation: deckSlideIn .28s ease-out; }
 
-/* ─── DECK NAV BAR — hidden, scroll-based progress replaces it ──── */
-.deck-nav { display: none; }
+/* ─── DECK NAV BAR — fixed at bottom, prev / counter / next ─────── */
+.deck-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  background: var(--paper);
+  border-top: 1px solid var(--hairline);
+  z-index: 100;
+}
+.deck-btn {
+  padding: 9px 20px;
+  font-family: var(--font-sans);
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border: 1.5px solid var(--hairline);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color .15s, color .15s;
+}
+.deck-btn:hover:not(:disabled) { border-color: var(--amber); color: var(--amber); }
+.deck-btn:disabled { opacity: .3; cursor: default; }
+.deck-btn.primary { background: var(--amber); color: #1A1A1A; border-color: var(--amber); }
+.counter, .deck-counter {
+  font-family: var(--font-sans);
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--muted);
+}
 
 /* Progress bar at top of screen */
 .deck-progress {
@@ -36,7 +60,7 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: rgba(255,255,255,0.08);
+  background: var(--hairline);
   z-index: 50;
 }
 .deck-progress-fill {
@@ -53,10 +77,11 @@
   padding: 8px 20px 100px;
 }
 .slide {
-  display: block;          /* all slides always visible */
+  display: none;           /* deck.js shows the active slide */
   width: 100%;
   max-width: 780px;
-  margin: 0 auto 28px;
+  margin: 0 auto;
+  padding: 0 16px;
 }
 
 /* ─── SLIDE CARD ───────────────────────────────────────────────── */
@@ -568,15 +593,20 @@ body.dark .breadcrumb       { color: #98A8B8 !important; }
 body.dark .breadcrumb a     { color: var(--amber) !important; }
 body.dark .breadcrumb strong { color: #FFFFFF !important; }
 
-/* Deck nav buttons (Prev/Next) */
+/* Deck nav bar + buttons in dark mode */
+body.dark .deck-nav {
+  background: #1A2230 !important;
+  border-top-color: rgba(255,255,255,.1) !important;
+}
 body.dark .deck-btn {
-  background: rgba(255,255,255,.08) !important;
-  color: #F0F0F0 !important;
+  background: transparent !important;
+  color: #E0E8F0 !important;
   border-color: rgba(255,255,255,.2) !important;
 }
-body.dark .deck-btn:hover { background: rgba(255,255,255,.15) !important; }
-body.dark .deck-btn:disabled { opacity: 0.4; color: #808080 !important; }
-body.dark .counter { color: #C8D4E0 !important; }
+body.dark .deck-btn:hover:not(:disabled) { border-color: var(--amber) !important; color: var(--amber) !important; }
+body.dark .deck-btn:disabled { opacity: 0.35; }
+body.dark .deck-btn.primary { background: var(--amber) !important; color: #1A1A1A !important; border-color: var(--amber) !important; }
+body.dark .counter, body.dark .deck-counter { color: #98A8B8 !important; }
 
 /* Lesson complete banner — keep amber bg, dark text */
 body.dark .lc-banner {

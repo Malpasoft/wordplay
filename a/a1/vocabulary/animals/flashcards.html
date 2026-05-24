@@ -139,8 +139,19 @@
 <footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
 
 <script>
-var WORDS = [{"word": "bread", "ipa": "/brɛd/", "definition": "a baked food made from flour", "example": "I eat bread for breakfast."}, {"word": "apple", "ipa": "/ˈæp(ə)l/", "definition": "a round red or green fruit", "example": "She eats an apple every day."}, {"word": "chicken", "ipa": "/ˈtʃɪkɪn/", "definition": "meat from a chicken", "example": "I love roast chicken."}, {"word": "rice", "ipa": "/raɪs/", "definition": "small white or brown grains, a staple food", "example": "We have rice with every meal."}, {"word": "coffee", "ipa": "/ˈkɒfi/", "definition": "a hot dark drink made from coffee beans", "example": "I drink coffee in the morning."}, {"word": "water", "ipa": "/ˈwɔːtə/", "definition": "a clear liquid we drink", "example": "Drink eight glasses of water a day."}, {"word": "salad", "ipa": "/ˈsæləd/", "definition": "a cold dish of raw vegetables", "example": "I have a salad for lunch."}, {"word": "pasta", "ipa": "/ˈpæstə/", "definition": "an Italian food made from flour and water", "example": "My favourite food is pasta."}, {"word": "milk", "ipa": "/mɪlk/", "definition": "a white liquid from cows", "example": "I put milk in my tea."}, {"word": "orange", "ipa": "/ˈɒrɪndʒ/", "definition": "a round citrus fruit", "example": "She drinks orange juice every morning."}];
-var STORAGE_KEY = 'wordplay_vocab_a1_food_mastered';
+var WORDS = [
+  {"word": "dog",      "ipa": "/dɒɡ/",        "definition": "a common pet animal",               "example": "I have a dog called Max."},
+  {"word": "cat",      "ipa": "/kæt/",        "definition": "a small furry pet",                 "example": "The cat is sleeping."},
+  {"word": "bird",     "ipa": "/bɜːd/",       "definition": "an animal with wings that can fly", "example": "A bird is singing in the tree."},
+  {"word": "fish",     "ipa": "/fɪʃ/",        "definition": "an animal that lives in water",     "example": "There are fish in the lake."},
+  {"word": "horse",    "ipa": "/hɔːs/",       "definition": "a large animal you can ride",       "example": "She rides a horse every weekend."},
+  {"word": "cow",      "ipa": "/kaʊ/",        "definition": "a farm animal that gives milk",     "example": "The cow is in the field."},
+  {"word": "chicken",  "ipa": "/ˈtʃɪk.ɪn/",  "definition": "a bird kept for eggs and meat",    "example": "We have ten chickens on the farm."},
+  {"word": "rabbit",   "ipa": "/ˈræb.ɪt/",   "definition": "a small animal with long ears",     "example": "My sister has a pet rabbit."},
+  {"word": "elephant", "ipa": "/ˈel.ɪ.fənt/","definition": "a very large grey animal",          "example": "The elephant is in the zoo."},
+  {"word": "monkey",   "ipa": "/ˈmʌŋ.ki/",   "definition": "an animal that climbs trees",       "example": "The monkey ate a banana."}
+];
+var STORAGE_KEY = 'wordplay_vocab_a1_animals_mastered';
 var fcIdx = 0;
 var matchSelected = null;
 var matchRound = 0;
@@ -265,7 +276,7 @@ function markMastered() {
     var raw = localStorage.getItem('wordplay_progress');
     var pd = raw ? JSON.parse(raw) : {};
     pd['a1'] = pd['a1'] || {};
-    pd['a1']['vocab_mastered_food'] = { done: true, date: new Date().toISOString() };
+    pd['a1']['vocab_mastered_animals'] = { done: true, date: new Date().toISOString() };
     localStorage.setItem('wordplay_progress', JSON.stringify(pd));
     document.getElementById('masteryBadge').style.display = '';
     document.getElementById('vocabStatus').textContent = '10 words · mastered \u2713';
@@ -301,7 +312,7 @@ checkMastered();
   var ta = document.getElementById('my-notes-area');
   var cc = document.getElementById('notes-chars');
   if (!ta) return;
-  var KEY = 'wp_notes_a1_food';
+  var KEY = 'wp_notes_a1_animals';
   try { ta.value = localStorage.getItem(KEY) || ''; cc.textContent = ta.value.length; } catch(e){}
   var t;
   ta.addEventListener('input', function() {

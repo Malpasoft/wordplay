@@ -1,60 +1,96 @@
 // ══════════════════════════════════════════════════════════════════
-// deck.js — lesson block layout with scroll-based progress tracking
-// All slides visible simultaneously; progress tracked as you read
+// deck.js — one-at-a-time lesson slides with swipe + button nav
+// Shows slides one at a time; navigates with buttons, swipe, keyboard
 // ══════════════════════════════════════════════════════════════════
 (function() {
-  var slides = document.querySelectorAll('.slide');
+  var slides = Array.from(document.querySelectorAll('.slide'));
   if (!slides.length) return;
 
   var chapterId = window.CHAPTER_ID || '';
   var level     = window.LEVEL || '';
-  var slideKey   = chapterId ? 'wordplay_slides_' + level + '_' + chapterId : null;
-  var completeKey = chapterId ? 'wordplay_slides_' + level + '_' + chapterId + '_complete' : null;
+  var total     = slides.length;
+  var current   = 0;
+  var completed = false;
 
-  // Show all slides (block layout)
-  slides.forEach(function(s) { s.style.display = 'block'; });
+  // ── Init: hide all slides except first ──────────────────────────
+  slides.forEach(function(s, i) { s.style.display = i === 0 ? 'block' : 'none'; });
 
-  var highestSeen = 0;
-  var completed   = false;
+  // ── Update buttons + progress bar ────────────────────────────────
+  function updateUI() {
+    var prevBtn = document.getElementById('deck-prev');
+    var nextBtn = document.getElementById('deck-next');
+    var counter = document.getElementById('slide-counter');
+    var bar     = document.getElementById('deck-progress-fill');
+    var pct     = Math.round(((current + 1) / total) * 100);
 
-  function updateProgress(idx) {
-    if (idx <= highestSeen && idx !== slides.length - 1) return;
-    highestSeen = Math.max(highestSeen, idx);
-
-    var pct = Math.round(((idx + 1) / slides.length) * 100);
-    var bar = document.getElementById('deck-progress-fill');
+    if (prevBtn) prevBtn.disabled = current === 0;
+    if (nextBtn) {
+      nextBtn.disabled = false;
+      nextBtn.innerHTML = current === total - 1
+        ? 'Finish &#10003;' : 'Next &#9654;';
+    }
+    if (counter) counter.textContent = (current + 1) + ' / ' + total;
     if (bar) bar.style.width = pct + '%';
 
-    if (slideKey) { try { localStorage.setItem(slideKey, String(idx)); } catch(e) {} }
-
-    if (idx === slides.length - 1 && !completed) {
-      completed = true;
-      markComplete();
+    if (chapterId && level) {
+      try { localStorage.setItem('wordplay_slides_' + level + '_' + chapterId, String(current)); } catch(e) {}
     }
   }
 
-  // IntersectionObserver: fire when each slide is ≥30% visible
-  if (window.IntersectionObserver) {
-    var obs = new IntersectionObserver(function(entries) {
-      entries.forEach(function(entry) {
-        if (entry.isIntersecting) {
-          var idx = Array.from(slides).indexOf(entry.target);
-          if (idx >= 0) updateProgress(idx);
-        }
-      });
-    }, { threshold: 0.3 });
-    slides.forEach(function(s) { obs.observe(s); });
-  } else {
-    // Fallback for old browsers: mark complete after 4s
-    setTimeout(function() { if (!completed) { completed = true; markComplete(); } }, 4000);
+  // ── Navigate to a specific slide index ───────────────────────────
+  function goTo(idx) {
+    if (idx === current || idx < 0 || idx >= total) return;
+    slides[current].style.display = 'none';
+    current = idx;
+    var s = slides[current];
+    s.style.display = 'block';
+    s.classList.remove('slide-anim');
+    void s.offsetHeight; // force reflow
+    s.classList.add('slide-anim');
+    updateUI();
+    if (current === total - 1 && !completed) { completed = true; markComplete(); }
   }
 
-  // ── Mark lesson complete ──────────────────────────────────────
-  function markComplete() {
-    if (completeKey) { try { localStorage.setItem(completeKey, '1'); } catch(e) {} }
+  // ── Public navigation functions (called by HTML onclick attrs too) ─
+  window.nextSlide = function() {
+    if (current < total - 1) goTo(current + 1);
+    else if (!completed) { completed = true; markComplete(); }
+  };
+  window.prevSlide = function() { if (current > 0) goTo(current - 1); };
+  window.goToSlide = function(n) { if (n >= 0 && n < total) goTo(n); };
 
+  // ── Wire buttons (only if no onclick attribute already) ──────────
+  var prevBtn = document.getElementById('deck-prev');
+  var nextBtn = document.getElementById('deck-next');
+  if (prevBtn && !prevBtn.getAttribute('onclick')) prevBtn.addEventListener('click', window.prevSlide);
+  if (nextBtn && !nextBtn.getAttribute('onclick')) nextBtn.addEventListener('click', window.nextSlide);
+
+  // ── Keyboard: arrow keys ─────────────────────────────────────────
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); window.nextSlide(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); window.prevSlide(); }
+  });
+
+  // ── Touch swipe support ──────────────────────────────────────────
+  var tx = 0, ty = 0;
+  document.addEventListener('touchstart', function(e) {
+    tx = e.touches[0].clientX;
+    ty = e.touches[0].clientY;
+  }, { passive: true });
+  document.addEventListener('touchend', function(e) {
+    var dx = e.changedTouches[0].clientX - tx;
+    var dy = e.changedTouches[0].clientY - ty;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 48) {
+      if (dx < 0) window.nextSlide();
+      else window.prevSlide();
+    }
+  }, { passive: true });
+
+  // ── Mark lesson complete ─────────────────────────────────────────
+  function markComplete() {
     if (chapterId && level) {
       try {
+        localStorage.setItem('wordplay_slides_' + level + '_' + chapterId + '_complete', '1');
         var raw  = localStorage.getItem('wordplay_progress');
         var data = raw ? JSON.parse(raw) : {};
         data[level] = data[level] || {};
@@ -64,39 +100,35 @@
         }
       } catch(e) {}
     }
-
     if (window.FCEStore && window.FCEStore.touchStreak) {
       try { window.FCEStore.touchStreak(); } catch(e) {}
     }
-
     showLessonCompleteBanner();
   }
 
-  // ── Completion banner ─────────────────────────────────────────
+  // ── Completion banner ─────────────────────────────────────────────
   function showLessonCompleteBanner() {
     if (document.getElementById('lesson-complete-banner')) return;
+    if (!document.getElementById('lesson-banner-style')) {
+      var sty = document.createElement('style');
+      sty.id  = 'lesson-banner-style';
+      sty.textContent = '@keyframes lessonBannerIn{from{opacity:0;transform:translate(-50%,14px)}to{opacity:1;transform:translate(-50%,0)}}';
+      document.head.appendChild(sty);
+    }
     var banner = document.createElement('div');
     banner.id = 'lesson-complete-banner';
     banner.style.cssText = [
-      'position:fixed;bottom:24px;left:50%;transform:translateX(-50%)',
+      'position:fixed;bottom:72px;left:50%;transform:translateX(-50%)',
       'background:var(--amber,#B8860B);color:#1A1A1A',
       'font-family:var(--font-sans,system-ui,sans-serif);font-size:.75rem',
       'font-weight:800;letter-spacing:1.5px;text-transform:uppercase',
       'padding:10px 24px;border-radius:6px',
-      'box-shadow:0 4px 20px rgba(0,0,0,.35)',
+      'box-shadow:0 4px 20px rgba(0,0,0,.25)',
       'z-index:200;white-space:nowrap',
       'animation:lessonBannerIn .3s ease-out'
     ].join(';');
-    banner.innerHTML = '&#10003; Lesson complete &nbsp;&#183;&nbsp; <a href="worksheet.html" style="color:#1A1A1A;font-weight:900;text-decoration:underline">Practice now</a>';
-
-    if (!document.getElementById('lesson-banner-style')) {
-      var sty = document.createElement('style');
-      sty.id  = 'lesson-banner-style';
-      sty.textContent = '@keyframes lessonBannerIn{from{opacity:0;transform:translate(-50%,16px)}to{opacity:1;transform:translate(-50%,0)}}';
-      document.head.appendChild(sty);
-    }
+    banner.innerHTML = '&#10003; Lesson complete &nbsp;&middot;&nbsp; <a href="worksheet.html" style="color:#1A1A1A;font-weight:900;text-decoration:underline">Practice now</a>';
     document.body.appendChild(banner);
-
     setTimeout(function() {
       banner.style.transition = 'opacity .4s';
       banner.style.opacity = '0';
@@ -104,30 +136,6 @@
     }, 7000);
   }
 
-  // ── Keyboard: arrow keys scroll to prev/next slide ────────────
-  function currentSlideIdx() {
-    var best = 0, minDist = Infinity;
-    slides.forEach(function(s, i) {
-      var dist = Math.abs(s.getBoundingClientRect().top - 80);
-      if (dist < minDist) { minDist = dist; best = i; }
-    });
-    return best;
-  }
-
-  window.nextSlide = function() {
-    var n = currentSlideIdx();
-    if (n < slides.length - 1) slides[n + 1].scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-  window.prevSlide = function() {
-    var n = currentSlideIdx();
-    if (n > 0) slides[n - 1].scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-  window.goToSlide = function(n) {
-    if (n >= 0 && n < slides.length) slides[n].scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); window.nextSlide(); }
-    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); window.prevSlide(); }
-  });
+  // ── Init ─────────────────────────────────────────────────────────
+  updateUI();
 })();

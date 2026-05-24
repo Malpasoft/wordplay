@@ -29,37 +29,31 @@
 <div class="slide"><div class="slide-card"><div class="slide-header"><h2>Words 5–8</h2></div><div class="overview-row"><div class="overview-label">horse</div><div class="overview-desc">a large animal you can ride &nbsp;<span style="color:var(--muted);font-style:italic">/hɔːs/</span></div></div><div class="overview-row"><div class="overview-label">cow</div><div class="overview-desc">a farm animal that gives milk &nbsp;<span style="color:var(--muted);font-style:italic">/kaʊ/</span></div></div><div class="overview-row"><div class="overview-label">chicken</div><div class="overview-desc">a bird kept for eggs and meat &nbsp;<span style="color:var(--muted);font-style:italic">/ˈtʃɪk.ɪn/</span></div></div><div class="overview-row"><div class="overview-label">rabbit</div><div class="overview-desc">a small animal with long ears &nbsp;<span style="color:var(--muted);font-style:italic">/ˈræb.ɪt/</span></div></div><div style="margin-top:14px;padding-top:10px;border-top:1px solid var(--hairline)"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Examples</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">"She rides a <b>horse</b>."</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">"The <b>cow</b> is in the field."</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">"We have ten <b>chickens</b>."</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">"My sister has a pet <b>rabbit</b>."</div></div></div></div>
 <div class="slide"><div class="slide-card"><div class="slide-header"><h2>Words 9–10</h2></div><div class="overview-row"><div class="overview-label">elephant</div><div class="overview-desc">a very large grey animal &nbsp;<span style="color:var(--muted);font-style:italic">/ˈel.ɪ.fənt/</span></div></div><div class="overview-row"><div class="overview-label">monkey</div><div class="overview-desc">an animal that climbs trees &nbsp;<span style="color:var(--muted);font-style:italic">/ˈmʌŋ.ki/</span></div></div><div style="margin-top:14px;padding-top:10px;border-top:1px solid var(--hairline)"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Examples</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">"The <b>elephant</b> is in the zoo."</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">"The <b>monkey</b> ate a banana."</div></div></div></div></div>
   <div class="deck-nav">
-    <button class="deck-btn" onclick="prevSlide()" id="deck-prev" disabled>← Prev</button>
-    <span class="deck-counter" id="slide-counter">1 / 3</span>
-    <button class="deck-btn primary" onclick="nextSlide()" id="deck-next">Next →</button>
+    <button class="deck-btn" id="deck-prev" disabled>&#9664; Prev</button>
+    <span class="deck-counter" id="slide-counter"></span>
+    <button class="deck-btn primary" id="deck-next">Next &#9654;</button>
   </div>
 </div>
 <footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
 <script src="../../../../shared/store.js?v=v103"></script>
 <script>window.LEVEL="a1";window.CHAPTER_ID="animals";</script>
 <script src="../../../../shared/deck.js?v=v103"></script>
-
-// Scroll first slide into view on load
-(function() {
-  var dk = document.getElementById('slide-deck');
-  if (dk) setTimeout(function() { dk.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 150);
-})();
-
-// ✓ badges on Practice / Game nav tabs
+<script>
 (function() {
   try {
     var p = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
     var lv = p['a1'] || {};
-    var ws = lv['food'];
-    if (ws && ws.pct >= 70) {
+    var ws = lv['vocab_mastered_animals'];
+    if (ws && ws.done) {
       var pt = document.querySelector('.chapter-nav-btn[href="index.html"]');
-      if (pt) pt.textContent = 'Practice ✓';
+      if (pt) pt.textContent = 'Flashcards ✓';
     }
-    var gm = lv['wordplay_game_food'];
+    var gm = lv['wordplay_game_animals'];
     if (gm && gm.pct >= 70) {
       var gt = document.querySelector('.chapter-nav-btn[href="game.html"]');
       if (gt) gt.textContent = 'Game ✓';
     }
   } catch(e) {}
 })();
+</script>
 </body></html>

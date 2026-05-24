@@ -10,6 +10,7 @@
 // ── Choice button handling ────────────────────────────────────────
 document.querySelectorAll('.choice-group').forEach(group => {
   group.querySelectorAll('.choice-btn').forEach(btn => {
+    btn.type = 'button'; // prevent accidental form submission
     btn.addEventListener('click', () => {
       if (group.classList.contains('ex-submitted')) return;
       group.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
