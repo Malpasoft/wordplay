@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -r '.tool_input.file_path // empty' | { read -r f; [[ \"$f\" == *.html ]] && python3 -c \"\nimport sys, re\ntry:\n    h = open('$f').read()\n    # Catch unclosed script/style tags left by bad edits\n    opens = len(re.findall(r'<script[^>]*>', h))\n    closes = len(re.findall(r'</script>', h))\n    if opens != closes:\n        print(f'WARN: {f}: {opens} <script> opens but {closes} closes')\n        sys.exit(1)\nexcept Exception as e:\n    pass\n\" 2>/dev/null || true; } 2>/dev/null || true"
+          }
+        ]
+      }
+    ]
+  }
+}

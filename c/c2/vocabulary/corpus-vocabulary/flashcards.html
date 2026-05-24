@@ -77,6 +77,9 @@ function showCard(idx){flipped=false;document.getElementById('flashcard').classL
 function fcNext(){fcIdx=(fcIdx+1)%WORDS.length;showCard(fcIdx);}
 function fcPrev(){fcIdx=(fcIdx-1+WORDS.length)%WORDS.length;showCard(fcIdx);}
 function renderList(){document.getElementById('wordList').innerHTML=WORDS.map(w=>'<div class="word-list-item"><span class="wl-word">'+w.word+'</span><span class="wl-def">'+w.def+'</span></div>').join('');}
+var mastered = false;
+var fcSeen = new Set();
+var completedRounds = 0;
 showCard(0);
 </script>
 </body></html>

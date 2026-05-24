@@ -226,6 +226,9 @@ function renderList(){
   document.getElementById('wordList').innerHTML=html;
 }
 
+var mastered = false;
+var fcSeen = new Set();
+var completedRounds = 0;
 showCard(0);
 checkMastered();
 </script>

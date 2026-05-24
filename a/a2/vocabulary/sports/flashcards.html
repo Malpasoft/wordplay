@@ -31,6 +31,11 @@
 .fc-ipa { font-family: var(--font-sans); font-size: .85rem; color: var(--muted); margin-bottom: 8px; }
 .fc-def { font-size: .95rem; color: var(--ink); margin-bottom: 8px; }
 .fc-ex { font-size: .85rem; color: var(--muted); font-style: italic; }
+.fc-audio-btn{background:none;border:1px solid var(--hairline);border-radius:4px;
+  padding:4px 10px;font-family:var(--font-sans);font-size:.65rem;font-weight:700;
+  letter-spacing:.5px;text-transform:uppercase;color:var(--muted);cursor:pointer;
+  margin-top:8px;transition:border-color .15s,color .15s}
+.fc-audio-btn:hover{border-color:var(--amber);color:var(--amber)}
 .fc-hint { font-family: var(--font-sans); font-size: .65rem; color: var(--muted);
   text-transform: uppercase; letter-spacing: 1px; margin-top: 12px; }
 .fc-nav { display: flex; align-items: center; gap: 16px; justify-content: center; margin-bottom: 20px; }
@@ -93,6 +98,7 @@
           <div class="fc-word" id="fcWord"></div>
           <div class="fc-ipa" id="fcIpa"></div>
           <div class="fc-hint">tap to reveal definition</div>
+          <button class="fc-audio-btn" onclick="speakWord(event)">&#9654; Pronounce</button>
         </div>
         <div class="fc-face fc-back">
           <div class="fc-def" id="fcDef"></div>
@@ -154,6 +160,17 @@ function flipCard() {
   document.getElementById('flashcard').classList.toggle('flipped', flipped);
 }
 
+function speakWord(e) {
+  if (e) e.stopPropagation();
+  var w = WORDS[fcIdx];
+  if (!w) return;
+  try {
+    var u = new SpeechSynthesisUtterance(w.word);
+    u.lang = 'en-GB'; u.rate = 0.9;
+    speechSynthesis.cancel();
+    speechSynthesis.speak(u);
+  } catch(err) {}
+}
 function showCard(idx) {
   flipped = false;
   document.getElementById('flashcard').classList.remove('flipped');
@@ -163,12 +180,15 @@ function showCard(idx) {
   document.getElementById('fcDef').textContent = w.def;
   document.getElementById('fcEx').innerHTML = w.ex;
   document.getElementById('fcCounter').textContent = (idx + 1) + ' / ' + WORDS.length;
+  fcSeen.add(idx);
+  if (!mastered && fcSeen.size >= WORDS.length) { mastered = true; setTimeout(markMastered, 700); }
 }
 
 function fcNext() { fcIdx = (fcIdx + 1) % WORDS.length; showCard(fcIdx); }
 function fcPrev() { fcIdx = (fcIdx - 1 + WORDS.length) % WORDS.length; showCard(fcIdx); }
 
 function markMastered() {
+  mastered = true;
   try { localStorage.setItem(MASTERY_KEY, '1');
     try {
       var _pd = JSON.parse(localStorage.getItem('wordplay_progress')||'{}');
@@ -240,7 +260,7 @@ function handleMatch(e) {
       prev.classList.remove('selected'); prev.classList.add('correct');
       el.classList.add('correct');
       var remaining = document.querySelectorAll('.match-item:not(.correct)').length;
-      if (remaining === 0) document.getElementById('matchScore').textContent = 'All matched!';
+      if (remaining === 0) { document.getElementById('matchScore').textContent = 'All matched!'; completedRounds++; if (!mastered && completedRounds >= 5) { mastered = true; setTimeout(markMastered, 700); } }
     } else {
       prev.classList.remove('selected');
       prev.classList.add('wrong'); el.classList.add('wrong');
@@ -260,6 +280,9 @@ function renderList() {
   document.getElementById('wordList').innerHTML = html;
 }
 
+var mastered = false;
+var fcSeen = new Set();
+var completedRounds = 0;
 showCard(0);
 checkMastered();
 </script>
