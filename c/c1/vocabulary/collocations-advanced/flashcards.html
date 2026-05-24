@@ -24,6 +24,10 @@
 .fc-def{font-size:.95rem;color:var(--ink);margin-bottom:8px}
 .fc-ex{font-size:.85rem;color:var(--muted);font-style:italic}
 .fc-hint{font-family:var(--font-sans);font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:12px}
+.fc-audio-btn{background:none;border:1px solid var(--hairline);border-radius:4px;
+  padding:5px 12px;font-family:var(--font-sans);font-size:.65rem;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;color:var(--muted);cursor:pointer;margin-top:10px}
+.fc-audio-btn:hover{border-color:var(--amber);color:var(--amber)}
 .fc-nav{display:flex;align-items:center;gap:16px;justify-content:center;margin-bottom:20px}
 .fc-btn{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 18px;border-radius:4px;cursor:pointer;border:1.5px solid var(--hairline);background:transparent;color:var(--ink)}
 .fc-btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
@@ -73,7 +77,8 @@
     <div id="modeFlash">
       <div class="flashcard-wrap">
         <div class="flashcard" id="flashcard" onclick="flipCard()">
-          <div class="fc-face fc-front"><div class="fc-word" id="fcWord"></div><div class="fc-hint">tap to reveal</div></div>
+          <div class="fc-face fc-front"><div class="fc-word" id="fcWord"></div><div class="fc-hint">tap to reveal</div>
+          <button class="fc-audio-btn" onclick="speakWord(event)">&#9654; Pronounce</button></div>
           <div class="fc-face fc-back"><div class="fc-def" id="fcDef"></div><div class="fc-ex" id="fcEx"></div></div>
         </div>
       </div>

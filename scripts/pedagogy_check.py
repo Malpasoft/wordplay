@@ -27,6 +27,8 @@ def read(path):
 # ── Check 1: Audio button on all flashcards ───────────────────────────
 for path in glob.glob(f'{BASE}/**/flashcards.html', recursive=True):
     h = read(path)
+    if 'var WORDS' not in h and 'STORAGE_KEY' not in h:
+        continue  # placeholder page, not a real flashcard deck
     if 'speakWord' in h:
         ok()
     else:
