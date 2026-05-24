@@ -56,6 +56,12 @@
 .mastery-badge { display: inline-block; padding: 8px 18px; background: rgba(184,134,11,.12);
   color: var(--amber); font-family: var(--font-sans); font-size: .78rem; font-weight: 700;
   letter-spacing: 1px; text-transform: uppercase; border-radius: 4px; margin-bottom: 16px; }
+.fc-audio-btn {
+  background: transparent; border: 1.5px solid var(--hairline); border-radius: 4px;
+  padding: 5px 14px; cursor: pointer; font-family: var(--font-sans); font-size: .65rem;
+  font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--muted);
+  margin-top: 10px; transition: border-color .15s, color .15s; }
+.fc-audio-btn:hover { border-color: var(--amber); color: var(--amber); }
 </style>
 </head>
 <body>
@@ -92,7 +98,8 @@
         <div class="fc-face fc-front">
           <div class="fc-word" id="fcWord"></div>
           <div class="fc-ipa" id="fcIpa"></div>
-          <div class="fc-hint">tap to reveal definition</div>
+          <button class="fc-audio-btn" id="fcAudioBtn" onclick="speakWord(event)">&#9654; Pronounce</button>
+          <div class="fc-hint">tap card to reveal definition</div>
         </div>
         <div class="fc-face fc-back">
           <div class="fc-def" id="fcDef"></div>
@@ -167,6 +174,16 @@ function renderCard() {
   document.getElementById('flashcard').classList.remove('flipped');
 }
 function flipCard() { document.getElementById('flashcard').classList.toggle('flipped'); }
+function speakWord(e) {
+  if (e) e.stopPropagation();
+  if (!window.speechSynthesis) return;
+  var w = WORDS[fcIdx];
+  var utt = new SpeechSynthesisUtterance(w.word);
+  utt.lang = 'en-GB';
+  utt.rate = 0.9;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utt);
+}
 function fcNext() { fcIdx = (fcIdx + 1) % WORDS.length; renderCard(); }
 function fcPrev() { fcIdx = (fcIdx - 1 + WORDS.length) % WORDS.length; renderCard(); }
 

@@ -228,8 +228,8 @@ body.dark .level-card { background: rgba(255,255,255,.05); border-color: rgba(25
     if (streak >= 2) {
       var badge = document.createElement('div');
       badge.style.cssText = 'text-align:center;margin:-10px auto 20px;font-family:var(--font-sans);font-size:.75rem;color:var(--amber);font-weight:700;letter-spacing:.5px';
-      badge.innerHTML = '&#128293; ' + streak + '-day streak'
-        + (streak >= 30 ? ' &#127881;' : streak >= 7 ? ' &#127942;' : '');
+      var milestone = streak >= 30 ? ' &middot; 30+ days' : streak >= 7 ? ' &middot; 7+ days' : '';
+      badge.innerHTML = '&#9670; ' + streak + '-day streak' + milestone;
       var hero = document.querySelector('.root-hero');
       if (hero) hero.appendChild(badge);
     }

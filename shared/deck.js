@@ -2,6 +2,41 @@
 // deck.js — one-at-a-time lesson slides with swipe + button nav
 // Shows slides one at a time; navigates with buttons, swipe, keyboard
 // ══════════════════════════════════════════════════════════════════
+
+// ── Inject Dashboard link into site header ───────────────────────
+(function() {
+  var inner = document.querySelector('.site-header-inner');
+  var brand = inner && inner.querySelector('.brand');
+  if (!inner || !brand || inner.querySelector('.header-dash')) return;
+  var dash = document.createElement('a');
+  dash.className = 'header-dash';
+  dash.textContent = 'Dashboard';
+  var href = brand.getAttribute('href') || 'index.html';
+  dash.href = href.replace('index.html', 'dashboard.html');
+  dash.style.cssText = 'color:#A8B4C6;text-decoration:none;font-size:.78rem;font-family:var(--font-sans,-apple-system,sans-serif);font-weight:600;padding:5px 10px;border-radius:4px;border:1px solid rgba(255,255,255,.2);transition:border-color .15s,color .15s';
+  dash.onmouseenter = function() { this.style.borderColor='var(--amber)'; this.style.color='var(--amber)'; };
+  dash.onmouseleave = function() { this.style.borderColor='rgba(255,255,255,.2)'; this.style.color='#A8B4C6'; };
+  inner.insertBefore(dash, inner.lastElementChild);
+})();
+
+// ── Confetti celebration ─────────────────────────────────────────
+function triggerConfetti() {
+  if (!document.getElementById('cf-kf')) {
+    var s = document.createElement('style');
+    s.id = 'cf-kf';
+    s.textContent = '@keyframes cfFall{to{transform:translateY(105vh) rotate(480deg);opacity:0}}';
+    document.head.appendChild(s);
+  }
+  var colors = ['#C9A050','#4CAF82','#E05A4A','#4AABB8','#F0F0F0','#C9A050'];
+  for (var i = 0; i < 32; i++) {
+    var p = document.createElement('div');
+    var sz = 6 + Math.random() * 6;
+    p.style.cssText = 'position:fixed;top:-12px;width:' + sz + 'px;height:' + sz + 'px;border-radius:' + Math.round(Math.random()) + 'px;background:' + colors[Math.floor(Math.random() * colors.length)] + ';left:' + (5 + Math.random() * 90) + '%;animation:cfFall ' + (1.8 + Math.random() * 2.2) + 's ' + (Math.random() * 0.5) + 's ease-in forwards;z-index:999;pointer-events:none';
+    document.body.appendChild(p);
+    setTimeout(function(el) { if (el.parentNode) el.parentNode.removeChild(el); }, 4500, p);
+  }
+}
+
 (function() {
   var slides = Array.from(document.querySelectorAll('.slide'));
   if (!slides.length) return;
@@ -115,6 +150,7 @@
       sty.textContent = '@keyframes lessonBannerIn{from{opacity:0;transform:translate(-50%,14px)}to{opacity:1;transform:translate(-50%,0)}}';
       document.head.appendChild(sty);
     }
+    triggerConfetti();
     var banner = document.createElement('div');
     banner.id = 'lesson-complete-banner';
     banner.style.cssText = [

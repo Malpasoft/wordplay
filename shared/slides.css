@@ -3,7 +3,7 @@
    ══════════════════════════════════════════════════════════════════ */
 
 .deck-body {
-  background: var(--bg);
+  background: var(--paper);
   overflow-x: hidden;
   overscroll-behavior: none;
 }
@@ -614,3 +614,6 @@ body.dark .lc-banner {
   color: #1A1A1A !important;
 }
 body.dark .lc-banner * { color: #1A1A1A !important; }
+
+/* Hide chapter-nav tab row on lesson pages (breadcrumb serves navigation) */
+.chapter-nav { display: none !important; }

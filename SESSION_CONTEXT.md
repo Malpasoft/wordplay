@@ -1,42 +1,33 @@
 # Word Play — Session Context
 
-**Version:** v100
+**Version:** v103
 **Live URL:** `https://delicate-mode-2bce.emi-dom123.workers.dev/`
 **Maintainer:** Em — freelance English teacher, Catalunya
-**Working method:** Chat → zip → upload to Cloudflare (no local dev)
+**Repo:** `malpasoft/wordplay` on GitHub → auto-deploys to Cloudflare Pages on push to `main`
+**Working branch:** `claude/github-workflow-setup-98Fbf` (merge to main when ready)
 
 > **Read AI_HANDOVER.md first** before reading this. That file orients you to who Em is and how the workflow runs. This file is the technical state-of-the-project.
 
 ---
 
-## 1. What was just shipped (v90 → v96)
+## 1. What was shipped in v101–v103
 
-### Grammar enrichment — 100% COMPLETE
-All 110 grammar chapters across A1-C2 now have substantive enriched slide decks (6-7 slides each with overview-rows, formula-blocks, panel-pairs, trap-rows, watch-outs, summary-slides with amber CTA). Zero stubs remain.
+### A1 Chapter 1 + Vocab 1 polish (v101–v103)
 
-| Level | Chapters | Status |
-|-------|----------|--------|
-| A1    | 25       | Complete — includes 7 chapters rebuilt from stubs in v94 |
-| A2    | 18       | Complete — includes 3 chapters rebuilt from stubs in v94 |
-| B1    | 19       | Complete — 4 chapters use simpler template (acceptable) |
-| B2    | 20       | Complete |
-| C1    | 17       | Complete — all 17 fully enriched with C1-level content |
-| C2    | 11       | Complete — all 11 fully enriched with C2-level content |
+- **Lesson pages (slides.html)**: switched to one-at-a-time swipeable deck (deck.js rewrite). Fixed body background (`var(--paper)`, was broken invalid var). Chapter-nav tab row hidden on lesson pages via slides.css. Dashboard link injected into lesson header via deck.js. All lesson pages now need `class="deck-body"` on `<body>`.
+- **Placement test**: fixed MCQ early-submit bug (button type=submit inside form). Added cache-busting.
+- **Animals flashcards**: fixed wrong vocabulary data (was food words). Added audio pronunciation button (Web Speech API, no external deps).
+- **Animals slides**: fixed orphan JS outside script tags, fixed wrong progress keys.
+- **Confetti**: CSS particle animation on lesson complete (deck.js) and game mastery (game.js).
+- **Streak badge**: removed emoji. Now shows `◆ N-day streak` with clean amber text.
+- **Section card hover**: replaced inline-JS hover on A1 hub page with `.sect-card` CSS class (amber border on hover). Grammar/Vocab/Writing cards now need `class="sect-card"` on `<a>` elements.
 
-### Vocabulary — 53 topics, all standardised
-All 53 vocab games have 10+ items in the 7-field format. Total: 534 items. Zero empty games.
-
-### Exam prep — CAE + CPE fully built
-- **FCE (B2)** — complete: about, strategy, writing-overview, parts 1-7 (strategy + practice), mocks 1-3
-- **CAE (C1)** — complete: about, strategy, writing-overview, mock-1 placeholder, ALL 8 parts have strategy guides + auto-graded practice questions (48 total questions)
-- **CPE (C2)** — complete: about, strategy, writing-overview, mock-1 placeholder, ALL 7 parts have strategy guides + auto-graded practice questions (52 total questions)
-
-### Handover docs — all rewritten from scratch in v90
-README.md (Em-friendly), AI_HANDOVER.md (full AI orientation), this file.
+### Cache-busting
+Current version string: `?v=v103`. Bump in `version.json` and all shared asset URLs when making changes.
 
 ---
 
-## 2. Content inventory (accurate)
+## 2. Content inventory (accurate at v103)
 
 ### Grammar — 110 chapters, all enriched
 Every chapter has: slides.html (lesson), worksheet.html (auto-graded), game.html (4-stage mastery), printables.html
@@ -52,7 +43,6 @@ Every chapter has: slides.html (lesson), worksheet.html (auto-graded), game.html
 | C2    | 7 |
 
 ### Writing — 21 chapters with auto-graders
-
 ### Exam prep
 | Exam | Level | Parts with practice | Total practice Qs |
 |------|-------|--------------------|--------------------|
@@ -61,7 +51,11 @@ Every chapter has: slides.html (lesson), worksheet.html (auto-graded), game.html
 | CPE  | C2    | 7/7                | 52                 |
 
 ### Special pages
-index.html, dashboard.html, placement-test.html, progress-certificate.html, 404.html, 6x certificate.html
+- `index.html` — homepage with level grid, streak badge, onboarding modal
+- `dashboard.html` — student progress: XP, stats, radar chart, level tiles, activity pillars
+- `placement-test.html` — 24-question level finder
+- `progress-certificate.html` — printable certificate generator
+- `404.html`, 6x `certificate.html` (one per level)
 
 ### Total: ~822 HTML pages
 
@@ -71,14 +65,14 @@ index.html, dashboard.html, placement-test.html, progress-certificate.html, 404.
 
 ```
 shared/
-  base.css           Layout, variables, header/footer/breadcrumb/nav
-  slides.css         Slide deck styles (full dark mode block)
+  base.css           Layout, variables, header/footer/breadcrumb/nav, .sect-card
+  slides.css         Slide deck styles — body must have class="deck-body"
   worksheet.css      Auto-graded practice styles
   game.css           4-stage mastery game styles
-  store.js           FCEStore — localStorage wrapper, CHAPTERS registry
-  deck.js            Slide navigation, progress bar, completion banner
+  store.js           FCEStore — localStorage wrapper, CHAPTERS registry, streak tracking
+  deck.js            Slide nav, confetti on complete, Dashboard header injection
   worksheet.js       Auto-grading: MCQ + text inputs + explanations
-  game.js            4-stage mastery engine
+  game.js            4-stage mastery engine, confetti on full mastery
   writing-grader.js  Live writing feedback (regex, no AI)
   sentence-grader.js Regex-based open sentence grader
   dark-init.js       Dark/light toggle + back-to-top button
@@ -87,6 +81,18 @@ shared/
 ---
 
 ## 4. Contracts
+
+### Lesson pages (slides.html) contract
+```html
+<body class="deck-body">  ← required for correct background
+<script>
+window.LEVEL = "a1";
+window.CHAPTER_ID = "animals";
+</script>
+<script src="../../../../shared/store.js?v=v103"></script>
+<script src="../../../../shared/deck.js?v=v103"></script>
+```
+deck.js auto-injects the Dashboard header button and confetti on completion.
 
 ### Worksheet contract
 ```html
@@ -110,22 +116,59 @@ window.GAME_DATA = {
 </script>
 ```
 
+### Vocab flashcards contract (animals pattern)
+```js
+var WORDS = [{ word, ipa, definition, example }, ...]; // 10 items
+var STORAGE_KEY = 'wordplay_vocab_a1_{topic}_mastered';
+// Progress key in wordplay_progress: pd['a1']['vocab_mastered_{topic}']
+```
+- flashcards.html has 3 modes: Flashcards (flip card + audio), Match game, Word list
+- game.html is the separate 4-stage mastery game (different from flashcards.html)
+
 ---
 
 ## 5. Design system
-Palette: navy #0E1A2B/#1A2A40, ink #1A1A1A, paper #F5EFE0, amber #C9A050, teal #1A7A8A, muted #6B7280.
-Dark mode: all CSS files have explicit `!important` overrides. Headings #FFF, body #F0F0F0, strong/b #FFE4A0, CTA buttons keep #1A1A1A text.
+
+**Palette (base.css :root):**
+- `--ink: #1A1A1A` / dark mode `#F0F0F0`
+- `--paper: #FAFAFA` / dark mode `#0E0E0E`
+- `--amber: #B8860B` / dark mode `#C9A050` — ONLY accent color for hover/CTA
+- `--navy: #1A1A1A` (used for text color that needs to be light in dark mode)
+- `--muted: #9A9A9A`, `--hairline: #E5E5E5`
+- `--green: #2E7D52`, `--red: #C0392B`
+
+**Iron-clad rules:**
+- Amber is the ONLY accent/hover color. No teal/blue in UI chrome.
+- No emojis in UI text (exception: ◐/◑ in dark toggle button only).
+- Dark mode must work everywhere — slides.css has comprehensive `body.dark` overrides.
+- Section cards on level hub pages must use `class="sect-card"` for CSS hover.
 
 ---
 
-## 6. Next steps (priority order)
+## 6. localStorage key structure
 
-1. **Vocab expansion** — A1/A2 have only 6 topics each (thin vs B1's 11, B2's 16). Add 4-6 topics per level.
-2. **KET (A2) + PET (B1) exam prep skeletons** — modelled on FCE/CAE/CPE structure
-3. **CAE/CPE mock exams** — full timed Reading & UoE papers (mock-1 pages are currently placeholders)
-4. **Game polish** — typed vs MCQ toggle, streak bonuses, audio for IPA
-5. **Phase 2** — GitHub → Cloudflare Pages auto-deploy
+```
+wordplay_progress: {
+  streak: N,
+  a1: {
+    'slides_{chapterId}': { done: true, date: ISO },        // lesson complete
+    '{chapterId}': { pct: 85, done: true },                 // worksheet score
+    'wordplay_game_{chapterId}': { pct: 90 },               // game score
+    'vocab_mastered_{topic}': { done: true, date: ISO },    // flashcard mastery
+  }
+}
+```
 
 ---
 
-*This file replaces all prior SESSION_CONTEXT.md content. v96.*
+## 7. Next steps (priority order)
+
+1. **A1 full audit** — Polish remaining A1 grammar/vocab chapters using animals+to-be as template
+2. **Vocab expansion** — A1/A2 have only 6 topics each; add 4-6 topics per level
+3. **KET (A2) + PET (B1) exam prep skeletons** — modelled on FCE/CAE/CPE
+4. **CAE/CPE mock exams** — full timed papers (currently placeholders)
+5. **Spanish version** — Once A1 polish is complete, use as base
+
+---
+
+*v103 — updated after A1 Chapter 1 + Vocab 1 polish session.*

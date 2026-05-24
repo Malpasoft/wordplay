@@ -787,6 +787,23 @@ body.dark #back-to-top { background: var(--amber); color: #1A1A1A; }
   box-shadow: 0 6px 20px rgba(184,134,11,.1);
   transform: translateY(-2px);
 }
+
+/* Section cards (Grammar / Vocabulary / Writing on level hub pages) */
+.sect-card {
+  display: block;
+  background: #1A1A1A;
+  border-radius: 12px;
+  padding: 28px 24px;
+  text-decoration: none;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: transform .15s, box-shadow .15s, border-color .18s;
+}
+.sect-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.3);
+  border-color: var(--amber);
+}
 .ch-card h2 {
   font-family: var(--font-serif);
   font-size: 1rem;

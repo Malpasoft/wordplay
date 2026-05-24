@@ -544,6 +544,24 @@
       }).join('');
     }
 
+    // ── Confetti celebration ──────────────────────────────────────
+    function triggerConfetti() {
+      if (!document.getElementById('cf-kf')) {
+        var s = document.createElement('style');
+        s.id = 'cf-kf';
+        s.textContent = '@keyframes cfFall{to{transform:translateY(105vh) rotate(480deg);opacity:0}}';
+        document.head.appendChild(s);
+      }
+      var colors = ['#C9A050','#4CAF82','#E05A4A','#4AABB8','#F0F0F0','#C9A050'];
+      for (var i = 0; i < 32; i++) {
+        var p = document.createElement('div');
+        var sz = 6 + Math.random() * 6;
+        p.style.cssText = 'position:fixed;top:-12px;width:' + sz + 'px;height:' + sz + 'px;border-radius:' + Math.round(Math.random()) + 'px;background:' + colors[Math.floor(Math.random() * colors.length)] + ';left:' + (5 + Math.random() * 90) + '%;animation:cfFall ' + (1.8 + Math.random() * 2.2) + 's ' + (Math.random() * 0.5) + 's ease-in forwards;z-index:999;pointer-events:none';
+        document.body.appendChild(p);
+        setTimeout(function(el) { if (el.parentNode) el.parentNode.removeChild(el); }, 4500, p);
+      }
+    }
+
     // ── Completion screen ─────────────────────────────────────────
     // Mastery map: categorise items as Strong / Brittle / Shaky
     function renderCompletion() {
@@ -578,6 +596,7 @@
       }
 
       showScreen('completion');
+      setTimeout(triggerConfetti, 400);
     }
 
     // ── Event listeners ───────────────────────────────────────────
