@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../favicon.svg" type="image/svg+xml">
+<title>A1 Gramática — Word Play para hispanohablantes</title>
+<link rel="stylesheet" href="../../../shared/base.css?v=v103">
+<script src="../../../shared/dark-init.js?v=v103"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link">A1</a>
+  <a href="../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Cambiar modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="section-page">
+  <div class="breadcrumb">
+    <a href="../../../index.html">Inicio</a><span>›</span>
+    <a href="../../index.html">Para hispanohablantes</a><span>›</span>
+    <a href="../index.html">A1</a><span>›</span>
+    <strong>Gramática</strong>
+  </div>
+  <div class="eyebrow">A1 · GRAMÁTICA · PARA HISPANOHABLANTES</div>
+  <h1>Gramática A1</h1>
+  <p class="section-desc">Explicaciones en español · Errores de interferencia · Comparación inglés-español</p>
+  <div class="ch-grid">
+    <a href="to-be/slides.html" class="ch-card ch-card--grammar" id="gpc_es-a1_to-be">
+      <div class="ch-num">Cap. 1</div>
+      <h2>El verbo to be</h2>
+      <p class="ch-desc">am · is · are — ser, estar, edad y estados</p><span class="ch-cta">Estudiar &#8594;</span>
+    </a>
+    <div class="ch-card ch-card--grammar" style="opacity:.4;pointer-events:none">
+      <div class="ch-num">Cap. 2</div>
+      <h2>Present Simple</h2>
+      <p class="ch-desc">I work · She works — verbos en presente</p><span class="ch-cta">Próximamente</span>
+    </div>
+    <div class="ch-card ch-card--grammar" style="opacity:.4;pointer-events:none">
+      <div class="ch-num">Cap. 3</div>
+      <h2>Artículos a / an / the</h2>
+      <p class="ch-desc">El artículo determinado e indeterminado en inglés</p><span class="ch-cta">Próximamente</span>
+    </div>
+    <div class="ch-card ch-card--grammar" style="opacity:.4;pointer-events:none">
+      <div class="ch-num">Cap. 4</div>
+      <h2>Pronombres personales</h2>
+      <p class="ch-desc">I, you, he, she — uso obligatorio en inglés</p><span class="ch-cta">Próximamente</span>
+    </div>
+    <div class="ch-card ch-card--grammar" style="opacity:.4;pointer-events:none">
+      <div class="ch-num">Cap. 5</div>
+      <h2>Have got</h2>
+      <p class="ch-desc">I have got / I've got — posesión en inglés</p><span class="ch-cta">Próximamente</span>
+    </div>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Inglés Cambridge A1→C2 · Para hispanohablantes</footer>
+<script>
+(function() {
+  try {
+    var prog = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+    var lvl = prog['es-a1'] || {};
+    var card = document.getElementById('gpc_es-a1_to-be');
+    if (!card) return;
+    var ws = lvl['to-be'];
+    var gm = lvl['wordplay_game_to-be'];
+    var badges = [];
+    if (ws && ws.pct >= 70) badges.push('Ejercicios ✓');
+    if (gm && gm.pct >= 70) badges.push('Juego ✓');
+    if (badges.length) {
+      var b = document.createElement('div');
+      b.style.cssText = 'font-family:var(--font-sans);font-size:.65rem;font-weight:700;color:var(--amber);margin-top:6px;letter-spacing:.5px';
+      b.textContent = badges.join(' · ');
+      card.querySelector('.ch-cta').before(b);
+    }
+  } catch(e) {}
+})();
+</script>
+</body>
+</html>
