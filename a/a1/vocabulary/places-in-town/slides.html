@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="../../../../shared/base.css?v=v103">
 <link rel="stylesheet" href="../../../../shared/slides.css?v=v103">
 <script src="../../../../shared/dark-init.js?v=v103"></script>
-</head><body>
+</head><body class="deck-body">
 <div class="deck-progress"><div class="deck-progress-fill" id="deck-progress-fill"></div></div>
 <header class="site-header"><div class="site-header-inner">
   <a href="../../index.html" class="back back-link">A1 Vocabulary</a>
@@ -27,31 +27,24 @@
   </nav>
   <div id="slide-deck"><div class="slide"><div class="slide-card"><div class="slide-header"><h2>Words 1–4</h2></div><div class="overview-row"><div class="overview-label">supermarket</div><div class="overview-desc">a large shop selling food and household items &nbsp;<span style="color:var(--muted);font-style:italic">/ˈsuːpərˌmɑːkɪt/</span></div></div><div class="overview-row"><div class="overview-label">school</div><div class="overview-desc">a place where children go to learn &nbsp;<span style="color:var(--muted);font-style:italic">/skuːl/</span></div></div><div class="overview-row"><div class="overview-label">hospital</div><div class="overview-desc">a place where sick or injured people are treated &nbsp;<span style="color:var(--muted);font-style:italic">/ˈhɒspɪtəl/</span></div></div><div class="overview-row"><div class="overview-label">bank</div><div class="overview-desc">a place where people keep money &nbsp;<span style="color:var(--muted);font-style:italic">/bæŋk/</span></div></div><div style="margin-top:14px;padding-top:10px;border-top:1px solid var(--hairline)"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Examples</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">“I go to the supermarket on Saturday.”</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">“The school is near my house.”</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">“The hospital is open 24 hours.”</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">“I go to the bank on Fridays.”</div></div></div></div><div class="slide"><div class="slide-card"><div class="slide-header"><h2>Words 5–8</h2></div><div class="overview-row"><div class="overview-label">park</div><div class="overview-desc">a public area with grass and trees &nbsp;<span style="color:var(--muted);font-style:italic">/pɑːk/</span></div></div><div class="overview-row"><div class="overview-label">restaurant</div><div class="overview-desc">a place where you pay to eat meals &nbsp;<span style="color:var(--muted);font-style:italic">/ˈrestərɒnt/</span></div></div><div class="overview-row"><div class="overview-label">train station</div><div class="overview-desc">a place where trains stop to let people on and off &nbsp;<span style="color:var(--muted);font-style:italic">/treɪn ˈsteɪʃən/</span></div></div><div class="overview-row"><div class="overview-label">library</div><div class="overview-desc">a place where you can borrow books &nbsp;<span style="color:var(--muted);font-style:italic">/ˈlaɪbrəri/</span></div></div><div style="margin-top:14px;padding-top:10px;border-top:1px solid var(--hairline)"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Examples</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">“We walk in the park every morning.”</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">“There is a good restaurant near here.”</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">“The train station is in the city centre.”</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">“I go to the library to study.”</div></div></div></div><div class="slide"><div class="slide-card"><div class="slide-header"><h2>Words 9–10</h2></div><div class="overview-row"><div class="overview-label">pharmacy</div><div class="overview-desc">a shop where you buy medicine &nbsp;<span style="color:var(--muted);font-style:italic">/ˈfɑːməsi/</span></div></div><div class="overview-row"><div class="overview-label">post office</div><div class="overview-desc">a place where you can send letters and parcels &nbsp;<span style="color:var(--muted);font-style:italic">/pəʊst ˈɒfɪs/</span></div></div><div style="margin-top:14px;padding-top:10px;border-top:1px solid var(--hairline)"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Examples</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">“The pharmacy is next to the bank.”</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">“I sent a letter at the post office.”</div></div></div></div></div>
   <div class="deck-nav">
-    <button class="deck-btn" onclick="prevSlide()" id="deck-prev" disabled>← Prev</button>
+    <button class="deck-btn" id="deck-prev" disabled>← Prev</button>
     <span class="deck-counter" id="slide-counter">1 / 3</span>
-    <button class="deck-btn primary" onclick="nextSlide()" id="deck-next">Next →</button>
+    <button class="deck-btn primary" id="deck-next">Next →</button>
   </div>
 </div>
 <footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
 <script src="../../../../shared/store.js?v=v103"></script>
 <script>window.LEVEL="a1";window.CHAPTER_ID="places-in-town";</script>
 <script src="../../../../shared/deck.js?v=v103"></script>
-
-// Scroll first slide into view on load
-(function() {
-  var dk = document.getElementById('slide-deck');
-  if (dk) setTimeout(function() { dk.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 150);
-})();
-
-// ✓ badges on Practice / Game nav tabs
+<script>
 (function() {
   try {
     var p = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
     var lv = p['a1'] || {};
-    var ws = lv['places-in-town'];
-    if (ws && ws.pct >= 70) {
+    var ws = lv['vocab_mastered_places-in-town'];
+    if (ws && ws.done) {
       var pt = document.querySelector('.chapter-nav-btn[href="index.html"]');
-      if (pt) pt.textContent = 'Practice ✓';
+      if (pt) pt.textContent = 'Flashcards ✓';
     }
     var gm = lv['wordplay_game_places-in-town'];
     if (gm && gm.pct >= 70) {
@@ -60,4 +53,5 @@
     }
   } catch(e) {}
 })();
+</script>
 </body></html>

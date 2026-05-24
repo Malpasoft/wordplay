@@ -35,6 +35,31 @@ function toggleDark() {
 }
 
 
+// Dashboard link injection — all pages with a back-link (skips homepage + dashboard)
+(function(){
+  function injectDashLink() {
+    var inner = document.querySelector('.site-header-inner');
+    if (!inner) return;
+    if (inner.querySelector('.header-dash')) return;
+    var brand = inner.querySelector('.brand');
+    if (!brand) return;
+    if (!inner.querySelector('.back-link')) return;
+    if (window.location.pathname.indexOf('dashboard') !== -1) return;
+    var dash = document.createElement('a');
+    dash.className = 'header-dash';
+    dash.textContent = 'Dashboard';
+    var href = brand.getAttribute('href') || 'index.html';
+    dash.href = href.replace('index.html', 'dashboard.html');
+    dash.style.cssText = 'color:#A8B4C6;font-size:.78rem;font-weight:600;padding:4px 10px;border-radius:6px;text-decoration:none;border:1px solid rgba(255,255,255,.2);white-space:nowrap;';
+    inner.insertBefore(dash, inner.lastElementChild);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', injectDashLink);
+  } else {
+    injectDashLink();
+  }
+})();
+
 // Back to top button — appears on long pages
 (function(){
   if (typeof document === 'undefined') return;

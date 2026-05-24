@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="../../../../shared/base.css?v=v103">
 <link rel="stylesheet" href="../../../../shared/slides.css?v=v103">
 <script src="../../../../shared/dark-init.js?v=v103"></script>
-</head><body>
+</head><body class="deck-body">
 <div class="deck-progress"><div class="deck-progress-fill" id="deck-progress-fill"></div></div>
 <header class="site-header"><div class="site-header-inner">
   <a href="../../index.html" class="back back-link">A1 Vocabulary</a>
@@ -27,31 +27,24 @@
   </nav>
   <div id="slide-deck"><div class="slide"><div class="slide-card"><div class="slide-header"><h2>Words 1–4</h2></div><div class="overview-row"><div class="overview-label">wake up</div><div class="overview-desc">to stop sleeping and open your eyes &nbsp;<span style="color:var(--muted);font-style:italic">/weɪk ʌp/</span></div></div><div class="overview-row"><div class="overview-label">have breakfast</div><div class="overview-desc">to eat the first meal of the day &nbsp;<span style="color:var(--muted);font-style:italic">/hæv ˈbrekfəst/</span></div></div><div class="overview-row"><div class="overview-label">go to work</div><div class="overview-desc">to travel to your job &nbsp;<span style="color:var(--muted);font-style:italic">/ɡəʊ tə wɜːk/</span></div></div><div class="overview-row"><div class="overview-label">have lunch</div><div class="overview-desc">to eat the midday meal &nbsp;<span style="color:var(--muted);font-style:italic">/hæv lʌntʃ/</span></div></div><div style="margin-top:14px;padding-top:10px;border-top:1px solid var(--hairline)"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Examples</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">“I wake up at 7 o'clock.”</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">“I have breakfast at 7:30.”</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">“I go to work by bus.”</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">“We have lunch at 1pm.”</div></div></div></div><div class="slide"><div class="slide-card"><div class="slide-header"><h2>Words 5–8</h2></div><div class="overview-row"><div class="overview-label">finish work</div><div class="overview-desc">to stop working at the end of the day &nbsp;<span style="color:var(--muted);font-style:italic">/ˈfɪnɪʃ wɜːk/</span></div></div><div class="overview-row"><div class="overview-label">cook dinner</div><div class="overview-desc">to prepare the evening meal &nbsp;<span style="color:var(--muted);font-style:italic">/kʊk ˈdɪnər/</span></div></div><div class="overview-row"><div class="overview-label">watch TV</div><div class="overview-desc">to look at television programmes &nbsp;<span style="color:var(--muted);font-style:italic">/wɒtʃ tiːˈviː/</span></div></div><div class="overview-row"><div class="overview-label">go to bed</div><div class="overview-desc">to get into bed to sleep &nbsp;<span style="color:var(--muted);font-style:italic">/ɡəʊ tə bed/</span></div></div><div style="margin-top:14px;padding-top:10px;border-top:1px solid var(--hairline)"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Examples</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">“I finish work at 5pm.”</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">“My mother cooks dinner every evening.”</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">“I watch TV after dinner.”</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">“I go to bed at 10:30.”</div></div></div></div><div class="slide"><div class="slide-card"><div class="slide-header"><h2>Words 9–10</h2></div><div class="overview-row"><div class="overview-label">have a shower</div><div class="overview-desc">to wash your body standing under running water &nbsp;<span style="color:var(--muted);font-style:italic">/hæv ə ˈʃaʊər/</span></div></div><div class="overview-row"><div class="overview-label">get dressed</div><div class="overview-desc">to put on your clothes &nbsp;<span style="color:var(--muted);font-style:italic">/ɡet drest/</span></div></div><div style="margin-top:14px;padding-top:10px;border-top:1px solid var(--hairline)"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Examples</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">“I have a shower in the morning.”</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">“I get dressed after my shower.”</div></div></div></div></div>
   <div class="deck-nav">
-    <button class="deck-btn" onclick="prevSlide()" id="deck-prev" disabled>← Prev</button>
+    <button class="deck-btn" id="deck-prev" disabled>← Prev</button>
     <span class="deck-counter" id="slide-counter">1 / 3</span>
-    <button class="deck-btn primary" onclick="nextSlide()" id="deck-next">Next →</button>
+    <button class="deck-btn primary" id="deck-next">Next →</button>
   </div>
 </div>
 <footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
 <script src="../../../../shared/store.js?v=v103"></script>
 <script>window.LEVEL="a1";window.CHAPTER_ID="daily-routine";</script>
 <script src="../../../../shared/deck.js?v=v103"></script>
-
-// Scroll first slide into view on load
-(function() {
-  var dk = document.getElementById('slide-deck');
-  if (dk) setTimeout(function() { dk.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 150);
-})();
-
-// ✓ badges on Practice / Game nav tabs
+<script>
 (function() {
   try {
     var p = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
     var lv = p['a1'] || {};
-    var ws = lv['daily-routine'];
-    if (ws && ws.pct >= 70) {
+    var ws = lv['vocab_mastered_daily-routine'];
+    if (ws && ws.done) {
       var pt = document.querySelector('.chapter-nav-btn[href="index.html"]');
-      if (pt) pt.textContent = 'Practice ✓';
+      if (pt) pt.textContent = 'Flashcards ✓';
     }
     var gm = lv['wordplay_game_daily-routine'];
     if (gm && gm.pct >= 70) {
@@ -60,4 +53,5 @@
     }
   } catch(e) {}
 })();
+</script>
 </body></html>

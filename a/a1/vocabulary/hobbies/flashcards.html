@@ -53,6 +53,12 @@
 .match-item.wrong { border-color: #c0392b; background: rgba(192,57,43,.08); }
 .match-score { font-family: var(--font-sans); font-size: .85rem; color: var(--muted);
   text-align: center; margin-bottom: 16px; }
+.fc-audio-btn {
+  background: transparent; border: 1.5px solid var(--hairline); border-radius: 4px;
+  padding: 5px 14px; cursor: pointer; font-family: var(--font-sans); font-size: .65rem;
+  font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--muted);
+  margin-top: 10px; transition: border-color .15s, color .15s; }
+.fc-audio-btn:hover { border-color: var(--amber); color: var(--amber); }
 .mastery-badge { display: inline-block; padding: 8px 18px; background: rgba(184,134,11,.12);
   color: var(--amber); font-family: var(--font-sans); font-size: .78rem; font-weight: 700;
   letter-spacing: 1px; text-transform: uppercase; border-radius: 4px; margin-bottom: 16px; }
@@ -92,7 +98,8 @@
         <div class="fc-face fc-front">
           <div class="fc-word" id="fcWord"></div>
           <div class="fc-ipa" id="fcIpa"></div>
-          <div class="fc-hint">tap to reveal definition</div>
+          <button class="fc-audio-btn" id="fcAudioBtn" onclick="speakWord(event)">&#9654; Pronounce</button>
+          <div class="fc-hint">tap card to reveal definition</div>
         </div>
         <div class="fc-face fc-back">
           <div class="fc-def" id="fcDef"></div>
@@ -139,11 +146,14 @@
 <footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
 
 <script>
-var WORDS = [{"word": "bread", "ipa": "/brɛd/", "definition": "a baked food made from flour", "example": "I eat bread for breakfast."}, {"word": "apple", "ipa": "/ˈæp(ə)l/", "definition": "a round red or green fruit", "example": "She eats an apple every day."}, {"word": "chicken", "ipa": "/ˈtʃɪkɪn/", "definition": "meat from a chicken", "example": "I love roast chicken."}, {"word": "rice", "ipa": "/raɪs/", "definition": "small white or brown grains, a staple food", "example": "We have rice with every meal."}, {"word": "coffee", "ipa": "/ˈkɒfi/", "definition": "a hot dark drink made from coffee beans", "example": "I drink coffee in the morning."}, {"word": "water", "ipa": "/ˈwɔːtə/", "definition": "a clear liquid we drink", "example": "Drink eight glasses of water a day."}, {"word": "salad", "ipa": "/ˈsæləd/", "definition": "a cold dish of raw vegetables", "example": "I have a salad for lunch."}, {"word": "pasta", "ipa": "/ˈpæstə/", "definition": "an Italian food made from flour and water", "example": "My favourite food is pasta."}, {"word": "milk", "ipa": "/mɪlk/", "definition": "a white liquid from cows", "example": "I put milk in my tea."}, {"word": "orange", "ipa": "/ˈɒrɪndʒ/", "definition": "a round citrus fruit", "example": "She drinks orange juice every morning."}];
-var STORAGE_KEY = 'wordplay_vocab_a1_food_mastered';
+var WORDS = [{"word":"reading","ipa":"/ˈriː.dɪŋ/","definition":"looking at books or texts for pleasure","example":"I enjoy reading every night."},{"word":"swimming","ipa":"/ˈswɪm.ɪŋ/","definition":"moving through water for exercise","example":"She goes swimming every morning."},{"word":"cooking","ipa":"/ˈkʊk.ɪŋ/","definition":"preparing and heating food","example":"Cooking is his favourite hobby."},{"word":"cycling","ipa":"/ˈsaɪ.klɪŋ/","definition":"riding a bicycle","example":"We go cycling at the weekend."},{"word":"dancing","ipa":"/ˈdɑːn.sɪŋ/","definition":"moving your body to music","example":"She loves dancing at parties."},{"word":"drawing","ipa":"/ˈdrɔː.ɪŋ/","definition":"making pictures with a pen or pencil","example":"He is good at drawing animals."},{"word":"gardening","ipa":"/ˈɡɑːd.nɪŋ/","definition":"growing plants and flowers","example":"My grandmother loves gardening."},{"word":"photography","ipa":"/fəˈtɒɡ.rə.fi/","definition":"taking pictures with a camera","example":"Photography is an expensive hobby."},{"word":"travelling","ipa":"/ˈtræv.əl.ɪŋ/","definition":"going to different places","example":"I love travelling to new countries."},{"word":"music","ipa":"/ˈmjuː.zɪk/","definition":"playing or listening to musical sounds","example":"He plays music every evening."}];
+var STORAGE_KEY = 'wordplay_vocab_a1_hobbies_mastered';
 var fcIdx = 0;
 var matchSelected = null;
 var matchRound = 0;
+var mastered = false;
+var fcSeen = new Set();
+var completedRounds = 0;
 
 // ── Flashcard ──────────────────────────────────────────────────
 function renderCard() {
@@ -153,7 +163,9 @@ function renderCard() {
   document.getElementById('fcDef').textContent = w.definition;
   document.getElementById('fcEx').textContent = '"' + w.example + '"';
   document.getElementById('fcCounter').textContent = (fcIdx + 1) + ' / ' + WORDS.length;
+  fcSeen.add(fcIdx);
   document.getElementById('flashcard').classList.remove('flipped');
+  if (!mastered && fcSeen.size >= WORDS.length) { mastered = true; setTimeout(markMastered, 700); }
 }
 function flipCard() { document.getElementById('flashcard').classList.toggle('flipped'); }
 function fcNext() { fcIdx = (fcIdx + 1) % WORDS.length; renderCard(); }
@@ -259,13 +271,14 @@ function setMode(mode, btn) {
 
 // ── Mastery ─────────────────────────────────────────────────────
 function markMastered() {
+  mastered = true;
   try {
     localStorage.setItem(STORAGE_KEY, '1');
     // Save to FCEStore progress
     var raw = localStorage.getItem('wordplay_progress');
     var pd = raw ? JSON.parse(raw) : {};
     pd['a1'] = pd['a1'] || {};
-    pd['a1']['vocab_mastered_food'] = { done: true, date: new Date().toISOString() };
+    pd['a1']['vocab_mastered_hobbies'] = { done: true, date: new Date().toISOString() };
     localStorage.setItem('wordplay_progress', JSON.stringify(pd));
     document.getElementById('masteryBadge').style.display = '';
     document.getElementById('vocabStatus').textContent = '10 words · mastered \u2713';
@@ -278,6 +291,7 @@ function markMastered() {
 function checkMastered() {
   try {
     if (localStorage.getItem(STORAGE_KEY) === '1') {
+      mastered = true;
       document.getElementById('masteryBadge').style.display = '';
       document.getElementById('vocabStatus').textContent = '10 words · mastered \u2713';
       var nb = document.getElementById('nextTopicBtn');
@@ -301,7 +315,7 @@ checkMastered();
   var ta = document.getElementById('my-notes-area');
   var cc = document.getElementById('notes-chars');
   if (!ta) return;
-  var KEY = 'wp_notes_a1_food';
+  var KEY = 'wp_notes_a1_hobbies';
   try { ta.value = localStorage.getItem(KEY) || ''; cc.textContent = ta.value.length; } catch(e){}
   var t;
   ta.addEventListener('input', function() {

@@ -53,6 +53,12 @@
 .match-item.wrong { border-color: #c0392b; background: rgba(192,57,43,.08); }
 .match-score { font-family: var(--font-sans); font-size: .85rem; color: var(--muted);
   text-align: center; margin-bottom: 16px; }
+.fc-audio-btn {
+  background: transparent; border: 1.5px solid var(--hairline); border-radius: 4px;
+  padding: 5px 14px; cursor: pointer; font-family: var(--font-sans); font-size: .65rem;
+  font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--muted);
+  margin-top: 10px; transition: border-color .15s, color .15s; }
+.fc-audio-btn:hover { border-color: var(--amber); color: var(--amber); }
 .mastery-badge { display: inline-block; padding: 8px 18px; background: rgba(184,134,11,.12);
   color: var(--amber); font-family: var(--font-sans); font-size: .78rem; font-weight: 700;
   letter-spacing: 1px; text-transform: uppercase; border-radius: 4px; margin-bottom: 16px; }
@@ -92,7 +98,8 @@
         <div class="fc-face fc-front">
           <div class="fc-word" id="fcWord"></div>
           <div class="fc-ipa" id="fcIpa"></div>
-          <div class="fc-hint">tap to reveal definition</div>
+          <button class="fc-audio-btn" id="fcAudioBtn" onclick="speakWord(event)">&#9654; Pronounce</button>
+          <div class="fc-hint">tap card to reveal definition</div>
         </div>
         <div class="fc-face fc-back">
           <div class="fc-def" id="fcDef"></div>
@@ -144,6 +151,9 @@ var STORAGE_KEY = 'wordplay_vocab_a1_family_mastered';
 var fcIdx = 0;
 var matchSelected = null;
 var matchRound = 0;
+var mastered = false;
+var fcSeen = new Set();
+var completedRounds = 0;
 
 // ── Flashcard ──────────────────────────────────────────────────
 function renderCard() {
@@ -153,7 +163,9 @@ function renderCard() {
   document.getElementById('fcDef').textContent = w.definition;
   document.getElementById('fcEx').textContent = '"' + w.example + '"';
   document.getElementById('fcCounter').textContent = (fcIdx + 1) + ' / ' + WORDS.length;
+  fcSeen.add(fcIdx);
   document.getElementById('flashcard').classList.remove('flipped');
+  if (!mastered && fcSeen.size >= WORDS.length) { mastered = true; setTimeout(markMastered, 700); }
 }
 function flipCard() { document.getElementById('flashcard').classList.toggle('flipped'); }
 function fcNext() { fcIdx = (fcIdx + 1) % WORDS.length; renderCard(); }
@@ -259,6 +271,7 @@ function setMode(mode, btn) {
 
 // ── Mastery ─────────────────────────────────────────────────────
 function markMastered() {
+  mastered = true;
   try {
     localStorage.setItem(STORAGE_KEY, '1');
     // Save to FCEStore progress
@@ -278,6 +291,7 @@ function markMastered() {
 function checkMastered() {
   try {
     if (localStorage.getItem(STORAGE_KEY) === '1') {
+      mastered = true;
       document.getElementById('masteryBadge').style.display = '';
       document.getElementById('vocabStatus').textContent = '10 words · mastered \u2713';
       var nb = document.getElementById('nextTopicBtn');

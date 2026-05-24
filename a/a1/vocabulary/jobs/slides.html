@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="../../../../shared/base.css?v=v103">
 <link rel="stylesheet" href="../../../../shared/slides.css?v=v103">
 <script src="../../../../shared/dark-init.js?v=v103"></script>
-</head><body>
+</head><body class="deck-body">
 <div class="deck-progress"><div class="deck-progress-fill" id="deck-progress-fill"></div></div>
 <header class="site-header"><div class="site-header-inner">
   <a href="../../index.html" class="back back-link">A1 Vocabulary</a>
@@ -29,37 +29,31 @@
 <div class="slide"><div class="slide-card"><div class="slide-header"><h2>Words 5–8</h2></div><div class="overview-row"><div class="overview-label">driver</div><div class="overview-desc">a person who drives a car or bus &nbsp;<span style="color:var(--muted);font-style:italic">/ˈdraɪ.vər/</span></div></div><div class="overview-row"><div class="overview-label">waiter</div><div class="overview-desc">a person who serves food &nbsp;<span style="color:var(--muted);font-style:italic">/ˈweɪ.tər/</span></div></div><div class="overview-row"><div class="overview-label">cook</div><div class="overview-desc">a person who makes food professionally &nbsp;<span style="color:var(--muted);font-style:italic">/kʊk/</span></div></div><div class="overview-row"><div class="overview-label">farmer</div><div class="overview-desc">a person who works on a farm &nbsp;<span style="color:var(--muted);font-style:italic">/ˈfɑː.mər/</span></div></div><div style="margin-top:14px;padding-top:10px;border-top:1px solid var(--hairline)"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Examples</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">"The bus <b>driver</b> was friendly."</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">"The <b>waiter</b> brought our food."</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">"She works as a <b>cook</b>."</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">"The <b>farmer</b> has many animals."</div></div></div></div>
 <div class="slide"><div class="slide-card"><div class="slide-header"><h2>Words 9–10</h2></div><div class="overview-row"><div class="overview-label">shop assistant</div><div class="overview-desc">a person who works in a shop &nbsp;<span style="color:var(--muted);font-style:italic">/ʃɒp əˈsɪs.tənt/</span></div></div><div class="overview-row"><div class="overview-label">student</div><div class="overview-desc">a person who studies &nbsp;<span style="color:var(--muted);font-style:italic">/ˈstjuː.dənt/</span></div></div><div style="margin-top:14px;padding-top:10px;border-top:1px solid var(--hairline)"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Examples</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">"The <b>shop assistant</b> helped me."</div><div style="font-size:.87rem;color:var(--muted);padding:3px 0;font-style:italic">"I am a <b>student</b>."</div></div></div></div></div>
   <div class="deck-nav">
-    <button class="deck-btn" onclick="prevSlide()" id="deck-prev" disabled>← Prev</button>
+    <button class="deck-btn" id="deck-prev" disabled>← Prev</button>
     <span class="deck-counter" id="slide-counter">1 / 3</span>
-    <button class="deck-btn primary" onclick="nextSlide()" id="deck-next">Next →</button>
+    <button class="deck-btn primary" id="deck-next">Next →</button>
   </div>
 </div>
 <footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
 <script src="../../../../shared/store.js?v=v103"></script>
 <script>window.LEVEL="a1";window.CHAPTER_ID="jobs";</script>
 <script src="../../../../shared/deck.js?v=v103"></script>
-
-// Scroll first slide into view on load
-(function() {
-  var dk = document.getElementById('slide-deck');
-  if (dk) setTimeout(function() { dk.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 150);
-})();
-
-// ✓ badges on Practice / Game nav tabs
+<script>
 (function() {
   try {
     var p = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
     var lv = p['a1'] || {};
-    var ws = lv['food'];
-    if (ws && ws.pct >= 70) {
+    var ws = lv['vocab_mastered_jobs'];
+    if (ws && ws.done) {
       var pt = document.querySelector('.chapter-nav-btn[href="index.html"]');
-      if (pt) pt.textContent = 'Practice ✓';
+      if (pt) pt.textContent = 'Flashcards ✓';
     }
-    var gm = lv['wordplay_game_food'];
+    var gm = lv['wordplay_game_jobs'];
     if (gm && gm.pct >= 70) {
       var gt = document.querySelector('.chapter-nav-btn[href="game.html"]');
       if (gt) gt.textContent = 'Game ✓';
     }
   } catch(e) {}
 })();
+</script>
 </body></html>

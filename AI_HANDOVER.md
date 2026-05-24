@@ -1,317 +1,214 @@
 # Word Play — AI & Developer Handover
 
-**Read this file first in any new Claude session.** Then read `SESSION_CONTEXT.md`. Together they fully orient you.
+**Read this file first in any new Claude session.**
 
-**Current version:** v100
-**Total HTML pages:** 822
-**Live URL:** `https://delicate-mode-2bce.emi-dom123.workers.dev/`
+**Current version:** v103  
+**Total HTML pages:** ~822  
+**Live URL:** https://delicate-mode-2bce.emi-dom123.workers.dev/  
+**GitHub repo:** `malpasoft/wordplay` → Cloudflare Pages auto-deploys from `main`
 
 ---
 
 ## 1. The person you are working with
 
-**Em** — freelance English teacher in Catalunya, Spain. Self-described as **code-illiterate**. She works via a **chat → zip → upload to Cloudflare** loop. She does not run local code, has no IDE, and cannot read or write JS or CSS.
+**Em** — freelance English teacher in Catalunya, Spain. Works via GitHub + Claude Code (remote sessions). Does not run local code, has no IDE.
 
-**Communication style:** Direct. Brief. No filler. No flattery. Calls out padded responses. Wants sendable files, not chat explanations.
+**Communication style:** Direct. Brief. No filler. No flattery. Pushes back on padded responses.
 
 **What she values:**
 - Clean minimal formatting (no decorative emoji, no headers everywhere)
-- Navy / gold / teal / cream palette consistency
-- Print-ready outputs over inline chat
+- Amber-only accent colour — no navy/gold/teal drift
+- Finishing and polishing existing content over adding new features
 - Pushback when she's wrong (constructively)
 
 **What annoys her:**
 - AI over-explaining instead of doing
-- Adding self-assessment when she asked for deterministic grading
 - Any drift from established patterns without telling her
-- Spanish-specific content mixed into the main course (it has its own future location)
+- Spanish-specific content mixed into the main course (reserved for Phase 4 `/es/`)
 
 ---
 
-## 2. How a session typically goes
+## 2. How a session works now
 
-1. Em uploads the latest `WordPlay_vNN.zip`.
-2. She gives an instruction: "Continue", "Add X chapter", "Fix dark mode", etc.
-3. You unzip, work in `/home/claude/WordPlay/site/`, package as `/mnt/user-data/outputs/WordPlay_v{NN+1}.zip`, and present the file.
-4. Bump `version.json` and `SESSION_CONTEXT.md` version line every batch.
-5. Always cache-bust CSS/JS includes with `?v=vNN` when you touch shared assets.
+The project is on GitHub. Claude Code is used in remote sessions with direct push access.
+
+1. Work on branch `claude/github-workflow-setup-98Fbf` (this was force-pushed to become `main`)
+2. Push with `git push -u origin <branch>` — Cloudflare Pages auto-deploys `main`
+3. Bump `?v=vNN` cache-bust suffix on shared asset URLs whenever `shared/` files change
+4. No zip packaging. No `present_files`. Just commit + push.
+
+**Active branch for development:** whatever the session context specifies. When in doubt, check `git branch`.
 
 ---
 
 ## 3. What Word Play is
 
-A **static** Cambridge English course (A1 to C2) on Cloudflare Workers. Vanilla HTML / CSS / JS. No build system. No backend. No database. All student progress lives in **browser localStorage**.
-
-**Pipeline:** Em writes Python scripts (with you) that generate HTML pages from data. The scripts are not deployed — only the generated HTML/CSS/JS ships.
+A **static** Cambridge English course (A1 to C2) on Cloudflare Pages. Vanilla HTML / CSS / JS. No build system. No backend. All student progress lives in **browser localStorage**.
 
 ---
 
-## 4. Content state (accurate)
+## 4. Content state (v103)
 
-### Grammar — 110 chapters total, all enriched with full slide decks
-| Level | Chapters | Notes |
-|-------|----------|-------|
+### Grammar — 110 chapters total
+| Level | Chapters | Status |
+|-------|----------|--------|
 | A1    | 25       | Fully enriched |
 | A2    | 18       | Fully enriched |
 | B1    | 19       | Fully enriched |
 | B2    | 20       | Fully enriched |
-| C1    | 17       | 15/17 enriched (subjunctive, cleft, advanced-tenses, inversion-advanced, relative-clauses-advanced, modal-verbs-advanced, nominalisation, hedging-language, ellipsis-substitution, discourse-connectors, and existing baseline) |
-| C2    | 11       | Still on minimal templates — needs enrichment |
+| C1    | 17       | Mostly done (a few advanced topics minimal) |
+| C2    | 11       | Minimal templates — needs enrichment |
 
-### Vocabulary — 53 topics, **all games standardised** with 10–12 items each
-| Level | Topics |
-|-------|--------|
-| A1    | 6      |
-| A2    | 6      |
-| B1    | 11     |
-| B2    | 16     |
-| C1    | 7      |
-| C2    | 7      |
+### Vocabulary — 53 topics
+| Level | Topics | Flashcard template |
+|-------|--------|--------------------|
+| A1    | 12     | Old (renderCard / STORAGE_KEY) |
+| A2    | 6      | New (showCard / MASTERY_KEY) |
+| B1    | 11     | New |
+| B2    | 16     | New |
+| C1    | 7      | New |
+| C2    | 7      | New (some minimal) |
 
-All vocab games use the standardised 7-field item structure (see §6).
+All vocab games use 10-item standardised GAME_DATA structure.  
+A1 flashcards have audio pronunciation + auto-complete after viewing all cards.  
+A1 matching game auto-completes after 5 completed rounds.
 
 ### Writing — 21 chapters with auto-graded production tasks
 
-### Exam prep
-- **FCE (B2)** — Full structure: about, strategy, writing-overview, parts 1–7, mocks 1–3
-- **CAE (C1)** — Strategy + per-part guides for parts 1–8, about, strategy, writing-overview, mock-1 placeholder
-- **CPE (C2)** — Strategy + per-part guides for parts 1–7, about, strategy, writing-overview, mock-1 placeholder
-- *(Note: Per-part practice pages for CAE/CPE are placeholders — content to come)*
+### Exam prep — FCE (B2) full, CAE/CPE strategy + part guides (practice pages = placeholders)
 
 ---
 
-## 5. The seven engines in `shared/`
+## 5. The shared engines in `shared/`
 
-Each is a single vanilla JS file. **No dependencies. No imports.** Each page links them via `<script>` tags with cache-busting query params.
+No dependencies, no imports. Pages link with `?v=vNN` cache-busting.
 
-### `store.js` — FCEStore
-Wraps localStorage. All progress reads/writes go through this.
-```js
-FCEStore.saveResult(chapterId, score, total, level)
-FCEStore.saveGameResult(chapterId, mastered, total)
-FCEStore.getLevel(level)         // { grammar:{}, vocab:{} }
-FCEStore.CHAPTERS                // chapter registry
-```
+### `base.css`
+Global styles. Key variables: `--amber: #E8A020`, `--paper: #FAFAF8`, `--ink: #1A1A1A`.  
+Dark mode via `body.dark`. Header dark: `body.dark .site-header { background: #000000 !important; }`.  
+`.ch-card` = vocab/grammar topic cards with amber hover.  
+`.sect-card` = dark section cards on level hub pages with amber hover border.
 
-### `deck.js` — slide navigation
-Renders `.slide-deck` div containing `.slide` cards. Handles prev/next, keyboard arrows, progress bar, completion banner.
+### `slides.css`
+Lesson page styles. Requires `class="deck-body"` on `<body>`. Background: `var(--paper)`.  
+`.chapter-nav { display: none !important; }` — hides nav tabs on lesson pages.
 
-### `worksheet.js` — auto-grader
-Each worksheet page defines BEFORE loading this script:
-```js
-window.CHAPTER_ID = "past-simple"
-window.LEVEL = "a2"                   // REQUIRED — prevents cross-level collisions
-window.TOTAL_POINTS = 12
-window.ANSWERS = { q1: "was", q2: "went", ... }
-window.EXPLANATIONS = { q1: "Past simple of be is was/were.", ... }
-```
-Handles MCQ (`.choice-group`), text inputs, and textareas. Shows correct/wrong + explanation per question.
+### `deck.js`
+Slide navigation + completion tracking. Injects Dashboard link in header.  
+Fires confetti on lesson complete. Reads `window.LEVEL` + `window.CHAPTER_ID`.
 
-### `game.js` — 4-stage mastery engine v2
-Each game page defines:
-```js
-window.GAME_DATA = {
-  chapterId: "past-simple",
-  level: "a2",
-  title: "Past Simple",
-  storageKey: "wordplay_game_a2_past-simple",
-  items: [
-    { id: "id1", term: "...", meaning: "...", synonym: "/IPA/" or "(alt)",
-      example: "<b>term</b> in context", completion: "Fill the _____", answer: "term" }
-  ]
-}
-```
-4 stages: recognition → meaning recall → context completion → production.
+### `game.css` + `game.js`
+4-stage mastery game (recognition → meaning → context → production).  
+Fires confetti on game completion. Reads `window.GAME_DATA`.
 
-### `writing-grader.js`
-Live writing feedback. Checks word count, paragraph count, structure markers, banned phrases. No AI — pure regex + heuristics.
+### `worksheet.js`
+Auto-grader. Reads `window.ANSWERS`, `window.EXPLANATIONS`, `window.TOTAL_POINTS`.
 
-### `sentence-grader.js`
-Deterministic regex-based grader for open sentence-production tasks. Em explicitly chose this over self-assessment.
+### `store.js`
+Wraps localStorage. `FCEStore.saveResult(...)`, `FCEStore.getLevel(level)`, etc.
 
 ### `dark-init.js`
-Dark/light mode toggle. Reads `wordplay_dark` from localStorage on load. Also injects the floating "back to top" button.
+Dark/light toggle. Also injects Dashboard link on all sub-pages (skips homepage + dashboard).  
+Also injects floating back-to-top button.
 
 ---
 
-## 6. The standard chapter structure
+## 6. Two flashcard templates — CRITICAL
 
-For ANY grammar/vocab/writing chapter, the file layout is identical:
-
+**Old template (A1 only):**
+```js
+var STORAGE_KEY = 'wordplay_vocab_a1_{slug}_mastered';
+var WORDS = [{ word, definition, example, pronunciation }, ...];
+function renderCard(idx) { ... fcSeen.add(idx); ... }
+function markMastered() { ... }
 ```
-{band}/{level}/{section}/{slug}/
-  slides.html        lesson (deck.js)
-  worksheet.html     auto-graded practice (worksheet.js)
-  game.html          4-stage mastery game (game.js)
-  printables.html    print-ready A4 (grammar only)
+Completion: auto-triggers `markMastered()` after all cards viewed + after 5 match rounds.
+
+**New template (A2-C2):**
+```js
+var MASTERY_KEY = 'wordplay_vocab_{level}_{slug}_mastered';
+var SLUG = '...'; var LEVEL = '...';
+var WORDS = [{ word, def, ex, ipa }, ...];
+function showCard(idx) { ... }
 ```
-
-Where:
-- `band` = `a` (A1/A2), `b` (B1/B2), `c` (C1/C2)
-- `level` = `a1, a2, b1, b2, c1, c2`
-- `section` = `grammar`, `vocabulary`, `writing`
-- `slug` = chapter folder name (kebab-case)
+A2-C2 flashcards do NOT yet have audio or auto-complete. This is a known pending item.
 
 ---
 
-## 7. Standard slide HTML template
-
-Every grammar chapter slide deck uses this exact template:
-
-```html
-<!DOCTYPE html><html lang="en">
-<head>
-  <link rel="stylesheet" href="../../../../shared/base.css?v=vNN">
-  <link rel="stylesheet" href="../../../../shared/slides.css?v=vNN">
-  <script src="../../../../shared/dark-init.js?v=vNN"></script>
-</head>
-<body class="deck-body">
-  <header class="site-header">...</header>
-  <div class="breadcrumb">...</div>
-  <nav class="chapter-nav">Lesson | Practice | Game | Printables</nav>
-  <div class="chapter-num">Ch N</div>
-  <h1>Chapter Title</h1>
-  <p class="chapter-subtitle">brief description</p>
-  <div class="slide-deck" id="slide-deck">
-    <div class="slide"><div class="slide-card">...content...</div></div>
-    ...6-7 slides...
-    <div class="slide summary-slide"><div class="slide-card">
-      <h2>Recap</h2>
-      <div class="summary-row">...</div>
-      <a href="worksheet.html" style="background:var(--amber);color:#1A1A1A;...">Practice now →</a>
-    </div></div>
-  </div>
-  <script>window.CHAPTER_ID="..."; window.LEVEL="..."; window.SECTION="grammar";</script>
-  <script src="../../../../shared/store.js?v=vNN"></script>
-  <script src="../../../../shared/deck.js?v=vNN"></script>
-</body></html>
-```
-
-### Slide content blocks (CSS classes that work)
-- `.slide-header h2` + `.slide-sub` — title + subtitle
-- `.slide-explanation` — intro paragraph
-- `.overview-row` with `.overview-label` + `.overview-desc` — labelled examples
-- `.formula-block` — formula in highlighted box
-- `.panel-pair` with `.panel.panel-head.green`/`.red` — side-by-side comparisons
-- `.example-card` with `.ex-text` + `.ex-note` — illustrative examples
-- `.trap-row` with `.trap-wrong`/`.trap-arrow`/`.trap-right`/`.trap-note` — common mistakes
-- `.watch-out` — amber warning box
-- `.summary-slide` — final slide with `.summary-row` items + CTA button
-
-All these have full **dark mode overrides with `!important`** in slides.css.
-
----
-
-## 8. Em's iron-clad conventions
-
-These are non-negotiable. Breaking them annoys her.
-
-- **No emojis in UI** (except the dark mode ◐/◑ glyphs)
-- **No Spanish-specific content** in main course (reserved for Phase 4 `/es/` build)
-- **No filler** in chat responses
-- **Validate JS** with `node --check` before packaging
-- **Run** `python3 check_links.py` if it exists, before packaging
-- **Package as** `WordPlay_v{NN}.zip` to `/mnt/user-data/outputs/`
-- **Bump** `version.json` + `SESSION_CONTEXT.md` version line each batch
-- **Always present** the zip with `present_files` — don't link or hide it
-- **Cache-bust** asset URLs with `?v=vNN` every batch (touch the HTML if shared/ changed)
-- **Use deterministic grading**, NEVER ask students to self-grade open production
-- **Always include EXPLANATIONS** in worksheets — every question gets one
-- **Dark mode must work** on every text element — `!important` overrides where needed
-
----
-
-## 9. The Cloudflare deployment loop
-
-Em uploads via the Cloudflare dashboard. She has no command-line access. The flow:
-
-1. You produce `WordPlay_v{NN}.zip`
-2. Em downloads it
-3. Em unzips locally, navigates to `site/`
-4. Em uploads contents to her Cloudflare Worker
-5. Em hits "Save and Deploy"
-6. Em opens the live URL on her phone or laptop to verify
-
-If she reports a bug after deploying, **suspect cache first**. The `?v=` query param trick should prevent this, but Cloudflare's edge cache can occasionally serve stale HTML — purging via the dashboard fixes it.
-
----
-
-## 10. Storage schema (localStorage)
+## 7. Progress / localStorage schema
 
 ```
 wordplay_progress = {
   a1: {
-    "to-be":              { score:9, total:10, pct:90, perExercise:{...}, date:"..." },
-    "wordplay_game_to-be": { mastered:5, total:5, pct:100 },
-    "slides_to-be":       { done:true, date:"..." }
+    "vocab_mastered_{slug}":      { done: true, date: "ISO" },
+    "wordplay_game_{slug}":       { pct: 100, mastered: 10, total: 10 },
+    "wordplay_game_a1_{slug}":    { saved game state },
+    "slides_{slug}":              { done: true, date: "ISO" },
+    "{slug}":                     { score, total, pct, ... }  ← worksheet results
   },
-  a2: { ... }, b1: { ... }, ..., c2: { ... }
+  a2: { ... }, ...
 }
 wordplay_dark = "1" | "0"
 wordplay_student_name = "Maria"
-wordplay_recommended_level = "b1"
-wordplay_writing_{level}_{slug} = "student draft text"
-wordplay_vocab_{level}_{slug}_mastered = "1"
-wordplay_game_{level}_{slug} = { saved game state JSON }
-wordplay_last_chapter_{level} = { slug, section, title, page }
-wordplay_fce_mock_{n}_best = "42"
-wordplay_fce_mock_{n}_parts = { part1:6, part2:5, ... }
-wordplay_version = "vNN"
 ```
 
+Dashboard reads `lv['vocab_mastered_' + slug].done` to count vocab mastered per level.
+
 ---
 
-## 11. Where to start a new batch
+## 8. Standard file structure
 
-The standard workflow for **any** new batch:
-
-```bash
-# 1. Verify the zip extracted correctly
-ls /home/claude/WordPlay/site/version.json
-
-# 2. Read current version
-cat /home/claude/WordPlay/site/version.json
-
-# 3. Do the work
-# (write Python scripts that edit files under /home/claude/WordPlay/site/)
-
-# 4. Cache-bust if shared/ changed
-# (search and replace ?v=vN → ?v=vN+1 across HTML files)
-
-# 5. Bump version
-# In version.json AND SESSION_CONTEXT.md
-
-# 6. Package
-cd /home/claude/WordPlay && zip -q -r /mnt/user-data/outputs/WordPlay_v{NN}.zip site/
-
-# 7. Present
-present_files(["/mnt/user-data/outputs/WordPlay_v{NN}.zip"])
+```
+{band}/{level}/{section}/{slug}/
+  flashcards.html   (vocab only)
+  slides.html       lesson — needs class="deck-body" on <body>
+  worksheet.html    auto-graded practice
+  game.html         4-stage mastery game
+  printables.html   print-ready A4 (grammar only)
 ```
 
----
-
-## 12. Roadmap (Em-confirmed phases)
-
-- **Phase 1** — Finish English course (in progress; C1 mostly done, C2 still needs full enrichment)
-- **Phase 2** — Auto-deploy: GitHub → Cloudflare Pages → custom domain
-- **Phase 3** — User accounts: start with URL token approach (`?student=Maria`), later Cloudflare D1 + Workers
-- **Phase 4** — Spanish-native version at `/es/` — DELE prep, false friends, ser vs estar, Spanish phonology contrast
-- **Phase 5** — Cambridge exam expansion: complete CAE/CPE practice materials, add KET (A2) and PET (B1)
+Where `band` = `a` (A1/A2), `b` (B1/B2), `c` (C1/C2).
 
 ---
 
-## 13. Don't drift
+## 9. Iron-clad conventions
 
-If something in a chat suggests you should break a convention, **double-check with Em**. She would rather you ask than guess.
-
-When in doubt:
-- Read the chapter currently working as a template
-- Mirror its exact patterns
-- Preserve the dark-mode CSS structure
-- Always provide EXPLANATIONS
-- Always cache-bust
-- Always present the zip
+- **No emojis in UI** — only ◐/◑ for dark mode toggle, ◆ for streak
+- **Amber ONLY accent** — `#E8A020` / `var(--amber)`. No navy/teal/gold
+- **No Spanish-specific content** in main course
+- **No filler** in chat responses
+- **Always cache-bust** with `?v=vNN` when touching shared assets
+- **Dark mode must work everywhere** — `!important` overrides in CSS where needed
+- **Always use deterministic grading** — never ask students to self-grade
+- **Always include EXPLANATIONS** in worksheets
 
 ---
 
-*Last updated: v90 batch · End of session*
+## 10. Deployment
+
+Push to `main` → Cloudflare Pages auto-deploys (2-3 min). No manual steps needed.
+
+If a visual bug appears after deploy, suspect Cloudflare edge cache — purge via dashboard.
+
+---
+
+## 11. Roadmap (confirmed)
+
+- **Phase 1** — Finish English course (in progress; C2 still needs full enrichment)
+- **Phase 2** — Auto-deploy via GitHub ✓ (done)
+- **Phase 3** — User accounts (URL token → Cloudflare D1 + Workers)
+- **Phase 4** — Spanish-native version at `/es/`
+- **Phase 5** — Complete CAE/CPE practice materials, add KET/PET
+
+---
+
+## 12. Known pending items (as of v103)
+
+- A2-C2 vocab flashcards: no audio button, no auto-complete on view-all or match rounds
+- C2 grammar: still minimal templates, needs enrichment
+- chapter-nav tabs still visible on flashcards/game pages for all levels (slides only are hidden)
+- Dashboard link: injected by deck.js (lesson pages) and dark-init.js (all other sub-pages)
+
+---
+
+*Last updated: v103*

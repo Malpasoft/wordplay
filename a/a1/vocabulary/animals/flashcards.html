@@ -162,6 +162,9 @@ var STORAGE_KEY = 'wordplay_vocab_a1_animals_mastered';
 var fcIdx = 0;
 var matchSelected = null;
 var matchRound = 0;
+var mastered = false;
+var fcSeen = new Set();
+var completedRounds = 0;
 
 // ── Flashcard ──────────────────────────────────────────────────
 function renderCard() {
@@ -171,7 +174,9 @@ function renderCard() {
   document.getElementById('fcDef').textContent = w.definition;
   document.getElementById('fcEx').textContent = '"' + w.example + '"';
   document.getElementById('fcCounter').textContent = (fcIdx + 1) + ' / ' + WORDS.length;
+  fcSeen.add(fcIdx);
   document.getElementById('flashcard').classList.remove('flipped');
+  if (!mastered && fcSeen.size >= WORDS.length) { mastered = true; setTimeout(markMastered, 700); }
 }
 function flipCard() { document.getElementById('flashcard').classList.toggle('flipped'); }
 function speakWord(e) {
@@ -287,6 +292,7 @@ function setMode(mode, btn) {
 
 // ── Mastery ─────────────────────────────────────────────────────
 function markMastered() {
+  mastered = true;
   try {
     localStorage.setItem(STORAGE_KEY, '1');
     // Save to FCEStore progress
@@ -306,6 +312,7 @@ function markMastered() {
 function checkMastered() {
   try {
     if (localStorage.getItem(STORAGE_KEY) === '1') {
+      mastered = true;
       document.getElementById('masteryBadge').style.display = '';
       document.getElementById('vocabStatus').textContent = '10 words · mastered \u2713';
       var nb = document.getElementById('nextTopicBtn');

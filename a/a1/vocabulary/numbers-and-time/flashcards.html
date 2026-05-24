@@ -53,6 +53,12 @@
 .match-item.wrong { border-color: #c0392b; background: rgba(192,57,43,.08); }
 .match-score { font-family: var(--font-sans); font-size: .85rem; color: var(--muted);
   text-align: center; margin-bottom: 16px; }
+.fc-audio-btn {
+  background: transparent; border: 1.5px solid var(--hairline); border-radius: 4px;
+  padding: 5px 14px; cursor: pointer; font-family: var(--font-sans); font-size: .65rem;
+  font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(--muted);
+  margin-top: 10px; transition: border-color .15s, color .15s; }
+.fc-audio-btn:hover { border-color: var(--amber); color: var(--amber); }
 .mastery-badge { display: inline-block; padding: 8px 18px; background: rgba(184,134,11,.12);
   color: var(--amber); font-family: var(--font-sans); font-size: .78rem; font-weight: 700;
   letter-spacing: 1px; text-transform: uppercase; border-radius: 4px; margin-bottom: 16px; }
@@ -92,7 +98,8 @@
         <div class="fc-face fc-front">
           <div class="fc-word" id="fcWord"></div>
           <div class="fc-ipa" id="fcIpa"></div>
-          <div class="fc-hint">tap to reveal definition</div>
+          <button class="fc-audio-btn" id="fcAudioBtn" onclick="speakWord(event)">&#9654; Pronounce</button>
+          <div class="fc-hint">tap card to reveal definition</div>
         </div>
         <div class="fc-face fc-back">
           <div class="fc-def" id="fcDef"></div>
@@ -139,11 +146,14 @@
 <footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
 
 <script>
-var WORDS = [{"word": "bread", "ipa": "/brɛd/", "definition": "a baked food made from flour", "example": "I eat bread for breakfast."}, {"word": "apple", "ipa": "/ˈæp(ə)l/", "definition": "a round red or green fruit", "example": "She eats an apple every day."}, {"word": "chicken", "ipa": "/ˈtʃɪkɪn/", "definition": "meat from a chicken", "example": "I love roast chicken."}, {"word": "rice", "ipa": "/raɪs/", "definition": "small white or brown grains, a staple food", "example": "We have rice with every meal."}, {"word": "coffee", "ipa": "/ˈkɒfi/", "definition": "a hot dark drink made from coffee beans", "example": "I drink coffee in the morning."}, {"word": "water", "ipa": "/ˈwɔːtə/", "definition": "a clear liquid we drink", "example": "Drink eight glasses of water a day."}, {"word": "salad", "ipa": "/ˈsæləd/", "definition": "a cold dish of raw vegetables", "example": "I have a salad for lunch."}, {"word": "pasta", "ipa": "/ˈpæstə/", "definition": "an Italian food made from flour and water", "example": "My favourite food is pasta."}, {"word": "milk", "ipa": "/mɪlk/", "definition": "a white liquid from cows", "example": "I put milk in my tea."}, {"word": "orange", "ipa": "/ˈɒrɪndʒ/", "definition": "a round citrus fruit", "example": "She drinks orange juice every morning."}];
-var STORAGE_KEY = 'wordplay_vocab_a1_food_mastered';
+var WORDS = [{"word":"minute","ipa":"/ˈmɪn.ɪt/","definition":"a unit of time equal to sixty seconds","example":"Wait a minute, please."},{"word":"hour","ipa":"/ˈaʊər/","definition":"a unit of time equal to sixty minutes","example":"The film is two hours long."},{"word":"day","ipa":"/deɪ/","definition":"a period of twenty-four hours","example":"I work five days a week."},{"word":"week","ipa":"/wiːk/","definition":"a period of seven days","example":"The class is twice a week."},{"word":"month","ipa":"/mʌnθ/","definition":"one of the twelve parts of a year","example":"January is the first month."},{"word":"year","ipa":"/jɪər/","definition":"a period of three hundred and sixty-five days","example":"I study English every year."},{"word":"today","ipa":"/təˈdeɪ/","definition":"on this day","example":"Today is Monday."},{"word":"tomorrow","ipa":"/təˈmɒr.əʊ/","definition":"on the next day","example":"We have a test tomorrow."},{"word":"yesterday","ipa":"/ˈjes.tə.deɪ/","definition":"on the day before today","example":"I saw her yesterday."},{"word":"now","ipa":"/naʊ/","definition":"at the present moment","example":"I am studying English now."}];
+var STORAGE_KEY = 'wordplay_vocab_a1_numbers-and-time_mastered';
 var fcIdx = 0;
 var matchSelected = null;
 var matchRound = 0;
+var mastered = false;
+var fcSeen = new Set();
+var completedRounds = 0;
 
 // ── Flashcard ──────────────────────────────────────────────────
 function renderCard() {
@@ -153,7 +163,9 @@ function renderCard() {
   document.getElementById('fcDef').textContent = w.definition;
   document.getElementById('fcEx').textContent = '"' + w.example + '"';
   document.getElementById('fcCounter').textContent = (fcIdx + 1) + ' / ' + WORDS.length;
+  fcSeen.add(fcIdx);
   document.getElementById('flashcard').classList.remove('flipped');
+  if (!mastered && fcSeen.size >= WORDS.length) { mastered = true; setTimeout(markMastered, 700); }
 }
 function flipCard() { document.getElementById('flashcard').classList.toggle('flipped'); }
 function fcNext() { fcIdx = (fcIdx + 1) % WORDS.length; renderCard(); }
@@ -259,13 +271,14 @@ function setMode(mode, btn) {
 
 // ── Mastery ─────────────────────────────────────────────────────
 function markMastered() {
+  mastered = true;
   try {
     localStorage.setItem(STORAGE_KEY, '1');
     // Save to FCEStore progress
     var raw = localStorage.getItem('wordplay_progress');
     var pd = raw ? JSON.parse(raw) : {};
     pd['a1'] = pd['a1'] || {};
-    pd['a1']['vocab_mastered_food'] = { done: true, date: new Date().toISOString() };
+    pd['a1']['vocab_mastered_numbers-and-time'] = { done: true, date: new Date().toISOString() };
     localStorage.setItem('wordplay_progress', JSON.stringify(pd));
     document.getElementById('masteryBadge').style.display = '';
     document.getElementById('vocabStatus').textContent = '10 words · mastered \u2713';
@@ -278,6 +291,7 @@ function markMastered() {
 function checkMastered() {
   try {
     if (localStorage.getItem(STORAGE_KEY) === '1') {
+      mastered = true;
       document.getElementById('masteryBadge').style.display = '';
       document.getElementById('vocabStatus').textContent = '10 words · mastered \u2713';
       var nb = document.getElementById('nextTopicBtn');
@@ -301,7 +315,7 @@ checkMastered();
   var ta = document.getElementById('my-notes-area');
   var cc = document.getElementById('notes-chars');
   if (!ta) return;
-  var KEY = 'wp_notes_a1_food';
+  var KEY = 'wp_notes_a1_numbers-and-time';
   try { ta.value = localStorage.getItem(KEY) || ''; cc.textContent = ta.value.length; } catch(e){}
   var t;
   ta.addEventListener('input', function() {
