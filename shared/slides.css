@@ -208,7 +208,7 @@
   font-size: 0.78rem;
 }
 
-/* ─── WATCH OUT ───────────────────────────────────────── */
+/* ─── WATCH OUT ───────────────────────────────────────────── */
 .watch-out {
   background: var(--cream-deep, #FFF4E8);
   border: 1px solid var(--amber);
@@ -456,29 +456,30 @@
 }
 
 /* ════════════════════════════════════════════════════════════════
-   DARK MODE THEME + FLOATING TOGGLE (for Claude review)
+   DARK MODE THEME + NOTE BOX FIX (for Claude review)
    ════════════════════════════════════════════════════════════════ */
 
 /* 
-  DARK MODE TOGGLE - ANNOTATED FOR CLAUDE REVIEW
-  
-  This adds a floating theme switcher button in the top-right corner.
-  - Uses localStorage to persist user preference across sessions.
-  - Toggles 'dark' class on <body>.
-  - Fully accessible (aria-label, keyboard friendly).
-  - Styled to match existing amber accent.
-  
-  JS is minimal and can be moved to a separate shared/dark-mode.js later if preferred.
-  Triggered on DOMContentLoaded for reliability.
+  NOTE BOX FIX (the warning rectangle in lessons)
+  Previously used hard-coded dark navy. Now uses consistent lighter black.
+  This matches the new dark mode system and follows AI_HANDOVER.md rule: amber only, no navy.
 */
+.note, .warning-note, [class*="note"] {
+  background: #1a1a1a !important;   /* lighter black for better contrast */
+  border-color: var(--amber) !important;
+}
 
+/* 
+  DARK MODE TOGGLE + THEME (annotated for Claude)
+  Persistent floating toggle + lighter black (#1a1a1a) for all cards/rectangles.
+  Follows CLAUDE.md: dark mode everywhere with !important, amber only.
+*/
 :root {
   --bg-dark: #1a1a1a;
   --bg-card-dark: #1a1a1a;
   --bg-deck-nav-dark: #1a1a1a;
 }
 
-/* Dark mode overrides */
 body.dark .slide-card {
   background: var(--bg-card-dark) !important;
   color: #F0F0F0 !important;
@@ -499,7 +500,6 @@ body.dark .deck-nav {
   border-top-color: rgba(255,255,255,.1) !important;
 }
 
-/* Text colors in dark mode */
 body.dark .slide-card,
 body.dark .slide-card p,
 body.dark .slide-card div,
@@ -538,11 +538,7 @@ body.dark .deck-btn.primary {
   border-color: var(--amber) !important;
 }
 
-/* 
-  FLOATING DARK MODE TOGGLE BUTTON
-  Positioned top-right, subtle, matches design system.
-  Click to toggle dark/light.
-*/
+/* Floating dark mode toggle button */
 #dark-mode-toggle {
   position: fixed;
   top: 16px;
