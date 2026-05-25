@@ -456,14 +456,13 @@
 }
 
 /* ════════════════════════════════════════════════════════════════
-   DARK MODE THEME — Clean Soft Black (No Navy Blue)
-   Single source of truth using CSS variables
+   DARK MODE THEME — Slightly Lighter Black + All Amber Confetti Ready
    ════════════════════════════════════════════════════════════════ */
 
 :root {
-  --bg-dark: #111111;
-  --bg-card-dark: #111111;
-  --bg-deck-nav-dark: #111111;
+  --bg-dark: #1a1a1a;           /* Slightly lighter black for better differentiation */
+  --bg-card-dark: #1a1a1a;
+  --bg-deck-nav-dark: #1a1a1a;
 }
 
 /* Dark mode overrides - clean and maintainable */
