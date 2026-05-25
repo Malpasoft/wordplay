@@ -1,9 +1,9 @@
-// ══════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════
 // deck.js — one-at-a-time lesson slides with swipe + button nav
 // Shows slides one at a time; navigates with buttons, swipe, keyboard
-// ══════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════
 
-// ── Inject Dashboard link into site header ───────────────────────
+// ─── Inject Dashboard link into site header ───────────────────────────────────
 (function() {
   var inner = document.querySelector('.site-header-inner');
   var brand = inner && inner.querySelector('.brand');
@@ -19,7 +19,9 @@
   inner.insertBefore(dash, inner.lastElementChild);
 })();
 
-// ── Confetti celebration ─────────────────────────────────────────
+// ─── Confetti celebration ────────────────────────────────────────────────────────────────
+// UPDATED: Now uses ONLY amber (#E8A020 / var(--amber)) per AI_HANDOVER.md and CLAUDE.md
+// No more multi-color confetti. Clean amber-only celebration on lesson complete (final recap).
 function triggerConfetti() {
   if (!document.getElementById('cf-kf')) {
     var s = document.createElement('style');
@@ -27,11 +29,11 @@ function triggerConfetti() {
     s.textContent = '@keyframes cfFall{to{transform:translateY(105vh) rotate(480deg);opacity:0}}';
     document.head.appendChild(s);
   }
-  var colors = ['#C9A050','#4CAF82','#E05A4A','#4AABB8','#F0F0F0','#C9A050'];
+  var amber = '#E8A020';  // strict amber only
   for (var i = 0; i < 32; i++) {
     var p = document.createElement('div');
     var sz = 6 + Math.random() * 6;
-    p.style.cssText = 'position:fixed;top:-12px;width:' + sz + 'px;height:' + sz + 'px;border-radius:' + Math.round(Math.random()) + 'px;background:' + colors[Math.floor(Math.random() * colors.length)] + ';left:' + (5 + Math.random() * 90) + '%;animation:cfFall ' + (1.8 + Math.random() * 2.2) + 's ' + (Math.random() * 0.5) + 's ease-in forwards;z-index:999;pointer-events:none';
+    p.style.cssText = 'position:fixed;top:-12px;width:' + sz + 'px;height:' + sz + 'px;border-radius:' + Math.round(Math.random()) + 'px;background:' + amber + ';left:' + (5 + Math.random() * 90) + '%;animation:cfFall ' + (1.8 + Math.random() * 2.2) + 's ' + (Math.random() * 0.5) + 's ease-in forwards;z-index:999;pointer-events:none';
     document.body.appendChild(p);
     setTimeout(function(el) { if (el.parentNode) el.parentNode.removeChild(el); }, 4500, p);
   }
@@ -47,10 +49,10 @@ function triggerConfetti() {
   var current   = 0;
   var completed = false;
 
-  // ── Init: hide all slides except first ──────────────────────────
+  // ─── Init: hide all slides except first ────────────────────────────────────────────────────────────────
   slides.forEach(function(s, i) { s.style.display = i === 0 ? 'block' : 'none'; });
 
-  // ── Update buttons + progress bar ────────────────────────────────
+  // ─── Update buttons + progress bar ───────────────────────────────────────────────────────────────
   function updateUI() {
     var prevBtn = document.getElementById('deck-prev');
     var nextBtn = document.getElementById('deck-next');
@@ -72,7 +74,7 @@ function triggerConfetti() {
     }
   }
 
-  // ── Navigate to a specific slide index ───────────────────────────
+  // ─── Navigate to a specific slide index ────────────────────────────────────────────────────────────────
   function goTo(idx) {
     if (idx === current || idx < 0 || idx >= total) return;
     slides[current].style.display = 'none';
@@ -86,7 +88,7 @@ function triggerConfetti() {
     if (current === total - 1 && !completed) { completed = true; markComplete(); }
   }
 
-  // ── Public navigation functions (called by HTML onclick attrs too) ─
+  // ─── Public navigation functions (called by HTML onclick attrs too) ─────────────────────────────────────────────────────────────
   window.nextSlide = function() {
     if (current < total - 1) goTo(current + 1);
     else if (!completed) { completed = true; markComplete(); }
@@ -94,19 +96,19 @@ function triggerConfetti() {
   window.prevSlide = function() { if (current > 0) goTo(current - 1); };
   window.goToSlide = function(n) { if (n >= 0 && n < total) goTo(n); };
 
-  // ── Wire buttons (only if no onclick attribute already) ──────────
+  // ─── Wire buttons (only if no onclick attribute already) ────────────────────────────────────────────────────────────────
   var prevBtn = document.getElementById('deck-prev');
   var nextBtn = document.getElementById('deck-next');
   if (prevBtn && !prevBtn.getAttribute('onclick')) prevBtn.addEventListener('click', window.prevSlide);
   if (nextBtn && !nextBtn.getAttribute('onclick')) nextBtn.addEventListener('click', window.nextSlide);
 
-  // ── Keyboard: arrow keys ─────────────────────────────────────────
+  // ─── Keyboard: arrow keys ────────────────────────────────────────────────────────────────
   document.addEventListener('keydown', function(e) {
     if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); window.nextSlide(); }
     else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); window.prevSlide(); }
   });
 
-  // ── Touch swipe support ──────────────────────────────────────────
+  // ─── Touch swipe support ────────────────────────────────────────────────────────────────
   var tx = 0, ty = 0;
   document.addEventListener('touchstart', function(e) {
     tx = e.touches[0].clientX;
@@ -121,7 +123,7 @@ function triggerConfetti() {
     }
   }, { passive: true });
 
-  // ── Mark lesson complete ─────────────────────────────────────────
+  // ─── Mark lesson complete ────────────────────────────────────────────────────────────────
   function markComplete() {
     if (chapterId && level) {
       try {
@@ -141,7 +143,7 @@ function triggerConfetti() {
     showLessonCompleteBanner();
   }
 
-  // ── Completion banner ─────────────────────────────────────────────
+  // ─── Completion banner ────────────────────────────────────────────────────────────────
   function showLessonCompleteBanner() {
     if (document.getElementById('lesson-complete-banner')) return;
     if (!document.getElementById('lesson-banner-style')) {
@@ -172,6 +174,6 @@ function triggerConfetti() {
     }, 7000);
   }
 
-  // ── Init ─────────────────────────────────────────────────────────
+  // ─── Init ────────────────────────────────────────────────────────────────
   updateUI();
 })();
