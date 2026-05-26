@@ -126,11 +126,18 @@
 var SLUG = 'health-lifestyle';
 var LEVEL = 'b2';
 var MASTERY_KEY = 'wordplay_vocab_b2_health-lifestyle_mastered';
-var WORDS = [{"id": "wb", "word": "Well-being", "def": "a person", "ipa": "", "ex": "Remote working has improved employee <b>well-being</b>."}, {"id": "nutr", "word": "Nutrition", "def": "the process of getting the right food and nutrients for health", "ipa": "", "ex": "Good <b>nutrition</b> can prevent many chronic illnesses."}, {"id": "sed", "word": "Sedentary lifestyle", "def": "a way of life involving very little physical activity", "ipa": "", "ex": "A <b>sedentary lifestyle</b> is linked to obesity and heart disease."}, {"id": "bo", "word": "Burnout", "def": "physical and mental exhaustion caused by prolonged stress", "ipa": "", "ex": "She suffered from <b>burnout</b> after months of overworking."}, {"id": "wlb", "word": "Work-life balance", "def": "having sufficient time for both work and personal life", "ipa": "", "ex": "Good <b>work-life balance</b> is essential for mental health."}, {"id": "mh", "word": "Mental health", "def": "a person", "ipa": "", "ex": "We need to reduce the stigma around <b>mental health</b>."}, {"id": "prev", "word": "Preventable disease", "def": "an illness that could be avoided with the right lifestyle choices", "ipa": "", "ex": "Many forms of diabetes are <b>preventable diseases</b>."}, {"id": "hc", "word": "Healthcare", "def": "the organised provision of medical services to a population", "ipa": "", "ex": "Access to quality <b>healthcare</b> is a basic human right."},
-  {"word":"Burnout","def":"a state of mental and physical exhaustion caused by prolonged stress","ipa":"","ex":"She took a month off after experiencing complete burnout."},
-  {"word":"Wellbeing","def":"the general state of being comfortable, healthy and happy","ipa":"","ex":"Exercise has a positive effect on both physical and mental wellbeing."},
-  {"word":"Sedentary lifestyle","def":"a way of life involving little physical activity, often involving sitting for long periods","ipa":"","ex":"A sedentary lifestyle is linked to an increased risk of heart disease."},
-  {"word":"Immune system","def":"the body's natural defence system against disease and infection","ipa":"","ex":"Regular exercise strengthens your immune system."}];
+var WORDS = [
+  {"id": "wb", "word": "Well-being", "def": "a person", "ipa": "", "ex": "Remote working has improved employee <b>well-being</b>."},
+  {"id": "nutr", "word": "Nutrition", "def": "the process of getting the right food and nutrients for health", "ipa": "", "ex": "Good <b>nutrition</b> can prevent many chronic illnesses."},
+  {"id": "sed", "word": "Sedentary lifestyle", "def": "a way of life involving very little physical activity", "ipa": "", "ex": "A <b>sedentary lifestyle</b> is linked to obesity and heart disease."},
+  {"id": "bo", "word": "Burnout", "def": "physical and mental exhaustion caused by prolonged stress", "ipa": "", "ex": "She suffered from <b>burnout</b> after months of overworking."},
+  {"id": "wlb", "word": "Work-life balance", "def": "having sufficient time for both work and personal life", "ipa": "", "ex": "Good <b>work-life balance</b> is essential for mental health."},
+  {"id": "mh", "word": "Mental health", "def": "a person", "ipa": "", "ex": "We need to reduce the stigma around <b>mental health</b>."},
+  {"id": "prev", "word": "Preventable disease", "def": "an illness that could be avoided with the right lifestyle choices", "ipa": "", "ex": "Many forms of diabetes are <b>preventable diseases</b>."},
+  {"id": "hc", "word": "Healthcare", "def": "the organised provision of medical services to a population", "ipa": "", "ex": "Access to quality <b>healthcare</b> is a basic human right."},
+  {"word": "Wellbeing", "def": "the general state of being comfortable, healthy and happy", "ipa": "", "ex": "Exercise has a positive effect on both physical and mental wellbeing."},
+  {"word": "Immune system", "def": "the body's natural defence system against disease and infection", "ipa": "", "ex": "Regular exercise strengthens your immune system."}
+];
 var fcIdx = 0, flipped = false;
 
 function setMode(mode, btn) {
