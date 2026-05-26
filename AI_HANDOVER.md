@@ -30,12 +30,12 @@
 
 ## 2. How a session works now
 
-The project is on GitHub. Claude Code is used in remote sessions with direct push access.
+The project is on GitHub. Each AI (Claude, Grok, etc.) works on its **own feature branch**. Merging to `main` is done manually by Em only when explicitly requested.
 
-1. Work on branch `claude/github-workflow-setup-98Fbf` (this was force-pushed to become `main`)
-2. Push with `git push -u origin <branch>` — Cloudflare Pages auto-deploys `main`
+1. Create or switch to your own feature branch (e.g. `fix/dark-mode-navy-to-charcoal`)
+2. Commit changes on that branch
 3. Bump `?v=vNN` cache-bust suffix on shared asset URLs whenever `shared/` files change
-4. No zip packaging. No `present_files`. Just commit + push.
+4. No zip packaging. No `present_files`. Just commit + push to your branch.
 
 **Active branch for development:** whatever the session context specifies. When in doubt, check `git branch`.
 
@@ -151,7 +151,6 @@ wordplay_progress = {
 wordplay_dark = "1" | "0"
 wordplay_student_name = "Maria"
 ```
-
 Dashboard reads `lv['vocab_mastered_' + slug].done` to count vocab mastered per level.
 
 ---
@@ -186,7 +185,7 @@ Where `band` = `a` (A1/A2), `b` (B1/B2), `c` (C1/C2).
 
 ## 10. Deployment
 
-Push to `main` → Cloudflare Pages auto-deploys (2-3 min). No manual steps needed.
+Cloudflare Pages auto-deploys from `main` on push. Merging to `main` is done manually by Em only when explicitly requested. No automatic pushes to main.
 
 If a visual bug appears after deploy, suspect Cloudflare edge cache — purge via dashboard.
 
