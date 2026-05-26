@@ -464,11 +464,11 @@
 
 /* Slide card — dark background, light text by default */
 body.dark .slide-card {
-  background: #1A2230 !important;
+  background: #141414 !important;
   color: #F0F0F0 !important;
   border-top-color: var(--amber);
 }
-body.dark .summary-slide .slide-card { background: #0D1520 !important; }
+body.dark .summary-slide .slide-card { background: #0A0A0A !important; }
 body.dark .slide.title-slide .slide-card { background: #050810 !important; color: #FFFFFF !important; }
 
 /* Every direct text element inside slide-card → light */
@@ -595,7 +595,7 @@ body.dark .breadcrumb strong { color: #FFFFFF !important; }
 
 /* Deck nav bar + buttons in dark mode */
 body.dark .deck-nav {
-  background: #1A2230 !important;
+  background: #141414 !important;
   border-top-color: rgba(255,255,255,.1) !important;
 }
 body.dark .deck-btn {

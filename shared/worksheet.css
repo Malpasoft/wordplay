@@ -363,7 +363,7 @@ button.reset {
    ══════════════════════════════════════════════════════════════════ */
 
 body.dark .exercise {
-  background: #1A2230 !important;
+  background: #141414 !important;
   border-color: rgba(255,255,255,.1) !important;
   color: #F0F0F0 !important;
 }
@@ -412,7 +412,7 @@ body.dark .ws-feedback { color: #C8D4E0 !important; }
 body.dark .ws-feedback strong { color: #FFFFFF !important; }
 
 body.dark .results-panel {
-  background: #0D1520 !important;
+  background: #141414 !important;
   border-color: rgba(255,255,255,.1) !important;
   color: #F0F0F0 !important;
 }

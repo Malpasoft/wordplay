@@ -44,10 +44,10 @@
     }
   }
 
-  // Update streak — NOTE: dates use UTC (toISOString). Students in UTC+ may see
-  // streak recorded as "tomorrow" when studying late at night. Known limitation.
+  // Update streak — uses local date (en-CA locale = YYYY-MM-DD) so streaks
+  // work correctly for students in any timezone, not just UTC.
   function updateStreak(data) {
-    var today = new Date().toISOString().slice(0,10);
+    var today = new Date().toLocaleDateString('en-CA');
     if (data.lastDay === today) return;
     if (data.lastDay) {
       var last = new Date(data.lastDay);
