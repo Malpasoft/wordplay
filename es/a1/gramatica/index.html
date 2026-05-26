@@ -30,11 +30,11 @@
       <h2>El verbo to be</h2>
       <p class="ch-desc">am · is · are — ser, estar, edad y estados</p><span class="ch-cta">Estudiar &#8594;</span>
     </a>
-    <div class="ch-card ch-card--grammar" style="opacity:.4;pointer-events:none">
+    <a href="present-simple/slides.html" class="ch-card ch-card--grammar" id="gpc_es-a1_present-simple">
       <div class="ch-num">Cap. 2</div>
       <h2>Present Simple</h2>
-      <p class="ch-desc">I work · She works — verbos en presente</p><span class="ch-cta">Próximamente</span>
-    </div>
+      <p class="ch-desc">I work · She works — verbos en presente</p><span class="ch-cta">Estudiar &#8594;</span>
+    </a>
     <div class="ch-card ch-card--grammar" style="opacity:.4;pointer-events:none">
       <div class="ch-num">Cap. 3</div>
       <h2>Artículos a / an / the</h2>
@@ -70,6 +70,26 @@
       b.style.cssText = 'font-family:var(--font-sans);font-size:.65rem;font-weight:700;color:var(--amber);margin-top:6px;letter-spacing:.5px';
       b.textContent = badges.join(' · ');
       card.querySelector('.ch-cta').before(b);
+    }
+  } catch(e) {}
+})();
+
+(function() {
+  try {
+    var prog = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+    var lvl = prog['es-a1'] || {};
+    var card2 = document.getElementById('gpc_es-a1_present-simple');
+    if (!card2) return;
+    var ws2 = lvl['present-simple'];
+    var gm2 = lvl['wordplay_game_es-a1_present-simple'];
+    var badges2 = [];
+    if (ws2 && ws2.pct >= 70) badges2.push('Ejercicios ✓');
+    if (gm2 && gm2.pct >= 70) badges2.push('Juego ✓');
+    if (badges2.length) {
+      var b2 = document.createElement('div');
+      b2.style.cssText = 'font-family:var(--font-sans);font-size:.65rem;font-weight:700;color:var(--amber);margin-top:6px;letter-spacing:.5px';
+      b2.textContent = badges2.join(' · ');
+      card2.querySelector('.ch-cta').before(b2);
     }
   } catch(e) {}
 })();

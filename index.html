@@ -227,11 +227,14 @@ body.dark .level-card { background: rgba(255,255,255,.05); border-color: rgba(25
     var streak = prog.streak || 0;
     if (streak >= 2) {
       var badge = document.createElement('div');
-      badge.style.cssText = 'text-align:center;margin:-10px auto 20px;font-family:var(--font-sans);font-size:.75rem;color:var(--amber);font-weight:700;letter-spacing:.5px';
+      badge.style.cssText = 'display:inline-block;text-align:center;margin:6px auto 0;padding:4px 14px;background:rgba(184,134,11,.1);border-radius:20px;font-family:var(--font-sans);font-size:.72rem;color:var(--amber);font-weight:700;letter-spacing:.5px';
       var milestone = streak >= 30 ? ' &middot; 30+ days' : streak >= 7 ? ' &middot; 7+ days' : '';
       badge.innerHTML = '&#9670; ' + streak + '-day streak' + milestone;
+      var wrap = document.createElement('div');
+      wrap.style.cssText = 'text-align:center;margin:8px 0 0';
+      wrap.appendChild(badge);
       var hero = document.querySelector('.root-hero');
-      if (hero) hero.appendChild(badge);
+      if (hero) hero.appendChild(wrap);
     }
   } catch(e) {}
 })();

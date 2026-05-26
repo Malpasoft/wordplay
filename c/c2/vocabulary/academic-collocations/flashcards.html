@@ -78,7 +78,9 @@ var WORDS=[{"id": "mount_evidence", "word": "Mount evidence", "def": "to accumul
 var fcIdx=0,flipped=false;
 function setMode(mode,btn){document.querySelectorAll('.mode-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.getElementById('modeFlash').style.display=mode==='flash'?'':'none';document.getElementById('modeList').style.display=mode==='list'?'':'none';if(mode==='list')renderList();}
 function flipCard(){flipped=!flipped;document.getElementById('flashcard').classList.toggle('flipped',flipped);}
-function showCard(idx){flipped=false;document.getElementById('flashcard').classList.remove('flipped');var w=WORDS[idx];document.getElementById('fcWord').textContent=w.word;document.getElementById('fcDef').textContent=w.def;document.getElementById('fcEx').textContent=w.ex||'';document.getElementById('fcCounter').textContent=(idx+1)+' / '+WORDS.length;}
+function showCard(idx){flipped=false;document.getElementById('flashcard').classList.remove('flipped');var w=WORDS[idx];document.getElementById('fcWord').textContent=w.word;document.getElementById('fcDef').textContent=w.def;document.getElementById('fcEx').textContent=w.ex||'';document.getElementById('fcCounter').textContent=(idx+1)+' / '+WORDS.length;
+  fcSeen.add(idx);
+  if (!mastered && fcSeen.size >= WORDS.length) { mastered = true; setTimeout(markMastered, 700); }}
 function fcNext(){fcIdx=(fcIdx+1)%WORDS.length;showCard(fcIdx);}
 function fcPrev(){fcIdx=(fcIdx-1+WORDS.length)%WORDS.length;showCard(fcIdx);}
 function renderList(){document.getElementById('wordList').innerHTML=WORDS.map(w=>'<div class="word-list-item"><span class="wl-word">'+w.word+'</span><span class="wl-def">'+w.def+'</span></div>').join('');}

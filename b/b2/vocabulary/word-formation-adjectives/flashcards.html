@@ -156,6 +156,8 @@ function showCard(idx){
   document.getElementById('fcDef').textContent=w.def;
   document.getElementById('fcEx').innerHTML=w.ex||'';
   document.getElementById('fcCounter').textContent=(idx+1)+' / '+WORDS.length;
+  fcSeen.add(idx);
+  if (!mastered && fcSeen.size >= WORDS.length) { mastered = true; setTimeout(markMastered, 700); }
 }
 
 function fcNext(){fcIdx=(fcIdx+1)%WORDS.length;showCard(fcIdx);}
@@ -215,7 +217,7 @@ function handleMatch(e){
       prev.classList.remove('selected'); prev.classList.add('correct');
       el.classList.add('correct');
       var remaining=document.querySelectorAll('.match-item:not(.correct)').length;
-      if(remaining===0) document.getElementById('matchScore').textContent='All matched!';
+      if(remaining===0) document.getElementById('matchScore').textContent='All matched!'; completedRounds++; if (!mastered && completedRounds >= 5) { mastered = true; setTimeout(markMastered, 700); }
     }else{
       prev.classList.remove('selected');
       prev.classList.add('wrong'); el.classList.add('wrong');

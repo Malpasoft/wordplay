@@ -264,7 +264,7 @@ function checkAnswers() {
   var pm = document.getElementById('pass-msg');
   if (pm) {
     var pct2 = Math.round((score / total) * 100);
-    if (pct2 === 100) pm.textContent = '🎉 Perfect score!';
+    if (pct2 === 100) pm.textContent = 'Perfect score!';
     else if (pct2 >= 80) pm.textContent = 'Great work — nearly perfect!';
     else if (pct2 >= 70) pm.textContent = 'Good job — try again for a higher score.';
     else pm.textContent = 'Keep practising — review the lesson and try again.';
@@ -337,4 +337,24 @@ document.getElementById('worksheet').addEventListener('submit', e => {
   });
   // Hide final submit until all exercises are done
   updateFinalSubmitState();
+
+  // Show best score banner if this worksheet was completed before
+  (function() {
+    try {
+      if (!window.FCEStore || !window.CHAPTER_ID) return;
+      var data = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+      var level = window.LEVEL;
+      if (!level) return;
+      var saved = data[level] && data[level][window.CHAPTER_ID];
+      if (!saved || !saved.pct) return;
+      var pct = saved.pct;
+      var color = pct >= 80 ? 'var(--green)' : pct >= 50 ? 'var(--amber)' : 'var(--red)';
+      var label = pct >= 80 ? 'Great score' : pct >= 50 ? 'Good attempt' : 'Keep practising';
+      var banner = document.createElement('div');
+      banner.style.cssText = 'display:flex;align-items:center;gap:10px;padding:10px 16px;margin-bottom:20px;background:var(--cream-deep,#F0EDE6);border-radius:6px;font-family:var(--font-sans);font-size:.8rem;color:var(--muted)';
+      banner.innerHTML = '<span>Previous best:</span><strong style="color:' + color + ';font-size:.95rem">' + pct + '%</strong><span style="color:var(--muted)">&mdash; ' + label + '. Can you beat it?</span>';
+      var form = document.getElementById('worksheet');
+      if (form) form.insertBefore(banner, form.firstChild);
+    } catch(e) {}
+  })();
 })();
