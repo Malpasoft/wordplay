@@ -359,30 +359,31 @@ button.reset {
 
 
 /* ══════════════════════════════════════════════════════════════════
-   DARK MODE — WORKSHEET (Batch 21)
+   DARK MODE — WORKSHEET (clean, no navy)
    ══════════════════════════════════════════════════════════════════ */
 
+/* Clean dark mode using consistent lighter black */
 body.dark .exercise {
-  background: #1A2230 !important;
-  border-color: rgba(255,255,255,.1) !important;
+  background: #1a1a1a !important;
+  border-color: #2a2a2a !important;
   color: #F0F0F0 !important;
 }
 body.dark .ex-head    { color: var(--amber) !important; }
 body.dark .ex-title   { color: #FFFFFF !important; }
 body.dark .ex-meta    { color: #98A8B8 !important; }
 body.dark .ex-instruct { color: #C8D4E0 !important; }
-body.dark .q          { border-bottom-color: rgba(255,255,255,.08) !important; }
+body.dark .q          { border-bottom-color: rgba(255,255,255,.08) !important; background: #1a1a1a !important; }
 body.dark .q-num      { color: var(--amber) !important; }
 body.dark .q-text     { color: #FFFFFF !important; }
 body.dark .q-text *   { color: inherit !important; }
 
 body.dark .choice-btn {
-  background: rgba(255,255,255,.06) !important;
-  border-color: rgba(255,255,255,.2) !important;
+  background: #1a1a1a !important;
+  border-color: #2a2a2a !important;
   color: #F0F0F0 !important;
 }
 body.dark .choice-btn:hover {
-  background: rgba(255,255,255,.12) !important;
+  background: #2a2a2a !important;
   border-color: var(--amber) !important;
 }
 body.dark .choice-btn.selected-correct {
@@ -399,8 +400,8 @@ body.dark .choice-btn.selected-wrong {
 body.dark .text-input,
 body.dark input[type="text"],
 body.dark textarea {
-  background: rgba(255,255,255,.08) !important;
-  border-color: rgba(255,255,255,.25) !important;
+  background: #1a1a1a !important;
+  border-color: #2a2a2a !important;
   color: #FFFFFF !important;
 }
 body.dark .text-input:focus,
@@ -412,8 +413,8 @@ body.dark .ws-feedback { color: #C8D4E0 !important; }
 body.dark .ws-feedback strong { color: #FFFFFF !important; }
 
 body.dark .results-panel {
-  background: #0D1520 !important;
-  border-color: rgba(255,255,255,.1) !important;
+  background: #1a1a1a !important;
+  border-color: #2a2a2a !important;
   color: #F0F0F0 !important;
 }
 body.dark .results-panel * { color: inherit !important; }
