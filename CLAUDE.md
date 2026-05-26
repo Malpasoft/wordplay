@@ -22,10 +22,10 @@ Static Cambridge English course (A1–C2) on Cloudflare Pages. Vanilla HTML/CSS/
 
 ## Git Workflow
 
-- **Always work on `main`** — Cloudflare Pages deploys from `main`. Never leave work on a feature branch without telling the user.
-- After completing any task: `git add`, `git commit`, `git push origin main` — do not stop before pushing.
+- **Work on your own feature branch** — Each AI uses its own branch (e.g. `fix/dark-mode-navy-to-charcoal`). Never push directly to `main`.
+- Merging to `main` is done manually by Em only when explicitly requested.
 - For large tasks: commit after each logical sub-task so a session limit doesn't lose progress.
-- Current working branch: `claude/github-workflow-setup-98Fbf` — this branch is force-pushed to `main` to deploy.
+- Current working branch: whatever the session specifies.
 
 ---
 
