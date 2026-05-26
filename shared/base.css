@@ -568,7 +568,7 @@ h3 {
 .wg-error { border-left-color: var(--red) !important; color: var(--red); }
 .wg-tips .wg-item { border-left-color: var(--amber); }
 
-/* Word counter pill */
+Word counter pill */
 .wc-pill {
   display: inline-block;
   padding: 3px 10px;
@@ -972,7 +972,6 @@ body.dark .ac-title { color: #F0F0F0; }
 body.dark .ac-desc  { color: #8A9AB0; }
 body.dark .ac-arrow { color: var(--amber); }
 
-
 /* ══════════════════════════════════════════════════════════════════
    CARD EXERCISE — one-question-at-a-time interactive grading
    ══════════════════════════════════════════════════════════════════ */
@@ -1014,7 +1013,7 @@ body.dark .ac-arrow { color: var(--amber); }
   font-family: var(--font-sans);
   font-size: .6rem;
   font-weight: 800;
-  letter-spacing: 2px;
+  letter-spacing: 2.5px;
   text-transform: uppercase;
   color: var(--amber);
   margin-bottom: 8px;
@@ -1112,7 +1111,7 @@ body.dark .ac-arrow { color: var(--amber); }
   color: var(--ink);
 }
 .ce-fb-wrong {
-  background: rgba(192,57,43,.06);
+  background: rgba(192,57,43,.12);
   border-left: 4px solid #c0392b;
   color: var(--ink);
 }
@@ -1199,3 +1198,17 @@ body.dark .ce-context { background: rgba(255,255,255,.05); color: #E0E8F0; }
 body.dark .ce-fb-correct { background: rgba(39,174,96,.15); color: #E0F0E8; }
 body.dark .ce-fb-wrong   { background: rgba(192,57,43,.12); color: #F0E0E0; }
 body.dark .ce-results-retry { color: #E0E8F0; border-color: #2A2A2A; }
+/* 
+  PLACEMENT TEST + ALL PAGES DARK MODE FIX
+  Broad rule to catch any remaining navy blue rectangles in placement test and other pages.
+  Uses lighter black (#1a1a1a) for consistency.
+*/
+body.dark .q,
+body.dark .choice-group,
+body.dark .choice-btn,
+body.dark input[type="text"],
+body.dark .exercise,
+body.dark .results-panel {
+  background: #1a1a1a !important;
+  border-color: #2a2a2a !important;
+}
