@@ -208,7 +208,7 @@
   font-size: 0.78rem;
 }
 
-/* ─── WATCH OUT ───────────────────────────────────────────── */
+/* ─── WATCH OUT ───────────────────────────────────────────────────── */
 .watch-out {
   background: var(--cream-deep, #FFF4E8);
   border: 1px solid var(--amber);
@@ -456,23 +456,14 @@
 }
 
 /* ════════════════════════════════════════════════════════════════
-   DARK MODE THEME + NOTE BOX FIX (for Claude review)
+   DARK MODE — FINAL BROAD FIX (all rectangles now #1a1a1a)
    ════════════════════════════════════════════════════════════════ */
 
 /* 
-  NOTE BOX FIX (the warning rectangle in lessons)
-  Previously used hard-coded dark navy. Now uses consistent lighter black.
-  This matches the new dark mode system and follows AI_HANDOVER.md rule: amber only, no navy.
-*/
-.note, .warning-note, [class*="note"] {
-  background: #1a1a1a !important;   /* lighter black for better contrast */
-  border-color: var(--amber) !important;
-}
-
-/* 
-  DARK MODE TOGGLE + THEME (annotated for Claude)
-  Persistent floating toggle + lighter black (#1a1a1a) for all cards/rectangles.
-  Follows CLAUDE.md: dark mode everywhere with !important, amber only.
+  BROAD DARK MODE RULE
+  This catches ALL rectangles, cards, panels, and content boxes in dark mode.
+  Uses the lighter black (#1a1a1a) for better contrast.
+  Follows AI_HANDOVER.md: amber only + dark mode everywhere with !important.
 */
 :root {
   --bg-dark: #1a1a1a;
@@ -480,26 +471,25 @@
   --bg-deck-nav-dark: #1a1a1a;
 }
 
-body.dark .slide-card {
+/* Universal dark mode card/rectangle rule */
+body.dark .slide-card,
+body.dark .panel,
+body.dark .example-card,
+body.dark .formula-block,
+body.dark .compare-pair .side,
+body.dark .mod-row,
+body.dark .overview-row,
+body.dark .summary-row,
+body.dark .trap-wrong,
+body.dark .trap-right,
+body.dark .watch-out,
+body.dark [class*="card"],
+body.dark [class*="note"],
+body.dark [class*="panel"] {
   background: var(--bg-card-dark) !important;
-  color: #F0F0F0 !important;
-  border-top-color: var(--amber);
 }
 
-body.dark .summary-slide .slide-card {
-  background: var(--bg-card-dark) !important;
-}
-
-body.dark .slide.title-slide .slide-card {
-  background: var(--bg-card-dark) !important;
-  color: #FFFFFF !important;
-}
-
-body.dark .deck-nav {
-  background: var(--bg-deck-nav-dark) !important;
-  border-top-color: rgba(255,255,255,.1) !important;
-}
-
+/* Text in dark mode */
 body.dark .slide-card,
 body.dark .slide-card p,
 body.dark .slide-card div,
@@ -523,8 +513,10 @@ body.dark .slide-card .slide-header h2 { color: #FFFFFF !important; }
 body.dark .slide-card .slide-sub { color: #C8D4E0 !important; }
 body.dark .slide-card .slide-explanation { color: #E0E8F0 !important; }
 
-body.dark .slide-card .panel-head.green { background: #1a4a28 !important; }
-body.dark .slide-card .panel-head.red { background: #4a1a1a !important; }
+body.dark .deck-nav {
+  background: var(--bg-deck-nav-dark) !important;
+  border-top-color: rgba(255,255,255,.1) !important;
+}
 
 body.dark .deck-btn {
   color: #E0E8F0 !important;
@@ -538,7 +530,7 @@ body.dark .deck-btn.primary {
   border-color: var(--amber) !important;
 }
 
-/* Floating dark mode toggle button */
+/* Floating dark mode toggle */
 #dark-mode-toggle {
   position: fixed;
   top: 16px;
