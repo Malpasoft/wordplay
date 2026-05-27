@@ -993,18 +993,20 @@ body.dark .ch-card--done { border-color: rgba(201,160,80,.35); }
 .activity-card {
   display: flex;
   flex-direction: column;
-  padding: 22px 18px 18px;
+  align-items: center;
+  text-align: center;
+  padding: 28px 20px 22px;
   background: var(--paper);
   border: 1.5px solid var(--border-soft);
-  border-top: 3px solid var(--amber);
-  border-radius: 10px;
+  border-radius: 8px;
   text-decoration: none;
-  transition: box-shadow .18s, transform .14s;
+  transition: box-shadow .18s, transform .14s, border-color .18s;
   position: relative;
 }
 .activity-card:hover {
-  box-shadow: 0 6px 20px rgba(0,0,0,.08);
-  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(184,134,11,.12);
+  border-color: var(--amber);
+  transform: translateY(-2px);
 }
 .activity-card[data-done="1"] .ac-title::after {
   content: ' ✓';
@@ -1012,36 +1014,36 @@ body.dark .ch-card--done { border-color: rgba(201,160,80,.35); }
 }
 .ac-icon { display: none !important; }
 .ac-title {
-  font-family: var(--font-sans);
-  font-size: .78rem;
-  font-weight: 800;
-  letter-spacing: .5px;
-  text-transform: uppercase;
+  font-family: Georgia, serif;
+  font-size: 1.3rem;
+  font-weight: 700;
   color: var(--ink);
+  margin-bottom: 8px;
 }
 .ac-desc {
-  font-size: .8rem;
+  font-size: .78rem;
   color: var(--muted);
-  line-height: 1.45;
+  line-height: 1.5;
   flex: 1;
 }
 .ac-arrow {
-  font-size: 1rem;
+  font-size: .9rem;
   color: var(--amber);
-  margin-top: 8px;
-  align-self: flex-end;
+  margin-top: 10px;
+  align-self: center;
 }
 
 /* Dark mode */
 body.dark .activity-card {
   background: rgba(255,255,255,.05);
-  border-left-color: rgba(255,255,255,.06);
-  border-right-color: rgba(255,255,255,.06);
-  border-bottom-color: rgba(255,255,255,.06);
+  border-color: rgba(255,255,255,.1);
 }
-body.dark .activity-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,.4); }
+body.dark .activity-card:hover {
+  border-color: var(--amber);
+  box-shadow: 0 6px 24px rgba(232,160,32,.15);
+}
 body.dark .ac-title { color: #F0F0F0; }
-body.dark .ac-desc  { color: #8A9AB0; }
+body.dark .ac-desc  { color: #A0A0A0; }
 body.dark .ac-arrow { color: var(--amber); }
 
 
