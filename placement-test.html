@@ -206,11 +206,71 @@ var QUESTIONS = [
 var LEVEL_NAMES = {a1:'A1 Beginner',a2:'A2 Elementary',b1:'B1 Pre-intermediate',b2:'B2 Upper-intermediate',c1:'C1 Advanced',c2:'C2 Proficiency'};
 var LEVEL_PATHS = {a1:'a/a1',a2:'a/a2',b1:'b/b1',b2:'b/b2',c1:'c/c1',c2:'c/c2'};
 var BANDS = ['a1','a2','b1','b2','c1','c2'];
+var WEIGHTS = {a1:1, a2:2, b1:4, b2:8, c1:16, c2:32};
+var MAX_SCORE = 4 * (1 + 2 + 4 + 8 + 16 + 32); // 252
 
-var current = 0;
-var bandScores = {a1:0,a2:0,b1:0,b2:0,c1:0,c2:0};
+// ── State ────────────────────────────────────────────────────────────
+var pools = {};
+var cursor = 1;  // index into BANDS; start at A2
+var asked = 0;
+var bandCorrect = {a1:0,a2:0,b1:0,b2:0,c1:0,c2:0};
+var totalScore = 0;
+var currentQ = null;
 var stage = document.getElementById('pt-stage');
 
+// ── Helpers ──────────────────────────────────────────────────────────
+function shuffle(arr) {
+  for (var i = arr.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+  }
+  return arr;
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Adaptive pool picker ─────────────────────────────────────────────
+function nextQuestion() {
+  if (pools[BANDS[cursor]] && pools[BANDS[cursor]].length) return pools[BANDS[cursor]].shift();
+  for (var d = 1; d < BANDS.length; d++) {
+    var hi = cursor + d, lo = cursor - d;
+    if (hi < BANDS.length && pools[BANDS[hi]].length) { cursor = hi; return pools[BANDS[cursor]].shift(); }
+    if (lo >= 0           && pools[BANDS[lo]].length) { cursor = lo; return pools[BANDS[cursor]].shift(); }
+  }
+  return null;
+}
+
+// ── Audio + haptic feedback ──────────────────────────────────────────
+function playTone(correct) {
+  try {
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (correct) {
+      [[660, 0], [880, 0.12]].forEach(function(pair) {
+        var o = ctx.createOscillator(), g = ctx.createGain();
+        o.connect(g); g.connect(ctx.destination);
+        o.type = 'sine'; o.frequency.value = pair[0];
+        var t = ctx.currentTime + pair[1];
+        g.gain.setValueAtTime(0, t);
+        g.gain.linearRampToValueAtTime(0.22, t + 0.01);
+        g.gain.exponentialRampToValueAtTime(0.001, t + 0.45);
+        o.start(t); o.stop(t + 0.45);
+      });
+    } else {
+      var o = ctx.createOscillator(), g = ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.type = 'sawtooth'; o.frequency.value = 160;
+      g.gain.setValueAtTime(0.18, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.28);
+      o.start(); o.stop(ctx.currentTime + 0.28);
+      try { navigator.vibrate && navigator.vibrate([60, 20, 60]); } catch(e2) {}
+    }
+    setTimeout(function() { try { ctx.close(); } catch(e2) {} }, 1200);
+  } catch(e) {}
+}
+
+// ── Screens ──────────────────────────────────────────────────────────
 function showIntro() {
   stage.innerHTML =
     '<div class="pt-intro">' +
@@ -222,104 +282,101 @@ function showIntro() {
 }
 
 function startTest() {
-  current = 0;
-  bandScores = {a1:0,a2:0,b1:0,b2:0,c1:0,c2:0};
-  showQ(0);
+  BANDS.forEach(function(b) {
+    pools[b] = shuffle(QUESTIONS.filter(function(q){ return q.level === b; }).slice());
+  });
+  cursor = 1;
+  asked = 0;
+  bandCorrect = {a1:0,a2:0,b1:0,b2:0,c1:0,c2:0};
+  totalScore = 0;
+  var q = nextQuestion();
+  if (q) showQ(q);
 }
 
-function showQ(i) {
-  var q = QUESTIONS[i];
-  var pct = Math.round((i / QUESTIONS.length) * 100);
-  var levelLabel = q.level.toUpperCase();
+function showQ(q) {
+  currentQ = q;
+  var pct = Math.round((asked / QUESTIONS.length) * 100);
 
   var html =
     '<div class="pt-prog"><div class="pt-prog-fill" style="width:' + pct + '%"></div></div>' +
     '<div class="pt-body">' +
-    '<div class="pt-meta"><span class="pt-badge">' + levelLabel + '</span><span class="pt-counter">Question ' + (i+1) + ' of ' + QUESTIONS.length + '</span></div>' +
+    '<div class="pt-meta"><span class="pt-badge">' + q.level.toUpperCase() + '</span>' +
+    '<span class="pt-counter">Question ' + (asked + 1) + ' of ' + QUESTIONS.length + '</span></div>' +
     '<p class="pt-qtext">' + escHtml(q.text) + '</p>';
 
   if (q.type === 'mc') {
+    var display = shuffle(q.choices.slice());
     html += '<div class="pt-choices">';
-    q.choices.forEach(function(c, idx) {
-      html += '<button class="pt-opt" onclick="answerMC(' + i + ',' + idx + ')">' + escHtml(c) + '</button>';
+    display.forEach(function(c) {
+      html += '<button class="pt-opt" data-val="' + escHtml(c) + '" onclick="answerMC(this)">' + escHtml(c) + '</button>';
     });
     html += '</div>';
   } else {
     html +=
       '<div class="pt-textrow">' +
-      '<input id="pt-inp" class="pt-input" type="text" autocomplete="off" placeholder="Type your answer..." onkeydown="if(event.key===\'Enter\')checkText(' + i + ')">' +
-      '<button id="pt-chk" class="pt-chk" onclick="checkText(' + i + ')">Check</button>' +
+      '<input id="pt-inp" class="pt-input" type="text" autocomplete="off" placeholder="Type your answer..." onkeydown="if(event.key===\'Enter\')checkText()">' +
+      '<button id="pt-chk" class="pt-chk" onclick="checkText()">Check</button>' +
       '</div>' +
       '<div id="pt-hint" class="pt-hint"></div>';
   }
 
   html += '</div>';
   stage.innerHTML = html;
-  if (q.type === 'text') {
-    var inp = document.getElementById('pt-inp');
-    if (inp) inp.focus();
-  }
+  if (q.type === 'text') { var inp = document.getElementById('pt-inp'); if (inp) inp.focus(); }
 }
 
-function answerMC(qi, choiceIdx) {
-  var q = QUESTIONS[qi];
-  var btns = stage.querySelectorAll('.pt-opt');
-  btns.forEach(function(b) { b.disabled = true; });
-
-  var selected = btns[choiceIdx];
-  var isCorrect = (q.choices[choiceIdx] === q.answer);
+function answerMC(btn) {
+  var q = currentQ;
+  stage.querySelectorAll('.pt-opt').forEach(function(b) { b.disabled = true; });
+  var isCorrect = btn.dataset.val === q.answer;
   if (isCorrect) {
-    selected.classList.add('correct');
-    bandScores[q.level]++;
+    btn.classList.add('correct');
+    totalScore += WEIGHTS[q.level];
+    bandCorrect[q.level]++;
   } else {
-    selected.classList.add('wrong');
-    // reveal correct answer
-    btns.forEach(function(b, i) {
-      if (q.choices[i] === q.answer) b.classList.add('reveal');
+    btn.classList.add('wrong');
+    totalScore -= WEIGHTS[q.level] * 0.5;
+    stage.querySelectorAll('.pt-opt').forEach(function(b) {
+      if (b.dataset.val === q.answer) b.classList.add('reveal');
     });
   }
-  setTimeout(function() { advance(qi); }, 750);
+  playTone(isCorrect);
+  setTimeout(function() { advance(isCorrect); }, 750);
 }
 
-function checkText(qi) {
-  var q = QUESTIONS[qi];
+function checkText() {
+  var q = currentQ;
   var inp = document.getElementById('pt-inp');
   var hint = document.getElementById('pt-hint');
   var chk = document.getElementById('pt-chk');
   if (!inp || inp.disabled) return;
-
   var val = inp.value.trim().toLowerCase();
   if (!val) return;
-
-  inp.disabled = true;
-  chk.disabled = true;
-
-  var isCorrect = q.accept.some(function(a) { return a.toLowerCase() === val; });
+  inp.disabled = true; chk.disabled = true;
+  var isCorrect = q.accept.some(function(a){ return a.toLowerCase() === val; });
   if (isCorrect) {
-    inp.classList.add('correct');
-    hint.className = 'pt-hint ok';
-    hint.textContent = 'Correct!';
-    bandScores[q.level]++;
+    inp.classList.add('correct'); hint.className = 'pt-hint ok'; hint.textContent = 'Correct!';
+    totalScore += WEIGHTS[q.level]; bandCorrect[q.level]++;
   } else {
-    inp.classList.add('wrong');
-    hint.className = 'pt-hint err';
+    inp.classList.add('wrong'); hint.className = 'pt-hint err';
     hint.textContent = 'Correct answer: ' + q.accept[0];
+    totalScore -= WEIGHTS[q.level] * 0.5;
   }
-  setTimeout(function() { advance(qi); }, 1000);
+  playTone(isCorrect);
+  setTimeout(function() { advance(isCorrect); }, 1000);
 }
 
-function advance(qi) {
-  var next = qi + 1;
-  if (next < QUESTIONS.length) {
-    showQ(next);
-  } else {
-    showResults();
-  }
+function advance(wasCorrect) {
+  cursor = wasCorrect ? Math.min(cursor + 1, BANDS.length - 1) : Math.max(cursor - 1, 0);
+  asked++;
+  var next = nextQuestion();
+  if (next) showQ(next);
+  else showResults();
 }
 
-function getRecommendation(scores) {
+function getRecommendation(correct) {
   var pcts = {};
-  BANDS.forEach(function(b) { pcts[b] = scores[b] / 4; });
+  BANDS.forEach(function(b){ pcts[b] = correct[b] / 4; });
   var ordered = ['c2','c1','b2','b1','a2','a1'];
   var recommend = 'a1';
   for (var i = 0; i < ordered.length; i++) {
@@ -331,22 +388,21 @@ function getRecommendation(scores) {
 }
 
 function showResults() {
-  var total = BANDS.reduce(function(s,b){ return s + bandScores[b]; }, 0);
-  var recommend = getRecommendation(bandScores);
-  var pct = Math.round((total / QUESTIONS.length) * 100);
+  var effective = Math.max(0, Math.round(totalScore));
+  var recommend = getRecommendation(bandCorrect);
+  var pct = Math.round(effective / MAX_SCORE * 100);
 
-  // Save result to localStorage (P0 fix)
   try {
     localStorage.setItem('wordplay_recommended_level', recommend);
     localStorage.setItem('wordplay_placement', JSON.stringify({
-      score: total, total: QUESTIONS.length, pct: pct,
+      score: effective, total: MAX_SCORE, pct: pct,
       recommended: recommend, date: new Date().toISOString()
     }));
-  } catch(e) { /* storage unavailable */ }
+  } catch(e) {}
 
   var bandHtml = '';
   BANDS.forEach(function(b) {
-    var s = bandScores[b];
+    var s = bandCorrect[b];
     var col = s >= 3 ? 'var(--green)' : s >= 2 ? 'var(--amber)' : 'var(--muted)';
     bandHtml +=
       '<div class="pt-band-cell">' +
@@ -362,8 +418,8 @@ function showResults() {
     '<div class="pt-prog"><div class="pt-prog-fill" style="width:100%"></div></div>' +
     '<div class="pt-results">' +
     '<div class="pt-res-eyebrow">Your result</div>' +
-    '<div class="pt-res-score">' + total + ' / ' + QUESTIONS.length + '</div>' +
-    '<div class="pt-res-pct">' + pct + '%</div>' +
+    '<div class="pt-res-score">' + effective + '<span style="font-size:1.1rem;font-weight:400;color:var(--muted);margin-left:6px">/ 252 pts</span></div>' +
+    '<div class="pt-res-pct">' + pct + '% proficiency</div>' +
     '<div class="pt-band-grid">' + bandHtml + '</div>' +
     '<div class="pt-rec-box">' +
     '<div class="pt-rec-lbl">Recommended starting point</div>' +
@@ -380,10 +436,6 @@ function showResults() {
     '</div>' +
     '</div>' +
     '<a href="index.html" class="pt-home-link">Back to home</a>';
-}
-
-function escHtml(s) {
-  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 // Show intro on load
