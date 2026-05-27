@@ -207,12 +207,14 @@ body.dark .level-card { background: rgba(255,255,255,.05); border-color: rgba(25
         <div><div style="font-family:var(--font-sans);font-size:.85rem;font-weight:700;color:var(--ink);margin-bottom:3px">Lesson → Practice → Game</div><div style="font-size:.8rem;color:var(--muted)">Read the lesson · do the exercises · master the game · repeat</div></div>
       </div>
     </div>
-    <button onclick="document.getElementById('onboardingModal').style.display='none';localStorage.setItem('wp_onboarded','1')" style="width:100%;padding:13px;background:var(--ink);color:var(--paper);font-family:var(--font-sans);font-size:.78rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;border:none;border-radius:5px;cursor:pointer">Got it — let's start</button>
+    <button onclick="document.getElementById('onboardingModal').style.display='none';try{localStorage.setItem('wp_onboarded','1');}catch(e){try{sessionStorage.setItem('wp_onboarded','1');}catch(e2){}}" style="width:100%;padding:13px;background:var(--ink);color:var(--paper);font-family:var(--font-sans);font-size:.78rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;border:none;border-radius:5px;cursor:pointer">Got it — let's start</button>
   </div>
 </div>
 <script>
 (function() {
-  if (!localStorage.getItem('wp_onboarded') && !localStorage.getItem('wordplay_progress')) {
+  var onboarded = false;
+  try { onboarded = !!(localStorage.getItem('wp_onboarded') || sessionStorage.getItem('wp_onboarded') || localStorage.getItem('wordplay_progress')); } catch(e) {}
+  if (!onboarded) {
     var m = document.getElementById('onboardingModal');
     if (m) { m.style.display = 'flex'; }
   }

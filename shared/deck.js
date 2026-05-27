@@ -106,19 +106,65 @@ function triggerConfetti() {
     else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); window.prevSlide(); }
   });
 
-  // ── Touch swipe support ──────────────────────────────────────────
-  var tx = 0, ty = 0;
+  // ── Touch swipe — Tinder-style drag + fly-away ───────────────────
+  var swipeStartX = 0, swipeStartY = 0;
+  var swipeActive = false, swipeDelta = 0;
+  var swipeCard = null;
+
+  function getActiveCard() {
+    return slides[current] && slides[current].querySelector('.slide-card');
+  }
+
   document.addEventListener('touchstart', function(e) {
-    tx = e.touches[0].clientX;
-    ty = e.touches[0].clientY;
+    if (e.touches.length > 1) return;
+    swipeStartX = e.touches[0].clientX;
+    swipeStartY = e.touches[0].clientY;
+    swipeActive = false;
+    swipeDelta = 0;
+    swipeCard = getActiveCard();
+    if (swipeCard) swipeCard.style.transition = 'none';
   }, { passive: true });
-  document.addEventListener('touchend', function(e) {
-    var dx = e.changedTouches[0].clientX - tx;
-    var dy = e.changedTouches[0].clientY - ty;
-    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 48) {
-      if (dx < 0) window.nextSlide();
-      else window.prevSlide();
+
+  document.addEventListener('touchmove', function(e) {
+    if (!swipeCard) return;
+    var dx = e.touches[0].clientX - swipeStartX;
+    var dy = e.touches[0].clientY - swipeStartY;
+    if (!swipeActive) {
+      if (Math.abs(dy) > Math.abs(dx) + 8) { swipeCard = null; return; }
+      if (Math.abs(dx) < 8) return;
+      swipeActive = true;
     }
+    swipeDelta = dx;
+    var tilt = (dx / (window.innerWidth * 0.5)) * 10;
+    var fade = 1 - Math.min(1, Math.abs(dx) / (window.innerWidth * 0.55));
+    swipeCard.style.transform = 'translateX(' + dx + 'px) rotate(' + tilt + 'deg)';
+    swipeCard.style.opacity = Math.max(0.25, fade);
+  }, { passive: true });
+
+  document.addEventListener('touchend', function() {
+    if (!swipeCard) return;
+    var card = swipeCard;
+    swipeCard = null;
+    if (!swipeActive || Math.abs(swipeDelta) < 30) {
+      card.style.transition = 'transform .22s ease-out, opacity .22s ease-out';
+      card.style.transform = '';
+      card.style.opacity = '';
+      setTimeout(function() { card.style.transition = ''; }, 230);
+      return;
+    }
+    var dir = swipeDelta < 0 ? -1 : 1;
+    var flyX = dir * window.innerWidth * 1.3;
+    var flyRot = dir * -18;
+    card.style.transition = 'transform .26s ease-in, opacity .22s ease-in';
+    card.style.transform = 'translateX(' + flyX + 'px) rotate(' + flyRot + 'deg)';
+    card.style.opacity = '0';
+    setTimeout(function() {
+      card.style.transition = 'none';
+      card.style.transform = '';
+      card.style.opacity = '';
+      if (dir < 0) window.nextSlide();
+      else window.prevSlide();
+    }, 270);
   }, { passive: true });
 
   // ── Mark lesson complete ─────────────────────────────────────────

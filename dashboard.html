@@ -870,6 +870,21 @@ function resetAll() {
   switchLevel(firstLevel);
   drawRadar();
 })();
+
+window.addEventListener('storage', function(e) {
+  if (e.key === 'wordplay_progress') {
+    try {
+      renderXPBanner();
+      var firstLevel = ACTIVE_LEVELS[0];
+      for (var i = 0; i < ACTIVE_LEVELS.length; i++) {
+        var s = computeLevelStats(ACTIVE_LEVELS[i]);
+        if (s.attempted > 0) { firstLevel = ACTIVE_LEVELS[i]; break; }
+      }
+      switchLevel(firstLevel);
+      drawRadar();
+    } catch(e2) {}
+  }
+});
 </script>
 <script>
 (function(){

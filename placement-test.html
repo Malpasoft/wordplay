@@ -15,7 +15,7 @@
 .pt-card {
   background: var(--paper);
   border-radius: 12px;
-  border-top: 4px solid var(--amber);
+  border: 1.5px solid var(--border-soft);
   box-shadow: 0 2px 18px rgba(0,0,0,.08);
   overflow: hidden;
 }
@@ -131,7 +131,7 @@
 .pt-home-link { display:block;text-align:center;margin-top:18px;font-family:var(--font-sans);font-size:.78rem;color:var(--muted);text-decoration:none; }
 
 /* Dark mode */
-body.dark .pt-card       { background: #1E1E1E; }
+body.dark .pt-card       { background: #1E1E1E; border-color: rgba(255,255,255,.1); }
 body.dark .pt-qtext      { color: #F0F0F0; }
 body.dark .pt-opt        { background: #2A2A2A; border-color: #3C3C3C; color: #E0E0E0; }
 body.dark .pt-opt.correct{ background: rgba(39,174,96,.18); border-color: #27ae60; color: #7fd9a0; }
