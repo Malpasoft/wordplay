@@ -369,6 +369,7 @@
   </div>
 </div>
 
+<script src="shared/store.js?v=v103"></script>
 <script>
 var LEVEL_META = [
   {id:'a1', band:'a', label:'A1', name:'Beginner',        grammar:25, vocab:6, writing:3},
@@ -402,20 +403,29 @@ function loadCertData() {
   
   LEVEL_META.forEach(function(lm) {
     var lvlProg = prog[lm.id] || {};
+    if (window.FCEStore && typeof FCEStore.getLevel === 'function') {
+      var levelData = FCEStore.getLevel(lm.id);
+      lvlProg = levelData.results || lvlProg;
+    }
     var started = Object.keys(lvlProg).length;
-    var complete = Object.keys(lvlProg).filter(function(k){
-      return lvlProg[k].slides && lvlProg[k].gameMastered;
-    }).length;
+    var completeCount = 0;
+    Object.keys(lvlProg).forEach(function(k) {
+      var entry = lvlProg[k] || {};
+      var pct = entry.pct || 0;
+      if (entry.done === true || pct >= 70 || (entry.mastered && entry.total && (entry.mastered / entry.total) >= 0.7)) {
+        completeCount++;
+      }
+    });
+    var expected = lm.grammar + lm.vocab;
+    var isComplete = completeCount >= expected && expected > 0;
     totalChapters += started;
     
     var isActive = started > 0;
-    var isComplete = complete >= (lm.grammar * 0.8); // 80% = complete
-    
     levelHtml += '<div class="cert-level-card ' + (isActive ? 'active' : 'locked') + '">';
     levelHtml += '<div class="cert-level-badge ' + (isComplete ? 'gold' : '') + '">' + lm.label + '</div>';
     levelHtml += '<div class="cert-level-name">' + lm.name + '</div>';
     if (isActive) {
-      levelHtml += '<div class="cert-level-stats">' + started + ' chapters<br>' + complete + ' complete</div>';
+      levelHtml += '<div class="cert-level-stats">' + started + ' chapters<br>' + completeCount + ' complete</div>';
       if (isComplete) levelHtml += '<div class="cert-level-complete">✓ Complete</div>';
     } else {
       levelHtml += '<div class="cert-level-stats">Not started</div>';
