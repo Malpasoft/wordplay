@@ -223,6 +223,66 @@ h3 {
   color: white;
 }
 
+/* QR share button — same visual style as dark-toggle */
+.qr-toggle {
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,0.28);
+  color: rgba(255,255,255,0.82);
+  font-family: var(--font-sans);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  padding: 5px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+  white-space: nowrap;
+}
+.qr-toggle:hover { background: rgba(255,255,255,0.10); color: var(--amber); border-color: var(--amber); }
+
+/* QR modal overlay */
+#wp-qr-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.72);
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+.wp-qr-box {
+  background: var(--paper);
+  border-radius: 12px;
+  padding: 28px 28px 24px;
+  text-align: center;
+  max-width: 280px;
+  width: 88%;
+  box-shadow: 0 8px 32px rgba(0,0,0,.35);
+}
+.wp-qr-img { border-radius: 6px; display: block; margin: 0 auto 14px; }
+.wp-qr-url {
+  font-family: var(--font-sans);
+  font-size: .65rem;
+  color: var(--muted);
+  word-break: break-all;
+  margin: 0 0 18px;
+  line-height: 1.5;
+}
+.wp-qr-close {
+  background: var(--amber);
+  color: #1A1A1A;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 28px;
+  font-family: var(--font-sans);
+  font-size: .78rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.wp-qr-close:hover { opacity: .88; }
+body.dark .wp-qr-box { background: #1E1E1E; }
+body.dark .wp-qr-img { outline: 1px solid rgba(255,255,255,.12); }
+
 /* ══════════════════════════════════════════════════════════════
    CHAPTER CARD — canonical design used on all section list pages
    ══════════════════════════════════════════════════════════════ */
@@ -686,12 +746,12 @@ body.dark .dark-toggle {
 }
 
 body.dark h1 { color: #FFFFFF !important; }
-body.dark p  { color: #E0E8F0 !important; }
+body.dark p  { color: #E0E0E0 !important; }
 body.dark .chapter-num      { color: var(--amber) !important; }
-body.dark .chapter-subtitle { color: #B8C8D8 !important; }
+body.dark .chapter-subtitle { color: #C0C0C0 !important; }
 body.dark .chapter-nav { background: rgba(255,255,255,.04) !important; }
 body.dark .chapter-nav-btn {
-  color: #C8D4E0 !important;
+  color: #C0C0C0 !important;
   background: transparent !important;
 }
 body.dark .chapter-nav-btn.active {
@@ -700,12 +760,12 @@ body.dark .chapter-nav-btn.active {
 }
 body.dark .chapter-nav-btn:hover { color: #FFFFFF !important; }
 
-body.dark .breadcrumb { color: #98A8B8 !important; }
+body.dark .breadcrumb { color: #A0A0A0 !important; }
 body.dark .breadcrumb a { color: var(--amber) !important; }
 body.dark .breadcrumb strong { color: #FFFFFF !important; }
-body.dark .breadcrumb span { color: #98A8B8 !important; }
+body.dark .breadcrumb span { color: #A0A0A0 !important; }
 
-body.dark .site-footer { color: #98A8B8 !important; }
+body.dark .site-footer { color: #A0A0A0 !important; }
 
 /* Preserve amber/navy CTA buttons */
 body.dark a[style*="background:var(--amber)"],
@@ -1195,7 +1255,7 @@ body.dark .ce-option-btn.ce-wrong   { color: #f08080; }
 body.dark .ce-text-input { background: #141414; border-color: #2A2A2A; color: #F0F0F0; }
 body.dark .ce-check-btn  { background: #F0F0F0; color: #1A1A1A; }
 body.dark .ce-next-btn   { background: #F0F0F0; color: #1A1A1A; }
-body.dark .ce-context { background: rgba(255,255,255,.05); color: #E0E8F0; }
+body.dark .ce-context { background: rgba(255,255,255,.05); color: #E0E0E0; }
 body.dark .ce-fb-correct { background: rgba(39,174,96,.15); color: #E0F0E8; }
 body.dark .ce-fb-wrong   { background: rgba(192,57,43,.12); color: #F0E0E0; }
-body.dark .ce-results-retry { color: #E0E8F0; border-color: #2A2A2A; }
+body.dark .ce-results-retry { color: #E0E0E0; border-color: #2A2A2A; }

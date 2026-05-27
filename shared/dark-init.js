@@ -80,3 +80,41 @@ function toggleDark() {
     document.addEventListener('DOMContentLoaded', setup);
   } else { setup(); }
 })();
+
+// QR code button — lets teachers share the current page with students
+(function(){
+  function injectQR() {
+    var inner = document.querySelector('.site-header-inner');
+    if (!inner || inner.querySelector('.qr-toggle')) return;
+    var btn = document.createElement('button');
+    btn.className = 'qr-toggle';
+    btn.textContent = 'QR';
+    btn.setAttribute('aria-label', 'Show QR code for this page');
+    btn.onclick = openQRModal;
+    inner.appendChild(btn);
+  }
+  function openQRModal() {
+    var modal = document.getElementById('wp-qr-modal');
+    if (!modal) {
+      modal = document.createElement('div');
+      modal.id = 'wp-qr-modal';
+      modal.innerHTML =
+        '<div class="wp-qr-box">' +
+        '<img class="wp-qr-img" width="220" height="220" alt="QR code">' +
+        '<p class="wp-qr-url"></p>' +
+        '<button class="wp-qr-close">Close</button>' +
+        '</div>';
+      modal.querySelector('.wp-qr-close').onclick = function(){ modal.style.display = 'none'; };
+      modal.onclick = function(e){ if (e.target === modal) modal.style.display = 'none'; };
+      document.body.appendChild(modal);
+    }
+    var url = window.location.href;
+    modal.querySelector('.wp-qr-img').src =
+      'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' + encodeURIComponent(url);
+    modal.querySelector('.wp-qr-url').textContent = url;
+    modal.style.display = 'flex';
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', injectQR);
+  } else { injectQR(); }
+})();

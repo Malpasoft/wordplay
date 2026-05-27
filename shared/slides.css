@@ -469,7 +469,7 @@ body.dark .slide-card {
   border-top-color: var(--amber);
 }
 body.dark .summary-slide .slide-card { background: #0A0A0A !important; }
-body.dark .slide.title-slide .slide-card { background: #050810 !important; color: #FFFFFF !important; }
+body.dark .slide.title-slide .slide-card { background: #050505 !important; color: #FFFFFF !important; }
 
 /* Every direct text element inside slide-card → light */
 body.dark .slide-card *:not(a) {
@@ -490,14 +490,14 @@ body.dark .slide-card h4 { color: #F0F0F0 !important; }
 
 /* Headings */
 body.dark .slide-card .slide-header h2 { color: #FFFFFF !important; }
-body.dark .slide-card .slide-sub        { color: #C8D4E0 !important; }
-body.dark .slide-card .slide-explanation { color: #E0E8F0 !important; }
+body.dark .slide-card .slide-sub        { color: #C0C0C0 !important; }
+body.dark .slide-card .slide-explanation { color: #E0E0E0 !important; }
 
 /* Bold/strong/em tags — keep amber for emphasis or white */
 body.dark .slide-card strong,
 body.dark .slide-card b { color: #FFE4A0 !important; }
 body.dark .slide-card em,
-body.dark .slide-card i { color: #C8D4E0 !important; }
+body.dark .slide-card i { color: #C0C0C0 !important; }
 
 /* Overview rows */
 body.dark .slide-card .overview-row,
@@ -507,15 +507,15 @@ body.dark .slide-card .summary-row {
   border-left-color: var(--amber) !important;
 }
 body.dark .slide-card .overview-label   { color: #FFFFFF !important; font-weight: 700; }
-body.dark .slide-card .overview-desc    { color: #E0E8F0 !important; }
+body.dark .slide-card .overview-desc    { color: #E0E0E0 !important; }
 body.dark .slide-card .overview-row .title { color: #FFFFFF !important; }
-body.dark .slide-card .overview-row .ex    { color: #B8C8D8 !important; }
+body.dark .slide-card .overview-row .ex    { color: #C0C0C0 !important; }
 body.dark .slide-card .overview-row .num   { color: var(--amber) !important; }
 
 /* Summary rows */
 body.dark .slide-card .summary-row .label { color: var(--amber) !important; }
 body.dark .slide-card .summary-row .form  { color: #FFFFFF !important; }
-body.dark .slide-card .summary-row .ex    { color: #C8D4E0 !important; }
+body.dark .slide-card .summary-row .ex    { color: #C0C0C0 !important; }
 
 /* Panel pairs */
 body.dark .slide-card .panel {
@@ -526,7 +526,7 @@ body.dark .slide-card .panel-head        { color: #FFFFFF !important; }
 body.dark .slide-card .panel-head.green  { background: #1a4a28 !important; color: #A0E8B0 !important; }
 body.dark .slide-card .panel-head.red    { background: #4a1a1a !important; color: #F0A0A0 !important; }
 body.dark .slide-card .panel-body .ex .sent { color: #F0F0F0 !important; font-style: italic; }
-body.dark .slide-card .panel-body .ex .note { color: #98A8B8 !important; }
+body.dark .slide-card .panel-body .ex .note { color: #A0A0A0 !important; }
 
 /* Example cards */
 body.dark .slide-card .example-card {
@@ -534,7 +534,7 @@ body.dark .slide-card .example-card {
   border-color: rgba(201,160,80,.5) !important;
 }
 body.dark .slide-card .example-card .ex-text { color: #FFFFFF !important; }
-body.dark .slide-card .example-card .ex-note { color: #B8C8D8 !important; }
+body.dark .slide-card .example-card .ex-note { color: #C0C0C0 !important; }
 
 /* Formula blocks */
 body.dark .slide-card .formula-block {
@@ -550,7 +550,7 @@ body.dark .slide-card .trap-row { border-bottom-color: rgba(255,255,255,.08) !im
 body.dark .slide-card .trap-wrong { background: rgba(192,57,43,.25) !important; color: #FFB0A0 !important; }
 body.dark .slide-card .trap-right { background: rgba(39,174,96,.25) !important; color: #A0E8B0 !important; }
 body.dark .slide-card .trap-arrow { color: var(--amber) !important; }
-body.dark .slide-card .trap-note  { color: #98A8B8 !important; }
+body.dark .slide-card .trap-note  { color: #A0A0A0 !important; }
 
 /* Watch-out boxes */
 body.dark .slide-card .watch-out {
@@ -588,8 +588,8 @@ body.dark .lc-cta-btn {
 
 /* Header / chapter meta in dark */
 body.dark .chapter-num      { color: var(--amber) !important; }
-body.dark .chapter-subtitle { color: #B8C8D8 !important; }
-body.dark .breadcrumb       { color: #98A8B8 !important; }
+body.dark .chapter-subtitle { color: #C0C0C0 !important; }
+body.dark .breadcrumb       { color: #A0A0A0 !important; }
 body.dark .breadcrumb a     { color: var(--amber) !important; }
 body.dark .breadcrumb strong { color: #FFFFFF !important; }
 
@@ -600,13 +600,13 @@ body.dark .deck-nav {
 }
 body.dark .deck-btn {
   background: transparent !important;
-  color: #E0E8F0 !important;
+  color: #E0E0E0 !important;
   border-color: rgba(255,255,255,.2) !important;
 }
 body.dark .deck-btn:hover:not(:disabled) { border-color: var(--amber) !important; color: var(--amber) !important; }
 body.dark .deck-btn:disabled { opacity: 0.35; }
 body.dark .deck-btn.primary { background: var(--amber) !important; color: #1A1A1A !important; border-color: var(--amber) !important; }
-body.dark .counter, body.dark .deck-counter { color: #98A8B8 !important; }
+body.dark .counter, body.dark .deck-counter { color: #A0A0A0 !important; }
 
 /* Lesson complete banner — keep amber bg, dark text */
 body.dark .lc-banner {
