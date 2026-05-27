@@ -35,7 +35,7 @@ function toggleDark() {
 }
 
 
-// Dashboard link injection — all pages with a back-link (skips homepage + dashboard)
+// Dashboard link injection — all pages except the dashboard itself
 (function(){
   function injectDashLink() {
     var inner = document.querySelector('.site-header-inner');
@@ -43,7 +43,6 @@ function toggleDark() {
     if (inner.querySelector('.header-dash')) return;
     var brand = inner.querySelector('.brand');
     if (!brand) return;
-    if (!inner.querySelector('.back-link')) return;
     if (window.location.pathname.indexOf('dashboard') !== -1) return;
     var dash = document.createElement('a');
     dash.className = 'header-dash';
@@ -117,4 +116,23 @@ function toggleDark() {
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', injectQR);
   } else { injectQR(); }
+})();
+
+// Group Dark + QR as a connected pill after both are injected
+(function(){
+  function groupUtils() {
+    var inner = document.querySelector('.site-header-inner');
+    if (!inner || inner.querySelector('.header-utils')) return;
+    var darkBtn = inner.querySelector('.dark-toggle');
+    var qrBtn = inner.querySelector('.qr-toggle');
+    if (!darkBtn || !qrBtn) return;
+    var utils = document.createElement('div');
+    utils.className = 'header-utils';
+    inner.insertBefore(utils, darkBtn);
+    utils.appendChild(darkBtn);
+    utils.appendChild(qrBtn);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', groupUtils);
+  } else { groupUtils(); }
 })();
