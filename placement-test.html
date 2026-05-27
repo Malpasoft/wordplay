@@ -18,6 +18,8 @@
   border: 1.5px solid var(--border-soft);
   box-shadow: 0 2px 18px rgba(0,0,0,.08);
   overflow: hidden;
+  will-change: transform;
+  user-select: none;
 }
 
 /* Progress bar */
@@ -217,6 +219,9 @@ var bandCorrect = {a1:0,a2:0,b1:0,b2:0,c1:0,c2:0};
 var totalScore = 0;
 var currentQ = null;
 var stage = document.getElementById('pt-stage');
+var ptAnswered = false;
+var ptLastCorrect = false;
+var advanceTimer = null;
 
 // ── Helpers ──────────────────────────────────────────────────────────
 function shuffle(arr) {
@@ -295,6 +300,8 @@ function startTest() {
 
 function showQ(q) {
   currentQ = q;
+  ptAnswered = false;
+  if (advanceTimer) { clearTimeout(advanceTimer); advanceTimer = null; }
   var pct = Math.round((asked / QUESTIONS.length) * 100);
 
   var html =
@@ -341,7 +348,8 @@ function answerMC(btn) {
     });
   }
   playTone(isCorrect);
-  setTimeout(function() { advance(isCorrect); }, 750);
+  ptAnswered = true; ptLastCorrect = isCorrect;
+  advanceTimer = setTimeout(function() { advanceTimer = null; advance(isCorrect); }, 750);
 }
 
 function checkText() {
@@ -363,7 +371,8 @@ function checkText() {
     totalScore -= WEIGHTS[q.level] * 0.5;
   }
   playTone(isCorrect);
-  setTimeout(function() { advance(isCorrect); }, 1000);
+  ptAnswered = true; ptLastCorrect = isCorrect;
+  advanceTimer = setTimeout(function() { advanceTimer = null; advance(isCorrect); }, 1000);
 }
 
 function advance(wasCorrect) {
@@ -373,6 +382,57 @@ function advance(wasCorrect) {
   if (next) showQ(next);
   else showResults();
 }
+
+// ── Swipe to advance (left swipe skips the auto-advance delay) ───
+(function() {
+  var ptSwStartX=0, ptSwStartY=0, ptSwActive=false, ptSwDelta=0;
+
+  stage.addEventListener('touchstart', function(e) {
+    if (!ptAnswered || e.touches.length > 1) return;
+    ptSwStartX = e.touches[0].clientX;
+    ptSwStartY = e.touches[0].clientY;
+    ptSwActive = false; ptSwDelta = 0;
+    stage.style.transition = 'none';
+  }, { passive: true });
+
+  stage.addEventListener('touchmove', function(e) {
+    if (!ptAnswered) return;
+    var dx = e.touches[0].clientX - ptSwStartX;
+    var dy = e.touches[0].clientY - ptSwStartY;
+    if (!ptSwActive) {
+      if (Math.abs(dy) > Math.abs(dx) + 8) return;
+      if (Math.abs(dx) < 8) return;
+      ptSwActive = true;
+    }
+    e.preventDefault();
+    ptSwDelta = dx;
+    var fade = 1 - Math.min(1, Math.abs(dx) / (window.innerWidth * 0.55));
+    stage.style.transform = 'translateX(' + dx + 'px)';
+    stage.style.opacity = Math.max(0.25, fade);
+  }, { passive: false });
+
+  stage.addEventListener('touchend', function() {
+    if (!ptSwActive || Math.abs(ptSwDelta) < 30) {
+      stage.style.transition = 'transform .22s ease-out, opacity .22s ease-out';
+      stage.style.transform = ''; stage.style.opacity = '';
+      setTimeout(function() { stage.style.transition = ''; }, 230);
+      ptSwActive = false; return;
+    }
+    if (ptSwDelta < 0) {
+      stage.style.transition = 'transform .26s ease-in, opacity .22s ease-in';
+      stage.style.transform = 'translateX(' + (-window.innerWidth * 1.3) + 'px) rotate(-18deg)';
+      stage.style.opacity = '0';
+      clearTimeout(advanceTimer); advanceTimer = null;
+      var lc = ptLastCorrect;
+      setTimeout(function() { advance(lc); }, 270);
+    } else {
+      stage.style.transition = 'transform .22s ease-out, opacity .22s ease-out';
+      stage.style.transform = ''; stage.style.opacity = '';
+      setTimeout(function() { stage.style.transition = ''; }, 230);
+    }
+    ptSwActive = false;
+  }, { passive: true });
+})();
 
 function getRecommendation(correct) {
   var pcts = {};

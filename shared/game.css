@@ -7,10 +7,9 @@
 
 /* ─── START SCREEN ──────────────────────────────────────────────── */
 .game-start {
-  background: white;
-  border: 1px solid var(--border-soft);
-  border-top: 4px solid var(--accent);
-  border-radius: 4px;
+  background: var(--paper);
+  border: 1.5px solid var(--border-soft);
+  border-radius: 10px;
   padding: 32px 24px;
   text-align: center;
   margin-top: 8px;
@@ -73,11 +72,13 @@
 .game-btn.small { padding: 8px 18px; font-size: 0.82rem; min-height: 38px; }
 /* ─── GAME PLAY AREA ────────────────────────────────────────────── */
 .game-play {
-  background: white;
-  border: 1px solid var(--border-soft);
-  border-radius: 4px;
+  background: var(--paper);
+  border: 1.5px solid var(--border-soft);
+  border-radius: 10px;
   padding: 24px 20px;
   margin-top: 8px;
+  will-change: transform;
+  user-select: none;
 }
 .game-mode-tag {
   font-family: var(--font-sans);
@@ -123,19 +124,19 @@
   text-align: left;
   font-family: var(--font-serif);
   font-size: 1rem;
-  color: var(--navy);
-  background: var(--offwhite);
-  border: 1.5px solid var(--border);
-  border-radius: 6px;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1.5px solid var(--hairline);
+  border-radius: 8px;
   cursor: pointer;
-  transition: all 0.12s;
+  transition: border-color .15s, background .15s;
   min-height: 52px;
   line-height: 1.4;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
 .game-option:active { transform: scale(0.99); }
-.game-option:hover:not(:disabled) { background: var(--cream-deep); border-color: var(--navy); }
+.game-option:hover:not(:disabled) { background: rgba(184,134,11,.05); border-color: var(--amber); }
 .game-option.correct { background: #F0F9F3; color: var(--green); border-color: var(--green); font-weight: 700; }
 .game-option.wrong   { background: #FDF3F3; color: var(--red); border-color: var(--red); text-decoration: line-through; }
 .game-option:disabled { cursor: default; opacity: 0.75; }

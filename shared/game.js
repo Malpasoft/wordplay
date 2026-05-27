@@ -65,6 +65,33 @@
     init();
   }
 
+  function playTone(correct) {
+    try {
+      var ctx = new (window.AudioContext || window.webkitAudioContext)();
+      if (correct) {
+        [[660,0],[880,0.1]].forEach(function(pair) {
+          var o = ctx.createOscillator(), g = ctx.createGain();
+          o.connect(g); g.connect(ctx.destination);
+          o.type = 'sine'; o.frequency.value = pair[0];
+          var t = ctx.currentTime + pair[1];
+          g.gain.setValueAtTime(0, t);
+          g.gain.linearRampToValueAtTime(0.22, t + 0.01);
+          g.gain.exponentialRampToValueAtTime(0.001, t + 0.4);
+          o.start(t); o.stop(t + 0.4);
+        });
+      } else {
+        var o = ctx.createOscillator(), g = ctx.createGain();
+        o.connect(g); g.connect(ctx.destination);
+        o.type = 'sawtooth'; o.frequency.value = 160;
+        g.gain.setValueAtTime(0.18, ctx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.22);
+        o.start(); o.stop(ctx.currentTime + 0.22);
+        try { navigator.vibrate && navigator.vibrate([50, 20, 50]); } catch(e2) {}
+      }
+      setTimeout(function() { try { ctx.close(); } catch(e2) {} }, 1200);
+    } catch(e) {}
+  }
+
   function init() {
     if (!window.GAME_DATA) {
       console.warn('GAME_DATA not defined');
@@ -404,6 +431,7 @@
       if (el.btnHint)   el.btnHint.disabled = true;
       if (el.btnReveal) el.btnReveal.disabled = true;
       if (el.btnKnow)   el.btnKnow.disabled = true;
+      playTone(isCorrect);
 
       // Track last answered for interval spacing
       st.lastAnswered = state.questionNum;
@@ -626,6 +654,57 @@
       if (e.key === 'h' && !state.answered) showHint();
       if (e.key === 'k' && !state.answered) handleKnowThis();
     });
+
+    // ── Swipe to advance (after answering) ────────────────────────
+    var swStartX=0, swStartY=0, swActive=false, swDelta=0, swCard=null;
+
+    document.addEventListener('touchstart', function(e) {
+      if (!state.answered || state.completed || e.touches.length > 1) return;
+      var card = document.querySelector('.game-play');
+      if (!card) return;
+      swStartX = e.touches[0].clientX;
+      swStartY = e.touches[0].clientY;
+      swActive = false; swDelta = 0;
+      swCard = card;
+      swCard.style.transition = 'none';
+    }, { passive: true });
+
+    document.addEventListener('touchmove', function(e) {
+      if (!swCard) return;
+      var dx = e.touches[0].clientX - swStartX;
+      var dy = e.touches[0].clientY - swStartY;
+      if (!swActive) {
+        if (Math.abs(dy) > Math.abs(dx) + 8) { swCard = null; return; }
+        if (Math.abs(dx) < 8) return;
+        swActive = true;
+      }
+      e.preventDefault();
+      swDelta = dx;
+      var fade = 1 - Math.min(1, Math.abs(dx) / (window.innerWidth * 0.55));
+      swCard.style.transform = 'translateX(' + dx + 'px)';
+      swCard.style.opacity = Math.max(0.25, fade);
+    }, { passive: false });
+
+    document.addEventListener('touchend', function() {
+      if (!swCard) return;
+      var card = swCard; swCard = null;
+      if (!swActive || Math.abs(swDelta) < 30) {
+        card.style.transition = 'transform .22s ease-out, opacity .22s ease-out';
+        card.style.transform = ''; card.style.opacity = '';
+        setTimeout(function() { card.style.transition = ''; }, 230);
+        return;
+      }
+      if (swDelta < 0) {
+        card.style.transition = 'transform .26s ease-in, opacity .22s ease-in';
+        card.style.transform = 'translateX(' + (-window.innerWidth * 1.3) + 'px) rotate(-18deg)';
+        card.style.opacity = '0';
+        setTimeout(nextItem, 270);
+      } else {
+        card.style.transition = 'transform .22s ease-out, opacity .22s ease-out';
+        card.style.transform = ''; card.style.opacity = '';
+        setTimeout(function() { card.style.transition = ''; }, 230);
+      }
+    }, { passive: true });
 
     // ── Boot ──────────────────────────────────────────────────────
     const hasSaved = loadState();
