@@ -134,11 +134,12 @@ function triggerConfetti() {
       if (Math.abs(dx) < 8) return;
       swipeActive = true;
     }
+    e.preventDefault(); // block scroll during horizontal swipe — stops fixed-element jitter
     swipeDelta = dx;
     var fade = 1 - Math.min(1, Math.abs(dx) / (window.innerWidth * 0.55));
     swipeCard.style.transform = 'translateX(' + dx + 'px)';
     swipeCard.style.opacity = Math.max(0.25, fade);
-  }, { passive: true });
+  }, { passive: false }); // non-passive so preventDefault works
 
   document.addEventListener('touchend', function() {
     if (!swipeCard) return;
