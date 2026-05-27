@@ -128,6 +128,18 @@ document.addEventListener('DOMContentLoaded', function() {
       var total = Object.values(bandScores).reduce(function(a,b){return a+b;},0);
       var recommend = getRecommendation(bandScores);
       
+      // Save placement result (P0 fix)
+      try {
+        var placementData = {
+          score: total,
+          total: 24,
+          pct: Math.round((total / 24) * 100),
+          recommended: recommend,
+          date: new Date().toISOString()
+        };
+        localStorage.setItem('wordplay_placement', JSON.stringify(placementData));
+      } catch(e) { console.warn('[WordPlay]', e.message); }
+      
       // Render recommendation into its own container, replacing any prior content
       var diagEl = document.getElementById('diagnostic-result');
       if (diagEl) {
