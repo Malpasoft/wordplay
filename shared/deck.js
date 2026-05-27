@@ -27,7 +27,7 @@ function triggerConfetti() {
     s.textContent = '@keyframes cfFall{to{transform:translateY(105vh) rotate(480deg);opacity:0}}';
     document.head.appendChild(s);
   }
-  var colors = ['#C9A050','#4CAF82','#E05A4A','#4AABB8','#F0F0F0','#C9A050'];
+  var colors = ['#C9A050','#E8A020','#B8860B','#FFD080','#F0C060','#D4A030'];
   for (var i = 0; i < 32; i++) {
     var p = document.createElement('div');
     var sz = 6 + Math.random() * 6;
@@ -135,9 +135,8 @@ function triggerConfetti() {
       swipeActive = true;
     }
     swipeDelta = dx;
-    var tilt = (dx / (window.innerWidth * 0.5)) * 10;
     var fade = 1 - Math.min(1, Math.abs(dx) / (window.innerWidth * 0.55));
-    swipeCard.style.transform = 'translateX(' + dx + 'px) rotate(' + tilt + 'deg)';
+    swipeCard.style.transform = 'translateX(' + dx + 'px)';
     swipeCard.style.opacity = Math.max(0.25, fade);
   }, { passive: true });
 

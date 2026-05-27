@@ -28,6 +28,17 @@
   background: var(--paper);
   border-top: 1px solid var(--hairline);
   z-index: 100;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+/* Promote fixed elements to GPU layers so card swipe doesn't jitter them */
+body.deck-body .site-header {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+body.deck-body .deck-progress {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 .deck-btn {
   padding: 9px 20px;
