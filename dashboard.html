@@ -10,13 +10,22 @@
 <script src="shared/dark-init.js"></script>
 <style>
 .dash-page { max-width: 980px; margin: 0 auto; padding: 24px 20px 60px; }
+.dash-page h1 {
+  font-family: var(--font-serif);
+  font-size: 2.4rem;
+  color: var(--ink);
+  margin: 0 0 24px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+@media (max-width: 600px) { .dash-page h1 { font-size: 1.9rem; } }
 
 /* ── XP & Level banner ── */
 .xp-banner {
-  border: 1px solid var(--hairline);
+  border: 1.5px solid var(--border-soft);
   border-radius: 12px;
   padding: 22px 24px;
-  background: linear-gradient(135deg, var(--paper) 0%, rgba(184,134,11,0.04) 100%);
+  background: var(--paper);
   margin-bottom: 24px;
   position: relative;
   overflow: hidden;
@@ -34,7 +43,7 @@
 .xp-info { flex: 1; min-width: 200px; }
 .xp-title {
   font-family: var(--font-sans); font-size: .65rem; font-weight: 800;
-  letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted);
+  letter-spacing: 2.5px; text-transform: uppercase; color: var(--amber);
   margin-bottom: 4px;
 }
 .xp-name {
@@ -65,14 +74,14 @@
 @media (max-width: 720px) { .hero-grid { grid-template-columns: 1fr; } }
 
 .hero-stats, .radar-card {
-  border: 1px solid var(--hairline);
+  border: 1.5px solid var(--border-soft);
   border-radius: 12px;
   padding: 22px;
   background: var(--paper);
 }
 .hero-stats h2, .radar-card-title {
   font-family: var(--font-sans); font-size: .65rem; font-weight: 800;
-  letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted);
+  letter-spacing: 2.5px; text-transform: uppercase; color: var(--amber);
   margin: 0 0 18px;
 }
 .stat-row {
@@ -97,14 +106,14 @@
 .pillars-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
+  gap: 12px;
   margin-bottom: 24px;
 }
 @media (max-width: 600px) { .pillars-grid { grid-template-columns: repeat(2, 1fr); } }
 .pillar {
-  border: 1px solid var(--hairline);
+  border: 1.5px solid var(--border-soft);
   border-radius: 10px;
-  padding: 16px 14px;
+  padding: 18px 14px;
   background: var(--paper);
   text-align: center;
 }
@@ -140,15 +149,15 @@
 }
 @media (max-width: 720px) { .level-overview { grid-template-columns: repeat(3, 1fr); } }
 .lv-tile {
-  border: 1px solid var(--hairline);
-  border-radius: 8px;
+  border: 1.5px solid var(--border-soft);
+  border-radius: 10px;
   padding: 14px 10px;
   text-align: center;
   background: var(--paper);
   cursor: pointer;
   transition: border-color .15s, transform .15s;
 }
-.lv-tile:hover:not(.disabled) { border-color: var(--ink); transform: translateY(-2px); }
+.lv-tile:hover:not(.disabled) { border-color: var(--amber); transform: translateY(-2px); }
 .lv-tile.active { border-color: var(--amber); background: rgba(184,134,11,.04); }
 .lv-tile.disabled { opacity: .4; cursor: not-allowed; }
 .lv-tile-code {
@@ -168,7 +177,7 @@
 /* ── Section heading ── */
 .sec-head {
   font-family: var(--font-sans); font-size: .65rem; font-weight: 800;
-  letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted);
+  letter-spacing: 2.5px; text-transform: uppercase; color: var(--amber);
   margin: 28px 0 14px;
   display: flex; align-items: center; gap: 10px;
 }
@@ -181,17 +190,17 @@
 /* ── Chapter cards (richer per-pillar progress) ── */
 .chapter-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 10px; }
 .chapter-card {
-  border: 1px solid var(--hairline);
-  border-radius: 8px;
+  border: 1.5px solid var(--border-soft);
+  border-radius: 10px;
   padding: 14px 16px;
   text-decoration: none;
   color: inherit;
   display: block;
-  transition: border-color .15s;
+  transition: border-color .15s, box-shadow .15s, transform .15s;
 }
-.chapter-card:hover { border-color: var(--ink); }
+.chapter-card:hover { border-color: var(--amber); box-shadow: 0 6px 20px rgba(184,134,11,.1); transform: translateY(-2px); }
 .chapter-card.complete { border-color: var(--amber); background: rgba(184,134,11,.04); }
-.chapter-card.in-progress { border-color: var(--ink); }
+.chapter-card.in-progress { border-color: var(--amber); }
 
 .chap-header {
   display: flex; align-items: baseline; justify-content: space-between;
@@ -265,13 +274,23 @@
   border: 1.5px solid var(--hairline); background: transparent;
   color: var(--muted); margin-top: 40px;
 }
-.reset-btn:hover { border-color: #B8425E; color: #B8425E; }
+.reset-btn:hover { border-color: var(--amber); color: var(--amber); }
 
 body.dark .lv-tile.active { background: rgba(184,134,11,.08); }
 body.dark .chapter-card.complete { background: rgba(184,134,11,.06); }
 body.dark .chap-pillar { background: rgba(255,255,255,0.04); }
 body.dark .chap-pillar.done { background: rgba(184,134,11,.14); }
-body.dark .xp-banner { background: linear-gradient(135deg, var(--paper) 0%, rgba(184,134,11,.07) 100%); }
+body.dark .xp-badge { box-shadow: 0 0 0 4px rgba(201,160,80,.18); }
+body.dark .reset-btn:hover { border-color: var(--amber); color: var(--amber); }
+
+@media (max-width: 420px) {
+  .xp-badge { width: 52px; height: 52px; font-size: 1.25rem; }
+  .xp-row { gap: 14px; }
+  .xp-name { font-size: 1.2rem; }
+}
+@media (max-width: 360px) {
+  .chapter-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
@@ -285,7 +304,7 @@ body.dark .xp-banner { background: linear-gradient(135deg, var(--paper) 0%, rgba
 
 <div class="dash-page">
   <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><strong>Dashboard</strong></div>
-  <h1 style="font-size:2rem;color:var(--ink);margin:0 0 24px">Your progress</h1>
+  <h1>Your progress</h1>
 
   <!-- XP / Level banner -->
   <div class="xp-banner">
@@ -364,35 +383,9 @@ body.dark .xp-banner { background: linear-gradient(135deg, var(--paper) 0%, rgba
   <!-- Per-level chapter detail -->
   <div id="levelDetail"></div>
 
-  <button class="reset-btn" onclick="resetAll()">⌧ Reset all progress</button>
+  <button class="reset-btn" onclick="resetAll()">Reset all progress</button>
 </div>
 
-
-<div style="text-align:center;margin:40px auto 20px;padding:20px;border-top:1px solid var(--hairline)">
-  <button id="wp-reset-btn" style="padding:8px 18px;background:transparent;border:1px solid rgba(192,57,43,.3);color:rgba(192,57,43,.7);font-family:var(--font-sans);font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:4px;cursor:pointer">Reset all progress</button>
-  <div style="font-family:var(--font-sans);font-size:.7rem;color:var(--muted);margin-top:8px">Useful for shared devices or starting over.</div>
-</div>
-<script>
-(function(){
-  var btn = document.getElementById('wp-reset-btn');
-  if (!btn) return;
-  btn.addEventListener('click', function() {
-    var msg = 'Reset ALL progress? This deletes chapters completed, streaks, vocabulary mastery, notes and certificates. Cannot be undone.';
-    if (!confirm(msg)) return;
-    if (!confirm('Final confirmation: really wipe everything?')) return;
-    try {
-      var keys = [];
-      for (var i = 0; i < localStorage.length; i++) {
-        var k = localStorage.key(i);
-        if (k && (k.startsWith('wordplay_') || k.startsWith('wp_') || k.startsWith('FCE'))) keys.push(k);
-      }
-      keys.forEach(function(k) { localStorage.removeItem(k); });
-      alert('Progress reset.');
-      location.href = 'index.html';
-    } catch(e) { alert('Reset failed: ' + e.message); }
-  });
-})();
-</script>
 <footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
 
 <script src="shared/store.js"></script>
@@ -651,7 +644,7 @@ function buildSection(level, section, label, chapters, results) {
       var wsRes = results[ch.slug];
       var gRes = results['wordplay_game_' + ch.slug] || results['game_' + ch.slug];
       
-      var lessonText = sD ? '✓' : '—';
+      var lessonText = sD ? 'Read' : '—';
       var wsText = wsRes && wsRes.pct !== undefined ? wsRes.pct + '%' : '—';
       var gameText = gRes ? (gRes.mastered + '/' + gRes.total) : '—';
       
@@ -737,45 +730,6 @@ function renderLevelOverview(activeLevel) {
     }
   });
   document.getElementById('levelOverview').innerHTML = html;
-  // FCE mock scores
-  (function() {
-    try {
-      var s1 = localStorage.getItem('wordplay_fce_mock_1_best');
-      var s2 = localStorage.getItem('wordplay_fce_mock_2_best');
-        var s3 = localStorage.getItem('wordplay_fce_mock_3_best');
-      if (s1 || s2) {
-        document.getElementById('fceDashSection').style.display = 'block';
-        if (s1) document.getElementById('fceScore1').textContent = s1;
-        if (s2) document.getElementById('fceScore2').textContent = s2;
-        if (s3 && document.getElementById('fceScore3')) document.getElementById('fceScore3').textContent = s3;
-
-      // Per-part weakest area
-      var partLabels = {part1:'MC Cloze',part2:'Open Cloze',part3:'Word Form',part4:'Key Word Transform',part5:'Multi-choice',part6:'Gapped Text',part7:'Multi-match'};
-      var partTotals = {part1:8,part2:8,part3:8,part4:6,part5:6,part6:6,part7:10};
-      var bestMock = null, bestScore = -1;
-      [1,2,3].forEach(function(n) {
-        var partsStr = localStorage.getItem('wordplay_fce_mock_' + n + '_parts');
-        if (!partsStr) return;
-        var tot = parseInt(localStorage.getItem('wordplay_fce_mock_' + n + '_best') || '0');
-        if (tot > bestScore) { bestScore = tot; bestMock = JSON.parse(partsStr); }
-      });
-      if (bestMock) {
-        var weakKey = null, weakPct = 101;
-        Object.keys(bestMock).forEach(function(k) {
-          var pct = Math.round((bestMock[k] / partTotals[k]) * 100);
-          if (pct < weakPct) { weakPct = pct; weakKey = k; }
-        });
-        var bkEl = document.getElementById('fce-part-breakdown');
-        if (bkEl && weakKey) {
-          bkEl.innerHTML = '<span style="font-family:var(--font-sans);font-size:.72rem;color:var(--muted)">Focus area: </span>' +
-            '<a href="../b/b2/fce/part-' + weakKey.replace('part','') + '/practice.html" ' +
-            'style="font-family:var(--font-sans);font-size:.72rem;font-weight:700;color:var(--amber);text-decoration:none">' +
-            partLabels[weakKey] + ' (' + weakPct + '%) →</a>';
-        }
-      }
-      }
-    } catch(e) {}
-  })();
 }
 
 function switchLevel(level) {
@@ -845,7 +799,7 @@ function resetAll() {
   if (!confirm('Reset all progress? This cannot be undone.')) return;
   for (var i = localStorage.length - 1; i >= 0; i--) {
     var key = localStorage.key(i);
-    if (key && (key.indexOf('wordplay') === 0 || key === 'playLearnProgress')) {
+    if (key && key.indexOf('wordplay') === 0) {
       localStorage.removeItem(key);
     }
   }
@@ -906,7 +860,7 @@ window.addEventListener('storage', function(e) {
     var top = nudges.slice(0,3);
     var bands = {a1:'a',a2:'a',b1:'b',b2:'b',c1:'c',c2:'c'};
     var html = '<div style="background:rgba(184,134,11,.07);border:1px solid rgba(184,134,11,.2);border-radius:8px;padding:16px 20px;margin-bottom:20px">';
-    html += '<div style="font-family:var(--font-sans);font-size:.62rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:10px">&#9651; Due for review</div>';
+    html += '<div style="font-family:var(--font-sans);font-size:.62rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:10px">Due for review</div>';
     top.forEach(function(n){
       var band=bands[n.lv]||'a';
       var href=band+'/'+n.lv+'/grammar/'+n.slug+'/worksheet.html';
