@@ -2,58 +2,12 @@
    WORD PLAY — Chapter Game Engine v2
    ══════════════════════════════════════════════════════════════════
 
-   PEDAGOGICAL DESIGN NOTES
-   ─────────────────────────
-   The previous engine used a 4-stage linear ladder (Meaning →
-   Synonym → Identify → Complete) with simple stage increment/
-   decrement. This works but has several weaknesses:
-   
-   1. FIXED STAGE ORDER — Every item always goes through the same
-      4 stages in the same order. Learners who already know Stage 1
-      must click through it to reach the more productive stages.
-   
-   2. NO SPACED REPETITION — Items are re-presented based only on
-      miss count weighting, not on time elapsed. True SRS uses
-      increasing intervals (1 → 4 → 10 → 30 min → 1 day...).
-      We can approximate this within a session.
+   4-stage spaced-repetition mastery game.
+   Stages 0-3 = Meaning / Recognition / In-context / Production.
+   Stage 4 = MASTERED.
 
-   3. BINARY CORRECT/WRONG — No partial credit. A hint-assisted
-      correct answer scores the same as a spontaneous one (except
-      for -5 points). This undermines the hint's pedagogical role.
-
-   4. NO CONFIDENCE DIMENSION — Learners can't signal "I know this"
-      to skip stages, which frustrates stronger students.
-
-   5. STAGE REGRESSION ON FIRST MISS — Regressing a stage on one
-      wrong answer is punitive and not supported by memory research.
-      (Two consecutive misses → regression is more appropriate.)
-
-   NEW DESIGN
-   ──────────
-   Stages (0-4):
-     0 — Receptive: see term + example → choose meaning (4-MCQ)
-     1 — Productive: see meaning → choose term (reverse MCQ)
-     2 — Contextual: see gapped sentence → choose correct answer
-     3 — Generative: see term → choose correct use in context
-     4 — MASTERED
-
-   Key changes:
-   • "I know this" button on stages 0-1: jumps item to stage 2,
-     saves time for confident learners, signals self-assessment
-   • Two-miss rule: item only regresses stage after TWO consecutive
-     misses on that item (not one)
-   • Confidence scoring: 
-       Spontaneous correct = 10pts
-       Hint-assisted correct = 4pts
-       "I know this" then correct at 2 = 8pts
-       "I know this" then wrong = regresses back to 0
-   • Interval weighting within session:
-       Items just answered (< 2 questions ago) = excluded from pool
-       Items with misses > 1 = higher weight
-       Items at stage 0 with no attempts = medium weight
-   • On completion: show mastery map — which items are strong vs
-     which are "brittle" (mastered but with many misses along the way)
-
+   Two-miss rule: stage regression only after two consecutive misses.
+   Auto-advance on correct (1.2 s). Manual Continue on wrong.
    ══════════════════════════════════════════════════════════════════ */
 
 (function () {
@@ -103,6 +57,32 @@
     const STORAGE_KEY = DATA.storageKey || ('game_' + DATA.level + '_' + DATA.chapterId);
     const STAGES = 4;
 
+    // ── Build play screen from a single clean template ────────────
+    // This replaces whatever static HTML the game.html has in .game-play,
+    // making game.js the single source of truth for the play-card layout.
+    (function buildPlayScreen() {
+      var play = document.querySelector('#gamePlay .game-play');
+      if (!play) return;
+      play.innerHTML =
+        '<div class="gp-prog"><div class="gp-prog-fill" id="gProgressBar" style="width:0%"></div></div>' +
+        '<div class="gp-meta">' +
+          '<span class="gp-badge" id="gModeTag"></span>' +
+          '<span class="gp-counter">' +
+            '<span class="gp-streak" id="gStreakBadge"></span>' +
+            '<span id="gProgressTxt">0 / ' + ITEMS.length + '</span>' +
+          '</span>' +
+        '</div>' +
+        '<div class="game-term" id="gTerm"></div>' +
+        '<div class="game-prompt" id="gPrompt"></div>' +
+        '<div class="game-options" id="gOptions"></div>' +
+        '<div class="game-feedback" id="gFeedback"></div>' +
+        '<div class="game-example" id="gExample" style="display:none"></div>' +
+        '<div class="gp-actions">' +
+          '<button id="gBtnHint" class="gp-link" type="button">Need a hint?</button>' +
+          '<button id="gBtnNext" class="game-btn primary" style="display:none">Continue</button>' +
+        '</div>';
+    })();
+
     // ── DOM refs ─────────────────────────────────────────────────
     function q(id) { return document.getElementById(id); }
     const screens = {
@@ -126,13 +106,9 @@
       example:     q('gExample'),
       btnNext:     q('gBtnNext'),
       btnHint:     q('gBtnHint'),
-      btnReveal:   q('gBtnReveal'),
-      btnKnow:     q('gBtnKnow'),
-      btnSaveQuit: q('gBtnSaveQuit'),
+      streakBadge: q('gStreakBadge'),
       progressBar: q('gProgressBar'),
       progressTxt: q('gProgressTxt'),
-      score:       q('gScore'),
-      streak:      q('gStreak'),
       refToggle:   q('gRefToggle'),
       refBody:     q('gRefBody'),
       refList:     q('gRefList'),
@@ -147,7 +123,6 @@
     var autoAdvanceTimer = null;
 
     // ── State ────────────────────────────────────────────────────
-    // item state: { id, stage, misses, consecutiveMisses, lastAnswered(questionNum), selfAsserted }
     let state = {
       items: [],
       score: 0,
@@ -158,48 +133,40 @@
       answered: false,
       hintUsed: false,
       completed: false,
-      questionNum: 0,       // global question counter for interval logic
+      questionNum: 0,
     };
 
     // ── Stage definitions ─────────────────────────────────────────
     const STAGE_DEFS = [
       {
-        tag: 'Stage 1 \u2014 Meaning',
+        tag: 'Stage 1 — Meaning',
         sub: 'What does this term mean?',
-        // show term, ask for meaning
         showTerm: (item) => item.term,
         correct: (item) => item.meaning,
         pool: (items) => items.map(i => i.meaning),
-        canKnow: true,  // "I know this" available
       },
       {
-        tag: 'Stage 2 \u2014 Recognition',
+        tag: 'Stage 2 — Recognition',
         sub: 'Which term matches this definition?',
-        // show meaning, ask for term (reverse)
         showTerm: (item) => item.meaning,
         correct: (item) => item.term,
         pool: (items) => items.map(i => i.term),
-        canKnow: true,
       },
       {
-        tag: 'Stage 3 \u2014 In context',
+        tag: 'Stage 3 — In context',
         sub: 'Complete the sentence correctly',
-        // show gapped sentence, ask for answer
         showTerm: (item) => item.completion
-          ? item.completion.replace('______', '\u25a1 \u25a1 \u25a1 \u25a1 \u25a1 \u25a1')
+          ? item.completion.replace('______', '□ □ □ □ □ □')
           : item.meaning,
         correct: (item) => item.answer || item.term,
         pool: (items) => items.map(i => i.answer || i.term),
-        canKnow: false,
       },
       {
-        tag: 'Stage 4 \u2014 Production',
+        tag: 'Stage 4 — Production',
         sub: 'Find a synonym or related term',
-        // show term, ask for synonym
         showTerm: (item) => item.term,
         correct: (item) => item.synonym,
         pool: (items) => items.map(i => i.synonym),
-        canKnow: false,
       },
     ];
 
@@ -244,7 +211,7 @@
 
     function freshState() {
       state = {
-        items: ITEMS.map(i => ({ id: i.id, stage: 0, misses: 0, consecutiveMisses: 0, lastAnswered: -99, selfAsserted: false })),
+        items: ITEMS.map(i => ({ id: i.id, stage: 0, misses: 0, consecutiveMisses: 0, lastAnswered: -99 })),
         score: 0, streak: 0, bestStreak: 0,
         currentId: null, currentStage: 0,
         answered: false, hintUsed: false, completed: false,
@@ -266,14 +233,15 @@
     function getItemState(id) { return state.items.find(i => i.id === id); }
 
     function showScreen(name) {
-      Object.entries(screens).forEach(([k, el]) => {
-        if (!el) return;
-        el.classList.toggle('active', k === name);
+      Object.entries(screens).forEach(([k, scr]) => {
+        if (!scr) return;
+        scr.classList.toggle('active', k === name);
       });
     }
 
-    function toast(msg, dur = 2000) {
+    function toast(msg, dur) {
       if (!el.toast) return;
+      dur = dur || 2000;
       el.toast.textContent = msg;
       el.toast.classList.add('show');
       setTimeout(() => el.toast.classList.remove('show'), dur);
@@ -298,18 +266,14 @@
     }
 
     // ── Pick next item ─────────────────────────────────────────────
-    // Spaced repetition within session:
-    //   - Never pick the item answered in the last 2 questions (unless only 1 item)
-    //   - Weight by consecutive misses (more misses = higher priority)
-    //   - Weight by stage (lower stage = higher priority if multiple same-miss items)
     function nextItem() {
       if (autoAdvanceTimer) { clearTimeout(autoAdvanceTimer); autoAdvanceTimer = null; }
 
-      // Reset card position (handles swipe-exit state) and slide in from right
+      // Reset card and slide in from right (handles post-swipe invisible state too)
       var playCard = document.querySelector('.game-play');
       if (playCard) {
         playCard.style.transition = 'none';
-        playCard.style.transform = 'translateX(30px)';
+        playCard.style.transform = 'translateX(28px)';
         playCard.style.opacity = '0';
         void playCard.offsetHeight;
         playCard.style.transition = 'transform 0.2s ease-out, opacity 0.18s ease-out';
@@ -326,7 +290,6 @@
 
       const pool = state.items.filter(i => {
         if (i.stage >= STAGES) return false;
-        // Exclude recently answered items (interval spacing), unless no choice
         const recentlyAnswered = (state.questionNum - i.lastAnswered) < 2;
         const poolSize = state.items.filter(j => j.stage < STAGES).length;
         if (recentlyAnswered && poolSize > 1) return false;
@@ -344,9 +307,8 @@
       // Weighted selection: prioritise high consecutive misses, then low stage
       const weighted = pool.map(i => {
         let w = 1;
-        w += i.consecutiveMisses * 3;   // miss weight: urgent review
-        w += (STAGES - i.stage) * 0.5;  // stage weight: prefer unmastered
-        if (i.selfAsserted) w *= 0.5;   // self-asserted: slightly lower priority
+        w += i.consecutiveMisses * 3;
+        w += (STAGES - i.stage) * 0.5;
         return { i, w };
       });
       const total = weighted.reduce((s, x) => s + x.w, 0);
@@ -369,42 +331,17 @@
       const stage = state.currentStage;
       const def = STAGE_DEFS[stage];
 
-      // Stage tag with progress dots
-      if (el.modeTag) {
-        el.modeTag.textContent = def.tag;
-      }
-      // Stage dots (persistent element)
-      let dotsEl = document.querySelector('.stage-dots');
-      if (!dotsEl && el.modeTag) {
-        dotsEl = document.createElement('div');
-        dotsEl.className = 'stage-dots';
-        dotsEl.style.cssText = 'display:flex;gap:5px;margin-top:6px;justify-content:center';
-        el.modeTag.insertAdjacentElement('afterend', dotsEl);
-      }
-      if (dotsEl) {
-        dotsEl.innerHTML = Array.from({length: STAGES}, (_, i) => {
-          const filled = i <= stage;
-          return `<span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:${filled ? 'var(--amber)' : 'var(--hairline)'};border:1.5px solid ${filled ? 'var(--amber)' : 'rgba(26,26,26,0.2)'}"></span>`;
-        }).join('');
-      }
+      if (el.modeTag) el.modeTag.textContent = def.tag;
 
-      // Term display
-      const termText = def.showTerm(item);
       if (el.term) {
         if (stage === 2 && item.completion) {
           el.term.innerHTML = item.completion.replace('______', '<span class="game-gap">______</span>');
         } else {
-          el.term.textContent = termText;
+          el.term.textContent = def.showTerm(item);
         }
       }
       if (el.prompt) el.prompt.textContent = def.sub;
 
-      // "I know this" button visibility
-      if (el.btnKnow) {
-        el.btnKnow.style.display = def.canKnow ? 'inline-flex' : 'none';
-      }
-
-      // Build answer options
       const correct = def.correct(item);
       const allAnswers = def.pool(ITEMS).filter(x => x && x !== correct);
       const distractors = shuffle(allAnswers).slice(0, 3);
@@ -419,16 +356,16 @@
         });
       }
 
-      if (el.btnHint)   { el.btnHint.disabled = false; }
-      if (el.btnReveal) { el.btnReveal.disabled = false; }
+      if (el.btnHint) el.btnHint.disabled = false;
 
       updateProgressUI();
     }
 
     // ── Handle answer ─────────────────────────────────────────────
-    function handleAnswer(btn, isReveal = false) {
+    function handleAnswer(btn, isReveal) {
       if (state.answered) return;
       state.answered = true;
+      isReveal = !!isReveal;
 
       const item    = getItem(state.currentId);
       const st      = getItemState(state.currentId);
@@ -438,72 +375,55 @@
       const acceptList = (item.accept || []);
       const isCorrect = !isReveal && (userVal === correct || acceptList.includes(userVal));
 
-      // Mark buttons
       el.options.querySelectorAll('.game-option').forEach(b => {
         b.disabled = true;
         const bVal = decodeURIComponent(b.dataset.val);
         if (bVal === correct || (item.accept || []).includes(bVal)) b.classList.add('correct');
         else if (b === btn && !isCorrect) b.classList.add('wrong');
       });
-      if (el.btnHint)   el.btnHint.disabled = true;
-      if (el.btnReveal) el.btnReveal.disabled = true;
-      if (el.btnKnow)   el.btnKnow.disabled = true;
+      if (el.btnHint) el.btnHint.disabled = true;
       playTone(isCorrect);
 
-      // Track last answered for interval spacing
       st.lastAnswered = state.questionNum;
 
       if (isCorrect) {
-        // Advance stage
         st.stage = Math.min(st.stage + 1, STAGES);
         st.consecutiveMisses = 0;
         state.streak++;
         if (state.streak > state.bestStreak) state.bestStreak = state.streak;
 
-        // Scoring: hint = 4pts, self-asserted then correct = 8pts, spontaneous = 10pts
-        const points = state.hintUsed ? 4 : (st.selfAsserted && state.currentStage === 2 ? 8 : 10);
+        const points = state.hintUsed ? 4 : 10;
         state.score += points;
 
         const feedbackMsg = state.streak >= 3
-          ? `Correct! \uD83D\uDD25 ${state.streak} streak`
+          ? 'Correct! ◆ ' + state.streak + ' streak'
           : 'Correct!';
         if (el.feedback) { el.feedback.textContent = feedbackMsg; el.feedback.className = 'game-feedback correct'; }
         if (st.stage >= STAGES) {
-          // Show mastery toast
           const brittle = st.misses > 2;
-          toast(brittle ? `${item.term} mastered \u2014 took some tries!` : `${item.term} mastered!`);
+          toast(brittle ? item.term + ' mastered — took some tries!' : item.term + ' mastered!');
           updateStoreProgress();
         }
       } else {
-        // Two-consecutive-miss rule for regression
         st.consecutiveMisses++;
         st.misses++;
         state.streak = 0;
 
-        if (st.selfAsserted) {
-          // Self-asserted then wrong: full regression to 0, clear assertion
-          st.stage = 0;
-          st.selfAsserted = false;
-          if (el.feedback) { el.feedback.textContent = `Not quite — the answer is "${correct}". Resetting to Stage 1.`; el.feedback.className = 'game-feedback wrong'; }
-        } else if (st.consecutiveMisses >= 2) {
-          // Two consecutive misses: regress one stage
+        if (st.consecutiveMisses >= 2) {
           st.stage = Math.max(st.stage - 1, 0);
-          const msg = isReveal ? `Answer: "${correct}"` : `Wrong again \u2014 "${correct}". Moving back a stage.`;
+          const msg = isReveal ? 'Answer: "' + correct + '"' : 'Wrong again — "' + correct + '". Moving back a stage.';
           if (el.feedback) { el.feedback.textContent = msg; el.feedback.className = 'game-feedback wrong'; }
         } else {
-          // First miss: just show answer, no regression
-          const msg = isReveal ? `Answer: "${correct}"` : `Not quite \u2014 the answer is "${correct}"`;
+          const msg = isReveal ? 'Answer: "' + correct + '"' : 'Not quite — the answer is "' + correct + '"';
           if (el.feedback) { el.feedback.textContent = msg; el.feedback.className = 'game-feedback wrong'; }
         }
       }
 
-      // Show example sentence
       if (el.example && item.example) {
         el.example.innerHTML = item.example;
         el.example.style.display = 'block';
       }
 
-      // Auto-complete check (fires before auto-advance so completion screen takes priority)
       if (state.items.every(i => i.stage >= STAGES)) {
         state.completed = true;
         updateProgressUI();
@@ -513,38 +433,16 @@
       }
 
       if (isCorrect) {
-        // Auto-advance after correct answer — no Next button needed
         if (el.btnNext) el.btnNext.style.display = 'none';
         autoAdvanceTimer = setTimeout(function() {
           autoAdvanceTimer = null;
           nextItem();
         }, 1200);
       } else {
-        // Wrong answer — show Next so learner can take time to process
         if (el.btnNext) el.btnNext.style.display = 'inline-flex';
       }
       updateProgressUI();
       saveState();
-    }
-
-    // ── "I know this" button ──────────────────────────────────────
-    // Jumps item to Stage 3 (In context) — learner self-asserts knowledge
-    // If they then get Stage 3 correct, they score 8pts and advance normally
-    // If they get Stage 3 wrong, they regress to Stage 0
-    function handleKnowThis() {
-      if (state.answered) return;
-      const st = getItemState(state.currentId);
-      if (!st) return;
-      st.stage = 2;           // jump to contextual stage
-      st.selfAsserted = true; // flag for scoring/regression
-      state.answered = false;
-      state.currentStage = 2;
-      if (el.feedback) {
-        el.feedback.textContent = 'Great \u2014 now prove it in context!';
-        el.feedback.className = 'game-feedback';
-      }
-      renderQuestion();
-      toast('Jumped to Stage 3 \u2014 complete the sentence to confirm.');
     }
 
     // ── Hint ──────────────────────────────────────────────────────
@@ -554,22 +452,9 @@
       const item = getItem(state.currentId);
       const def  = STAGE_DEFS[state.currentStage];
       const correct = def.correct(item);
-      // Show first letter of each word
-      const hint = correct.split(' ').map(w => w[0] + '\u2026').join(' ');
+      const hint = correct.split(' ').map(w => w[0] + '…').join(' ');
       if (el.feedback) { el.feedback.textContent = 'Hint: ' + hint; el.feedback.className = 'game-feedback'; }
       if (el.btnHint) el.btnHint.disabled = true;
-    }
-
-    // ── Reveal ────────────────────────────────────────────────────
-    function reveal() {
-      if (state.answered) return;
-      const item = getItem(state.currentId);
-      const def  = STAGE_DEFS[state.currentStage];
-      const correct = def.correct(item);
-      const btns = el.options ? el.options.querySelectorAll('.game-option') : [];
-      let fakeBtn = null;
-      btns.forEach(b => { if (decodeURIComponent(b.dataset.val) === correct) fakeBtn = b; });
-      handleAnswer(fakeBtn || btns[0], true);
     }
 
     // ── Progress UI ───────────────────────────────────────────────
@@ -577,9 +462,8 @@
       const mastered = state.items.filter(i => i.stage >= STAGES).length;
       const pct = Math.round((mastered / ITEMS.length) * 100);
       if (el.progressBar) el.progressBar.style.width = pct + '%';
-      if (el.progressTxt) el.progressTxt.textContent = mastered + ' / ' + ITEMS.length + ' mastered';
-      if (el.score)  el.score.textContent = state.score;
-      if (el.streak) el.streak.textContent = state.streak;
+      if (el.progressTxt) el.progressTxt.textContent = mastered + ' / ' + ITEMS.length;
+      if (el.streakBadge) el.streakBadge.textContent = state.streak >= 3 ? '◆ ' + state.streak + '  ' : '';
       renderReference();
     }
 
@@ -602,7 +486,7 @@
       }).join('');
     }
 
-    // ── Confetti celebration ──────────────────────────────────────
+    // ── Confetti ──────────────────────────────────────────────────
     function triggerConfetti() {
       if (!document.getElementById('cf-kf')) {
         var s = document.createElement('style');
@@ -621,17 +505,15 @@
     }
 
     // ── Completion screen ─────────────────────────────────────────
-    // Mastery map: categorise items as Strong / Brittle / Shaky
     function renderCompletion() {
       if (el.finalScore)  el.finalScore.textContent  = state.score;
       if (el.finalStreak) el.finalStreak.textContent = state.bestStreak;
       const mastered = state.items.filter(i => i.stage >= STAGES).length;
-      if (el.finalPct)    el.finalPct.textContent    = Math.round((mastered / ITEMS.length) * 100) + '%';
+      if (el.finalPct) el.finalPct.textContent = Math.round((mastered / ITEMS.length) * 100) + '%';
 
-      // Mastery map
       if (el.masteryMap) {
-        const strong   = state.items.filter(i => i.stage >= STAGES && i.misses <= 1);
-        const brittle  = state.items.filter(i => i.stage >= STAGES && i.misses > 1);
+        const strong     = state.items.filter(i => i.stage >= STAGES && i.misses <= 1);
+        const brittle    = state.items.filter(i => i.stage >= STAGES && i.misses > 1);
         const unmastered = state.items.filter(i => i.stage < STAGES);
 
         let html = '';
@@ -641,7 +523,7 @@
           html += '</div>';
         }
         if (brittle.length) {
-          html += '<div class="mastery-group"><div class="mastery-group-label" style="color:var(--amber)">Mastered \u2014 review again (' + brittle.length + ')</div>';
+          html += '<div class="mastery-group"><div class="mastery-group-label" style="color:var(--amber)">Mastered — review again (' + brittle.length + ')</div>';
           html += brittle.map(i => `<span class="mastery-chip brittle">${getItem(i.id).term}</span>`).join('');
           html += '</div>';
         }
@@ -666,13 +548,10 @@
       nextItem();
     });
     if (el.btnHint)          el.btnHint.addEventListener('click',          showHint);
-    if (el.btnReveal)        el.btnReveal.addEventListener('click',        reveal);
-    if (el.btnKnow)          el.btnKnow.addEventListener('click',          handleKnowThis);
     if (el.btnPlayAgain)     el.btnPlayAgain.addEventListener('click',     () => { freshState(); showScreen('play'); nextItem(); });
-    if (el.btnSaveQuit)      el.btnSaveQuit.addEventListener('click',      () => { saveState(); toast('Progress saved'); setTimeout(() => { showScreen('start'); renderStart(); }, 600); });
     if (el.refToggle)        el.refToggle.addEventListener('click',        () => {
       const body = el.refBody;
-      if (body) { body.classList.toggle('open'); el.refToggle.textContent = body.classList.contains('open') ? '\u25b2 Reference' : '\u25bc Reference'; }
+      if (body) { body.classList.toggle('open'); el.refToggle.textContent = body.classList.contains('open') ? '▲ Reference' : '▼ Reference'; }
     });
 
     // Keyboard shortcuts
@@ -683,9 +562,11 @@
         const btn = btns[parseInt(e.key) - 1];
         if (btn && !btn.disabled) btn.click();
       }
-      if ((e.key === 'Enter' || e.key === ' ') && state.answered && el.btnNext && el.btnNext.style.display !== 'none') nextItem();
+      if ((e.key === 'Enter' || e.key === ' ') && state.answered && el.btnNext && el.btnNext.style.display !== 'none') {
+        if (autoAdvanceTimer) { clearTimeout(autoAdvanceTimer); autoAdvanceTimer = null; }
+        nextItem();
+      }
       if (e.key === 'h' && !state.answered) showHint();
-      if (e.key === 'k' && !state.answered) handleKnowThis();
     });
 
     // ── Swipe to advance (after answering) ────────────────────────

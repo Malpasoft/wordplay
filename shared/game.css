@@ -1,6 +1,7 @@
-/* ─── CHAPTER NAV (shared across slides / worksheet / game) ─────── */
-/* ── Chapter navigation tabs ── */
-/* Nav container — constrains width and positions nav below header */
+/* ══════════════════════════════════════════════════════════════════
+   WORD PLAY — Game CSS v107
+   ══════════════════════════════════════════════════════════════════ */
+
 /* ─── SCREEN TRANSITIONS ────────────────────────────────────────── */
 .game-screen { display: none; }
 .game-screen.active { display: block; }
@@ -9,13 +10,21 @@
 .game-start {
   background: var(--paper);
   border: 1.5px solid var(--border-soft);
-  border-radius: 10px;
-  padding: 32px 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 18px rgba(0,0,0,.08);
+  padding: 36px 28px;
   text-align: center;
   margin-top: 8px;
 }
-.game-start h2 { font-size: 1.6rem; margin-bottom: 12px; }
-.game-start p { color: var(--muted-deep); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
+.game-start h2 {
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--ink);
+}
+.game-start p { color: var(--muted-deep); font-size: 0.92rem; line-height: 1.6; margin-bottom: 20px; }
+
 .game-stats-row {
   display: flex;
   justify-content: center;
@@ -23,7 +32,7 @@
   margin: 20px 0;
   padding: 16px;
   background: var(--cream-deep);
-  border-radius: 4px;
+  border-radius: 8px;
 }
 .game-stat { text-align: center; }
 .game-stat-val {
@@ -36,7 +45,7 @@
 }
 .game-stat-label {
   font-family: var(--font-sans);
-  font-size: 0.65rem;
+  font-size: 0.62rem;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   color: var(--muted);
@@ -44,19 +53,24 @@
 }
 
 .game-btn-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+
+/* ─── BUTTONS ───────────────────────────────────────────────────── */
 .game-btn {
   padding: 13px 28px;
   font-family: var(--font-sans);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   font-weight: 700;
   letter-spacing: 0.5px;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   min-height: 48px;
-  transition: all 0.12s;
+  transition: background .12s, opacity .12s;
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
   border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .game-btn:active { transform: scale(0.97); }
 .game-btn.primary { background: var(--amber); color: #1A1A1A; }
@@ -70,43 +84,87 @@
 }
 .game-btn.ghost:hover { background: var(--cream-deep); }
 .game-btn.small { padding: 8px 18px; font-size: 0.82rem; min-height: 38px; }
-/* ─── GAME PLAY AREA ────────────────────────────────────────────── */
+
+/* ─── PLAY CARD ─────────────────────────────────────────────────── */
 .game-play {
   background: var(--paper);
   border: 1.5px solid var(--border-soft);
-  border-radius: 10px;
-  padding: 24px 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 18px rgba(0,0,0,.08);
+  padding: 0 0 22px;
   margin-top: 8px;
+  overflow: hidden;
   will-change: transform;
   user-select: none;
 }
-.game-mode-tag {
+
+/* Amber progress bar flush at top of card */
+.gp-prog {
+  height: 4px;
+  background: var(--hairline);
+}
+.gp-prog-fill {
+  height: 100%;
+  background: var(--amber);
+  transition: width .4s ease;
+}
+
+/* Stage badge + counter row */
+.gp-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 26px 0;
+}
+.gp-badge {
+  background: rgba(184,134,11,.12);
+  color: var(--amber);
   font-family: var(--font-sans);
-  font-size: 0.72rem;
+  font-size: .6rem;
+  font-weight: 800;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--accent);
-  font-weight: 700;
-  margin-bottom: 8px;
+  padding: 4px 10px;
+  border-radius: 4px;
 }
+.gp-counter {
+  font-family: var(--font-sans);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+}
+.gp-streak {
+  color: var(--amber);
+  font-weight: 800;
+}
+
+/* Content sections — consistent side padding */
+.game-term,
+.game-prompt,
+.game-options,
+.game-feedback,
+.game-example,
+.gp-actions {
+  padding-left: 26px;
+  padding-right: 26px;
+}
+
+/* Term (the word / gapped sentence / definition) */
 .game-term {
   font-family: var(--font-serif);
-  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  font-size: clamp(1.5rem, 5vw, 2.2rem);
   font-weight: 700;
   color: var(--ink);
   text-align: center;
-  padding: 16px 0 8px;
+  padding-top: 20px;
+  padding-bottom: 6px;
   line-height: 1.2;
 }
-.game-prompt {
-  font-style: italic;
-  color: var(--muted-deep);
-  text-align: center;
-  font-size: 0.95rem;
-  margin-bottom: 20px;
-  line-height: 1.5;
-}
-/* the sentence completion gap */
+
+/* Sentence-completion gap */
 .game-gap {
   border-bottom: 3px solid var(--accent);
   padding: 0 6px;
@@ -116,8 +174,18 @@
   color: var(--accent);
 }
 
+/* Stage sub-prompt */
+.game-prompt {
+  font-style: italic;
+  color: var(--muted-deep);
+  text-align: center;
+  font-size: 0.92rem;
+  padding-bottom: 16px;
+  line-height: 1.5;
+}
+
 /* ─── OPTIONS ───────────────────────────────────────────────────── */
-.game-options { display: flex; flex-direction: column; gap: 10px; margin: 16px 0; }
+.game-options { display: flex; flex-direction: column; gap: 10px; padding-bottom: 4px; }
 .game-option {
   width: 100%;
   padding: 14px 18px;
@@ -138,78 +206,69 @@
 .game-option:active { transform: scale(0.99); }
 .game-option:hover:not(:disabled) { background: rgba(184,134,11,.05); border-color: var(--amber); }
 .game-option.correct { background: #F0F9F3; color: var(--green); border-color: var(--green); font-weight: 700; }
-.game-option.wrong   { background: #FDF3F3; color: var(--red); border-color: var(--red); text-decoration: line-through; }
+.game-option.wrong   { background: #FDF3F3; color: var(--red);   border-color: var(--red);   text-decoration: line-through; }
 .game-option:disabled { cursor: default; opacity: 0.75; }
-/* ─── FEEDBACK ──────────────────────────────────────────────────── */
+
+/* ─── FEEDBACK & EXAMPLE ────────────────────────────────────────── */
 .game-feedback {
-  min-height: 28px;
-  font-size: 0.98rem;
+  min-height: 26px;
+  font-family: var(--font-sans);
+  font-size: 0.92rem;
   font-weight: 700;
   text-align: center;
-  padding: 4px 0;
-  margin: 8px 0;
+  padding-top: 10px;
+  padding-bottom: 2px;
 }
 .game-feedback.correct { color: var(--green); }
 .game-feedback.wrong   { color: var(--red); }
+
 .game-example {
   font-style: italic;
   color: var(--muted-deep);
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   text-align: center;
-  padding: 8px 0;
+  padding-top: 8px;
+  padding-bottom: 4px;
   line-height: 1.5;
   border-top: 1px solid var(--border-soft);
-  margin-top: 8px;
-}
-/* ─── PROGRESS PANEL ────────────────────────────────────────────── */
-.game-progress-strip {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 0;
-  border-top: 1px solid var(--border-soft);
-  margin-top: 16px;
-}
-.game-progress-bar {
-  flex: 1;
-  height: 6px;
-  background: var(--cream-deep);
-  border-radius: 3px;
-  overflow: hidden;
-}
-.game-progress-fill {
-  height: 100%;
-  background: var(--accent);
-  border-radius: 3px;
-  transition: width 0.4s ease-out;
-}
-.game-progress-text {
-  font-family: var(--font-sans);
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--muted);
-  white-space: nowrap;
-  letter-spacing: 0.5px;
-}
-
-.game-score-streak {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  font-family: var(--font-sans);
-  font-size: 0.82rem;
-  color: var(--muted);
   margin-top: 6px;
 }
-.game-score-streak strong { color: var(--amber); }
-/* ─── HELPER ROW ────────────────────────────────────────────────── */
-.game-helpers { display: flex; justify-content: center; gap: 8px; margin: 12px 0 4px; }
+
+/* ─── ACTION ROW (hint link + continue button) ──────────────────── */
+.gp-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 14px;
+}
+
+/* "Need a hint?" — subtle text link, not a button */
+.gp-link {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-family: var(--font-sans);
+  font-size: .8rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  padding: 4px 0;
+  -webkit-tap-highlight-color: transparent;
+}
+.gp-link:hover { color: var(--amber); }
+.gp-link:disabled { opacity: .35; cursor: default; text-decoration: none; }
+
+#gBtnNext {
+  min-width: 130px;
+  animation: nextBtnIn .2s ease-out;
+}
+@keyframes nextBtnIn { from { opacity:0; transform:scale(.94) } to { opacity:1; transform:scale(1) } }
 
 /* ─── REFERENCE PANEL ───────────────────────────────────────────── */
 .game-ref-panel {
   margin-top: 16px;
-  border: 1px solid var(--border-soft);
-  border-radius: 4px;
+  border: 1.5px solid var(--border-soft);
+  border-radius: 8px;
   overflow: hidden;
 }
 .game-ref-head {
@@ -234,31 +293,63 @@
 }
 .game-ref-item:last-child { border-bottom: none; }
 .game-ref-item .ref-term { font-weight: 700; color: var(--ink); }
-.game-ref-item .ref-def { color: var(--muted-deep); font-size: 0.85rem; }
-.game-ref-item .ref-ex { font-style: italic; color: var(--muted); font-size: 0.82rem; margin-top: 2px; }
+.game-ref-item .ref-def  { color: var(--muted-deep); font-size: 0.85rem; }
+.game-ref-item .ref-ex   { font-style: italic; color: var(--muted); font-size: 0.82rem; margin-top: 2px; }
 
-/* stage pip track per item */
 .ref-stage-track { display: flex; gap: 3px; margin-top: 6px; }
 .ref-stage-pip {
   width: 18px; height: 4px; border-radius: 2px;
   background: var(--cream-deep);
   transition: background 0.2s;
 }
-.ref-stage-pip.filled { background: var(--accent); }
+.ref-stage-pip.filled         { background: var(--accent); }
+.ref-stage-pip.filled-brittle { background: var(--amber) !important; opacity: 0.6; }
 
 /* ─── COMPLETION SCREEN ─────────────────────────────────────────── */
 .game-completion {
   background: var(--paper);
   border: 1.5px solid var(--border-soft);
   border-top: 4px solid var(--green);
-  border-radius: 10px;
-  padding: 40px 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 18px rgba(0,0,0,.08);
+  padding: 40px 28px;
   text-align: center;
   margin-top: 8px;
 }
-.game-completion h2 { font-size: 1.8rem; margin-bottom: 12px; }
-.game-completion p { color: var(--muted-deep); margin-bottom: 8px; font-size: 0.95rem; }
-/* ─── NOTIFICATION TOAST ────────────────────────────────────────── */
+.game-completion h2 {
+  font-family: var(--font-serif);
+  font-size: 1.9rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--ink);
+}
+.game-completion > p { color: var(--muted-deep); margin-bottom: 8px; font-size: 0.92rem; }
+
+/* ─── MASTERY MAP ───────────────────────────────────────────────── */
+#gMasteryMap { margin: 16px 0; text-align: left; }
+.mastery-group { margin-bottom: 14px; }
+.mastery-group-label {
+  font-family: var(--font-sans);
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.mastery-chip {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-family: var(--font-sans);
+  font-size: .72rem;
+  font-weight: 700;
+  margin: 3px 4px 3px 0;
+}
+.mastery-chip.strong     { background: rgba(46,125,82,.15);   color: var(--green); }
+.mastery-chip.brittle    { background: rgba(184,134,11,.12);  color: var(--amber); }
+.mastery-chip.unmastered { background: rgba(192,57,43,.10);   color: var(--red);   }
+
+/* ─── TOAST ─────────────────────────────────────────────────────── */
 .game-toast {
   position: fixed;
   bottom: 28px;
@@ -267,7 +358,7 @@
   background: rgba(20,20,20,0.92);
   color: #F0F0F0;
   padding: 10px 20px;
-  border-radius: 4px;
+  border-radius: 6px;
   font-family: var(--font-sans);
   font-size: 0.88rem;
   font-weight: 600;
@@ -278,14 +369,8 @@
   white-space: nowrap;
 }
 .game-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-/* ── Mobile nav overflow fix ── */
-/* ── Responsive ── */
-@media (max-width: 600px) {
-  .game-card { margin: 0 10px; }
-  .game-btn { padding: 12px 16px; font-size: 0.85rem; }
-}
 
-/* ── Chapter nav — card button style ─────────────────────────── */
+/* ─── CHAPTER NAV ───────────────────────────────────────────────── */
 .chapter-nav {
   display: flex;
   gap: 8px;
@@ -297,11 +382,7 @@
   flex-wrap: wrap;
 }
 .chapter-nav::-webkit-scrollbar { display: none; }
-.chapter-nav-wrap {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 0;
-}
+.chapter-nav-wrap { max-width: 800px; margin: 0 auto; padding: 0; }
 .chapter-nav-btn {
   flex: 1 1 auto;
   min-width: 80px;
@@ -322,177 +403,96 @@
   cursor: pointer;
   display: inline-block;
 }
-.chapter-nav-btn:hover {
-  color: var(--ink);
-  border-color: var(--ink);
-}
-.chapter-nav-btn.active {
-  background: var(--amber);
-  color: #1A1A1A;
-  border-color: var(--amber);
-}
+.chapter-nav-btn:hover { color: var(--ink); border-color: var(--ink); }
+.chapter-nav-btn.active { background: var(--amber); color: #1A1A1A; border-color: var(--amber); }
+
 @media (max-width: 480px) {
-  .chapter-nav {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-  }
-  .chapter-nav-btn {
-    flex-shrink: 0;
-    font-size: 0.62rem;
-    padding: 8px 10px;
-    letter-spacing: 1px;
-  }
+  .chapter-nav { flex-wrap: nowrap; }
+  .chapter-nav-btn { flex-shrink: 0; font-size: 0.62rem; padding: 8px 10px; letter-spacing: 1px; }
 }
 @media (max-width: 380px) {
   .chapter-nav-btn { min-width: 60px; }
 }
 
-/* ── Mastery map (completion screen) ─────────────────────────────── */
-#gMasteryMap {
-  margin: 16px 0;
-  text-align: left;
+/* ─── RESPONSIVE ────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .gp-meta,
+  .game-term,
+  .game-prompt,
+  .game-options,
+  .game-feedback,
+  .game-example,
+  .gp-actions          { padding-left: 18px; padding-right: 18px; }
+  .game-start,
+  .game-completion     { padding: 28px 18px; }
+  .game-btn            { padding: 12px 16px; font-size: 0.85rem; }
 }
-.mastery-group {
-  margin-bottom: 14px;
+@media (max-width: 380px) {
+  .gp-badge            { font-size: .55rem; letter-spacing: 1.5px; }
+  .game-term           { font-size: 1.4rem; }
 }
-.mastery-group-label {
-  font-family: var(--font-sans);
-  font-size: .68rem;
-  font-weight: 800;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-.mastery-chip {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-family: var(--font-sans);
-  font-size: .72rem;
-  font-weight: 700;
-  margin: 3px 4px 3px 0;
-}
-.mastery-chip.strong    { background: rgba(46,125,82,.15);  color: var(--green); }
-.mastery-chip.brittle   { background: rgba(184,134,11,.12); color: var(--amber); }
-.mastery-chip.unmastered{ background: rgba(192,57,43,.10);  color: var(--red);   }
-
-/* ── Brittle pip (mastered but with many misses) ─────────────────── */
-.ref-stage-pip.filled-brittle {
-  background: var(--amber) !important;
-  border-color: var(--amber) !important;
-  opacity: 0.6;
-}
-
-/* ── "I know this" button ─────────────────────────────────────────── */
-.game-btn.know {
-  background: transparent;
-  border: 1.5px solid var(--amber);
-  color: var(--amber);
-  font-size: .65rem;
-  padding: 6px 12px;
-  letter-spacing: .5px;
-}
-.game-btn.know:hover {
-  background: rgba(184,134,11,.1);
-}
-
-/* ── Streak fire indicator ────────────────────────────────────────── */
-.streak-fire {
-  display: inline-block;
-  margin-left: 4px;
-  font-size: .9rem;
-}
-
-/* ─── GAME CARD ACTIONS (hint / reveal / next) ──────────────────── */
-.game-card-actions {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin-top: 18px;
-  padding-top: 14px;
-  border-top: 1px solid var(--hairline);
-}
-.game-card-actions .game-btn { min-width: 90px; }
-
-/* Save & Exit — centred below the card */
-#gBtnSaveQuit {
-  display: block;
-  margin: 14px auto 0;
-  min-width: 140px;
-}
-
-
-#gBtnNext { min-width:120px;animation:nextBtnIn .2s ease-out; }
-@keyframes nextBtnIn { from{opacity:0;transform:scale(.95)} to{opacity:1;transform:scale(1)} }
-
-.game-stage-dots{display:flex;gap:6px;justify-content:center;margin-bottom:12px}
-.game-stage-dot{width:8px;height:8px;border-radius:50%;background:var(--hairline);transition:background .25s}
-.game-stage-dot.active{background:var(--amber)}
-.game-stage-dot.done{background:var(--green,#27ae60)}
-
 
 /* ══════════════════════════════════════════════════════════════════
-   DARK MODE — GAME (v106)
+   DARK MODE (v107)
    ══════════════════════════════════════════════════════════════════ */
 
 body.dark .game-start,
-body.dark .game-play {
+body.dark .game-play,
+body.dark .game-completion {
   background: var(--paper) !important;
   border-color: rgba(255,255,255,.1) !important;
   color: var(--ink) !important;
+  box-shadow: none !important;
 }
-body.dark .game-term        { color: #FFFFFF !important; }
-body.dark .game-prompt      { color: #E0E8F0 !important; }
-body.dark .game-example     { color: #B8C8D8 !important; }
-body.dark .game-feedback    { color: #F0F0F0 !important; }
+body.dark .game-start h2,
+body.dark .game-completion h2 { color: var(--ink) !important; }
+body.dark .game-term           { color: #FFFFFF !important; }
+body.dark .game-prompt         { color: rgba(255,255,255,.6) !important; }
+body.dark .game-example        { color: rgba(255,255,255,.5) !important; border-top-color: rgba(255,255,255,.1) !important; }
+body.dark .game-feedback       { color: var(--ink) !important; }
+body.dark .game-feedback.correct { color: var(--green) !important; }
+body.dark .game-feedback.wrong   { color: var(--red) !important; }
 
-body.dark .game-hud { color: #98A8B8 !important; }
-body.dark .hud-val  { color: #FFFFFF !important; }
+body.dark .gp-prog { background: rgba(255,255,255,.12); }
+body.dark .gp-badge { background: rgba(201,160,80,.15); }
 
 body.dark .game-option,
 body.dark .game-btn {
-  background: rgba(255,255,255,.08) !important;
-  border-color: rgba(255,255,255,.2) !important;
+  background: rgba(255,255,255,.07) !important;
+  border-color: rgba(255,255,255,.18) !important;
   color: #F0F0F0 !important;
 }
 body.dark .game-option:hover:not(:disabled),
 body.dark .game-btn:hover {
-  background: rgba(255,255,255,.15) !important;
+  background: rgba(255,255,255,.14) !important;
   border-color: var(--amber) !important;
 }
+body.dark .game-btn.primary {
+  background: var(--amber) !important;
+  color: #1A1A1A !important;
+  border-color: var(--amber) !important;
+}
+body.dark .game-btn.primary:hover { background: var(--accent-dark) !important; }
 body.dark .game-option.correct {
-  background: rgba(39,174,96,.25) !important;
+  background: rgba(39,174,96,.22) !important;
   border-color: #4CAF82 !important;
   color: #A0E8B0 !important;
 }
 body.dark .game-option.wrong {
-  background: rgba(192,57,43,.25) !important;
+  background: rgba(192,57,43,.22) !important;
   border-color: #E05A4A !important;
   color: #FFA090 !important;
 }
-body.dark .game-btn.know {
-  background: rgba(184,134,11,.15) !important;
-  color: var(--amber) !important;
-  border-color: rgba(184,134,11,.4) !important;
-}
+body.dark .gp-link { color: rgba(255,255,255,.4) !important; }
+body.dark .gp-link:hover { color: var(--amber) !important; }
+
 body.dark .game-stats-row { background: rgba(255,255,255,.06) !important; }
-body.dark .game-btn.primary { background: var(--amber) !important; color: #1A1A1A !important; }
+body.dark .game-stat-val   { color: var(--amber) !important; }
+body.dark .game-stat-label { color: rgba(255,255,255,.45) !important; }
 
-body.dark .game-ref-panel {
-  background: #0D1520 !important;
-  border-color: rgba(255,255,255,.08) !important;
-}
-body.dark .game-ref-head { color: var(--amber) !important; }
-
-body.dark .game-completion { color: var(--ink) !important; }
-body.dark .game-completion h2 { color: var(--ink) !important; }
-body.dark .game-stat-val   { color: #FFFFFF !important; }
-body.dark .game-stat-label { color: #98A8B8 !important; }
-
-body.dark .typing-input {
-  background: rgba(255,255,255,.08) !important;
-  border-color: rgba(255,255,255,.25) !important;
-  color: #FFFFFF !important;
-}
-body.dark .typing-input:focus { border-color: var(--amber) !important; }
+body.dark .game-ref-panel { border-color: rgba(255,255,255,.08) !important; }
+body.dark .game-ref-head  { background: rgba(255,255,255,.05) !important; color: var(--amber) !important; }
+body.dark .game-ref-item .ref-term { color: #FFFFFF !important; }
+body.dark .game-ref-item .ref-def  { color: rgba(255,255,255,.55) !important; }
+body.dark .game-ref-item .ref-ex   { color: rgba(255,255,255,.38) !important; }
+body.dark .ref-stage-pip { background: rgba(255,255,255,.12); }
