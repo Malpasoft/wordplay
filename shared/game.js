@@ -144,6 +144,8 @@
       toast: q('gToast'),
     };
 
+    var autoAdvanceTimer = null;
+
     // ── State ────────────────────────────────────────────────────
     // item state: { id, stage, misses, consecutiveMisses, lastAnswered(questionNum), selfAsserted }
     let state = {
@@ -301,6 +303,21 @@
     //   - Weight by consecutive misses (more misses = higher priority)
     //   - Weight by stage (lower stage = higher priority if multiple same-miss items)
     function nextItem() {
+      if (autoAdvanceTimer) { clearTimeout(autoAdvanceTimer); autoAdvanceTimer = null; }
+
+      // Reset card position (handles swipe-exit state) and slide in from right
+      var playCard = document.querySelector('.game-play');
+      if (playCard) {
+        playCard.style.transition = 'none';
+        playCard.style.transform = 'translateX(30px)';
+        playCard.style.opacity = '0';
+        void playCard.offsetHeight;
+        playCard.style.transition = 'transform 0.2s ease-out, opacity 0.18s ease-out';
+        playCard.style.transform = '';
+        playCard.style.opacity = '';
+        setTimeout(function() { playCard.style.transition = ''; }, 220);
+      }
+
       state.answered = false;
       state.hintUsed = false;
       if (el.feedback) { el.feedback.textContent = ''; el.feedback.className = 'game-feedback'; }
@@ -486,15 +503,28 @@
         el.example.style.display = 'block';
       }
 
-      if (el.btnNext) el.btnNext.style.display = 'inline-flex';
-      updateProgressUI();
-      saveState();
-
-      // Auto-complete check
+      // Auto-complete check (fires before auto-advance so completion screen takes priority)
       if (state.items.every(i => i.stage >= STAGES)) {
         state.completed = true;
+        updateProgressUI();
+        saveState();
         setTimeout(() => { updateStoreProgress(); clearState(); renderCompletion(); }, 1400);
+        return;
       }
+
+      if (isCorrect) {
+        // Auto-advance after correct answer — no Next button needed
+        if (el.btnNext) el.btnNext.style.display = 'none';
+        autoAdvanceTimer = setTimeout(function() {
+          autoAdvanceTimer = null;
+          nextItem();
+        }, 1200);
+      } else {
+        // Wrong answer — show Next so learner can take time to process
+        if (el.btnNext) el.btnNext.style.display = 'inline-flex';
+      }
+      updateProgressUI();
+      saveState();
     }
 
     // ── "I know this" button ──────────────────────────────────────
@@ -631,7 +661,10 @@
     if (el.btnStart)         el.btnStart.addEventListener('click',         () => { freshState(); saveState(); showScreen('play'); nextItem(); });
     if (el.btnResume)        el.btnResume.addEventListener('click',        () => { showScreen('play'); nextItem(); });
     if (el.btnNewFromResume) el.btnNewFromResume.addEventListener('click', () => { freshState(); saveState(); showScreen('play'); nextItem(); });
-    if (el.btnNext)          el.btnNext.addEventListener('click',          nextItem);
+    if (el.btnNext)          el.btnNext.addEventListener('click',          function() {
+      if (autoAdvanceTimer) { clearTimeout(autoAdvanceTimer); autoAdvanceTimer = null; }
+      nextItem();
+    });
     if (el.btnHint)          el.btnHint.addEventListener('click',          showHint);
     if (el.btnReveal)        el.btnReveal.addEventListener('click',        reveal);
     if (el.btnKnow)          el.btnKnow.addEventListener('click',          handleKnowThis);
