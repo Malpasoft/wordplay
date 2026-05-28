@@ -237,6 +237,16 @@
         if (!scr) return;
         scr.classList.toggle('active', k === name);
       });
+      if (name === 'play') {
+        requestAnimationFrame(function() {
+          var card = document.querySelector('#gamePlay .game-play');
+          if (!card) return;
+          var nav = document.querySelector('.site-header');
+          var navH = nav ? nav.getBoundingClientRect().height : 0;
+          var top = card.getBoundingClientRect().top + window.pageYOffset - navH - 12;
+          window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+        });
+      }
     }
 
     function toast(msg, dur) {
