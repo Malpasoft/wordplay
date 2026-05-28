@@ -35,21 +35,21 @@
       <h2>Present Simple</h2>
       <p class="ch-desc">I work · She works — verbos en presente</p><span class="ch-cta">Estudiar &#8594;</span>
     </a>
-    <div class="ch-card ch-card--grammar" style="opacity:.4;pointer-events:none">
+    <a href="articulos/index.html" class="ch-card ch-card--grammar" id="gpc_es-a1_articulos">
       <div class="ch-num">Cap. 3</div>
       <h2>Artículos a / an / the</h2>
-      <p class="ch-desc">El artículo determinado e indeterminado en inglés</p><span class="ch-cta">Próximamente</span>
-    </div>
-    <div class="ch-card ch-card--grammar" style="opacity:.4;pointer-events:none">
+      <p class="ch-desc">El artículo determinado e indeterminado en inglés</p><span class="ch-cta">Estudiar &#8594;</span>
+    </a>
+    <a href="pronombres/index.html" class="ch-card ch-card--grammar" id="gpc_es-a1_pronombres">
       <div class="ch-num">Cap. 4</div>
       <h2>Pronombres personales</h2>
-      <p class="ch-desc">I, you, he, she — uso obligatorio en inglés</p><span class="ch-cta">Próximamente</span>
-    </div>
-    <div class="ch-card ch-card--grammar" style="opacity:.4;pointer-events:none">
+      <p class="ch-desc">I, you, he, she — uso obligatorio en inglés</p><span class="ch-cta">Estudiar &#8594;</span>
+    </a>
+    <a href="have-got/index.html" class="ch-card ch-card--grammar" id="gpc_es-a1_have-got">
       <div class="ch-num">Cap. 5</div>
       <h2>Have got</h2>
-      <p class="ch-desc">I have got / I've got — posesión en inglés</p><span class="ch-cta">Próximamente</span>
-    </div>
+      <p class="ch-desc">I have got / I've got — posesión en inglés</p><span class="ch-cta">Estudiar &#8594;</span>
+    </a>
   </div>
 </div>
 <footer class="site-footer">Word Play · Inglés Cambridge A1→C2 · Para hispanohablantes</footer>
@@ -90,6 +90,66 @@
       b2.style.cssText = 'font-family:var(--font-sans);font-size:.65rem;font-weight:700;color:var(--amber);margin-top:6px;letter-spacing:.5px';
       b2.textContent = badges2.join(' · ');
       card2.querySelector('.ch-cta').before(b2);
+    }
+  } catch(e) {}
+})();
+
+(function() {
+  try {
+    var prog = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+    var lvl = prog['es-a1'] || {};
+    var card3 = document.getElementById('gpc_es-a1_articulos');
+    if (!card3) return;
+    var ws3 = lvl['articulos'];
+    var gm3 = lvl['wordplay_game_articulos'];
+    var badges3 = [];
+    if (ws3 && ws3.pct >= 70) badges3.push('Ejercicios ✓');
+    if (gm3 && gm3.pct >= 70) badges3.push('Juego ✓');
+    if (badges3.length) {
+      var b3 = document.createElement('div');
+      b3.style.cssText = 'font-family:var(--font-sans);font-size:.65rem;font-weight:700;color:var(--amber);margin-top:6px;letter-spacing:.5px';
+      b3.textContent = badges3.join(' · ');
+      card3.querySelector('.ch-cta').before(b3);
+    }
+  } catch(e) {}
+})();
+
+(function() {
+  try {
+    var prog = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+    var lvl = prog['es-a1'] || {};
+    var card4 = document.getElementById('gpc_es-a1_pronombres');
+    if (!card4) return;
+    var ws4 = lvl['pronombres'];
+    var gm4 = lvl['wordplay_game_pronombres'];
+    var badges4 = [];
+    if (ws4 && ws4.pct >= 70) badges4.push('Ejercicios ✓');
+    if (gm4 && gm4.pct >= 70) badges4.push('Juego ✓');
+    if (badges4.length) {
+      var b4 = document.createElement('div');
+      b4.style.cssText = 'font-family:var(--font-sans);font-size:.65rem;font-weight:700;color:var(--amber);margin-top:6px;letter-spacing:.5px';
+      b4.textContent = badges4.join(' · ');
+      card4.querySelector('.ch-cta').before(b4);
+    }
+  } catch(e) {}
+})();
+
+(function() {
+  try {
+    var prog = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+    var lvl = prog['es-a1'] || {};
+    var card5 = document.getElementById('gpc_es-a1_have-got');
+    if (!card5) return;
+    var ws5 = lvl['have-got'];
+    var gm5 = lvl['wordplay_game_have-got'];
+    var badges5 = [];
+    if (ws5 && ws5.pct >= 70) badges5.push('Ejercicios ✓');
+    if (gm5 && gm5.pct >= 70) badges5.push('Juego ✓');
+    if (badges5.length) {
+      var b5 = document.createElement('div');
+      b5.style.cssText = 'font-family:var(--font-sans);font-size:.65rem;font-weight:700;color:var(--amber);margin-top:6px;letter-spacing:.5px';
+      b5.textContent = badges5.join(' · ');
+      card5.querySelector('.ch-cta').before(b5);
     }
   } catch(e) {}
 })();
