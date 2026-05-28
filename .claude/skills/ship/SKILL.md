@@ -1,18 +1,50 @@
 # /ship
 
-Check and deploy the current changes to production.
+Deploy the current changes: design-check → cache-bust → commit → push.
 
 ## Steps
 
-1. **Confirm branch** — verify we are on `claude/github-workflow-setup-98Fbf` or `main`. If on another branch, stop and tell the user.
+### 1. Confirm branch
+We must be on `claude/github-workflow-setup-98Fbf`. If not, stop and tell the user.
 
-2. **Design system check** — scan all staged/modified HTML and CSS files for:
-   - Any emoji characters (flag if found)
-   - Any hex colours outside `#E8A020` (amber), `#1A1A1A` (ink), `#FAFAF8` (paper), `#000000` (dark header) — flag unexpected new colours
-   - Any `onmouseover`/`onmouseout` inline hover handlers (should use `sect-card` CSS class instead)
+### 2. Design-system audit (staged + modified files)
+Scan every staged/modified `.html`, `.css`, `.js` file for:
+- **Emoji characters** — flag any outside the allowed set (◐ ◑ ◆). Fix before shipping.
+- **Off-palette hex colours** — any `#RRGGBB` that isn't amber (`#E8A020`, `#B8860B`, `#C9A050`) or a neutral greyscale must be explained or removed.
+- **Inline hover handlers** — `onmouseover`/`onmouseout` must use `sect-card` CSS class instead.
 
-3. **Commit** — stage all changes, write a clear commit message describing what changed and why (not just what).
+Fix all violations before proceeding.
 
-4. **Push to main** — `git push origin HEAD:main`
+### 3. Cache-bust check
+If any file under `shared/` was modified:
+1. Find which shared files changed: `git diff --name-only HEAD shared/`
+2. For each changed file, identify the current `?v=vNN` version in consumer pages.
+3. Bump all consumers to the new version with this idempotent pattern:
+   ```python
+   import glob
+   OLD, NEW = "shared_file.ext?v=vOLD", "shared_file.ext?v=vNEW"
+   for p in glob.glob('**/*.html', recursive=True):
+       c = open(p).read()
+       if OLD in c:
+           open(p,'w').write(c.replace(OLD, NEW))
+   ```
+4. Verify: `grep -r "shared_file.ext?v=" --include="*.html" . | grep -v "v=vNEW" | wc -l` → must be 0.
 
-5. **Confirm** — report the commit hash and tell the user Cloudflare Pages will deploy within ~2 minutes.
+### 4. Commit
+Stage specific files (never `git add -A`). Message format:
+```
+<type>: <why the change was needed, one line>
+
+<optional body: what changed and key decisions>
+
+https://claude.ai/code/session_012MdyQ9zuDQKaoLMknxXJQo
+```
+
+### 5. Push
+```bash
+git push origin HEAD:main                          # deploys to Cloudflare Pages
+git push -u origin claude/github-workflow-setup-98Fbf  # keeps dev branch in sync
+```
+
+### 6. Confirm
+Report: commit hash, files changed, cache-bust bumps applied (if any), and "Cloudflare Pages deploys in ~2 minutes."
