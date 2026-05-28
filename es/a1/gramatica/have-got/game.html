@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A1 Gramática · Have got — Juego | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v106">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v107">
+<script src="../../../../shared/dark-init.js?v=v105"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link">Gramática A1</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Cambiar modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>›</span>
+  <a href="../../../index.html">Para hispanohablantes</a><span>›</span>
+  <a href="../../index.html">A1</a><span>›</span>
+  <a href="../index.html">Gramática</a><span>›</span>
+  <strong>Have got</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lección</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+</nav>
+<div class="game-wrap" id="gameWrap">
+  <div id="gameStart" class="game-screen active">
+    <div class="game-start">
+      <h2>Have got — Dominio</h2>
+      <p>10 elementos · 4 fases cada uno. Domina have got para posesión, preguntas y respuestas cortas.</p>
+      <p style="font-size:.85rem;color:var(--muted)">Un error te hace retroceder una fase — nunca a cero.</p>
+      <div id="gStartMastered" style="font-family:var(--font-sans);font-size:.9rem;margin:12px 0;color:var(--muted)"></div>
+      <div id="gResumeSection" style="display:none;margin-bottom:12px">
+        <button id="gBtnResume" class="game-btn primary">Continuar</button>
+        <button id="gBtnNewFromResume" class="game-btn">Empezar de nuevo</button>
+      </div>
+      <button id="gBtnStart" class="game-btn primary">Empezar</button>
+      <a href="../../index.html" class="game-btn" style="text-align:center;text-decoration:none;margin-top:8px">← Volver al nivel A1</a>
+    </div>
+  </div>
+  <div id="gamePlay" class="game-screen">
+    <div class="game-hud">
+      <span id="gModeTag" class="game-mode-tag"></span>
+      <span class="hud-sep">·</span>
+      <span id="gScore" class="hud-val">0</span> <span class="hud-label">dominados</span>
+      <span class="hud-sep">·</span>
+      <span id="gStreak" class="hud-val">0</span>
+    </div>
+    <div class="game-progress-bar"><div id="gProgressBar" class="game-progress-fill"></div></div>
+    <div id="gProgressTxt" class="game-progress-txt"></div>
+    <div class="game-card">
+      <div id="gTerm" class="game-term"></div>
+      <div id="gPrompt" class="game-prompt"></div>
+      <div id="gOptions" class="game-options"></div>
+      <div id="gFeedback" class="game-feedback"></div>
+      <div id="gExample" class="game-example" style="display:none"></div>
+    </div>
+  </div>
+  <div id="gameEnd" class="game-screen">
+    <div class="game-end">
+      <h2>¡Capítulo completado!</h2>
+      <div id="gFinalScore" class="final-score"></div>
+      <button id="gBtnRestart" class="game-btn primary">Jugar de nuevo</button>
+      <a href="../index.html" class="game-btn">Volver a Gramática A1</a>
+    </div>
+  </div>
+</div>
+<script>
+window.LEVEL = "es-a1";
+window.CHAPTER_ID = "have-got";
+window.STORAGE_KEY = "wordplay_game_es-a1_have-got";
+</script>
+<script src="../../../../shared/game.js?v=v107"></script>
+</body>
+</html>
