@@ -277,8 +277,10 @@
 .reset-btn:hover { border-color: var(--amber); color: var(--amber); }
 
 body.dark .lv-tile.active { background: rgba(184,134,11,.08); }
-body.dark .chapter-card.complete { background: rgba(184,134,11,.06); }
-body.dark .chap-pillar { background: rgba(255,255,255,0.04); }
+body.dark .chapter-card { background: var(--paper) !important; border-color: var(--hairline) !important; }
+body.dark .chapter-card.complete { background: rgba(184,134,11,.06) !important; }
+body.dark .chapter-card.locked { background: rgba(255,255,255,.04) !important; }
+body.dark .chap-pillar { background: rgba(255,255,255,0.08) !important; }
 body.dark .chap-pillar.done { background: rgba(184,134,11,.14); }
 body.dark .xp-badge { box-shadow: 0 0 0 4px rgba(201,160,80,.18); }
 body.dark .reset-btn:hover { border-color: var(--amber); color: var(--amber); }

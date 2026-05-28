@@ -438,6 +438,9 @@ body.dark .wp-qr-img { outline: 1px solid rgba(255,255,255,.12); }
 .breadcrumb span { opacity: 0.5; }
 
 /* Dark mode for cards */
+body.dark .chapter-card { background: var(--paper); border-color: var(--hairline); }
+body.dark .chapter-card.locked { background: rgba(255,255,255,.04); }
+
 /* ══════════════════════════════════════════════════════════════
    CHAPTER PAGE LAYOUT — consistent max-width and spacing
    ══════════════════════════════════════════════════════════════ */
