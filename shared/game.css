@@ -62,7 +62,7 @@
 .game-btn.primary { background: var(--navy); color: white; }
 .game-btn.primary:hover { background: var(--accent); }
 .game-btn.secondary { background: var(--ink); color: var(--paper); opacity: .75; }
-.game-btn.secondary:hover { background: #1A6A78; }
+.game-btn.secondary:hover { background: var(--amber); color: #1A1A1A; opacity: 1; }
 .game-btn.ghost {
   background: transparent;
   border: 1.5px solid var(--border);
@@ -436,15 +436,12 @@
    DARK MODE — GAME (Batch 21)
    ══════════════════════════════════════════════════════════════════ */
 
-body.dark .game-start-card,
-body.dark .game-card {
+body.dark .game-start,
+body.dark .game-play {
   background: #1A2230 !important;
   border-color: rgba(255,255,255,.1) !important;
   color: #F0F0F0 !important;
 }
-body.dark .game-card * { color: inherit !important; }
-body.dark .game-start-title { color: #FFFFFF !important; }
-body.dark .game-start-meta  { color: #98A8B8 !important; }
 body.dark .game-term        { color: #FFFFFF !important; }
 body.dark .game-prompt      { color: #E0E8F0 !important; }
 body.dark .game-example     { color: #B8C8D8 !important; }
@@ -475,10 +472,11 @@ body.dark .game-options .opt-btn.wrong {
   color: #FFA090 !important;
 }
 body.dark .game-btn.know {
-  background: rgba(76,175,130,.15) !important;
-  color: #4CAF82 !important;
-  border-color: rgba(76,175,130,.4) !important;
+  background: rgba(184,134,11,.15) !important;
+  color: var(--amber) !important;
+  border-color: rgba(184,134,11,.4) !important;
 }
+body.dark .game-stats-row { background: rgba(255,255,255,.06) !important; }
 body.dark .game-btn.primary {
   background: var(--amber) !important;
   color: #1A1A1A !important;

@@ -580,7 +580,7 @@
         s.textContent = '@keyframes cfFall{to{transform:translateY(105vh) rotate(480deg);opacity:0}}';
         document.head.appendChild(s);
       }
-      var colors = ['#C9A050','#4CAF82','#E05A4A','#4AABB8','#F0F0F0','#C9A050'];
+      var colors = ['#C9A050','#E8A020','#D4B060','#B8860B','#F5D080','#C9A050'];
       for (var i = 0; i < 32; i++) {
         var p = document.createElement('div');
         var sz = 6 + Math.random() * 6;
@@ -606,17 +606,17 @@
 
         let html = '';
         if (strong.length) {
-          html += '<div class="mastery-group"><div class="mastery-group-label" style="color:var(--green)">\u2713 Strong (' + strong.length + ')</div>';
+          html += '<div class="mastery-group"><div class="mastery-group-label" style="color:var(--green)">Strong (' + strong.length + ')</div>';
           html += strong.map(i => `<span class="mastery-chip strong">${getItem(i.id).term}</span>`).join('');
           html += '</div>';
         }
         if (brittle.length) {
-          html += '<div class="mastery-group"><div class="mastery-group-label" style="color:var(--amber)">\u26a0 Mastered but review again (' + brittle.length + ')</div>';
+          html += '<div class="mastery-group"><div class="mastery-group-label" style="color:var(--amber)">Mastered \u2014 review again (' + brittle.length + ')</div>';
           html += brittle.map(i => `<span class="mastery-chip brittle">${getItem(i.id).term}</span>`).join('');
           html += '</div>';
         }
         if (unmastered.length) {
-          html += '<div class="mastery-group"><div class="mastery-group-label" style="color:var(--red)">\u2715 Needs more practice (' + unmastered.length + ')</div>';
+          html += '<div class="mastery-group"><div class="mastery-group-label" style="color:var(--red)">Needs more practice (' + unmastered.length + ')</div>';
           html += unmastered.map(i => `<span class="mastery-chip unmastered">${getItem(i.id).term}</span>`).join('');
           html += '</div>';
         }
