@@ -1,0 +1,307 @@
+TASK: Build Spanish A1 content files — one at a time
+
+You are creating lesson content for a static Cambridge English site (malpasoft/wordplay).
+The site is for Spanish speakers learning English (A1 level). You will build HTML content
+files following exact templates. Do not change any design, CSS, JavaScript logic, or
+shared files — content only.
+
+═══════════════════════════════════════════════════════════════
+BRANCH
+═══════════════════════════════════════════════════════════════
+
+  git checkout main && git pull origin main
+  git checkout -b grok/spanish-a1-content
+
+Commit each file separately. Push after each commit:
+  git push -u origin grok/spanish-a1-content
+
+
+═══════════════════════════════════════════════════════════════
+WHAT TO BUILD
+═══════════════════════════════════════════════════════════════
+
+Grammar chapters — 3 files each (slides.html, worksheet.html, game.html):
+  es/a1/gramatica/articulos/    — Cap. 3: Artículos a / an / the
+  es/a1/gramatica/pronombres/   — Cap. 4: Pronombres personales (I, you, he…)
+  es/a1/gramatica/have-got/     — Cap. 5: Have got (posesión)
+
+Vocabulary units — 2 files each (slides.html + game.html):
+  es/a1/vocabulary/colours/          — Colores (10 palabras)
+  es/a1/vocabulary/animals/          — Animales (10 palabras)
+  es/a1/vocabulary/family/           — Familia (10 palabras)
+  es/a1/vocabulary/numbers-and-time/ — Números y tiempo (10 palabras)
+
+DO NOT CREATE: flashcards.html, any file in shared/, any index.html (already exists).
+
+
+═══════════════════════════════════════════════════════════════
+TEMPLATE FILES — COPY EXACTLY
+═══════════════════════════════════════════════════════════════
+
+Grammar slides:    es/a1/gramatica/to-be/slides.html
+Grammar worksheet: es/a1/gramatica/to-be/worksheet.html
+Grammar game:      es/a1/gramatica/to-be/game.html
+Vocabulary game:   copy grammar game template, adapt GAME_DATA only
+
+
+═══════════════════════════════════════════════════════════════
+HARD RULES — NEVER BREAK THESE
+═══════════════════════════════════════════════════════════════
+
+1. Never touch shared/ files — off-limits entirely.
+2. Never create or edit index.html — those exist and are correct.
+3. Path depth is always ../../../../ for all asset links (4 levels to root).
+   Copy from the to-be template — do not change paths.
+4. Asset versions — copy exactly from to-be:
+     base.css?v=v106
+     slides.css?v=v108
+     game.css?v=v105
+     dark-init.js?v=v105
+     store.js?v=v103
+     game.js?v=v105
+     deck.js?v=v109
+     worksheet.css?v=v104
+     worksheet.js?v=v103
+5. Dark toggle — always &#9680; Oscuro — NOT the bullet character ● and NOT the
+   English word "Dark".
+6. No Unicode symbols — no ✓ ✗ ⚠ ★ or emoji anywhere, including inside JS strings.
+7. All UI text in Spanish — Lección, Ejercicios, Juego, Empezar, Siguiente,
+   Guardar y salir, Continuar, Empezar de nuevo, etc.
+8. lang="es" on <html> always.
+9. class="deck-body" on <body> of every slides.html.
+10. window.LEVEL = "es-a1" always (not "a1").
+11. storageKey in game.html always "wordplay_game_es-a1_{slug}".
+12. One file per commit — format: content: create es/a1/gramatica/articulos/slides.html
+
+
+═══════════════════════════════════════════════════════════════
+GRAMMAR SLIDES.HTML STRUCTURE
+═══════════════════════════════════════════════════════════════
+
+Copy <head>, <header>, breadcrumb, <nav class="chapter-nav">, and <footer> verbatim
+from to-be/slides.html. Update:
+  - <title>
+  - <div class="chapter-num">Cap. N</div>
+  - <h1> and <p class="chapter-subtitle">
+  - window.CHAPTER_ID = "{slug}"
+  - The localStorage last-chapter block at the bottom (update slug and title)
+
+Include 6–8 slides:
+  1. Introduction — what is this, why it differs from Spanish
+  2. Core form/conjugation table in .bi-block (Spanish → English)
+  3. Common interference trap patterns using .trap-row (wrong → right)
+  4. Usage in context / additional rules
+  5. (More slides as needed)
+  6. Summary slide with CTA button to worksheet.html
+
+CSS classes available in slides.css — do not invent new ones:
+  .bi-block .bi-row .bi-es .bi-sep .bi-en       — bilingual comparison table
+  .overview-row .overview-label .overview-desc   — use-case list rows
+  .trap-row .trap-wrong .trap-arrow .trap-right .trap-note — error patterns
+  .watch-out                                     — important rule callout box
+  .examples-row .example-card .ex-text .ex-note  — example cards
+  .summary-row .label .form .ex                  — final summary table
+  .panel-pair .panel .panel-head .panel-body     — two-column panels
+
+Bottom of slides.html — progress badge script (copy from to-be, update slug,
+do NOT put ✓ in the text strings):
+
+  (function() {
+    try {
+      var prog = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+      var lvl = prog['es-a1'] || {};
+      var ws = lvl['{slug}'];
+      if (ws && ws.pct >= 70) {
+        var pt = document.getElementById('nav-practice');
+        if (pt) pt.textContent = 'Ejercicios';
+      }
+      var gm = lvl['wordplay_game_{slug}'];
+      if (gm && gm.pct >= 70) {
+        var gt = document.getElementById('nav-game');
+        if (gt) gt.textContent = 'Juego';
+      }
+    } catch(e) {}
+  })();
+
+
+═══════════════════════════════════════════════════════════════
+GRAMMAR WORKSHEET.HTML STRUCTURE
+═══════════════════════════════════════════════════════════════
+
+Copy to-be/worksheet.html. Update:
+  window.CHAPTER_ID = "{slug}"
+  window.LEVEL = "es-a1"
+  window.SECTION = "gramatica"
+  window.TOTAL_POINTS = (sum of all exercise points)
+  window.ANSWERS = { questionId: {answer:"…", accept:["…","…"]}, … }
+  window.EXERCISE_TITLES = { ex1:"…", ex2:"…", … }
+  window.EXPLANATIONS = { questionId: "Spanish explanation…", … }
+
+EVERY SINGLE QUESTION must have an entry in window.EXPLANATIONS — a Spanish sentence
+explaining why the answer is correct, citing the rule, mentioning Spanish interference
+where relevant. No exceptions.
+
+Include 4 exercises (use these question ID patterns):
+  1. mc1–mc5  — Multiple choice, 5 questions, choose correct form
+  2. tr1–tr6  — Translation gap-fill, 5–6 questions (Spanish cue, fill missing English word)
+  3. neg1–neg4 — Negatives / questions / edge case, 4 questions
+  4. ctx1–ctx4 — Short reading passage, 4 fill-in questions
+
+
+═══════════════════════════════════════════════════════════════
+GRAMMAR GAME.HTML STRUCTURE
+═══════════════════════════════════════════════════════════════
+
+Copy to-be/game.html. Update window.GAME_DATA:
+
+  window.GAME_DATA = {
+    chapterId: "{slug}",
+    level: "es-a1",
+    title: "…",
+    storageKey: "wordplay_game_es-a1_{slug}",
+    items: [ /* 10 items */ ]
+  };
+
+Each item format:
+  {
+    "id": "a",
+    "term": "a",
+    "meaning": "artículo indefinido — delante de consonante",
+    "synonym": "(artículo)",
+    "example": "She is <b>a</b> teacher.",
+    "completion": "She is _____ teacher.",
+    "answer": "a"
+  }
+
+  - meaning: short Spanish description of the concept (not just a word translation)
+  - example: natural English sentence with the term wrapped in <b> tags
+  - completion: same sentence with the term replaced by _____
+  - answer: exact string the student must produce
+
+Also update:
+  - Completion screen "next chapter" link → next chapter's slides.html
+  - Back links in start screen and completion → ../../index.html (A1 hub)
+  - Button labels in Spanish: Empezar, Continuar, Empezar de nuevo, Siguiente,
+    Guardar y salir, Pista, Mostrar, Ya lo sé
+
+
+═══════════════════════════════════════════════════════════════
+VOCABULARY SLIDES.HTML STRUCTURE
+═══════════════════════════════════════════════════════════════
+
+Same as grammar slides template. Adapt these parts:
+  - Back-link text in header: Vocabulario A1
+  - Chapter nav: Lección | Tarjetas | Juego
+    (hrefs: slides.html, flashcards.html, game.html)
+  - Instead of chapter number: <div class="chapter-num">Vocabulario</div>
+  - window.SECTION = "vocabulary"
+
+Slide structure (5–6 slides):
+  1. Overview — all 10 words in a .bi-block (English → Spanish, one per .bi-row)
+  2–4. Grouped word slides (3–4 words each):
+       for each word: English term + /IPA/ + Spanish translation + example sentence (EN · ES)
+  5. Common confusions or false friends (if applicable)
+  6. Summary + CTA button to game.html
+
+
+═══════════════════════════════════════════════════════════════
+VOCABULARY GAME.HTML STRUCTURE
+═══════════════════════════════════════════════════════════════
+
+Copy grammar game template. Use:
+  storageKey: "wordplay_game_es-a1_{slug}"
+  level: "es-a1"
+  chapterId: "{slug}"
+
+10 items, one per vocabulary word:
+  {
+    "id": "red",
+    "term": "red",
+    "meaning": "de color rojo — para describir objetos",
+    "synonym": "(color)",
+    "example": "I have a <b>red</b> car.",
+    "completion": "I have a _____ car.",
+    "answer": "red"
+  }
+
+Completion screen back links:
+  ../index.html    (unit hub)
+  ../../index.html (A1 hub)
+
+
+═══════════════════════════════════════════════════════════════
+CONTENT TO BUILD (IN THIS ORDER)
+═══════════════════════════════════════════════════════════════
+
+Grammar Cap. 3 — Artículos (slug: articulos)
+  Slides content:
+    - a vs an: consonant/vowel rule; contrast with Spanish where un/una agree in gender
+    - the: definite article; when to use and when NOT to (Spanish uses el/la more often)
+    - Zero article: general concepts (I like music — not "the music" for general)
+    - 5+ trap sentences with wrong→right corrections
+    - Summary table
+  Game: 10 items covering a, an, the, zero article, and common error patterns
+
+Grammar Cap. 4 — Pronombres personales (slug: pronombres)
+  Slides content:
+    - I, you, he, she, it, we, they — full table with Spanish equivalents
+    - Mandatory subject in English vs Spanish (drop-subject language)
+    - "it" for objects and animals — no equivalent in Spanish
+    - "you" for singular and plural (vs tú / vosotros / usted)
+    - he/she/it distinction (Spanish has él/ella but no neuter)
+    - Common omission errors: "Is tired." → "She is tired."
+    - Summary
+  Game: 10 items (the 7 pronouns + 3 context/error patterns)
+
+Grammar Cap. 5 — Have got (slug: have-got)
+  Slides content:
+    - I have got / I've got — expressing possession
+    - Comparison with Spanish tener
+    - he/she has got
+    - Negatives: haven't got / hasn't got
+    - Questions: Have you got…? short answers: Yes, I have. / No, I haven't.
+    - British English (have got) vs American (have) — note only, not tested
+    - NOT for age or physical states — those use to be (I am 25, I am hungry)
+    - Summary
+  Game: 10 items
+
+Vocabulary — Colores (slug: colours)
+  Words: red, blue, green, yellow, orange, purple, pink, white, black, brown
+  Notes: "green" = verde (not "grin"), false friend warning for colour spelling (British)
+
+Vocabulary — Animales (slug: animals)
+  Words: dog, cat, bird, fish, horse, cow, rabbit, bear, lion, elephant
+
+Vocabulary — Familia (slug: family)
+  Words: mother, father, brother, sister, son, daughter,
+         grandfather, grandmother, husband, wife
+  Notes: son/daughter confusion; husband/wife vs man/woman
+
+Vocabulary — Números y Tiempo (slug: numbers-and-time)
+  Words: one, two, three, four, five, six, seven, eight, nine, ten
+         o'clock, half past, quarter to, hour, minute
+  (Use all 10 as items in the game; slides can group numbers 1–5, 6–10, then time words)
+
+
+═══════════════════════════════════════════════════════════════
+CHECKLIST BEFORE EACH COMMIT
+═══════════════════════════════════════════════════════════════
+
+  [ ] All shared asset paths use ../../../../ (4 levels)
+  [ ] Dark toggle is &#9680; Oscuro
+  [ ] No Unicode symbols anywhere (including in JS strings)
+  [ ] window.LEVEL = "es-a1" in every file
+  [ ] storageKey starts with wordplay_game_es-a1_
+  [ ] Every worksheet question has a Spanish EXPLANATION
+  [ ] class="deck-body" on <body> of slides.html
+  [ ] lang="es" on <html>
+
+
+═══════════════════════════════════════════════════════════════
+START HERE
+═══════════════════════════════════════════════════════════════
+
+Start with just the first file:
+  es/a1/gramatica/articulos/slides.html
+
+Do not proceed to the next file until you confirm this one is committed and pushed.
