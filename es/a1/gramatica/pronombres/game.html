@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A1 Gramática · Pronombres personales — Juego | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v106">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v105">
+<script src="../../../../shared/dark-init.js?v=v105"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link">Gramática A1</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Cambiar modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>›</span>
+  <a href="../../../index.html">Para hispanohablantes</a><span>›</span>
+  <a href="../../index.html">A1</a><span>›</span>
+  <a href="../index.html">Gramática</a><span>›</span>
+  <strong>Pronombres personales</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lección</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+</nav>
+<div class="game-wrap" id="gameWrap">
+  <div id="gameStart" class="game-screen active">
+    <div class="game-start">
+      <h2>Pronombres — Dominio</h2>
+      <p>10 elementos · 4 fases cada uno. Aprende I, you, he, she, it, we, they y las formas negativas y de pregunta.</p>
+      <p style="font-size:.85rem;color:var(--muted)">Un error te hace retroceder una fase — nunca a cero.</p>
+      <div id="gStartMastered" style="font-family:var(--font-sans);font-size:.9rem;margin:12px 0;color:var(--muted)"></div>
+      <div id="gResumeSection" style="display:none;margin-bottom:12px">
+        <button id="gBtnResume" class="game-btn primary">Continuar</button>
+        <button id="gBtnNewFromResume" class="game-btn">Empezar de nuevo</button>
+      </div>
+      <button id="gBtnStart" class="game-btn primary">Empezar</button>
+      <a href="../../index.html" class="game-btn" style="text-align:center;text-decoration:none;margin-top:8px">&#8592; Volver al nivel A1</a>
+    </div>
+  </div>
+  <div id="gamePlay" class="game-screen">
+    <div class="game-hud">
+      <span id="gModeTag" class="game-mode-tag"></span>
+      <span class="hud-sep">·</span>
+      <span id="gScore" class="hud-val">0</span> <span class="hud-label">dominados</span>
+      <span class="hud-sep">·</span>
+      <span id="gStreak" class="hud-val">0</span>
+    </div>
+    <div class="game-progress-bar"><div id="gProgressBar" class="game-progress-fill"></div></div>
+    <div id="gProgressTxt" class="game-progress-txt"></div>
+    <div class="game-card">
+      <div id="gTerm" class="game-term"></div>
+      <div id="gPrompt" class="game-prompt"></div>
+      <div id="gOptions" class="game-options"></div>
+      <div id="gFeedback" class="game-feedback"></div>
+      <div id="gExample" class="game-example" style="display:none"></div>
+      <div class="game-card-actions">
+        <button id="gBtnHint" class="game-btn small">Pista</button>
+        <button id="gBtnReveal" class="game-btn small">Mostrar</button>
+        <button id="gBtnKnow" class="game-btn small ghost" style="display:none" title="Saltar a la fase de contexto">Ya lo sé</button>
+        <button id="gBtnNext" class="game-btn primary" style="display:none">Siguiente</button>
+      </div>
+    </div>
+    <div class="game-ref">
+      <button id="gRefToggle" class="game-ref-toggle">Referencia &#9662;</button>
+      <div id="gRefBody" class="game-ref-body" style="display:none">
+        <ul id="gRefList"></ul>
+      </div>
+    </div>
+    <button id="gBtnSaveQuit" class="game-btn small">Guardar y salir</button>
+  </div>
+  <div id="gameCompletion" class="game-screen">
+    <div class="game-complete">
+      <div style="font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:8px">Capítulo 4 completado</div>
+      <h2 style="margin-bottom:6px">¡Todo dominado!</h2>
+      <p style="color:var(--muted);font-size:.85rem;margin-bottom:20px">Puntuación: <strong id="gFinalScore"></strong> &nbsp;·&nbsp; Racha: <strong id="gFinalStreak"></strong></p>
+      <div id="gFinalPct" style="font-family:var(--font-serif);font-size:1.4rem;font-weight:700;color:var(--accent);text-align:center;margin:8px 0"></div>
+      <div id="gMasteryMap" style="margin:16px 0;text-align:left;"></div>
+      <a href="../have-got/slides.html" class="game-btn primary" style="text-decoration:none;text-align:center">Siguiente capítulo &rarr; Cap. 5 Have got</a>
+      <a href="worksheet.html" class="game-btn" style="text-decoration:none;text-align:center">Repetir ejercicios</a>
+      <a href="../../index.html" class="game-btn" style="text-decoration:none;text-align:center;opacity:.7">&#8592; Nivel A1</a>
+    </div>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Inglés Cambridge A1→C2 · Para hispanohablantes</footer>
+<script>
+window.GAME_DATA={chapterId:"pronombres",level:"es-a1",title:"Pronombres personales",storageKey:"wordplay_game_es-a1_pronombres",items:[
+  {"id":"i","term":"I","meaning":"primera persona — yo","synonym":"(yo)","example":"<b>I</b> am happy.","completion":"_____ am happy.","answer":"I"},
+  {"id":"you","term":"You","meaning":"segunda persona — tú / vosotros","synonym":"(tú/vosotros)","example":"<b>You</b> are ready.","completion":"_____ are ready.","answer":"You"},
+  {"id":"he","term":"He","meaning":"tercera persona masculina — él","synonym":"(él)","example":"<b>He</b> is tall.","completion":"_____ is tall.","answer":"He"},
+  {"id":"she","term":"She","meaning":"tercera persona femenina — ella","synonym":"(ella)","example":"<b>She</b> is my sister.","completion":"_____ is my sister.","answer":"She"},
+  {"id":"it","term":"It","meaning":"neutro — ello / eso (objetos, animales)","synonym":"(ello)","example":"<b>It</b> is a cat.","completion":"_____ is a cat.","answer":"It"},
+  {"id":"we","term":"We","meaning":"primera persona plural — nosotros","synonym":"(nosotros)","example":"<b>We</b> are friends.","completion":"_____ are friends.","answer":"We"},
+  {"id":"they","term":"They","meaning":"tercera persona plural — ellos","synonym":"(ellos)","example":"<b>They</b> are nice.","completion":"_____ are nice.","answer":"They"},
+  {"id":"isnt","term":"isn't","meaning":"is + not — no es / no está","synonym":"(negativo)","example":"She <b>isn't</b> here.","completion":"She _____ here.","answer":"isn't"},
+  {"id":"arent","term":"aren't","meaning":"are + not — no son / no están","synonym":"(negativo)","example":"They <b>aren't</b> ready.","completion":"They _____ ready.","answer":"aren't"},
+  {"id":"yesiam","term":"Yes, I am.","meaning":"respuesta corta afirmativa","synonym":"(respuesta)","example":"Are you tired? <b>Yes, I am.</b>","completion":"Are you tired? _____","answer":"Yes, I am."}
+]};
+</script>
+<script src="../../../../shared/store.js?v=v103"></script>
+<script src="../../../../shared/game.js?v=v105"></script>
+</body>
+</html>
