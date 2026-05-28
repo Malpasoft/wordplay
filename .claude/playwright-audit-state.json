@@ -1,0 +1,157 @@
+{
+  "started": "2026-05-28T22:11:09.475318Z",
+  "last_updated": "2026-05-28T22:36:59.994580Z",
+  "current_level": "complete",
+  "pages_done": 20,
+  "pages_total": 568,
+  "bugs": [
+    {
+      "id": "BUG-001",
+      "page": "a/a1/grammar/adjectives-basic/worksheet.html (systemic: 13 worksheets affected)",
+      "type": "pedagogy",
+      "severity": "P1",
+      "description": "13 A1 grammar worksheets have e1q1\u2013e1q8 multiple-choice questions with no entries in window.EXPLANATIONS. Wrong-answer feedback shows only \"Not quite.\" \u2014 no explanation. Pedagogy rule: every question must have an explanation.",
+      "repro": "Open any A1 grammar worksheet \u2192 click a wrong answer in Exercise 1 \u2192 feedback shows \"Not quite.\" with no explanation text",
+      "screenshot": ".claude/playwright-audit-screenshots/placement-test.png",
+      "suggested_fix": "Add e1q1\u2013e1q8 keys to window.EXPLANATIONS in each affected worksheet. Example: \"e1q1\": \"Adjective NEVER takes -s: two <strong>blue</strong> eyes (not blues).\""
+    },
+    {
+      "id": "BUG-002",
+      "page": "a/a1/grammar/adjectives-basic/game.html (affects all game pages)",
+      "type": "layout",
+      "severity": "P1",
+      "description": "The .game-term element (the word being tested) is hidden behind the sticky navigation bar when the game play screen first loads. Term top=12px, sticky nav bottom=70px \u2014 the student cannot see which word they are answering for.",
+      "repro": "Open any game.html \u2192 click Start \u2192 observe the term/word area is covered by the sticky header.",
+      "screenshot": ".claude/playwright-audit-screenshots/a1-game-full.png",
+      "suggested_fix": "Add scroll-margin-top or padding-top to .game-play container equal to the sticky nav height (~70px). Or call window.scrollTo(0, 0) after game starts and ensure .game-play has top padding."
+    },
+    {
+      "id": "BUG-003",
+      "page": "19 slides pages across A1-C2 grammar",
+      "type": "design-system",
+      "severity": "P2",
+      "description": "19 slides pages use \u26a0 (U+26A0) in Note panels. CLAUDE.md bans all emojis in content and UI; only \u25d0 \u25d1 \u25c6 are permitted.",
+      "repro": "Open any grammar slides.html \u2192 scroll to a \"Note\" box \u2192 see \u26a0 symbol",
+      "screenshot": ".claude/playwright-audit-screenshots/a1-slides.png",
+      "suggested_fix": "Replace \u26a0 with \"Note:\" text label, or use a CSS ::before pseudo-element on .deck-note that renders a non-emoji indicator."
+    },
+    {
+      "id": "BUG-004",
+      "page": "es/a1/gramatica/have-got/game.html",
+      "type": "js-error",
+      "severity": "P1",
+      "description": "game.html only defines LEVEL, CHAPTER_ID, STORAGE_KEY \u2014 window.GAME_DATA is completely missing. game.js logs a warning and the game renders with no terms to answer. Worksheet and slides were cherry-picked correctly.",
+      "repro": "Open es/a1/gramatica/have-got/game.html \u2192 click Empezar \u2192 console: \"GAME_DATA not defined\" \u2192 no questions appear",
+      "screenshot": ".claude/playwright-audit-screenshots/es-a1-articulos-game.png",
+      "suggested_fix": "Add window.GAME_DATA to have-got/game.html with items matching the have got grammar concepts from slides.html (affirmative/negative/question forms, short answers, contractions). Use articulos/game.html as template.",
+      "status": "fixed",
+      "fixed_at": "2026-05-28T22:36:59.994578"
+    }
+  ],
+  "levels": {
+    "placement-test": {
+      "pages": {
+        "placement-test.html": {
+          "status": "ok",
+          "errors": [],
+          "checked_at": "2026-05-28T22:20:55.181438"
+        }
+      }
+    },
+    "a1": {
+      "pages": {
+        "a/a1/grammar/adjectives-basic/worksheet.html": {
+          "status": "error",
+          "errors": [
+            "Missing explanations for e1q1-e1q8 (first exercise MC questions show only \"Not quite.\" \u2014 no explanation text)"
+          ],
+          "checked_at": "2026-05-28T22:20:55.181475"
+        },
+        "a/a1/grammar/adjectives-basic/game.html": {
+          "status": "error",
+          "errors": [
+            "BUG-002: .game-term obscured by sticky nav (term top=12, nav bottom=70) \u2014 word being tested is invisible when game starts"
+          ],
+          "checked_at": "2026-05-28T22:23:29.791677"
+        },
+        "a/a1/grammar/adjectives-basic/slides.html": {
+          "status": "ok",
+          "errors": [],
+          "checked_at": "2026-05-28T22:35:55.345423"
+        },
+        "a/a2/grammar/comparatives-basic/worksheet.html": {
+          "status": "ok",
+          "errors": [],
+          "checked_at": "2026-05-28T22:35:55.345441"
+        },
+        "a/a2/grammar/comparatives-basic/game.html": {
+          "status": "ok",
+          "errors": [],
+          "checked_at": "2026-05-28T22:35:55.345442"
+        },
+        "b/b1/grammar/present-perfect/worksheet.html": {
+          "status": "ok",
+          "errors": [],
+          "checked_at": "2026-05-28T22:35:55.345443"
+        },
+        "b/b1/grammar/present-perfect/game.html": {
+          "status": "ok",
+          "errors": [],
+          "checked_at": "2026-05-28T22:35:55.345444"
+        },
+        "b/b2/vocabulary/environment-climate/game.html": {
+          "status": "ok",
+          "errors": [],
+          "checked_at": "2026-05-28T22:35:55.345445"
+        },
+        "c/c1/grammar/advanced-tenses/worksheet.html": {
+          "status": "ok",
+          "errors": [],
+          "checked_at": "2026-05-28T22:35:55.345446"
+        },
+        "c/c2/grammar/conditionals-mastery/game.html": {
+          "status": "ok",
+          "errors": [],
+          "checked_at": "2026-05-28T22:35:55.345484"
+        },
+        "es/a1/gramatica/articulos/slides.html": {
+          "status": "ok",
+          "errors": [],
+          "checked_at": "2026-05-28T22:35:55.345486"
+        },
+        "es/a1/gramatica/articulos/worksheet.html": {
+          "status": "ok",
+          "errors": [],
+          "checked_at": "2026-05-28T22:35:55.345487"
+        },
+        "es/a1/gramatica/articulos/game.html": {
+          "status": "ok",
+          "errors": [],
+          "checked_at": "2026-05-28T22:35:55.345488"
+        },
+        "es/a1/gramatica/pronombres/game.html": {
+          "status": "ok",
+          "errors": [],
+          "checked_at": "2026-05-28T22:35:55.345488"
+        },
+        "es/a1/vocabulary/daily-routines/index.html": {
+          "status": "ok",
+          "errors": [],
+          "checked_at": "2026-05-28T22:35:55.345489"
+        },
+        "es/a1/vocabulary/food-and-drink/index.html": {
+          "status": "ok",
+          "errors": [],
+          "checked_at": "2026-05-28T22:35:55.345490"
+        },
+        "es/a1/gramatica/have-got/game.html": {
+          "status": "fixed",
+          "errors": [
+            "BUG-004: GAME_DATA was missing \u2014 fixed by adding 10 have-got grammar items"
+          ],
+          "checked_at": "2026-05-28T22:36:59.994551"
+        }
+      }
+    }
+  }
+}
