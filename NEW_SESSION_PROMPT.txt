@@ -1,0 +1,58 @@
+We're continuing work on the Word Play CEFR English course (A1–C2). It's a static
+Cloudflare Pages site — ~1,157 HTML files, vanilla HTML/CSS/JS, no build system, no backend.
+All student progress lives in browser localStorage.
+
+FIRST: read CLAUDE.md — it is the single source of truth for every project rule (design
+system, git workflow, cache-busting, bulk edits, pedagogy). Then skim AI_HANDOVER.md for
+orientation and current state. Don't restate rules in other files; CLAUDE.md is canonical.
+
+BRANCH & DEPLOYMENT:
+- Develop on: claude/github-workflow-setup-98Fbf
+- Deploy: git push origin HEAD:main  (Cloudflare Pages auto-deploys main, ~2 min), then
+  sync the dev branch: git push -u origin claude/github-workflow-setup-98Fbf
+- Always commit AND push before ending a session.
+
+DESIGN (full rules in CLAUDE.md — the essentials):
+- Accent: amber only, always via var(--amber) — never hardcode a hex. Real values
+  #B8860B (light) / #C9A050 (dark). No second accent colour.
+- Background var(--paper) = #F7F3EE (warm parchment) / #0E0E0E dark; ink var(--ink) #1A1A1A.
+- Clean no-emoji UI; only ◐/◑ (dark toggle) and ◆ (streak) are allowed. A design-check.sh
+  hook enforces this automatically — no need to police it by hand.
+- Dark mode must work on every element. deck-body class on every slides.html body.
+  sect-card class for level-hub section cards.
+
+CACHE-BUSTING:
+Each shared/ asset has its OWN independent ?v=vNN (they are not in lockstep). When you
+change a shared file, grep its current ?v= value and bump only that file's consumers.
+The /ship skill automates this. version.json is just a coarse project marker.
+
+BULK EDITS & VERIFICATION (lessons learned):
+- Prefer targeted Edit calls. For 50+ files, verify on 2–3 samples first. Never sed/awk HTML.
+- Before any templated fix, grep for ALL structural/whitespace variants and confirm the
+  file count per variant — grammar pages and Spanish/vocab pages often differ in whitespace.
+- Verify visual changes with Playwright across desktop, dark mode, and mobile (360px)
+  before calling them done. Never claim something is "already correct" from memory — re-read
+  the actual source line (and screenshot it) before concluding.
+
+TOOLING AVAILABLE:
+- Playwright MCP — visual verification (desktop / dark / mobile). If it drops, fall back to
+  a headless Node script.
+- GitHub MCP — PRs, issues, branches in malpasoft/wordplay.
+- /ship — design-check → cache-bust → commit → push to main + dev branch.
+- /playwright-audit — resumable A1–C2 lesson audit; checkpoints to
+  .claude/playwright-audit-state.json so it survives interruptions.
+- Explore subagent — fan-out codebase research without flooding context.
+- Plan subagent — design multi-step implementation strategies before coding.
+- update-config — configure hooks/permissions/settings.json.
+
+CURRENT STATE (late May 2026):
+- Navigation: site-wide icon-only back arrow (destination = last breadcrumb link);
+  breadcrumbs run menu → chapter; chapter-nav tab rows hidden on slides/worksheet/game.
+- Header: brand absolutely centred (immune to the Dashboard/QR buttons dark-init.js injects
+  at runtime); Dark + QR grouped in a right-aligned pill; Dashboard hidden on ≤560px mobile.
+- Visual: warm parchment background, inkier card borders, section cards adapt light/dark,
+  redundant level-name subtitle removed from the six English level hubs.
+- Spanish: /es/a1/ grammar + vocabulary built (Phase 4 started).
+- Pending: A2–C2 vocab flashcards lack audio + auto-complete; C2 grammar needs enrichment.
+
+What would you like to work on?

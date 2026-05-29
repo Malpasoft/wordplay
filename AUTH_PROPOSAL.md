@@ -11,7 +11,7 @@ All student progress is stored in **browser localStorage**. This means:
 
 ### Phase 1 — URL token (simplest, no infrastructure)
 **How it works:** Each student gets a unique URL like:
-`https://delicate-mode-2bce.emi-dom123.workers.dev/?student=maria-garcia-2024`
+`https://wordplay-38t.pages.dev/?student=maria-garcia-2024`
 
 The site reads the `?student=` parameter and uses it as a localStorage namespace. This means:
 - Same device, same browser → progress is remembered
@@ -108,10 +108,10 @@ Add a "Espanol" toggle button that:
 **Cons:** Complex JS. Clutters the clean English-only design. Mixing languages in the code makes maintenance harder. Breaks Em's "no Spanish in main course" rule.
 
 ### Recommendation
-**Option A — parallel `/es/` site.** It respects the clean separation Em wants, uses the same engines, and can be built incrementally (start with A1, expand level by level). The Spanish homepage skeleton is already at `/es/index.html` in v100.
+**Option A — parallel `/es/` site.** It respects the clean separation Em wants, uses the same engines, and can be built incrementally (start with A1, expand level by level). This is the approach now in progress: `/es/a1/` grammar and vocabulary are built.
 
 Build order:
-1. `/es/a1/` — 5-6 key grammar chapters with Spanish explanations + false-friend notes
+1. `/es/a1/` — grammar + vocabulary with Spanish explanations + false-friend notes (done)
 2. `/es/a2/` — expand as A1 proves the format works
 3. Continue level by level
 

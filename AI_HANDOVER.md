@@ -1,10 +1,10 @@
 # Word Play — AI & Developer Handover
 
-**Read this file first in any new Claude session.**
+**Read `CLAUDE.md` first (it holds all the rules), then this file for orientation.**
 
-**Current version:** v103  
-**Total HTML pages:** ~822  
-**Live URL:** https://delicate-mode-2bce.emi-dom123.workers.dev/  
+**Project version marker:** see `version.json`  
+**Total HTML pages:** ~1,157  
+**Live URL:** https://wordplay-38t.pages.dev (Cloudflare Pages project `wordplay-38t`)  
 **GitHub repo:** `malpasoft/wordplay` → Cloudflare Pages auto-deploys from `main`
 
 ---
@@ -31,13 +31,13 @@
 ## 2. How a session works now
 
 The project is on GitHub. Claude Code is used in remote sessions with direct push access.
+The full git/deploy/cache-bust rules are in **CLAUDE.md** — in short:
 
-1. Work on branch `claude/github-workflow-setup-98Fbf` (this was force-pushed to become `main`)
-2. Push with `git push -u origin <branch>` — Cloudflare Pages auto-deploys `main`
-3. Bump `?v=vNN` cache-bust suffix on shared asset URLs whenever `shared/` files change
-4. No zip packaging. No `present_files`. Just commit + push.
-
-**Active branch for development:** whatever the session context specifies. When in doubt, check `git branch`.
+1. Develop on `claude/github-workflow-setup-98Fbf`.
+2. Deploy with `git push origin HEAD:main` (Cloudflare Pages auto-deploys `main`), then
+   sync the dev branch.
+3. Bump the per-file `?v=vNN` suffix only on the shared assets you actually change.
+4. No zip packaging. Just commit + push.
 
 ---
 
@@ -47,7 +47,7 @@ A **static** Cambridge English course (A1 to C2) on Cloudflare Pages. Vanilla HT
 
 ---
 
-## 4. Content state (v103)
+## 4. Content state
 
 ### Grammar — 110 chapters total
 | Level | Chapters | Status |
@@ -84,8 +84,9 @@ A1 matching game auto-completes after 5 completed rounds.
 No dependencies, no imports. Pages link with `?v=vNN` cache-busting.
 
 ### `base.css`
-Global styles. Key variables: `--amber: #E8A020`, `--paper: #FAFAF8`, `--ink: #1A1A1A`.  
-Dark mode via `body.dark`. Header dark: `body.dark .site-header { background: #000000 !important; }`.  
+Global styles. Key variables: `--amber` (`#B8860B` / `#C9A050` dark), `--paper: #F7F3EE`
+(warm parchment), `--ink: #1A1A1A`. Always use `var(--amber)`, never a literal hex.  
+Dark mode via `body.dark`.  
 `.ch-card` = vocab/grammar topic cards with amber hover.  
 `.sect-card` = dark section cards on level hub pages with amber hover border.
 
@@ -171,16 +172,14 @@ Where `band` = `a` (A1/A2), `b` (B1/B2), `c` (C1/C2).
 
 ---
 
-## 9. Iron-clad conventions
+## 9. Conventions
 
-- **No emojis in UI** — only ◐/◑ for dark mode toggle, ◆ for streak
-- **Amber ONLY accent** — `#E8A020` / `var(--amber)`. No navy/teal/gold
-- **No Spanish-specific content** in main course
-- **No filler** in chat responses
-- **Always cache-bust** with `?v=vNN` when touching shared assets
-- **Dark mode must work everywhere** — `!important` overrides in CSS where needed
-- **Always use deterministic grading** — never ask students to self-grade
-- **Always include EXPLANATIONS** in worksheets
+All design, git, cache-bust, and pedagogy rules live in **CLAUDE.md** — read it. The only
+handover-specific notes:
+
+- **No Spanish-specific content in the main English course** — the Spanish course is a
+  separate parallel site under `/es/`.
+- **No filler in chat responses** — Em is direct and values doing over explaining.
 
 ---
 
@@ -195,20 +194,29 @@ If a visual bug appears after deploy, suspect Cloudflare edge cache — purge vi
 ## 11. Roadmap (confirmed)
 
 - **Phase 1** — Finish English course (in progress; C2 still needs full enrichment)
-- **Phase 2** — Auto-deploy via GitHub ✓ (done)
+- **Phase 2** — Auto-deploy via GitHub (done)
 - **Phase 3** — User accounts (URL token → Cloudflare D1 + Workers)
-- **Phase 4** — Spanish-native version at `/es/`
+- **Phase 4** — Spanish-native version at `/es/` (started — A1 grammar + vocab built)
 - **Phase 5** — Complete CAE/CPE practice materials, add KET/PET
 
 ---
 
-## 12. Known pending items (as of v103)
+## 12. Known pending items
 
 - A2-C2 vocab flashcards: no audio button, no auto-complete on view-all or match rounds
 - C2 grammar: still minimal templates, needs enrichment
-- chapter-nav tabs still visible on flashcards/game pages for all levels (slides only are hidden)
 - Dashboard link: injected by deck.js (lesson pages) and dark-init.js (all other sub-pages)
 
 ---
 
-*Last updated: v103*
+## 13. Recent work (week of 26–29 May 2026)
+
+- **Navigation:** site-wide icon-only back arrow in the header (destination = the last
+  breadcrumb link); breadcrumbs always run menu → chapter; chapter-nav tab rows now hidden
+  on slides/worksheet/game (the chapter hub already links the four parts).
+- **Header layout:** brand is absolutely centred (immune to the Dashboard/QR buttons that
+  `dark-init.js` injects at runtime); Dark + QR grouped into a right-aligned pill; Dashboard
+  link hidden on ≤560px mobile.
+- **Visual polish:** warm parchment background (`--paper: #F7F3EE`), inkier card borders,
+  section cards adapt between light/dark mode, redundant level-name subtitle removed from
+  the six English level hubs.

@@ -10,8 +10,7 @@
 
 | Who | Branch pattern | Example |
 |-----|---------------|---------|
-| Claude (Anthropic) | `claude/batch-N` | `claude/batch-2` |
-| Grok (xAI) | `grok/topic` | `grok/audit-p0-p1` |
+| Claude (Anthropic) | `claude/topic` | `claude/github-workflow-setup-98Fbf` |
 | Owner | `user/topic` | `user/homepage-hero` |
 | Experiments | `exp/topic` | `exp/new-game-type` |
 
@@ -30,8 +29,7 @@ main  (production — reviewed merges only)
   ↑
   │  PR opened → owner approves → merge
   │
-  ├── claude/batch-N     ← Claude works here
-  ├── grok/topic         ← Grok works here
+  ├── claude/topic       ← Claude works here
   └── user/topic         ← Owner experiments here
 ```
 
@@ -43,17 +41,13 @@ main  (production — reviewed merges only)
 
 ---
 
-## Design rules (non-negotiable)
+## Design rules
 
-These are enforced on every PR. If your changes violate them, the PR will be sent back.
-
-- **Accent colour: amber only** — `#E8A020` / `var(--amber)`. No teal, no navy, no per-card colours.
-- **No emojis** — anywhere in UI or content. Only exceptions: `◐`/`◑` (dark toggle), `◆` (streak badge).
-- **Dark mode must work on every element** — use `!important` overrides where needed.
-- **`class="deck-body"`** on `<body>` of every `slides.html` page.
-- **`class="sect-card"`** for dark section cards on level hub pages — never inline `onmouseover/onmouseout`.
-- **Cache-bust** all `shared/` asset URLs with `?v=vNN` when you touch them.
-- **Pedagogy check must stay at 0 failures** — run `python3 scripts/pedagogy_check.py` before pushing.
+The design system, cache-bust policy, and pedagogy rules are defined in **CLAUDE.md**
+(the single source of truth). They are checked on every PR — if a change violates them,
+the PR is sent back. In short: amber-only accent via `var(--amber)`, clean no-emoji UI
+(`◐ ◑ ◆` excepted), dark mode everywhere, and `python3 scripts/pedagogy_check.py` at
+0 failures before pushing.
 
 ---
 
@@ -74,7 +68,7 @@ No emojis in commit messages.
 ## File conventions
 
 - **Static site only** — vanilla HTML/CSS/JS, no build step, no npm
-- **~822 HTML pages** — prefer targeted `Edit` calls over batch scripts
+- **~1,157 HTML pages** — prefer targeted `Edit` calls over batch scripts
 - **Two flashcard templates** — never mix them:
   - Old (A1 vocab): `STORAGE_KEY`, `WORDS[{word, definition, example, pronunciation}]`, `renderCard()`
   - New (A2–C2): `MASTERY_KEY`, `SLUG`, `LEVEL`, `WORDS[{word, ipa, def, ex}]`, `showCard()`

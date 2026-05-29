@@ -1,18 +1,19 @@
 # Word Play — Session Context
 
-**Version:** v103
-**Live URL:** `https://delicate-mode-2bce.emi-dom123.workers.dev/`
+**Project version marker:** see `version.json`
+**Live URL:** `https://wordplay-38t.pages.dev`
 **Maintainer:** Em — freelance English teacher, Catalunya
 **Repo:** `malpasoft/wordplay` on GitHub → auto-deploys to Cloudflare Pages on push to `main`
-**Working branch:** `claude/github-workflow-setup-98Fbf` (merge to main when ready)
+**Working branch:** `claude/github-workflow-setup-98Fbf`
 
-> **Read AI_HANDOVER.md first** before reading this. That file orients you to who Em is and how the workflow runs. This file is the technical state-of-the-project.
+> **Read CLAUDE.md first (all the rules), then AI_HANDOVER.md (orientation).** This file is
+> the deep technical state — JS contracts, shared-engine wiring, and the localStorage schema.
 
 ---
 
-## 1. What was shipped in v101–v103
+## 1. Key architecture notes
 
-### A1 Chapter 1 + Vocab 1 polish (v101–v103)
+### A1 Chapter 1 + Vocab 1 polish
 
 - **Lesson pages (slides.html)**: switched to one-at-a-time swipeable deck (deck.js rewrite). Fixed body background (`var(--paper)`, was broken invalid var). Chapter-nav tab row hidden on lesson pages via slides.css. Dashboard link injected into lesson header via deck.js. All lesson pages now need `class="deck-body"` on `<body>`.
 - **Placement test**: fixed MCQ early-submit bug (button type=submit inside form). Added cache-busting.
@@ -23,11 +24,12 @@
 - **Section card hover**: replaced inline-JS hover on A1 hub page with `.sect-card` CSS class (amber border on hover). Grammar/Vocab/Writing cards now need `class="sect-card"` on `<a>` elements.
 
 ### Cache-busting
-Current version string: `?v=v103`. Bump in `version.json` and all shared asset URLs when making changes.
+Each `shared/` asset carries its own independent `?v=vNN` — bump only the files you change.
+See CLAUDE.md for the procedure.
 
 ---
 
-## 2. Content inventory (accurate at v103)
+## 2. Content inventory
 
 ### Grammar — 110 chapters, all enriched
 Every chapter has: slides.html (lesson), worksheet.html (auto-graded), game.html (4-stage mastery), printables.html
@@ -57,7 +59,7 @@ Every chapter has: slides.html (lesson), worksheet.html (auto-graded), game.html
 - `progress-certificate.html` — printable certificate generator
 - `404.html`, 6x `certificate.html` (one per level)
 
-### Total: ~822 HTML pages
+### Total: ~1,157 HTML pages
 
 ---
 
@@ -89,9 +91,10 @@ shared/
 window.LEVEL = "a1";
 window.CHAPTER_ID = "animals";
 </script>
-<script src="../../../../shared/store.js?v=v103"></script>
-<script src="../../../../shared/deck.js?v=v103"></script>
+<script src="../../../../shared/store.js?v=vNN"></script>
+<script src="../../../../shared/deck.js?v=vNN"></script>
 ```
+(Use the current `?v=` value for each file — see the cache-busting note above.)
 deck.js auto-injects the Dashboard header button and confetti on completion.
 
 ### Worksheet contract
@@ -129,19 +132,12 @@ var STORAGE_KEY = 'wordplay_vocab_a1_{topic}_mastered';
 
 ## 5. Design system
 
-**Palette (base.css :root):**
-- `--ink: #1A1A1A` / dark mode `#F0F0F0`
-- `--paper: #FAFAFA` / dark mode `#0E0E0E`
-- `--amber: #B8860B` / dark mode `#C9A050` — ONLY accent color for hover/CTA
-- `--navy: #1A1A1A` (used for text color that needs to be light in dark mode)
-- `--muted: #9A9A9A`, `--hairline: #E5E5E5`
-- `--green: #2E7D52`, `--red: #C0392B`
-
-**Iron-clad rules:**
-- Amber is the ONLY accent/hover color. No teal/blue in UI chrome.
-- No emojis in UI text (exception: ◐/◑ in dark toggle button only).
-- Dark mode must work everywhere — slides.css has comprehensive `body.dark` overrides.
-- Section cards on level hub pages must use `class="sect-card"` for CSS hover.
+The full palette and design rules live in **CLAUDE.md** (single source of truth). For
+reference, the `base.css :root` palette is:
+- `--ink: #1A1A1A` / dark `#F0F0F0`
+- `--paper: #F7F3EE` / dark `#0E0E0E`
+- `--amber: #B8860B` / dark `#C9A050` — the only accent colour (always via `var(--amber)`)
+- `--muted: #9A9A9A`, `--hairline: #E5E5E5`, `--green: #2E7D52`, `--red: #C0392B`
 
 ---
 
@@ -171,4 +167,4 @@ wordplay_progress: {
 
 ---
 
-*v103 — updated after A1 Chapter 1 + Vocab 1 polish session.*
+*Updated May 2026 — navigation, header layout, and visual-polish pass; docs refresh.*
