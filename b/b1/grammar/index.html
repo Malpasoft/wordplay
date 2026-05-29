@@ -23,7 +23,7 @@
   </div>
   <div class="eyebrow">B1 · GRAMMAR</div>
   <h1>Grammar</h1>
-  <p class="section-desc">17 chapters · Lesson · Practice · Game · Printables</p>
+  <p class="section-desc">19 chapters · Lesson · Practice · Game · Printables</p>
   <div class="ch-grid">
   <a href="comparatives-superlatives/index.html" class="ch-card" id="ch_b1_comparatives-superlatives">
     <div class="ch-num">Ch 1 <span class="ch-start">Start here</span></div>
@@ -127,6 +127,18 @@
     <p class="ch-desc">If + present, + present/will</p><div class="ch-prog" id="prog_b1_zero-first-conditional"><div class="ch-prog-fill" id="progf_b1_zero-first-conditional"></div></div>
     <span class="ch-cta">Open &#8594;</span>
   </a>
+  <a href="past-perfect/index.html" class="ch-card" id="ch_b1_past-perfect">
+    <div class="ch-num">Ch 18</div>
+    <h2>Past Perfect</h2>
+    <p class="ch-desc">had + past participle · the past before the past</p><div class="ch-prog" id="prog_b1_past-perfect"><div class="ch-prog-fill" id="progf_b1_past-perfect"></div></div>
+    <span class="ch-cta">Open &#8594;</span>
+  </a>
+  <a href="present-perfect-continuous/index.html" class="ch-card" id="ch_b1_present-perfect-continuous">
+    <div class="ch-num">Ch 19</div>
+    <h2>Present Perfect Continuous</h2>
+    <p class="ch-desc">have been + -ing · for/since · vs present perfect</p><div class="ch-prog" id="prog_b1_present-perfect-continuous"><div class="ch-prog-fill" id="progf_b1_present-perfect-continuous"></div></div>
+    <span class="ch-cta">Open &#8594;</span>
+  </a>
   </div>
 </div>
 <footer class="site-footer">Word Play · Cambridge English A1&#8594;C2</footer>
@@ -136,7 +148,7 @@
   try {
     var prog = JSON.parse(localStorage.getItem('wordplay_progress')||'{}');
     var lvl = prog['b1']||{};
-    var slugs = ["comparatives-superlatives", "future-forms", "ing-form", "modal-deduction", "modals-advice", "modals-obligation", "passive-simple", "past-simple-continuous", "present-perfect", "question-tags", "relative-clauses", "reported-speech-basic", "second-conditional", "so-neither", "too-enough", "verb-infinitive-patterns", "zero-first-conditional"];
+    var slugs = ["comparatives-superlatives", "future-forms", "ing-form", "modal-deduction", "modals-advice", "modals-obligation", "passive-simple", "past-simple-continuous", "present-perfect", "question-tags", "relative-clauses", "reported-speech-basic", "second-conditional", "so-neither", "too-enough", "verb-infinitive-patterns", "zero-first-conditional", "past-perfect", "present-perfect-continuous"];
     slugs.forEach(function(slug){
       var done=0, total=3;
       if(lvl['slides_'+slug]&&lvl['slides_'+slug].done) done++;
