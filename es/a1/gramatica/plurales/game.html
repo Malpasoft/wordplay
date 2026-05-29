@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A1 Gramática · Los plurales — Juego | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v110">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v109">
+<script src="../../../../shared/dark-init.js?v=v105"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Cambiar modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>›</span>
+  <a href="../../../index.html">Para hispanohablantes</a><span>›</span>
+  <a href="../../index.html">A1</a><span>›</span>
+  <a href="../index.html">Gramática</a><span>›</span>
+  <a href="index.html">Los plurales</a>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lección</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+</nav>
+<div class="game-wrap" id="gameWrap">
+  <div id="gameStart" class="game-screen active">
+    <div class="game-start">
+      <h2>Los plurales — Dominio</h2>
+      <p>10 elementos · 4 fases cada uno. Empareja cada singular con su plural a través del reconocimiento, contexto y producción.</p>
+      <p style="font-size:.85rem;color:var(--muted)">Un error te hace retroceder una fase — nunca a cero.</p>
+      <div id="gStartMastered" style="font-family:var(--font-sans);font-size:.9rem;margin:12px 0;color:var(--muted)"></div>
+      <div id="gResumeSection" style="display:none;margin-bottom:12px">
+        <button id="gBtnResume" class="game-btn primary">Continuar</button>
+        <button id="gBtnNewFromResume" class="game-btn">Empezar de nuevo</button>
+      </div>
+      <button id="gBtnStart" class="game-btn primary">Empezar</button>
+      <a href="../../index.html" class="game-btn" style="text-align:center;text-decoration:none;margin-top:8px">&#8592; Volver al nivel A1</a>
+    </div>
+  </div>
+    <div id="gamePlay" class="game-screen"><div class="game-play"></div>
+  <div class="game-ref-panel" id="gRefPanel">
+    <button id="gRefToggle" class="game-ref-head">&#9660; Referencia &mdash; todas las palabras</button>
+    <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div>
+  </div></div>
+<div id="gameCompletion" class="game-screen">
+    <div class="game-complete">
+      <div style="font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:8px">Capítulo 6 completado</div>
+      <h2 style="margin-bottom:6px">¡Todo dominado!</h2>
+      <p style="color:var(--muted);font-size:.85rem;margin-bottom:20px">Puntuación: <strong id="gFinalScore"></strong> &nbsp;&middot;&nbsp; Racha: <strong id="gFinalStreak"></strong></p>
+      <div id="gFinalPct" style="font-family:var(--font-serif);font-size:1.4rem;font-weight:700;color:var(--accent);text-align:center;margin:8px 0"></div>
+      <div id="gMasteryMap" style="margin:16px 0;text-align:left;"></div>
+      <a href="worksheet.html" class="game-btn" style="text-decoration:none;text-align:center">Repetir ejercicios</a>
+      <a href="../../index.html" class="game-btn" style="text-decoration:none;text-align:center;opacity:.7">&#8592; Nivel A1</a>
+    </div>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Inglés Cambridge A1→C2 · Para hispanohablantes</footer>
+<script>
+window.GAME_DATA={chapterId:"plurales",level:"es-a1",title:"Los plurales",storageKey:"wordplay_game_es-a1_plurales",items:[
+  {"id":"books","term":"books","meaning":"libros","synonym":"book + -s","example":"I have three <b>books</b>.","completion":"I have three _____.","answer":"books"},
+  {"id":"boxes","term":"boxes","meaning":"cajas","synonym":"box + -es","example":"There are two <b>boxes</b> here.","completion":"There are two _____ here.","answer":"boxes"},
+  {"id":"cities","term":"cities","meaning":"ciudades","synonym":"city → cities","example":"I know many <b>cities</b>.","completion":"I know many _____.","answer":"cities"},
+  {"id":"watches","term":"watches","meaning":"relojes (de pulsera)","synonym":"watch → watches","example":"He sells <b>watches</b>.","completion":"He sells _____.","answer":"watches"},
+  {"id":"knives","term":"knives","meaning":"cuchillos","synonym":"knife → knives","example":"We need two <b>knives</b>.","completion":"We need two _____.","answer":"knives"},
+  {"id":"children","term":"children","meaning":"niños/as","synonym":"child → children","example":"The <b>children</b> are playing.","completion":"The _____ are playing.","answer":"children"},
+  {"id":"people","term":"people","meaning":"personas/gente","synonym":"person → people","example":"Many <b>people</b> live here.","completion":"Many _____ live here.","answer":"people"},
+  {"id":"feet","term":"feet","meaning":"pies","synonym":"foot → feet","example":"I have two <b>feet</b>.","completion":"I have two _____.","answer":"feet"},
+  {"id":"women","term":"women","meaning":"mujeres","synonym":"woman → women","example":"Three <b>women</b> are here.","completion":"Three _____ are here.","answer":"women"},
+  {"id":"leaves","term":"leaves","meaning":"hojas (de árbol)","synonym":"leaf → leaves","example":"The <b>leaves</b> are green.","completion":"The _____ are green.","answer":"leaves"}
+]};
+</script>
+<script src="../../../../shared/store.js?v=v104"></script>
+<script src="../../../../shared/game.js?v=v108"></script>
+</body>
+</html>
