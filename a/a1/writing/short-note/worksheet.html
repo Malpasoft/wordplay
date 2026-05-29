@@ -72,16 +72,19 @@
   <div style="border:1px solid var(--hairline);border-radius:8px;padding:16px 20px;margin-top:24px"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Self-check before saving</div><label style="display:flex;gap:10px;align-items:center;padding:6px 0;font-size:.88rem;cursor:pointer"><input type="checkbox" style="width:16px;height:16px;flex-shrink:0"> <span>I answered all parts of the task</span></label><label style="display:flex;gap:10px;align-items:center;padding:6px 0;font-size:.88rem;cursor:pointer"><input type="checkbox" style="width:16px;height:16px;flex-shrink:0"> <span>My spelling is correct</span></label><label style="display:flex;gap:10px;align-items:center;padding:6px 0;font-size:.88rem;cursor:pointer"><input type="checkbox" style="width:16px;height:16px;flex-shrink:0"> <span>I used capital letters and full stops</span></label><label style="display:flex;gap:10px;align-items:center;padding:6px 0;font-size:.88rem;cursor:pointer"><input type="checkbox" style="width:16px;height:16px;flex-shrink:0"> <span>My sentences make sense</span></label><label style="display:flex;gap:10px;align-items:center;padding:6px 0;font-size:.88rem;cursor:pointer"><input type="checkbox" style="width:16px;height:16px;flex-shrink:0"> <span>I used "am", "is" or "are" correctly</span></label></div>
 </form>
 <footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
-
-window.CHAPTER_ID = "short-note";
-window.LEVEL = "a1";
-window.SECTION = "writing";
-window.TOTAL_POINTS = 3;
-window.ANSWERS = {"w1": {"answer": "Hi!"}, "w2": {"answer": "I am at the shops."}, "w3": {"answer": "See you later!"}};
-window.EXERCISE_TITLES = {ex_warmup: "Warm-up — Choose the correct phrase"};
 <script src="../../../../shared/store.js?v=v103"></script>
 <script>
 window.CHAPTER_ID = 'short-note';
+window.LEVEL = 'a1';
+window.SECTION = 'writing';
+window.TOTAL_POINTS = 3;
+window.ANSWERS = {"w1": {"answer": "Hi!"}, "w2": {"answer": "I am at the shops."}, "w3": {"answer": "See you later!"}};
+window.EXERCISE_TITLES = {"ex_warmup": "Warm-up — Choose the correct phrase"};
+window.EXPLANATIONS = {
+  "w1": "<strong>Hi!</strong> is correct for a friendly note. 'Dear Sir or Madam,' and 'To Whom It May Concern,' are formal business letter openings — not suitable for a short note to a friend.",
+  "w2": "<strong>I am at the shops.</strong> is a simple, direct sentence saying where you are. The other options are formal phrases used in business correspondence.",
+  "w3": "<strong>See you later!</strong> is a natural, friendly closing for a short note. 'Yours faithfully,' is for formal letters, and 'I look forward to hearing from you.' is business language."
+};
 window.LEVEL = 'a1';
 var DRAFT_KEY = 'wordplay_writing_a1_short-note';
 var ta = document.getElementById('writingAnswer');

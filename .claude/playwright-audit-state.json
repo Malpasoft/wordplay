@@ -1,9 +1,9 @@
 {
   "started": "2026-05-29T00:00:00.000000Z",
-  "last_updated": "2026-05-29T08:37:43.582549Z",
-  "current_level": "a2",
+  "last_updated": "2026-05-29T08:42:23.303029Z",
+  "current_level": "complete",
   "current_chapter": null,
-  "pages_done": 100,
+  "pages_done": 628,
   "pages_total": 0,
   "bugs": [
     {
@@ -104,6 +104,24 @@
       "description": "window.ANSWERS, window.TOTAL_POINTS, and window.EXERCISE_TITLES were outside any <script> tag (raw text on page, not executed). Added missing window.EXPLANATIONS for 3 questions.",
       "status": "fixed",
       "fixed_at": "2026-05-29T08:37:43.582549Z"
+    },
+    {
+      "id": "BUG-012",
+      "page": "a/a1/writing/personal-profile/worksheet.html and a/a1/writing/short-note/worksheet.html",
+      "type": "js-error",
+      "severity": "P1",
+      "description": "Same bug as BUG-011: window.ANSWERS, TOTAL_POINTS, EXERCISE_TITLES outside any <script> tag. Added window.EXPLANATIONS for all questions in both files.",
+      "status": "fixed",
+      "fixed_at": "2026-05-29T08:42:23.303029Z"
+    },
+    {
+      "id": "BUG-013",
+      "page": "Multiple writing worksheets: a2/writing/description, a2/writing/informal-email, a2/writing/postcard, b1/vocabulary/applied-grammar-verbs",
+      "type": "pedagogy",
+      "severity": "P1",
+      "description": "4 worksheets had MCQ questions with no window.EXPLANATIONS \u2014 wrong answers showed no feedback.",
+      "status": "fixed",
+      "fixed_at": "2026-05-29T08:42:23.303029Z"
     }
   ],
   "levels": {
@@ -126,6 +144,42 @@
           "status": "fixed",
           "notes": "form-filling BUG-011 fixed; 2 textarea worksheets ok"
         }
+      }
+    },
+    "a2": {
+      "status": "done",
+      "chapters": {
+        "all": "clean \u2014 3 writing worksheets missing EXPLANATIONS fixed"
+      }
+    },
+    "b1": {
+      "status": "done",
+      "chapters": {
+        "all": "clean \u2014 1 vocab worksheet missing EXPLANATIONS fixed"
+      }
+    },
+    "b2": {
+      "status": "done",
+      "chapters": {
+        "all": "clean"
+      }
+    },
+    "c1": {
+      "status": "done",
+      "chapters": {
+        "all": "clean"
+      }
+    },
+    "c2": {
+      "status": "done",
+      "chapters": {
+        "all": "clean"
+      }
+    },
+    "es-a1": {
+      "status": "done",
+      "chapters": {
+        "all": "clean \u2014 vocabulary content stubs (Pr\u00f3ximamente) by design"
       }
     }
   }
