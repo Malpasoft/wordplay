@@ -25,7 +25,7 @@ body {
 /* ─── CSS VARIABLES ────────────────────────────────────────────── */
 :root {
   --ink: #1A1A1A;
-  --paper: #FAFAFA;
+  --paper: #F7F3EE;
   --navy: #1A1A1A;
   --navy-light: #6B6B6B;
   --muted: #9A9A9A;
@@ -37,7 +37,7 @@ body {
   --cream: #FAFAFA;
   --cream-deep: #F0EDE8;
   --muted-deep: #6B6B6B;
-  --border-soft: rgba(26,26,26,0.12);
+  --border-soft: rgba(26,26,26,0.22);
   --navy-deep: #0D0D0D;
   --navy-mid: #3A3A3A;
   --offwhite: #F5F3EF;
@@ -61,7 +61,7 @@ body.dark {
   --accent-dark: #A07830;
   --cream-deep: #1A1A1A;
   --muted-deep: #A8B4C6;
-  --border-soft: rgba(255,255,255,0.1);
+  --border-soft: rgba(255,255,255,0.16);
   --navy-deep: #0A0A0A;
   --navy-mid: #2A2A2A;
   --offwhite: #141414;
@@ -87,11 +87,14 @@ a { color: inherit; }
 .site-header-inner {
   max-width: 840px;
   margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  gap: 12px;
 }
+.site-header-inner .back.back-link { grid-column: 1; justify-self: start; }
+.site-header-inner .brand,
+.site-header-inner a.brand { grid-column: 2; }
+.site-header-inner .dark-toggle { grid-column: 3; justify-self: end; }
 .site-header a.brand,
 .site-header .brand {
   color: white;
@@ -309,8 +312,8 @@ body.dark .wp-qr-img { outline: 1px solid rgba(255,255,255,.12); }
   margin-bottom: 32px;
 }
 .chapter-card {
-  background: white;
-  border: 1px solid rgba(26,26,26,0.12);
+  background: var(--paper);
+  border: 1.5px solid var(--border-soft);
   border-radius: 8px;
   padding: 18px 20px 14px;
   cursor: pointer;
@@ -322,6 +325,7 @@ body.dark .wp-qr-img { outline: 1px solid rgba(255,255,255,.12); }
   box-shadow: 0 4px 16px rgba(184,134,11,0.12);
   transform: translateY(-1px);
 }
+body.dark .chapter-card { background: var(--navy-mid); }
 .chapter-card.locked {
   background: var(--cream);
   cursor: default;
@@ -883,6 +887,14 @@ body.dark #back-to-top { background: var(--amber); color: #1A1A1A; }
   box-shadow: 0 8px 24px rgba(0,0,0,.3);
   border-color: var(--amber);
 }
+body:not(.dark) .sect-card {
+  background: var(--paper);
+  border-color: rgba(26,26,26,0.18);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+body:not(.dark) .sect-card > *:nth-child(1) { color: var(--amber) !important; }
+body:not(.dark) .sect-card > *:nth-child(2) { color: var(--ink) !important; }
+body:not(.dark) .sect-card > *:nth-child(n+3) { color: var(--muted) !important; }
 .ch-card h2 {
   font-family: var(--font-serif);
   font-size: 1rem;
