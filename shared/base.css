@@ -92,13 +92,15 @@ a { color: inherit; }
   align-items: center;
   gap: 12px;
 }
-.site-header a.brand {
+.site-header a.brand,
+.site-header .brand {
   color: white;
   text-decoration: none;
   font-family: var(--font-serif);
   font-weight: 700;
   font-size: 1.1rem;
   letter-spacing: -0.01em;
+  white-space: nowrap;
 }
 .site-header a.brand span {
   color: var(--accent);
@@ -123,7 +125,8 @@ a { color: inherit; }
   transition: background 0.15s;
 }
 .site-header .back:active { background: rgba(255,255,255,0.1); }
-.site-header .back.back-link::before { content: '←'; font-size: 1.1rem; }
+.site-header .back.back-link { padding: 6px 8px; }
+.site-header .back.back-link::before { content: '←'; font-size: 1.25rem; }
 .site-header .forward-link::after { content: ''; }
 
 /* ─── CONTAINER ─────────────────────────────────────────────────── */
