@@ -351,6 +351,15 @@ body.deck-body .deck-progress {
   .trap-arrow { display: none; }
 }
 
+/* ─── INLINE WRONG / RIGHT SPANS (overview-desc corrections) ──── */
+/* Used when a wrong→correct pair appears inline in overview-desc  */
+/* (replaces the stripped ✓ symbol — keeps right/wrong visually    */
+/*  distinct without forbidden Unicode symbols)                     */
+.ov-wrong { color: var(--red); text-decoration: line-through; font-style: italic; }
+.ov-right { color: var(--green); font-weight: 600; }
+body.dark .ov-wrong { color: #e57373; }
+body.dark .ov-right { color: #5ecf85; }
+
 /* ─── SUMMARY SLIDE (dark) ───────────────────────────────────── */
 .slide.summary-slide .slide-card {
   background: var(--navy-deep);
