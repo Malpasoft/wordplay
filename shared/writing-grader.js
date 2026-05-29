@@ -533,7 +533,7 @@ function renderFeedback(result, containerId, config, currentText) {
   // Positives
   if (result.positives.length > 0) {
     html += '<div class="wg-section wg-pos">';
-    html += '<div class="wg-section-head">✓ What is working well</div>';
+    html += '<div class="wg-section-head">What is working well</div>';
     result.positives.forEach(function(p){html+='<div class="wg-item">'+escapeHtml(p)+'</div>';});
     html += '</div>';
   }
@@ -541,7 +541,7 @@ function renderFeedback(result, containerId, config, currentText) {
   // Issues
   if (result.issues.length > 0) {
     html += '<div class="wg-section wg-issues">';
-    html += '<div class="wg-section-head">⚠ Issues to address</div>';
+    html += '<div class="wg-section-head">Issues to address</div>';
     result.issues.forEach(function(i){
       var cls = i.severity==='error'?'wg-error':'wg-warn';
       html += '<div class="wg-item '+cls+'">'+escapeHtml(i.text)+'</div>';
@@ -552,7 +552,7 @@ function renderFeedback(result, containerId, config, currentText) {
   // Tips
   if (result.tips.length > 0) {
     html += '<div class="wg-section wg-tips">';
-    html += '<div class="wg-section-head">✎ Tips to improve</div>';
+    html += '<div class="wg-section-head">Tips to improve</div>';
     result.tips.forEach(function(t){html+='<div class="wg-item">'+escapeHtml(t)+'</div>';});
     html += '</div>';
   }
