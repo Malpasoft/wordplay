@@ -35,6 +35,11 @@
       <p class="ac-desc">Flip cards, then match words to definitions</p>
       <span class="ac-arrow">&#8594;</span>
     </a>
+    <a href="worksheet.html" class="activity-card" data-activity="practice">
+      <span class="ac-title">Practice</span>
+      <p class="ac-desc">MCQ and fill-in exercises with instant feedback</p>
+      <span class="ac-arrow">&#8594;</span>
+    </a>
     <a href="game.html" class="activity-card" data-activity="game">
       <span class="ac-title">Mastery Game</span>
       <p class="ac-desc">4-stage game to lock words into long-term memory</p>
@@ -52,6 +57,7 @@
     var defs=[
       ['slides.html', lvl['slides_academic-vocabulary']&&lvl['slides_academic-vocabulary'].done],
       ['flashcards.html', !!localStorage.getItem('wordplay_vocab_c1_academic-vocabulary_mastered')],
+      ['worksheet.html', lvl['worksheet_academic-vocabulary']&&lvl['worksheet_academic-vocabulary'].done],
       ['game.html', lvl['wordplay_game_c1_academic-vocabulary']&&lvl['wordplay_game_c1_academic-vocabulary'].pct>=70]
     ];
     defs.forEach(function(d){
