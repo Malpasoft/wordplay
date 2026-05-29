@@ -214,7 +214,7 @@ function checkAnswers() {
     breakdownEl.innerHTML = '<h3>Review your answers</h3>' + breakdown.map(section => {
       const itemsHtml = section.items.map(item => {
         const cls = item.isOpen ? 'info' : (item.correct ? 'correct' : 'wrong');
-        const mark = item.isOpen ? '~' : (item.correct ? '✓' : '✗');
+        const mark = item.isOpen ? '~' : (item.correct ? '✓' : '✕');
         var qLabel = item.q.replace(/^e\d+q(\d+)$/i, 'Q$1').toUpperCase();
         let content = '<div class="content"><strong>' + qLabel + '</strong>';
         if (item.isOpen) {
