@@ -1,5 +1,5 @@
 /* ══════════════════════════════════════════════════════════════════
-   WORD PLAY — Game CSS v107
+   WORD PLAY — Game CSS v108
    ══════════════════════════════════════════════════════════════════ */
 
 /* ─── SCREEN TRANSITIONS ────────────────────────────────────────── */
@@ -10,7 +10,7 @@
 .game-start {
   background: var(--paper);
   border: 1.5px solid var(--border-soft);
-  border-radius: 12px;
+  border-radius: 10px;
   box-shadow: 0 2px 18px rgba(0,0,0,.08);
   padding: 36px 28px;
   text-align: center;
@@ -89,7 +89,7 @@
 .game-play {
   background: var(--paper);
   border: 1.5px solid var(--border-soft);
-  border-radius: 12px;
+  border-radius: 10px;
   box-shadow: 0 2px 18px rgba(0,0,0,.08);
   padding: 0 0 22px;
   margin-top: 8px;
@@ -203,24 +203,38 @@
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
 }
-.game-option:active { transform: scale(0.99); }
+.game-option:active { transform: scale(0.97); }
 .game-option:hover:not(:disabled) { background: rgba(184,134,11,.05); border-color: var(--amber); }
-.game-option.correct { background: #F0F9F3; color: var(--green); border-color: var(--green); font-weight: 700; }
-.game-option.wrong   { background: #FDF3F3; color: var(--red);   border-color: var(--red);   text-decoration: line-through; }
+.game-option.correct { background: rgba(39,174,96,0.10); color: #1d7d45; border-color: #27ae60; font-weight: 700; }
+.game-option.wrong   { background: rgba(192,57,43,0.07); color: #a0342a; border-color: #c0392b; text-decoration: line-through; }
 .game-option:disabled { cursor: default; opacity: 0.75; }
 
 /* ─── FEEDBACK & EXAMPLE ────────────────────────────────────────── */
 .game-feedback {
-  min-height: 26px;
+  min-height: 0;
   font-family: var(--font-sans);
   font-size: 0.92rem;
-  font-weight: 700;
-  text-align: center;
-  padding-top: 10px;
+  padding-top: 8px;
   padding-bottom: 2px;
 }
-.game-feedback.correct { color: var(--green); }
-.game-feedback.wrong   { color: var(--red); }
+.game-feedback.correct {
+  background: rgba(39,174,96,0.08);
+  border-left: 3px solid #27ae60;
+  padding: 12px 26px;
+  color: #1d7d45;
+  font-weight: 700;
+  text-align: left;
+  margin-top: 6px;
+}
+.game-feedback.wrong {
+  background: rgba(192,57,43,0.06);
+  border-left: 3px solid #c0392b;
+  padding: 12px 26px;
+  color: #a0342a;
+  font-weight: 600;
+  text-align: left;
+  margin-top: 6px;
+}
 
 .game-example {
   font-style: italic;
@@ -231,18 +245,19 @@
   padding-bottom: 4px;
   line-height: 1.5;
   border-top: 1px solid var(--border-soft);
-  margin-top: 6px;
+  margin-top: 12px;
 }
 
-/* ─── ACTION ROW (hint link + continue button) ──────────────────── */
+/* ─── ACTION ROW (continue button + hint link) ──────────────────── */
 .gp-actions {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
   padding-top: 14px;
 }
 
-/* "Need a hint?" — subtle text link, not a button */
+/* "Need a hint?" — subtle text link below the Continue button */
 .gp-link {
   background: none;
   border: none;
@@ -253,13 +268,23 @@
   text-underline-offset: 3px;
   cursor: pointer;
   padding: 4px 0;
+  text-align: center;
+  align-self: center;
   -webkit-tap-highlight-color: transparent;
 }
 .gp-link:hover { color: var(--amber); }
 .gp-link:disabled { opacity: .35; cursor: default; text-decoration: none; }
 
 #gBtnNext {
-  min-width: 130px;
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 14px;
+  border-radius: 8px;
   animation: nextBtnIn .2s ease-out;
 }
 @keyframes nextBtnIn { from { opacity:0; transform:scale(.94) } to { opacity:1; transform:scale(1) } }
@@ -310,7 +335,7 @@
   background: var(--paper);
   border: 1.5px solid var(--border-soft);
   border-top: 4px solid var(--green);
-  border-radius: 12px;
+  border-radius: 10px;
   box-shadow: 0 2px 18px rgba(0,0,0,.08);
   padding: 40px 28px;
   text-align: center;
@@ -433,7 +458,7 @@
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   DARK MODE (v107)
+   DARK MODE (v108)
    ══════════════════════════════════════════════════════════════════ */
 
 body.dark .game-start,
@@ -449,9 +474,17 @@ body.dark .game-completion h2 { color: var(--ink) !important; }
 body.dark .game-term           { color: #FFFFFF !important; }
 body.dark .game-prompt         { color: rgba(255,255,255,.6) !important; }
 body.dark .game-example        { color: rgba(255,255,255,.5) !important; border-top-color: rgba(255,255,255,.1) !important; }
-body.dark .game-feedback       { color: var(--ink) !important; }
-body.dark .game-feedback.correct { color: var(--green) !important; }
-body.dark .game-feedback.wrong   { color: var(--red) !important; }
+body.dark .game-feedback { color: var(--ink) !important; }
+body.dark .game-feedback.correct {
+  background: rgba(39,174,96,0.13) !important;
+  border-left-color: #4CAF82 !important;
+  color: #5ecf85 !important;
+}
+body.dark .game-feedback.wrong {
+  background: rgba(192,57,43,0.13) !important;
+  border-left-color: #E05A4A !important;
+  color: #FFA090 !important;
+}
 
 body.dark .gp-prog { background: rgba(255,255,255,.12); }
 body.dark .gp-badge { background: rgba(201,160,80,.15); }
@@ -474,12 +507,13 @@ body.dark .game-btn.primary {
 }
 body.dark .game-btn.primary:hover { background: var(--accent-dark) !important; }
 body.dark .game-option.correct {
-  background: rgba(39,174,96,.22) !important;
+  background: rgba(39,174,96,.20) !important;
   border-color: #4CAF82 !important;
   color: #A0E8B0 !important;
+  font-weight: 700 !important;
 }
 body.dark .game-option.wrong {
-  background: rgba(192,57,43,.22) !important;
+  background: rgba(192,57,43,.20) !important;
   border-color: #E05A4A !important;
   color: #FFA090 !important;
 }
