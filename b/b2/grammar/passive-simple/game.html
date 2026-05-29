@@ -20,11 +20,41 @@
 <a href="worksheet.html" class="chapter-nav-btn">Practice</a>
 <a href="game.html" class="chapter-nav-btn active">Game</a>
 </nav>
-<h1>Passive Voice (B2) — Game</h1>
-<div id="game-root"></div>
+<div class="game-wrap">
+  <div id="gameStart" class="game-screen active">
+    <div class="game-start">
+      <h2>Passive Voice (B2) — Mastery</h2>
+      <p>4 stages each — meaning, recognition, in-context and production. A wrong answer drops you back one stage, never to zero.</p>
+      <div id="gStartMastered" style="font-family:var(--font-sans);font-size:.9rem;margin:12px 0;color:var(--muted)"></div>
+      <div id="gResumeSection" style="display:none;margin-bottom:12px">
+        <button id="gBtnResume" class="game-btn primary">Resume</button>
+        <button id="gBtnNewFromResume" class="game-btn">Start fresh</button>
+      </div>
+      <button id="gBtnStart" class="game-btn primary">Start</button>
+    </div>
+  </div>
+  <div id="gamePlay" class="game-screen"><div class="game-play"></div>
+    <div class="game-ref-panel" id="gRefPanel">
+      <button id="gRefToggle" class="game-ref-head">&#9660; Reference &mdash; all items</button>
+      <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div>
+    </div>
+  </div>
+  <div id="gameCompletion" class="game-screen">
+    <div class="game-complete" style="text-align:center">
+      <h2>All mastered!</h2>
+      <p style="color:var(--muted);font-size:.85rem">Score: <strong id="gFinalScore"></strong> &middot; Best streak: <strong id="gFinalStreak"></strong></p>
+      <div id="gFinalPct" style="font-family:var(--font-serif);font-size:1.4rem;font-weight:700;color:var(--accent);margin:8px 0"></div>
+      <div id="gMasteryMap" style="margin:16px 0;text-align:left"></div>
+      <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+      <a href="worksheet.html" class="game-btn" style="text-decoration:none;text-align:center;margin-top:8px">Redo practice worksheet</a>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.CHAPTER_ID="passive-simple";window.LEVEL="b2";window.SECTION="grammar";
 window.GAME_DATA = {
+  chapterId:"passive-simple",level:"b2",title:"Passive Voice (B2)",storageKey:"wordplay_game_b2_passive-simple",
   items: [{"id": "reporting", "term": "It is said that", "meaning": "reporting verb passive structure", "synonym": "impersonal passive", "example": "<b>It is said that</b> the economy is improving.", "completion": "It is ______ that the building is haunted. (believe)", "answer": "believed"}, {"id": "to_be", "term": "reported to be", "meaning": "subject + passive + to be", "synonym": "impersonal alternative", "example": "The minister <b>is reported to be</b> resigning.", "completion": "He is ______ to be the richest man in town. (say)", "answer": "said"}, {"id": "modal", "term": "modal + be + PP", "meaning": "passive with modal verbs", "synonym": "modal passive", "example": "This report <b>must be submitted</b> by Friday.", "completion": "The form ______ in pen. (should + complete)", "answer": "should be completed"}, {"id": "past_modal", "term": "should have been + PP", "meaning": "past modal passive", "synonym": "past obligation passive", "example": "This <b>should have been done</b> yesterday.", "completion": "The mistake ______ earlier. (should + spot)", "answer": "should have been spotted"}, {"id": "inf", "term": "to be + PP (passive infinitive)", "meaning": "want/expect + to + be + PP", "synonym": "passive after main verb", "example": "She wants <b>to be promoted</b>.", "completion": "He expects ______ for the trip. (choose)", "answer": "to be chosen"}, {"id": "ger", "term": "being + PP (passive gerund)", "meaning": "after verbs that take -ing", "synonym": "passive form of gerund", "example": "Nobody likes <b>being criticised</b>.", "completion": "She avoided ______ . (see)", "answer": "being seen"}]
 };
 </script>

@@ -29,24 +29,12 @@
     </div>
     <button id="gBtnStart" class="game-btn primary">Start</button>
   </div></div>
-  <div id="gamePlay" class="game-screen"><div class="game-play-card">
-    <div class="game-top-bar"><div class="game-progress-wrap"><div class="game-progress-bar" id="gProgressBar" style="width:0%"></div></div>
-    <div class="game-top-stats"><span>Score <strong id="gScore">0</strong></span><span>Streak <strong id="gStreak">0</strong></span></div></div>
-    <div id="gModeTag" class="game-mode-tag"></div><div id="gTerm" class="game-term"></div>
-    <div id="gPrompt" class="game-prompt"></div><div id="gOptions" class="game-options"></div>
-    <div id="gFeedback" class="game-feedback"></div><div id="gExample" class="game-example" style="display:none"></div>
-    <div class="game-btn-row">
-      <button id="gBtnHint" class="game-btn ghost">Hint [H]</button>
-      <button id="gBtnKnow" class="game-btn know" style="display:none">I know this [K]</button>
-      <button id="gBtnReveal" class="game-btn ghost">Reveal</button>
-      <button id="gBtnNext" class="game-btn primary" style="display:none">Next →</button>
-    </div>
-    <div class="game-progress-txt" id="gProgressTxt">0 / 10 mastered</div>
-    <button id="gBtnSaveQuit" class="game-btn ghost" style="margin-top:12px;width:100%">Save &amp; quit</button>
-  </div>
-  <div class="game-ref-panel"><button id="gRefToggle" class="game-ref-head">▼ Reference</button>
-  <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div></div></div>
-  <div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div id="gamePlay" class="game-screen"><div class="game-play"></div>
+  <div class="game-ref-panel" id="gRefPanel">
+    <button id="gRefToggle" class="game-ref-head">&#9660; Reference &mdash; all words</button>
+    <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div>
+  </div></div>
+<div id="gameCompletion" class="game-screen"><div class="game-completion-card">
     <div class="completion-title">Complete!</div>
     <div id="gMasteryMap" style="margin:12px 0"></div>
     <div class="completion-stats"><div>Score <strong id="gFinalScore">0</strong></div><div>Mastery <strong id="gFinalPct">0%</strong></div></div>

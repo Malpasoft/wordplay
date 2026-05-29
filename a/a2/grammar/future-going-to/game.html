@@ -46,37 +46,12 @@
     </div>
   </div>
 
-  <div id="gamePlay" class="game-screen">
-    <div class="game-hud">
-      <span id="gModeTag" class="game-mode-tag"></span>
-      <span class="hud-sep">·</span>
-      <span id="gScore" class="hud-val">0</span> <span class="hud-label">mastered</span>
-      <span class="hud-sep">·</span>
-      <span id="gStreak" class="hud-val">0</span>
-    </div>
-    <div class="game-progress-bar"><div id="gProgressBar" class="game-progress-fill"></div></div>
-    <div id="gProgressTxt" class="game-progress-txt"></div>
-    <div class="game-card">
-      <div id="gTerm" class="game-term"></div>
-      <div id="gPrompt" class="game-prompt"></div>
-      <div id="gOptions" class="game-options"></div>
-      <div id="gFeedback" class="game-feedback"></div>
-      <div id="gExample" class="game-example" style="display:none"></div>
-      <div class="game-card-actions">
-        <button id="gBtnHint" class="game-btn ghost small">Hint</button>
-        <button id="gBtnReveal" class="game-btn ghost small">Show answer</button>
-        <button id="gBtnKnow" class="game-btn know small" style="display:none">I know this</button>
-        <button id="gBtnNext" class="game-btn primary" style="display:none">Next &#8594;</button>
-      </div>
-    </div>
-    <div class="game-ref-panel">
-      <button id="gRefToggle" class="game-ref-head">&#9660; Reference</button>
-      <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div>
-    </div>
-    <button id="gBtnSaveQuit" class="game-btn ghost small" style="margin-top:12px">Save &amp; quit</button>
-  </div>
-
-  <div id="gameCompletion" class="game-screen">
+    <div id="gamePlay" class="game-screen"><div class="game-play"></div>
+  <div class="game-ref-panel" id="gRefPanel">
+    <button id="gRefToggle" class="game-ref-head">&#9660; Reference &mdash; all words</button>
+    <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div>
+  </div></div>
+<div id="gameCompletion" class="game-screen">
     <div class="game-completion">
       <h2>Mastered!</h2>
       <p>You have completed all items in this chapter.</p>
