@@ -329,7 +329,7 @@ body.deck-body .deck-progress {
   color: var(--red);
   text-decoration: line-through;
 }
-.trap-wrong::before { content: '✗ '; text-decoration: none; font-weight: 700; }
+.trap-wrong::before { content: ''; }
 .trap-arrow { color: var(--muted); font-size: 1rem; }
 .trap-right {
   background: rgba(39,174,96,.08);
@@ -338,7 +338,7 @@ body.deck-body .deck-progress {
   border-radius: 4px;
   color: var(--green);
 }
-.trap-right::before { content: '✓ '; font-weight: 700; }
+.trap-right::before { content: ''; }
 .trap-note {
   grid-column: 1 / -1;
   font-size: 0.78rem;

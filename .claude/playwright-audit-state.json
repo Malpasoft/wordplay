@@ -1,9 +1,9 @@
 {
   "started": "2026-05-29T00:00:00.000000Z",
-  "last_updated": null,
-  "current_level": "placement-test",
+  "last_updated": "2026-05-29T08:37:43.582549Z",
+  "current_level": "a2",
   "current_chapter": null,
-  "pages_done": 0,
+  "pages_done": 100,
   "pages_total": 0,
   "bugs": [
     {
@@ -11,7 +11,7 @@
       "page": "a/a1/grammar/adjectives-basic/worksheet.html (systemic: 13 worksheets affected)",
       "type": "pedagogy",
       "severity": "P1",
-      "description": "13 A1 grammar worksheets had e1q1–e1q8 multiple-choice questions with no entries in window.EXPLANATIONS.",
+      "description": "13 A1 grammar worksheets had e1q1\u2013e1q8 multiple-choice questions with no entries in window.EXPLANATIONS.",
       "status": "fixed",
       "fixed_at": "2026-05-28T23:01:00.338066"
     },
@@ -29,7 +29,7 @@
       "page": "shared/slides.css (.watch-out::before)",
       "type": "design-system",
       "severity": "P2",
-      "description": "slides.css .watch-out::before injected forbidden ⚠ (U+26A0) via CSS pseudo-element across all 201 slides pages.",
+      "description": "slides.css .watch-out::before injected forbidden \u26a0 (U+26A0) via CSS pseudo-element across all 201 slides pages.",
       "status": "fixed",
       "fixed_at": "2026-05-29T07:45:00.000000Z"
     },
@@ -38,7 +38,7 @@
       "page": "es/a1/gramatica/have-got/game.html",
       "type": "js-error",
       "severity": "P1",
-      "description": "window.GAME_DATA was completely missing — game rendered with no terms.",
+      "description": "window.GAME_DATA was completely missing \u2014 game rendered with no terms.",
       "status": "fixed",
       "fixed_at": "2026-05-28T22:36:59.994578"
     },
@@ -56,7 +56,7 @@
       "page": "shared/writing-grader.js",
       "type": "design-system",
       "severity": "P2",
-      "description": "writing-grader.js section headers used forbidden symbols ✓, ⚠, ✎ in 'What is working well', 'Issues to address', 'Tips to improve'.",
+      "description": "writing-grader.js section headers used forbidden symbols \u2713, \u26a0, \u270e in 'What is working well', 'Issues to address', 'Tips to improve'.",
       "status": "fixed",
       "fixed_at": "2026-05-29T08:00:00.000000Z"
     },
@@ -65,7 +65,7 @@
       "page": "b/b2/vocabulary/applied-grammar-prepositions/worksheet.html",
       "type": "pedagogy",
       "severity": "P1",
-      "description": "Worksheet had no window.EXPLANATIONS block — 6 questions gave no wrong-answer feedback.",
+      "description": "Worksheet had no window.EXPLANATIONS block \u2014 6 questions gave no wrong-answer feedback.",
       "status": "fixed",
       "fixed_at": "2026-05-29T08:00:00.000000Z"
     },
@@ -74,10 +74,59 @@
       "page": "c/c1/vocabulary/applied-grammar-register/worksheet.html and c/c2/vocabulary/applied-grammar-collocation/worksheet.html",
       "type": "pedagogy",
       "severity": "P1",
-      "description": "Both worksheets had no window.EXPLANATIONS block — 6 questions each gave no wrong-answer feedback.",
+      "description": "Both worksheets had no window.EXPLANATIONS block \u2014 6 questions each gave no wrong-answer feedback.",
       "status": "fixed",
       "fixed_at": "2026-05-29T08:00:00.000000Z"
+    },
+    {
+      "id": "BUG-009",
+      "page": "shared/slides.css (.trap-wrong::before / .trap-right::before)",
+      "type": "design-system",
+      "severity": "P2",
+      "description": "slides.css injected forbidden \u2717 and \u2713 via ::before pseudo-elements on .trap-wrong and .trap-right across all slides with common-mistake rows (adjectives, articles, present-simple, etc.).",
+      "status": "fixed",
+      "fixed_at": "2026-05-29T08:37:43.582549Z"
+    },
+    {
+      "id": "BUG-010",
+      "page": "177 HTML files course-wide",
+      "type": "design-system",
+      "severity": "P2",
+      "description": "Forbidden symbols (\u2717, \u2713) used in panel-head green/red, result spans, DO/DON'T column heads, nav badge textContent, FCE mock feedback, button labels across 177 files.",
+      "status": "systemic-fixed",
+      "fixed_at": "2026-05-29T08:37:43.582549Z"
+    },
+    {
+      "id": "BUG-011",
+      "page": "a/a1/writing/form-filling/worksheet.html",
+      "type": "js-error",
+      "severity": "P1",
+      "description": "window.ANSWERS, window.TOTAL_POINTS, and window.EXERCISE_TITLES were outside any <script> tag (raw text on page, not executed). Added missing window.EXPLANATIONS for 3 questions.",
+      "status": "fixed",
+      "fixed_at": "2026-05-29T08:37:43.582549Z"
     }
   ],
-  "levels": {}
+  "levels": {
+    "placement-test": {
+      "status": "done",
+      "chapters": {}
+    },
+    "a1": {
+      "status": "done",
+      "chapters": {
+        "grammar": {
+          "status": "ok",
+          "notes": "25 chapters \u2014 all clean after BUG-009/BUG-010 systemic fix"
+        },
+        "vocabulary": {
+          "status": "ok",
+          "notes": "12 chapters \u2014 all clean"
+        },
+        "writing": {
+          "status": "fixed",
+          "notes": "form-filling BUG-011 fixed; 2 textarea worksheets ok"
+        }
+      }
+    }
+  }
 }

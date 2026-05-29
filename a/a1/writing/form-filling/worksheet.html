@@ -71,17 +71,19 @@
   <div style="border:1px solid var(--hairline);border-radius:8px;padding:16px 20px;margin-top:24px"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Self-check before saving</div><label style="display:flex;gap:10px;align-items:center;padding:6px 0;font-size:.88rem;cursor:pointer"><input type="checkbox" style="width:16px;height:16px;flex-shrink:0"> <span>I answered all parts of the task</span></label><label style="display:flex;gap:10px;align-items:center;padding:6px 0;font-size:.88rem;cursor:pointer"><input type="checkbox" style="width:16px;height:16px;flex-shrink:0"> <span>My spelling is correct</span></label><label style="display:flex;gap:10px;align-items:center;padding:6px 0;font-size:.88rem;cursor:pointer"><input type="checkbox" style="width:16px;height:16px;flex-shrink:0"> <span>I used capital letters and full stops</span></label><label style="display:flex;gap:10px;align-items:center;padding:6px 0;font-size:.88rem;cursor:pointer"><input type="checkbox" style="width:16px;height:16px;flex-shrink:0"> <span>My sentences make sense</span></label><label style="display:flex;gap:10px;align-items:center;padding:6px 0;font-size:.88rem;cursor:pointer"><input type="checkbox" style="width:16px;height:16px;flex-shrink:0"> <span>I used "am", "is" or "are" correctly</span></label></div>
 </form>
 <footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
-
-window.CHAPTER_ID = "form-filling";
-window.LEVEL = "a1";
-window.SECTION = "writing";
-window.TOTAL_POINTS = 3;
-window.ANSWERS = {"w1": {"answer": "Sofia"}, "w2": {"answer": "Spanish"}, "w3": {"answer": "14/03/1996"}};
-window.EXERCISE_TITLES = {ex_warmup: "Warm-up — What goes in each box?"};
 <script src="../../../../shared/store.js?v=v103"></script>
 <script>
 window.CHAPTER_ID = 'form-filling';
 window.LEVEL = 'a1';
+window.SECTION = 'writing';
+window.TOTAL_POINTS = 3;
+window.ANSWERS = {"w1": {"answer": "Sofia"}, "w2": {"answer": "Spanish"}, "w3": {"answer": "14/03/1996"}};
+window.EXERCISE_TITLES = {"ex_warmup": "Warm-up — What goes in each box?"};
+window.EXPLANATIONS = {
+  "w1": "<strong>First name</strong> means your given name (e.g. Sofia), not your city (Barcelona) or nationality (Spanish).",
+  "w2": "<strong>Nationality</strong> describes where you are from: Spanish, British, French, etc. — not a name or job.",
+  "w3": "<strong>Date of birth</strong> uses the format DD/MM/YYYY (e.g. 14/03/1996). 'Sofia Garcia' is a name, not a date."
+};
 var DRAFT_KEY = 'wordplay_writing_a1_form-filling';
 var ta = document.getElementById('writingAnswer');
 if (ta) {

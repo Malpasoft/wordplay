@@ -8,7 +8,7 @@
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
 <title>A1 · Question Words — Lesson | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v106">
-<link rel="stylesheet" href="../../../../shared/slides.css?v=v109">
+<link rel="stylesheet" href="../../../../shared/slides.css?v=v110">
 <script src="../../../../shared/dark-init.js?v=v105"></script>
 </head>
 <body class="deck-body">
@@ -44,7 +44,7 @@
 </div></div>
 <div class="slide"><div class="slide-card">
   <div class="slide-header"><h2>Word order: question word + verb + subject</h2><p class="slide-sub">Auxiliary verb (do, does, is, are...) goes before the subject</p></div>
-  <div class="formula-block"><strong>Question word</strong> + <strong>auxiliary</strong> + subject + main verb? &nbsp;<span class="arrow">→</span>&nbsp; <strong>Where do you live?</strong> <span class="result">✓</span></div>
+  <div class="formula-block"><strong>Question word</strong> + <strong>auxiliary</strong> + subject + main verb? &nbsp;<span class="arrow">→</span>&nbsp; <strong>Where do you live?</strong> </div>
   <div class="overview-row"><div class="overview-label">With "to be"</div><div class="overview-desc"><strong>Where is</strong> she? · <strong>Who are</strong> they?</div></div>
   <div class="overview-row"><div class="overview-label">With do/does</div><div class="overview-desc"><strong>What do</strong> you want? · <strong>Where does</strong> she work?</div></div>
   <div class="overview-row"><div class="overview-label">With can</div><div class="overview-desc"><strong>How can</strong> I help you?</div></div>
@@ -104,9 +104,9 @@ try { localStorage.setItem('wordplay_last_chapter_a1', JSON.stringify({ slug: 'q
     var p = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
     var lv = p['a1'] || {};
     var ws = lv['question-words'];
-    if (ws && ws.pct >= 70) { var pt = document.getElementById('nav-practice'); if (pt) pt.textContent = 'Practice ✓'; }
+    if (ws && ws.pct >= 70) { var pt = document.getElementById('nav-practice'); if (pt) pt.textContent = 'Practice'; }
     var gm = lv['wordplay_game_question-words'];
-    if (gm && gm.pct >= 70) { var gt = document.querySelectorAll('.chapter-nav-btn')[2]; if (gt) gt.textContent = 'Game ✓'; }
+    if (gm && gm.pct >= 70) { var gt = document.querySelectorAll('.chapter-nav-btn')[2]; if (gt) gt.textContent = 'Game'; }
   } catch(e) {}
 })();
 (function() {

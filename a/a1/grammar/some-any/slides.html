@@ -8,7 +8,7 @@
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
 <title>A1 · Some &amp; Any — Lesson | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v106">
-<link rel="stylesheet" href="../../../../shared/slides.css?v=v109">
+<link rel="stylesheet" href="../../../../shared/slides.css?v=v110">
 <script src="../../../../shared/dark-init.js?v=v105"></script>
 </head>
 <body class="deck-body">
@@ -101,9 +101,9 @@ try { localStorage.setItem('wordplay_last_chapter_a1', JSON.stringify({ slug: 's
     var p = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
     var lv = p['a1'] || {};
     var ws = lv['some-any'];
-    if (ws && ws.pct >= 70) { var pt = document.getElementById('nav-practice'); if (pt) pt.textContent = 'Practice ✓'; }
+    if (ws && ws.pct >= 70) { var pt = document.getElementById('nav-practice'); if (pt) pt.textContent = 'Practice'; }
     var gm = lv['wordplay_game_some-any'];
-    if (gm && gm.pct >= 70) { var gt = document.querySelectorAll('.chapter-nav-btn')[2]; if (gt) gt.textContent = 'Game ✓'; }
+    if (gm && gm.pct >= 70) { var gt = document.querySelectorAll('.chapter-nav-btn')[2]; if (gt) gt.textContent = 'Game'; }
   } catch(e) {}
 })();
 (function() {

@@ -519,7 +519,7 @@ function reviewAnswers() {
       const isRight = v && checkAnswer('part1', i, v);
       const note = document.createElement('div');
       note.className = 'show-answer';
-      note.innerHTML = isRight ? '<span class="correct-mark">✓ Correct</span>' : '<span class="wrong-mark">✗</span> Correct answer: <strong>' + correct + '</strong>';
+      note.innerHTML = isRight ? '<span class="correct-mark">Correct</span>' : '<span class="wrong-mark">Wrong</span> Correct answer: <strong>' + correct + '</strong>';
       qDiv.appendChild(note);
     }
   }
@@ -536,7 +536,7 @@ function reviewAnswers() {
       if (!parent.querySelector('.show-answer')) {
         const note = document.createElement('div');
         note.className = 'show-answer';
-        note.innerHTML = isRight ? '<span class="correct-mark">✓</span>' : '<span class="wrong-mark">✗</span> Correct: <strong>' + correctText + '</strong>';
+        note.innerHTML = isRight ? '<span class="correct-mark">Correct</span>' : '<span class="wrong-mark">Wrong</span> Correct: <strong>' + correctText + '</strong>';
         parent.appendChild(note);
       }
     }
@@ -551,7 +551,7 @@ function reviewAnswers() {
     const correctText = ANSWERS.part4[i].answer;
     const note = document.createElement('div');
     note.className = 'show-answer';
-    note.innerHTML = isRight ? '<span class="correct-mark">✓</span>' : '<span class="wrong-mark">✗</span> Correct: <strong>' + correctText + '</strong>';
+    note.innerHTML = isRight ? '<span class="correct-mark">Correct</span>' : '<span class="wrong-mark">Wrong</span> Correct: <strong>' + correctText + '</strong>';
     qDiv.appendChild(note);
   });
   // Part 5: radios 31-36
@@ -564,7 +564,7 @@ function reviewAnswers() {
     if (qDiv && !qDiv.querySelector('.show-answer')) {
       const note = document.createElement('div');
       note.className = 'show-answer';
-      note.innerHTML = isRight ? '<span class="correct-mark">✓ Correct</span>' : '<span class="wrong-mark">✗</span> Correct answer: <strong>' + correct + '</strong>';
+      note.innerHTML = isRight ? '<span class="correct-mark">Correct</span>' : '<span class="wrong-mark">Wrong</span> Correct answer: <strong>' + correct + '</strong>';
       qDiv.appendChild(note);
     }
   }
@@ -579,7 +579,7 @@ function reviewAnswers() {
       note.className = 'show-answer';
       note.style.display = 'inline';
       note.style.padding = '0';
-      note.innerHTML = isRight ? ' <span class="correct-mark">✓</span>' : ' <span class="wrong-mark">✗ ' + correct + '</span>';
+      note.innerHTML = isRight ? ' <span class="correct-mark">Correct</span>' : ' <span class="wrong-mark">' + correct + '</span>';
       sel.parentElement.appendChild(note);
     }
   }
@@ -595,7 +595,7 @@ function reviewAnswers() {
       note.style.display = 'inline-block';
       note.style.padding = '0';
       note.style.marginLeft = '8px';
-      note.innerHTML = isRight ? '<span class="correct-mark">✓</span>' : '<span class="wrong-mark">✗ ' + correct + '</span>';
+      note.innerHTML = isRight ? '<span class="correct-mark">Correct</span>' : '<span class="wrong-mark">' + correct + '</span>';
       sel.parentElement.appendChild(note);
     }
   }
