@@ -60,6 +60,11 @@
       <h2>Demostrativos</h2>
       <p class="ch-desc">this · that · these · those — señalar cerca y lejos</p><span class="ch-cta">Estudiar &#8594;</span>
     </a>
+    <a href="there-is-there-are/index.html" class="ch-card ch-card--grammar" id="gpc_es-a1_there-is-there-are">
+      <div class="ch-num">Cap. 8</div>
+      <h2>There is / There are</h2>
+      <p class="ch-desc">cómo decir "hay" — singular, plural, negativo y preguntas</p><span class="ch-cta">Estudiar &#8594;</span>
+    </a>
   </div>
 </div>
 <footer class="site-footer">Word Play · Inglés Cambridge A1→C2 · Para hispanohablantes</footer>
@@ -200,6 +205,26 @@
       b7.style.cssText = 'font-family:var(--font-sans);font-size:.65rem;font-weight:700;color:var(--amber);margin-top:6px;letter-spacing:.5px';
       b7.textContent = badges7.join(' · ');
       card7.querySelector('.ch-cta').before(b7);
+    }
+  } catch(e) {}
+})();
+
+(function() {
+  try {
+    var prog = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+    var lvl = prog['es-a1'] || {};
+    var card8 = document.getElementById('gpc_es-a1_there-is-there-are');
+    if (!card8) return;
+    var ws8 = lvl['there-is-there-are'];
+    var gm8 = lvl['wordplay_game_es-a1_there-is-there-are'];
+    var badges8 = [];
+    if (ws8 && ws8.pct >= 70) badges8.push('Ejercicios');
+    if (gm8 && gm8.pct >= 70) badges8.push('Juego');
+    if (badges8.length) {
+      var b8 = document.createElement('div');
+      b8.style.cssText = 'font-family:var(--font-sans);font-size:.65rem;font-weight:700;color:var(--amber);margin-top:6px;letter-spacing:.5px';
+      b8.textContent = badges8.join(' · ');
+      card8.querySelector('.ch-cta').before(b8);
     }
   } catch(e) {}
 })();

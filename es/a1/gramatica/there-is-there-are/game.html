@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A1 Gramática · There is / There are — Juego | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v110">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v109">
+<script src="../../../../shared/dark-init.js?v=v105"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Cambiar modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>›</span>
+  <a href="../../../index.html">Para hispanohablantes</a><span>›</span>
+  <a href="../../index.html">A1</a><span>›</span>
+  <a href="../index.html">Gramática</a><span>›</span>
+  <a href="index.html">There is / There are</a>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lección</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+</nav>
+<div class="game-wrap" id="gameWrap">
+  <div id="gameStart" class="game-screen active">
+    <div class="game-start">
+      <h2>There is / There are — Dominio</h2>
+      <p>10 elementos · 4 fases cada uno. Empareja cada forma con su uso a través del reconocimiento, contexto y producción.</p>
+      <p style="font-size:.85rem;color:var(--muted)">Un error te hace retroceder una fase — nunca a cero.</p>
+      <div id="gStartMastered" style="font-family:var(--font-sans);font-size:.9rem;margin:12px 0;color:var(--muted)"></div>
+      <div id="gResumeSection" style="display:none;margin-bottom:12px">
+        <button id="gBtnResume" class="game-btn primary">Continuar</button>
+        <button id="gBtnNewFromResume" class="game-btn">Empezar de nuevo</button>
+      </div>
+      <button id="gBtnStart" class="game-btn primary">Empezar</button>
+      <a href="../../index.html" class="game-btn" style="text-align:center;text-decoration:none;margin-top:8px">&#8592; Volver al nivel A1</a>
+    </div>
+  </div>
+    <div id="gamePlay" class="game-screen"><div class="game-play"></div>
+  <div class="game-ref-panel" id="gRefPanel">
+    <button id="gRefToggle" class="game-ref-head">&#9660; Referencia &mdash; todas las palabras</button>
+    <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div>
+  </div></div>
+<div id="gameCompletion" class="game-screen">
+    <div class="game-complete">
+      <div style="font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:8px">Capítulo 8 completado</div>
+      <h2 style="margin-bottom:6px">¡Todo dominado!</h2>
+      <p style="color:var(--muted);font-size:.85rem;margin-bottom:20px">Puntuación: <strong id="gFinalScore"></strong> &nbsp;&middot;&nbsp; Racha: <strong id="gFinalStreak"></strong></p>
+      <div id="gFinalPct" style="font-family:var(--font-serif);font-size:1.4rem;font-weight:700;color:var(--accent);text-align:center;margin:8px 0"></div>
+      <div id="gMasteryMap" style="margin:16px 0;text-align:left;"></div>
+      <a href="worksheet.html" class="game-btn" style="text-decoration:none;text-align:center">Repetir ejercicios</a>
+      <a href="../../index.html" class="game-btn" style="text-decoration:none;text-align:center;opacity:.7">&#8592; Nivel A1</a>
+    </div>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Inglés Cambridge A1→C2 · Para hispanohablantes</footer>
+<script>
+window.GAME_DATA={chapterId:"there-is-there-are",level:"es-a1",title:"There is / There are",storageKey:"wordplay_game_es-a1_there-is-there-are",items:[
+  {"id":"there_is","term":"There is","meaning":"hay (uno · singular)","synonym":"singular","example":"<b>There is</b> a book here.","completion":"_____ a book here.","answer":"There is"},
+  {"id":"there_are","term":"There are","meaning":"hay (varios · plural)","synonym":"plural","example":"<b>There are</b> two books here.","completion":"_____ two books here.","answer":"There are"},
+  {"id":"theres","term":"There's","meaning":"hay (contracción de there is)","synonym":"there is","example":"<b>There's</b> a problem.","completion":"_____ a problem. (contracción)","answer":"There's"},
+  {"id":"isnt","term":"There isn't","meaning":"no hay (singular)","synonym":"there is not","example":"<b>There isn't</b> any coffee.","completion":"_____ any coffee.","answer":"There isn't"},
+  {"id":"arent","term":"There aren't","meaning":"no hay (plural)","synonym":"there are not","example":"<b>There aren't</b> any chairs.","completion":"_____ any chairs.","answer":"There aren't"},
+  {"id":"is_there","term":"Is there?","meaning":"¿hay? (singular)","synonym":"pregunta singular","example":"<b>Is there</b> a bank near here?","completion":"_____ a bank near here?","answer":"Is there"},
+  {"id":"are_there","term":"Are there?","meaning":"¿hay? (plural)","synonym":"pregunta plural","example":"<b>Are there</b> any shops?","completion":"_____ any shops?","answer":"Are there"},
+  {"id":"yes_is","term":"Yes, there is","meaning":"Sí (respuesta corta singular)","synonym":"respuesta corta","example":"\"Is there a café?\" \"<b>Yes, there is</b>.\"","completion":"Is there a café? — Yes, _____.","answer":"there is"},
+  {"id":"no_arent","term":"No, there aren't","meaning":"No (respuesta corta plural)","synonym":"respuesta corta","example":"\"Are there eggs?\" \"<b>No, there aren't</b>.\"","completion":"Are there eggs? — No, _____.","answer":"there aren't"},
+  {"id":"there_is_no","term":"There is no","meaning":"no hay ningún/a","synonym":"= there isn't any","example":"<b>There is no</b> problem.","completion":"_____ problem. (ningún)","answer":"There is no"}
+]};
+</script>
+<script src="../../../../shared/store.js?v=v104"></script>
+<script src="../../../../shared/game.js?v=v108"></script>
+</body>
+</html>
