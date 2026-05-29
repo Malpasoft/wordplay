@@ -55,6 +55,11 @@
       <h2>Los plurales</h2>
       <p class="ch-desc">book → books · child → children — el plural en inglés</p><span class="ch-cta">Estudiar &#8594;</span>
     </a>
+    <a href="demostrativos/index.html" class="ch-card ch-card--grammar" id="gpc_es-a1_demostrativos">
+      <div class="ch-num">Cap. 7</div>
+      <h2>Demostrativos</h2>
+      <p class="ch-desc">this · that · these · those — señalar cerca y lejos</p><span class="ch-cta">Estudiar &#8594;</span>
+    </a>
   </div>
 </div>
 <footer class="site-footer">Word Play · Inglés Cambridge A1→C2 · Para hispanohablantes</footer>
@@ -175,6 +180,26 @@
       b6.style.cssText = 'font-family:var(--font-sans);font-size:.65rem;font-weight:700;color:var(--amber);margin-top:6px;letter-spacing:.5px';
       b6.textContent = badges6.join(' · ');
       card6.querySelector('.ch-cta').before(b6);
+    }
+  } catch(e) {}
+})();
+
+(function() {
+  try {
+    var prog = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+    var lvl = prog['es-a1'] || {};
+    var card7 = document.getElementById('gpc_es-a1_demostrativos');
+    if (!card7) return;
+    var ws7 = lvl['demostrativos'];
+    var gm7 = lvl['wordplay_game_es-a1_demostrativos'];
+    var badges7 = [];
+    if (ws7 && ws7.pct >= 70) badges7.push('Ejercicios');
+    if (gm7 && gm7.pct >= 70) badges7.push('Juego');
+    if (badges7.length) {
+      var b7 = document.createElement('div');
+      b7.style.cssText = 'font-family:var(--font-sans);font-size:.65rem;font-weight:700;color:var(--amber);margin-top:6px;letter-spacing:.5px';
+      b7.textContent = badges7.join(' · ');
+      card7.querySelector('.ch-cta').before(b7);
     }
   } catch(e) {}
 })();

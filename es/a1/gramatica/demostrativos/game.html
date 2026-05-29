@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A1 Gramática · Demostrativos — Juego | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v110">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v109">
+<script src="../../../../shared/dark-init.js?v=v105"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Cambiar modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>›</span>
+  <a href="../../../index.html">Para hispanohablantes</a><span>›</span>
+  <a href="../../index.html">A1</a><span>›</span>
+  <a href="../index.html">Gramática</a><span>›</span>
+  <a href="index.html">Demostrativos</a>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lección</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+</nav>
+<div class="game-wrap" id="gameWrap">
+  <div id="gameStart" class="game-screen active">
+    <div class="game-start">
+      <h2>Demostrativos — Dominio</h2>
+      <p>10 elementos · 4 fases cada uno. Empareja cada demostrativo con su uso a través del reconocimiento, contexto y producción.</p>
+      <p style="font-size:.85rem;color:var(--muted)">Un error te hace retroceder una fase — nunca a cero.</p>
+      <div id="gStartMastered" style="font-family:var(--font-sans);font-size:.9rem;margin:12px 0;color:var(--muted)"></div>
+      <div id="gResumeSection" style="display:none;margin-bottom:12px">
+        <button id="gBtnResume" class="game-btn primary">Continuar</button>
+        <button id="gBtnNewFromResume" class="game-btn">Empezar de nuevo</button>
+      </div>
+      <button id="gBtnStart" class="game-btn primary">Empezar</button>
+      <a href="../../index.html" class="game-btn" style="text-align:center;text-decoration:none;margin-top:8px">&#8592; Volver al nivel A1</a>
+    </div>
+  </div>
+    <div id="gamePlay" class="game-screen"><div class="game-play"></div>
+  <div class="game-ref-panel" id="gRefPanel">
+    <button id="gRefToggle" class="game-ref-head">&#9660; Referencia &mdash; todas las palabras</button>
+    <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div>
+  </div></div>
+<div id="gameCompletion" class="game-screen">
+    <div class="game-complete">
+      <div style="font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:8px">Capítulo 7 completado</div>
+      <h2 style="margin-bottom:6px">¡Todo dominado!</h2>
+      <p style="color:var(--muted);font-size:.85rem;margin-bottom:20px">Puntuación: <strong id="gFinalScore"></strong> &nbsp;&middot;&nbsp; Racha: <strong id="gFinalStreak"></strong></p>
+      <div id="gFinalPct" style="font-family:var(--font-serif);font-size:1.4rem;font-weight:700;color:var(--accent);text-align:center;margin:8px 0"></div>
+      <div id="gMasteryMap" style="margin:16px 0;text-align:left;"></div>
+      <a href="worksheet.html" class="game-btn" style="text-decoration:none;text-align:center">Repetir ejercicios</a>
+      <a href="../../index.html" class="game-btn" style="text-decoration:none;text-align:center;opacity:.7">&#8592; Nivel A1</a>
+    </div>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Inglés Cambridge A1→C2 · Para hispanohablantes</footer>
+<script>
+window.GAME_DATA={chapterId:"demostrativos",level:"es-a1",title:"Demostrativos",storageKey:"wordplay_game_es-a1_demostrativos",items:[
+  {"id":"this","term":"this","meaning":"este/esta (una cosa, cerca)","synonym":"singular · here","example":"<b>This</b> book is mine.","completion":"_____ book is mine. (cerca)","answer":"This"},
+  {"id":"that","term":"that","meaning":"ese/aquel (una cosa, lejos)","synonym":"singular · there","example":"<b>That</b> house is big.","completion":"_____ house is big. (lejos)","answer":"That"},
+  {"id":"these","term":"these","meaning":"estos/estas (varias, cerca)","synonym":"plural · here","example":"<b>These</b> shoes are new.","completion":"_____ shoes are new. (cerca)","answer":"These"},
+  {"id":"those","term":"those","meaning":"esos/aquellos (varias, lejos)","synonym":"plural · there","example":"<b>Those</b> cars are fast.","completion":"_____ cars are fast. (lejos)","answer":"Those"},
+  {"id":"this_is","term":"This is","meaning":"este es / esta es","synonym":"presentar (cerca)","example":"<b>This is</b> my sister.","completion":"_____ my sister. (presentación)","answer":"This is"},
+  {"id":"these_are","term":"These are","meaning":"estos son / estas son","synonym":"plural cerca","example":"<b>These are</b> my keys.","completion":"_____ my keys. (en la mano)","answer":"These are"},
+  {"id":"those_are","term":"Those are","meaning":"esos son / aquellos son","synonym":"plural lejos","example":"<b>Those are</b> their books.","completion":"_____ their books. (allí)","answer":"Those are"},
+  {"id":"whats_that","term":"What's that?","meaning":"¿Qué es eso?","synonym":"pregunta · lejos","example":"<b>What's that</b> on the table?","completion":"_____ on the table?","answer":"What's that"},
+  {"id":"this_pron","term":"this","meaning":"esto (pronombre, cerca)","synonym":"sin sustantivo","example":"<b>This</b> is difficult.","completion":"_____ is difficult.","answer":"This"},
+  {"id":"those_pron","term":"those","meaning":"esos (pronombre, lejos)","synonym":"sin sustantivo","example":"<b>Those</b> are expensive.","completion":"_____ are expensive.","answer":"Those"}
+]};
+</script>
+<script src="../../../../shared/store.js?v=v104"></script>
+<script src="../../../../shared/game.js?v=v108"></script>
+</body>
+</html>
