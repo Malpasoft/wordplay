@@ -772,6 +772,7 @@ body.dark .chapter-nav-btn {
 body.dark .chapter-nav-btn.active {
   color: var(--amber) !important;
   border-bottom-color: var(--amber) !important;
+  background: transparent !important;
 }
 body.dark .chapter-nav-btn:hover { color: #FFFFFF !important; }
 

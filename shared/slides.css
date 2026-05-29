@@ -640,5 +640,44 @@ body.dark .lc-banner {
 }
 body.dark .lc-banner * { color: #1A1A1A !important; }
 
-/* Hide chapter-nav tab row on lesson pages (breadcrumb serves navigation) */
-.chapter-nav { display: none !important; }
+/* ─── CHAPTER NAV ─────────────────────────────────────────────── */
+.chapter-nav {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 28px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  max-width: 800px;
+  flex-wrap: wrap;
+}
+.chapter-nav::-webkit-scrollbar { display: none; }
+.chapter-nav-btn {
+  flex: 1 1 auto;
+  min-width: 80px;
+  padding: 10px 14px;
+  font-family: var(--font-sans);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-align: center;
+  text-decoration: none;
+  color: var(--muted);
+  background: transparent;
+  border: 1.5px solid var(--hairline);
+  border-radius: 6px;
+  transition: background .15s, color .15s, border-color .15s;
+  white-space: nowrap;
+  cursor: pointer;
+  display: inline-block;
+}
+.chapter-nav-btn:hover { color: var(--ink); border-color: var(--ink); }
+.chapter-nav-btn.active { background: var(--amber); color: #1A1A1A; border-color: var(--amber); }
+@media (max-width: 480px) {
+  .chapter-nav { flex-wrap: nowrap; }
+  .chapter-nav-btn { flex-shrink: 0; font-size: 0.62rem; padding: 8px 10px; letter-spacing: 1px; }
+}
+@media (max-width: 380px) {
+  .chapter-nav-btn { min-width: 60px; }
+}
