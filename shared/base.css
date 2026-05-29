@@ -87,14 +87,23 @@ a { color: inherit; }
 .site-header-inner {
   max-width: 840px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  display: flex;
   align-items: center;
+  position: relative;
+  min-height: 44px;
 }
-.site-header-inner .back.back-link { grid-column: 1; justify-self: start; }
+/* Brand always centred absolutely, immune to runtime-injected siblings */
 .site-header-inner .brand,
-.site-header-inner a.brand { grid-column: 2; }
-.site-header-inner .dark-toggle { grid-column: 3; justify-self: end; }
+.site-header-inner a.brand {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+/* Dark+QR pill always pushed to the far right */
+.site-header-inner .header-utils { margin-left: auto; }
+/* Dashboard link hidden on narrow mobile where it would crowd the brand */
+@media (max-width: 560px) { .site-header-inner .header-dash { display: none; } }
 .site-header a.brand,
 .site-header .brand {
   color: white;
