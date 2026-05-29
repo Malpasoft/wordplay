@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Vocabulario A1 · Rutina Diaria — Juego | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v106">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v108">
+<script src="../../../../shared/dark-init.js?v=v105"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link">Vocabulario A1</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Cambiar modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Inicio</a><span>›</span><a href="../../../../es/index.html">Para hispanohablantes</a><span>›</span><a href="../../index.html">A1</a><span>›</span><a href="../index.html">Vocabulario</a><span>›</span><strong>Rutina Diaria</strong></div>
+  <div class="chapter-num">V5</div>
+  <h1>Rutina Diaria</h1>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn">Lección</a>
+    <a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a>
+    <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start">
+    <h2>Rutina Diaria</h2>
+    <p>Juego de dominio en 4 etapas. Responde correctamente para avanzar.</p>
+    <div class="game-stats-row">
+      <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+      <div class="game-stat"><div class="game-stat-val">10</div><div class="game-stat-label">Total</div></div>
+    </div>
+    <div id="gResumeSection" style="display:none" class="game-btn-row">
+      <button id="gBtnResume" class="game-btn primary">Continuar</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost small">Nuevo juego</button>
+    </div>
+    <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Comenzar</button></div>
+  </div></div>
+  <div id="gamePlay" class="game-screen"><div class="game-play">
+    <div class="gp-prog"><div class="gp-prog-fill" id="gProgressBar" style="width:0%"></div></div>
+    <div class="gp-meta">
+      <span class="gp-badge" id="gModeTag"></span>
+      <span class="gp-counter"><span class="gp-streak" id="gStreakBadge"></span><span id="gProgressTxt">0 / 10</span></span>
+    </div>
+    <div id="gTerm" class="game-term"></div>
+    <div id="gPrompt" class="game-prompt"></div>
+    <div id="gOptions" class="game-options"></div>
+    <div id="gFeedback" class="game-feedback"></div>
+    <div id="gExample" class="game-example"></div>
+    <div class="gp-actions">
+      <button id="gBtnHint" class="gp-link">¿Necesitas una pista?</button>
+      <button id="gBtnNext" class="game-btn primary" style="display:none">Continuar</button>
+    </div>
+  </div>
+  <div class="game-ref-panel" id="gRefPanel">
+    <button id="gRefToggle" class="game-ref-head">&#9660; Referencia — todas las palabras</button>
+    <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div>
+  </div></div>
+  <div id="gameCompletion" class="game-screen"><div class="game-completion">
+    <h2>Completado</h2>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="game-stats-row">
+      <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntos</div></div>
+      <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+      <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominio</div></div>
+    </div>
+    <div class="game-btn-row">
+      <a href="../food-and-drink/index.html" class="game-btn primary" style="text-decoration:none;text-align:center">Siguiente: Comida y Bebida &#8594;</a>
+                <button id="gBtnPlayAgain" class="game-btn secondary">Jugar de nuevo</button>
+    </div>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v103"></script>
+<script>window.LEVEL="es-a1";window.CHAPTER_ID="daily-routines";
+window.GAME_DATA={chapterId:"daily-routines",level:"es-a1",title:"Rutina Diaria",storageKey:"wordplay_game_es-a1_daily-routines",items:[
+  {"id": "wakeup", "term": "wake up", "meaning": "despertarse \u2014 dejar de dormir por la ma\u00f1ana", "synonym": "(phrasal verb)", "example": "I <b>wake up</b> at 7 o'clock.", "completion": "I _____ at 7 o'clock.", "answer": "wake up"},
+  {"id": "getup", "term": "get up", "meaning": "levantarse \u2014 salir de la cama", "synonym": "(phrasal verb)", "example": "She <b>gets up</b> early.", "completion": "She _____ early.", "answer": "gets up"},
+  {"id": "havebreakfast", "term": "have breakfast", "meaning": "desayunar \u2014 comer por la ma\u00f1ana", "synonym": "(expresi\u00f3n)", "example": "I <b>have breakfast</b> at 8.", "completion": "I _____ at 8.", "answer": "have breakfast"},
+  {"id": "gotoschool", "term": "go to school", "meaning": "ir al colegio \u2014 desplazarse a estudiar", "synonym": "(expresi\u00f3n)", "example": "The children <b>go to school</b> by bus.", "completion": "The children _____ by bus.", "answer": "go to school"},
+  {"id": "havelunch", "term": "have lunch", "meaning": "almorzar \u2014 comer a mediod\u00eda", "synonym": "(expresi\u00f3n)", "example": "We <b>have lunch</b> at 1 pm.", "completion": "We _____ at 1 pm.", "answer": "have lunch"},
+  {"id": "gohome", "term": "go home", "meaning": "ir a casa \u2014 volver al hogar", "synonym": "(expresi\u00f3n)", "example": "I <b>go home</b> at five.", "completion": "I _____ at five.", "answer": "go home"},
+  {"id": "havedinner", "term": "have dinner", "meaning": "cenar \u2014 comer por la noche", "synonym": "(expresi\u00f3n)", "example": "We <b>have dinner</b> together.", "completion": "We _____ together.", "answer": "have dinner"},
+  {"id": "watchtv", "term": "watch TV", "meaning": "ver la televisi\u00f3n \u2014 mirar la tele", "synonym": "(expresi\u00f3n)", "example": "He <b>watches TV</b> in the evening.", "completion": "He _____ in the evening.", "answer": "watches TV"},
+  {"id": "gotobed", "term": "go to bed", "meaning": "acostarse \u2014 irse a dormir", "synonym": "(phrasal verb)", "example": "I <b>go to bed</b> at 11 pm.", "completion": "I _____ at 11 pm.", "answer": "go to bed"},
+  {"id": "sleep", "term": "sleep", "meaning": "dormir \u2014 descansar durante la noche", "synonym": "/sli\u02d0p/", "example": "I <b>sleep</b> for eight hours.", "completion": "I _____ for eight hours.", "answer": "sleep"}
+]};
+</script>
+<script src="../../../../shared/game.js?v=v108"></script>
+</body></html>

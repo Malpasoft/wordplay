@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Vocabulario A1 · Comida y Bebida — Juego | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v106">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v108">
+<script src="../../../../shared/dark-init.js?v=v105"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link">Vocabulario A1</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Cambiar modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Inicio</a><span>›</span><a href="../../../../es/index.html">Para hispanohablantes</a><span>›</span><a href="../../index.html">A1</a><span>›</span><a href="../index.html">Vocabulario</a><span>›</span><strong>Comida y Bebida</strong></div>
+  <div class="chapter-num">V6</div>
+  <h1>Comida y Bebida</h1>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn">Lección</a>
+    <a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a>
+    <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start">
+    <h2>Comida y Bebida</h2>
+    <p>Juego de dominio en 4 etapas. Responde correctamente para avanzar.</p>
+    <div class="game-stats-row">
+      <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+      <div class="game-stat"><div class="game-stat-val">10</div><div class="game-stat-label">Total</div></div>
+    </div>
+    <div id="gResumeSection" style="display:none" class="game-btn-row">
+      <button id="gBtnResume" class="game-btn primary">Continuar</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost small">Nuevo juego</button>
+    </div>
+    <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Comenzar</button></div>
+  </div></div>
+  <div id="gamePlay" class="game-screen"><div class="game-play">
+    <div class="gp-prog"><div class="gp-prog-fill" id="gProgressBar" style="width:0%"></div></div>
+    <div class="gp-meta">
+      <span class="gp-badge" id="gModeTag"></span>
+      <span class="gp-counter"><span class="gp-streak" id="gStreakBadge"></span><span id="gProgressTxt">0 / 10</span></span>
+    </div>
+    <div id="gTerm" class="game-term"></div>
+    <div id="gPrompt" class="game-prompt"></div>
+    <div id="gOptions" class="game-options"></div>
+    <div id="gFeedback" class="game-feedback"></div>
+    <div id="gExample" class="game-example"></div>
+    <div class="gp-actions">
+      <button id="gBtnHint" class="gp-link">¿Necesitas una pista?</button>
+      <button id="gBtnNext" class="game-btn primary" style="display:none">Continuar</button>
+    </div>
+  </div>
+  <div class="game-ref-panel" id="gRefPanel">
+    <button id="gRefToggle" class="game-ref-head">&#9660; Referencia — todas las palabras</button>
+    <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div>
+  </div></div>
+  <div id="gameCompletion" class="game-screen"><div class="game-completion">
+    <h2>Completado</h2>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="game-stats-row">
+      <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntos</div></div>
+      <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+      <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominio</div></div>
+    </div>
+    <div class="game-btn-row">
+      <button id="gBtnPlayAgain" class="game-btn secondary">Jugar de nuevo</button>
+    </div>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v103"></script>
+<script>window.LEVEL="es-a1";window.CHAPTER_ID="food-and-drink";
+window.GAME_DATA={chapterId:"food-and-drink",level:"es-a1",title:"Comida y Bebida",storageKey:"wordplay_game_es-a1_food-and-drink",items:[
+  {"id": "bread", "term": "bread", "meaning": "pan \u2014 alimento b\u00e1sico hecho de harina", "synonym": "/bred/", "example": "I eat <b>bread</b> every morning.", "completion": "I eat _____ every morning.", "answer": "bread"},
+  {"id": "water", "term": "water", "meaning": "agua \u2014 l\u00edquido esencial para beber", "synonym": "/\u02c8w\u0254\u02d0.t\u0259r/", "example": "Can I have a glass of <b>water</b>?", "completion": "Can I have a glass of _____?", "answer": "water"},
+  {"id": "milk", "term": "milk", "meaning": "leche \u2014 bebida blanca de vaca", "synonym": "/m\u026alk/", "example": "She drinks <b>milk</b> every day.", "completion": "She drinks _____ every day.", "answer": "milk"},
+  {"id": "apple", "term": "apple", "meaning": "manzana \u2014 fruta roja o verde", "synonym": "/\u02c8\u00e6p.\u0259l/", "example": "I eat an <b>apple</b> for lunch.", "completion": "I eat an _____ for lunch.", "answer": "apple"},
+  {"id": "rice", "term": "rice", "meaning": "arroz \u2014 cereal en granos blancos", "synonym": "/ra\u026as/", "example": "We have <b>rice</b> with dinner.", "completion": "We have _____ with dinner.", "answer": "rice"},
+  {"id": "egg", "term": "egg", "meaning": "huevo \u2014 alimento producido por las gallinas", "synonym": "/e\u0261/", "example": "I have two <b>eggs</b> for breakfast.", "completion": "I have two _____ for breakfast.", "answer": "eggs"},
+  {"id": "coffee", "term": "coffee", "meaning": "caf\u00e9 \u2014 bebida caliente de color oscuro", "synonym": "/\u02c8k\u0252f.i/", "example": "He drinks <b>coffee</b> in the morning.", "completion": "He drinks _____ in the morning.", "answer": "coffee"},
+  {"id": "orange", "term": "orange", "meaning": "naranja \u2014 fruta c\u00edtrica de color naranja", "synonym": "/\u02c8\u0252r.\u026and\u0292/", "example": "I drink <b>orange</b> juice.", "completion": "I drink _____ juice.", "answer": "orange"},
+  {"id": "cheese", "term": "cheese", "meaning": "queso \u2014 alimento l\u00e1cteo s\u00f3lido", "synonym": "/t\u0283i\u02d0z/", "example": "I put <b>cheese</b> on my sandwich.", "completion": "I put _____ on my sandwich.", "answer": "cheese"},
+  {"id": "soup", "term": "soup", "meaning": "sopa \u2014 plato l\u00edquido y caliente", "synonym": "/su\u02d0p/", "example": "The <b>soup</b> is hot.", "completion": "The _____ is hot.", "answer": "soup"}
+]};
+</script>
+<script src="../../../../shared/game.js?v=v108"></script>
+</body></html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Vocabulario A1 · Números y Tiempo — Juego | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v106">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v108">
+<script src="../../../../shared/dark-init.js?v=v105"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link">Vocabulario A1</a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Cambiar modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Inicio</a><span>›</span><a href="../../../../es/index.html">Para hispanohablantes</a><span>›</span><a href="../../index.html">A1</a><span>›</span><a href="../index.html">Vocabulario</a><span>›</span><strong>Números y Tiempo</strong></div>
+  <div class="chapter-num">V4</div>
+  <h1>Números y Tiempo</h1>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn">Lección</a>
+    <a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a>
+    <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start">
+    <h2>Números y Tiempo</h2>
+    <p>Juego de dominio en 4 etapas. Responde correctamente para avanzar.</p>
+    <div class="game-stats-row">
+      <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+      <div class="game-stat"><div class="game-stat-val">10</div><div class="game-stat-label">Total</div></div>
+    </div>
+    <div id="gResumeSection" style="display:none" class="game-btn-row">
+      <button id="gBtnResume" class="game-btn primary">Continuar</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost small">Nuevo juego</button>
+    </div>
+    <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Comenzar</button></div>
+  </div></div>
+  <div id="gamePlay" class="game-screen"><div class="game-play">
+    <div class="gp-prog"><div class="gp-prog-fill" id="gProgressBar" style="width:0%"></div></div>
+    <div class="gp-meta">
+      <span class="gp-badge" id="gModeTag"></span>
+      <span class="gp-counter"><span class="gp-streak" id="gStreakBadge"></span><span id="gProgressTxt">0 / 10</span></span>
+    </div>
+    <div id="gTerm" class="game-term"></div>
+    <div id="gPrompt" class="game-prompt"></div>
+    <div id="gOptions" class="game-options"></div>
+    <div id="gFeedback" class="game-feedback"></div>
+    <div id="gExample" class="game-example"></div>
+    <div class="gp-actions">
+      <button id="gBtnHint" class="gp-link">¿Necesitas una pista?</button>
+      <button id="gBtnNext" class="game-btn primary" style="display:none">Continuar</button>
+    </div>
+  </div>
+  <div class="game-ref-panel" id="gRefPanel">
+    <button id="gRefToggle" class="game-ref-head">&#9660; Referencia — todas las palabras</button>
+    <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div>
+  </div></div>
+  <div id="gameCompletion" class="game-screen"><div class="game-completion">
+    <h2>Completado</h2>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="game-stats-row">
+      <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntos</div></div>
+      <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+      <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominio</div></div>
+    </div>
+    <div class="game-btn-row">
+      <a href="../daily-routines/index.html" class="game-btn primary" style="text-decoration:none;text-align:center">Siguiente: Rutina Diaria &#8594;</a>
+                <button id="gBtnPlayAgain" class="game-btn secondary">Jugar de nuevo</button>
+    </div>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v103"></script>
+<script>window.LEVEL="es-a1";window.CHAPTER_ID="numbers-and-time";
+window.GAME_DATA={chapterId:"numbers-and-time",level:"es-a1",title:"Números y Tiempo",storageKey:"wordplay_game_es-a1_numbers-and-time",items:[
+  {"id": "hundred", "term": "hundred", "meaning": "cien / ciento \u2014 el n\u00famero 100", "synonym": "/\u02c8h\u028cn.dr\u0259d/", "example": "There are a <b>hundred</b> students.", "completion": "There are a _____ students.", "answer": "hundred"},
+  {"id": "thousand", "term": "thousand", "meaning": "mil \u2014 el n\u00famero 1.000", "synonym": "/\u02c8\u03b8a\u028a.z\u0259nd/", "example": "The city has ten <b>thousand</b> people.", "completion": "The city has ten _____ people.", "answer": "thousand"},
+  {"id": "quarter", "term": "quarter", "meaning": "cuarto \u2014 un cuarto de hora (15 min)", "synonym": "/\u02c8kw\u0254\u02d0.t\u0259r/", "example": "It is <b>quarter</b> past three.", "completion": "It is _____ past three.", "answer": "quarter"},
+  {"id": "half", "term": "half", "meaning": "mitad / media \u2014 30 minutos", "synonym": "/h\u0251\u02d0f/", "example": "It is <b>half</b> past six.", "completion": "It is _____ past six.", "answer": "half"},
+  {"id": "midnight", "term": "midnight", "meaning": "medianoche \u2014 las 12 de la noche", "synonym": "/\u02c8m\u026ad.na\u026at/", "example": "The film starts at <b>midnight</b>.", "completion": "The film starts at _____.", "answer": "midnight"},
+  {"id": "noon", "term": "noon", "meaning": "mediod\u00eda \u2014 las 12 del d\u00eda", "synonym": "/nu\u02d0n/", "example": "Lunch is at <b>noon</b>.", "completion": "Lunch is at _____.", "answer": "noon"},
+  {"id": "monday", "term": "Monday", "meaning": "lunes \u2014 el primer d\u00eda de la semana laboral", "synonym": "/\u02c8m\u028cn.de\u026a/", "example": "I start school on <b>Monday</b>.", "completion": "I start school on _____.", "answer": "Monday"},
+  {"id": "january", "term": "January", "meaning": "enero \u2014 el primer mes del a\u00f1o", "synonym": "/\u02c8d\u0292\u00e6n.ju.\u0259r.i/", "example": "My birthday is in <b>January</b>.", "completion": "My birthday is in _____.", "answer": "January"},
+  {"id": "weekend", "term": "weekend", "meaning": "fin de semana \u2014 s\u00e1bado y domingo", "synonym": "/\u02ccwi\u02d0k\u02c8end/", "example": "I relax at the <b>weekend</b>.", "completion": "I relax at the _____.", "answer": "weekend"},
+  {"id": "oclock", "term": "o'clock", "meaning": "en punto \u2014 la hora exacta sin minutos", "synonym": "/\u0259\u02c8kl\u0252k/", "example": "It is three <b>o'clock</b>.", "completion": "It is three _____.", "answer": "o'clock"}
+]};
+</script>
+<script src="../../../../shared/game.js?v=v108"></script>
+</body></html>
