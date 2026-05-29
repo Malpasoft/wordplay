@@ -234,7 +234,7 @@ body.deck-body .deck-progress {
   line-height: 1.5;
 }
 .watch-out strong { color: var(--amber); }
-.watch-out::before { content: '⚠ '; color: var(--amber); font-weight: 700; }
+.watch-out::before { content: 'Note — '; color: var(--amber); font-weight: 700; }
 
 /* ─── OVERVIEW / SUMMARY ROWS ─────────────────────────────────── */
 .overview-row, .summary-row {
