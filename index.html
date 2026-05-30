@@ -191,32 +191,42 @@ body.dark .level-card { background: rgba(255,255,255,.05); border-color: rgba(25
 
 <div id="onboardingModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000;align-items:center;justify-content:center;padding:20px">
   <div style="background:var(--paper);border-radius:12px;max-width:460px;width:100%;padding:32px 28px;position:relative">
+    <button onclick="wpOnboardClose()" aria-label="Close" style="position:absolute;top:14px;right:14px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:transparent;border:none;border-radius:50%;font-size:1.3rem;line-height:1;color:var(--muted);cursor:pointer;transition:color .15s,background .15s" onmouseover="this.style.color='var(--ink)';this.style.background='rgba(0,0,0,.05)'" onmouseout="this.style.color='var(--muted)';this.style.background='transparent'">&times;</button>
     <div style="font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:10px">Welcome to Word Play</div>
     <h2 style="font-family:Georgia,serif;font-size:1.6rem;margin:0 0 14px;color:var(--ink)">How it works</h2>
     <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:24px">
       <div style="display:flex;gap:14px;align-items:flex-start">
         <div style="min-width:32px;height:32px;background:var(--amber);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-sans);font-weight:800;font-size:.85rem;color:#1A1A1A">1</div>
-        <div><div style="font-family:var(--font-sans);font-size:.85rem;font-weight:700;color:var(--ink);margin-bottom:3px">Take the placement test</div><div style="font-size:.8rem;color:var(--muted)">24 questions · finds your level · takes 5 minutes</div></div>
+        <div><div style="font-family:var(--font-sans);font-size:.85rem;font-weight:700;color:var(--ink);margin-bottom:3px">Take the placement test</div><div style="font-size:.8rem;color:var(--muted)">Finds your level · about 5 minutes</div></div>
       </div>
       <div style="display:flex;gap:14px;align-items:flex-start">
         <div style="min-width:32px;height:32px;background:var(--amber);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-sans);font-weight:800;font-size:.85rem;color:#1A1A1A">2</div>
-        <div><div style="font-family:var(--font-sans);font-size:.85rem;font-weight:700;color:var(--ink);margin-bottom:3px">Choose a chapter</div><div style="font-size:.8rem;color:var(--muted)">Grammar · Vocabulary · Writing — start at Chapter 1</div></div>
+        <div><div style="font-family:var(--font-sans);font-size:.85rem;font-weight:700;color:var(--ink);margin-bottom:3px">Choose a level &amp; skill</div><div style="font-size:.8rem;color:var(--muted)">CEFR A1–C2 · Grammar, Vocabulary or Writing</div></div>
       </div>
       <div style="display:flex;gap:14px;align-items:flex-start">
         <div style="min-width:32px;height:32px;background:var(--amber);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-sans);font-weight:800;font-size:.85rem;color:#1A1A1A">3</div>
-        <div><div style="font-family:var(--font-sans);font-size:.85rem;font-weight:700;color:var(--ink);margin-bottom:3px">Lesson → Practice → Game</div><div style="font-size:.8rem;color:var(--muted)">Read the lesson · do the exercises · master the game · repeat</div></div>
+        <div><div style="font-family:var(--font-sans);font-size:.85rem;font-weight:700;color:var(--ink);margin-bottom:3px">Lesson → Review → Mastery</div><div style="font-size:.8rem;color:var(--muted)">Learn it, test yourself, master the game — then print a worksheet</div></div>
       </div>
     </div>
-    <button onclick="document.getElementById('onboardingModal').style.display='none';try{localStorage.setItem('wp_onboarded','1');}catch(e){try{sessionStorage.setItem('wp_onboarded','1');}catch(e2){}}" style="width:100%;padding:13px;background:var(--ink);color:var(--paper);font-family:var(--font-sans);font-size:.78rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;border:none;border-radius:5px;cursor:pointer">Got it — let's start</button>
+    <button onclick="wpOnboardClose(); location.href='placement-test.html'" style="width:100%;padding:13px;background:var(--ink);color:var(--paper);font-family:var(--font-sans);font-size:.78rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;border:none;border-radius:5px;cursor:pointer">Take the placement test →</button>
+    <div style="text-align:center;margin-top:14px"><a href="#" onclick="event.preventDefault(); wpOnboardClose()" style="font-family:var(--font-sans);font-size:.78rem;color:var(--muted);text-decoration:none" onmouseover="this.style.textDecoration='underline'" onmouseout="this.style.textDecoration='none'">or explore on your own</a></div>
   </div>
 </div>
 <script>
+function wpOnboardClose() {
+  var m = document.getElementById('onboardingModal');
+  if (m) { m.style.display = 'none'; }
+  try { localStorage.setItem('wp_onboarded','1'); }
+  catch(e) { try { sessionStorage.setItem('wp_onboarded','1'); } catch(e2) {} }
+}
 (function() {
   var onboarded = false;
   try { onboarded = !!(localStorage.getItem('wp_onboarded') || sessionStorage.getItem('wp_onboarded') || localStorage.getItem('wordplay_progress')); } catch(e) {}
-  if (!onboarded) {
-    var m = document.getElementById('onboardingModal');
-    if (m) { m.style.display = 'flex'; }
+  var m = document.getElementById('onboardingModal');
+  if (m) {
+    // Click on the dark backdrop (but not the card) closes the modal.
+    m.addEventListener('click', function(e) { if (e.target === m) wpOnboardClose(); });
+    if (!onboarded) { m.style.display = 'flex'; }
   }
 })();
 </script>
