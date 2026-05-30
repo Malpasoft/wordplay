@@ -1,17 +1,27 @@
 /* ══════════════════════════════════════════════════════════════════
-   print.css v101 — Printables hub web view
-   Only the .no-print hub bar; body/print styles stay inline per-page.
+   print.css v102 — Printables hub web view + modal + download
    ══════════════════════════════════════════════════════════════════ */
 
-/* ─── Variables (standalone pages don't load base.css) ──────────── */
+/* ─── Variables (scoped; Template A pages don't load base.css) ──── */
 .ph-hub {
   --ph-ink:      #1A1A1A;
   --ph-paper:    #F7F3EE;
   --ph-cream:    #F0EDE8;
   --ph-amber:    #B8860B;
   --ph-hairline: #E5E5E5;
-  --ph-muted:    #7A7A7A;
+  --ph-muted:    #9A9A9A;
   --ph-sans:     -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --ph-serif:    Georgia, "Times New Roman", serif;
+}
+
+/* ─── Dark mode overrides ────────────────────────────────────────── */
+body.dark .ph-hub {
+  --ph-ink:      #F0F0F0;
+  --ph-paper:    #161616;
+  --ph-cream:    #1E1E1E;
+  --ph-amber:    #C9A050;
+  --ph-hairline: rgba(255,255,255,.1);
+  --ph-muted:    #888;
 }
 
 /* ─── Hub wrapper ────────────────────────────────────────────────── */
@@ -19,8 +29,8 @@
   font-family: var(--ph-sans);
   background: var(--ph-paper);
   border-bottom: 1.5px solid var(--ph-hairline);
-  padding: 20px 24px 24px;
-  margin-bottom: 20px;
+  padding: 24px 28px 28px;
+  margin-bottom: 0;
 }
 
 .ph-hub-back {
@@ -28,7 +38,7 @@
   font-size: .78rem;
   color: var(--ph-muted);
   text-decoration: none;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
   letter-spacing: .2px;
 }
 .ph-hub-back:hover { color: var(--ph-amber); }
@@ -37,58 +47,73 @@
 .ph-hub-cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-bottom: 16px;
+  gap: 14px;
+  margin-bottom: 18px;
 }
 
 .ph-hub-card {
+  background: #fff;
   border: 1.5px solid var(--ph-hairline);
   border-top: 3px solid var(--ph-amber);
-  border-radius: 6px;
-  padding: 14px 16px 12px;
-  background: #fff;
+  border-radius: 8px;
+  padding: 18px 18px 16px;
+  display: flex;
+  flex-direction: column;
+  transition: transform .14s, border-color .18s, box-shadow .18s;
 }
+.ph-hub-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--ph-amber);
+  box-shadow: 0 6px 20px rgba(184,134,11,.12);
+}
+body.dark .ph-hub-card { background: #1E1E1E; }
 
 .ph-hub-card-title {
-  font-size: .82rem;
+  font-family: var(--ph-serif);
+  font-size: 1rem;
   font-weight: 700;
   color: var(--ph-ink);
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .ph-hub-card-desc {
-  font-size: .72rem;
+  font-size: .73rem;
   color: var(--ph-muted);
-  line-height: 1.4;
-  margin-bottom: 12px;
+  line-height: 1.45;
+  flex: 1;
+  margin-bottom: 14px;
 }
 
 .ph-hub-card-btns {
   display: flex;
-  gap: 6px;
+  gap: 7px;
+  margin-bottom: 8px;
 }
 
-/* View link */
+/* View button — outline */
 .ph-hub-btn-view {
   display: inline-block;
   padding: 6px 14px;
-  font-size: .72rem;
+  font-size: .71rem;
   font-weight: 700;
   letter-spacing: .5px;
   text-transform: uppercase;
   text-decoration: none;
   color: var(--ph-ink);
+  background: transparent;
   border: 1.5px solid var(--ph-hairline);
   border-radius: 4px;
+  cursor: pointer;
   transition: border-color .15s, color .15s;
 }
 .ph-hub-btn-view:hover { border-color: var(--ph-amber); color: var(--ph-amber); }
 
-/* Print-section button */
+/* Print button — amber fill */
 .ph-hub-btn-print {
+  display: inline-block;
   padding: 6px 14px;
   font-family: var(--ph-sans);
-  font-size: .72rem;
+  font-size: .71rem;
   font-weight: 700;
   letter-spacing: .5px;
   text-transform: uppercase;
@@ -99,13 +124,30 @@
   cursor: pointer;
   transition: opacity .15s;
 }
-.ph-hub-btn-print:hover { opacity: .85; }
+.ph-hub-btn-print:hover { opacity: .82; }
 
-/* Print all button */
-.ph-hub-btn-all {
-  padding: 10px 24px;
+/* Download link — per card */
+.ph-hub-btn-download {
+  display: inline-block;
+  font-size: .69rem;
   font-family: var(--ph-sans);
-  font-size: .78rem;
+  color: var(--ph-amber);
+  text-decoration: none;
+  letter-spacing: .3px;
+}
+.ph-hub-btn-download:hover { text-decoration: underline; }
+
+/* ─── Bottom action row (injected by print.js) ───────────────────── */
+.ph-hub-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.ph-hub-btn-all {
+  padding: 10px 22px;
+  font-family: var(--ph-sans);
+  font-size: .77rem;
   font-weight: 700;
   letter-spacing: .5px;
   text-transform: uppercase;
@@ -117,16 +159,106 @@
   transition: border-color .15s, background .15s;
 }
 .ph-hub-btn-all:hover { border-color: var(--ph-amber); background: #fffbf0; }
+body.dark .ph-hub-btn-all:hover { background: #2a2200; }
+
+.ph-hub-btn-dl-all {
+  background: transparent;
+  color: var(--ph-amber);
+  border-color: var(--ph-amber);
+}
+.ph-hub-btn-dl-all:hover { background: rgba(184,134,11,.07); }
+
+/* ─── Modal overlay ──────────────────────────────────────────────── */
+.ph-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.ph-modal.ph-modal-open { display: flex; }
+
+.ph-modal-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+  backdrop-filter: blur(2px);
+}
+
+.ph-modal-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 700px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.3);
+}
+
+.ph-modal-close {
+  flex-shrink: 0;
+  align-self: flex-end;
+  width: 34px;
+  height: 34px;
+  font-size: 1rem;
+  line-height: 34px;
+  text-align: center;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #666;
+  margin: 10px 10px 0;
+  transition: background .15s, color .15s;
+}
+.ph-modal-close:hover { background: #f0f0f0; color: #000; }
+
+/* A4 content frame — scrollable */
+.ph-a4-frame {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14mm 18mm 18mm;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 11pt;
+  color: #000;
+  background: #fff;
+  line-height: 1.5;
+}
+
+/* Normalise Template B container styles inside modal */
+.ph-a4-frame .container { padding: 0; max-width: 100%; margin: 0; }
+.ph-a4-frame .ps { max-width: 100%; margin: 0; }
+.ph-a4-frame .site-header,
+.ph-a4-frame .site-footer,
+.ph-a4-frame .breadcrumb,
+.ph-a4-frame .chapter-nav { display: none !important; }
+
+/* Normalise Template A print styles inside modal */
+.ph-a4-frame h1 { font-size: 18pt; margin-bottom: 3pt; }
+.ph-a4-frame h2 { font-size: 13pt; margin: 14pt 0 6pt; border-bottom: 0.5pt solid #aaa; padding-bottom: 3pt; }
+.ph-a4-frame .meta { font-family: Arial, sans-serif; font-size: 8pt; color: #666; letter-spacing: 1pt; text-transform: uppercase; margin-bottom: 8pt; }
+.ph-a4-frame table { width: 100%; border-collapse: collapse; margin-bottom: 8pt; font-size: 10pt; }
+.ph-a4-frame th { font-family: Arial, sans-serif; font-size: 8pt; font-weight: bold; background: #f0f0f0; padding: 5pt 8pt; border: 0.5pt solid #ccc; text-align: left; }
+.ph-a4-frame td { padding: 5pt 8pt; border: 0.5pt solid #ccc; }
 
 /* ─── Responsive ─────────────────────────────────────────────────── */
 @media (max-width: 560px) {
-  .ph-hub { padding: 16px; }
+  .ph-hub { padding: 16px 16px 20px; }
   .ph-hub-cards { grid-template-columns: 1fr; }
+  .ph-modal { padding: 0; align-items: flex-end; }
+  .ph-modal-inner { max-height: 92vh; border-radius: 12px 12px 0 0; max-width: 100%; }
+  .ph-a4-frame { padding: 10mm 10mm 14mm; }
 }
 
 /* ─── Section-specific printing ──────────────────────────────────── */
 @media print {
-  .ph-hub { display: none !important; }
+  .ph-hub,
+  .ph-modal { display: none !important; }
 
   body.wp-print-lesson    .ph-section-worksheet,
   body.wp-print-lesson    .ph-section-key      { display: none !important; }
