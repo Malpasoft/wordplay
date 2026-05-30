@@ -70,6 +70,11 @@
       <h2>Can</h2>
       <p class="ch-desc">can · can't · cannot — habilidades, posibilidades y permisos</p><span class="ch-cta">Estudiar &#8594;</span>
     </a>
+    <a href="preposiciones/index.html" class="ch-card ch-card--grammar" id="gpc_es-a1_preposiciones">
+      <div class="ch-num">Cap. 10</div>
+      <h2>Preposiciones de lugar</h2>
+      <p class="ch-desc">in · on · under · next to · behind — dónde están las cosas</p><span class="ch-cta">Estudiar &#8594;</span>
+    </a>
   </div>
 </div>
 <footer class="site-footer">Word Play · Inglés Cambridge A1→C2 · Para hispanohablantes</footer>
@@ -250,6 +255,26 @@
       b9.style.cssText = 'font-family:var(--font-sans);font-size:.65rem;font-weight:700;color:var(--amber);margin-top:6px;letter-spacing:.5px';
       b9.textContent = badges9.join(' · ');
       card9.querySelector('.ch-cta').before(b9);
+    }
+  } catch(e) {}
+})();
+
+(function() {
+  try {
+    var prog = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+    var lvl = prog['es-a1'] || {};
+    var card10 = document.getElementById('gpc_es-a1_preposiciones');
+    if (!card10) return;
+    var ws10 = lvl['preposiciones'];
+    var gm10 = lvl['wordplay_game_es-a1_preposiciones'];
+    var badges10 = [];
+    if (ws10 && ws10.pct >= 70) badges10.push('Ejercicios');
+    if (gm10 && gm10.pct >= 70) badges10.push('Juego');
+    if (badges10.length) {
+      var b10 = document.createElement('div');
+      b10.style.cssText = 'font-family:var(--font-sans);font-size:.65rem;font-weight:700;color:var(--amber);margin-top:6px;letter-spacing:.5px';
+      b10.textContent = badges10.join(' · ');
+      card10.querySelector('.ch-cta').before(b10);
     }
   } catch(e) {}
 })();
