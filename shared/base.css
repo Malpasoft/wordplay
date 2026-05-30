@@ -157,7 +157,7 @@ a { color: inherit; }
   white-space: nowrap;
 }
 .site-header a.brand span {
-  color: var(--accent);
+  color: var(--amber);
   font-size: 0.75rem;
   letter-spacing: 2px;
   text-transform: uppercase;
@@ -221,7 +221,7 @@ h3 {
   font-size: var(--fs-overline);
   letter-spacing: var(--tracking-overline);
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--amber);
   font-weight: var(--fw-heavy);
   margin-bottom: 6px;
 }
@@ -230,7 +230,7 @@ h3 {
   color: var(--muted);
   font-style: italic;
   padding-bottom: 18px;
-  border-bottom: 2px solid var(--accent);
+  border-bottom: 2px solid var(--amber);
   margin-bottom: 28px;
 }
 
@@ -248,7 +248,7 @@ h3 {
 
 @media (min-width: 640px) {
   .container { padding: 44px 40px 80px; }
-  h1 { font-size: 3rem; }
+  h1 { font-size: var(--fs-h1); }
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -739,7 +739,7 @@ body.dark .chapter-card.locked { background: rgba(255,255,255,.04); }
 .worksheet-container > h1 {
   font-size: 2rem;
   line-height: 1.15;
-  color: var(--navy);
+  color: var(--text-1);
   margin: 16px 0 6px;
 }
 
@@ -758,10 +758,10 @@ body.dark .chapter-card.locked { background: rgba(255,255,255,.04); }
 .chapter-subtitle {
   font-family: var(--font-sans);
   font-size: 0.82rem;
-  color: var(--navy-light, var(--muted));
+  color: var(--text-2);
   margin: 0 0 24px;
   padding-bottom: 16px;
-  border-bottom: 1px solid rgba(26,26,26,0.1);
+  border-bottom: 1px solid var(--line);
 }
 
 /* ── Dark mode updates ── */
@@ -1043,7 +1043,7 @@ body.dark .dark-toggle:hover {
 }
 
 body.dark .chapter-num      { color: var(--amber) !important; }
-body.dark .chapter-subtitle { color: #C0C0C0 !important; }
+body.dark .chapter-subtitle { color: var(--text-2) !important; }
 body.dark .chapter-nav { background: rgba(255,255,255,.04) !important; }
 body.dark .chapter-nav-btn {
   color: #C0C0C0 !important;
