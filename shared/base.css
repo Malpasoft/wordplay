@@ -136,8 +136,9 @@ a { color: inherit; }
   transition: background 0.15s;
 }
 .site-header .back:active { background: rgba(255,255,255,0.1); }
-.site-header .back.back-link { padding: 6px 8px; }
-.site-header .back.back-link::before { content: '←'; font-size: 1.25rem; }
+/* Header back arrow removed — the brand stays fixed top-left and the
+   breadcrumb (with its ← affordance) handles back navigation. */
+.site-header .back.back-link { display: none !important; }
 .site-header .forward-link::after { content: ''; }
 
 /* ─── CONTAINER ─────────────────────────────────────────────────── */
@@ -242,8 +243,8 @@ h3 {
 /* QR share button — same visual style as dark-toggle */
 .qr-toggle {
   background: transparent;
-  border: 1.5px solid rgba(255,255,255,0.28);
-  color: rgba(255,255,255,0.82);
+  border: 1.5px solid var(--hairline);
+  color: var(--muted);
   font-family: var(--font-sans);
   font-size: .68rem;
   font-weight: 700;
@@ -254,7 +255,9 @@ h3 {
   transition: background .15s, color .15s;
   white-space: nowrap;
 }
-.qr-toggle:hover { background: rgba(255,255,255,0.10); color: var(--amber); border-color: var(--amber); }
+.qr-toggle:hover { background: rgba(0,0,0,0.06); color: var(--amber); border-color: var(--amber); }
+body.dark .qr-toggle { border-color: rgba(255,255,255,.2); color: #F0F0F0; }
+body.dark .qr-toggle:hover { background: rgba(255,255,255,.14); color: white; border-color: rgba(255,255,255,.2); }
 
 /* QR modal overlay */
 #wp-qr-modal {
@@ -381,7 +384,50 @@ body.dark .header-xp:hover { border-color: var(--amber); }
 body.dark .header-search-btn { border-color: rgba(255,255,255,.18); color: rgba(255,255,255,.55); }
 body.dark .header-search-btn:hover { border-color: var(--amber); color: var(--amber); }
 
-/* ─── SEARCH PANEL ──────────────────────────────────────────────── */
+/* ─── INLINE SEARCH (expands within the header bar) ─────────────────
+   When open, the input fills the bar over the right-hand controls; only
+   the brand stays visible. Results drop into the panel below. */
+.header-search-inline {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  margin-left: 12px;
+}
+.site-header-inner.searching .header-search-inline { display: flex; }
+.site-header-inner.searching .header-search-btn,
+.site-header-inner.searching .header-utils,
+.site-header-inner.searching .header-xp { display: none !important; }
+.header-search-inline input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 12px;
+  font-family: var(--font-sans);
+  font-size: .9rem;
+  border: 1.5px solid var(--hairline);
+  border-radius: 6px;
+  background: var(--cream-deep);
+  color: var(--ink);
+  outline: none;
+}
+.header-search-inline input:focus { border-color: var(--amber); }
+body.dark .header-search-inline input {
+  background: #1a1a1a; color: #f0f0f0; border-color: rgba(255,255,255,.18);
+}
+.header-search-close {
+  flex-shrink: 0;
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  background: transparent; border: none;
+  font-size: 1.25rem; line-height: 1;
+  color: var(--muted); cursor: pointer; border-radius: 6px;
+  transition: color .15s, background .15s;
+}
+.header-search-close:hover { color: var(--ink); background: rgba(0,0,0,.05); }
+body.dark .header-search-close { color: rgba(255,255,255,.6); }
+body.dark .header-search-close:hover { color: #fff; background: rgba(255,255,255,.1); }
+
+/* ─── SEARCH RESULTS PANEL (below header) ───────────────────────── */
 .header-search-panel {
   display: none;
   position: sticky;
@@ -618,6 +664,13 @@ body.dark .chapter-card { background: var(--navy-mid); }
 .breadcrumb a { color: var(--muted); text-decoration: none; }
 .breadcrumb a:hover { text-decoration: underline; }
 .breadcrumb span { opacity: 0.5; }
+/* Back affordance lives in the breadcrumb now (replaces the header arrow) */
+.breadcrumb > a:first-child::before {
+  content: '\2190';
+  margin-right: 6px;
+  font-weight: 700;
+  color: var(--amber);
+}
 
 /* Dark mode for cards */
 body.dark .chapter-card { background: var(--paper); border-color: var(--hairline); }
@@ -935,8 +988,8 @@ body.dark .site-header {
 }
 body.dark .site-header .brand,
 body.dark .site-header .brand * { color: #FFFFFF !important; }
-body.dark .site-header .back,
-body.dark .site-header .back-link { color: var(--amber) !important; }
+/* Logo mark: WP stays legible in dark mode (white square → dark letters) */
+body.dark .site-header .brand svg text { fill: #1A1A1A !important; }
 body.dark .dark-toggle {
   background: rgba(255,255,255,.08) !important;
   color: #F0F0F0 !important;

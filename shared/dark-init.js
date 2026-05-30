@@ -135,16 +135,19 @@ function toggleDark() {
   } else { injectXP(); }
 })();
 
-// Chapter search — icon in header, panel below
+// Chapter search — icon expands into an inline field within the header bar
 (function(){
-  var _loaded = false;
-  var _panel  = null;
-  var _input  = null;
+  var _loaded  = false;
+  var _inner   = null;
+  var _inline  = null;
+  var _input   = null;
+  var _panel   = null;
   var _results = null;
 
   function injectSearch() {
     var inner = document.querySelector('.site-header-inner');
     if (!inner || inner.querySelector('.header-search-btn')) return;
+    _inner = inner;
 
     var btn = document.createElement('button');
     btn.className = 'header-search-btn';
@@ -157,45 +160,49 @@ function toggleDark() {
     else inner.appendChild(btn);
   }
 
-  function ensurePanel() {
-    if (_panel) return;
+  function ensureUI() {
+    if (_inline) return;
+    // Inline field inside the header bar
+    _inline = document.createElement('div');
+    _inline.className = 'header-search-inline';
+    _inline.innerHTML =
+      '<input type="search" placeholder="Search chapters…" autocomplete="off" aria-label="Search chapters">' +
+      '<button class="header-search-close" aria-label="Close search">&times;</button>';
+    _input = _inline.querySelector('input');
+    _inner.appendChild(_inline);
+
+    // Results drop into a panel below the header
     _panel = document.createElement('div');
     _panel.className = 'header-search-panel';
-    _panel.innerHTML =
-      '<input class="header-search-input" type="search" placeholder="Search chapters…" autocomplete="off">' +
-      '<div class="header-search-results"></div>';
-    _input   = _panel.querySelector('.header-search-input');
+    _panel.innerHTML = '<div class="header-search-results"></div>';
     _results = _panel.querySelector('.header-search-results');
-
     var header = document.querySelector('.site-header');
     if (header && header.parentNode) header.after(_panel);
     else document.body.insertBefore(_panel, document.body.firstChild);
 
     _input.addEventListener('input', onInput);
-    _input.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') { closeSearch(); }
-    });
+    _input.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeSearch(); });
+    _inline.querySelector('.header-search-close').onclick = closeSearch;
     document.addEventListener('click', function(e) {
-      if (_panel.style.display !== 'none' && !_panel.contains(e.target) &&
-          !e.target.closest('.header-search-btn')) {
-        closeSearch();
-      }
+      if (!_inner.classList.contains('searching')) return;
+      if (!_inner.contains(e.target) && !_panel.contains(e.target)) closeSearch();
     }, true);
   }
 
   function toggleSearch() {
-    ensurePanel();
-    var open = _panel.style.display !== 'none' && _panel.style.display !== '';
-    if (open) { closeSearch(); return; }
-    _panel.style.display = 'block';
+    ensureUI();
+    if (_inner.classList.contains('searching')) { closeSearch(); return; }
+    _inner.classList.add('searching');
     _input.value = '';
     _results.innerHTML = '';
+    _panel.style.display = 'none';
     setTimeout(function() { _input.focus(); }, 40);
     loadSearch();
   }
 
   function closeSearch() {
-    if (_panel) { _panel.style.display = 'none'; }
+    if (_inner) _inner.classList.remove('searching');
+    if (_panel) _panel.style.display = 'none';
   }
 
   function loadSearch() {
@@ -215,7 +222,7 @@ function toggleDark() {
   function onInput() {
     if (!_results) return;
     var q = _input ? _input.value.trim() : '';
-    if (!q) { _results.innerHTML = ''; return; }
+    if (!q) { _results.innerHTML = ''; _panel.style.display = 'none'; return; }
     if (!window.WPSearch) { loadSearch(); return; }
     if (!_loaded) {
       WPSearch.load(_SHARED + 'search-index.json', function() { onInput(); });
@@ -223,6 +230,7 @@ function toggleDark() {
       return;
     }
     var hits = WPSearch.search(q);
+    _panel.style.display = 'block';
     if (!hits.length) {
       _results.innerHTML = '<div class="sr-empty">No chapters found</div>';
       return;
