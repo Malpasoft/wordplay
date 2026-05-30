@@ -102,8 +102,6 @@ a { color: inherit; }
 }
 /* Dark+QR pill always pushed to the far right */
 .site-header-inner .header-utils { margin-left: auto; }
-/* Dashboard link hidden on narrow mobile where it would crowd the brand */
-@media (max-width: 560px) { .site-header-inner .header-dash { display: none; } }
 .site-header a.brand,
 .site-header .brand {
   color: var(--ink);
@@ -312,6 +310,28 @@ body.dark .wp-qr-img { outline: 1px solid rgba(255,255,255,.12); }
   margin-left: 0;
 }
 
+/* ─── DASHBOARD LINK ────────────────────────────────────────────── */
+.header-dash {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-sans);
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--muted-deep);
+  padding: 5px 12px;
+  border: 1.5px solid var(--hairline);
+  border-radius: 6px;
+  text-decoration: none;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: border-color .15s, color .15s;
+}
+.header-dash:hover { border-color: var(--amber); color: var(--amber); }
+.header-dash svg { width: 16px; height: 16px; display: none; }   /* desktop: text label only */
+body.dark .header-dash { color: rgba(255,255,255,.6); border-color: rgba(255,255,255,.18); }
+body.dark .header-dash:hover { color: var(--amber); border-color: var(--amber); }
+
 /* ─── XP BADGE ──────────────────────────────────────────────────── */
 .header-xp {
   display: flex;
@@ -438,8 +458,47 @@ body.dark .sr-item:hover { background: rgba(201,160,80,.1); }
   color: var(--muted);
   padding: 8px 10px;
 }
+/* ─── MOBILE HEADER (≤560px): compact single row ─────────────────────
+   All six controls stay visible. Brand collapses to the WP logo mark,
+   Dashboard + dark-mode shrink to icons, XP becomes a compact chip. */
 @media (max-width: 560px) {
-  .header-xp { display: none; }
+  .site-header { padding: 10px 10px; }
+  .site-header-inner { gap: 6px; }
+
+  /* Brand → logo mark only (hide the "Word Play" wordmark) */
+  .site-header-inner .brand,
+  .site-header-inner a.brand {
+    position: static;
+    transform: none;
+    left: auto;
+    font-size: 0;
+  }
+  .site-header a.brand svg { margin-right: 0 !important; }
+  .site-header a.brand span { display: none; }
+
+  /* Pin the whole right-hand cluster to the far right as one block */
+  .site-header-inner .header-dash { margin-left: auto; }
+  .site-header-inner .header-utils { margin-left: 0; }
+
+  /* Dashboard → icon-only button */
+  .header-dash {
+    padding: 0;
+    width: 34px;
+    height: 34px;
+    justify-content: center;
+  }
+  .header-dash svg { display: block; }
+  .header-dash-text { display: none; }
+
+  /* XP badge → compact, label ellipsised for long level names */
+  .header-xp { display: flex; padding: 4px 7px; gap: 5px; }
+  .header-xp-label { max-width: 56px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .header-xp-bar { width: 24px; }
+
+  /* Dark toggle → glyph-only (hide the "Dark"/"Light" word, keep ◐/◑) */
+  .header-utils .dark-toggle { font-size: 0; padding: 5px 9px; }
+  .header-utils .dark-toggle::before { font-size: .95rem; content: "\25D0"; }
+  body.dark .header-utils .dark-toggle::before { content: "\25D1"; }
 }
 
 /* ══════════════════════════════════════════════════════════════

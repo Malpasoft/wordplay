@@ -9,12 +9,9 @@
   if (!inner || !brand || inner.querySelector('.header-dash')) return;
   var dash = document.createElement('a');
   dash.className = 'header-dash';
-  dash.textContent = 'Dashboard';
+  dash.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span class="header-dash-text">Dashboard</span>';
   var href = brand.getAttribute('href') || 'index.html';
   dash.href = href.replace('index.html', 'dashboard.html');
-  dash.style.cssText = 'color:var(--muted);text-decoration:none;font-size:.78rem;font-family:var(--font-sans,-apple-system,sans-serif);font-weight:600;padding:5px 10px;border-radius:4px;border:1px solid var(--hairline);transition:border-color .15s,color .15s';
-  dash.onmouseenter = function() { this.style.borderColor='var(--amber)'; this.style.color='var(--amber)'; };
-  dash.onmouseleave = function() { this.style.borderColor='var(--hairline)'; this.style.color='var(--muted)'; };
   inner.insertBefore(dash, inner.lastElementChild);
 })();
 
