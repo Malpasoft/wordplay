@@ -1,9 +1,8 @@
 // ══════════════════════════════════════════════════════════════════
 // deck.js — one-at-a-time lesson slides with swipe + button nav
-// Shows slides one at a time; navigates with buttons, swipe, keyboard
 // ══════════════════════════════════════════════════════════════════
 
-// ── Inject Dashboard link into site header ───────────────────────
+// ── Dashboard link in header ─────────────────────────────────────
 (function() {
   var inner = document.querySelector('.site-header-inner');
   var brand = inner && inner.querySelector('.brand');
@@ -13,13 +12,13 @@
   dash.textContent = 'Dashboard';
   var href = brand.getAttribute('href') || 'index.html';
   dash.href = href.replace('index.html', 'dashboard.html');
-  dash.style.cssText = 'color:#A8B4C6;text-decoration:none;font-size:.78rem;font-family:var(--font-sans,-apple-system,sans-serif);font-weight:600;padding:5px 10px;border-radius:4px;border:1px solid rgba(255,255,255,.2);transition:border-color .15s,color .15s';
+  dash.style.cssText = 'color:var(--muted);text-decoration:none;font-size:.78rem;font-family:var(--font-sans,-apple-system,sans-serif);font-weight:600;padding:5px 10px;border-radius:4px;border:1px solid var(--hairline);transition:border-color .15s,color .15s';
   dash.onmouseenter = function() { this.style.borderColor='var(--amber)'; this.style.color='var(--amber)'; };
-  dash.onmouseleave = function() { this.style.borderColor='rgba(255,255,255,.2)'; this.style.color='#A8B4C6'; };
+  dash.onmouseleave = function() { this.style.borderColor='var(--hairline)'; this.style.color='var(--muted)'; };
   inner.insertBefore(dash, inner.lastElementChild);
 })();
 
-// ── Confetti celebration ─────────────────────────────────────────
+// ── Confetti ─────────────────────────────────────────────────────
 function triggerConfetti() {
   if (!document.getElementById('cf-kf')) {
     var s = document.createElement('style');
@@ -61,8 +60,8 @@ function triggerConfetti() {
     if (prevBtn) prevBtn.disabled = current === 0;
     if (nextBtn) {
       nextBtn.disabled = false;
-      nextBtn.innerHTML = current === total - 1
-        ? 'Finish &#10003;' : 'Next &#9654;';
+      // Always "Next →" — the completion screen handles the post-lesson CTA
+      nextBtn.innerHTML = 'Next &#9654;';
     }
     if (counter) counter.textContent = (current + 1) + ' / ' + total;
     if (bar) bar.style.width = pct + '%';
@@ -80,33 +79,37 @@ function triggerConfetti() {
     var s = slides[current];
     s.style.display = 'block';
     s.classList.remove('slide-anim');
-    void s.offsetHeight; // force reflow
+    void s.offsetHeight;
     s.classList.add('slide-anim');
     updateUI();
-    if (current === total - 1 && !completed) { completed = true; markComplete(); }
   }
 
-  // ── Public navigation functions (called by HTML onclick attrs too) ─
+  // ── Public navigation ────────────────────────────────────────────
   window.nextSlide = function() {
-    if (current < total - 1) goTo(current + 1);
-    else if (!completed) { completed = true; markComplete(); }
+    if (current < total - 1) {
+      goTo(current + 1);
+    } else {
+      // Last slide → show completion screen
+      if (!completed) { completed = true; markComplete(); }
+      showCompletionScreen();
+    }
   };
   window.prevSlide = function() { if (current > 0) goTo(current - 1); };
   window.goToSlide = function(n) { if (n >= 0 && n < total) goTo(n); };
 
-  // ── Wire buttons (only if no onclick attribute already) ──────────
+  // ── Wire buttons ─────────────────────────────────────────────────
   var prevBtn = document.getElementById('deck-prev');
   var nextBtn = document.getElementById('deck-next');
   if (prevBtn && !prevBtn.getAttribute('onclick')) prevBtn.addEventListener('click', window.prevSlide);
   if (nextBtn && !nextBtn.getAttribute('onclick')) nextBtn.addEventListener('click', window.nextSlide);
 
-  // ── Keyboard: arrow keys ─────────────────────────────────────────
+  // ── Keyboard nav ─────────────────────────────────────────────────
   document.addEventListener('keydown', function(e) {
     if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); window.nextSlide(); }
     else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); window.prevSlide(); }
   });
 
-  // ── Touch swipe — Tinder-style drag + fly-away ───────────────────
+  // ── Touch swipe ──────────────────────────────────────────────────
   var swipeStartX = 0, swipeStartY = 0;
   var swipeActive = false, swipeDelta = 0;
   var swipeCard = null;
@@ -134,12 +137,12 @@ function triggerConfetti() {
       if (Math.abs(dx) < 8) return;
       swipeActive = true;
     }
-    e.preventDefault(); // block scroll during horizontal swipe — stops fixed-element jitter
+    e.preventDefault();
     swipeDelta = dx;
     var fade = 1 - Math.min(1, Math.abs(dx) / (window.innerWidth * 0.55));
     swipeCard.style.transform = 'translateX(' + dx + 'px)';
     swipeCard.style.opacity = Math.max(0.25, fade);
-  }, { passive: false }); // non-passive so preventDefault works
+  }, { passive: false });
 
   document.addEventListener('touchend', function() {
     if (!swipeCard) return;
@@ -184,38 +187,47 @@ function triggerConfetti() {
     if (window.FCEStore && window.FCEStore.touchStreak) {
       try { window.FCEStore.touchStreak(); } catch(e) {}
     }
-    showLessonCompleteBanner();
   }
 
-  // ── Completion banner ─────────────────────────────────────────────
-  function showLessonCompleteBanner() {
-    if (document.getElementById('lesson-complete-banner')) return;
-    if (!document.getElementById('lesson-banner-style')) {
-      var sty = document.createElement('style');
-      sty.id  = 'lesson-banner-style';
-      sty.textContent = '@keyframes lessonBannerIn{from{opacity:0;transform:translate(-50%,14px)}to{opacity:1;transform:translate(-50%,0)}}';
-      document.head.appendChild(sty);
-    }
+  // ── Completion screen (replaces the slide deck) ───────────────────
+  function showCompletionScreen() {
+    var deckWrap = document.querySelector('.slide-deck');
+    var deckNav  = document.querySelector('.deck-nav');
+    var bar      = document.getElementById('deck-progress-fill');
+
+    if (deckWrap) deckWrap.style.display = 'none';
+    if (deckNav)  deckNav.style.display  = 'none';
+    if (bar) bar.style.width = '100%';
+
+    if (document.getElementById('deck-complete')) return;
+
     triggerConfetti();
-    var banner = document.createElement('div');
-    banner.id = 'lesson-complete-banner';
-    banner.style.cssText = [
-      'position:fixed;bottom:72px;left:50%;transform:translateX(-50%)',
-      'background:var(--amber,#B8860B);color:#1A1A1A',
-      'font-family:var(--font-sans,system-ui,sans-serif);font-size:.75rem',
-      'font-weight:800;letter-spacing:1.5px;text-transform:uppercase',
-      'padding:10px 24px;border-radius:6px',
-      'box-shadow:0 4px 20px rgba(0,0,0,.25)',
-      'z-index:200;white-space:nowrap',
-      'animation:lessonBannerIn .3s ease-out'
-    ].join(';');
-    banner.innerHTML = '&#10003; Lesson complete &nbsp;&middot;&nbsp; <a href="worksheet.html" style="color:#1A1A1A;font-weight:900;text-decoration:underline">Practice now</a>';
-    document.body.appendChild(banner);
-    setTimeout(function() {
-      banner.style.transition = 'opacity .4s';
-      banner.style.opacity = '0';
-      setTimeout(function() { if (banner.parentNode) banner.parentNode.removeChild(banner); }, 450);
-    }, 7000);
+
+    // Detect language from window.LEVEL or html lang
+    var isSpanish = (window.LEVEL || '').indexOf('es-') === 0 || document.documentElement.lang === 'es';
+    var reviewLabel = isSpanish ? 'Empezar el Repaso' : 'Start Review';
+    var completeLabel = isSpanish ? '¡Lección completada!' : 'Lesson complete!';
+    var wellDoneLabel = isSpanish ? '¡Bien hecho!' : 'Well done!';
+    var readyLabel = isSpanish ? 'Has terminado la lección. ¿Listo para repasar?' : "You've finished this lesson. Ready to test yourself?";
+    var backLabel = isSpanish ? '← Volver al capítulo' : '← Back to chapter';
+
+    var screen = document.createElement('div');
+    screen.id = 'deck-complete';
+    screen.style.cssText = 'max-width:680px;margin:40px auto;padding:0 20px 80px';
+    screen.innerHTML = [
+      '<div style="text-align:center;padding:40px 28px;background:var(--cream-deep);border:1.5px solid var(--hairline);border-radius:10px">',
+        '<div style="font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:10px">' + completeLabel + '</div>',
+        '<h2 style="font-family:Georgia,serif;font-size:2rem;font-weight:700;color:var(--ink);margin:0 0 10px">' + wellDoneLabel + '</h2>',
+        '<p style="font-family:var(--font-sans);font-size:.9rem;color:var(--muted);margin:0 0 28px">' + readyLabel + '</p>',
+        '<a href="worksheet.html" style="display:inline-block;padding:14px 36px;background:var(--amber);color:#1A1A1A;font-family:var(--font-sans);font-size:.82rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;border-radius:5px">' + reviewLabel + ' &#8594;</a>',
+        '<br><br>',
+        '<a href="index.html" style="font-family:var(--font-sans);font-size:.78rem;color:var(--muted);text-decoration:none">' + backLabel + '</a>',
+      '</div>'
+    ].join('');
+
+    var footer = document.querySelector('.site-footer');
+    if (footer) footer.before(screen);
+    else document.body.appendChild(screen);
   }
 
   // ── Init ─────────────────────────────────────────────────────────
