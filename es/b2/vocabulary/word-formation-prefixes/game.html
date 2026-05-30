@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Word Play — Cambridge English grammar, vocabulary and writing practice.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>B2 · Word Formation: Prefixes — Juego | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v123">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v110">
+<script src="../../../../shared/dark-init.js?v=v109"></script>
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a>
+    <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Oscuro</button>
+  </div>
+</header>
+<div class="breadcrumb"><a href="../../../../index.html">Inicio</a><span>&#8250;</span><a href="../../../../es/b2/index.html">B2</a><span>&#8250;</span><a href="../index.html">Vocabulario</a><span>&#8250;</span><a href="index.html">Word Formation: Prefixes</a></div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lección</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Repaso</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="game-wrap" id="gameWrap">
+  <div id="gameStart" class="game-screen active">
+    <div class="game-start">
+      <h2>Word Formation: Prefixes — Mastery</h2>
+      <p>10 elementos · 4 etapas cada uno.</p>
+      <p style="font-size:.85rem;color:var(--muted)">Una respuesta incorrecta te baja un nivel — nunca a cero.</p>
+      <div id="gStartMastered" style="font-family:var(--font-sans);font-size:.9rem;margin:12px 0;color:var(--muted)"></div>
+      <div id="gResumeSection" style="display:none;margin-bottom:12px">
+        <button id="gBtnResume" class="game-btn primary">Continuar</button>
+        <button id="gBtnNewFromResume" class="game-btn">Empezar de nuevo</button>
+      </div>
+      <button id="gBtnStart" class="game-btn primary">Empezar</button>
+      <a href="../../../../es/b2/index.html" class="game-btn" style="text-align:center;text-decoration:none;margin-top:8px">&#8592; Volver al inicio</a>
+    </div>
+  </div>
+  <div id="gamePlay" class="game-screen"><div class="game-play"></div>
+  <div class="game-ref-panel" id="gRefPanel">
+    <button id="gRefToggle" class="game-ref-head">&#9660; Referencia &mdash; todas las palabras</button>
+    <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div>
+  </div></div>
+  <div id="gameCompletion" class="game-screen">
+    <div class="game-complete">
+      <div style="font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:8px">Capítulo 15 completado</div>
+      <h2 style="margin-bottom:6px">¡Todo dominado!</h2>
+      <p style="color:var(--muted);font-size:.85rem;margin-bottom:20px">Puntuación: <strong id="gFinalScore"></strong> &nbsp;&middot;&nbsp; Racha: <strong id="gFinalStreak"></strong></p>
+      <div id="gFinalPct" style="font-family:var(--font-serif);font-size:1.4rem;font-weight:700;color:var(--accent);text-align:center;margin:8px 0"></div>
+      <div id="gMasteryMap" style="margin:16px 0;text-align:left;"></div>
+      <a href="../work-careers/slides.html" class="game-btn primary" style="text-decoration:none;text-align:center">Siguiente capítulo &rarr; Cap. 16 Work & Careers</a>
+      <a href="worksheet.html" class="game-btn" style="text-decoration:none;text-align:center">Repetir los ejercicios</a>
+      <a href="../../../../es/b2/index.html" class="game-btn" style="text-decoration:none;text-align:center;opacity:.7">&#8592; Volver al inicio</a>
+    </div>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Cambridge Inglés A1&#8594;C2</footer>
+<script>
+window.GAME_DATA={chapterId:"word-formation-prefixes",level:"b2",title:"Word Formation: Prefixes",storageKey:"wordplay_game_es-b2_word-formation-prefixes",items:[
+  {"id":"item1","term":"<!-- TERM 1 -->","meaning":"<!-- MEANING 1 -->","synonym":"<!-- hint -->","example":"<!-- Example with <b>term</b> -->","completion":"<!-- Example with _____ -->","answer":"<!-- answer -->"},
+  {"id":"item2","term":"<!-- TERM 2 -->","meaning":"<!-- MEANING 2 -->","synonym":"<!-- hint -->","example":"<!-- Example with <b>term</b> -->","completion":"<!-- Example with _____ -->","answer":"<!-- answer -->"},
+  {"id":"item3","term":"<!-- TERM 3 -->","meaning":"<!-- MEANING 3 -->","synonym":"<!-- hint -->","example":"<!-- Example with <b>term</b> -->","completion":"<!-- Example with _____ -->","answer":"<!-- answer -->"},
+  {"id":"item4","term":"<!-- TERM 4 -->","meaning":"<!-- MEANING 4 -->","synonym":"<!-- hint -->","example":"<!-- Example with <b>term</b> -->","completion":"<!-- Example with _____ -->","answer":"<!-- answer -->"},
+  {"id":"item5","term":"<!-- TERM 5 -->","meaning":"<!-- MEANING 5 -->","synonym":"<!-- hint -->","example":"<!-- Example with <b>term</b> -->","completion":"<!-- Example with _____ -->","answer":"<!-- answer -->"},
+  {"id":"item6","term":"<!-- TERM 6 -->","meaning":"<!-- MEANING 6 -->","synonym":"<!-- hint -->","example":"<!-- Example with <b>term</b> -->","completion":"<!-- Example with _____ -->","answer":"<!-- answer -->"},
+  {"id":"item7","term":"<!-- TERM 7 -->","meaning":"<!-- MEANING 7 -->","synonym":"<!-- hint -->","example":"<!-- Example with <b>term</b> -->","completion":"<!-- Example with _____ -->","answer":"<!-- answer -->"},
+  {"id":"item8","term":"<!-- TERM 8 -->","meaning":"<!-- MEANING 8 -->","synonym":"<!-- hint -->","example":"<!-- Example with <b>term</b> -->","completion":"<!-- Example with _____ -->","answer":"<!-- answer -->"},
+  {"id":"item9","term":"<!-- TERM 9 -->","meaning":"<!-- MEANING 9 -->","synonym":"<!-- hint -->","example":"<!-- Example with <b>term</b> -->","completion":"<!-- Example with _____ -->","answer":"<!-- answer -->"},
+  {"id":"item10","term":"<!-- TERM 10 -->","meaning":"<!-- MEANING 10 -->","synonym":"<!-- hint -->","example":"<!-- Example with <b>term</b> -->","completion":"<!-- Example with _____ -->","answer":"<!-- answer -->"}
+]};
+</script>
+<script src="../../../../shared/store.js?v=v105"></script>
+<script src="../../../../shared/game.js?v=v110"></script>
+</body>
+</html>
