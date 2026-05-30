@@ -4,26 +4,38 @@
 <link rel="stylesheet" href="../../../../shared/base.css?v=v112">
 <script src="../../../../shared/dark-init.js?v=v106"></script>
 <style>@media print{.site-header,.chapter-nav,.breadcrumb,.no-print{display:none!important}body{background:var(--paper)}}</style>
+<link rel="stylesheet" href="../../../../shared/print.css?v=v101">
+<script src="../../../../shared/print.js?v=v101"></script>
 </head><body>
-<div class="no-print">
-  <div class="print-hub-web">
-    <a href="index.html" class="phw-back">&#8592; Back to chapter</a>
-    <div class="phw-grid">
-      <a href="#ph-lesson" class="phw-card">
-        <div class="phw-title">Lesson Reference</div>
-        <div class="phw-desc">Grammar rules, tables and examples</div>
-      </a>
-      <a href="#ph-worksheet" class="phw-card">
-        <div class="phw-title">Practice Worksheet</div>
-        <div class="phw-desc">Exercises to complete by hand</div>
-      </a>
-      <a href="#ph-key" class="phw-card">
-        <div class="phw-title">Answer Key</div>
-        <div class="phw-desc">All correct answers for marking</div>
-      </a>
+<div class="no-print ph-hub">
+  <a href="index.html" class="ph-hub-back">&#8592; Back to chapter</a>
+  <div class="ph-hub-cards">
+    <div class="ph-hub-card">
+      <div class="ph-hub-card-title">Lesson Reference</div>
+      <div class="ph-hub-card-desc">Grammar notes, tables and examples</div>
+      <div class="ph-hub-card-btns">
+        <a href="#ph-lesson" class="ph-hub-btn-view">View</a>
+        <button onclick="wpPrint('lesson')" class="ph-hub-btn-print">Print</button>
+      </div>
     </div>
-    <button onclick="window.print()" class="phw-print-btn">Print all pages</button>
+    <div class="ph-hub-card">
+      <div class="ph-hub-card-title">Review Exercises</div>
+      <div class="ph-hub-card-desc">Questions to practise by hand</div>
+      <div class="ph-hub-card-btns">
+        <a href="#ph-worksheet" class="ph-hub-btn-view">View</a>
+        <button onclick="wpPrint('worksheet')" class="ph-hub-btn-print">Print</button>
+      </div>
+    </div>
+    <div class="ph-hub-card">
+      <div class="ph-hub-card-title">Answer Key</div>
+      <div class="ph-hub-card-desc">Correct answers for marking</div>
+      <div class="ph-hub-card-btns">
+        <a href="#ph-key" class="ph-hub-btn-view">View</a>
+        <button onclick="wpPrint('key')" class="ph-hub-btn-print">Print</button>
+      </div>
+    </div>
   </div>
+  <button onclick="window.print()" class="ph-hub-btn-all">Print all three pages</button>
 </div>
 <div id="ph-lesson"></div>
 <header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a>
