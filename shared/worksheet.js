@@ -1,360 +1,423 @@
 // ══════════════════════════════════════════════════════════════════
-// WORKSHEET — shared grading logic (v49: per-exercise check buttons)
+// worksheet.js v2 — question-by-question quiz with 3 lives
+// Reads questions from existing form HTML + window.ANSWERS/EXPLANATIONS
+// Per-chapter pages need no changes — data API is unchanged.
 // ══════════════════════════════════════════════════════════════════
-// Each worksheet page must define (before this script):
-//   window.TOTAL_POINTS   — integer, total possible score
-//   window.ANSWERS        — object keyed by data-q, with { answer, accept? }
-//   window.CHAPTER_ID     — string key e.g. 'ch10'  (for progress saving)
-//   window.EXERCISE_TITLES (optional) — { ex1: 'Label', ... }
 
-// ── Choice button handling ────────────────────────────────────────
-document.querySelectorAll('.choice-group').forEach(group => {
-  group.querySelectorAll('.choice-btn').forEach(btn => {
-    btn.type = 'button'; // prevent accidental form submission
-    btn.addEventListener('click', () => {
-      if (group.classList.contains('ex-submitted')) return;
-      group.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-      checkExerciseComplete(group.closest('section.exercise'));
-    });
-  });
-});
+(function () {
+  'use strict';
 
-// Auto-enable Check button when all questions in an exercise are answered
-function checkExerciseComplete(section) {
-  if (!section) return;
-  var allAnswered = true;
-  section.querySelectorAll('.choice-group').forEach(g => {
-    if (!g.querySelector('.choice-btn.selected')) allAnswered = false;
-  });
-  section.querySelectorAll('input[type="text"]').forEach(inp => {
-    if (!inp.value.trim()) allAnswered = false;
-  });
-  var checkBtn = section.querySelector('.ex-check-btn');
-  if (checkBtn) checkBtn.disabled = !allAnswered;
-}
+  // ── Language detection ───────────────────────────────────────────
+  var isEs = (window.LEVEL || '').indexOf('es-') === 0 || document.documentElement.lang === 'es';
+  var L = {
+    check:       isEs ? 'Comprobar' : 'Check',
+    next:        isEs ? 'Siguiente' : 'Next',
+    correct:     isEs ? 'Correcto' : 'Correct',
+    wrong:       isEs ? 'Incorrecto' : 'Incorrect',
+    correctAns:  isEs ? 'Respuesta correcta:' : 'Correct answer:',
+    remaining:   isEs ? 'restantes' : 'remaining',
+    typeHere:    isEs ? 'Escribe tu respuesta' : 'Type your answer',
+    mcLabel:     isEs ? 'Elige la respuesta correcta' : 'Choose the correct answer',
+    fillLabel:   isEs ? 'Rellena el hueco' : 'Fill in the blank',
+    transLabel:  isEs ? 'Traduce al inglés' : 'Translate into English',
+    prevBest:    isEs ? 'Mejor puntuación anterior:' : 'Previous best:',
+    completed:   isEs ? 'Repaso completado' : 'Review complete',
+    wellDone:    isEs ? '¡Buen trabajo!' : 'Well done!',
+    keepGoing:   isEs ? '¡Sigue practicando!' : 'Keep practising!',
+    noLives:     isEs ? 'Sin vidas' : 'Out of lives',
+    firstPass:   isEs ? 'A la primera:' : 'First-pass score:',
+    tryAgain:    isEs ? 'Intentar de nuevo' : 'Try again',
+    gameBtn:     isEs ? 'Ir al Juego de Dominio' : 'Start Mastery Game',
+    seeResults:  isEs ? 'Ver resultados' : 'See results',
+    back:        isEs ? '← Volver al capítulo' : '← Back to chapter',
+  };
 
-// Auto-check: when filling a text input, re-evaluate completion
-document.querySelectorAll('input[type="text"]').forEach(inp => {
-  inp.addEventListener('input', () => {
-    checkExerciseComplete(inp.closest('section.exercise'));
-  });
-});
-
-// ── Normalise strings for fuzzy matching ─────────────────────────
-function norm(s) {
-  return (s || '').toLowerCase().trim()
-    .replace(/[.!?,;:]$/g, '')
-    .replace(/\s+/g, ' ')
-    .replace(/[\u2018\u2019`]/g, "'")
-    .replace(/[\u201C\u201D]/g, '"');
-}
-
-function isTextCorrect(q, userValue) {
-  const key = window.ANSWERS[q];
-  if (!key) return false;
-  const u = norm(userValue);
-  if (!u) return false;
-  if (u === norm(key.answer)) return true;
-  return (key.accept || []).some(alt => u === norm(alt));
-}
-
-function escapeHtml(s) {
-  return String(s).replace(/[&<>"']/g, c =>
-    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])
-  );
-}
-
-// ── Grade a single exercise section ──────────────────────────────
-function gradeSection(section) {
-  var score = 0;
-  var items = [];
-
-  section.querySelectorAll('.choice-group').forEach(group => {
-    var q = group.dataset.q;
-    var ans = group.dataset.answer;
-    var selected = group.querySelector('.choice-btn.selected');
-    var user = selected ? selected.dataset.value : null;
-    var correct = user === ans;
-    if (correct) score++;
-    group.classList.add('ex-submitted');
-    group.querySelectorAll('.choice-btn').forEach(b => {
-      b.disabled = true;
-      if (b.dataset.value === ans) b.classList.add('correct-answer');
-      else if (b === selected && !correct) b.classList.add('wrong-answer');
-    });
-    var qEl = group.closest('.q');
-    qEl.classList.add(correct ? 'correct' : 'wrong');
-    var fb = qEl.querySelector('.ws-feedback') || document.createElement('div');
-    fb.className = 'ws-feedback';
-    var explHtml = '';
-    if (!correct && window.EXPLANATIONS && window.EXPLANATIONS[q]) {
-      explHtml = '<div style="margin-top:6px;padding:7px 11px;background:rgba(184,134,11,.08);border-left:3px solid var(--amber);font-family:var(--font-sans);font-size:.76rem;color:var(--ink);line-height:1.5;border-radius:0 3px 3px 0">&#9432; ' + window.EXPLANATIONS[q] + '</div>';
-    }
-    fb.innerHTML = correct
-      ? '<span style="color:var(--green);font-family:var(--font-sans);font-size:.82rem;font-weight:600">&#10003; Correct</span>'
-      : '<span style="color:var(--red);font-family:var(--font-sans);font-size:.82rem">Correct answer: <strong>' + escapeHtml(ans) + '</strong></span>' + explHtml;
-    qEl.appendChild(fb);
-    items.push({ q, user, ans, correct });
-  });
-
-  section.querySelectorAll('input[type="text"]').forEach(inp => {
-    var q = inp.dataset.q;
-    var user = inp.value;
-    var correct = isTextCorrect(q, user);
-    if (correct) score++;
-    inp.disabled = true;
-    var qEl = inp.closest('.q');
-    if (qEl && !qEl.classList.contains('correct') && !qEl.classList.contains('wrong')) {
-      qEl.classList.add(correct ? 'correct' : 'wrong');
-    }
-    var correctAns = window.ANSWERS[q]?.answer || '';
-    var fb = qEl ? (qEl.querySelector('.ws-feedback') || document.createElement('div')) : null;
-    if (fb) {
-      fb.className = 'ws-feedback';
-      fb.innerHTML = correct
-        ? '<span style="color:var(--green);font-family:var(--font-sans);font-size:.82rem;font-weight:600">Correct</span>'
-        : '<span style="color:var(--red);font-family:var(--font-sans);font-size:.82rem">Correct answer: <strong>' + escapeHtml(correctAns) + '</strong></span>';
-      qEl.appendChild(fb);
-    }
-    items.push({ q, user: user || '(blank)', ans: correctAns, correct });
-  });
-
-  section.querySelectorAll('select').forEach(sel => {
-    var q = sel.dataset.q;
-    var user = sel.value;
-    var ans = sel.dataset.answer;
-    var correct = user === ans;
-    if (correct) score++;
-    sel.disabled = true;
-    var qEl = sel.closest('.q');
-    if (qEl && !qEl.classList.contains('correct') && !qEl.classList.contains('wrong')) {
-      qEl.classList.add(correct ? 'correct' : 'wrong');
-    }
-    items.push({ q, user: user || '—', ans, correct });
-  });
-
-  section.querySelectorAll('textarea').forEach(ta => {
-    var q = ta.dataset.q;
-    var user = ta.value.trim();
-    var written = user.length > 5;
-    if (written) score++;
-    ta.disabled = true;
-    var qEl = ta.closest('.q');
-    if (qEl) qEl.classList.add('info');
-    items.push({ q, user: user || '(blank)', ans: ta.dataset.answerSample, correct: written, isOpen: true });
-  });
-
-  return { score, total: items.length, items };
-}
-
-// ── Per-exercise Check button handler ────────────────────────────
-function checkExercise(sectionId) {
-  var section = document.getElementById(sectionId);
-  if (!section || section.classList.contains('graded')) return;
-
-  var result = gradeSection(section);
-  section.classList.add('graded');
-
-  var checkBtn = section.querySelector('.ex-check-btn');
-  if (checkBtn) checkBtn.style.display = 'none';
-
-  // Show mini score inside the exercise
-  var pct = result.total ? Math.round((result.score / result.total) * 100) : 0;
-  var color = pct >= 80 ? 'var(--green)' : pct >= 50 ? 'var(--amber)' : 'var(--red)';
-  var miniScore = document.createElement('div');
-  miniScore.className = 'ex-mini-score';
-  miniScore.style.cssText = 'font-family:var(--font-sans);font-size:.82rem;font-weight:700;padding:8px 14px;border-radius:4px;background:var(--cream-deep);border:1px solid var(--hairline);margin-top:12px;display:flex;align-items:center;gap:10px';
-  miniScore.innerHTML = '<span style="color:var(--muted)">Exercise score:</span> <span style="color:' + color + '">' + result.score + ' / ' + result.total + ' (' + pct + '%)</span>';
-  section.appendChild(miniScore);
-
-  updateFinalSubmitState();
-}
-
-function updateFinalSubmitState() {
-  var allSections = document.querySelectorAll('section.exercise');
-  var allGraded = Array.from(allSections).every(s => s.classList.contains('graded'));
-  var submitWrap = document.querySelector('.submit-wrap');
-  if (submitWrap) {
-    submitWrap.style.display = allGraded ? 'flex' : 'none';
+  // ── Helpers ──────────────────────────────────────────────────────
+  function norm(s) {
+    return (s || '').toLowerCase().trim()
+      .replace(/[.!?,;:]$/g, '')
+      .replace(/\s+/g, ' ')
+      .replace(/[‘’`]/g, "'")
+      .replace(/[“”]/g, '"');
   }
-}
-
-// ── Main grading function (full submit) ───────────────────────────
-function checkAnswers() {
-  if (document.body.classList.contains('submitted')) return;
-  let score = 0;
-  const breakdown = [];
-  const titles = window.EXERCISE_TITLES || {};
-  var perExercise = {};
-
-  document.querySelectorAll('section.exercise').forEach(section => {
-    const id = section.id;
-    const title = titles[id] || section.querySelector('.ex-title')?.textContent || id;
-    var result;
-    if (!section.classList.contains('graded')) {
-      result = gradeSection(section);
-      section.classList.add('graded');
-      var checkBtn = section.querySelector('.ex-check-btn');
-      if (checkBtn) checkBtn.style.display = 'none';
-    } else {
-      // Already graded — recount from DOM
-      var correct = section.querySelectorAll('.q.correct').length;
-      var total = section.querySelectorAll('.q').length;
-      result = { score: correct, total, items: [] };
+  function isTextCorrect(answerObj, userVal) {
+    if (!answerObj) return false;
+    var u = norm(userVal);
+    if (!u) return false;
+    if (u === norm(answerObj.answer)) return true;
+    return (answerObj.accept || []).some(function (a) { return u === norm(a); });
+  }
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
+    });
+  }
+  function shuffle(arr) {
+    for (var i = arr.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var t = arr[i]; arr[i] = arr[j]; arr[j] = t;
     }
-    score += result.score;
-    perExercise[id] = { correct: result.score, total: result.total };
-    if (result.items.length) breakdown.push({ title, items: result.items });
+    return arr;
+  }
+
+  // ── Extract questions from existing HTML form ────────────────────
+  var questions = [];
+  var sectionMeta = {};
+
+  document.querySelectorAll('section.exercise').forEach(function (section) {
+    var sId = section.id;
+    var titleEl = section.querySelector('.ex-title');
+    sectionMeta[sId] = { title: titleEl ? titleEl.textContent.trim() : sId, qKeys: [] };
+
+    section.querySelectorAll('.q').forEach(function (qEl) {
+      var mcGroup   = qEl.querySelector('.choice-group');
+      var textInput = qEl.querySelector('input[type="text"]');
+      var qTextEl   = qEl.querySelector('.q-text');
+      var srcEl     = qEl.querySelector('.traduce-src');
+      var qText     = qTextEl ? qTextEl.textContent.trim() : '';
+      var srcText   = srcEl   ? srcEl.textContent.trim()   : '';
+      var q         = null;
+
+      if (mcGroup) {
+        var qKey = mcGroup.dataset.q;
+        q = {
+          type: 'mc', qKey: qKey, sectionId: sId,
+          text: qText,
+          options: Array.from(mcGroup.querySelectorAll('.choice-btn')).map(function (b) { return b.dataset.value; }),
+          correct: mcGroup.dataset.answer,
+          accept: [],
+        };
+      } else if (textInput) {
+        var qKey2 = textInput.dataset.q;
+        var ans   = (window.ANSWERS || {})[qKey2] || {};
+        q = {
+          type: srcText ? 'translate' : 'fill', qKey: qKey2, sectionId: sId,
+          text: srcText || qText,
+          correct: ans.answer || '',
+          accept: ans.accept || [],
+        };
+      }
+
+      if (q) {
+        if (window.EXPLANATIONS && window.EXPLANATIONS[q.qKey]) q.explanation = window.EXPLANATIONS[q.qKey];
+        questions.push(q);
+        sectionMeta[sId].qKeys.push(q.qKey);
+      }
+    });
   });
 
-  // Render breakdown
-  const breakdownEl = document.getElementById('breakdown');
-  if (breakdownEl) {
-    breakdownEl.innerHTML = '<h3>Review your answers</h3>' + breakdown.map(section => {
-      const itemsHtml = section.items.map(item => {
-        const cls = item.isOpen ? 'info' : (item.correct ? 'correct' : 'wrong');
-        const mark = item.isOpen ? '~' : (item.correct ? '✓' : '✕');
-        var qLabel = item.q.replace(/^e\d+q(\d+)$/i, 'Q$1').toUpperCase();
-        let content = '<div class="content"><strong>' + qLabel + '</strong>';
-        if (item.isOpen) {
-          content += '<span class="your-ans">You wrote: ' + escapeHtml(item.user) + '</span>';
-          content += '<span class="correct-ans">Sample: ' + escapeHtml(item.ans) + '</span>';
-        } else if (!item.correct) {
-          content += '<span class="your-ans">You wrote: ' + escapeHtml(item.user) + '</span>';
-          content += '<span class="correct-ans">Answer: ' + escapeHtml(item.ans) + '</span>';
-        }
-        content += '</div>';
-        return '<div class="breakdown-item ' + cls + '"><span class="mark">' + mark + '</span>' + content + '</div>';
+  if (!questions.length) return;
+
+  // ── Hide legacy form + results panel ────────────────────────────
+  var formEl   = document.getElementById('worksheet');
+  var oldRes   = document.getElementById('results');
+  if (formEl)  formEl.style.display  = 'none';
+  if (oldRes)  oldRes.style.display  = 'none';
+
+  // ── Quiz state ───────────────────────────────────────────────────
+  var MAX_LIVES     = 3;
+  var queue         = questions.slice();
+  var lives         = MAX_LIVES;
+  var totalQ        = questions.length;
+  var answeredQ     = 0;           // questions correctly answered (removed from queue)
+  var firstPassOK   = 0;           // correct on first attempt ever
+  var seenOnce      = {};          // qKey → true once shown
+  var perSection    = {};
+  questions.forEach(function (q) {
+    if (!perSection[q.sectionId]) perSection[q.sectionId] = { correct: 0, total: 0 };
+    perSection[q.sectionId].total++;
+  });
+  var currentQ  = null;
+  var checked   = false;
+  var autoTimer = null;
+
+  // ── Inject styles ────────────────────────────────────────────────
+  var css = document.createElement('style');
+  css.textContent = [
+    '#wsq{max-width:720px;margin:0 auto;padding:0 20px 80px}',
+    '#wsq-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;font-family:var(--font-sans);font-size:.78rem}',
+    '#wsq-counter{color:var(--muted);font-weight:600}',
+    '#wsq-lives{display:flex;gap:4px}',
+    '.wsq-heart{font-size:1.1rem;line-height:1;transition:opacity .2s;color:#e05a4a}',
+    'body.dark .wsq-heart{color:#f08070}',
+    '.wsq-heart.lost{opacity:.18;color:var(--muted)}',
+    '#wsq-bar{height:4px;background:var(--hairline);border-radius:2px;margin-bottom:20px;overflow:hidden}',
+    '#wsq-bar-fill{height:100%;background:var(--amber);border-radius:2px;transition:width .35s}',
+    '#wsq-card{background:var(--paper);border:1.5px solid var(--hairline);border-radius:10px;padding:28px 24px;margin-bottom:14px;transition:border-color .25s,background .25s}',
+    '#wsq-card.ok{border-color:var(--green);background:rgba(46,125,82,.04)}',
+    '#wsq-card.bad{border-color:var(--amber);background:rgba(184,134,11,.04)}',
+    'body.dark #wsq-card{background:#1a1a1a;border-color:rgba(255,255,255,.1)}',
+    'body.dark #wsq-card.ok{background:rgba(76,175,130,.07)}',
+    'body.dark #wsq-card.bad{background:rgba(201,160,80,.07)}',
+    '#wsq-qtype{font-family:var(--font-sans);font-size:.58rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:8px}',
+    '#wsq-qtext{font-family:Georgia,serif;font-size:1.08rem;font-weight:700;color:var(--ink);line-height:1.45;margin-bottom:18px}',
+    'body.dark #wsq-qtext{color:#f0f0f0}',
+    '#wsq-opts{display:flex;flex-direction:column;gap:8px}',
+    '.wsq-opt{padding:11px 16px;border:1.5px solid var(--hairline);border-radius:6px;background:var(--paper);color:var(--ink);font-family:var(--font-sans);font-size:.9rem;cursor:pointer;text-align:left;transition:border-color .15s,background .15s;width:100%}',
+    '.wsq-opt:hover:not(:disabled){border-color:var(--amber);background:rgba(184,134,11,.04)}',
+    '.wsq-opt.sel{border-color:var(--amber);background:rgba(184,134,11,.08);font-weight:700}',
+    '.wsq-opt.right{border-color:var(--green);background:rgba(46,125,82,.07);font-weight:700;color:var(--green)}',
+    '.wsq-opt.miss{border-color:var(--red);opacity:.7}',
+    'body.dark .wsq-opt{background:#1a1a1a;color:#f0f0f0;border-color:rgba(255,255,255,.15)}',
+    'body.dark .wsq-opt.sel{background:rgba(201,160,80,.12);border-color:var(--amber)}',
+    'body.dark .wsq-opt.right{background:rgba(76,175,130,.12);color:var(--green)}',
+    '#wsq-fill-wrap{display:flex;flex-direction:column;gap:8px}',
+    '#wsq-fill{padding:10px 14px;font-family:var(--font-sans);font-size:.95rem;border:1.5px solid var(--hairline);border-radius:6px;background:var(--paper);color:var(--ink);box-sizing:border-box;width:100%;max-width:420px}',
+    '#wsq-fill:focus{outline:none;border-color:var(--amber)}',
+    'body.dark #wsq-fill{background:#1a1a1a;color:#f0f0f0;border-color:rgba(255,255,255,.2)}',
+    '#wsq-fb{margin-top:10px;font-family:var(--font-sans);font-size:.88rem;font-weight:700;display:none}',
+    '#wsq-fb.ok{color:var(--green)}',
+    '#wsq-fb.bad{color:var(--red)}',
+    '#wsq-expl{margin-top:12px;padding:10px 14px;background:rgba(184,134,11,.08);border-left:3px solid var(--amber);font-family:var(--font-sans);font-size:.8rem;color:var(--ink);line-height:1.55;border-radius:0 4px 4px 0;display:none}',
+    'body.dark #wsq-expl{background:rgba(201,160,80,.1);color:#e0e0e0}',
+    '#wsq-btns{display:flex;gap:10px;margin-top:16px;align-items:center}',
+    '#wsq-check{padding:10px 26px;background:var(--ink);color:var(--paper);font-family:var(--font-sans);font-size:.76rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:0;border-radius:4px;cursor:pointer;transition:opacity .15s}',
+    '#wsq-check:disabled{opacity:.3;cursor:default}',
+    'body.dark #wsq-check{background:#e8e8e8;color:#111}',
+    '#wsq-next{padding:10px 26px;background:var(--amber);color:#1A1A1A;font-family:var(--font-sans);font-size:.76rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:0;border-radius:4px;cursor:pointer;display:none}',
+    '#wsq-done{max-width:720px;margin:0 auto;padding:0 20px 80px}',
+    '#wsq-done-card{text-align:center;padding:36px 24px;background:var(--cream-deep);border:1.5px solid var(--hairline);border-radius:10px}',
+    'body.dark #wsq-done-card{background:#1a1a1a;border-color:rgba(255,255,255,.1)}',
+    '#wsq-prev{display:flex;align-items:center;gap:10px;padding:10px 16px;margin-bottom:20px;background:var(--cream-deep);border-radius:6px;font-family:var(--font-sans);font-size:.8rem;color:var(--muted)}',
+    'body.dark #wsq-prev{background:#1a1a1a;border:1px solid rgba(255,255,255,.08)}',
+  ].join('');
+  document.head.appendChild(css);
+
+  // ── Build quiz HTML ──────────────────────────────────────────────
+  var quiz = document.createElement('div');
+  quiz.id = 'wsq';
+  quiz.innerHTML = [
+    '<div id="wsq-bar"><div id="wsq-bar-fill" style="width:0%"></div></div>',
+    '<div id="wsq-top">',
+      '<span id="wsq-counter"></span>',
+      '<div id="wsq-lives"></div>',
+    '</div>',
+    '<div id="wsq-card">',
+      '<div id="wsq-qtype"></div>',
+      '<div id="wsq-qtext"></div>',
+      '<div id="wsq-opts"></div>',
+      '<div id="wsq-fill-wrap" style="display:none">',
+        '<input id="wsq-fill" type="text" autocomplete="off" spellcheck="false">',
+      '</div>',
+      '<div id="wsq-fb"></div>',
+      '<div id="wsq-expl"></div>',
+    '</div>',
+    '<div id="wsq-btns">',
+      '<button id="wsq-check" disabled>' + L.check + '</button>',
+      '<button id="wsq-next">' + L.next + ' &#8594;</button>',
+    '</div>',
+  ].join('');
+
+  // Previous best banner
+  try {
+    if (window.FCEStore && window.CHAPTER_ID && window.LEVEL) {
+      var pg = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+      var sv = pg[window.LEVEL] && pg[window.LEVEL][window.CHAPTER_ID];
+      if (sv && sv.pct) {
+        var pb = document.createElement('div');
+        pb.id = 'wsq-prev';
+        var pc = sv.pct >= 80 ? 'var(--green)' : sv.pct >= 50 ? 'var(--amber)' : 'var(--red)';
+        pb.innerHTML = '<span>' + L.prevBest + '</span><strong style="color:' + pc + ';font-size:.95rem">' + sv.pct + '%</strong>';
+        quiz.insertBefore(pb, quiz.firstChild);
+      }
+    }
+  } catch (e) {}
+
+  var formParent = formEl ? formEl.parentNode : (document.querySelector('.container') || document.body);
+  formParent.insertBefore(quiz, formEl || null);
+
+  // ── DOM refs ─────────────────────────────────────────────────────
+  var $ = function (id) { return document.getElementById(id); };
+  var elCounter = $('wsq-counter');
+  var elLives   = $('wsq-lives');
+  var elBarFill = $('wsq-bar-fill');
+  var elCard    = $('wsq-card');
+  var elQType   = $('wsq-qtype');
+  var elQText   = $('wsq-qtext');
+  var elOpts    = $('wsq-opts');
+  var elFillWr  = $('wsq-fill-wrap');
+  var elInput   = document.querySelector('#wsq-fill-wrap > input');
+  var elFb      = $('wsq-fb');
+  var elExpl    = $('wsq-expl');
+  var elCheck   = $('wsq-check');
+  var elNext    = $('wsq-next');
+
+  // ── Render lives ─────────────────────────────────────────────────
+  function renderLives() {
+    elLives.innerHTML = '';
+    for (var i = 0; i < MAX_LIVES; i++) {
+      var h = document.createElement('span');
+      h.className = 'wsq-heart' + (i >= lives ? ' lost' : '');
+      h.textContent = '♥';
+      elLives.appendChild(h);
+    }
+  }
+
+  // ── Update header ────────────────────────────────────────────────
+  function updateHeader() {
+    elCounter.textContent = (totalQ - answeredQ) + ' ' + L.remaining;
+    if (elBarFill) elBarFill.style.width = Math.round((answeredQ / totalQ) * 100) + '%';
+    renderLives();
+  }
+
+  // ── Show question ────────────────────────────────────────────────
+  function showQ(q) {
+    currentQ = q;
+    checked  = false;
+    if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+
+    elCard.className = '';
+    elFb.style.display   = 'none';
+    elExpl.style.display = 'none';
+    elCheck.style.display = '';
+    elNext.style.display = 'none';
+    elCheck.disabled = true;
+    elNext.textContent = L.next + ' →';
+
+    elQType.textContent = q.type === 'mc' ? L.mcLabel : (q.type === 'translate' ? L.transLabel : L.fillLabel);
+    elQText.innerHTML   = esc(q.text);
+
+    if (q.type === 'mc') {
+      elOpts.style.display  = '';
+      elFillWr.style.display = 'none';
+      var opts = shuffle(q.options.slice());
+      elOpts.innerHTML = opts.map(function (o) {
+        return '<button type="button" class="wsq-opt" data-v="' + esc(o) + '">' + esc(o) + '</button>';
       }).join('');
-      return '<div class="breakdown-ex"><h4>' + section.title + '</h4>' + itemsHtml + '</div>';
-    }).join('');
+      elOpts.querySelectorAll('.wsq-opt').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          if (checked) return;
+          elOpts.querySelectorAll('.wsq-opt').forEach(function (b) { b.classList.remove('sel'); });
+          this.classList.add('sel');
+          elCheck.disabled = false;
+        });
+      });
+    } else {
+      elOpts.style.display   = 'none';
+      elFillWr.style.display = '';
+      elInput.value    = '';
+      elInput.disabled = false;
+      setTimeout(function () { elInput.focus(); }, 60);
+      elInput.oninput   = function () { elCheck.disabled = !elInput.value.trim(); };
+      elInput.onkeydown = function (e) { if (e.key === 'Enter' && !elCheck.disabled) elCheck.click(); };
+    }
+
+    updateHeader();
   }
 
-  const total = window.TOTAL_POINTS;
-  document.getElementById('score-got').textContent = score;
-  document.getElementById('score-total').textContent = total;
-  document.getElementById('score-pct').textContent = Math.round((score / total) * 100) + '%';
+  // ── Check ────────────────────────────────────────────────────────
+  function doCheck() {
+    if (checked || !currentQ) return;
+    checked = true;
+    var q = currentQ;
+    var correct = false;
+    var selBtn  = null;
 
-  var exBreakdown = document.getElementById('exercise-breakdown');
-  if (exBreakdown) {
-    var titleMap = window.EXERCISE_TITLES || {};
-    var html = '';
-    Object.keys(perExercise).forEach(function(exId) {
-      var d = perExercise[exId];
-      var exPct = d.total ? Math.round((d.correct / d.total) * 100) : 0;
-      var color = exPct >= 80 ? 'var(--amber)' : exPct >= 50 ? 'var(--ink)' : 'var(--muted)';
-      var label = titleMap[exId] || exId;
-      html += '<div class="ex-row" style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--hairline);font-family:var(--font-sans);font-size:.82rem">';
-      html += '<span style="flex:1;color:var(--ink)">' + label + '</span>';
-      html += '<span style="color:var(--muted);font-size:.78rem">' + d.correct + '/' + d.total + '</span>';
-      html += '<div style="width:80px;height:6px;background:var(--hairline);border-radius:3px;overflow:hidden">';
-      html += '<div style="width:' + exPct + '%;height:100%;background:' + color + '"></div></div>';
-      html += '<span style="font-weight:700;color:' + color + ';min-width:36px;text-align:right">' + exPct + '%</span>';
-      html += '</div>';
-    });
-    exBreakdown.innerHTML = html;
+    if (q.type === 'mc') {
+      selBtn  = elOpts.querySelector('.wsq-opt.sel');
+      correct = selBtn && selBtn.dataset.v === q.correct;
+      elOpts.querySelectorAll('.wsq-opt').forEach(function (btn) {
+        btn.disabled = true;
+        if (btn.dataset.v === q.correct) btn.classList.add('right');
+        else if (btn === selBtn && !correct) btn.classList.add('miss');
+      });
+    } else {
+      correct = isTextCorrect({ answer: q.correct, accept: q.accept }, elInput.value);
+      elInput.disabled = true;
+    }
+
+    elCard.className = correct ? 'ok' : 'bad';
+    elFb.className   = 'wsq-fb ' + (correct ? 'ok' : 'bad');
+    elFb.innerHTML   = correct
+      ? ('✓ ' + L.correct)
+      : (L.wrong + '. ' + L.correctAns + ' <strong>' + esc(q.correct) + '</strong>');
+    elFb.style.display = 'block';
+
+    if (q.explanation) {
+      elExpl.innerHTML     = q.explanation;
+      elExpl.style.display = 'block';
+    }
+
+    elCheck.style.display = 'none';
+    elNext.style.display  = 'block';
+
+    // Track first-pass
+    if (!seenOnce[q.qKey]) {
+      seenOnce[q.qKey] = true;
+      if (correct) firstPassOK++;
+    }
+
+    if (correct) {
+      answeredQ++;
+      perSection[q.sectionId].correct++;
+      var idx = queue.indexOf(q);
+      if (idx !== -1) queue.splice(idx, 1);
+      // Auto-advance after 1.5 s
+      autoTimer = setTimeout(function () { elNext.click(); }, 1500);
+    } else {
+      lives--;
+      var idx2 = queue.indexOf(q);
+      if (idx2 !== -1) { queue.splice(idx2, 1); queue.push(q); }
+      if (lives <= 0) elNext.textContent = L.seeResults;
+    }
+
+    updateHeader();
   }
 
-  if (window.FCEStore && window.CHAPTER_ID) {
-    FCEStore.saveResult(window.CHAPTER_ID, score, total, perExercise);
+  // ── Next ─────────────────────────────────────────────────────────
+  function doNext() {
+    if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+    if (queue.length === 0 || lives <= 0) { finish(); return; }
+    showQ(queue[0]);
   }
 
-  // Populate pass-msg
-  var pm = document.getElementById('pass-msg');
-  if (pm) {
-    var pct2 = Math.round((score / total) * 100);
-    if (pct2 === 100) pm.textContent = 'Perfect score!';
-    else if (pct2 >= 80) pm.textContent = 'Great work — nearly perfect!';
-    else if (pct2 >= 70) pm.textContent = 'Good job — try again for a higher score.';
-    else pm.textContent = 'Keep practising — review the lesson and try again.';
-    pm.style.display = 'block';
+  // ── Finish ───────────────────────────────────────────────────────
+  function finish() {
+    quiz.style.display = 'none';
+
+    var pct     = totalQ ? Math.round((firstPassOK / totalQ) * 100) : 0;
+    var success = lives > 0 && queue.length === 0;
+
+    // Save progress
+    if (window.FCEStore && window.CHAPTER_ID) {
+      var pEx = {};
+      Object.keys(perSection).forEach(function (sId) {
+        pEx[sId] = { correct: perSection[sId].correct, total: perSection[sId].total };
+      });
+      try { FCEStore.saveResult(window.CHAPTER_ID, firstPassOK, totalQ, pEx); } catch (e) {}
+    }
+
+    var pctColor = pct >= 80 ? 'var(--green)' : pct >= 50 ? 'var(--amber)' : 'var(--red)';
+
+    var gameCTA = success
+      ? '<a href="game.html" style="display:inline-block;padding:13px 32px;background:var(--amber);color:#1A1A1A;font-family:var(--font-sans);font-size:.8rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;border-radius:5px">' + L.gameBtn + ' &#8594;</a><br>'
+      : '';
+    var retryBtn = '<button onclick="location.reload()" style="display:inline-block;margin-top:12px;padding:11px 26px;background:transparent;color:var(--ink);font-family:var(--font-sans);font-size:.76rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:1.5px solid var(--hairline);border-radius:4px;cursor:pointer">' + L.tryAgain + '</button>';
+
+    var done = document.createElement('div');
+    done.id = 'wsq-done';
+    done.innerHTML = [
+      '<div id="wsq-done-card">',
+        '<div style="font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:8px">' + (success ? L.completed : L.noLives) + '</div>',
+        '<h2 style="font-family:Georgia,serif;font-size:2rem;font-weight:700;color:var(--ink);margin:0 0 10px">' + (success ? L.wellDone : L.keepGoing) + '</h2>',
+        '<p style="font-family:var(--font-sans);font-size:.88rem;color:var(--muted);margin:0 0 24px">' + L.firstPass + ' <strong style="color:' + pctColor + '">' + firstPassOK + ' / ' + totalQ + ' (' + pct + '%)</strong></p>',
+        gameCTA,
+        retryBtn,
+        '<br><a href="index.html" style="display:inline-block;margin-top:16px;font-family:var(--font-sans);font-size:.78rem;color:var(--muted);text-decoration:none">' + L.back + '</a>',
+      '</div>',
+    ].join('');
+
+    var footer = document.querySelector('.site-footer');
+    if (footer) footer.before(done);
+    else document.body.appendChild(done);
   }
-  document.body.classList.add('submitted');
-  document.getElementById('results').classList.add('show');
-  document.querySelector('.submit-wrap').style.display = 'none';
-  document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
 
-// ── Reset ────────────────────────────────────────────────────────
-function resetAll() {
-  if (!confirm('Clear all your answers?')) return;
-  document.querySelectorAll('input[type="text"], textarea').forEach(i => i.value = '');
-  document.querySelectorAll('select').forEach(s => s.value = '');
-  document.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
-  document.querySelectorAll('.ws-feedback').forEach(fb => fb.remove());
-  document.querySelectorAll('.ex-mini-score').forEach(ms => ms.remove());
-  document.querySelectorAll('section.exercise').forEach(s => {
-    s.classList.remove('graded');
-    var btn = s.querySelector('.ex-check-btn');
-    if (btn) { btn.style.display = ''; btn.disabled = true; }
-  });
-  updateFinalSubmitState();
-}
+  // ── Wire events ──────────────────────────────────────────────────
+  elCheck.addEventListener('click', doCheck);
+  elNext.addEventListener('click',  doNext);
 
-function tryAgain() {
-  document.body.classList.remove('submitted');
-  document.getElementById('results').classList.remove('show');
-  document.querySelectorAll('input[type="text"], textarea, select').forEach(el => {
-    el.disabled = false; el.value = '';
-  });
-  document.querySelectorAll('.choice-btn').forEach(b => {
-    b.disabled = false;
-    b.classList.remove('selected', 'correct-answer', 'wrong-answer');
-  });
-  document.querySelectorAll('.q').forEach(q => q.classList.remove('correct', 'wrong', 'info'));
-  document.querySelectorAll('.ws-feedback').forEach(fb => fb.remove());
-  document.querySelectorAll('.ex-mini-score').forEach(ms => ms.remove());
-  document.querySelectorAll('section.exercise').forEach(s => {
-    s.classList.remove('graded');
-    var btn = s.querySelector('.ex-check-btn');
-    if (btn) { btn.style.display = ''; btn.disabled = true; }
-  });
-  updateFinalSubmitState();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
+  // ── Start ────────────────────────────────────────────────────────
+  renderLives();
+  if (queue.length) showQ(queue[0]);
 
-document.getElementById('worksheet').addEventListener('submit', e => {
-  e.preventDefault();
-  checkAnswers();
-});
-
-// ── Inject per-exercise Check buttons and hide final Submit initially ──
-(function() {
-  var sections = document.querySelectorAll('section.exercise');
-  sections.forEach(function(section) {
-    var btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'ex-check-btn';
-    btn.textContent = 'Check exercise';
-    btn.disabled = true;
-    btn.style.cssText = 'margin-top:14px;padding:8px 20px;font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:var(--ink);color:var(--paper);border:0;border-radius:3px;cursor:pointer;transition:opacity .15s';
-    btn.addEventListener('mouseover', function() { if (!this.disabled) this.style.opacity = '.85'; });
-    btn.addEventListener('mouseout', function() { this.style.opacity = '1'; });
-    btn.onclick = function() { checkExercise(section.id); };
-    btn.addEventListener('disabled', function() { this.style.opacity = '.4'; this.style.cursor = 'default'; });
-    section.appendChild(btn);
-  });
-  // Hide final submit until all exercises are done
-  updateFinalSubmitState();
-
-  // Show best score banner if this worksheet was completed before
-  (function() {
-    try {
-      if (!window.FCEStore || !window.CHAPTER_ID) return;
-      var data = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
-      var level = window.LEVEL;
-      if (!level) return;
-      var saved = data[level] && data[level][window.CHAPTER_ID];
-      if (!saved || !saved.pct) return;
-      var pct = saved.pct;
-      var color = pct >= 80 ? 'var(--green)' : pct >= 50 ? 'var(--amber)' : 'var(--red)';
-      var label = pct >= 80 ? 'Great score' : pct >= 50 ? 'Good attempt' : 'Keep practising';
-      var banner = document.createElement('div');
-      banner.style.cssText = 'display:flex;align-items:center;gap:10px;padding:10px 16px;margin-bottom:20px;background:var(--cream-deep,#F0EDE6);border-radius:6px;font-family:var(--font-sans);font-size:.8rem;color:var(--muted)';
-      banner.innerHTML = '<span>Previous best:</span><strong style="color:' + color + ';font-size:.95rem">' + pct + '%</strong><span style="color:var(--muted)">&mdash; ' + label + '. Can you beat it?</span>';
-      var form = document.getElementById('worksheet');
-      if (form) form.insertBefore(banner, form.firstChild);
-    } catch(e) {}
-  })();
 })();
