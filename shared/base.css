@@ -452,32 +452,28 @@ body.dark .sr-item:hover { background: rgba(201,160,80,.1); }
   padding: 8px 10px;
 }
 /* ─── MOBILE HEADER (≤560px) ──────────────────────────────────────
-   Full brand stays top-left. QR hides (a QR code shares a page TO another
-   device — redundant on the phone itself), dark-mode shrinks to a glyph,
-   and the level badge compacts so everything fits one row. */
+   Everything stays on one row: full brand top-left, then search · dark/QR ·
+   level. The dark toggle shrinks to its ◐/◑ glyph (keeping the connected
+   pill with QR) and the level badge tightens so QR stays visible. */
 @media (max-width: 560px) {
-  .site-header { padding: 10px 10px; }
-  .site-header-inner { gap: 5px; }
+  .site-header { padding: 10px 8px; }
+  .site-header-inner { gap: 4px; }
 
-  /* Brand keeps logo + wordmark, just a touch smaller */
-  .site-header a.brand, .site-header .brand { font-size: 1rem; }
+  /* Brand keeps logo + wordmark, slightly smaller */
+  .site-header a.brand, .site-header .brand { font-size: .92rem; }
+  .site-header a.brand svg, .site-header .brand svg { margin-right: 5px !important; }
 
-  /* Level badge → compact, label ellipsised for long level names */
-  .header-xp { padding: 4px 7px; gap: 5px; }
-  .header-xp-label { max-width: 52px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .header-xp-bar { width: 22px; }
+  /* Level badge → tight, label ellipsised for long level names */
+  .header-xp { padding: 4px 6px; gap: 4px; }
+  .header-xp-label { max-width: 42px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .header-xp-bar { width: 18px; }
+  .header-xp-go { font-size: .85rem; }
 
-  /* Hide QR; the dark toggle becomes a standalone glyph-only button */
-  .header-utils .qr-toggle { display: none; }
-  .header-utils .dark-toggle {
-    font-size: 0;
-    padding: 5px 9px;
-    border-radius: 6px;
-    border-right: 1.5px solid var(--hairline);
-  }
+  /* Dark toggle → glyph-only, but keeps the connected pill shape with QR */
+  .header-utils .dark-toggle { font-size: 0; padding: 5px 7px; }
   .header-utils .dark-toggle::before { font-size: .95rem; content: "\25D0"; }
-  body.dark .header-utils .dark-toggle { border-right-color: rgba(255,255,255,.2); }
   body.dark .header-utils .dark-toggle::before { content: "\25D1"; }
+  .header-utils .qr-toggle { padding: 5px 7px; }
 }
 
 /* ══════════════════════════════════════════════════════════════
