@@ -2,19 +2,6 @@
 // deck.js — one-at-a-time lesson slides with swipe + button nav
 // ══════════════════════════════════════════════════════════════════
 
-// ── Dashboard link in header ─────────────────────────────────────
-(function() {
-  var inner = document.querySelector('.site-header-inner');
-  var brand = inner && inner.querySelector('.brand');
-  if (!inner || !brand || inner.querySelector('.header-dash')) return;
-  var dash = document.createElement('a');
-  dash.className = 'header-dash';
-  dash.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span class="header-dash-text">Dashboard</span>';
-  var href = brand.getAttribute('href') || 'index.html';
-  dash.href = href.replace('index.html', 'dashboard.html');
-  inner.insertBefore(dash, inner.lastElementChild);
-})();
-
 // ── Confetti ─────────────────────────────────────────────────────
 function triggerConfetti() {
   if (!document.getElementById('cf-kf')) {

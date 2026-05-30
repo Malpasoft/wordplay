@@ -28,29 +28,6 @@ function toggleDark() {
 }
 
 
-// Dashboard link injection — all pages except the dashboard itself
-(function(){
-  function injectDashLink() {
-    var inner = document.querySelector('.site-header-inner');
-    if (!inner) return;
-    if (inner.querySelector('.header-dash')) return;
-    var brand = inner.querySelector('.brand');
-    if (!brand) return;
-    if (window.location.pathname.indexOf('dashboard') !== -1) return;
-    var dash = document.createElement('a');
-    dash.className = 'header-dash';
-    dash.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span class="header-dash-text">Dashboard</span>';
-    var href = brand.getAttribute('href') || 'index.html';
-    dash.href = href.replace('index.html', 'dashboard.html');
-    inner.insertBefore(dash, inner.lastElementChild);
-  }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', injectDashLink);
-  } else {
-    injectDashLink();
-  }
-})();
-
 // Back to top button — appears on long pages
 (function(){
   if (typeof document === 'undefined') return;
@@ -137,15 +114,21 @@ function toggleDark() {
     var lv   = FCEStore.getXPLevel();
     var pct  = lv.pct;
     var next = lv.max ? lv.xp + ' / ' + lv.max : lv.xp + ' XP';
-    var badge = document.createElement('div');
+    // The level badge doubles as the dashboard link (top-right "account" spot)
+    var badge = document.createElement('a');
     badge.className = 'header-xp';
-    badge.title = next + ' XP';
+    badge.title = lv.label + ' · ' + next + ' XP · Open your dashboard';
+    var onDash = window.location.pathname.indexOf('dashboard') !== -1;
+    if (!onDash) {
+      var brand = inner.querySelector('.brand');
+      var href  = (brand && brand.getAttribute('href')) || 'index.html';
+      badge.href = href.replace('index.html', 'dashboard.html');
+    }
     badge.innerHTML =
       '<span class="header-xp-label">' + lv.label + '</span>' +
-      '<div class="header-xp-bar"><div class="header-xp-fill" style="width:' + pct + '%"></div></div>';
-    var utils = inner.querySelector('.header-utils');
-    if (utils) inner.insertBefore(badge, utils);
-    else inner.appendChild(badge);
+      '<div class="header-xp-bar"><div class="header-xp-fill" style="width:' + pct + '%"></div></div>' +
+      '<span class="header-xp-go" aria-hidden="true">&#8250;</span>';
+    inner.appendChild(badge);   // last element → far-right account corner
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', injectXP);
