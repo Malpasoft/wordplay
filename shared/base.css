@@ -551,20 +551,19 @@ body.dark .sr-item:hover { background: rgba(201,160,80,.1); }
   margin-bottom: 32px;
 }
 .chapter-card {
-  background: var(--paper);
-  border: 1.5px solid var(--border-soft);
-  border-radius: 8px;
+  background: var(--surface-2);
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
   padding: 18px 20px 14px;
   cursor: pointer;
-  transition: border-color .2s, box-shadow .2s, transform .15s;
+  transition: border-color .18s, box-shadow .18s, transform .14s;
   position: relative;
 }
 .chapter-card:not(.locked):hover {
   border-color: var(--amber);
-  box-shadow: 0 4px 16px rgba(184,134,11,0.12);
-  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(184,134,11,.12);
+  transform: translateY(-2px);
 }
-body.dark .chapter-card { background: var(--navy-mid); }
 .chapter-card.locked {
   background: var(--cream);
   cursor: default;
@@ -692,7 +691,6 @@ body.dark .chapter-card { background: var(--navy-mid); }
 }
 
 /* Dark mode for cards */
-body.dark .chapter-card { background: var(--paper); border-color: var(--hairline); }
 body.dark .chapter-card.locked { background: rgba(255,255,255,.04); }
 
 /* ══════════════════════════════════════════════════════════════
@@ -1103,9 +1101,9 @@ body.dark #back-to-top { background: var(--amber); color: #1A1A1A; }
   display: flex;
   flex-direction: column;
   padding: 20px 20px 16px;
-  background: var(--paper);
-  border: 1.5px solid var(--border-soft);
-  border-radius: 10px;
+  background: var(--surface-2);
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
   text-decoration: none;
   transition: border-color .18s, box-shadow .18s, transform .14s;
   position: relative;
@@ -1113,30 +1111,25 @@ body.dark #back-to-top { background: var(--amber); color: #1A1A1A; }
 }
 .ch-card:hover {
   border-color: var(--amber);
-  box-shadow: 0 6px 20px rgba(184,134,11,.1);
+  box-shadow: 0 6px 20px rgba(184,134,11,.12);
   transform: translateY(-2px);
 }
 
 /* Section cards (Grammar / Vocabulary / Writing on level hub pages) */
 .sect-card {
   display: block;
-  background: #1A1A1A;
+  background: var(--surface-2);
   border-radius: 12px;
   padding: 28px 24px;
   text-decoration: none;
   cursor: pointer;
-  border: 2px solid transparent;
-  transition: transform .15s, box-shadow .15s, border-color .18s;
+  border: 1.5px solid var(--line);
+  transition: transform .14s, box-shadow .18s, border-color .18s;
 }
 .sect-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0,0,0,.3);
+  box-shadow: 0 6px 20px rgba(184,134,11,.12);
   border-color: var(--amber);
-}
-body:not(.dark) .sect-card {
-  background: var(--paper);
-  border-color: rgba(26,26,26,0.18);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 /* English hubs (no card eyebrow): title · description · chapter count */
 html:not([lang="es"]) body:not(.dark) .sect-card > *:nth-child(1) { color: var(--ink) !important; }
@@ -1222,14 +1215,6 @@ html[lang="es"] body:not(.dark) .sect-card > *:nth-child(n+3) { color: var(--mut
 .ch-card--vocab .ch-cta { color: var(--amber); }
 
 /* Dark mode */
-body.dark .ch-card {
-  background: rgba(255,255,255,.04);
-  border-color: rgba(255,255,255,.1);
-}
-body.dark .ch-card:hover {
-  border-color: var(--amber);
-  box-shadow: 0 6px 20px rgba(184,134,11,.14);
-}
 body.dark .ch-card--done { border-color: rgba(201,160,80,.35); }
 
 /* Section page subtitle */
@@ -1268,9 +1253,9 @@ body.dark .ch-card--done { border-color: rgba(201,160,80,.35); }
   align-items: center;
   text-align: center;
   padding: 28px 20px 22px;
-  background: var(--paper);
-  border: 1.5px solid var(--border-soft);
-  border-radius: 8px;
+  background: var(--surface-2);
+  border: 1.5px solid var(--line);
+  border-radius: 12px;
   text-decoration: none;
   transition: box-shadow .18s, transform .14s, border-color .18s;
   position: relative;
@@ -1306,13 +1291,9 @@ body.dark .ch-card--done { border-color: rgba(201,160,80,.35); }
 }
 
 /* Dark mode */
-body.dark .activity-card {
-  background: rgba(255,255,255,.05);
-  border-color: rgba(255,255,255,.1);
-}
 body.dark .activity-card:hover {
   border-color: var(--amber);
-  box-shadow: 0 6px 24px rgba(232,160,32,.15);
+  box-shadow: 0 6px 20px rgba(184,134,11,.18);
 }
 body.dark .ac-arrow { color: var(--amber); }
 

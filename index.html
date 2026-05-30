@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <title>Word Play — English A1 to C2</title>
-<link rel="stylesheet" href="shared/base.css?v=v120">
+<link rel="stylesheet" href="shared/base.css?v=v121">
 <script src="shared/dark-init.js?v=v109"></script>
 <style>
 .root-hero { padding: 52px 20px 32px; text-align: center; max-width: 640px; margin: 0 auto; }
@@ -20,18 +20,17 @@
 @media (max-width: 640px) { .level-grid { grid-template-columns: repeat(2,1fr); } }
 @media (max-width: 520px) { .level-grid { grid-template-columns: 1fr; } .root-hero h1 { font-size: 2rem; } }
 .level-card {
-  background: var(--paper); border: 1px solid var(--border-soft,rgba(26,26,26,.12));
-  border-radius: 8px; padding: 28px 20px 24px; text-align: center;
-  text-decoration: none; transition: box-shadow .2s, border-color .2s, transform .15s;
+  background: var(--surface-2); border: 1.5px solid var(--line);
+  border-radius: 12px; padding: 28px 20px 24px; text-align: center;
+  text-decoration: none; transition: box-shadow .18s, border-color .18s, transform .14s;
   display: block;
 }
 .level-card:not(.locked):hover { box-shadow: 0 6px 20px rgba(184,134,11,.12); border-color: var(--amber); transform: translateY(-2px); }
 .level-card.locked { opacity: .55; cursor: default; }
 .lc-band { font-family: var(--font-sans); font-size: .6rem; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
-.lc-code { font-family: var(--font-serif,Georgia,serif); font-size: 2.4rem; font-weight: 700; color: var(--navy); line-height: 1; margin-bottom: 8px; }
-.lc-desc { font-size: .8rem; color: var(--muted-deep,#8A96A8); line-height: 1.5; margin-bottom: 14px; }
-.lc-stat { font-family: var(--font-sans); font-size: .68rem; font-weight: 700; letter-spacing: 1px; color: var(--muted); }
-body.dark .level-card { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.1); }
+.lc-code { font-family: var(--font-serif,Georgia,serif); font-size: 2.4rem; font-weight: 700; color: var(--text-1); line-height: 1; margin-bottom: 8px; }
+.lc-desc { font-size: .8rem; color: var(--text-2); line-height: 1.5; margin-bottom: 14px; }
+.lc-stat { font-family: var(--font-sans); font-size: .68rem; font-weight: 700; letter-spacing: 1px; color: var(--text-3); }
 </style>
 </head>
 <body>
