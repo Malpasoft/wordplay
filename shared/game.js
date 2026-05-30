@@ -1,14 +1,8 @@
-/* ══════════════════════════════════════════════════════════════════
-   WORD PLAY — Chapter Game Engine v2
-   ══════════════════════════════════════════════════════════════════
-
-   4-stage spaced-repetition mastery game.
-   Stages 0-3 = Meaning / Recognition / In-context / Production.
-   Stage 4 = MASTERED.
-
-   Two-miss rule: stage regression only after two consecutive misses.
-   Auto-advance on correct (1.2 s). Manual Continue on wrong.
-   ══════════════════════════════════════════════════════════════════ */
+// ══════════════════════════════════════════════════════════════════
+// game.js v2 — Dominio model
+// 4 key items × 3 question types, score toward 100 points to win
+// GAME_DATA interface unchanged; per-chapter HTML needs no edits.
+// ══════════════════════════════════════════════════════════════════
 
 (function () {
   'use strict';
@@ -19,481 +13,80 @@
     init();
   }
 
-  function playTone(correct) {
-    try {
-      var ctx = new (window.AudioContext || window.webkitAudioContext)();
-      if (correct) {
-        [[660,0],[880,0.1]].forEach(function(pair) {
+  function init() {
+    if (!window.GAME_DATA) return;
+
+    var DATA      = window.GAME_DATA;
+    var ALL_ITEMS = DATA.items || [];
+    var ITEMS     = ALL_ITEMS.slice(0, 4);
+    if (!ITEMS.length) return;
+
+    var STORAGE_KEY = DATA.storageKey || ('game_' + (DATA.level || '') + '_' + (DATA.chapterId || ''));
+    var SCORE_GOAL  = 100;
+
+    // ── Language ──────────────────────────────────────────────────
+    var isEs = ((DATA.level || '').indexOf('es-') === 0) || (document.documentElement.lang === 'es');
+    var L = {
+      start:      isEs ? 'Empezar'           : 'Start',
+      resume:     isEs ? 'Continuar'          : 'Resume',
+      newGame:    isEs ? 'Empezar de nuevo'   : 'New game',
+      check:      isEs ? 'Comprobar'          : 'Check',
+      next:       isEs ? 'Continuar'          : 'Continue',
+      correct:    isEs ? '¡Correcto!'         : 'Correct!',
+      wrong:      isEs ? 'Incorrecto'         : 'Incorrect',
+      answer:     isEs ? 'Respuesta:'         : 'Answer:',
+      placeholder:isEs ? 'Escribe en inglés…' : 'Type your answer…',
+      sigLabel:   isEs ? 'Significado'        : 'Meaning',
+      ctxLabel:   isEs ? 'Contexto'           : 'Context',
+      prodLabel:  isEs ? 'Producción'         : 'Production',
+      sigSub:     isEs ? '¿Qué significa esta expresión?' : 'What does this expression mean?',
+      ctxSub:     isEs ? 'Completa la frase'  : 'Complete the sentence',
+      prodSub:    isEs ? 'Escribe la expresión en inglés' : 'Write the English expression',
+      toWin:      isEs ? '/ ' + SCORE_GOAL + ' para ganar' : '/ ' + SCORE_GOAL + ' to win',
+      desc:       isEs
+        ? (ITEMS.length + ' conceptos clave · 3 rondas cada uno · llega a ' + SCORE_GOAL + ' puntos')
+        : (ITEMS.length + ' key concepts · 3 rounds each · reach ' + SCORE_GOAL + ' points'),
+      hint:       isEs
+        ? 'Aciertos consecutivos del mismo concepto y rachas entre conceptos añaden puntos extra.'
+        : 'Same-concept runs and cross-concept streaks add bonus points.',
+      bestScore:  isEs ? 'Mejor puntuación:' : 'Best score:',
+      dominio:    isEs ? '¡Dominio alcanzado!' : 'Mastery achieved!',
+      wellDone:   isEs ? '¡Bien hecho!'      : 'Well done!',
+      finalScore: isEs ? 'Puntuación:'       : 'Score:',
+      printBtn:   isEs ? 'Ir a Imprimibles →' : 'Go to Printables →',
+      backBtn:    isEs ? '← Volver al capítulo' : '← Back to chapter',
+      bonusSame:  isEs ? '+5 racha mismo concepto' : '+5 same-concept run',
+      bonusCross: isEs ? '+3 racha entre conceptos' : '+3 cross-concept streak',
+      refOpen:    isEs ? '▼ Referencia — todas las palabras' : '▼ Reference — all words',
+      refClose:   isEs ? '▲ Referencia' : '▲ Reference',
+    };
+
+    // ── Audio ─────────────────────────────────────────────────────
+    function playTone(correct) {
+      try {
+        var ctx = new (window.AudioContext || window.webkitAudioContext)();
+        if (correct) {
+          [[660,0],[880,0.1]].forEach(function(pair) {
+            var o = ctx.createOscillator(), g = ctx.createGain();
+            o.connect(g); g.connect(ctx.destination);
+            o.type = 'sine'; o.frequency.value = pair[0];
+            var t = ctx.currentTime + pair[1];
+            g.gain.setValueAtTime(0, t);
+            g.gain.linearRampToValueAtTime(0.22, t + 0.01);
+            g.gain.exponentialRampToValueAtTime(0.001, t + 0.4);
+            o.start(t); o.stop(t + 0.4);
+          });
+        } else {
           var o = ctx.createOscillator(), g = ctx.createGain();
           o.connect(g); g.connect(ctx.destination);
-          o.type = 'sine'; o.frequency.value = pair[0];
-          var t = ctx.currentTime + pair[1];
-          g.gain.setValueAtTime(0, t);
-          g.gain.linearRampToValueAtTime(0.22, t + 0.01);
-          g.gain.exponentialRampToValueAtTime(0.001, t + 0.4);
-          o.start(t); o.stop(t + 0.4);
-        });
-      } else {
-        var o = ctx.createOscillator(), g = ctx.createGain();
-        o.connect(g); g.connect(ctx.destination);
-        o.type = 'sawtooth'; o.frequency.value = 160;
-        g.gain.setValueAtTime(0.18, ctx.currentTime);
-        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.22);
-        o.start(); o.stop(ctx.currentTime + 0.22);
-        try { navigator.vibrate && navigator.vibrate([50, 20, 50]); } catch(e2) {}
-      }
-      setTimeout(function() { try { ctx.close(); } catch(e2) {} }, 1200);
-    } catch(e) {}
-  }
-
-  function init() {
-    if (!window.GAME_DATA) {
-      console.warn('GAME_DATA not defined');
-      return;
-    }
-
-    const DATA = window.GAME_DATA;
-    const ITEMS = DATA.items;
-    const STORAGE_KEY = DATA.storageKey || ('game_' + DATA.level + '_' + DATA.chapterId);
-    const STAGES = 4;
-
-    // ── Build play screen from a single clean template ────────────
-    // This replaces whatever static HTML the game.html has in .game-play,
-    // making game.js the single source of truth for the play-card layout.
-    (function buildPlayScreen() {
-      var play = document.querySelector('#gamePlay .game-play');
-      if (!play) return;
-      play.innerHTML =
-        '<div class="gp-prog"><div class="gp-prog-fill" id="gProgressBar" style="width:0%"></div></div>' +
-        '<div class="gp-meta">' +
-          '<span class="gp-badge" id="gModeTag"></span>' +
-          '<span class="gp-counter">' +
-            '<span class="gp-streak" id="gStreakBadge"></span>' +
-            '<span id="gProgressTxt">0 / ' + ITEMS.length + '</span>' +
-          '</span>' +
-        '</div>' +
-        '<div class="game-term" id="gTerm"></div>' +
-        '<div class="game-prompt" id="gPrompt"></div>' +
-        '<div class="game-options" id="gOptions"></div>' +
-        '<div class="game-feedback" id="gFeedback"></div>' +
-        '<div class="game-example" id="gExample" style="display:none"></div>' +
-        '<div class="gp-actions">' +
-          '<button id="gBtnHint" class="gp-link" type="button">Need a hint?</button>' +
-          '<button id="gBtnNext" class="game-btn primary" style="display:none">Continue</button>' +
-        '</div>';
-    })();
-
-    // ── DOM refs ─────────────────────────────────────────────────
-    function q(id) { return document.getElementById(id); }
-    const screens = {
-      start:      q('gameStart'),
-      play:       q('gamePlay'),
-      completion: q('gameCompletion'),
-    };
-    const el = {
-      startMastered:    q('gStartMastered'),
-      startTotal:       q('gStartTotal'),
-      startLifetime:    q('gStartLifetime'),
-      resumeSection:    q('gResumeSection'),
-      btnResume:        q('gBtnResume'),
-      btnNewFromResume: q('gBtnNewFromResume'),
-      btnStart:         q('gBtnStart'),
-      modeTag:     q('gModeTag'),
-      term:        q('gTerm'),
-      prompt:      q('gPrompt'),
-      options:     q('gOptions'),
-      feedback:    q('gFeedback'),
-      example:     q('gExample'),
-      btnNext:     q('gBtnNext'),
-      btnHint:     q('gBtnHint'),
-      streakBadge: q('gStreakBadge'),
-      progressBar: q('gProgressBar'),
-      progressTxt: q('gProgressTxt'),
-      refToggle:   q('gRefToggle'),
-      refBody:     q('gRefBody'),
-      refList:     q('gRefList'),
-      finalScore:   q('gFinalScore'),
-      finalStreak:  q('gFinalStreak'),
-      finalPct:     q('gFinalPct'),
-      masteryMap:   q('gMasteryMap'),
-      btnPlayAgain: q('gBtnPlayAgain'),
-      toast: q('gToast'),
-    };
-
-    var autoAdvanceTimer = null;
-
-    // ── State ────────────────────────────────────────────────────
-    let state = {
-      items: [],
-      score: 0,
-      streak: 0,
-      bestStreak: 0,
-      currentId: null,
-      currentStage: 0,
-      answered: false,
-      hintUsed: false,
-      completed: false,
-      questionNum: 0,
-    };
-
-    // ── Stage definitions ─────────────────────────────────────────
-    const STAGE_DEFS = [
-      {
-        tag: 'Stage 1 — Meaning',
-        sub: 'What does this term mean?',
-        showTerm: (item) => item.term,
-        correct: (item) => item.meaning,
-        pool: (items) => items.map(i => i.meaning),
-      },
-      {
-        tag: 'Stage 2 — Recognition',
-        sub: 'Which term matches this definition?',
-        showTerm: (item) => item.meaning,
-        correct: (item) => item.term,
-        pool: (items) => items.map(i => i.term),
-      },
-      {
-        tag: 'Stage 3 — In context',
-        sub: 'Complete the sentence correctly',
-        showTerm: (item) => item.completion
-          ? item.completion.replace('______', '□ □ □ □ □ □')
-          : item.meaning,
-        correct: (item) => item.answer || item.term,
-        pool: (items) => items.map(i => i.answer || i.term),
-      },
-      {
-        tag: 'Stage 4 — Production',
-        sub: 'Find a synonym or related term',
-        showTerm: (item) => item.term,
-        correct: (item) => item.synonym,
-        pool: (items) => items.map(i => i.synonym),
-      },
-    ];
-
-    // ── Persistence ──────────────────────────────────────────────
-    function saveState() {
-      try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify({
-          items: state.items,
-          score: state.score,
-          streak: state.streak,
-          bestStreak: state.bestStreak,
-          currentId: state.currentId,
-          currentStage: state.currentStage,
-          completed: state.completed,
-          questionNum: state.questionNum,
-        }));
-      } catch (e) {}
-    }
-
-    function loadState() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) return false;
-        const saved = JSON.parse(raw);
-        const ids = new Set(ITEMS.map(i => i.id));
-        saved.items = (saved.items || []).filter(i => ids.has(i.id));
-        if (saved.items.length === 0) return false;
-        Object.assign(state, saved);
-        return true;
-      } catch (e) { return false; }
-    }
-
-    function clearState() {
-      try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
-    }
-
-    function updateStoreProgress() {
-      if (!window.FCEStore || !DATA.chapterId || !DATA.level) return;
-      const mastered = state.items.filter(i => i.stage >= STAGES).length;
-      if (mastered > 0) FCEStore.saveGameResult(DATA.chapterId, mastered, ITEMS.length);
-    }
-
-    function freshState() {
-      state = {
-        items: ITEMS.map(i => ({ id: i.id, stage: 0, misses: 0, consecutiveMisses: 0, lastAnswered: -99 })),
-        score: 0, streak: 0, bestStreak: 0,
-        currentId: null, currentStage: 0,
-        answered: false, hintUsed: false, completed: false,
-        questionNum: 0,
-      };
-    }
-
-    // ── Helpers ──────────────────────────────────────────────────
-    function shuffle(arr) {
-      const a = [...arr];
-      for (let i = a.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [a[i], a[j]] = [a[j], a[i]];
-      }
-      return a;
-    }
-
-    function getItem(id)      { return ITEMS.find(i => i.id === id); }
-    function getItemState(id) { return state.items.find(i => i.id === id); }
-
-    function showScreen(name) {
-      Object.entries(screens).forEach(([k, scr]) => {
-        if (!scr) return;
-        scr.classList.toggle('active', k === name);
-      });
-      if (name === 'play') {
-        requestAnimationFrame(function() {
-          var card = document.querySelector('#gamePlay .game-play');
-          if (!card) return;
-          var nav = document.querySelector('.site-header');
-          var navH = nav ? nav.getBoundingClientRect().height : 0;
-          var top = card.getBoundingClientRect().top + window.pageYOffset - navH - 12;
-          window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
-        });
-      }
-    }
-
-    function toast(msg, dur) {
-      if (!el.toast) return;
-      dur = dur || 2000;
-      el.toast.textContent = msg;
-      el.toast.classList.add('show');
-      setTimeout(() => el.toast.classList.remove('show'), dur);
-    }
-
-    // ── Start screen ─────────────────────────────────────────────
-    function renderStart() {
-      const mastered = state.items.filter(i => i.stage >= STAGES).length;
-      if (el.startMastered) el.startMastered.textContent = mastered;
-      if (el.startTotal)    el.startTotal.textContent = ITEMS.length;
-      if (el.startLifetime && window.FCEStore && DATA.level && DATA.chapterId) {
-        try {
-          var lv = FCEStore.getLevel(DATA.level);
-          var key = 'wordplay_game_' + DATA.chapterId;
-          var lt = (lv.results || {})[key];
-          el.startLifetime.textContent = lt ? lt.mastered + '/' + lt.total + ' (' + lt.pct + '%)' : '—';
-        } catch(e) { if (el.startLifetime) el.startLifetime.textContent = '—'; }
-      }
-      const hasSaved = state.items.some(i => i.stage > 0 || i.misses > 0) && !state.completed;
-      if (el.resumeSection) el.resumeSection.style.display = hasSaved ? 'block' : 'none';
-      showScreen('start');
-    }
-
-    // ── Pick next item ─────────────────────────────────────────────
-    function nextItem() {
-      if (autoAdvanceTimer) { clearTimeout(autoAdvanceTimer); autoAdvanceTimer = null; }
-
-      // Reset card and slide in from right (handles post-swipe invisible state too)
-      var playCard = document.querySelector('.game-play');
-      if (playCard) {
-        playCard.style.transition = 'none';
-        playCard.style.transform = 'translateX(28px)';
-        playCard.style.opacity = '0';
-        void playCard.offsetHeight;
-        playCard.style.transition = 'transform 0.2s ease-out, opacity 0.18s ease-out';
-        playCard.style.transform = '';
-        playCard.style.opacity = '';
-        setTimeout(function() { playCard.style.transition = ''; }, 220);
-      }
-
-      state.answered = false;
-      state.hintUsed = false;
-      if (el.feedback) { el.feedback.textContent = ''; el.feedback.className = 'game-feedback'; }
-      if (el.example)  { el.example.textContent = ''; el.example.style.display = 'none'; }
-      if (el.btnNext)  el.btnNext.style.display = 'none';
-
-      const pool = state.items.filter(i => {
-        if (i.stage >= STAGES) return false;
-        const recentlyAnswered = (state.questionNum - i.lastAnswered) < 2;
-        const poolSize = state.items.filter(j => j.stage < STAGES).length;
-        if (recentlyAnswered && poolSize > 1) return false;
-        return true;
-      });
-
-      if (pool.length === 0) {
-        state.completed = true;
-        updateStoreProgress();
-        clearState();
-        renderCompletion();
-        return;
-      }
-
-      // Weighted selection: prioritise high consecutive misses, then low stage
-      const weighted = pool.map(i => {
-        let w = 1;
-        w += i.consecutiveMisses * 3;
-        w += (STAGES - i.stage) * 0.5;
-        return { i, w };
-      });
-      const total = weighted.reduce((s, x) => s + x.w, 0);
-      let rand = Math.random() * total;
-      let chosen = weighted[0].i;
-      for (const x of weighted) {
-        rand -= x.w;
-        if (rand <= 0) { chosen = x.i; break; }
-      }
-
-      state.currentId = chosen.id;
-      state.currentStage = chosen.stage;
-      state.questionNum++;
-      renderQuestion();
-    }
-
-    // ── Render question ───────────────────────────────────────────
-    function renderQuestion() {
-      const item = getItem(state.currentId);
-      const stage = state.currentStage;
-      const def = STAGE_DEFS[stage];
-
-      if (el.modeTag) el.modeTag.textContent = def.tag;
-
-      if (el.term) {
-        if (stage === 2 && item.completion) {
-          el.term.innerHTML = item.completion.replace('______', '<span class="game-gap">______</span>');
-        } else {
-          el.term.textContent = def.showTerm(item);
+          o.type = 'sawtooth'; o.frequency.value = 160;
+          g.gain.setValueAtTime(0.18, ctx.currentTime);
+          g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.22);
+          o.start(); o.stop(ctx.currentTime + 0.22);
+          try { navigator.vibrate && navigator.vibrate([50, 20, 50]); } catch(e2) {}
         }
-      }
-      if (el.prompt) el.prompt.textContent = def.sub;
-
-      const correct = def.correct(item);
-      const allAnswers = def.pool(ITEMS).filter(x => x && x !== correct);
-      const distractors = shuffle(allAnswers).slice(0, 3);
-      const options = shuffle([correct, ...distractors]);
-
-      if (el.options) {
-        el.options.innerHTML = options.map((opt, i) =>
-          `<button class="game-option" data-val="${encodeURIComponent(opt)}" data-idx="${i}">${opt}</button>`
-        ).join('');
-        el.options.querySelectorAll('.game-option').forEach(btn => {
-          btn.addEventListener('click', () => handleAnswer(btn));
-        });
-      }
-
-      if (el.btnHint) el.btnHint.disabled = false;
-
-      updateProgressUI();
-    }
-
-    // ── Handle answer ─────────────────────────────────────────────
-    function handleAnswer(btn, isReveal) {
-      if (state.answered) return;
-      state.answered = true;
-      isReveal = !!isReveal;
-
-      const item    = getItem(state.currentId);
-      const st      = getItemState(state.currentId);
-      const def     = STAGE_DEFS[state.currentStage];
-      const correct = def.correct(item);
-      const userVal = decodeURIComponent(btn.dataset.val);
-      const acceptList = (item.accept || []);
-      const isCorrect = !isReveal && (userVal === correct || acceptList.includes(userVal));
-
-      el.options.querySelectorAll('.game-option').forEach(b => {
-        b.disabled = true;
-        const bVal = decodeURIComponent(b.dataset.val);
-        if (bVal === correct || (item.accept || []).includes(bVal)) b.classList.add('correct');
-        else if (b === btn && !isCorrect) b.classList.add('wrong');
-      });
-      if (el.btnHint) el.btnHint.disabled = true;
-      playTone(isCorrect);
-
-      st.lastAnswered = state.questionNum;
-
-      if (isCorrect) {
-        st.stage = Math.min(st.stage + 1, STAGES);
-        st.consecutiveMisses = 0;
-        state.streak++;
-        if (state.streak > state.bestStreak) state.bestStreak = state.streak;
-
-        const points = state.hintUsed ? 4 : 10;
-        state.score += points;
-
-        const feedbackMsg = state.streak >= 3
-          ? 'Correct! ◆ ' + state.streak + ' streak'
-          : 'Correct!';
-        if (el.feedback) { el.feedback.textContent = feedbackMsg; el.feedback.className = 'game-feedback correct'; }
-        if (st.stage >= STAGES) {
-          const brittle = st.misses > 2;
-          toast(brittle ? item.term + ' mastered — took some tries!' : item.term + ' mastered!');
-          updateStoreProgress();
-        }
-      } else {
-        st.consecutiveMisses++;
-        st.misses++;
-        state.streak = 0;
-
-        if (st.consecutiveMisses >= 2) {
-          st.stage = Math.max(st.stage - 1, 0);
-          const msg = isReveal ? 'Answer: "' + correct + '"' : 'Wrong again — "' + correct + '". Moving back a stage.';
-          if (el.feedback) { el.feedback.textContent = msg; el.feedback.className = 'game-feedback wrong'; }
-        } else {
-          const msg = isReveal ? 'Answer: "' + correct + '"' : 'Not quite — the answer is "' + correct + '"';
-          if (el.feedback) { el.feedback.textContent = msg; el.feedback.className = 'game-feedback wrong'; }
-        }
-      }
-
-      if (el.example && item.example) {
-        el.example.innerHTML = item.example;
-        el.example.style.display = 'block';
-      }
-
-      if (state.items.every(i => i.stage >= STAGES)) {
-        state.completed = true;
-        updateProgressUI();
-        saveState();
-        setTimeout(() => { updateStoreProgress(); clearState(); renderCompletion(); }, 1400);
-        return;
-      }
-
-      if (isCorrect) {
-        if (el.btnNext) el.btnNext.style.display = 'none';
-        autoAdvanceTimer = setTimeout(function() {
-          autoAdvanceTimer = null;
-          nextItem();
-        }, 1200);
-      } else {
-        if (el.btnNext) el.btnNext.style.display = 'inline-flex';
-      }
-      updateProgressUI();
-      saveState();
-    }
-
-    // ── Hint ──────────────────────────────────────────────────────
-    function showHint() {
-      if (state.answered) return;
-      state.hintUsed = true;
-      const item = getItem(state.currentId);
-      const def  = STAGE_DEFS[state.currentStage];
-      const correct = def.correct(item);
-      const hint = correct.split(' ').map(w => w[0] + '…').join(' ');
-      if (el.feedback) { el.feedback.textContent = 'Hint: ' + hint; el.feedback.className = 'game-feedback'; }
-      if (el.btnHint) el.btnHint.disabled = true;
-    }
-
-    // ── Progress UI ───────────────────────────────────────────────
-    function updateProgressUI() {
-      const mastered = state.items.filter(i => i.stage >= STAGES).length;
-      const pct = Math.round((mastered / ITEMS.length) * 100);
-      if (el.progressBar) el.progressBar.style.width = pct + '%';
-      if (el.progressTxt) el.progressTxt.textContent = mastered + ' / ' + ITEMS.length;
-      if (el.streakBadge) el.streakBadge.textContent = state.streak >= 3 ? '◆ ' + state.streak + '  ' : '';
-      renderReference();
-    }
-
-    // ── Reference panel ───────────────────────────────────────────
-    function renderReference() {
-      if (!el.refList) return;
-      el.refList.innerHTML = ITEMS.map(item => {
-        const st = getItemState(item.id);
-        const stage = st ? st.stage : 0;
-        const brittle = st && st.misses > 2 && stage >= STAGES;
-        const pips = Array.from({ length: STAGES }, (_, i) =>
-          `<div class="ref-stage-pip ${i < stage ? (brittle ? 'filled-brittle' : 'filled') : ''}"></div>`
-        ).join('');
-        return `<div class="game-ref-item">
-          <span class="ref-term">${item.term}</span>
-          <div class="ref-stage-track">${pips}</div>
-          <div class="ref-def">${item.meaning}</div>
-          <div class="ref-ex">${item.example || ''}</div>
-        </div>`;
-      }).join('');
+        setTimeout(function() { try { ctx.close(); } catch(e2) {} }, 1200);
+      } catch(e) {}
     }
 
     // ── Confetti ──────────────────────────────────────────────────
@@ -514,89 +107,539 @@
       }
     }
 
-    // ── Completion screen ─────────────────────────────────────────
-    function renderCompletion() {
-      if (el.finalScore)  el.finalScore.textContent  = state.score;
-      if (el.finalStreak) el.finalStreak.textContent = state.bestStreak;
-      const mastered = state.items.filter(i => i.stage >= STAGES).length;
-      if (el.finalPct) el.finalPct.textContent = Math.round((mastered / ITEMS.length) * 100) + '%';
-
-      if (el.masteryMap) {
-        const strong     = state.items.filter(i => i.stage >= STAGES && i.misses <= 1);
-        const brittle    = state.items.filter(i => i.stage >= STAGES && i.misses > 1);
-        const unmastered = state.items.filter(i => i.stage < STAGES);
-
-        let html = '';
-        if (strong.length) {
-          html += '<div class="mastery-group"><div class="mastery-group-label" style="color:var(--green)">Strong (' + strong.length + ')</div>';
-          html += strong.map(i => `<span class="mastery-chip strong">${getItem(i.id).term}</span>`).join('');
-          html += '</div>';
-        }
-        if (brittle.length) {
-          html += '<div class="mastery-group"><div class="mastery-group-label" style="color:var(--amber)">Mastered — review again (' + brittle.length + ')</div>';
-          html += brittle.map(i => `<span class="mastery-chip brittle">${getItem(i.id).term}</span>`).join('');
-          html += '</div>';
-        }
-        if (unmastered.length) {
-          html += '<div class="mastery-group"><div class="mastery-group-label" style="color:var(--red)">Needs more practice (' + unmastered.length + ')</div>';
-          html += unmastered.map(i => `<span class="mastery-chip unmastered">${getItem(i.id).term}</span>`).join('');
-          html += '</div>';
-        }
-        el.masteryMap.innerHTML = html;
+    // ── Helpers ───────────────────────────────────────────────────
+    function shuffle(arr) {
+      var a = arr.slice();
+      for (var i = a.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var t = a[i]; a[i] = a[j]; a[j] = t;
       }
-
-      showScreen('completion');
-      setTimeout(triggerConfetti, 400);
+      return a;
     }
 
-    // ── Event listeners ───────────────────────────────────────────
-    if (el.btnStart)         el.btnStart.addEventListener('click',         () => { freshState(); saveState(); showScreen('play'); nextItem(); });
-    if (el.btnResume)        el.btnResume.addEventListener('click',        () => { showScreen('play'); nextItem(); });
-    if (el.btnNewFromResume) el.btnNewFromResume.addEventListener('click', () => { freshState(); saveState(); showScreen('play'); nextItem(); });
-    if (el.btnNext)          el.btnNext.addEventListener('click',          function() {
-      if (autoAdvanceTimer) { clearTimeout(autoAdvanceTimer); autoAdvanceTimer = null; }
-      nextItem();
-    });
-    if (el.btnHint)          el.btnHint.addEventListener('click',          showHint);
-    if (el.btnPlayAgain)     el.btnPlayAgain.addEventListener('click',     () => { freshState(); showScreen('play'); nextItem(); });
-    if (el.refToggle)        el.refToggle.addEventListener('click',        () => {
-      const body = el.refBody;
-      if (body) { body.classList.toggle('open'); el.refToggle.textContent = body.classList.contains('open') ? '▲ Reference' : '▼ Reference'; }
-    });
+    function norm(s) {
+      return (s || '').toLowerCase().trim()
+        .replace(/[.!?,;:]$/g, '').replace(/\s+/g, ' ').replace(/[''`]/g, "'");
+    }
+
+    function esc(s) {
+      return String(s || '').replace(/[&<>"']/g, function(c) {
+        return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
+      });
+    }
+
+    function getItem(id) {
+      for (var i = 0; i < ITEMS.length; i++) {
+        if (ITEMS[i].id === id) return ITEMS[i];
+      }
+      return null;
+    }
+
+    // ── Queue ─────────────────────────────────────────────────────
+    function buildQueue() {
+      var q = [];
+      ITEMS.forEach(function(item) {
+        q.push({ itemId: item.id, qtype: 'significado' });
+        q.push({ itemId: item.id, qtype: 'contexto'    });
+        q.push({ itemId: item.id, qtype: 'produccion'  });
+      });
+      return shuffle(q);
+    }
+
+    // ── Persistence ───────────────────────────────────────────────
+    function getBestScore() {
+      try { return parseInt(localStorage.getItem(STORAGE_KEY + '_best') || '0', 10); } catch(e) { return 0; }
+    }
+    function saveBestScore(score) {
+      try {
+        if (score > getBestScore()) localStorage.setItem(STORAGE_KEY + '_best', String(score));
+      } catch(e) {}
+    }
+
+    function saveState() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          score:        state.score,
+          bestStreak:   state.bestStreak,
+          crossStreak:  state.crossStreak,
+          lastItemId:   state.lastItemId,
+          sameRunCount: state.sameRunCount,
+          itemCorrect:  state.itemCorrect,
+          queue:        state.queue,
+        }));
+      } catch(e) {}
+    }
+
+    function loadState() {
+      try {
+        var raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return false;
+        var saved = JSON.parse(raw);
+        if (!saved || !saved.queue || !saved.queue.length) return false;
+        var validIds = {};
+        ITEMS.forEach(function(i) { validIds[i.id] = true; });
+        var validQ = saved.queue.filter(function(q) { return validIds[q.itemId]; });
+        if (!validQ.length) return false;
+        state = {
+          score:        saved.score       || 0,
+          bestStreak:   saved.bestStreak  || 0,
+          crossStreak:  saved.crossStreak || 0,
+          lastItemId:   saved.lastItemId  || null,
+          sameRunCount: saved.sameRunCount|| 0,
+          itemCorrect:  saved.itemCorrect || {},
+          queue:        validQ,
+        };
+        return true;
+      } catch(e) { return false; }
+    }
+
+    function clearState() {
+      try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+    }
+
+    // ── State ─────────────────────────────────────────────────────
+    var state = null;
+    var autoTimer = null;
+    var currentQItem = null;
+
+    function freshState() {
+      state = {
+        score:        0,
+        bestStreak:   0,
+        crossStreak:  0,
+        lastItemId:   null,
+        sameRunCount: 0,
+        itemCorrect:  {},
+        queue:        buildQueue(),
+      };
+    }
+
+    // ── Build play screen ─────────────────────────────────────────
+    (function buildPlayScreen() {
+      var play = document.querySelector('#gamePlay .game-play');
+      if (!play) return;
+      play.innerHTML =
+        '<div class="gp-prog"><div class="gp-prog-fill" id="gProgressBar" style="width:0%"></div></div>' +
+        '<div class="gp-meta">' +
+          '<span class="gp-badge" id="gQTypeTag"></span>' +
+          '<div class="gp-counter">' +
+            '<span class="gp-streak" id="gStreakBadge" style="display:none">◆ 3 </span>' +
+            '<span id="gScoreLabel">0</span>' +
+            '<span style="color:var(--muted);font-size:.68rem;margin-left:3px">' + L.toWin + '</span>' +
+          '</div>' +
+        '</div>' +
+        '<div class="game-term" id="gTerm"></div>' +
+        '<div class="game-prompt" id="gPrompt"></div>' +
+        '<div class="game-options" id="gOptions"></div>' +
+        '<div class="gp-input-wrap" id="gInputWrap" style="display:none">' +
+          '<input id="gInput" type="text" autocomplete="off" spellcheck="false" placeholder="' + L.placeholder + '">' +
+          '<button id="gBtnCheck" class="game-btn primary">' + L.check + '</button>' +
+        '</div>' +
+        '<div class="game-feedback" id="gFeedback"></div>' +
+        '<div class="game-example" id="gExample" style="display:none"></div>' +
+        '<div class="gp-actions">' +
+          '<button id="gBtnNext" class="game-btn primary" style="display:none">' + L.next + '</button>' +
+        '</div>';
+    })();
+
+    // ── Update start screen text ──────────────────────────────────
+    (function updateStartScreen() {
+      var allPs = document.querySelectorAll('#gameStart .game-start p');
+      if (allPs[0]) allPs[0].textContent = L.desc;
+      if (allPs[1]) allPs[1].textContent = L.hint;
+      var mastEl = document.getElementById('gStartMastered');
+      if (mastEl) {
+        var best = getBestScore();
+        mastEl.textContent = best > 0 ? (L.bestScore + ' ' + best) : '';
+      }
+    })();
+
+    // ── DOM refs ──────────────────────────────────────────────────
+    function $$(id) { return document.getElementById(id); }
+    var screens = {
+      start:      $$('gameStart'),
+      play:       $$('gamePlay'),
+      completion: $$('gameCompletion'),
+    };
+    var el = {
+      resumeSection:    $$('gResumeSection'),
+      btnResume:        $$('gBtnResume'),
+      btnNewFromResume: $$('gBtnNewFromResume'),
+      btnStart:         $$('gBtnStart'),
+      qTypeTag:    $$('gQTypeTag'),
+      term:        $$('gTerm'),
+      prompt:      $$('gPrompt'),
+      options:     $$('gOptions'),
+      inputWrap:   $$('gInputWrap'),
+      input:       $$('gInput'),
+      btnCheck:    $$('gBtnCheck'),
+      feedback:    $$('gFeedback'),
+      example:     $$('gExample'),
+      btnNext:     $$('gBtnNext'),
+      streakBadge: $$('gStreakBadge'),
+      progressBar: $$('gProgressBar'),
+      scoreLabel:  $$('gScoreLabel'),
+      refToggle:   $$('gRefToggle'),
+      refBody:     $$('gRefBody'),
+      refList:     $$('gRefList'),
+    };
+
+    // ── Screen management ─────────────────────────────────────────
+    function showScreen(name) {
+      Object.keys(screens).forEach(function(k) {
+        var scr = screens[k];
+        if (scr) scr.classList.toggle('active', k === name);
+      });
+      if (name === 'play') {
+        requestAnimationFrame(function() {
+          var card = document.querySelector('#gamePlay .game-play');
+          if (!card) return;
+          var nav = document.querySelector('.site-header');
+          var top = card.getBoundingClientRect().top + window.pageYOffset - (nav ? nav.getBoundingClientRect().height : 0) - 12;
+          window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+        });
+      }
+    }
+
+    // ── Score bar ─────────────────────────────────────────────────
+    function updateScoreBar() {
+      var pct = Math.min(100, Math.round((state.score / SCORE_GOAL) * 100));
+      if (el.progressBar) el.progressBar.style.width = pct + '%';
+      if (el.scoreLabel)  el.scoreLabel.textContent  = state.score;
+      if (el.streakBadge) {
+        if (state.crossStreak >= 3) {
+          el.streakBadge.textContent = '◆ ' + state.crossStreak + ' ';
+          el.streakBadge.style.display = '';
+        } else {
+          el.streakBadge.style.display = 'none';
+        }
+      }
+    }
+
+    // ── Show question ─────────────────────────────────────────────
+    function showQ(qItem) {
+      currentQItem = qItem;
+      if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+
+      var playCard = document.querySelector('#gamePlay .game-play');
+      if (playCard) {
+        playCard.style.transition = 'none';
+        playCard.style.transform  = 'translateX(28px)';
+        playCard.style.opacity    = '0';
+        void playCard.offsetHeight;
+        playCard.style.transition = 'transform .2s ease-out, opacity .18s ease-out';
+        playCard.style.transform  = '';
+        playCard.style.opacity    = '';
+        setTimeout(function() { playCard.style.transition = ''; }, 220);
+      }
+
+      var item = getItem(qItem.itemId);
+      var type = qItem.qtype;
+
+      if (el.feedback) { el.feedback.textContent = ''; el.feedback.className = 'game-feedback'; }
+      if (el.example)  { el.example.textContent  = ''; el.example.style.display = 'none'; }
+      if (el.btnNext)  el.btnNext.style.display   = 'none';
+
+      // Question type label
+      var labels = { significado: L.sigLabel, contexto: L.ctxLabel, produccion: L.prodLabel };
+      if (el.qTypeTag) el.qTypeTag.textContent = labels[type] || type;
+
+      if (type === 'significado') {
+        // Show English term → pick Spanish meaning
+        if (el.term)   el.term.textContent   = item.term;
+        if (el.prompt) el.prompt.textContent = L.sigSub;
+        if (el.options)   el.options.style.display   = '';
+        if (el.inputWrap) el.inputWrap.style.display = 'none';
+        renderMC(
+          item.meaning,
+          ITEMS.filter(function(i) { return i.id !== item.id; }).map(function(i) { return i.meaning; })
+        );
+      } else if (type === 'contexto') {
+        // Show gapped sentence → pick/type answer
+        if (el.term) {
+          var sent = item.completion || item.example || '';
+          el.term.innerHTML = sent
+            ? esc(sent).replace('_____', '<span class="game-gap">_____</span>')
+            : esc(item.term);
+        }
+        if (el.prompt) el.prompt.textContent = L.ctxSub;
+        if (el.options)   el.options.style.display   = '';
+        if (el.inputWrap) el.inputWrap.style.display = 'none';
+        renderMC(
+          item.answer || item.term,
+          ITEMS.filter(function(i) { return i.id !== item.id; }).map(function(i) { return i.answer || i.term; })
+        );
+      } else {
+        // produccion: show Spanish meaning → type English term
+        if (el.term)   el.term.textContent   = item.meaning;
+        if (el.prompt) el.prompt.textContent = L.prodSub;
+        if (el.options)   el.options.style.display   = 'none';
+        if (el.inputWrap) el.inputWrap.style.display = '';
+        if (el.input) {
+          el.input.value    = '';
+          el.input.disabled = false;
+        }
+        if (el.btnCheck) el.btnCheck.disabled = true;
+        setTimeout(function() { if (el.input) el.input.focus(); }, 80);
+      }
+
+      updateScoreBar();
+    }
+
+    // ── MC options ────────────────────────────────────────────────
+    function renderMC(correct, distractorPool) {
+      if (!el.options) return;
+      var opts = shuffle([correct].concat(shuffle(distractorPool).slice(0, 3)));
+      el.options.innerHTML = opts.map(function(o) {
+        return '<button type="button" class="game-option" data-v="' + esc(o) + '">' + esc(o) + '</button>';
+      }).join('');
+      el.options.querySelectorAll('.game-option').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          gradeAnswer(btn.dataset.v);
+        });
+      });
+    }
+
+    // ── Grade answer ──────────────────────────────────────────────
+    function gradeAnswer(userVal) {
+      if (!currentQItem) return;
+      var qItem  = currentQItem;
+      var item   = getItem(qItem.itemId);
+      var type   = qItem.qtype;
+      var correct = (type === 'contexto') ? (item.answer || item.term) : item.term;
+
+      var isCorrect = false;
+      if (type === 'produccion') {
+        isCorrect = norm(userVal) === norm(correct) ||
+          (item.accept || []).some(function(a) { return norm(userVal) === norm(a); });
+      } else {
+        isCorrect = userVal === correct;
+      }
+
+      // Disable options / input
+      if (el.options) {
+        el.options.querySelectorAll('.game-option').forEach(function(btn) {
+          btn.disabled = true;
+          if (btn.dataset.v === correct)              btn.classList.add('correct');
+          else if (btn.dataset.v === userVal && !isCorrect) btn.classList.add('wrong');
+        });
+      }
+      if (el.input)    el.input.disabled    = true;
+      if (el.btnCheck) el.btnCheck.disabled = true;
+
+      playTone(isCorrect);
+
+      // ── Score ──────────────────────────────────────────────────
+      var bonusMsg = '';
+      if (isCorrect) {
+        var pts = 10;
+        var prevId = state.lastItemId;
+        state.lastItemId = item.id;
+
+        if (prevId !== null && prevId === item.id) {
+          // Same-item run: previous correct was same item
+          state.sameRunCount++;
+          state.crossStreak = 0;
+          if (state.sameRunCount >= 2) { pts += 5; bonusMsg = L.bonusSame; }
+        } else if (prevId !== null && prevId !== item.id) {
+          // Different item: extend cross-item streak
+          state.crossStreak++;
+          state.sameRunCount = 1;
+          if (state.crossStreak > state.bestStreak) state.bestStreak = state.crossStreak;
+          if (state.crossStreak >= 3) { pts += 3; bonusMsg = L.bonusCross; }
+        } else {
+          // First correct answer ever
+          state.crossStreak = 0;
+          state.sameRunCount = 1;
+        }
+
+        state.score += pts;
+        state.itemCorrect[item.id] = true;
+
+        // Remove from queue
+        var idx = state.queue.indexOf(qItem);
+        if (idx !== -1) state.queue.splice(idx, 1);
+      } else {
+        state.score        = Math.max(0, state.score - 3);
+        state.crossStreak  = 0;
+        state.sameRunCount = 0;
+        // Requeue at end
+        var idx2 = state.queue.indexOf(qItem);
+        if (idx2 !== -1) { state.queue.splice(idx2, 1); state.queue.push(qItem); }
+      }
+
+      // ── Feedback ──────────────────────────────────────────────
+      if (el.feedback) {
+        el.feedback.className = 'game-feedback ' + (isCorrect ? 'correct' : 'wrong');
+        el.feedback.innerHTML = isCorrect
+          ? ('✓ ' + L.correct + (bonusMsg ? '  <em>' + bonusMsg + '</em>' : ''))
+          : (L.wrong + '. ' + L.answer + ' <strong>' + esc(correct) + '</strong>');
+      }
+      if (item.example && el.example) {
+        el.example.innerHTML  = item.example;
+        el.example.style.display = 'block';
+      }
+
+      updateScoreBar();
+      renderReference();
+
+      // ── Win check ─────────────────────────────────────────────
+      var allItemsCorrect = ITEMS.every(function(i) { return state.itemCorrect[i.id]; });
+      if (state.score >= SCORE_GOAL && allItemsCorrect) {
+        saveBestScore(state.score);
+        if (window.FCEStore && DATA.chapterId && DATA.level) {
+          try { FCEStore.saveGameResult(DATA.chapterId, ITEMS.length, ITEMS.length); } catch(e) {}
+        }
+        saveState();
+        autoTimer = setTimeout(function() {
+          autoTimer = null;
+          clearState();
+          renderCompletion();
+        }, 1500);
+        return;
+      }
+
+      saveState();
+
+      if (isCorrect) {
+        autoTimer = setTimeout(function() { autoTimer = null; nextQ(); }, 1200);
+      } else {
+        if (el.btnNext) el.btnNext.style.display = 'block';
+      }
+    }
+
+    // ── Next question ─────────────────────────────────────────────
+    function nextQ() {
+      if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+      if (!state.queue.length) {
+        // Rebuild with any items not yet answered correctly
+        var missing = ITEMS.filter(function(i) { return !state.itemCorrect[i.id]; });
+        if (!missing.length) { renderCompletion(); return; }
+        var extra = [];
+        missing.forEach(function(item) {
+          extra.push({ itemId: item.id, qtype: 'significado' });
+          extra.push({ itemId: item.id, qtype: 'contexto'    });
+          extra.push({ itemId: item.id, qtype: 'produccion'  });
+        });
+        state.queue = shuffle(extra);
+      }
+      showQ(state.queue[0]);
+    }
+
+    // ── Reference panel ───────────────────────────────────────────
+    function renderReference() {
+      if (!el.refList) return;
+      el.refList.innerHTML = ITEMS.map(function(item) {
+        var done = state && state.itemCorrect && state.itemCorrect[item.id];
+        return '<div class="game-ref-item">' +
+          '<span class="ref-term">' + esc(item.term) + (done ? ' ✓' : '') + '</span>' +
+          '<div class="ref-def">' + esc(item.meaning) + '</div>' +
+          '<div class="ref-ex">' + (item.example || '') + '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    // ── Completion screen ─────────────────────────────────────────
+    function renderCompletion() {
+      var comp = document.querySelector('#gameCompletion .game-complete');
+      if (comp) {
+        comp.innerHTML = [
+          '<div style="font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:8px">' + esc(DATA.title || (DATA.chapterId || '')) + '</div>',
+          '<h2 style="font-family:Georgia,serif;font-size:2rem;font-weight:700;color:var(--ink);margin:0 0 10px">' + L.dominio + '</h2>',
+          '<p style="font-family:var(--font-sans);font-size:.88rem;color:var(--muted);margin:0 0 24px">' + L.finalScore + ' <strong>' + state.score + '</strong></p>',
+          '<a href="printables.html" style="display:inline-block;padding:14px 36px;background:var(--amber);color:#1A1A1A;font-family:var(--font-sans);font-size:.82rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;border-radius:5px">' + L.printBtn + '</a>',
+          '<br><br>',
+          '<a href="index.html" style="font-family:var(--font-sans);font-size:.78rem;color:var(--muted);text-decoration:none">' + L.backBtn + '</a>',
+        ].join('');
+      }
+      showScreen('completion');
+      setTimeout(triggerConfetti, 300);
+    }
+
+    // ── Start screen ──────────────────────────────────────────────
+    function renderStart() {
+      var hasSaved = state && state.queue && state.queue.length < (ITEMS.length * 3);
+      if (el.resumeSection) el.resumeSection.style.display = hasSaved ? 'block' : 'none';
+      if (el.btnStart)      el.btnStart.style.display      = hasSaved ? 'none'  : '';
+      showScreen('start');
+    }
+
+    // ── Input events ──────────────────────────────────────────────
+    if (el.input) {
+      el.input.addEventListener('input', function() {
+        if (el.btnCheck) el.btnCheck.disabled = !el.input.value.trim();
+      });
+      el.input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && el.btnCheck && !el.btnCheck.disabled) el.btnCheck.click();
+      });
+    }
+    if (el.btnCheck) {
+      el.btnCheck.addEventListener('click', function() {
+        if (!currentQItem || !el.input) return;
+        gradeAnswer(el.input.value);
+      });
+    }
+
+    // ── Button wiring ─────────────────────────────────────────────
+    if (el.btnStart) {
+      el.btnStart.addEventListener('click', function() {
+        freshState(); saveState(); renderReference(); showScreen('play'); nextQ();
+      });
+    }
+    if (el.btnResume) {
+      el.btnResume.addEventListener('click', function() {
+        renderReference(); showScreen('play'); nextQ();
+      });
+    }
+    if (el.btnNewFromResume) {
+      el.btnNewFromResume.addEventListener('click', function() {
+        freshState(); saveState(); renderReference(); showScreen('play'); nextQ();
+      });
+    }
+    if (el.btnNext) {
+      el.btnNext.addEventListener('click', function() {
+        if (autoTimer) { clearTimeout(autoTimer); autoTimer = null; }
+        nextQ();
+      });
+    }
+    if (el.refToggle) {
+      el.refToggle.addEventListener('click', function() {
+        if (el.refBody) {
+          el.refBody.classList.toggle('open');
+          el.refToggle.textContent = el.refBody.classList.contains('open') ? L.refClose : L.refOpen;
+        }
+      });
+    }
 
     // Keyboard shortcuts
-    document.addEventListener('keydown', e => {
-      if (screens.play && !screens.play.classList.contains('active')) return;
-      if (e.key >= '1' && e.key <= '4' && !state.answered) {
-        const btns = el.options ? el.options.querySelectorAll('.game-option') : [];
-        const btn = btns[parseInt(e.key) - 1];
+    document.addEventListener('keydown', function(e) {
+      if (!screens.play || !screens.play.classList.contains('active')) return;
+      if (!currentQItem) return;
+      var type = currentQItem.qtype;
+      if (type !== 'produccion' && e.key >= '1' && e.key <= '4') {
+        var btns = el.options ? el.options.querySelectorAll('.game-option') : [];
+        var btn  = btns[parseInt(e.key, 10) - 1];
         if (btn && !btn.disabled) btn.click();
       }
-      if ((e.key === 'Enter' || e.key === ' ') && state.answered && el.btnNext && el.btnNext.style.display !== 'none') {
-        if (autoAdvanceTimer) { clearTimeout(autoAdvanceTimer); autoAdvanceTimer = null; }
-        nextItem();
+      if ((e.key === 'Enter' || e.key === ' ') && el.btnNext && el.btnNext.style.display !== 'none') {
+        e.preventDefault(); el.btnNext.click();
       }
-      if (e.key === 'h' && !state.answered) showHint();
     });
 
-    // ── Swipe to advance (after answering) ────────────────────────
-    var swStartX=0, swStartY=0, swActive=false, swDelta=0, swCard=null;
-
+    // ── Touch swipe to advance (after answering) ──────────────────
+    var swX=0, swY=0, swActive=false, swDelta=0, swCard=null;
     document.addEventListener('touchstart', function(e) {
-      if (!state.answered || state.completed || e.touches.length > 1) return;
+      if (!currentQItem || e.touches.length > 1) return;
+      if (!el.btnNext || el.btnNext.style.display === 'none') return;
       var card = document.querySelector('.game-play');
       if (!card) return;
-      swStartX = e.touches[0].clientX;
-      swStartY = e.touches[0].clientY;
-      swActive = false; swDelta = 0;
-      swCard = card;
+      swX = e.touches[0].clientX; swY = e.touches[0].clientY;
+      swActive = false; swDelta = 0; swCard = card;
       swCard.style.transition = 'none';
     }, { passive: true });
-
     document.addEventListener('touchmove', function(e) {
       if (!swCard) return;
-      var dx = e.touches[0].clientX - swStartX;
-      var dy = e.touches[0].clientY - swStartY;
+      var dx = e.touches[0].clientX - swX, dy = e.touches[0].clientY - swY;
       if (!swActive) {
         if (Math.abs(dy) > Math.abs(dx) + 8) { swCard = null; return; }
         if (Math.abs(dx) < 8) return;
@@ -604,11 +647,9 @@
       }
       e.preventDefault();
       swDelta = dx;
-      var fade = 1 - Math.min(1, Math.abs(dx) / (window.innerWidth * 0.55));
       swCard.style.transform = 'translateX(' + dx + 'px)';
-      swCard.style.opacity = Math.max(0.25, fade);
+      swCard.style.opacity   = String(Math.max(0.25, 1 - Math.abs(dx) / (window.innerWidth * 0.55)));
     }, { passive: false });
-
     document.addEventListener('touchend', function() {
       if (!swCard) return;
       var card = swCard; swCard = null;
@@ -620,9 +661,9 @@
       }
       if (swDelta < 0) {
         card.style.transition = 'transform .26s ease-in, opacity .22s ease-in';
-        card.style.transform = 'translateX(' + (-window.innerWidth * 1.3) + 'px) rotate(-18deg)';
-        card.style.opacity = '0';
-        setTimeout(nextItem, 270);
+        card.style.transform  = 'translateX(' + (-window.innerWidth * 1.3) + 'px) rotate(-18deg)';
+        card.style.opacity    = '0';
+        setTimeout(nextQ, 270);
       } else {
         card.style.transition = 'transform .22s ease-out, opacity .22s ease-out';
         card.style.transform = ''; card.style.opacity = '';
@@ -631,7 +672,7 @@
     }, { passive: true });
 
     // ── Boot ──────────────────────────────────────────────────────
-    const hasSaved = loadState();
+    var hasSaved = loadState();
     if (!hasSaved) freshState();
     renderStart();
     renderReference();

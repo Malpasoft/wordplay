@@ -439,6 +439,32 @@
   .chapter-nav-btn { min-width: 60px; }
 }
 
+/* ─── PRODUCTION INPUT ──────────────────────────────────────────── */
+.gp-input-wrap {
+  padding: 0 26px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+#gInput {
+  padding: 11px 14px;
+  font-family: var(--font-sans);
+  font-size: .95rem;
+  border: 1.5px solid var(--hairline);
+  border-radius: 6px;
+  background: var(--paper);
+  color: var(--ink);
+  box-sizing: border-box;
+  width: 100%;
+}
+#gInput:focus { outline: none; border-color: var(--amber); }
+body.dark #gInput {
+  background: #1a1a1a !important;
+  color: #f0f0f0 !important;
+  border-color: rgba(255,255,255,.2) !important;
+}
+body.dark #gInput:focus { border-color: var(--amber) !important; }
+
 /* ─── RESPONSIVE ────────────────────────────────────────────────── */
 @media (max-width: 600px) {
   .gp-meta,
@@ -447,6 +473,7 @@
   .game-options,
   .game-feedback,
   .game-example,
+  .gp-input-wrap,
   .gp-actions          { padding-left: 18px; padding-right: 18px; }
   .game-start,
   .game-completion     { padding: 28px 18px; }
