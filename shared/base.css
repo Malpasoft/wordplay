@@ -1125,9 +1125,18 @@ body:not(.dark) .sect-card {
   border-color: rgba(26,26,26,0.18);
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
-body:not(.dark) .sect-card > *:nth-child(1) { color: var(--amber) !important; }
-body:not(.dark) .sect-card > *:nth-child(2) { color: var(--ink) !important; }
-body:not(.dark) .sect-card > *:nth-child(n+3) { color: var(--muted) !important; }
+/* English hubs (no card eyebrow): title · description · chapter count */
+html:not([lang="es"]) body:not(.dark) .sect-card > *:nth-child(1) { color: var(--ink) !important; }
+html:not([lang="es"]) body:not(.dark) .sect-card > *:nth-child(2) { color: var(--muted-deep) !important; }
+html:not([lang="es"]) body:not(.dark) .sect-card > *:nth-child(n+3) { color: var(--muted) !important; }
+/* Card title + description in serif for an editorial, cohesive look */
+html:not([lang="es"]) .sect-card > *:nth-child(1),
+html:not([lang="es"]) .sect-card > *:nth-child(2) { font-family: var(--font-serif) !important; }
+
+/* Spanish hubs (card eyebrow present): eyebrow · title · rest */
+html[lang="es"] body:not(.dark) .sect-card > *:nth-child(1) { color: var(--amber) !important; }
+html[lang="es"] body:not(.dark) .sect-card > *:nth-child(2) { color: var(--ink) !important; }
+html[lang="es"] body:not(.dark) .sect-card > *:nth-child(n+3) { color: var(--muted) !important; }
 .ch-card h2 {
   font-family: var(--font-serif);
   font-size: 1rem;
