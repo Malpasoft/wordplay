@@ -360,7 +360,7 @@ body.deck-body .deck-progress {
 body.dark .ov-wrong { color: #e57373; }
 body.dark .ov-right { color: #5ecf85; }
 
-/* ─── SUMMARY SLIDE (dark) ───────────────────────────────────── */
+/* ─── SUMMARY SLIDE (default = dark card, always) ───────────── */
 .slide.summary-slide .slide-card {
   background: var(--navy-deep);
   color: white;
@@ -399,6 +399,23 @@ body.dark .ov-right { color: #5ecf85; }
   font-size: 0.85rem;
   margin-left: 0;
 }
+
+/* ─── SUMMARY SLIDE — light mode override ───────────────────── */
+body:not(.dark) .slide.summary-slide .slide-card {
+  background: var(--cream-deep);
+  color: var(--ink);
+  border: 1.5px solid var(--hairline);
+}
+body:not(.dark) .slide.summary-slide h2 { color: var(--ink); }
+body:not(.dark) .summary-row {
+  background: var(--paper);
+  border-color: var(--hairline);
+  border-left-color: var(--amber);
+  color: var(--ink);
+}
+body:not(.dark) .summary-row .label { color: var(--amber); }
+body:not(.dark) .summary-row .form { color: var(--ink); }
+body:not(.dark) .summary-row .ex { color: var(--muted); }
 
 /* ─── TWO-UP EXAMPLE PAIRS ───────────────────────────────────── */
 .compare-pair {

@@ -76,13 +76,13 @@ a { color: inherit; }
 
 /* ─── GLOBAL HEADER / NAV ──────────────────────────────────────── */
 .site-header {
-  background: var(--navy);
-  color: white;
+  background: var(--paper);
+  color: var(--ink);
   padding: 14px 20px;
   position: sticky;
   top: 0;
   z-index: 100;
-  border-bottom: 3px solid var(--accent);
+  border-bottom: 2px solid var(--amber);
 }
 .site-header-inner {
   max-width: 840px;
@@ -106,7 +106,7 @@ a { color: inherit; }
 @media (max-width: 560px) { .site-header-inner .header-dash { display: none; } }
 .site-header a.brand,
 .site-header .brand {
-  color: white;
+  color: var(--ink);
   text-decoration: none;
   font-family: var(--font-serif);
   font-weight: 700;
@@ -125,7 +125,7 @@ a { color: inherit; }
   vertical-align: 2px;
 }
 .site-header .back {
-  color: #A8B4C6;
+  color: var(--muted);
   text-decoration: none;
   font-size: 0.85rem;
   font-family: var(--font-sans);
@@ -218,11 +218,11 @@ h3 {
 /* Submit/results */
 /* Slide deck */
 /* Headings */
-/* Dark toggle — sits on the always-dark site-header; white/translucent in both modes */
+/* Dark toggle — adapts to light/dark header */
 .dark-toggle {
   background: transparent;
-  border: 1.5px solid rgba(255,255,255,0.28);
-  color: rgba(255,255,255,0.82);
+  border: 1.5px solid var(--hairline);
+  color: var(--muted);
   font-family: var(--font-sans);
   font-size: .68rem;
   font-weight: 600;
@@ -234,9 +234,11 @@ h3 {
   white-space: nowrap;
 }
 .dark-toggle:hover {
-  background: rgba(255,255,255,0.10);
-  color: white;
+  background: rgba(0,0,0,0.06);
+  color: var(--ink);
 }
+/* Pin the toggle to the far right when it's a direct header child (no .header-utils wrapper) */
+.site-header-inner > .dark-toggle { margin-left: auto; }
 
 /* QR share button — same visual style as dark-toggle */
 .qr-toggle {
@@ -763,8 +765,9 @@ body.dark .chapter-card.locked { background: rgba(255,255,255,.04); }
    ══════════════════════════════════════════════════════════════════ */
 
 body.dark .site-header {
-  background: #000000 !important;
-  border-bottom-color: rgba(255,255,255,.1) !important;
+  background: #111111 !important;
+  border-bottom-color: rgba(255,255,255,.08) !important;
+  color: white !important;
 }
 body.dark .site-header .brand,
 body.dark .site-header .brand * { color: #FFFFFF !important; }
@@ -774,6 +777,10 @@ body.dark .dark-toggle {
   background: rgba(255,255,255,.08) !important;
   color: #F0F0F0 !important;
   border-color: rgba(255,255,255,.2) !important;
+}
+body.dark .dark-toggle:hover {
+  background: rgba(255,255,255,.14) !important;
+  color: white !important;
 }
 
 body.dark h1 { color: #FFFFFF !important; }
