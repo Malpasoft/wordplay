@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Can — Gramática A1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v110">
+<script src="../../../../shared/dark-init.js?v=v105"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atrás"></a>
+  <a href="../../../../index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="section-page">
+  <div class="breadcrumb">
+    <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+    <a href="../../../../es/a1/index.html">A1</a><span>&#8250;</span>
+    <a href="../index.html">Gramática</a><span>&#8250;</span>
+    <strong>Can</strong>
+  </div>
+  <div class="chapter-num">Capítulo 9 · Gramática</div>
+  <h1 class="chapter-h1">Can</h1>
+  <div class="activity-grid">
+    <a href="slides.html" class="activity-card" data-activity="lesson">
+      <span class="ac-title">Lección</span>
+      <p class="ac-desc">Explicación completa con ejemplos y comparaciones con español</p>
+      <span class="ac-arrow">&#8594;</span>
+    </a>
+    <a href="worksheet.html" class="activity-card" data-activity="practice">
+      <span class="ac-title">Práctica</span>
+      <p class="ac-desc">Ejercicios interactivos con retroalimentación inmediata</p>
+      <span class="ac-arrow">&#8594;</span>
+    </a>
+    <a href="game.html" class="activity-card" data-activity="game">
+      <span class="ac-title">Juego de Dominio</span>
+      <p class="ac-desc">Juego de 4 etapas para fijar la gramática en memoria</p>
+      <span class="ac-arrow">&#8594;</span>
+    </a>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2 · Para hispanohablantes</footer>
+<script src="../../../../shared/store.js?v=v104"></script>
+<script>
+(function(){
+  try {
+    var prog=JSON.parse(localStorage.getItem('wordplay_progress')||'{}');
+    var lvl=prog['es-a1']||{};
+    var defs=[
+      ['slides.html', lvl['can']&&lvl['can'].done],
+      ['worksheet.html', lvl['can']&&lvl['can'].pct>=70],
+      ['game.html', lvl['wordplay_game_es-a1_can']&&lvl['wordplay_game_es-a1_can'].pct>=70]
+    ];
+    defs.forEach(function(d){
+      if(!d[1]) return;
+      var card=document.querySelector('.activity-card[href="'+d[0]+'"]');
+      if(card) card.setAttribute('data-done','1');
+    });
+  }catch(e){}
+})();
+</script>
+</body>
+</html>

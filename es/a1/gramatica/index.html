@@ -65,6 +65,11 @@
       <h2>There is / There are</h2>
       <p class="ch-desc">cómo decir "hay" — singular, plural, negativo y preguntas</p><span class="ch-cta">Estudiar &#8594;</span>
     </a>
+    <a href="can/index.html" class="ch-card ch-card--grammar" id="gpc_es-a1_can">
+      <div class="ch-num">Cap. 9</div>
+      <h2>Can</h2>
+      <p class="ch-desc">can · can't · cannot — habilidades, posibilidades y permisos</p><span class="ch-cta">Estudiar &#8594;</span>
+    </a>
   </div>
 </div>
 <footer class="site-footer">Word Play · Inglés Cambridge A1→C2 · Para hispanohablantes</footer>
@@ -225,6 +230,26 @@
       b8.style.cssText = 'font-family:var(--font-sans);font-size:.65rem;font-weight:700;color:var(--amber);margin-top:6px;letter-spacing:.5px';
       b8.textContent = badges8.join(' · ');
       card8.querySelector('.ch-cta').before(b8);
+    }
+  } catch(e) {}
+})();
+
+(function() {
+  try {
+    var prog = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+    var lvl = prog['es-a1'] || {};
+    var card9 = document.getElementById('gpc_es-a1_can');
+    if (!card9) return;
+    var ws9 = lvl['can'];
+    var gm9 = lvl['wordplay_game_es-a1_can'];
+    var badges9 = [];
+    if (ws9 && ws9.pct >= 70) badges9.push('Ejercicios');
+    if (gm9 && gm9.pct >= 70) badges9.push('Juego');
+    if (badges9.length) {
+      var b9 = document.createElement('div');
+      b9.style.cssText = 'font-family:var(--font-sans);font-size:.65rem;font-weight:700;color:var(--amber);margin-top:6px;letter-spacing:.5px';
+      b9.textContent = badges9.join(' · ');
+      card9.querySelector('.ch-cta').before(b9);
     }
   } catch(e) {}
 })();
