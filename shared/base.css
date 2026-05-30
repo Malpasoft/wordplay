@@ -46,6 +46,16 @@ body {
   --border: #E5E5E5;
   --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
   --font-serif: Georgia, "Times New Roman", serif;
+
+  /* ─── Semantic tokens (canonical — components should use these) ───
+     Light values. The body.dark block flips the same set, so anything
+     built on these adapts to dark mode with no per-rule overrides. */
+  --surface:    #F7F3EE;   /* page background        */
+  --surface-2:  #FFFFFF;   /* raised surfaces / cards */
+  --text-1:     #1A1A1A;   /* primary text / titles   */
+  --text-2:     #5E5E5E;   /* secondary / body copy   */
+  --text-3:     #9A9A9A;   /* muted / meta            */
+  --line:       #E5E5E5;   /* hairline borders        */
 }
 
 body.dark {
@@ -60,7 +70,7 @@ body.dark {
   --accent: #C9A050;
   --accent-dark: #A07830;
   --cream-deep: #1A1A1A;
-  --muted-deep: #A8B4C6;
+  --muted-deep: #B0B0B0;   /* was #A8B4C6 — neutral grey, no cool tint vs the warm palette */
   --border-soft: rgba(255,255,255,0.16);
   --navy-deep: #0A0A0A;
   --navy-mid: #2A2A2A;
@@ -68,6 +78,14 @@ body.dark {
   --green: #4CAF82;
   --red: #E05A4A;
   --cream: #0E0E0E;
+
+  /* ─── Semantic tokens — dark values (same names as :root) ─── */
+  --surface:    #0E0E0E;
+  --surface-2:  #1A1A1A;
+  --text-1:     #F0F0F0;
+  --text-2:     #B5B5B5;
+  --text-3:     #8A8A8A;
+  --line:       #2A2A2A;
 }
 
 button { font-family: inherit; -webkit-tap-highlight-color: transparent; border: none; background: none; cursor: pointer; }
@@ -156,7 +174,7 @@ h1 {
   font-weight: 700;
   letter-spacing: -0.02em;
   margin-bottom: 4px;
-  color: var(--navy);
+  color: var(--text-1);
   line-height: 1.1;
 }
 h2 {
@@ -164,14 +182,14 @@ h2 {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 12px;
-  color: var(--navy);
+  color: var(--text-1);
 }
 h3 {
   font-family: var(--font-serif);
   font-size: 1.2rem;
   font-weight: 700;
   margin-bottom: 10px;
-  color: var(--navy);
+  color: var(--text-1);
 }
 .eyebrow {
   font-family: var(--font-sans);
@@ -1000,7 +1018,6 @@ body.dark .dark-toggle:hover {
   color: white !important;
 }
 
-body.dark h1 { color: #FFFFFF !important; }
 body.dark p  { color: #E0E0E0 !important; }
 body.dark .chapter-num      { color: var(--amber) !important; }
 body.dark .chapter-subtitle { color: #C0C0C0 !important; }
