@@ -489,6 +489,7 @@
         saveBestScore(state.score);
         if (window.FCEStore && DATA.chapterId && DATA.level) {
           try { FCEStore.saveGameResult(DATA.chapterId, ITEMS.length, ITEMS.length); } catch(e) {}
+          try { FCEStore.addXP(30); } catch(e) {}
         }
         saveState();
         autoTimer = setTimeout(function() {

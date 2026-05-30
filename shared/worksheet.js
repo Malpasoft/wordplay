@@ -385,6 +385,7 @@
         pEx[sId] = { correct: perSection[sId].correct, total: perSection[sId].total };
       });
       try { FCEStore.saveResult(window.CHAPTER_ID, firstPassOK, totalQ, pEx); } catch (e) {}
+      if (success && pct >= 50) try { FCEStore.addXP(20); } catch (e) {}
     }
 
     var pctColor = pct >= 80 ? 'var(--green)' : pct >= 50 ? 'var(--amber)' : 'var(--red)';

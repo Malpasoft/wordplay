@@ -66,6 +66,15 @@
     save(data);
   }
 
+  var XP_LEVELS = [
+    { label: 'Beginner',           min: 0    },
+    { label: 'Elementary',         min: 100  },
+    { label: 'Pre-Intermediate',   min: 250  },
+    { label: 'Intermediate',       min: 500  },
+    { label: 'Upper-Intermediate', min: 1000 },
+    { label: 'Advanced',           min: 2000 },
+  ];
+
   window.FCEStore = {
     touchStreak: touchStreak,
     // Save a worksheet result
@@ -114,6 +123,29 @@
       };
       updateStreak(data);
       save(data);
+    },
+
+    // XP system
+    addXP: function(n) {
+      var data = load();
+      data.xp = (data.xp || 0) + Math.max(0, n || 0);
+      save(data);
+      return data.xp;
+    },
+    getXP: function() {
+      try { return (JSON.parse(localStorage.getItem(KEY) || '{}').xp) || 0; } catch(e) { return 0; }
+    },
+    getXPLevel: function() {
+      var xp = FCEStore.getXP();
+      var level = XP_LEVELS[0];
+      for (var i = 0; i < XP_LEVELS.length; i++) {
+        if (xp >= XP_LEVELS[i].min) level = XP_LEVELS[i];
+        else break;
+      }
+      var nextIdx = XP_LEVELS.indexOf(level) + 1;
+      var next    = nextIdx < XP_LEVELS.length ? XP_LEVELS[nextIdx] : null;
+      var pct     = next ? Math.min(100, Math.round(((xp - level.min) / (next.min - level.min)) * 100)) : 100;
+      return { label: level.label, xp: xp, min: level.min, max: next ? next.min : null, pct: pct };
     },
 
     // Get all data for a level

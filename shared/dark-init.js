@@ -1,16 +1,9 @@
 // ══════════════════════════════════════════════════════════════════
-// dark-init.js — dark/light mode toggle
+// dark-init.js — dark mode, dashboard link, XP badge, search, QR
 // ══════════════════════════════════════════════════════════════════
-//
-// Reads localStorage key "wordplay_dark" ("1" = dark mode on).
-// Applies class "dark" to document.body immediately (in <head>) to
-// prevent a flash of the wrong theme on page load.
-//
-// USAGE
-//   Load in <head> (not deferred): <script src="shared/dark-init.js"></script>
-//   Toggle button: <button class="dark-toggle" onclick="toggleDark()">Dark</button>
-//   toggleDark() is exposed globally.
-// ══════════════════════════════════════════════════════════════════
+// Capture path to shared/ while the script is executing (synchronous)
+var _SHARED = (document.currentScript || {src:''}).src.replace(/dark-init\.js[^/]*$/, '') || 'shared/';
+
 (function() {
   function applyDark() {
     var isDark = localStorage.getItem('wordplay_dark') === '1';
@@ -135,4 +128,135 @@ function toggleDark() {
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', groupUtils);
   } else { groupUtils(); }
+})();
+
+// XP badge — shows level name + mini progress bar
+(function(){
+  function injectXP() {
+    var inner = document.querySelector('.site-header-inner');
+    if (!inner || inner.querySelector('.header-xp') || !window.FCEStore) return;
+    var lv   = FCEStore.getXPLevel();
+    var pct  = lv.pct;
+    var next = lv.max ? lv.xp + ' / ' + lv.max : lv.xp + ' XP';
+    var badge = document.createElement('div');
+    badge.className = 'header-xp';
+    badge.title = next + ' XP';
+    badge.innerHTML =
+      '<span class="header-xp-label">' + lv.label + '</span>' +
+      '<div class="header-xp-bar"><div class="header-xp-fill" style="width:' + pct + '%"></div></div>';
+    var utils = inner.querySelector('.header-utils');
+    if (utils) inner.insertBefore(badge, utils);
+    else inner.appendChild(badge);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', injectXP);
+  } else { injectXP(); }
+})();
+
+// Chapter search — icon in header, panel below
+(function(){
+  var _loaded = false;
+  var _panel  = null;
+  var _input  = null;
+  var _results = null;
+
+  function injectSearch() {
+    var inner = document.querySelector('.site-header-inner');
+    if (!inner || inner.querySelector('.header-search-btn')) return;
+
+    var btn = document.createElement('button');
+    btn.className = 'header-search-btn';
+    btn.setAttribute('aria-label', 'Search chapters');
+    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>';
+    btn.onclick = toggleSearch;
+
+    var utils = inner.querySelector('.header-utils');
+    if (utils) inner.insertBefore(btn, utils);
+    else inner.appendChild(btn);
+  }
+
+  function ensurePanel() {
+    if (_panel) return;
+    _panel = document.createElement('div');
+    _panel.className = 'header-search-panel';
+    _panel.innerHTML =
+      '<input class="header-search-input" type="search" placeholder="Search chapters…" autocomplete="off">' +
+      '<div class="header-search-results"></div>';
+    _input   = _panel.querySelector('.header-search-input');
+    _results = _panel.querySelector('.header-search-results');
+
+    var header = document.querySelector('.site-header');
+    if (header && header.parentNode) header.after(_panel);
+    else document.body.insertBefore(_panel, document.body.firstChild);
+
+    _input.addEventListener('input', onInput);
+    _input.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') { closeSearch(); }
+    });
+    document.addEventListener('click', function(e) {
+      if (_panel.style.display !== 'none' && !_panel.contains(e.target) &&
+          !e.target.closest('.header-search-btn')) {
+        closeSearch();
+      }
+    }, true);
+  }
+
+  function toggleSearch() {
+    ensurePanel();
+    var open = _panel.style.display !== 'none' && _panel.style.display !== '';
+    if (open) { closeSearch(); return; }
+    _panel.style.display = 'block';
+    _input.value = '';
+    _results.innerHTML = '';
+    setTimeout(function() { _input.focus(); }, 40);
+    loadSearch();
+  }
+
+  function closeSearch() {
+    if (_panel) { _panel.style.display = 'none'; }
+  }
+
+  function loadSearch() {
+    if (_loaded || !window.WPSearch) {
+      if (!window.WPSearch) {
+        var s = document.createElement('script');
+        s.src = _SHARED + 'search.js?v=v101';
+        s.onload = function() { _loaded = true; if (_input && _input.value) onInput(); };
+        document.head.appendChild(s);
+      }
+      return;
+    }
+    WPSearch.load(_SHARED + 'search-index.json', function() { if (_input && _input.value) onInput(); });
+    _loaded = true;
+  }
+
+  function onInput() {
+    if (!_results) return;
+    var q = _input ? _input.value.trim() : '';
+    if (!q) { _results.innerHTML = ''; return; }
+    if (!window.WPSearch) { loadSearch(); return; }
+    if (!_loaded) {
+      WPSearch.load(_SHARED + 'search-index.json', function() { onInput(); });
+      _loaded = true;
+      return;
+    }
+    var hits = WPSearch.search(q);
+    if (!hits.length) {
+      _results.innerHTML = '<div class="sr-empty">No chapters found</div>';
+      return;
+    }
+    _results.innerHTML = hits.map(function(h) {
+      return '<a href="' + h.url + '" class="sr-item">' +
+        '<span class="sr-title">' + h.title + '</span>' +
+        '<span class="sr-meta">' + h.level + ' · ' + h.section + '</span>' +
+      '</a>';
+    }).join('');
+    _results.querySelectorAll('.sr-item').forEach(function(a) {
+      a.addEventListener('click', closeSearch);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', injectSearch);
+  } else { injectSearch(); }
 })();

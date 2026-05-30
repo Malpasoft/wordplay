@@ -184,8 +184,9 @@ function triggerConfetti() {
         }
       } catch(e) {}
     }
-    if (window.FCEStore && window.FCEStore.touchStreak) {
+    if (window.FCEStore) {
       try { window.FCEStore.touchStreak(); } catch(e) {}
+      try { window.FCEStore.addXP(10); } catch(e) {}
     }
   }
 
