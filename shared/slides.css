@@ -391,10 +391,10 @@ body.dark .ov-right { color: #5ecf85; }
 .summary-row .form {
   font-family: var(--font-serif);
   font-size: 0.88rem;
-  color: #D0D8E4;
+  color: #ECECEC;
 }
 .summary-row .ex {
-  color: #9AA8BE;
+  color: #B0B0B0;
   font-style: italic;
   font-size: 0.85rem;
   margin-left: 0;
