@@ -1,4 +1,4 @@
-name: Pedagogy Check
+name: Site Checks
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  pedagogy:
+  checks:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -17,10 +17,24 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Run pedagogy check
+      # Hard gate — pedagogy must stay at 0 failures.
+      - name: Pedagogy check
         run: |
-          python3 scripts/pedagogy_check.py 2>&1 | tee /tmp/check_output.txt
-          if grep -q "FAIL" /tmp/check_output.txt; then
+          python3 scripts/pedagogy_check.py 2>&1 | tee /tmp/ped.txt
+          if grep -q "FAIL" /tmp/ped.txt; then
             echo "Pedagogy check failed — see output above"
             exit 1
           fi
+
+      # Informational for now — a known backlog of vocab-nav links and ES
+      # flashcard stubs is still being cleared (Phase 2). These steps post a
+      # full report on every push so issues are visible without burning a
+      # human/AI session. Flip continue-on-error to false to make them
+      # blocking gates once the backlog reaches zero.
+      - name: Broken-link check (report only)
+        continue-on-error: true
+        run: python3 scripts/check_links.py
+
+      - name: Structure check (report only)
+        continue-on-error: true
+        run: python3 scripts/check_structure.py
