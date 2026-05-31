@@ -89,6 +89,9 @@ hr { border: none; border-top: 1px solid var(--hairline); margin: 32px 0; }
     <div class="label">Step 1</div>
     <h2>Prime your AI</h2>
     <div class="card">
+      <h3>Dev branch name</h3>
+      <input id="dev-branch" type="text" placeholder="e.g. content/es-stubs-june" oninput="buildPrimer()">
+      <p style="font-size:.78rem;color:var(--muted);margin-top:-6px;margin-bottom:10px">AI will push here only — you review and merge to main.</p>
       <h3>Which AI are you using?</h3>
       <select id="ai-select" onchange="buildPrimer()">
         <option value="">— select —</option>
@@ -188,13 +191,25 @@ hr { border: none; border-top: 1px solid var(--hairline); margin: 32px 0; }
 
 <script>
 const REPO = 'malpasoft/wordplay';
-const BRANCH = 'claude/website-design-token-optimization-1ZNUG';
 
-const CORE_CONTEXT = `Repo: ${REPO}, branch: ${BRANCH}
+function getDevBranch() {
+  return document.getElementById('dev-branch').value.trim() || 'content/dev';
+}
+
+function getCoreContext() {
+  const branch = getDevBranch();
+  return `Repo: ${REPO}
+IMPORTANT: Develop on branch "${branch}" — NEVER push directly to main.
+When done: commit + push to ${branch} only. Owner reviews and merges to main.
 Rules: var(--amber) only · no emoji · Python not sed/awk · pedagogy_check.py must stay 0 failures
-Deploy: git push origin HEAD:main (Cloudflare auto-deploys)
-Key files (read these via raw.githubusercontent.com/malpasoft/wordplay/main/):
-  CLAUDE.md, AI_HANDOVER.md, scripts/fill_en_c1c2_vocab.py (reference fill script)`;
+After every change run all three checks:
+  python3 scripts/pedagogy_check.py
+  python3 scripts/check_links.py
+  python3 scripts/check_structure.py
+All must show 0 failures before pushing.
+Key files (read via raw.githubusercontent.com/malpasoft/wordplay/main/):
+  CLAUDE.md, AI_HANDOVER.md, scripts/fill_en_c1c2_vocab.py`;
+}
 
 const TASKS = {
   'fill-es': `TASK: Fill the 71 Spanish-track (es/) flashcard stubs.
@@ -237,7 +252,7 @@ const AI_NOTES = {
   deepseek: `You have web browsing. Read the raw GitHub files listed below before starting — they contain all project rules and the exact code templates you must follow.`,
   gemini: `You have web browsing. Read the raw GitHub files listed below before starting. Pay attention to CLAUDE.md — it overrides any default behaviour.`,
   gpt: `You have web browsing via the browser tool. Read the raw GitHub files listed below. Do not guess at file structure — read the actual files first.`,
-  claude: `Read CLAUDE.md and AI_HANDOVER.md before doing anything else. The strategic plan is at /root/.claude/plans/before-we-start-i-zazzy-starfish.md — read it before touching anything. Develop on branch: ${BRANCH}. Phase 1 done. Phase 2 next: fill 71 ES flashcard stubs (scripts/fill_es_vocab.py), then Cambridge exam pages. Run python3 scripts/pedagogy_check.py, check_links.py, check_structure.py before every push. All must stay at 0 failures/broken links.`
+  claude: `Read CLAUDE.md and AI_HANDOVER.md before doing anything else. The strategic plan is at /root/.claude/plans/before-we-start-i-zazzy-starfish.md — read it before touching anything. Phase 1 done. Phase 2 next: fill 71 ES flashcard stubs (scripts/fill_es_vocab.py), then Cambridge exam pages. Run all three checkers before every push — pedagogy_check.py, check_links.py, check_structure.py — all must stay at 0 failures.`
 };
 
 function buildPrimer() {
@@ -250,7 +265,7 @@ function buildPrimer() {
   const taskText = TASKS[task] || '';
   const prompt = `${note}
 
-${CORE_CONTEXT}
+${getCoreContext()}
 
 ${taskText}`;
   box.textContent = prompt.trim();
