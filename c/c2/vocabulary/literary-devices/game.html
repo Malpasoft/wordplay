@@ -60,17 +60,98 @@
 </div>
 <footer class="site-footer">Word Play · Cambridge English A1&#8594;C2</footer>
 <script>
-window.GAME_DATA={chapterId:"literary-devices",level:"c2",title:"Literary Devices",storageKey:"wordplay_game_literary-devices",items:[
-  {"id":"item1","term":"<!-- TERM 1 -->","meaning":"<!-- MEANING 1 -->","synonym":"<!-- hint -->","example":"<!-- Example with <b>term</b> -->","completion":"<!-- Example with _____ -->","answer":"<!-- answer -->"},
-  {"id":"item2","term":"<!-- TERM 2 -->","meaning":"<!-- MEANING 2 -->","synonym":"<!-- hint -->","example":"<!-- Example with <b>term</b> -->","completion":"<!-- Example with _____ -->","answer":"<!-- answer -->"},
-  {"id":"item3","term":"<!-- TERM 3 -->","meaning":"<!-- MEANING 3 -->","synonym":"<!-- hint -->","example":"<!-- Example with <b>term</b> -->","completion":"<!-- Example with _____ -->","answer":"<!-- answer -->"},
-  {"id":"item4","term":"<!-- TERM 4 -->","meaning":"<!-- MEANING 4 -->","synonym":"<!-- hint -->","example":"<!-- Example with <b>term</b> -->","completion":"<!-- Example with _____ -->","answer":"<!-- answer -->"},
-  {"id":"item5","term":"<!-- TERM 5 -->","meaning":"<!-- MEANING 5 -->","synonym":"<!-- hint -->","example":"<!-- Example with <b>term</b> -->","completion":"<!-- Example with _____ -->","answer":"<!-- answer -->"},
-  {"id":"item6","term":"<!-- TERM 6 -->","meaning":"<!-- MEANING 6 -->","synonym":"<!-- hint -->","example":"<!-- Example with <b>term</b> -->","completion":"<!-- Example with _____ -->","answer":"<!-- answer -->"},
-  {"id":"item7","term":"<!-- TERM 7 -->","meaning":"<!-- MEANING 7 -->","synonym":"<!-- hint -->","example":"<!-- Example with <b>term</b> -->","completion":"<!-- Example with _____ -->","answer":"<!-- answer -->"},
-  {"id":"item8","term":"<!-- TERM 8 -->","meaning":"<!-- MEANING 8 -->","synonym":"<!-- hint -->","example":"<!-- Example with <b>term</b> -->","completion":"<!-- Example with _____ -->","answer":"<!-- answer -->"},
-  {"id":"item9","term":"<!-- TERM 9 -->","meaning":"<!-- MEANING 9 -->","synonym":"<!-- hint -->","example":"<!-- Example with <b>term</b> -->","completion":"<!-- Example with _____ -->","answer":"<!-- answer -->"},
-  {"id":"item10","term":"<!-- TERM 10 -->","meaning":"<!-- MEANING 10 -->","synonym":"<!-- hint -->","example":"<!-- Example with <b>term</b> -->","completion":"<!-- Example with _____ -->","answer":"<!-- answer -->"}
+window.GAME_DATA={chapterId:"literary-devices",level:"c2",title:"Literary Devices",storageKey:"wordplay_game_literary-devices",items:
+[
+  {
+    "id": "metaphor",
+    "term": "Metaphor",
+    "meaning": "describing something by saying it is something else to suggest a similarity",
+    "synonym": "ˈmet.ə.fɔː",
+    "example": "\"Life is a journey\" is a common <b>metaphor</b>.",
+    "completion": "\"Life is a journey\" is a common metaphor.",
+    "answer": "Metaphor"
+  },
+  {
+    "id": "simile",
+    "term": "Simile",
+    "meaning": "a comparison using \"like\" or \"as\"",
+    "synonym": "ˈsɪm.ɪ.li",
+    "example": "\"As cold as ice\" is a <b>simile</b>.",
+    "completion": "\"As cold as ice\" is a simile.",
+    "answer": "Simile"
+  },
+  {
+    "id": "allusion",
+    "term": "Allusion",
+    "meaning": "an indirect reference to a person, place, or event",
+    "synonym": "əˈluː.ʒən",
+    "example": "Calling someone a \"Romeo\" is an <b>allusion</b> to Shakespeare.",
+    "completion": "Calling someone a \"Romeo\" is an allusion to Shakespeare.",
+    "answer": "Allusion"
+  },
+  {
+    "id": "personification",
+    "term": "Personification",
+    "meaning": "attributing human qualities to non-human things",
+    "synonym": "pəˌsɒn.ɪ.fɪˈkeɪ.ʃən",
+    "example": "\"The wind whispered secrets\" uses <b>personification</b>.",
+    "completion": "\"The wind whispered secrets\" uses personification.",
+    "answer": "Personification"
+  },
+  {
+    "id": "paradox",
+    "term": "Paradox",
+    "meaning": "a statement that seems contradictory but reveals a deeper truth",
+    "synonym": "ˈpær.ə.dɒks",
+    "example": "\"Less is more\" is a famous <b>paradox</b>.",
+    "completion": "\"Less is more\" is a famous paradox.",
+    "answer": "Paradox"
+  },
+  {
+    "id": "hyperbole",
+    "term": "Hyperbole",
+    "meaning": "deliberate exaggeration for dramatic or comic effect",
+    "synonym": "haɪˈpɜː.bəl.i",
+    "example": "\"I've told you a million times\" is an example of <b>hyperbole</b>.",
+    "completion": "\"I've told you a million times\" is an example of hyperbole.",
+    "answer": "Hyperbole"
+  },
+  {
+    "id": "oxymoron",
+    "term": "Oxymoron",
+    "meaning": "a phrase combining two contradictory terms",
+    "synonym": "ˌɒk.siˈmɔː.rɒn",
+    "example": "\"Deafening silence\" is an <b>oxymoron</b>.",
+    "completion": "\"Deafening silence\" is an oxymoron.",
+    "answer": "Oxymoron"
+  },
+  {
+    "id": "allegory",
+    "term": "Allegory",
+    "meaning": "a story where characters and events symbolise deeper moral truths",
+    "synonym": "ˈæl.ɪ.ɡər.i",
+    "example": "Orwell's <i>Animal Farm</i> is a political <b>allegory</b>.",
+    "completion": "Orwell's Animal Farm is a political allegory.",
+    "answer": "Allegory"
+  },
+  {
+    "id": "foreshadowing",
+    "term": "Foreshadowing",
+    "meaning": "giving an advance hint of what is to come later in the narrative",
+    "synonym": "ˈfɔː.ˌʃæd.əʊ.ɪŋ",
+    "example": "The storm in chapter one was <b>foreshadowing</b> the conflict ahead.",
+    "completion": "The storm in chapter one was foreshadowing the conflict ahead.",
+    "answer": "Foreshadowing"
+  },
+  {
+    "id": "motif",
+    "term": "Motif",
+    "meaning": "a recurring image or idea that develops a theme throughout a work",
+    "synonym": "məʊˈtiːf",
+    "example": "The recurring mirror <b>motif</b> suggests self-deception in the novel.",
+    "completion": "The recurring mirror motif suggests self-deception in the novel.",
+    "answer": "Motif"
+  }
 ]};
 </script>
 <script src="../../../../shared/store.js?v=v105"></script>
