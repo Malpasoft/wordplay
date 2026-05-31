@@ -95,7 +95,7 @@ hr { border: none; border-top: 1px solid var(--hairline); margin: 32px 0; }
         <option value="deepseek">DeepSeek</option>
         <option value="gemini">Gemini</option>
         <option value="gpt">ChatGPT / GPT-4</option>
-        <option value="claude">Claude (new session)</option>
+        <option value="claude">Claude Code (new session)</option>
       </select>
       <h3 style="margin-top:10px">What do you want to do?</h3>
       <select id="task-select" onchange="buildPrimer()">
@@ -237,7 +237,7 @@ const AI_NOTES = {
   deepseek: `You have web browsing. Read the raw GitHub files listed below before starting — they contain all project rules and the exact code templates you must follow.`,
   gemini: `You have web browsing. Read the raw GitHub files listed below before starting. Pay attention to CLAUDE.md — it overrides any default behaviour.`,
   gpt: `You have web browsing via the browser tool. Read the raw GitHub files listed below. Do not guess at file structure — read the actual files first.`,
-  claude: `Read CLAUDE.md and AI_HANDOVER.md before doing anything else. The plan file is at /root/.claude/plans/before-we-start-i-zazzy-starfish.md. Develop on branch: ${BRANCH}.`
+  claude: `Read CLAUDE.md and AI_HANDOVER.md before doing anything else. The strategic plan is at /root/.claude/plans/before-we-start-i-zazzy-starfish.md — read it before touching anything. Develop on branch: ${BRANCH}. Phase 1 done. Phase 2 next: fill 71 ES flashcard stubs (scripts/fill_es_vocab.py), then Cambridge exam pages. Run python3 scripts/pedagogy_check.py, check_links.py, check_structure.py before every push. All must stay at 0 failures/broken links.`
 };
 
 function buildPrimer() {
