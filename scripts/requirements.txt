@@ -1,0 +1,16 @@
+# Python dependencies for Word Play build/maintenance scripts
+# Install: pip install -r scripts/requirements.txt
+
+# Core stdlib only — no external packages required for:
+#   pedagogy_check.py, gen_chapter.py, fill_chapter.py, fix_flashcard_audio.py
+#   gen_search_index.py, gen_explanations.py
+
+# Optional: needed only for audio generation (Phase 5)
+# openai==1.30.5
+# boto3==1.34.0       # R2 uploads via S3-compat API
+
+# Optional: needed only for Playwright visual verification
+# playwright==1.44.0
+
+# Dev tools
+pytest==8.2.2
