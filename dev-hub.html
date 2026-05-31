@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Word Play · Dev Hub</title>
+<style>
+:root {
+  --ink: #1A1A1A; --paper: #F7F3EE; --amber: #B8860B;
+  --amber-light: #F5E6B8; --muted: #6B6B6B; --hairline: #D4CFC8;
+  --card: #FFFFFF; --code-bg: #F0EDE8; --green: #2E7D52;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--paper); color: var(--ink); font-size: 15px; line-height: 1.6; }
+header { background: var(--ink); color: white; padding: 20px; border-bottom: 3px solid var(--amber); }
+header h1 { font-family: Georgia, serif; font-size: 1.5rem; font-weight: 700; }
+header p { font-size: 0.75rem; color: rgba(255,255,255,0.5); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
+.container { max-width: 680px; margin: 0 auto; padding: 24px 16px 80px; }
+.section { margin-bottom: 32px; }
+.label { font-size: 0.62rem; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+h2 { font-family: Georgia, serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 14px; }
+.card { background: var(--card); border: 1.5px solid var(--hairline); border-radius: 10px; padding: 18px; margin-bottom: 12px; }
+.card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
+.card p { font-size: 0.85rem; color: var(--muted); }
+select, input, textarea {
+  width: 100%; padding: 10px 12px; border: 1.5px solid var(--hairline);
+  border-radius: 7px; font-size: 0.9rem; font-family: inherit;
+  background: var(--card); color: var(--ink); margin-bottom: 10px;
+  appearance: none; -webkit-appearance: none;
+}
+select:focus, input:focus, textarea:focus { outline: none; border-color: var(--amber); }
+textarea { min-height: 90px; resize: vertical; }
+.btn {
+  display: inline-block; padding: 10px 20px; border-radius: 7px;
+  font-size: 0.85rem; font-weight: 700; letter-spacing: 0.3px;
+  cursor: pointer; border: none; font-family: inherit;
+}
+.btn-primary { background: var(--amber); color: white; }
+.btn-secondary { background: var(--card); color: var(--ink); border: 1.5px solid var(--hairline); }
+.btn:active { opacity: 0.8; }
+.btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+.prompt-box {
+  background: var(--ink); color: rgba(255,255,255,0.92);
+  border-radius: 10px; padding: 16px;
+  font-family: "SF Mono", "Menlo", monospace; font-size: 0.72rem;
+  line-height: 1.7; white-space: pre-wrap; word-break: break-word;
+  margin-top: 12px; display: none;
+  -webkit-user-select: all; user-select: all;
+}
+.prompt-box.visible { display: block; }
+.copy-btn {
+  display: none; margin-top: 8px; width: 100%;
+  padding: 10px; background: var(--amber); color: white;
+  border: none; border-radius: 7px; font-size: 0.85rem;
+  font-weight: 700; cursor: pointer; font-family: inherit;
+}
+.copy-btn.visible { display: block; }
+.copy-btn.copied { background: var(--green); }
+.link-list { list-style: none; padding: 0; }
+.link-list li { margin-bottom: 8px; }
+.link-list a {
+  display: block; background: var(--card); border: 1.5px solid var(--hairline);
+  border-radius: 7px; padding: 10px 14px; text-decoration: none;
+  color: var(--amber); font-size: 0.82rem; font-weight: 600;
+  word-break: break-all;
+}
+.link-list a:active { background: var(--amber-light); }
+.word-rows { margin-bottom: 10px; }
+.word-row { display: grid; grid-template-columns: 1fr 1fr 2fr 2fr; gap: 6px; margin-bottom: 6px; }
+.word-row input { margin-bottom: 0; font-size: 0.8rem; padding: 7px 9px; }
+.word-row .col-label { font-size: 0.6rem; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 0 2px 2px; }
+.dict-output { display: none; background: var(--code-bg); border: 1px solid var(--hairline); border-radius: 7px; padding: 14px; font-family: "SF Mono","Menlo",monospace; font-size: 0.72rem; white-space: pre-wrap; word-break: break-word; margin-top: 10px; -webkit-user-select: all; user-select: all; }
+.dict-output.visible { display: block; }
+hr { border: none; border-top: 1px solid var(--hairline); margin: 32px 0; }
+.status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--green); margin-right: 6px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Word Play · Dev Hub</h1>
+  <p>AI content tool · private</p>
+</header>
+
+<div class="container">
+
+  <!-- ── SECTION 1: AI PRIMER ── -->
+  <div class="section">
+    <div class="label">Step 1</div>
+    <h2>Prime your AI</h2>
+    <div class="card">
+      <h3>Which AI are you using?</h3>
+      <select id="ai-select" onchange="buildPrimer()">
+        <option value="">— select —</option>
+        <option value="deepseek">DeepSeek</option>
+        <option value="gemini">Gemini</option>
+        <option value="gpt">ChatGPT / GPT-4</option>
+        <option value="claude">Claude (new session)</option>
+      </select>
+      <h3 style="margin-top:10px">What do you want to do?</h3>
+      <select id="task-select" onchange="buildPrimer()">
+        <option value="">— select task —</option>
+        <option value="fill-es">Fill ES flashcard stubs (71 remaining)</option>
+        <option value="new-chapter">Create a new chapter from scratch</option>
+        <option value="audit">Audit a specific file or section</option>
+        <option value="bug">Fix a bug or structure issue</option>
+        <option value="cambridge">Fill Cambridge exam pages</option>
+        <option value="generic">General dev help</option>
+      </select>
+      <div id="prompt-output" class="prompt-box"></div>
+      <button id="copy-primer" class="copy-btn" onclick="copyPrimer()">Copy prompt</button>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ── SECTION 2: CHAPTER WORD BUILDER ── -->
+  <div class="section">
+    <div class="label">Step 2 (optional)</div>
+    <h2>Build chapter word data</h2>
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:14px">Fill in 10 words — paste the output into your AI or directly into a fill script.</p>
+    <div class="card">
+      <select id="ch-level" style="margin-bottom:6px">
+        <option value="a1">A1</option><option value="a2">A2</option>
+        <option value="b1">B1</option><option value="b2">B2</option>
+        <option value="c1">C1</option><option value="c2">C2</option>
+      </select>
+      <select id="ch-track" style="margin-bottom:6px">
+        <option value="en">English track (en)</option>
+        <option value="es">Spanish track (es)</option>
+      </select>
+      <input id="ch-slug" type="text" placeholder="chapter slug  e.g. abstract-nouns">
+      <input id="ch-title" type="text" placeholder="chapter title  e.g. Abstract Nouns">
+
+      <div style="display:grid;grid-template-columns:1fr 1fr 2fr 2fr;gap:6px;margin-bottom:4px;padding:0 2px">
+        <div class="col-label">Word</div>
+        <div class="col-label">IPA</div>
+        <div class="col-label">Definition</div>
+        <div class="col-label">Example sentence</div>
+      </div>
+      <div class="word-rows" id="word-rows"></div>
+
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="genDict()">Generate Python dict</button>
+        <button class="btn btn-secondary" onclick="clearWords()">Clear</button>
+      </div>
+      <div id="dict-output" class="dict-output"></div>
+      <button id="copy-dict" class="copy-btn" onclick="copyDict()" style="display:none">Copy dict</button>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- ── SECTION 3: RAW FILE LINKS ── -->
+  <div class="section">
+    <div class="label">Quick links</div>
+    <h2>Key repo files (raw)</h2>
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:12px">Paste these URLs into any AI with web browsing — it can read them directly.</p>
+    <ul class="link-list">
+      <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/CLAUDE.md" target="_blank">CLAUDE.md — project rules</a></li>
+      <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/AI_HANDOVER.md" target="_blank">AI_HANDOVER.md — full context</a></li>
+      <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/scripts/gen_chapter.py" target="_blank">gen_chapter.py — scaffold generator</a></li>
+      <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/scripts/fill_chapter.py" target="_blank">fill_chapter.py — content filler</a></li>
+      <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/scripts/fill_en_c1c2_vocab.py" target="_blank">fill_en_c1c2_vocab.py — reference fill script</a></li>
+      <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/scripts/pedagogy_check.py" target="_blank">pedagogy_check.py — quality gate</a></li>
+      <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/shared/store.js" target="_blank">store.js — localStorage engine</a></li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <!-- ── SECTION 4: STATUS ── -->
+  <div class="section">
+    <div class="label">Project status</div>
+    <h2>Current state</h2>
+    <div class="card">
+      <p><span class="status-dot"></span><strong>Pedagogy:</strong> 993 checks, 0 failures</p>
+      <p style="margin-top:6px"><span class="status-dot"></span><strong>Broken links:</strong> 0</p>
+      <p style="margin-top:6px"><span class="status-dot"></span><strong>Structure issues:</strong> 0 (excl. 71 ES stubs)</p>
+    </div>
+    <div class="card" style="margin-top:0">
+      <h3>Up next</h3>
+      <p style="font-size:.85rem;color:var(--muted)">1. Fill 71 ES flashcard stubs (Phase 2)<br>2. Cambridge exam pages<br>3. Custom domain → auth (Phase 3)</p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const REPO = 'malpasoft/wordplay';
+const BRANCH = 'claude/website-design-token-optimization-1ZNUG';
+
+const CORE_CONTEXT = `Repo: ${REPO}, branch: ${BRANCH}
+Rules: var(--amber) only · no emoji · Python not sed/awk · pedagogy_check.py must stay 0 failures
+Deploy: git push origin HEAD:main (Cloudflare auto-deploys)
+Key files (read these via raw.githubusercontent.com/malpasoft/wordplay/main/):
+  CLAUDE.md, AI_HANDOVER.md, scripts/fill_en_c1c2_vocab.py (reference fill script)`;
+
+const TASKS = {
+  'fill-es': `TASK: Fill the 71 Spanish-track (es/) flashcard stubs.
+Each stub has <!-- FLASHCARDS CONTENT PLACEHOLDER --> where the content should be.
+Reference: read a complete ES flashcard without PLACEHOLDER (e.g. es/a1/vocabulary/animals/flashcards.html via raw GitHub).
+Template uses: MASTERY_KEY, SLUG, LEVEL, WORDS [{word,ipa,def,ex}], speakWord() lang='en-GB' rate=0.9, showCard(), markMastered(), initMatch().
+Auto-complete: flashcards after fcSeen.size >= WORDS.length, game after completedRounds >= 5.
+10 CEFR-appropriate English words per chapter. UI language is Spanish (Pronunciar, Dominar, etc.).
+Chapters: es/a1/vocabulary/clothes,hobbies,house-and-rooms,jobs,places-in-town,weather
+  es/a2/vocabulary/cooking,feelings-emotions,health-and-body,music,problems-solutions,
+    school-subjects,shopping-and-money,sports,technology-and-media,transport-and-travel,
+    weather-detail,work-and-jobs
+  (+ b1×11, b2×16, c1×14, c2×12 — see AI_HANDOVER.md for full list)
+Write scripts/fill_es_vocab.py, run it, then run python3 scripts/pedagogy_check.py.`,
+
+  'new-chapter': `TASK: Create a new chapter from scratch.
+Use scripts/gen_chapter.py to scaffold the folder and files, then fill with content.
+Read gen_chapter.py first to understand the V = dict(base='v123'...) version map.
+Chapter needs: slides.html, flashcards.html, game.html, worksheet.html, printables.html, index.html.
+Content standard: 10 words with IPA, definition, example sentence. All worksheet questions need EXPLANATIONS.
+Run python3 scripts/pedagogy_check.py after generating — must be 0 failures.`,
+
+  'audit': `TASK: Audit the specified file or section for quality and correctness.
+Check: correct CEFR level vocabulary, accurate IPA, natural example sentences, all questions have explanations, no broken links, correct nav tabs for chapter type (vocab = Flashcards/Lesson/Game only, not worksheet/printables).
+Report issues in order of severity. Do not fix without confirming first.`,
+
+  'bug': `TASK: Fix the described bug.
+Before changing anything: grep for ALL variants of the pattern across the repo (grammar and Spanish/vocab pages often differ in whitespace). Confirm file count per variant. Use Python with explicit string matching — never sed/awk.
+Verify fix on 2-3 sample files before running full set. Run python3 scripts/check_links.py and scripts/check_structure.py after.`,
+
+  'cambridge': `TASK: Fill Cambridge exam pages (KET/PET/FCE/CAE/CPE).
+These live in the exams/ directory. Pages exist but are sparse or placeholder.
+Format should match existing lesson pages: breadcrumb, chapter-nav, worksheet questions with ANSWERS and EXPLANATIONS arrays, GAME_DATA for the game page.
+Run python3 scripts/pedagogy_check.py after — must be 0 failures.`,
+
+  'generic': `TASK: (describe what you need below — paste this primer first, then explain your request)`
+};
+
+const AI_NOTES = {
+  deepseek: `You have web browsing. Read the raw GitHub files listed below before starting — they contain all project rules and the exact code templates you must follow.`,
+  gemini: `You have web browsing. Read the raw GitHub files listed below before starting. Pay attention to CLAUDE.md — it overrides any default behaviour.`,
+  gpt: `You have web browsing via the browser tool. Read the raw GitHub files listed below. Do not guess at file structure — read the actual files first.`,
+  claude: `Read CLAUDE.md and AI_HANDOVER.md before doing anything else. The plan file is at /root/.claude/plans/before-we-start-i-zazzy-starfish.md. Develop on branch: ${BRANCH}.`
+};
+
+function buildPrimer() {
+  const ai = document.getElementById('ai-select').value;
+  const task = document.getElementById('task-select').value;
+  const box = document.getElementById('prompt-output');
+  const btn = document.getElementById('copy-primer');
+  if (!ai || !task) { box.classList.remove('visible'); btn.classList.remove('visible'); return; }
+  const note = AI_NOTES[ai] || '';
+  const taskText = TASKS[task] || '';
+  const prompt = `${note}
+
+${CORE_CONTEXT}
+
+${taskText}`;
+  box.textContent = prompt.trim();
+  box.classList.add('visible');
+  btn.classList.add('visible');
+  btn.classList.remove('copied');
+  btn.textContent = 'Copy prompt';
+}
+
+function copyPrimer() {
+  const box = document.getElementById('prompt-output');
+  navigator.clipboard.writeText(box.textContent).then(() => {
+    const btn = document.getElementById('copy-primer');
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy prompt'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// ── WORD BUILDER ──
+function buildRows() {
+  const rows = document.getElementById('word-rows');
+  rows.innerHTML = '';
+  for (let i = 0; i < 10; i++) {
+    const d = document.createElement('div');
+    d.className = 'word-row';
+    d.innerHTML = `
+      <input type="text" placeholder="word ${i+1}" id="w${i}_word">
+      <input type="text" placeholder="/ˈɪp.ə/" id="w${i}_ipa">
+      <input type="text" placeholder="definition" id="w${i}_def">
+      <input type="text" placeholder="Example with <b>word</b> bold" id="w${i}_ex">`;
+    rows.appendChild(d);
+  }
+}
+buildRows();
+
+function genDict() {
+  const level = document.getElementById('ch-level').value;
+  const track = document.getElementById('ch-track').value;
+  const slug = document.getElementById('ch-slug').value.trim() || 'my-chapter';
+  const title = document.getElementById('ch-title').value.trim() || 'My Chapter';
+  const words = [];
+  for (let i = 0; i < 10; i++) {
+    const w = document.getElementById(`w${i}_word`).value.trim();
+    if (!w) continue;
+    words.push({
+      id: w.toLowerCase().replace(/\s+/g,'-'),
+      word: w,
+      ipa: document.getElementById(`w${i}_ipa`).value.trim() || '/…/',
+      def_: document.getElementById(`w${i}_def`).value.trim() || '…',
+      ex: document.getElementById(`w${i}_ex`).value.trim() || `The <b>${w}</b> is used here.`
+    });
+  }
+  if (words.length === 0) return;
+  const key = track === 'es' ? `"${level}/${slug}"` : `"${level}/${slug}"`;
+  let out = `# Paste this into scripts/fill_en_c1c2_vocab.py (or fill_es_vocab.py)\n`;
+  out += `# under the CHAPTERS dict\n\n`;
+  out += `${key}: {\n  "title": "${title}",\n  "level": "${level.toUpperCase()}",\n  "words": [\n`;
+  words.forEach((w, i) => {
+    out += `    {"id": "${w.id}", "word": "${w.word}", "ipa": "${w.ipa}", "def_": "${w.def_}", "ex": "${w.ex}"}`;
+    out += i < words.length - 1 ? ',\n' : '\n';
+  });
+  out += `  ]\n},`;
+  const o = document.getElementById('dict-output');
+  o.textContent = out;
+  o.classList.add('visible');
+  const cb = document.getElementById('copy-dict');
+  cb.style.display = 'block';
+  cb.textContent = 'Copy dict';
+  cb.classList.remove('copied');
+}
+
+function copyDict() {
+  const o = document.getElementById('dict-output');
+  navigator.clipboard.writeText(o.textContent).then(() => {
+    const cb = document.getElementById('copy-dict');
+    cb.textContent = 'Copied!';
+    cb.classList.add('copied');
+    setTimeout(() => { cb.textContent = 'Copy dict'; cb.classList.remove('copied'); }, 2000);
+  });
+}
+
+function clearWords() {
+  buildRows();
+  document.getElementById('ch-slug').value = '';
+  document.getElementById('ch-title').value = '';
+  document.getElementById('dict-output').classList.remove('visible');
+  document.getElementById('copy-dict').style.display = 'none';
+}
+</script>
+</body>
+</html>
