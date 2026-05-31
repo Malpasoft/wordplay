@@ -151,6 +151,14 @@ var STORAGE_KEY = 'wordplay_vocab_a1_food_mastered';
 var fcIdx = 0;
 var matchSelected = null;
 var matchRound = 0;
+function speakWord(e) {
+  if (e) e.stopPropagation();
+  if (!window.speechSynthesis) return;
+  var utt = new SpeechSynthesisUtterance(WORDS[fcIdx].word);
+  utt.lang = 'en-GB'; utt.rate = 0.9;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utt);
+}
 var mastered = false;
 var fcSeen = new Set();
 var completedRounds = 0;

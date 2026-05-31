@@ -120,6 +120,14 @@ function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.flo
 function initMatch(){var sample=shuffle(WORDS).slice(0,6);var words=shuffle(sample.map(w=>{return{id:w.term,text:w.term,type:'word'};}));var defs=shuffle(sample.map(w=>{return{id:w.term,text:w.meaning.length>50?w.meaning.slice(0,47)+'...':w.meaning,type:'def'};}));matchSelected=null;document.getElementById('matchScore').textContent='Match each word to its definition';function renderCol(col,items){col.innerHTML='';items.forEach(function(item){var el=document.createElement('div');el.className='match-item';el.textContent=item.text;el.dataset.id=item.id;el.dataset.type=item.type;el.addEventListener('click',handleMatch);col.appendChild(el);});}renderCol(document.getElementById('matchWords'),words);renderCol(document.getElementById('matchDefs'),defs);}
 function handleMatch(e){var el=e.currentTarget;if(el.classList.contains('correct'))return;if(!matchSelected){if(matchSelected&&matchSelected!==el)matchSelected.classList.remove('selected');matchSelected=el;el.classList.add('selected');}else{var prev=matchSelected;matchSelected=null;var correct=prev.dataset.id===el.dataset.id&&prev.dataset.type!==el.dataset.type;if(correct){prev.classList.remove('selected');prev.classList.add('correct');el.classList.add('correct');var remaining=document.querySelectorAll('.match-item:not(.correct)').length;if(remaining===0)document.getElementById('matchScore').textContent='All matched!'; completedRounds++; if (!mastered && completedRounds >= 5) { mastered = true; setTimeout(markMastered, 700); }}else{prev.classList.remove('selected');prev.classList.add('wrong');el.classList.add('wrong');setTimeout(function(){prev.classList.remove('wrong');el.classList.remove('wrong');},600);}}}
 function renderList(){document.getElementById('wordList').innerHTML=WORDS.map(w=>'<div class="word-list-item"><span class="wl-word">'+w.term+'</span><span class="wl-def">'+w.meaning+'</span></div>').join('');}
+function speakWord(e) {
+  if (e) e.stopPropagation();
+  if (!window.speechSynthesis) return;
+  var utt = new SpeechSynthesisUtterance(WORDS[fcIdx].word);
+  utt.lang = 'en-GB'; utt.rate = 0.9;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utt);
+}
 var mastered = false;
 var fcSeen = new Set();
 var completedRounds = 0;
