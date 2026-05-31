@@ -25,7 +25,7 @@ a1 | question-words | Question words — who/what/where/when | Questions | BUILT
 a1 | can-basic | Can — ability and permission | Modals | BUILT
 a1 | some-any | Some and Any | Nouns & Determiners | BUILT
 
-# Total A1: 24 chapters + 3 writing tasks
+# Total A1: 24 grammar + 12 vocab + 3 writing tasks
 # A1 Writing
 a1 | personal-profile | Personal Profile | Writing | BUILT
 a1 | short-note | Short Note or Message | Writing | BUILT
@@ -64,7 +64,7 @@ a2 | object-pronouns | Object pronouns and reflexive pronouns | Nouns & Determin
 a2 | word-order | Word order — statements and questions | Sentence Structure | BUILT
 a2 | short-answers | Short answers and question tags — basic | Questions | BUILT
 
-# Total A2: 18 chapters + 6 vocab + 3 writing tasks
+# Total A2: 19 grammar + 12 vocab + 3 writing tasks
 # A2 Vocabulary (flashcard format)
 a2 | school-subjects | School Subjects | Vocabulary | BUILT
 a2 | work-and-jobs | Work and Jobs | Vocabulary | BUILT
@@ -102,7 +102,7 @@ b1 | reported-speech-basic | Reported Speech — basic statements and questions 
 b1 | verb-infinitive-patterns | Verb + infinitive patterns | Verb Patterns | BUILT
 b1 | question-tags | Question Tags | Questions | BUILT
 
-# Total B1: 17 chapters (7 built, 10 placeholder)
+# Total B1: 21 grammar + 11 vocab + 3 writing tasks
 
 # ══════════════════════════════════════════════════════════════
 # B2 — UPPER-INTERMEDIATE (First Certificate / B2 First)
@@ -128,7 +128,7 @@ b2 | articles | Articles — a/an/the/zero article | Nouns & Determiners | place
 b2 | comparisons | Comparisons — full range | Comparison | BUILT
 b2 | linking-discourse | Linking Words and Discourse Markers | Sentence Structure | placeholder
 
-# Total B2: 18 chapters (10 built, 8 placeholder)
+# Total B2: 18 grammar + 16 vocab + 5 writing tasks
 
 # ══════════════════════════════════════════════════════════════
 # C1 — ADVANCED (Advanced / C1 Advanced / CAE)
@@ -153,7 +153,7 @@ c1 | discourse-connectors | Discourse Connectors and Cohesion | Sentence Structu
 c1 | nominalisation | Nominalisation — turning verbs/adj into nouns | Word Formation | placeholder
 c1 | hedging-language | Hedging Language and Academic Register | Register | placeholder
 
-# Total C1: 17 chapters
+# Total C1: 17 grammar + 14 vocab + 6 writing tasks
 
 # ══════════════════════════════════════════════════════════════
 # C2 — PROFICIENCY (Proficiency / C2 Proficiency / CPE)
@@ -171,30 +171,25 @@ c2 | register-grammar | Register and Grammar — formal, informal, literary | Re
 c2 | error-analysis | Common Advanced Errors — diagnosis and correction | Review | placeholder
 c2 | grammar-in-text | Grammar in Context — analysis of authentic texts | Review | placeholder
 
-# Total C2: 10 chapters
+# Total C2: 11 grammar + 12 vocab + 6 writing tasks
 
 # ══════════════════════════════════════════════════════════════
-# SUMMARY
+# SUMMARY (English track)
 # ══════════════════════════════════════════════════════════════
-# A1:  17 chapters  (0 built)
-# A2:  18 chapters  (0 built)
-# B1:  17 chapters  (7 built, 10 placeholder)
-# B2:  18 chapters  (10 built, 8 placeholder)
-# C1:  17 chapters  (0 built)
-# C2:  10 chapters  (0 built)
-# ─────────────────────────────────
-# TOTAL: 97 grammar chapters
-# Built:       17 chapters
-# Placeholder: 80 chapters
-
-
-# C1 — ADVANCED (Cambridge C1 Advanced / CAE)
-c1 | conditionals-advanced | Conditionals — Advanced | Grammar | BUILT
-c1 | passive-advanced | Passive Voice — Advanced | Grammar | BUILT
-c1 | modal-verbs-advanced | Modal Verbs — Advanced | Grammar | BUILT
-c1 | relative-clauses-advanced | Relative Clauses — Advanced | Grammar | BUILT
-c1 | reported-speech-advanced | Reported Speech — Advanced | Grammar | BUILT
-
+# A1:  24 grammar + 12 vocab + 3 writing  =  39 chapters
+# A2:  19 grammar + 12 vocab + 3 writing  =  34 chapters
+# B1:  21 grammar + 11 vocab + 3 writing  =  35 chapters
+# B2:  18 grammar + 16 vocab + 5 writing  =  39 chapters
+# C1:  17 grammar + 14 vocab + 6 writing  =  37 chapters
+# C2:  11 grammar + 12 vocab + 6 writing  =  29 chapters
+# ─────────────────────────────────────────────────────
+# TOTAL: 213 English chapters
+# Grammar: 110  Vocabulary: 77  Writing: 26
+#
+# Spanish track (/es/) mirrors English structure — 210 chapters
+# (A1=24g/12v/3w  A2=18g/12v/3w  B1=19g/11v/3w
+#  B2=18g/16v/5w  C1=17g/14v/6w  C2=11g/12v/6w)
+# Content fill status: ES A1 grammar 4/24 filled; rest = scaffold placeholders.
 
 # B2 FCE EXAM PREP (Cambridge B2 First / FCE)
 b2 | fce/about | About the FCE Exam | Info | BUILT

@@ -1,16 +1,22 @@
-# Directory `b`: Intermediate CEFR Modules Overview
+# Directory `b`: CEFR B1 and B2
 
-This directory includes lessons for CEFR **Intermediate (B1)** and **Upper-Intermediate (B2)** levels. Modules focus on introducing self-directed tasks critical to progress into advanced English fluency for complex functions like argument structure.
+Pre-Intermediate (B1) and Upper-Intermediate (B2) levels. B2 includes full Cambridge FCE (B2 First) exam preparation.
 
-## Folder Structure
-- **b1/**: Lessons, grammar topics, and activities at the B1 level.
-- **b2/**: Content for CEFR B2, including Cambridge FCE exam-specific modules.
+## Folder structure
 
-Each subdirectory includes:
-- **grammar/**: Focused modules for grammar structures at intermediate levels.
-- **vocabulary/**: Expanding learners’ intermediate vocabulary.
-- **writing/**: Self-paced tasks with auto-grading.
-- **certificate.html**: A file to generate a certificate of progress for intermediate levels.
+- **b1/** — CEFR B1: 21 grammar + 11 vocabulary + 3 writing = **35 chapters**
+- **b2/** — CEFR B2: 18 grammar + 16 vocabulary + 5 writing = **39 chapters** + FCE exam prep
 
-## Notes
-This directory sets the stage for advanced-level learners, with exam alignment (e.g., FCE) progressively integrated into the curriculum.
+Each chapter folder contains:
+- `slides.html` — lesson deck
+- `worksheet.html` — auto-graded practice
+- `game.html` — 4-stage mastery game
+- `printables.html` — print-ready A4 (grammar)
+- `flashcards.html` — vocabulary chapters
+
+## FCE exam prep (`b/b2/fce/`)
+
+Full coverage of all 7 B2 First paper parts plus 2 mock exams:
+- About / Strategy / Writing overview
+- Parts 1–7 (multi-choice cloze → gapped text → multi-matching)
+- Mock 1 + Mock 2

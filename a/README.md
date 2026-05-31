@@ -1,16 +1,21 @@
-# Directory `a`: Beginner CEFR Levels
+# Directory `a`: CEFR A1 and A2
 
-This directory contains modules for users starting their English learning journey, aligned with CEFR levels **A1** (Beginner) and **A2 Elementary**.
+Beginner (A1) and Elementary (A2) levels. Vocabulary and grammar aligned with Cambridge A1 Starters/Movers and A2 Key (KET).
 
-## Folder Structure
-- **a1/**: Lessons, games, and activities at CEFR A1 (Beginner level)
-- **a2/**: Content for CEFR A2 (Elementary level), including materials for future KET exam alignment (Cambridge A2 Key).
+## Folder structure
 
-Each subdirectory includes:
-- **grammar/**: Core grammatical points matching the A1/A2 syllabus.
-- **vocabulary/**: Interactive mastery modules for level-specific vocabulary themes.
-- **writing/**: Step-by-step writing assignments with model solutions (graded).
-- **certificate.html**: Certificate generator acknowledging CEFR level completion.
+- **a1/** — CEFR A1: 24 grammar + 12 vocabulary + 3 writing = **39 chapters**
+- **a2/** — CEFR A2: 19 grammar + 12 vocabulary + 3 writing = **34 chapters**
+
+Each chapter folder contains:
+- `slides.html` — lesson deck (`class="deck-body"` on `<body>`, powered by `deck.js`)
+- `worksheet.html` — auto-graded practice (powered by `worksheet.js`)
+- `game.html` — 4-stage mastery game (powered by `game.js`)
+- `printables.html` — print-ready A4 (grammar chapters)
+- `flashcards.html` — flip cards + match game + word list (vocabulary chapters)
 
 ## Notes
-This layer focuses on foundational mastery; exam prep (e.g., KET) content tracks under **`ket` assigned subdir**.
+
+- A1 vocab uses the **old** flashcard template (`STORAGE_KEY`, `renderCard()`) with audio pronunciation and auto-complete.
+- A2–C2 vocab uses the **new** template (`MASTERY_KEY`, `showCard()`); audio and auto-complete are a known pending item.
+- KET (A2 Key) exam prep is a future roadmap item.

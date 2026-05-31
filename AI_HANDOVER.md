@@ -3,7 +3,7 @@
 **Read `CLAUDE.md` first (it holds all the rules), then this file for orientation.**
 
 **Project version marker:** see `version.json`  
-**Total HTML pages:** ~1,157  
+**Total HTML pages:** ~2,187  
 **Live URL:** https://wordplay-38t.pages.dev (Cloudflare Pages project `wordplay-38t`)  
 **GitHub repo:** `malpasoft/wordplay` → Cloudflare Pages auto-deploys from `main`
 
@@ -33,7 +33,7 @@
 The project is on GitHub. Claude Code is used in remote sessions with direct push access.
 The full git/deploy/cache-bust rules are in **CLAUDE.md** — in short:
 
-1. Develop on `claude/github-workflow-setup-98Fbf`.
+1. Develop on `claude/website-design-token-optimization-1ZNUG`.
 2. Deploy with `git push origin HEAD:main` (Cloudflare Pages auto-deploys `main`), then
    sync the dev branch.
 3. Bump the per-file `?v=vNN` suffix only on the shared assets you actually change.
@@ -49,33 +49,64 @@ A **static** Cambridge English course (A1 to C2) on Cloudflare Pages. Vanilla HT
 
 ## 4. Content state
 
-### Grammar — 110 chapters total
-| Level | Chapters | Status |
-|-------|----------|--------|
-| A1    | 25       | Fully enriched |
-| A2    | 18       | Fully enriched |
-| B1    | 19       | Fully enriched |
-| B2    | 20       | Fully enriched |
-| C1    | 17       | Mostly done (a few advanced topics minimal) |
-| C2    | 11       | Minimal templates — needs enrichment |
+### English track — 213 chapters total
 
-### Vocabulary — 53 topics
-| Level | Topics | Flashcard template |
-|-------|--------|--------------------|
+**Grammar — 110 chapters**
+| Level | Chapters | Notes |
+|-------|----------|-------|
+| A1    | 24       | Fully enriched |
+| A2    | 19       | Fully enriched (indirect-questions added) |
+| B1    | 21       | Fully enriched (wish-if-only, passive-variations added) |
+| B2    | 18       | Mostly enriched; a few advanced topics minimal |
+| C1    | 17       | Scaffolded; needs enrichment |
+| C2    | 11       | Scaffolded; needs enrichment |
+
+**Vocabulary — 77 topics**
+| Level | Topics | Template |
+|-------|--------|----------|
 | A1    | 12     | Old (renderCard / STORAGE_KEY) |
-| A2    | 6      | New (showCard / MASTERY_KEY) |
+| A2    | 12     | New (showCard / MASTERY_KEY) |
 | B1    | 11     | New |
 | B2    | 16     | New |
-| C1    | 7      | New |
-| C2    | 7      | New (some minimal) |
+| C1    | 14     | New (expanded from 7 to 14 this session) |
+| C2    | 12     | New (expanded from 7 to 12 this session) |
 
 All vocab games use 10-item standardised GAME_DATA structure.  
-A1 flashcards have audio pronunciation + auto-complete after viewing all cards.  
-A1 matching game auto-completes after 5 completed rounds.
+A1 flashcards: audio pronunciation + auto-complete after all cards viewed.  
+A2–C2 flashcards: no audio, no auto-complete (known pending item).
 
-### Writing — 21 chapters with auto-graded production tasks
+**Writing — 26 chapters**
+| Level | Chapters |
+|-------|----------|
+| A1    | 3 |
+| A2    | 3 |
+| B1    | 3 |
+| B2    | 5 |
+| C1    | 6 |
+| C2    | 6 |
 
-### Exam prep — FCE (B2) full, CAE/CPE strategy + part guides (practice pages = placeholders)
+**Exam prep** — FCE (B2) full 7-part coverage; CAE (C1) and CPE (C2) strategy + part guides. Mock papers are placeholders.
+
+---
+
+### Spanish track (`/es/`) — 210 chapters total, all 6 levels live
+
+Built in parallel to the English track; mirrors English curriculum with Spanish-native explanations and interference-error slides.
+
+**Grammar — 107 chapters**
+| Level | Chapters | Folder |
+|-------|----------|--------|
+| A1    | 24       | `es/a1/gramatica/` |
+| A2    | 18       | `es/a2/gramatica/` |
+| B1    | 19       | `es/b1/gramatica/` |
+| B2    | 18       | `es/b2/gramatica/` |
+| C1    | 17       | `es/c1/gramatica/` |
+| C2    | 11       | `es/c2/gramatica/` |
+
+**Vocabulary — 77 topics** (same counts as English per level)  
+**Writing — 26 chapters** (same counts as English per level)
+
+**Content fill status:** 4 ES A1 grammar chapters have full authored content (present-continuous, going-to-future, question-words, imperatives). All other Spanish chapters are scaffolded with placeholder HTML — the `scripts/fill_chapter.py` tooling and content modules in `scripts/content/` are ready for the remaining fill passes.
 
 ---
 
@@ -159,6 +190,7 @@ Dashboard reads `lv['vocab_mastered_' + slug].done` to count vocab mastered per 
 
 ## 8. Standard file structure
 
+**English chapters:**
 ```
 {band}/{level}/{section}/{slug}/
   flashcards.html   (vocab only)
@@ -167,8 +199,18 @@ Dashboard reads `lv['vocab_mastered_' + slug].done` to count vocab mastered per 
   game.html         4-stage mastery game
   printables.html   print-ready A4 (grammar only)
 ```
-
 Where `band` = `a` (A1/A2), `b` (B1/B2), `c` (C1/C2).
+
+**Spanish chapters:**
+```
+es/{level}/{section}/{slug}/
+  slides.html       lesson
+  worksheet.html    auto-graded practice
+  game.html         4-stage mastery game
+  printables.html   print-ready A4
+  (vocab: flashcards.html instead of printables)
+```
+Note: Spanish grammar folder uses Spanish spelling — `gramatica/`. Vocabulary and writing folders keep English spelling (`vocabulary/`, `writing/`) to match the existing site structure.
 
 ---
 
@@ -193,30 +235,35 @@ If a visual bug appears after deploy, suspect Cloudflare edge cache — purge vi
 
 ## 11. Roadmap (confirmed)
 
-- **Phase 1** — Finish English course (in progress; C2 still needs full enrichment)
+- **Phase 1** — Finish English course (in progress; B2–C2 grammar still needs enrichment)
 - **Phase 2** — Auto-deploy via GitHub (done)
 - **Phase 3** — User accounts (URL token → Cloudflare D1 + Workers)
-- **Phase 4** — Spanish-native version at `/es/` (started — A1 grammar + vocab built)
-- **Phase 5** — Complete CAE/CPE practice materials, add KET/PET
+- **Phase 4** — Spanish-native version at `/es/` (**scaffolding complete** — all 6 levels, 3 sections, 210 chapters built; content fill in progress starting from ES A1 grammar)
+- **Phase 5** — Complete CAE/CPE practice materials, add KET/PET mock papers
 
 ---
 
 ## 12. Known pending items
 
-- A2-C2 vocab flashcards: no audio button, no auto-complete on view-all or match rounds
-- C2 grammar: still minimal templates, needs enrichment
-- Dashboard link: injected by deck.js (lesson pages) and dark-init.js (all other sub-pages)
+- A2–C2 vocab flashcards: no audio button, no auto-complete on view-all or match rounds
+- B2–C2 English grammar: scaffolded but needs enrichment
+- Spanish A1–C2 chapters: scaffolded with placeholder HTML; content fill in progress (see `scripts/fill_chapter.py`)
+- Dashboard link: injected by `deck.js` (lesson pages) and `dark-init.js` (all other sub-pages)
+- KET/PET exam prep: not yet built
 
 ---
 
-## 13. Recent work (week of 26–29 May 2026)
+## 13. Recent work (May 2026)
 
-- **Navigation:** site-wide icon-only back arrow in the header (destination = the last
-  breadcrumb link); breadcrumbs always run menu → chapter; chapter-nav tab rows now hidden
-  on slides/worksheet/game (the chapter hub already links the four parts).
-- **Header layout:** brand is absolutely centred (immune to the Dashboard/QR buttons that
-  `dark-init.js` injects at runtime); Dark + QR grouped into a right-aligned pill; Dashboard
-  link hidden on ≤560px mobile.
-- **Visual polish:** warm parchment background (`--paper: #F7F3EE`), inkier card borders,
-  section cards adapt between light/dark mode, redundant level-name subtitle removed from
-  the six English level hubs.
+**Week of 26–29 May — Visual polish + navigation**
+- Site-wide icon-only back arrow; breadcrumbs always run menu → chapter; chapter-nav tab row hidden on slides/worksheet/game.
+- Brand absolutely centred in header; Dark + QR grouped right; Dashboard link hidden on mobile.
+- Warm parchment background (`--paper: #F7F3EE`), inkier card borders, section cards adapt light/dark.
+
+**Week of 30–31 May — Full syllabus expansion**
+- **English gaps filled:** A2 `indirect-questions` (Ch 19), B1 `wish-if-only` (Ch 20) + `passive-variations` (Ch 21).
+- **English vocabulary expanded:** C1 7 → 14 topics, C2 7 → 12 topics (12 new topics total).
+- **Spanish track built from scratch:** complete scaffold for all 6 levels × 3 sections = 210 chapters. `gen_chapter.py` extended to handle Spanish folder conventions (`gramatica/` vs `vocabulary/`/`writing/`). Level hubs and section index pages generated for every level. All 6 Spanish levels activated in `es/index.html`.
+- **Spanish C1/C2 vocabulary** mirrored from English (same 12 new topics).
+- **Content fill tooling created:** `scripts/fill_chapter.py` (idempotent anchor-based filler), authored content modules in `scripts/content/`. First 4 ES A1 grammar chapters filled with complete bilingual content: present-continuous, going-to-future, question-words, imperatives (7 slides + 14 graded questions + 10 game items each).
+- Search index regenerated: 424 entries.

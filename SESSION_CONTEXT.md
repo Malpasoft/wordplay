@@ -4,7 +4,7 @@
 **Live URL:** `https://wordplay-38t.pages.dev`
 **Maintainer:** Em — freelance English teacher, Catalunya
 **Repo:** `malpasoft/wordplay` on GitHub → auto-deploys to Cloudflare Pages on push to `main`
-**Working branch:** `claude/github-workflow-setup-98Fbf`
+**Working branch:** `claude/website-design-token-optimization-1ZNUG`
 
 > **Read CLAUDE.md first (all the rules), then AI_HANDOVER.md (orientation).** This file is
 > the deep technical state — JS contracts, shared-engine wiring, and the localStorage schema.
@@ -31,35 +31,59 @@ See CLAUDE.md for the procedure.
 
 ## 2. Content inventory
 
-### Grammar — 110 chapters, all enriched
-Every chapter has: slides.html (lesson), worksheet.html (auto-graded), game.html (4-stage mastery), printables.html
+### English track — 213 chapters
 
-### Vocab — 53 topics
-| Level | Topics |
-|-------|--------|
-| A1    | 6 |
-| A2    | 6 |
-| B1    | 11 |
-| B2    | 16 |
-| C1    | 7 |
-| C2    | 7 |
+**Grammar — 110 chapters**
+| Level | Chapters | Notes |
+|-------|----------|-------|
+| A1    | 24       | Fully enriched |
+| A2    | 19       | Fully enriched |
+| B1    | 21       | Fully enriched |
+| B2    | 18       | Partially enriched |
+| C1    | 17       | Scaffolded |
+| C2    | 11       | Scaffolded |
 
-### Writing — 21 chapters with auto-graders
-### Exam prep
-| Exam | Level | Parts with practice | Total practice Qs |
-|------|-------|--------------------|--------------------|
-| FCE  | B2    | 7/7                | ~40                |
-| CAE  | C1    | 8/8                | 48                 |
-| CPE  | C2    | 7/7                | 52                 |
+**Vocabulary — 77 topics**
+| Level | Topics | Template |
+|-------|--------|----------|
+| A1    | 12     | Old (renderCard / STORAGE_KEY) |
+| A2    | 12     | New (showCard / MASTERY_KEY) |
+| B1    | 11     | New |
+| B2    | 16     | New |
+| C1    | 14     | New |
+| C2    | 12     | New |
+
+**Writing — 26 chapters** (A1/A2/B1: 3 each; B2: 5; C1/C2: 6 each)
+
+**Exam prep**
+| Exam | Level | Status |
+|------|-------|--------|
+| FCE  | B2    | Full — 7 parts + 2 mock papers |
+| CAE  | C1    | Strategy + 8 part guides (practice = placeholders) |
+| CPE  | C2    | Strategy + 7 part guides (practice = placeholders) |
+
+### Spanish track (`/es/`) — 210 chapters
+
+**All 6 levels scaffolded** (A1–C2), all 3 sections (gramatica / vocabulary / writing).
+Grammar per level: A1=24, A2=18, B1=19, B2=18, C1=17, C2=11.
+Vocab per level: A1=12, A2=12, B1=11, B2=16, C1=14, C2=12.
+Writing per level: A1=3, A2=3, B1=3, B2=5, C1=6, C2=6.
+
+Content fill status: 4 ES A1 grammar chapters filled (present-continuous, going-to-future, question-words, imperatives). All others are scaffold placeholders.
+
+**Fill tooling:**
+- `scripts/fill_chapter.py` — idempotent anchor-based filler for slides/worksheet/game
+- `scripts/content/es_a1_g_batch1.py` — PC + going-to-future content dicts
+- `scripts/content/es_a1_g_batch2.py` — question-words + imperatives content dicts
 
 ### Special pages
 - `index.html` — homepage with level grid, streak badge, onboarding modal
 - `dashboard.html` — student progress: XP, stats, radar chart, level tiles, activity pillars
 - `placement-test.html` — 24-question level finder
 - `progress-certificate.html` — printable certificate generator
-- `404.html`, 6x `certificate.html` (one per level)
+- `404.html`, 6× `certificate.html` (one per level)
 
-### Total: ~1,157 HTML pages
+### Total: ~2,187 HTML pages · Search index: 424 entries
 
 ---
 
@@ -159,12 +183,13 @@ wordplay_progress: {
 
 ## 7. Next steps (priority order)
 
-1. **A1 full audit** — Polish remaining A1 grammar/vocab chapters using animals+to-be as template
-2. **Vocab expansion** — A1/A2 have only 6 topics each; add 4-6 topics per level
-3. **KET (A2) + PET (B1) exam prep skeletons** — modelled on FCE/CAE/CPE
-4. **CAE/CPE mock exams** — full timed papers (currently placeholders)
-5. **Spanish version** — Once A1 polish is complete, use as base
+1. **ES A1 content fill** — remaining 20 ES A1 grammar chapters + 12 vocab topics need fill pass using `fill_chapter.py`
+2. **ES A2–C2 content fill** — ~200 chapters still placeholder; generate content batches with background agents and run filler
+3. **A2–C2 vocab audio** — add audio button and auto-complete to A2–C2 flashcard template (known gap)
+4. **B2–C2 English grammar enrichment** — currently scaffolded only
+5. **KET (A2) + PET (B1) exam prep skeletons** — modelled on FCE/CAE/CPE
+6. **CAE/CPE mock exams** — full timed papers (currently placeholders)
 
 ---
 
-*Updated May 2026 — navigation, header layout, and visual-polish pass; docs refresh.*
+*Updated 31 May 2026 — full Spanish track scaffold, English vocab/grammar gap fill, content tooling added.*

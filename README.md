@@ -1,31 +1,31 @@
-# First Layer Overview: Top-Level `wordplay`
+# Word Play — Project Root
 
-This is the root directory of the `wordplay` project. The project provides a complete Cambridge curriculum-aligned interactive website for learning English from Beginner to Mastery levels. Users can interactively progress across six CEFR levels (A1–C2), with added resources for exam preparation and tracking progress.
+A complete Cambridge English course (A1–C2) as a static website on Cloudflare Pages. Vanilla HTML/CSS/JS, no build system, ~2,187 HTML pages. Two parallel tracks: English (main course) and Spanish-native (`/es/`).
 
-### Project Structure
-Here is an overview of project files and folders found at this top layer:
+## Top-level files and directories
 
-- **404.html**: Custom error page displayed when users access a non-existent URL.
-- **CLAUDE.md**: Single source of truth for project rules — design system, git workflow, conventions, pedagogy. Read this first.
-- **AI_HANDOVER.md**: Orientation for a new AI/developer session — who the project is for, current content state, and how the shared engines fit together.
-- **AUTH_PROPOSAL.md**: Proposal for long-term implementation of user authorization systems (e.g., login, accounts).
-- **README.md**: You are reading this file!
-- **SESSION_CONTEXT.md**: Technical reference for AI workflows during site generation.
-- **SYLLABUS.md**: Reference material for mapping Cambridge syllabus topics into site structure.
-- **_headers/**: Configuration for HTTP response headers on the live-hosted site.
-- **a/**: Beginner level modules (A1 and A2), part of the first official CEFR levels.
-- **b/**: Intermediate CEFR levels (B1 and B2), including FCE (exam-specific).
-- **c/**: Advanced CEFR levels (C1 and C2), including integration for exams like CAE and CPE.
-- **es/**: Spanish-native parallel course (`/es/`). A1 grammar and vocabulary are built; further levels to follow.
-- **shared/**: Shared assets like CSS and JavaScript powering site-wide components.
+- **CLAUDE.md** — Single source of truth for all project rules. Read this first.
+- **AI_HANDOVER.md** — Orientation for a new AI/developer session: content state, shared engines, localStorage schema.
+- **SESSION_CONTEXT.md** — Deep technical reference: JS contracts, current content counts, next steps.
+- **CONTRIBUTING.md** — Branch naming, PR workflow, design rules checklist.
+- **PEDAGOGY.md** — Learning design principles that every chapter must follow.
+- **SYLLABUS.md** — Cambridge syllabus → site structure mapping reference.
+- **AUTH_PROPOSAL.md** — Future user-account implementation proposal (not yet built).
+- **404.html** — Custom error page.
+- **a/** — CEFR A1 and A2 (Beginner / Elementary).
+- **b/** — CEFR B1 and B2 (Pre-Intermediate / Upper-Intermediate, FCE exam prep).
+- **c/** — CEFR C1 and C2 (Advanced / Proficiency, CAE and CPE exam prep).
+- **es/** — Spanish-native parallel course. Full A1–C2 curriculum scaffolded across all 6 levels and 3 sections (grammar, vocabulary, writing).
+- **shared/** — CSS and JS engines shared across all ~2,187 pages.
+- **scripts/** — Python generation and maintenance scripts. `fill_chapter.py` + `scripts/content/` hold content-fill tooling.
 
 ---
-
-## Purpose of This Project
-Wordplay is designed for educators and English learners alike. The static site format ensures privacy and accessibility, storing user progress locally without backend dependencies—future updates may add login and external persistence solutions.
 
 ## For contributors & AI sessions
-Start with **CLAUDE.md** (the rules), then **AI_HANDOVER.md** (orientation). PR and branch conventions are in **CONTRIBUTING.md**.
+
+Start with **CLAUDE.md** (rules), then **AI_HANDOVER.md** (orientation). PR and branch conventions are in **CONTRIBUTING.md**.
+
+All student progress lives in browser localStorage — no backend, no accounts (yet).
 
 ---
-_Last Updated: May 2026_
+_Last updated: May 2026_
