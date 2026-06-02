@@ -212,8 +212,10 @@ h1{font-size:1.4rem;color:var(--navy);margin:0}
         <div class="f-row">
           <label class="f-label" for="fCourse">Course track</label>
           <select class="f-select" id="fCourse">
-            <option value="en">English (A&ndash;C)</option>
-            <option value="es">Spanish &rarr; English (ES)</option>
+            <option value="en">English — universal (A&ndash;C)</option>
+            <option value="es">English via Spanish (ES track)</option>
+            <option value="espanol">Spanish — universal (A&ndash;C)</option>
+            <option value="espanol-en">Spanish via English</option>
           </select>
         </div>
         <div class="f-row">
@@ -237,7 +239,45 @@ h1{font-size:1.4rem;color:var(--navy);margin:0}
           <label class="f-label" for="fAge">Age (optional)</label>
           <input class="f-input" id="fAge" type="number" min="5" max="99" placeholder="e.g. 42">
         </div>
-        <textarea class="f-textarea" id="fNotes" placeholder="Goals, occupation, weak areas, notes…"></textarea>
+        <div class="f-row">
+          <label class="f-label" for="fTargetLevel">Target level</label>
+          <select class="f-select" id="fTargetLevel">
+            <option value="">— not set —</option>
+            <option value="A1">A1</option><option value="A2">A2</option>
+            <option value="B1">B1</option><option value="B2">B2</option>
+            <option value="C1">C1</option><option value="C2">C2</option>
+          </select>
+        </div>
+        <div class="f-row">
+          <label class="f-label" for="fExam">Exam goal</label>
+          <select class="f-select" id="fExam">
+            <option value="">None / not set</option>
+            <option value="ket">Cambridge KET (A2 Key)</option>
+            <option value="pet">Cambridge PET (B1 Prelim)</option>
+            <option value="fce">Cambridge FCE (B2 First)</option>
+            <option value="cae">Cambridge CAE (C1 Advanced)</option>
+            <option value="cpe">Cambridge CPE (C2 Proficiency)</option>
+            <option value="dele-a1">DELE A1</option>
+            <option value="dele-a2">DELE A2</option>
+            <option value="dele-b1">DELE B1</option>
+            <option value="dele-b2">DELE B2</option>
+            <option value="dele-c1">DELE C1</option>
+            <option value="dele-c2">DELE C2</option>
+          </select>
+        </div>
+        <div class="f-row">
+          <label class="f-label" for="fFormat">Teaching format</label>
+          <select class="f-select" id="fFormat">
+            <option value="both">Online &amp; in-person</option>
+            <option value="online">Online only</option>
+            <option value="inperson">In-person only</option>
+          </select>
+        </div>
+        <div class="f-row">
+          <label class="f-label" for="fOccupation">Occupation / context</label>
+          <input class="f-input" id="fOccupation" type="text" placeholder="e.g. Chef, Nurse, Student">
+        </div>
+        <textarea class="f-textarea" id="fNotes" placeholder="Goals, weak areas, learning context, notes…"></textarea>
         <div class="f-actions">
           <button class="f-save" onclick="saveStudent()">Save student</button>
           <button class="f-cancel" onclick="hideForm()">Cancel</button>
@@ -435,9 +475,11 @@ function setFilter(f) { activeFilter = f; renderRoster(); }
 
 function stubCount(s) {
   if (!coverageData || !s.level) return null;
-  return coverageData.chapters.filter(function(c){
-    return c.track === s.course && c.level === s.level && c.status !== 'complete';
-  }).length;
+  var chapters = coverageData.chapters.filter(function(c){
+    return c.track === s.course && c.level === s.level;
+  });
+  if (!chapters.length) return -1;  // -1 = track not built at all
+  return chapters.filter(function(c){ return c.status !== 'complete'; }).length;
 }
 
 function sortedStudents() {
@@ -469,16 +511,25 @@ function renderRoster() {
   grid.innerHTML = list.map(function(s){
     var initials = s.name.trim().split(/\s+/).map(function(w){return w[0]}).slice(0,2).join('').toUpperCase();
     var stubs = stubCount(s);
-    var gapHtml = stubs === null ? '<span class="stu-gap-count">No level set</span>'
-      : stubs === 0 ? '<span class="stu-gap-count ok">All complete</span>'
+    var gapHtml = stubs === null  ? '<span class="stu-gap-count">No level set</span>'
+      : stubs === -1 ? '<span class="stu-gap-count warn">Track not built</span>'
+      : stubs === 0  ? '<span class="stu-gap-count ok">All complete</span>'
       : '<span class="stu-gap-count warn">'+stubs+' stub'+(stubs!==1?'s':'')+'</span>';
+    var examShort = {'ket':'KET','pet':'PET','fce':'FCE','cae':'CAE','cpe':'CPE','dele-a1':'DELE A1','dele-a2':'DELE A2','dele-b1':'DELE B1','dele-b2':'DELE B2','dele-c1':'DELE C1','dele-c2':'DELE C2'};
+    var fmtShort  = {'online':'Online','inperson':'In-person','both':'Both'};
+    var courseShort = {'en':'EN','es':'EN/ES','espanol':'ES','espanol-en':'ES/EN'};
     var active = s.id === currentId ? ' active' : '';
     return '<div class="stu-card'+active+'" onclick="ensureStudentTab(\''+s.id+'\')">'
       + '<div class="stu-avatar">'+initials+'</div>'
       + '<div class="stu-name" title="'+esc(s.name)+'">'+esc(s.name)+'</div>'
       + '<div class="stu-tags">'
-      + (s.level ? '<span class="stu-tag lvl">'+s.level+'</span>' : '')
-      + '<span class="stu-tag">'+esc(s.course.toUpperCase())+'</span>'
+      + (s.level ? '<span class="stu-tag lvl">'+s.level+(s.targetLevel&&s.targetLevel!==s.level?'&rarr;'+s.targetLevel:'')+'</span>' : '')
+      + '<span class="stu-tag">'+esc(courseShort[s.course]||s.course.toUpperCase())+'</span>'
+      + (s.exam ? '<span class="stu-tag lvl">'+esc(examShort[s.exam]||s.exam)+'</span>' : '')
+      + '</div>'
+      + '<div class="stu-tags">'
+      + (s.format&&s.format!=='both' ? '<span class="stu-tag">'+esc(fmtShort[s.format])+'</span>' : '')
+      + (s.occupation ? '<span class="stu-tag" style="max-width:80px;overflow:hidden;text-overflow:ellipsis">'+esc(s.occupation)+'</span>' : '')
       + '</div>'
       + gapHtml
       + '</div>';
@@ -492,7 +543,10 @@ function renderStudentDetail(id) {
   var el = document.getElementById('studentContent');
 
   var initials = s.name.trim().split(/\s+/).map(function(w){return w[0]}).slice(0,2).join('').toUpperCase();
-  var trackLabel = s.course === 'es' ? 'Spanish&rarr;English (ES)' : 'English (EN)';
+  var trackLabels = {'en':'English (EN)','es':'English via ES','espanol':'Spanish','espanol-en':'Spanish via EN'};
+  var trackLabel = trackLabels[s.course] || s.course.toUpperCase();
+  var examLabels = {'ket':'KET','pet':'PET','fce':'FCE','cae':'CAE','cpe':'CPE','dele-a1':'DELE A1','dele-a2':'DELE A2','dele-b1':'DELE B1','dele-b2':'DELE B2','dele-c1':'DELE C1','dele-c2':'DELE C2'};
+  var formatLabels = {'online':'Online','inperson':'In-person','both':'Online &amp; in-person'};
 
   var html = '<div class="detail-card">';
   html += '<div class="detail-top">';
@@ -500,9 +554,12 @@ function renderStudentDetail(id) {
   html += '<div class="detail-info">';
   html += '<div class="detail-name">'+esc(s.name)+'</div>';
   html += '<div class="detail-tags">';
-  if (s.level) html += '<span class="d-tag lvl">'+s.level+'</span>';
+  if (s.level) html += '<span class="d-tag lvl">'+s.level+(s.targetLevel && s.targetLevel !== s.level ? '&rarr;'+s.targetLevel : '')+'</span>';
   html += '<span class="d-tag">'+esc(s.l1)+'</span>';
   html += '<span class="d-tag">'+trackLabel+'</span>';
+  if (s.format) html += '<span class="d-tag">'+esc(formatLabels[s.format]||s.format)+'</span>';
+  if (s.exam) html += '<span class="d-tag lvl">'+esc(examLabels[s.exam]||s.exam)+'</span>';
+  if (s.occupation) html += '<span class="d-tag">'+esc(s.occupation)+'</span>';
   if (s.age) html += '<span class="d-tag">Age '+esc(s.age)+'</span>';
   if (s.code) html += '<span class="d-tag">'+esc(s.code)+'</span>';
   html += '</div>';
@@ -523,13 +580,27 @@ function renderStudentDetail(id) {
     + ['Spanish','English','French','Portuguese','Italian','German','Arabic','Chinese','Japanese','Russian','Other'].map(function(l){ return '<option'+(s.l1===l?' selected':'')+'>'+l+'</option>'; }).join('')
     + '</select></div>'
     + '<div class="f-row"><label class="f-label">Course track</label><select class="f-select" id="efCourse">'
-    + '<option value="en"'+(s.course==='en'?' selected':'')+'>English (A&ndash;C)</option>'
-    + '<option value="es"'+(s.course==='es'?' selected':'')+'>Spanish&rarr;English (ES)</option>'
+    + '<option value="en"'+(s.course==='en'?' selected':'')+'>English &mdash; universal (A&ndash;C)</option>'
+    + '<option value="es"'+(s.course==='es'?' selected':'')+'>English via Spanish (ES track)</option>'
+    + '<option value="espanol"'+(s.course==='espanol'?' selected':'')+'>Spanish &mdash; universal (A&ndash;C)</option>'
+    + '<option value="espanol-en"'+(s.course==='espanol-en'?' selected':'')+'>Spanish via English</option>'
     + '</select></div>'
     + '<div class="f-row"><label class="f-label">Level</label><select class="f-select" id="efLevel">'
     + '<option value="">— not assessed —</option>'
     + ['A1','A2','B1','B2','C1','C2'].map(function(l){ return '<option value="'+l+'"'+(s.level===l?' selected':'')+'>'+l+'</option>'; }).join('')
     + '</select><p class="placement-hint"><a href="placement-test.html" target="_blank">Run placement test</a></p></div>'
+    + '<div class="f-row"><label class="f-label">Target level</label><select class="f-select" id="efTargetLevel">'
+    + '<option value="">— not set —</option>'
+    + ['A1','A2','B1','B2','C1','C2'].map(function(l){ return '<option value="'+l+'"'+(s.targetLevel===l?' selected':'')+'>'+l+'</option>'; }).join('')
+    + '</select></div>'
+    + '<div class="f-row"><label class="f-label">Exam goal</label><select class="f-select" id="efExam">'
+    + '<option value="">None / not set</option>'
+    + [['ket','Cambridge KET'],['pet','Cambridge PET'],['fce','Cambridge FCE'],['cae','Cambridge CAE'],['cpe','Cambridge CPE'],['dele-a1','DELE A1'],['dele-a2','DELE A2'],['dele-b1','DELE B1'],['dele-b2','DELE B2'],['dele-c1','DELE C1'],['dele-c2','DELE C2']].map(function(o){ return '<option value="'+o[0]+'"'+(s.exam===o[0]?' selected':'')+'>'+o[1]+'</option>'; }).join('')
+    + '</select></div>'
+    + '<div class="f-row"><label class="f-label">Teaching format</label><select class="f-select" id="efFormat">'
+    + [['both','Online &amp; in-person'],['online','Online only'],['inperson','In-person only']].map(function(o){ return '<option value="'+o[0]+'"'+((s.format||'both')===o[0]?' selected':'')+'>'+o[1]+'</option>'; }).join('')
+    + '</select></div>'
+    + '<div class="f-row"><label class="f-label">Occupation / context</label><input class="f-input" id="efOccupation" type="text" value="'+esc(s.occupation||'')+'" placeholder="e.g. Chef, Nurse, Student"></div>'
     + '<div class="f-row"><label class="f-label">Class code</label><input class="f-input" id="efCode" type="text" value="'+esc(s.code||'')+'"></div>'
     + '<div class="f-row"><label class="f-label">Age</label><input class="f-input" id="efAge" type="number" min="5" max="99" value="'+esc(s.age||'')+'"></div>'
     + '<textarea class="f-textarea" id="efNotes">'+esc(s.notes||'')+'</textarea>'
@@ -555,7 +626,17 @@ function renderGapHtml(s) {
   if (!s.level) return '<div class="gap-section"><p style="font-family:var(--font-sans);font-size:.82rem;color:var(--muted)">Set a level to see content gaps.</p></div>';
   if (!coverageData) return '<div class="gap-section"><p style="font-family:var(--font-sans);font-size:.82rem;color:var(--muted)">Loading coverage data…</p></div>';
 
+  var trackNotBuilt = {'espanol':true,'espanol-en':true}[s.course];
   var chapters = coverageData.chapters.filter(function(c){ return c.track === s.course && c.level === s.level; });
+  if (trackNotBuilt || !chapters.length) {
+    var trackHint = {'espanol':'Spanish universal (espanol/)','espanol-en':'Spanish via English (espanol-en/)','en':'English universal (a/ b/ c/)','es':'English via Spanish (es/)'}[s.course] || s.course;
+    return '<div class="gap-section">'
+      + '<p class="gs-title">'+s.level+' content</p>'
+      + '<p style="font-family:var(--font-sans);font-size:.82rem;color:var(--amber);margin:0 0 6px">No content built yet for the '+esc(trackHint)+' track at '+s.level+'.</p>'
+      + '<p style="font-family:var(--font-sans);font-size:.78rem;color:var(--muted);margin:0">Use AI Prompts &rarr; Bootstrap to generate this track, or fill it chapter by chapter via Dev Hub.</p>'
+      + '</div>';
+  }
+
   var complete = chapters.filter(function(c){ return c.status==='complete'; }).length;
   var stub = chapters.filter(function(c){ return c.status==='stub'; }).length;
   var missing = chapters.filter(function(c){ return c.status==='missing'; }).length;
@@ -602,6 +683,10 @@ function showAddForm() {
   document.getElementById('fL1').value = 'Spanish';
   document.getElementById('fCourse').value = 'en';
   document.getElementById('fLevel').value = '';
+  document.getElementById('fTargetLevel').value = '';
+  document.getElementById('fExam').value = '';
+  document.getElementById('fFormat').value = 'both';
+  document.getElementById('fOccupation').value = '';
   document.getElementById('fCode').value = '';
   document.getElementById('fAge').value = '';
   document.getElementById('fNotes').value = '';
@@ -630,6 +715,10 @@ function saveStudent() {
     l1: document.getElementById('fL1').value,
     course: document.getElementById('fCourse').value,
     level: document.getElementById('fLevel').value,
+    targetLevel: document.getElementById('fTargetLevel').value,
+    exam: document.getElementById('fExam').value,
+    format: document.getElementById('fFormat').value,
+    occupation: document.getElementById('fOccupation').value.trim(),
     code: document.getElementById('fCode').value.trim(),
     age: document.getElementById('fAge').value.trim(),
     notes: document.getElementById('fNotes').value.trim(),
@@ -653,6 +742,10 @@ function saveEditForm() {
   s.l1 = document.getElementById('efL1').value;
   s.course = document.getElementById('efCourse').value;
   s.level = document.getElementById('efLevel').value;
+  s.targetLevel = document.getElementById('efTargetLevel').value;
+  s.exam = document.getElementById('efExam').value;
+  s.format = document.getElementById('efFormat').value;
+  s.occupation = document.getElementById('efOccupation').value.trim();
   s.code = document.getElementById('efCode').value.trim();
   s.age = document.getElementById('efAge').value.trim();
   s.notes = document.getElementById('efNotes').value.trim();
