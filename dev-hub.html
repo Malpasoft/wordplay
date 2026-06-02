@@ -103,11 +103,20 @@ hr { border: none; border-top: 1px solid var(--hairline); margin: 32px 0; }
       <h3 style="margin-top:10px">What do you want to do?</h3>
       <select id="task-select" onchange="buildPrimer()">
         <option value="">— select task —</option>
-        <option value="fill-es">Fill ES flashcard stubs (71 remaining)</option>
-        <option value="new-chapter">Create a new chapter from scratch</option>
-        <option value="audit">Audit a specific file or section</option>
-        <option value="bug">Fix a bug or structure issue</option>
-        <option value="cambridge">Fill Cambridge exam pages</option>
+        <optgroup label="ES Stubs — do in order">
+          <option value="fill-es-a">Batch A: ES A1+A2 stubs (18 chapters)</option>
+          <option value="fill-es-b">Batch B: ES B1+B2 stubs (27 chapters)</option>
+          <option value="fill-es-c">Batch C: ES C1+C2 stubs (26 chapters)</option>
+        </optgroup>
+        <optgroup label="Content">
+          <option value="cambridge">Fill Cambridge exam pages (KET→CPE)</option>
+          <option value="new-chapter">Create a new chapter from scratch</option>
+        </optgroup>
+        <optgroup label="Quality">
+          <option value="verify">Verify a branch — run all checks + report</option>
+          <option value="audit">Audit a file or section for quality</option>
+          <option value="bug">Fix a bug or structure issue</option>
+        </optgroup>
         <option value="generic">General dev help</option>
       </select>
       <div id="prompt-output" class="prompt-box"></div>
@@ -172,18 +181,49 @@ hr { border: none; border-top: 1px solid var(--hairline); margin: 32px 0; }
 
   <hr>
 
-  <!-- ── SECTION 4: STATUS ── -->
+  <!-- ── SECTION 4: NEXT STEPS ── -->
   <div class="section">
-    <div class="label">Project status</div>
-    <h2>Current state</h2>
+    <div class="label">Roadmap</div>
+    <h2>Next steps — in order</h2>
+
     <div class="card">
-      <p><span class="status-dot"></span><strong>Pedagogy:</strong> 993 checks, 0 failures</p>
-      <p style="margin-top:6px"><span class="status-dot"></span><strong>Broken links:</strong> 0</p>
-      <p style="margin-top:6px"><span class="status-dot"></span><strong>Structure issues:</strong> 0 (excl. 71 ES stubs)</p>
+      <div class="meta" style="color:var(--amber);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px">Step 1 — now</div>
+      <h3>ES Batch A: A1 + A2 stubs (18 chapters)</h3>
+      <p>Select DeepSeek + "Batch A", name branch <code>content/es-a1-a2</code>, run script, verify, merge.</p>
     </div>
-    <div class="card" style="margin-top:0">
-      <h3>Up next</h3>
-      <p style="font-size:.85rem;color:var(--muted)">1. Fill 71 ES flashcard stubs (Phase 2)<br>2. Cambridge exam pages<br>3. Custom domain → auth (Phase 3)</p>
+
+    <div class="card">
+      <div class="meta" style="color:var(--amber);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px">Step 2</div>
+      <h3>ES Batch B: B1 + B2 stubs (27 chapters)</h3>
+      <p>Branch <code>content/es-b1-b2</code>. Same process. B1/B2 words = FCE phrasal verbs + collocations.</p>
+    </div>
+
+    <div class="card">
+      <div class="meta" style="color:var(--amber);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px">Step 3</div>
+      <h3>ES Batch C: C1 + C2 stubs (26 chapters)</h3>
+      <p>Branch <code>content/es-c1-c2</code>. C1/C2 = CAE/CPE academic + nuanced register.</p>
+    </div>
+
+    <div class="card">
+      <div class="meta" style="color:var(--amber);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px">Step 4</div>
+      <h3>Cambridge exam pages</h3>
+      <p>Branch <code>content/cambridge-exams</code>. KET → CPE. Real exam question formats.</p>
+    </div>
+
+    <div class="card">
+      <div class="meta" style="color:var(--amber);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px">Step 5 — needs Claude</div>
+      <h3>Auth + payments (Phase 3/4)</h3>
+      <p>Custom domain first. Then Cloudflare Worker + D1 + argon2 + passkeys. Stripe Checkout. Needs judgment — use Claude for this one.</p>
+    </div>
+
+    <div class="card" style="border-top:3px solid var(--amber)">
+      <h3>After every batch — run this</h3>
+      <p style="font-family:monospace;font-size:.78rem;background:var(--code-bg);padding:8px;border-radius:5px;margin-top:6px">
+        python3 scripts/pedagogy_check.py<br>
+        python3 scripts/check_links.py<br>
+        python3 scripts/check_structure.py
+      </p>
+      <p style="margin-top:8px;font-size:.82rem;color:var(--muted)">All must show 0 before merging to main.</p>
     </div>
   </div>
 
@@ -211,41 +251,135 @@ Key files (read via raw.githubusercontent.com/malpasoft/wordplay/main/):
   CLAUDE.md, AI_HANDOVER.md, scripts/fill_en_c1c2_vocab.py`;
 }
 
+const ES_TEMPLATE_NOTE = `TEMPLATE (read this raw file first to get the exact HTML):
+https://raw.githubusercontent.com/malpasoft/wordplay/main/es/a1/vocabulary/animals/flashcards.html
+Key parts: MASTERY_KEY, SLUG, LEVEL, WORDS [{word,ipa,def,ex}]
+speakWord() — lang='en-GB' rate=0.9 (words ARE English, UI is Spanish)
+showCard() flip interface, markMastered(), initMatch() match game
+Auto-complete: flashcards when fcSeen.size >= WORDS.length, game when completedRounds >= 5
+10 CEFR-appropriate English words per chapter. Spanish UI labels (Pronunciar, Dominar, Tarjetas, Juego, Lección).
+Word format: {id:"slug", word:"English", ipa:"/ˈɪp.ə/", def:"Spanish definition", ex:"Spanish sentence with <b>word</b> bold"}
+Write scripts/fill_es_vocab.py with a CHAPTERS dict, generate all files, run python3 scripts/pedagogy_check.py.`;
+
 const TASKS = {
-  'fill-es': `TASK: Fill the 71 Spanish-track (es/) flashcard stubs.
-Each stub has <!-- FLASHCARDS CONTENT PLACEHOLDER --> where the content should be.
-Reference: read a complete ES flashcard without PLACEHOLDER (e.g. es/a1/vocabulary/animals/flashcards.html via raw GitHub).
-Template uses: MASTERY_KEY, SLUG, LEVEL, WORDS [{word,ipa,def,ex}], speakWord() lang='en-GB' rate=0.9, showCard(), markMastered(), initMatch().
-Auto-complete: flashcards after fcSeen.size >= WORDS.length, game after completedRounds >= 5.
-10 CEFR-appropriate English words per chapter. UI language is Spanish (Pronunciar, Dominar, etc.).
-Chapters: es/a1/vocabulary/clothes,hobbies,house-and-rooms,jobs,places-in-town,weather
-  es/a2/vocabulary/cooking,feelings-emotions,health-and-body,music,problems-solutions,
-    school-subjects,shopping-and-money,sports,technology-and-media,transport-and-travel,
-    weather-detail,work-and-jobs
-  (+ b1×11, b2×16, c1×14, c2×12 — see AI_HANDOVER.md for full list)
-Write scripts/fill_es_vocab.py, run it, then run python3 scripts/pedagogy_check.py.`,
+
+  'fill-es-a': `TASK — Batch A: Fill 18 ES flashcard stubs (A1 + A2 levels).
+${ES_TEMPLATE_NOTE}
+
+Chapters to fill:
+es/a1/vocabulary/clothes
+es/a1/vocabulary/hobbies
+es/a1/vocabulary/house-and-rooms
+es/a1/vocabulary/jobs
+es/a1/vocabulary/places-in-town
+es/a1/vocabulary/weather
+es/a2/vocabulary/cooking
+es/a2/vocabulary/feelings-emotions
+es/a2/vocabulary/health-and-body
+es/a2/vocabulary/music
+es/a2/vocabulary/problems-solutions
+es/a2/vocabulary/school-subjects
+es/a2/vocabulary/shopping-and-money
+es/a2/vocabulary/sports
+es/a2/vocabulary/technology-and-media
+es/a2/vocabulary/transport-and-travel
+es/a2/vocabulary/weather-detail
+es/a2/vocabulary/work-and-jobs`,
+
+  'fill-es-b': `TASK — Batch B: Fill 27 ES flashcard stubs (B1 + B2 levels).
+${ES_TEMPLATE_NOTE}
+
+Chapters to fill:
+es/b1/vocabulary/adjective-preposition
+es/b1/vocabulary/applied-grammar-verbs
+es/b1/vocabulary/collocations-make-do
+es/b1/vocabulary/education-school
+es/b1/vocabulary/environment-nature
+es/b1/vocabulary/phrasal-verbs-get-take
+es/b1/vocabulary/phrasal-verbs-go-come
+es/b1/vocabulary/sport-leisure
+es/b1/vocabulary/technology-media
+es/b1/vocabulary/travel-holidays
+es/b1/vocabulary/word-families-basic
+es/b2/vocabulary/applied-grammar-prepositions
+es/b2/vocabulary/collocations-adj-noun
+es/b2/vocabulary/collocations-verbs
+es/b2/vocabulary/environment-climate
+es/b2/vocabulary/expressions-idioms
+es/b2/vocabulary/false-friends
+es/b2/vocabulary/health-lifestyle
+es/b2/vocabulary/phrasal-verbs-look-bring
+es/b2/vocabulary/phrasal-verbs-put-set
+es/b2/vocabulary/phrasal-verbs-turn-run
+es/b2/vocabulary/society-culture
+es/b2/vocabulary/technology-innovation
+es/b2/vocabulary/word-formation-adjectives
+es/b2/vocabulary/word-formation-nouns
+es/b2/vocabulary/word-formation-prefixes
+es/b2/vocabulary/work-careers`,
+
+  'fill-es-c': `TASK — Batch C: Fill 26 ES flashcard stubs (C1 + C2 levels).
+${ES_TEMPLATE_NOTE}
+
+Chapters to fill:
+es/c1/vocabulary/abstract-nouns
+es/c1/vocabulary/academic-verbs
+es/c1/vocabulary/academic-vocabulary
+es/c1/vocabulary/applied-grammar-register
+es/c1/vocabulary/attitudes-opinions
+es/c1/vocabulary/cause-effect
+es/c1/vocabulary/collocations-advanced
+es/c1/vocabulary/contrast-concession
+es/c1/vocabulary/formal-synonyms
+es/c1/vocabulary/idioms-fixed-expressions
+es/c1/vocabulary/paraphrasing-synonyms
+es/c1/vocabulary/register-style
+es/c1/vocabulary/topic-vocabulary-arts
+es/c1/vocabulary/word-formation-advanced
+es/c2/vocabulary/academic-collocations
+es/c2/vocabulary/advanced-idioms
+es/c2/vocabulary/applied-grammar-collocation
+es/c2/vocabulary/connotation-register
+es/c2/vocabulary/corpus-vocabulary
+es/c2/vocabulary/discourse-vocabulary
+es/c2/vocabulary/lexical-sophistication
+es/c2/vocabulary/literary-devices
+es/c2/vocabulary/nuanced-synonyms
+es/c2/vocabulary/persuasive-language
+es/c2/vocabulary/precision-vocabulary
+es/c2/vocabulary/spoken-written-modes`,
+
+  'verify': `TASK: Verify the current branch is clean and ready to merge.
+Run all three checkers and report results:
+  python3 scripts/pedagogy_check.py
+  python3 scripts/check_links.py
+  python3 scripts/check_structure.py
+Expected: pedagogy 0 failures, 0 broken links, 0 structure issues (71 ES flashcard stubs are allowed to flag as missing breadcrumb — that is expected until they are filled).
+If anything fails: fix it before pushing. Report a clear PASS or FAIL with details.`,
 
   'new-chapter': `TASK: Create a new chapter from scratch.
-Use scripts/gen_chapter.py to scaffold the folder and files, then fill with content.
-Read gen_chapter.py first to understand the V = dict(base='v123'...) version map.
+Read scripts/gen_chapter.py (raw GitHub) first — use the V = dict(base='v123'...) version map exactly.
 Chapter needs: slides.html, flashcards.html, game.html, worksheet.html, printables.html, index.html.
-Content standard: 10 words with IPA, definition, example sentence. All worksheet questions need EXPLANATIONS.
-Run python3 scripts/pedagogy_check.py after generating — must be 0 failures.`,
-
-  'audit': `TASK: Audit the specified file or section for quality and correctness.
-Check: correct CEFR level vocabulary, accurate IPA, natural example sentences, all questions have explanations, no broken links, correct nav tabs for chapter type (vocab = Flashcards/Lesson/Game only, not worksheet/printables).
-Report issues in order of severity. Do not fix without confirming first.`,
-
-  'bug': `TASK: Fix the described bug.
-Before changing anything: grep for ALL variants of the pattern across the repo (grammar and Spanish/vocab pages often differ in whitespace). Confirm file count per variant. Use Python with explicit string matching — never sed/awk.
-Verify fix on 2-3 sample files before running full set. Run python3 scripts/check_links.py and scripts/check_structure.py after.`,
-
-  'cambridge': `TASK: Fill Cambridge exam pages (KET/PET/FCE/CAE/CPE).
-These live in the exams/ directory. Pages exist but are sparse or placeholder.
-Format should match existing lesson pages: breadcrumb, chapter-nav, worksheet questions with ANSWERS and EXPLANATIONS arrays, GAME_DATA for the game page.
+Vocab chapters nav = Flashcards + Lesson + Game only (no worksheet/printables tabs).
+Grammar chapters nav = Lesson + Review + Game + Printables.
+Content: 10 words with IPA, definition, example. All worksheet questions need EXPLANATIONS array.
 Run python3 scripts/pedagogy_check.py after — must be 0 failures.`,
 
-  'generic': `TASK: (describe what you need below — paste this primer first, then explain your request)`
+  'cambridge': `TASK: Fill Cambridge exam pages (KET/PET/FCE/CAE/CPE).
+Pages live in the exams/ directory — list them with: find exams/ -name "*.html" | head -30
+Read one existing exam page first to understand the current structure.
+Format: breadcrumb, chapter-nav, worksheet with ANSWERS + EXPLANATIONS arrays, GAME_DATA for game page.
+Use real Cambridge exam question types: multiple choice, gap fill, word formation, key word transformation.
+Run python3 scripts/pedagogy_check.py after — must be 0 failures.`,
+
+  'audit': `TASK: Audit the specified file or section for quality and correctness.
+Check: CEFR-appropriate vocabulary, accurate IPA, natural example sentences, all questions have EXPLANATIONS, no broken links, correct nav for chapter type (vocab = Flashcards/Lesson/Game; grammar = Lesson/Review/Game/Printables).
+Report issues by severity. Do not fix anything without listing findings first.`,
+
+  'bug': `TASK: Fix the described bug.
+Before touching anything: grep for ALL structural variants across the repo — grammar and Spanish/vocab pages often differ in whitespace. Confirm exact file count per variant. Use Python with explicit string matching, never sed/awk. Verify on 2-3 sample files before running the full set. Run all three checkers after.`,
+
+  'generic': `TASK: (paste this primer first, then describe your request below)`
 };
 
 const AI_NOTES = {
