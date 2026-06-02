@@ -125,6 +125,10 @@ h1{font-size:1.4rem;color:var(--navy);margin:0}
 /* ── Empty overview ── */
 .empty-overview{padding:48px 24px;text-align:center;color:var(--muted);font-family:var(--font-sans);font-size:.85rem}
 .empty-overview strong{display:block;font-size:1rem;color:var(--navy);margin-bottom:6px}
+
+/* ── Cloud sync panel ── */
+.sync-panel{display:none;background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:16px;margin-bottom:16px}
+.sync-panel.visible{display:block}
 </style>
 </head>
 <body>
@@ -138,8 +142,27 @@ h1{font-size:1.4rem;color:var(--navy);margin:0}
   <div class="pro-header">
     <div>
       <h1>Student Profiles</h1>
-      <p style="font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin:2px 0 0">All data stored locally in this browser &mdash; export JSON to back up or share.</p>
+      <p id="syncStatusText" style="font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin:2px 0 0">All data stored locally &mdash; set up cloud sync to access from any device.</p>
     </div>
+    <div class="pro-header-actions">
+      <button class="ghost-btn" onclick="toggleSyncPanel()">Cloud sync</button>
+    </div>
+  </div>
+
+  <div id="syncPanel" class="sync-panel">
+    <div style="display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap">
+      <div style="flex:1;min-width:200px">
+        <label class="f-label" for="syncCodeInput">Sync passphrase (min 8 chars)</label>
+        <input class="f-input" id="syncCodeInput" type="text" placeholder="e.g. wordplay-emi-2026" autocomplete="off">
+      </div>
+      <div style="display:flex;gap:6px">
+        <button class="f-save" onclick="activateSync()">Activate</button>
+        <button class="ghost-btn" id="syncNowBtn" style="display:none" onclick="syncNow()">Sync now</button>
+        <button class="ghost-btn" id="clearSyncBtn" style="display:none" onclick="clearSync()">Disconnect</button>
+      </div>
+    </div>
+    <p style="font-family:var(--font-sans);font-size:.65rem;color:var(--muted);margin:8px 0 4px">Enter the same passphrase on any device to merge profiles. Keep it private.</p>
+    <p id="syncDetailStatus" style="font-family:var(--font-sans);font-size:.68rem;margin:0"></p>
   </div>
 
   <nav class="tab-nav" id="tabNav">
@@ -234,17 +257,25 @@ h1{font-size:1.4rem;color:var(--navy);margin:0}
 <script>
 /* ─────────────────────────── state ─────────────────────────── */
 var STORAGE_KEY = 'wordplay_student_profiles';
+var SYNC_CODE_KEY = 'wordplay_sync_code';
+var SYNC_LAST_KEY = 'wordplay_sync_last';
 var students = [];
 var coverageData = null;
 var currentId = null;
 var activeTab = 'overview';
+var syncCode = null;
+var syncBusy = false;
 
 /* ─────────────────────────── persistence ─────────────────────── */
 function loadStudents() {
   try { students = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch(e) { students = []; }
 }
-function saveStudents() {
+function saveStudentsLocal() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
+}
+function saveStudents() {
+  saveStudentsLocal();
+  syncPush();
 }
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
 
@@ -690,6 +721,135 @@ function downloadJSON(data, filename) {
   a.click();
 }
 
+/* ─────────────────────────── cloud sync ─────────────────── */
+function loadSyncCode() {
+  syncCode = localStorage.getItem(SYNC_CODE_KEY) || null;
+}
+
+function updateSyncStatusText() {
+  var el = document.getElementById('syncStatusText');
+  var lastRaw = localStorage.getItem(SYNC_LAST_KEY);
+  if (!syncCode) {
+    el.style.color = '';
+    el.textContent = 'All data stored locally — set up cloud sync to access from any device.';
+    return;
+  }
+  if (lastRaw) {
+    var diff = Math.round((Date.now() - parseInt(lastRaw)) / 1000);
+    var ago = diff < 60 ? 'just now' : diff < 3600 ? Math.floor(diff / 60) + 'm ago' : Math.floor(diff / 3600) + 'h ago';
+    el.style.color = '#27ae60';
+    el.textContent = 'Synced ' + ago + ' via cloud.';
+  } else {
+    el.style.color = '';
+    el.textContent = 'Cloud sync active — syncing now…';
+  }
+}
+
+function toggleSyncPanel() {
+  var panel = document.getElementById('syncPanel');
+  var visible = panel.classList.toggle('visible');
+  if (visible) {
+    document.getElementById('syncCodeInput').value = syncCode || '';
+    document.getElementById('syncNowBtn').style.display = syncCode ? 'inline-block' : 'none';
+    document.getElementById('clearSyncBtn').style.display = syncCode ? 'inline-block' : 'none';
+    document.getElementById('syncDetailStatus').textContent = '';
+    if (!syncCode) document.getElementById('syncCodeInput').focus();
+  }
+}
+
+function activateSync() {
+  var code = document.getElementById('syncCodeInput').value.trim();
+  var statusEl = document.getElementById('syncDetailStatus');
+  if (code.length < 8) {
+    statusEl.style.color = '#c0392b';
+    statusEl.textContent = 'Passphrase must be at least 8 characters.';
+    return;
+  }
+  syncCode = code;
+  localStorage.setItem(SYNC_CODE_KEY, code);
+  document.getElementById('syncNowBtn').style.display = 'inline-block';
+  document.getElementById('clearSyncBtn').style.display = 'inline-block';
+  syncNow();
+}
+
+function clearSync() {
+  if (!confirm('Disconnect cloud sync? Your local profiles are not deleted.')) return;
+  syncCode = null;
+  localStorage.removeItem(SYNC_CODE_KEY);
+  localStorage.removeItem(SYNC_LAST_KEY);
+  document.getElementById('syncPanel').classList.remove('visible');
+  updateSyncStatusText();
+}
+
+function syncNow() {
+  if (!syncCode || syncBusy) return;
+  syncBusy = true;
+  var statusEl = document.getElementById('syncDetailStatus');
+  statusEl.style.color = 'var(--amber)';
+  statusEl.textContent = 'Syncing…';
+
+  fetch('/api/profiles/' + encodeURIComponent(syncCode))
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      var remote = d.profiles || [];
+      students = mergeProfiles(students, remote);
+      saveStudentsLocal();
+      return fetch('/api/profiles/' + encodeURIComponent(syncCode), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ profiles: students })
+      });
+    })
+    .then(function(r) { return r.json(); })
+    .then(function() {
+      localStorage.setItem(SYNC_LAST_KEY, String(Date.now()));
+      syncBusy = false;
+      var statusEl = document.getElementById('syncDetailStatus');
+      statusEl.style.color = '#27ae60';
+      statusEl.textContent = 'Synced successfully.';
+      updateSyncStatusText();
+      renderOverview();
+      if (activeTab === 'roster') renderRoster();
+      if (activeTab === 'student' && currentId) renderStudentDetail(currentId);
+    })
+    .catch(function() {
+      syncBusy = false;
+      var statusEl = document.getElementById('syncDetailStatus');
+      statusEl.style.color = '#c0392b';
+      statusEl.textContent = 'Sync failed — check your connection.';
+    });
+}
+
+function syncPush() {
+  if (!syncCode || syncBusy) return;
+  fetch('/api/profiles/' + encodeURIComponent(syncCode), {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ profiles: students })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function() {
+    localStorage.setItem(SYNC_LAST_KEY, String(Date.now()));
+    updateSyncStatusText();
+  })
+  .catch(function() {});
+}
+
+function mergeProfiles(local, remote) {
+  var map = {};
+  local.forEach(function(s) { map[s.id] = s; });
+  remote.forEach(function(s) {
+    if (!map[s.id]) {
+      map[s.id] = s;
+    } else {
+      var localTs = new Date(map[s.id].updatedAt || 0).getTime();
+      var remoteTs = new Date(s.updatedAt || 0).getTime();
+      if (remoteTs > localTs) map[s.id] = s;
+    }
+  });
+  return Object.values(map);
+}
+
 /* ─────────────────────────── utils ─────────────────────── */
 function esc(s) {
   if (s == null) return '';
@@ -698,6 +858,9 @@ function esc(s) {
 
 /* ─────────────────────────── init ─────────────────────── */
 loadStudents();
+loadSyncCode();
+updateSyncStatusText();
+if (syncCode) syncNow();
 loadCoverage();
 renderOverview();
 </script>
