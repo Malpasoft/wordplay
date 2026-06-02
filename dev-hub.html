@@ -169,11 +169,15 @@ hr { border: none; border-top: 1px solid var(--hairline); margin: 32px 0; }
     <h2>Key repo files (raw)</h2>
     <p style="font-size:.85rem;color:var(--muted);margin-bottom:12px">Paste these URLs into any AI with web browsing — it can read them directly.</p>
     <ul class="link-list">
-      <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/CLAUDE.md" target="_blank">CLAUDE.md — project rules</a></li>
-      <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/AI_HANDOVER.md" target="_blank">AI_HANDOVER.md — full context</a></li>
+      <li><a href="coverage.html" target="_blank">coverage.html — content status (complete / stub / missing)</a></li>
+      <li><a href="profile.html" target="_blank">profile.html — student profiles + content gap view</a></li>
+      <li><a href="dashboard.html" target="_blank">dashboard.html — student progress radar</a></li>
+      <li><a href="placement-test.html" target="_blank">placement-test.html — CEFR level test</a></li>
+      <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/CLAUDE.md" target="_blank">CLAUDE.md — project rules (raw)</a></li>
+      <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/AI_HANDOVER.md" target="_blank">AI_HANDOVER.md — full context (raw)</a></li>
       <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/scripts/gen_chapter.py" target="_blank">gen_chapter.py — scaffold generator</a></li>
       <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/scripts/fill_chapter.py" target="_blank">fill_chapter.py — content filler</a></li>
-      <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/scripts/fill_en_c1c2_vocab.py" target="_blank">fill_en_c1c2_vocab.py — reference fill script</a></li>
+      <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/scripts/gen_coverage.py" target="_blank">gen_coverage.py — regenerate coverage data</a></li>
       <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/scripts/pedagogy_check.py" target="_blank">pedagogy_check.py — quality gate</a></li>
       <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/shared/store.js" target="_blank">store.js — localStorage engine</a></li>
     </ul>
@@ -186,16 +190,22 @@ hr { border: none; border-top: 1px solid var(--hairline); margin: 32px 0; }
     <div class="label">Roadmap</div>
     <h2>Next steps — in order</h2>
 
+    <div class="card" style="border-left:3px solid #27ae60">
+      <div class="meta" style="color:#27ae60;font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px">Done</div>
+      <h3>Dev toolkit + student profiles</h3>
+      <p><strong>coverage.html</strong> shows complete vs stub per level/track. <strong>profile.html</strong> lets you add each student (name, L1, level, notes) and see exactly which chapters to finish for them. Regenerate coverage after filling content: <code>python3 scripts/gen_coverage.py</code></p>
+    </div>
+
     <div class="card">
       <div class="meta" style="color:var(--amber);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px">Step 1 — now</div>
-      <h3>ES Batch A: A1 + A2 stubs (18 chapters)</h3>
-      <p>Select DeepSeek + "Batch A", name branch <code>content/es-a1-a2</code>, run script, verify, merge.</p>
+      <h3>ES Batch A: A1 + A2 flashcard stubs (18 chapters)</h3>
+      <p>Open <a href="coverage.html" target="_blank">coverage.html</a> → Spanish tab → see amber stubs. Select DeepSeek + "Batch A", name branch <code>content/es-a1-a2</code>, run, verify, merge.</p>
     </div>
 
     <div class="card">
       <div class="meta" style="color:var(--amber);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px">Step 2</div>
       <h3>ES Batch B: B1 + B2 stubs (27 chapters)</h3>
-      <p>Branch <code>content/es-b1-b2</code>. Same process. B1/B2 words = FCE phrasal verbs + collocations.</p>
+      <p>Branch <code>content/es-b1-b2</code>. B1/B2 words = FCE phrasal verbs + collocations. After merging, re-run <code>gen_coverage.py</code> and check <a href="profile.html" target="_blank">profile.html</a> for any student at B1/B2 ES.</p>
     </div>
 
     <div class="card">
@@ -212,8 +222,8 @@ hr { border: none; border-top: 1px solid var(--hairline); margin: 32px 0; }
 
     <div class="card">
       <div class="meta" style="color:var(--amber);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px">Step 5 — needs Claude</div>
-      <h3>Auth + payments (Phase 3/4)</h3>
-      <p>Custom domain first. Then Cloudflare Worker + D1 + argon2 + passkeys. Stripe Checkout. Needs judgment — use Claude for this one.</p>
+      <h3>Auth + cloud sync (Phase 3)</h3>
+      <p>Custom domain first. Then Cloudflare Worker + D1 + argon2 + passkeys. Profiles migrate from localStorage to real accounts. Needs judgment — use Claude for this one.</p>
     </div>
 
     <div class="card" style="border-top:3px solid var(--amber)">
@@ -221,9 +231,10 @@ hr { border: none; border-top: 1px solid var(--hairline); margin: 32px 0; }
       <p style="font-family:monospace;font-size:.78rem;background:var(--code-bg);padding:8px;border-radius:5px;margin-top:6px">
         python3 scripts/pedagogy_check.py<br>
         python3 scripts/check_links.py<br>
-        python3 scripts/check_structure.py
+        python3 scripts/check_structure.py<br>
+        python3 scripts/gen_coverage.py
       </p>
-      <p style="margin-top:8px;font-size:.82rem;color:var(--muted)">All must show 0 before merging to main.</p>
+      <p style="margin-top:8px;font-size:.82rem;color:var(--muted)">First three must show 0 failures before merging. gen_coverage updates the teacher view.</p>
     </div>
   </div>
 

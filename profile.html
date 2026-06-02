@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>Student Profiles | Word Play</title>
+<link rel="stylesheet" href="shared/base.css?v=v123">
+<script src="shared/dark-init.js?v=v109"></script>
+<style>
+.pro-wrap{max-width:960px;margin:0 auto;padding:24px 16px}
+h1{font-size:1.5rem;color:var(--navy);margin:0 0 4px}
+.pro-meta{font-family:var(--font-sans);font-size:.78rem;color:var(--muted);margin-bottom:24px}
+
+/* Layout */
+.pro-layout{display:grid;grid-template-columns:260px 1fr;gap:24px;align-items:start}
+@media(max-width:640px){.pro-layout{grid-template-columns:1fr}}
+
+/* Sidebar — student list */
+.pro-sidebar{}
+.pro-list-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.pro-list-title{font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
+.pro-add-btn{font-family:var(--font-sans);font-size:.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:3px;border:1.5px solid var(--hairline);background:transparent;color:var(--ink);cursor:pointer;transition:border-color .15s}
+.pro-add-btn:hover{border-color:var(--amber);color:var(--amber)}
+
+.student-card{padding:10px 12px;border-radius:6px;border:1px solid var(--hairline);background:var(--paper);margin-bottom:8px;cursor:pointer;transition:border-color .15s}
+.student-card:hover{border-color:var(--ink)}
+.student-card.active{border-color:var(--amber);background:rgba(184,134,11,.05)}
+.sc-name{font-weight:700;font-size:.9rem;color:var(--ink)}
+.sc-meta{font-family:var(--font-sans);font-size:.68rem;color:var(--muted);margin-top:2px}
+.sc-level{display:inline-block;font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:1px 6px;border-radius:2px;border:1px solid var(--amber);color:var(--amber);margin-right:4px}
+
+.no-students{padding:24px 0;text-align:center;color:var(--muted);font-family:var(--font-sans);font-size:.82rem}
+
+/* Main panel */
+.pro-main{}
+
+/* Form */
+.pro-form{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:20px;display:none}
+.pro-form.visible{display:block}
+.pro-form h2{font-size:1.1rem;color:var(--navy);margin:0 0 16px}
+.form-row{margin-bottom:14px}
+.form-label{font-family:var(--font-sans);font-size:.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:5px}
+.form-input,.form-select,.form-textarea{width:100%;box-sizing:border-box;padding:9px 12px;font-family:var(--font-sans);font-size:.9rem;border:1.5px solid var(--hairline);border-radius:4px;background:var(--paper);color:var(--ink);transition:border-color .15s}
+.form-input:focus,.form-select:focus,.form-textarea:focus{outline:none;border-color:var(--amber)}
+.form-textarea{min-height:72px;resize:vertical}
+.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-actions{display:flex;gap:8px;margin-top:16px}
+.form-save{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 20px;border-radius:4px;border:none;background:var(--ink);color:var(--paper);cursor:pointer}
+.form-cancel{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 20px;border-radius:4px;border:1.5px solid var(--hairline);background:transparent;color:var(--ink);cursor:pointer}
+
+/* Student detail view */
+.pro-detail{display:none}
+.pro-detail.visible{display:block}
+.detail-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:20px;padding:20px;background:var(--paper);border:1px solid var(--hairline);border-radius:8px}
+.detail-avatar{width:44px;height:44px;border-radius:50%;background:var(--amber);display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:700;color:#fff;flex-shrink:0}
+.detail-info{flex:1}
+.detail-name{font-size:1.2rem;font-weight:700;color:var(--navy);margin:0 0 4px}
+.detail-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.detail-tag{font-family:var(--font-sans);font-size:.62rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:3px;border:1px solid var(--hairline);color:var(--muted)}
+.detail-tag.level-tag{border-color:var(--amber);color:var(--amber)}
+.detail-notes{font-size:.85rem;color:var(--muted);font-style:italic;margin:0}
+.detail-actions{display:flex;gap:6px;margin-left:auto;flex-shrink:0}
+.detail-btn{font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border-radius:3px;border:1.5px solid var(--hairline);background:transparent;color:var(--ink);cursor:pointer}
+.detail-btn.danger{border-color:#c0392b;color:#c0392b}
+
+/* Content gap section */
+.gap-section{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:20px;margin-bottom:16px}
+.gap-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+.gap-title{font-size:1rem;font-weight:700;color:var(--navy)}
+.gap-subtitle{font-family:var(--font-sans);font-size:.72rem;color:var(--muted)}
+.gap-bar-row{margin-bottom:12px}
+.gap-bar-label{font-family:var(--font-sans);font-size:.68rem;font-weight:700;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px}
+.gap-bar{height:8px;border-radius:4px;overflow:hidden;display:flex;background:var(--hairline)}
+.gap-seg-complete{height:100%;background:#27ae60}
+.gap-seg-stub{height:100%;background:var(--amber)}
+.gap-seg-missing{height:100%;background:#c0392b}
+.gap-stat{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin-top:3px}
+.gap-stat strong{color:var(--ink)}
+
+.ch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px;margin-top:12px}
+.ch-chip{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:4px;border:1px solid var(--hairline);font-size:.78rem;color:var(--ink);text-decoration:none;transition:border-color .15s}
+.ch-chip:hover{border-color:var(--ink)}
+.ch-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.dot-complete{background:#27ae60}
+.dot-stub{background:var(--amber)}
+.dot-missing{background:#c0392b}
+.sec-label{font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:12px 0 6px}
+
+.coverage-loading{padding:24px;text-align:center;color:var(--muted);font-family:var(--font-sans);font-size:.82rem}
+
+/* Export */
+.export-bar{display:flex;gap:8px;margin-top:16px;padding-top:16px;border-top:1px solid var(--hairline)}
+.export-btn{font-family:var(--font-sans);font-size:.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:3px;border:1.5px solid var(--hairline);background:transparent;color:var(--muted);cursor:pointer;transition:border-color .15s,color .15s}
+.export-btn:hover{border-color:var(--ink);color:var(--ink)}
+
+/* Placement test link */
+.placement-hint{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin-top:6px}
+.placement-hint a{color:var(--amber)}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="index.html" class="back back-link" aria-label="Back"></a>
+  <a href="index.html" class="brand">Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+
+<div class="pro-wrap">
+  <h1>Student Profiles</h1>
+  <p class="pro-meta">Identify each student and see what content to finish for them. All data stored locally in this browser.</p>
+
+  <div class="pro-layout">
+    <!-- Sidebar: student list -->
+    <div class="pro-sidebar">
+      <div class="pro-list-head">
+        <span class="pro-list-title">Students</span>
+        <button class="pro-add-btn" onclick="showAddForm()">+ Add</button>
+      </div>
+      <div id="studentList"></div>
+    </div>
+
+    <!-- Main panel -->
+    <div class="pro-main">
+      <!-- Add / Edit form -->
+      <div class="pro-form" id="proForm">
+        <h2 id="formTitle">New student</h2>
+        <input type="hidden" id="editId">
+
+        <div class="form-row">
+          <label class="form-label" for="fName">Name</label>
+          <input class="form-input" id="fName" type="text" placeholder="e.g. Miguel">
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-row" style="margin-bottom:0">
+            <label class="form-label" for="fL1">Native language (L1)</label>
+            <select class="form-select" id="fL1">
+              <option value="Spanish">Spanish</option>
+              <option value="English">English</option>
+              <option value="French">French</option>
+              <option value="Portuguese">Portuguese</option>
+              <option value="Italian">Italian</option>
+              <option value="German">German</option>
+              <option value="Arabic">Arabic</option>
+              <option value="Chinese">Chinese</option>
+              <option value="Japanese">Japanese</option>
+              <option value="Russian">Russian</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-row" style="margin-bottom:0">
+            <label class="form-label" for="fCourse">Course track</label>
+            <select class="form-select" id="fCourse">
+              <option value="en">English (A–C)</option>
+              <option value="es">Spanish for Spanish speakers (ES)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row" style="margin-top:14px">
+          <label class="form-label" for="fLevel">Current level</label>
+          <select class="form-select" id="fLevel">
+            <option value="">— not assessed yet —</option>
+            <option value="A1">A1 — Beginner</option>
+            <option value="A2">A2 — Elementary</option>
+            <option value="B1">B1 — Intermediate</option>
+            <option value="B2">B2 — Upper Intermediate</option>
+            <option value="C1">C1 — Advanced</option>
+            <option value="C2">C2 — Proficiency</option>
+          </select>
+          <p class="placement-hint">Not sure? <a href="placement-test.html" target="_blank">Run the placement test</a> in a new tab, then return and select the recommended level.</p>
+        </div>
+
+        <div class="form-row">
+          <label class="form-label" for="fNotes">Notes (age, goals, occupation, weak areas…)</label>
+          <textarea class="form-textarea" id="fNotes" placeholder="e.g. 42 years old, works in finance, strong grammar but weak spoken fluency"></textarea>
+        </div>
+
+        <div class="form-row">
+          <label class="form-label" for="fCode">Class code (optional)</label>
+          <input class="form-input" id="fCode" type="text" placeholder="e.g. tuesday-group">
+        </div>
+
+        <div class="form-actions">
+          <button class="form-save" onclick="saveStudent()">Save student</button>
+          <button class="form-cancel" onclick="hideForm()">Cancel</button>
+        </div>
+      </div>
+
+      <!-- Student detail view -->
+      <div class="pro-detail" id="proDetail">
+        <div class="detail-header">
+          <div class="detail-avatar" id="detailAvatar"></div>
+          <div class="detail-info">
+            <div class="detail-name" id="detailName"></div>
+            <div class="detail-tags" id="detailTags"></div>
+            <p class="detail-notes" id="detailNotes"></p>
+          </div>
+          <div class="detail-actions">
+            <button class="detail-btn" onclick="editCurrent()">Edit</button>
+            <button class="detail-btn danger" onclick="deleteCurrent()">Delete</button>
+          </div>
+        </div>
+
+        <div id="contentGap"></div>
+
+        <div class="export-bar">
+          <button class="export-btn" onclick="exportJSON()">Export JSON</button>
+          <button class="export-btn" onclick="exportAll()">Export all students</button>
+        </div>
+      </div>
+
+      <!-- Empty state -->
+      <div id="emptyState" style="padding:40px 0;text-align:center;color:var(--muted);font-family:var(--font-sans);font-size:.85rem">
+        Add a student to get started.
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">Word Play &middot; Cambridge English A1&rarr;C2</footer>
+
+<script>
+var STORAGE_KEY = 'wordplay_student_profiles';
+var coverageData = null;
+var students = [];
+var currentId = null;
+
+/* ---- Storage ---- */
+function load() {
+  try { students = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch(e) { students = []; }
+}
+function save() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
+}
+function uid() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+}
+
+/* ---- Coverage data ---- */
+function loadCoverage() {
+  fetch('shared/coverage-data.json')
+    .then(function(r){ return r.json(); })
+    .then(function(d){ coverageData = d; if (currentId) renderGap(currentId); })
+    .catch(function(){ coverageData = null; });
+}
+
+/* ---- Render student list ---- */
+function renderList() {
+  var el = document.getElementById('studentList');
+  if (!students.length) {
+    el.innerHTML = '<div class="no-students">No students yet.</div>';
+    return;
+  }
+  el.innerHTML = students.map(function(s) {
+    var active = s.id === currentId ? ' active' : '';
+    var levelTag = s.level ? '<span class="sc-level">'+s.level+'</span>' : '';
+    return '<div class="student-card'+active+'" onclick="selectStudent(\''+s.id+'\')">'
+      + '<div class="sc-name">'+esc(s.name)+'</div>'
+      + '<div class="sc-meta">'+levelTag+esc(s.l1)+' &rarr; '+trackLabel(s.course)+'</div>'
+      + '</div>';
+  }).join('');
+}
+
+function trackLabel(course) {
+  return course === 'es' ? 'ES track' : 'EN track';
+}
+
+/* ---- Select student ---- */
+function selectStudent(id) {
+  currentId = id;
+  var s = students.find(function(x){ return x.id === id; });
+  if (!s) return;
+  hideForm();
+  document.getElementById('emptyState').style.display = 'none';
+  document.getElementById('proDetail').classList.add('visible');
+  renderList();
+
+  // Avatar initials
+  var initials = s.name.trim().split(/\s+/).map(function(w){return w[0]}).slice(0,2).join('').toUpperCase();
+  document.getElementById('detailAvatar').textContent = initials;
+
+  document.getElementById('detailName').textContent = s.name;
+
+  var tags = '';
+  if (s.level) tags += '<span class="detail-tag level-tag">'+s.level+'</span>';
+  tags += '<span class="detail-tag">'+esc(s.l1)+'</span>';
+  tags += '<span class="detail-tag">'+trackLabel(s.course)+'</span>';
+  if (s.code) tags += '<span class="detail-tag">'+esc(s.code)+'</span>';
+  document.getElementById('detailTags').innerHTML = tags;
+
+  document.getElementById('detailNotes').textContent = s.notes || '';
+
+  renderGap(id);
+}
+
+/* ---- Content gap for selected student ---- */
+function renderGap(id) {
+  var s = students.find(function(x){ return x.id === id; });
+  var el = document.getElementById('contentGap');
+  if (!s || !s.level) {
+    el.innerHTML = '<div class="gap-section"><p style="color:var(--muted);font-family:var(--font-sans);font-size:.82rem">Set a level for this student to see content gaps.</p></div>';
+    return;
+  }
+  if (!coverageData) {
+    el.innerHTML = '<div class="gap-section"><p class="coverage-loading">Loading coverage data…</p></div>';
+    return;
+  }
+
+  var chapters = coverageData.chapters.filter(function(c){
+    return c.track === s.course && c.level === s.level;
+  });
+
+  var complete = chapters.filter(function(c){return c.status==='complete'}).length;
+  var stub = chapters.filter(function(c){return c.status==='stub'}).length;
+  var missing = chapters.filter(function(c){return c.status==='missing'}).length;
+  var total = chapters.length;
+
+  var pct = total ? Math.round(complete/total*100) : 0;
+  var cPct = total ? Math.round(complete/total*100) : 0;
+  var sPct = total ? Math.round(stub/total*100) : 0;
+  var mPct = total ? Math.round(missing/total*100) : 0;
+
+  var sectionLabels = {grammar:'Grammar',vocabulary:'Vocabulary',writing:'Writing'};
+  var sectionOrder = ['grammar','vocabulary','writing'];
+
+  var html = '<div class="gap-section">';
+  html += '<div class="gap-head"><span class="gap-title">'+s.level+' content — '+trackLabel(s.course)+'</span>';
+  html += '<span class="gap-subtitle">'+complete+'/'+total+' chapters ready ('+pct+'%)</span></div>';
+
+  html += '<div class="gap-bar" style="margin-bottom:6px"><div class="gap-seg-complete" style="width:'+cPct+'%"></div><div class="gap-seg-stub" style="width:'+sPct+'%"></div><div class="gap-seg-missing" style="width:'+mPct+'%"></div></div>';
+
+  var statParts = [];
+  if (complete) statParts.push('<strong>'+complete+' complete</strong>');
+  if (stub) statParts.push('<span style="color:var(--amber)">'+stub+' need content</span>');
+  if (missing) statParts.push('<span style="color:#c0392b">'+missing+' missing files</span>');
+  html += '<p class="gap-stat">'+statParts.join(' &middot; ')+'</p>';
+
+  if (stub > 0 || missing > 0) {
+    html += '<p style="font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin:12px 0 4px">Chapters needing work:</p>';
+    html += '<div class="ch-grid">';
+    sectionOrder.forEach(function(sec) {
+      var secChaps = chapters.filter(function(c){return c.section===sec && c.status!=='complete'});
+      if (!secChaps.length) return;
+      html += '<div style="grid-column:1/-1" class="sec-label">'+sectionLabels[sec]+'</div>';
+      secChaps.forEach(function(c) {
+        html += '<a class="ch-chip" href="'+c.url+'" target="_blank"><div class="ch-dot dot-'+c.status+'"></div>'+esc(c.title)+'</a>';
+      });
+    });
+    html += '</div>';
+  } else {
+    html += '<p style="font-family:var(--font-sans);font-size:.82rem;color:#27ae60;margin-top:12px">All '+s.level+' content is complete for this track.</p>';
+  }
+
+  html += '</div>';
+  el.innerHTML = html;
+}
+
+/* ---- Form ---- */
+function showAddForm() {
+  document.getElementById('editId').value = '';
+  document.getElementById('formTitle').textContent = 'New student';
+  document.getElementById('fName').value = '';
+  document.getElementById('fL1').value = 'Spanish';
+  document.getElementById('fCourse').value = 'en';
+  document.getElementById('fLevel').value = '';
+  document.getElementById('fNotes').value = '';
+  document.getElementById('fCode').value = '';
+  document.getElementById('proDetail').classList.remove('visible');
+  document.getElementById('emptyState').style.display = 'none';
+  document.getElementById('proForm').classList.add('visible');
+  document.getElementById('fName').focus();
+}
+
+function editCurrent() {
+  var s = students.find(function(x){ return x.id === currentId; });
+  if (!s) return;
+  document.getElementById('editId').value = s.id;
+  document.getElementById('formTitle').textContent = 'Edit student';
+  document.getElementById('fName').value = s.name;
+  document.getElementById('fL1').value = s.l1;
+  document.getElementById('fCourse').value = s.course;
+  document.getElementById('fLevel').value = s.level || '';
+  document.getElementById('fNotes').value = s.notes || '';
+  document.getElementById('fCode').value = s.code || '';
+  document.getElementById('proDetail').classList.remove('visible');
+  document.getElementById('proForm').classList.add('visible');
+  document.getElementById('fName').focus();
+}
+
+function hideForm() {
+  document.getElementById('proForm').classList.remove('visible');
+  if (currentId) {
+    document.getElementById('proDetail').classList.add('visible');
+  } else if (!students.length) {
+    document.getElementById('emptyState').style.display = '';
+  }
+}
+
+function saveStudent() {
+  var name = document.getElementById('fName').value.trim();
+  if (!name) { document.getElementById('fName').focus(); return; }
+
+  var id = document.getElementById('editId').value || uid();
+  var s = {
+    id: id,
+    name: name,
+    l1: document.getElementById('fL1').value,
+    course: document.getElementById('fCourse').value,
+    level: document.getElementById('fLevel').value,
+    notes: document.getElementById('fNotes').value.trim(),
+    code: document.getElementById('fCode').value.trim(),
+    updatedAt: new Date().toISOString()
+  };
+
+  var idx = students.findIndex(function(x){ return x.id === id; });
+  if (idx >= 0) students[idx] = s;
+  else students.push(s);
+
+  save();
+  document.getElementById('proForm').classList.remove('visible');
+  currentId = id;
+  renderList();
+  selectStudent(id);
+}
+
+function deleteCurrent() {
+  var s = students.find(function(x){ return x.id === currentId; });
+  if (!s || !confirm('Delete '+s.name+'?')) return;
+  students = students.filter(function(x){ return x.id !== currentId; });
+  save();
+  currentId = null;
+  document.getElementById('proDetail').classList.remove('visible');
+  renderList();
+  if (!students.length) document.getElementById('emptyState').style.display = '';
+}
+
+/* ---- Export ---- */
+function exportJSON() {
+  var s = students.find(function(x){ return x.id === currentId; });
+  if (!s) return;
+  downloadJSON([s], s.name.replace(/\s+/g,'_')+'_profile.json');
+}
+function exportAll() {
+  downloadJSON(students, 'wordplay_students_'+new Date().toISOString().slice(0,10)+'.json');
+}
+function downloadJSON(data, filename) {
+  var blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
+}
+
+function esc(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ---- Init ---- */
+load();
+loadCoverage();
+renderList();
+if (students.length) {
+  selectStudent(students[0].id);
+} else {
+  document.getElementById('emptyState').style.display = '';
+}
+</script>
+</body>
+</html>
