@@ -163,6 +163,20 @@ hr { border: none; border-top: 1px solid var(--hairline); margin: 32px 0; }
 
   <hr>
 
+  <!-- ── SECTION 2b: CLASS CONTEXT ── -->
+  <div class="section">
+    <div class="label">Class context</div>
+    <h2>Student roster snapshot</h2>
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:12px">Paste this into any AI so it knows what content to prioritise for your actual students.</p>
+    <div style="position:relative">
+      <textarea id="classContext" rows="8" readonly style="width:100%;box-sizing:border-box;font-family:monospace;font-size:.78rem;padding:12px;border:1.5px solid var(--hairline);border-radius:6px;background:var(--paper);color:var(--ink);resize:vertical" placeholder="Loading student profiles…"></textarea>
+      <button onclick="copyClassContext()" style="position:absolute;top:8px;right:8px;font-family:var(--font-sans);font-size:.62rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:3px;border:1.5px solid var(--hairline);background:var(--paper);color:var(--muted);cursor:pointer">Copy</button>
+    </div>
+    <p style="font-size:.75rem;color:var(--muted);margin-top:6px">Add students in <a href="profile.html" target="_blank">profile.html</a> first. This reads your current student list from localStorage.</p>
+  </div>
+
+  <hr>
+
   <!-- ── SECTION 3: RAW FILE LINKS ── -->
   <div class="section">
     <div class="label">Quick links</div>
@@ -242,6 +256,63 @@ hr { border: none; border-top: 1px solid var(--hairline); margin: 32px 0; }
 
 <script>
 const REPO = 'malpasoft/wordplay';
+
+/* ── Class context snapshot ── */
+function buildClassContext() {
+  try {
+    var students = JSON.parse(localStorage.getItem('wordplay_student_profiles')) || [];
+    if (!students.length) return 'No students found in profile.html yet.';
+
+    var levelOrder = {A1:1,A2:2,B1:3,B2:4,C1:5,C2:6};
+    students.sort(function(a,b){ return (levelOrder[a.level]||9)-(levelOrder[b.level]||9)||a.name.localeCompare(b.name); });
+
+    var lines = ['STUDENT ROSTER — ' + new Date().toLocaleDateString()];
+    lines.push('');
+
+    students.forEach(function(s) {
+      var trackLabel = s.course === 'es' ? 'Spanish→English (ES)' : 'English (EN)';
+      var parts = [s.name, s.level || 'No level', s.l1 + ' speaker', trackLabel];
+      if (s.age) parts.push('age ' + s.age);
+      if (s.code) parts.push('group: ' + s.code);
+      lines.push('• ' + parts.join(' | '));
+      if (s.notes) lines.push('  Notes: ' + s.notes);
+    });
+
+    // Group by track+level for priority summary
+    lines.push('');
+    lines.push('PRIORITY — students by level:');
+    var groups = {};
+    students.forEach(function(s) {
+      if (!s.level) return;
+      var key = s.course.toUpperCase() + ' ' + s.level;
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(s.name);
+    });
+    Object.keys(groups).sort().forEach(function(k) {
+      lines.push('• ' + k + ': ' + groups[k].join(', ') + ' (' + groups[k].length + ' student' + (groups[k].length!==1?'s':'')+')');
+    });
+
+    lines.push('');
+    lines.push('Focus content fill on the levels with the most students first.');
+    lines.push('Check coverage.html → Spanish tab to see which chapters are stubs.');
+
+    return lines.join('\n');
+  } catch(e) {
+    return 'Could not load student profiles.';
+  }
+}
+
+function copyClassContext() {
+  var text = document.getElementById('classContext').value;
+  navigator.clipboard.writeText(text).then(function(){ alert('Copied!'); });
+}
+
+function refreshClassContext() {
+  var ta = document.getElementById('classContext');
+  if (ta) ta.value = buildClassContext();
+}
+
+window.addEventListener('load', refreshClassContext);
 
 function getDevBranch() {
   return document.getElementById('dev-branch').value.trim() || 'content/dev';

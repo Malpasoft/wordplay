@@ -9,95 +9,122 @@
 <link rel="stylesheet" href="shared/base.css?v=v123">
 <script src="shared/dark-init.js?v=v109"></script>
 <style>
-.pro-wrap{max-width:960px;margin:0 auto;padding:24px 16px}
-h1{font-size:1.5rem;color:var(--navy);margin:0 0 4px}
-.pro-meta{font-family:var(--font-sans);font-size:.78rem;color:var(--muted);margin-bottom:24px}
+/* ── Layout ── */
+.pro-wrap{max-width:1000px;margin:0 auto;padding:20px 16px}
+h1{font-size:1.4rem;color:var(--navy);margin:0}
+.pro-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.pro-header-actions{margin-left:auto;display:flex;gap:8px}
 
-/* Layout */
-.pro-layout{display:grid;grid-template-columns:260px 1fr;gap:24px;align-items:start}
-@media(max-width:640px){.pro-layout{grid-template-columns:1fr}}
+/* ── Tab nav ── */
+.tab-nav{display:flex;gap:0;border-bottom:2px solid var(--hairline);margin-bottom:20px;overflow-x:auto}
+.tab-btn{font-family:var(--font-sans);font-size:.68rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:8px 16px;border:none;background:transparent;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:color .15s,border-color .15s}
+.tab-btn.active{color:var(--ink);border-bottom-color:var(--amber)}
+.tab-btn.dynamic{color:var(--amber)}
+.tab-btn.dynamic.active{color:var(--ink)}
 
-/* Sidebar — student list */
-.pro-sidebar{}
-.pro-list-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.pro-list-title{font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
-.pro-add-btn{font-family:var(--font-sans);font-size:.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:3px;border:1.5px solid var(--hairline);background:transparent;color:var(--ink);cursor:pointer;transition:border-color .15s}
-.pro-add-btn:hover{border-color:var(--amber);color:var(--amber)}
+/* ── Panels ── */
+.panel{display:none}.panel.active{display:block}
 
-.student-card{padding:10px 12px;border-radius:6px;border:1px solid var(--hairline);background:var(--paper);margin-bottom:8px;cursor:pointer;transition:border-color .15s}
-.student-card:hover{border-color:var(--ink)}
-.student-card.active{border-color:var(--amber);background:rgba(184,134,11,.05)}
-.sc-name{font-weight:700;font-size:.9rem;color:var(--ink)}
-.sc-meta{font-family:var(--font-sans);font-size:.68rem;color:var(--muted);margin-top:2px}
-.sc-level{display:inline-block;font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;padding:1px 6px;border-radius:2px;border:1px solid var(--amber);color:var(--amber);margin-right:4px}
+/* ── Stats bar ── */
+.stats-row{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.stat-pill{font-family:var(--font-sans);font-size:.72rem;font-weight:700;padding:5px 12px;border-radius:20px;background:var(--paper);border:1px solid var(--hairline);color:var(--ink)}
+.stat-pill.warn{border-color:var(--amber);color:var(--amber)}
 
-.no-students{padding:24px 0;text-align:center;color:var(--muted);font-family:var(--font-sans);font-size:.82rem}
+/* ── Priority gaps table ── */
+.gaps-head{font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.gap-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:6px;border:1px solid var(--hairline);background:var(--paper);margin-bottom:6px;flex-wrap:wrap}
+.gap-row:hover{border-color:var(--ink)}
+.gap-chapter{font-weight:700;font-size:.88rem;color:var(--navy);flex:1;min-width:120px}
+.gap-chapter a{color:inherit;text-decoration:none}
+.gap-chapter a:hover{color:var(--amber)}
+.gap-badges{display:flex;gap:5px;flex-shrink:0}
+.gap-badge{font-family:var(--font-sans);font-size:.58rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:2px;border:1px solid var(--hairline);color:var(--muted)}
+.gap-badge.es{border-color:#5b8dd9;color:#5b8dd9}
+.gap-badge.en{border-color:#27ae60;color:#27ae60}
+.gap-students{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);display:flex;align-items:center;gap:6px;flex-shrink:0}
+.gap-dot{width:7px;height:7px;border-radius:50%;background:var(--amber);display:inline-block}
+.gap-names{font-size:.72rem;color:var(--muted)}
+.no-gaps{padding:24px;text-align:center;color:var(--muted);font-family:var(--font-sans);font-size:.82rem;border:1px dashed var(--hairline);border-radius:6px}
 
-/* Main panel */
-.pro-main{}
+/* ── Roster grid ── */
+.roster-toolbar{display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+.roster-filter{font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:20px;border:1.5px solid var(--hairline);background:transparent;color:var(--muted);cursor:pointer;transition:all .15s}
+.roster-filter.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.roster-sort{font-family:var(--font-sans);font-size:.68rem;padding:5px 10px;border:1.5px solid var(--hairline);border-radius:4px;background:var(--paper);color:var(--ink);margin-left:auto}
+.roster-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.stu-card{padding:14px 12px;border-radius:8px;border:1.5px solid var(--hairline);background:var(--paper);cursor:pointer;transition:border-color .15s,transform .1s;text-align:center}
+.stu-card:hover{border-color:var(--amber);transform:translateY(-1px)}
+.stu-card.active{border-color:var(--amber);background:rgba(184,134,11,.05)}
+.stu-avatar{width:40px;height:40px;border-radius:50%;background:var(--amber);display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700;color:#fff;margin:0 auto 8px}
+.stu-name{font-weight:700;font-size:.88rem;color:var(--navy);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stu-tags{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin-bottom:4px}
+.stu-tag{font-family:var(--font-sans);font-size:.56rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:1px 5px;border-radius:2px;border:1px solid var(--hairline);color:var(--muted)}
+.stu-tag.lvl{border-color:var(--amber);color:var(--amber)}
+.stu-gap-count{font-family:var(--font-sans);font-size:.65rem;color:var(--muted)}
+.stu-gap-count.warn{color:var(--amber)}
+.stu-gap-count.ok{color:#27ae60}
+.no-students{grid-column:1/-1;padding:40px;text-align:center;color:var(--muted);font-family:var(--font-sans);font-size:.85rem}
 
-/* Form */
-.pro-form{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:20px;display:none}
-.pro-form.visible{display:block}
-.pro-form h2{font-size:1.1rem;color:var(--navy);margin:0 0 16px}
-.form-row{margin-bottom:14px}
-.form-label{font-family:var(--font-sans);font-size:.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:5px}
-.form-input,.form-select,.form-textarea{width:100%;box-sizing:border-box;padding:9px 12px;font-family:var(--font-sans);font-size:.9rem;border:1.5px solid var(--hairline);border-radius:4px;background:var(--paper);color:var(--ink);transition:border-color .15s}
-.form-input:focus,.form-select:focus,.form-textarea:focus{outline:none;border-color:var(--amber)}
-.form-textarea{min-height:72px;resize:vertical}
-.form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.form-actions{display:flex;gap:8px;margin-top:16px}
-.form-save{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 20px;border-radius:4px;border:none;background:var(--ink);color:var(--paper);cursor:pointer}
-.form-cancel{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 20px;border-radius:4px;border:1.5px solid var(--hairline);background:transparent;color:var(--ink);cursor:pointer}
+/* ── Roster actions ── */
+.add-btn{font-family:var(--font-sans);font-size:.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:7px 16px;border-radius:4px;border:none;background:var(--ink);color:var(--paper);cursor:pointer}
+.ghost-btn{font-family:var(--font-sans);font-size:.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:4px;border:1.5px solid var(--hairline);background:transparent;color:var(--muted);cursor:pointer;transition:border-color .15s,color .15s}
+.ghost-btn:hover{border-color:var(--ink);color:var(--ink)}
 
-/* Student detail view */
-.pro-detail{display:none}
-.pro-detail.visible{display:block}
-.detail-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:20px;padding:20px;background:var(--paper);border:1px solid var(--hairline);border-radius:8px}
-.detail-avatar{width:44px;height:44px;border-radius:50%;background:var(--amber);display:flex;align-items:center;justify-content:center;font-size:1.2rem;font-weight:700;color:#fff;flex-shrink:0}
+/* ── Student detail ── */
+.detail-card{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:18px;margin-bottom:16px}
+.detail-top{display:flex;align-items:flex-start;gap:12px}
+.detail-avatar{width:42px;height:42px;border-radius:50%;background:var(--amber);display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;color:#fff;flex-shrink:0}
 .detail-info{flex:1}
-.detail-name{font-size:1.2rem;font-weight:700;color:var(--navy);margin:0 0 4px}
-.detail-tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
-.detail-tag{font-family:var(--font-sans);font-size:.62rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;border-radius:3px;border:1px solid var(--hairline);color:var(--muted)}
-.detail-tag.level-tag{border-color:var(--amber);color:var(--amber)}
-.detail-notes{font-size:.85rem;color:var(--muted);font-style:italic;margin:0}
-.detail-actions{display:flex;gap:6px;margin-left:auto;flex-shrink:0}
-.detail-btn{font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border-radius:3px;border:1.5px solid var(--hairline);background:transparent;color:var(--ink);cursor:pointer}
+.detail-name{font-size:1.1rem;font-weight:700;color:var(--navy);margin:0 0 5px}
+.detail-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:5px}
+.d-tag{font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:2px;border:1px solid var(--hairline);color:var(--muted)}
+.d-tag.lvl{border-color:var(--amber);color:var(--amber)}
+.detail-notes{font-size:.83rem;color:var(--muted);font-style:italic;margin:0}
+.detail-actions{display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap}
+.detail-btn{font-family:var(--font-sans);font-size:.62rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:6px 11px;border-radius:3px;border:1.5px solid var(--hairline);background:transparent;color:var(--ink);cursor:pointer;transition:border-color .15s}
+.detail-btn:hover{border-color:var(--ink)}
 .detail-btn.danger{border-color:#c0392b;color:#c0392b}
+.detail-btn.danger:hover{background:#c0392b;color:#fff}
 
-/* Content gap section */
-.gap-section{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:20px;margin-bottom:16px}
-.gap-head{display:flex;align-items:center;gap:12px;margin-bottom:16px}
-.gap-title{font-size:1rem;font-weight:700;color:var(--navy)}
-.gap-subtitle{font-family:var(--font-sans);font-size:.72rem;color:var(--muted)}
-.gap-bar-row{margin-bottom:12px}
-.gap-bar-label{font-family:var(--font-sans);font-size:.68rem;font-weight:700;color:var(--muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:1px}
-.gap-bar{height:8px;border-radius:4px;overflow:hidden;display:flex;background:var(--hairline)}
-.gap-seg-complete{height:100%;background:#27ae60}
-.gap-seg-stub{height:100%;background:var(--amber)}
-.gap-seg-missing{height:100%;background:#c0392b}
-.gap-stat{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin-top:3px}
-.gap-stat strong{color:var(--ink)}
-
-.ch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px;margin-top:12px}
-.ch-chip{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:4px;border:1px solid var(--hairline);font-size:.78rem;color:var(--ink);text-decoration:none;transition:border-color .15s}
-.ch-chip:hover{border-color:var(--ink)}
-.ch-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.dot-complete{background:#27ae60}
+/* ── Content gap ── */
+.gap-section{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:18px;margin-bottom:16px}
+.gs-title{font-weight:700;font-size:.95rem;color:var(--navy);margin:0 0 4px}
+.gs-sub{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin:0 0 12px}
+.gs-bar{height:7px;border-radius:4px;overflow:hidden;display:flex;background:var(--hairline);margin-bottom:6px}
+.gs-complete{height:100%;background:#27ae60}
+.gs-stub{height:100%;background:var(--amber)}
+.gs-missing{height:100%;background:#c0392b}
+.gs-stat{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin-bottom:12px}
+.ch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:5px;margin-top:8px}
+.ch-chip{display:flex;align-items:center;gap:7px;padding:6px 9px;border-radius:4px;border:1px solid var(--hairline);font-size:.78rem;color:var(--ink);text-decoration:none;transition:border-color .15s}
+.ch-chip:hover{border-color:var(--amber)}
+.ch-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .dot-stub{background:var(--amber)}
 .dot-missing{background:#c0392b}
-.sec-label{font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:12px 0 6px}
+.sec-head{font-family:var(--font-sans);font-size:.58rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:10px 0 4px;grid-column:1/-1}
 
-.coverage-loading{padding:24px;text-align:center;color:var(--muted);font-family:var(--font-sans);font-size:.82rem}
-
-/* Export */
-.export-bar{display:flex;gap:8px;margin-top:16px;padding-top:16px;border-top:1px solid var(--hairline)}
-.export-btn{font-family:var(--font-sans);font-size:.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:3px;border:1.5px solid var(--hairline);background:transparent;color:var(--muted);cursor:pointer;transition:border-color .15s,color .15s}
-.export-btn:hover{border-color:var(--ink);color:var(--ink)}
-
-/* Placement test link */
-.placement-hint{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin-top:6px}
+/* ── Edit form ── */
+.edit-form{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:18px;margin-bottom:16px;display:none}
+.edit-form.visible{display:block}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:480px){.form-grid{grid-template-columns:1fr}}
+.f-row{margin-bottom:0}
+.f-label{font-family:var(--font-sans);font-size:.62rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:4px}
+.f-input,.f-select,.f-textarea{width:100%;box-sizing:border-box;padding:8px 11px;font-family:var(--font-sans);font-size:.88rem;border:1.5px solid var(--hairline);border-radius:4px;background:var(--paper);color:var(--ink);transition:border-color .15s}
+.f-input:focus,.f-select:focus,.f-textarea:focus{outline:none;border-color:var(--amber)}
+.f-textarea{min-height:64px;resize:vertical;grid-column:1/-1}
+.f-actions{display:flex;gap:8px;margin-top:12px;grid-column:1/-1}
+.f-save{font-family:var(--font-sans);font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:8px 18px;border-radius:4px;border:none;background:var(--ink);color:var(--paper);cursor:pointer}
+.f-cancel{font-family:var(--font-sans);font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:8px 14px;border-radius:4px;border:1.5px solid var(--hairline);background:transparent;color:var(--ink);cursor:pointer}
+.placement-hint{font-family:var(--font-sans);font-size:.68rem;color:var(--muted);margin-top:4px}
 .placement-hint a{color:var(--amber)}
+
+/* ── Export bar ── */
+.export-bar{display:flex;gap:6px;padding-top:12px;border-top:1px solid var(--hairline);flex-wrap:wrap}
+
+/* ── Empty overview ── */
+.empty-overview{padding:48px 24px;text-align:center;color:var(--muted);font-family:var(--font-sans);font-size:.85rem}
+.empty-overview strong{display:block;font-size:1rem;color:var(--navy);margin-bottom:6px}
 </style>
 </head>
 <body>
@@ -108,61 +135,68 @@ h1{font-size:1.5rem;color:var(--navy);margin:0 0 4px}
 </div></header>
 
 <div class="pro-wrap">
-  <h1>Student Profiles</h1>
-  <p class="pro-meta">Identify each student and see what content to finish for them. All data stored locally in this browser.</p>
-
-  <div class="pro-layout">
-    <!-- Sidebar: student list -->
-    <div class="pro-sidebar">
-      <div class="pro-list-head">
-        <span class="pro-list-title">Students</span>
-        <button class="pro-add-btn" onclick="showAddForm()">+ Add</button>
-      </div>
-      <div id="studentList"></div>
+  <div class="pro-header">
+    <div>
+      <h1>Student Profiles</h1>
+      <p style="font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin:2px 0 0">All data stored locally in this browser &mdash; export JSON to back up or share.</p>
     </div>
+  </div>
 
-    <!-- Main panel -->
-    <div class="pro-main">
-      <!-- Add / Edit form -->
-      <div class="pro-form" id="proForm">
-        <h2 id="formTitle">New student</h2>
-        <input type="hidden" id="editId">
+  <nav class="tab-nav" id="tabNav">
+    <button class="tab-btn active" data-tab="overview" onclick="switchTab('overview')">Overview</button>
+    <button class="tab-btn" data-tab="roster" onclick="switchTab('roster')">Roster</button>
+  </nav>
 
-        <div class="form-row">
-          <label class="form-label" for="fName">Name</label>
-          <input class="form-input" id="fName" type="text" placeholder="e.g. Miguel">
+  <!-- OVERVIEW panel -->
+  <div class="panel active" id="panel-overview">
+    <div id="overviewContent"></div>
+  </div>
+
+  <!-- ROSTER panel -->
+  <div class="panel" id="panel-roster">
+    <div class="roster-toolbar" id="rosterToolbar">
+      <button class="add-btn" onclick="showAddForm()">+ Add student</button>
+      <button class="ghost-btn" onclick="triggerImport()">Import JSON</button>
+      <input type="file" id="importInput" accept=".json" style="display:none" onchange="handleImport(event)">
+      <select class="roster-sort" id="rosterSort" onchange="renderRoster()">
+        <option value="name">Sort: Name</option>
+        <option value="level">Sort: Level</option>
+        <option value="track">Sort: Track</option>
+        <option value="gaps">Sort: Most gaps</option>
+      </select>
+    </div>
+    <div id="filterBar" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px"></div>
+    <div class="roster-grid" id="rosterGrid"></div>
+
+    <!-- Inline add/edit form -->
+    <div class="edit-form" id="rosterForm" style="margin-top:16px">
+      <h3 id="rosterFormTitle" style="margin:0 0 14px;font-size:1rem;color:var(--navy)">New student</h3>
+      <input type="hidden" id="fId">
+      <div class="form-grid">
+        <div class="f-row">
+          <label class="f-label" for="fName">Name</label>
+          <input class="f-input" id="fName" type="text" placeholder="e.g. Miguel" autocomplete="off">
         </div>
-
-        <div class="form-row-2">
-          <div class="form-row" style="margin-bottom:0">
-            <label class="form-label" for="fL1">Native language (L1)</label>
-            <select class="form-select" id="fL1">
-              <option value="Spanish">Spanish</option>
-              <option value="English">English</option>
-              <option value="French">French</option>
-              <option value="Portuguese">Portuguese</option>
-              <option value="Italian">Italian</option>
-              <option value="German">German</option>
-              <option value="Arabic">Arabic</option>
-              <option value="Chinese">Chinese</option>
-              <option value="Japanese">Japanese</option>
-              <option value="Russian">Russian</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-          <div class="form-row" style="margin-bottom:0">
-            <label class="form-label" for="fCourse">Course track</label>
-            <select class="form-select" id="fCourse">
-              <option value="en">English (A–C)</option>
-              <option value="es">Spanish for Spanish speakers (ES)</option>
-            </select>
-          </div>
+        <div class="f-row">
+          <label class="f-label" for="fL1">Native language (L1)</label>
+          <select class="f-select" id="fL1">
+            <option>Spanish</option><option>English</option><option>French</option>
+            <option>Portuguese</option><option>Italian</option><option>German</option>
+            <option>Arabic</option><option>Chinese</option><option>Japanese</option>
+            <option>Russian</option><option>Other</option>
+          </select>
         </div>
-
-        <div class="form-row" style="margin-top:14px">
-          <label class="form-label" for="fLevel">Current level</label>
-          <select class="form-select" id="fLevel">
-            <option value="">— not assessed yet —</option>
+        <div class="f-row">
+          <label class="f-label" for="fCourse">Course track</label>
+          <select class="f-select" id="fCourse">
+            <option value="en">English (A&ndash;C)</option>
+            <option value="es">Spanish &rarr; English (ES)</option>
+          </select>
+        </div>
+        <div class="f-row">
+          <label class="f-label" for="fLevel">Current level</label>
+          <select class="f-select" id="fLevel">
+            <option value="">— not assessed —</option>
             <option value="A1">A1 — Beginner</option>
             <option value="A2">A2 — Elementary</option>
             <option value="B1">B1 — Intermediate</option>
@@ -170,275 +204,477 @@ h1{font-size:1.5rem;color:var(--navy);margin:0 0 4px}
             <option value="C1">C1 — Advanced</option>
             <option value="C2">C2 — Proficiency</option>
           </select>
-          <p class="placement-hint">Not sure? <a href="placement-test.html" target="_blank">Run the placement test</a> in a new tab, then return and select the recommended level.</p>
+          <p class="placement-hint">Not sure? <a href="placement-test.html" target="_blank">Run placement test</a> then return.</p>
         </div>
-
-        <div class="form-row">
-          <label class="form-label" for="fNotes">Notes (age, goals, occupation, weak areas…)</label>
-          <textarea class="form-textarea" id="fNotes" placeholder="e.g. 42 years old, works in finance, strong grammar but weak spoken fluency"></textarea>
+        <div class="f-row">
+          <label class="f-label" for="fCode">Class / group code</label>
+          <input class="f-input" id="fCode" type="text" placeholder="e.g. tuesday-adults">
         </div>
-
-        <div class="form-row">
-          <label class="form-label" for="fCode">Class code (optional)</label>
-          <input class="form-input" id="fCode" type="text" placeholder="e.g. tuesday-group">
+        <div class="f-row">
+          <label class="f-label" for="fAge">Age (optional)</label>
+          <input class="f-input" id="fAge" type="number" min="5" max="99" placeholder="e.g. 42">
         </div>
-
-        <div class="form-actions">
-          <button class="form-save" onclick="saveStudent()">Save student</button>
-          <button class="form-cancel" onclick="hideForm()">Cancel</button>
+        <textarea class="f-textarea" id="fNotes" placeholder="Goals, occupation, weak areas, notes…"></textarea>
+        <div class="f-actions">
+          <button class="f-save" onclick="saveStudent()">Save student</button>
+          <button class="f-cancel" onclick="hideForm()">Cancel</button>
         </div>
-      </div>
-
-      <!-- Student detail view -->
-      <div class="pro-detail" id="proDetail">
-        <div class="detail-header">
-          <div class="detail-avatar" id="detailAvatar"></div>
-          <div class="detail-info">
-            <div class="detail-name" id="detailName"></div>
-            <div class="detail-tags" id="detailTags"></div>
-            <p class="detail-notes" id="detailNotes"></p>
-          </div>
-          <div class="detail-actions">
-            <button class="detail-btn" onclick="editCurrent()">Edit</button>
-            <button class="detail-btn danger" onclick="deleteCurrent()">Delete</button>
-          </div>
-        </div>
-
-        <div id="contentGap"></div>
-
-        <div class="export-bar">
-          <button class="export-btn" onclick="exportJSON()">Export JSON</button>
-          <button class="export-btn" onclick="exportAll()">Export all students</button>
-        </div>
-      </div>
-
-      <!-- Empty state -->
-      <div id="emptyState" style="padding:40px 0;text-align:center;color:var(--muted);font-family:var(--font-sans);font-size:.85rem">
-        Add a student to get started.
       </div>
     </div>
+  </div>
+
+  <!-- STUDENT DETAIL panel (dynamic tab) -->
+  <div class="panel" id="panel-student">
+    <div id="studentContent"></div>
   </div>
 </div>
 
 <footer class="site-footer">Word Play &middot; Cambridge English A1&rarr;C2</footer>
 
 <script>
+/* ─────────────────────────── state ─────────────────────────── */
 var STORAGE_KEY = 'wordplay_student_profiles';
-var coverageData = null;
 var students = [];
+var coverageData = null;
 var currentId = null;
+var activeTab = 'overview';
 
-/* ---- Storage ---- */
-function load() {
+/* ─────────────────────────── persistence ─────────────────────── */
+function loadStudents() {
   try { students = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch(e) { students = []; }
 }
-function save() {
+function saveStudents() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
 }
-function uid() {
-  return Date.now().toString(36) + Math.random().toString(36).slice(2,6);
-}
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
 
-/* ---- Coverage data ---- */
+/* ─────────────────────────── coverage data ─────────────────────── */
 function loadCoverage() {
-  fetch('shared/coverage-data.json')
+  fetch('shared/coverage-data.json?v=' + Date.now())
     .then(function(r){ return r.json(); })
-    .then(function(d){ coverageData = d; if (currentId) renderGap(currentId); })
-    .catch(function(){ coverageData = null; });
+    .then(function(d){
+      coverageData = d;
+      if (activeTab === 'overview') renderOverview();
+      if (activeTab === 'student' && currentId) renderStudentDetail(currentId);
+    })
+    .catch(function(){
+      coverageData = null;
+    });
 }
 
-/* ---- Render student list ---- */
-function renderList() {
-  var el = document.getElementById('studentList');
+/* ─────────────────────────── tab routing ─────────────────────── */
+function switchTab(tab) {
+  activeTab = tab;
+  document.querySelectorAll('.tab-btn').forEach(function(b){
+    b.classList.toggle('active', b.dataset.tab === tab);
+  });
+  document.querySelectorAll('.panel').forEach(function(p){
+    p.classList.toggle('active', p.id === 'panel-' + tab);
+  });
+  if (tab === 'overview') renderOverview();
+  if (tab === 'roster') renderRoster();
+  if (tab === 'student' && currentId) renderStudentDetail(currentId);
+}
+
+function ensureStudentTab(id) {
+  // Add or update the dynamic student tab
+  var nav = document.getElementById('tabNav');
+  var existing = nav.querySelector('[data-tab="student"]');
+  var s = students.find(function(x){ return x.id === id; });
+  if (!existing) {
+    var btn = document.createElement('button');
+    btn.className = 'tab-btn dynamic';
+    btn.dataset.tab = 'student';
+    btn.onclick = function(){ switchTab('student'); };
+    nav.appendChild(btn);
+    existing = btn;
+  }
+  existing.textContent = s ? s.name : 'Student';
+  currentId = id;
+  switchTab('student');
+}
+
+/* ─────────────────────────── overview ─────────────────────── */
+function calcPriorityGaps() {
+  if (!coverageData || !students.length) return [];
+  var stubs = coverageData.chapters.filter(function(c){ return c.status !== 'complete'; });
+  var map = {};
+  stubs.forEach(function(c){
+    map[c.url] = { chapter: c, studentList: [] };
+  });
+  students.forEach(function(s){
+    if (!s.level) return;
+    stubs.forEach(function(c){
+      if (c.track === s.course && c.level === s.level) {
+        map[c.url].studentList.push(s);
+      }
+    });
+  });
+  return Object.values(map)
+    .filter(function(g){ return g.studentList.length > 0; })
+    .sort(function(a,b){ return b.studentList.length - a.studentList.length || a.chapter.level.localeCompare(b.chapter.level); });
+}
+
+function renderOverview() {
+  var el = document.getElementById('overviewContent');
+
   if (!students.length) {
-    el.innerHTML = '<div class="no-students">No students yet.</div>';
+    el.innerHTML = '<div class="empty-overview"><strong>No students yet</strong>Add students in the Roster tab, then come back here to see which content to finish first.</div>';
     return;
   }
-  el.innerHTML = students.map(function(s) {
+
+  // Stats
+  var withLevel = students.filter(function(s){ return s.level; });
+  var noLevel = students.filter(function(s){ return !s.level; });
+  var tracks = {};
+  withLevel.forEach(function(s){ tracks[s.course + '_' + s.level] = true; });
+  var levelCount = Object.keys(tracks).length;
+
+  var gaps = calcPriorityGaps();
+  var affectedStudents = new Set();
+  gaps.forEach(function(g){ g.studentList.forEach(function(s){ affectedStudents.add(s.id); }); });
+
+  var html = '<div class="stats-row">';
+  html += '<span class="stat-pill">'+students.length+' student'+(students.length!==1?'s':'')+'</span>';
+  if (withLevel.length) html += '<span class="stat-pill">'+levelCount+' active level'+(levelCount!==1?'s':'')+'</span>';
+  if (gaps.length) html += '<span class="stat-pill warn">'+gaps.length+' chapter'+(gaps.length!==1?'s':'')+' blocking '+affectedStudents.size+' student'+(affectedStudents.size!==1?'s':'')+'</span>';
+  if (noLevel.length) html += '<span class="stat-pill warn">'+noLevel.length+' unassessed</span>';
+  html += '</div>';
+
+  // Priority gaps
+  if (gaps.length) {
+    html += '<p class="gaps-head">Priority gaps &mdash; finish these first</p>';
+    gaps.forEach(function(g){
+      var c = g.chapter;
+      var sectionLabel = {grammar:'Grammar',vocabulary:'Vocabulary',writing:'Writing'}[c.section] || c.section;
+      var names = g.studentList.map(function(s){ return esc(s.name); }).join(', ');
+      html += '<div class="gap-row">';
+      html += '<div class="gap-chapter"><a href="'+c.url+'" target="_blank">'+esc(c.title)+'</a></div>';
+      html += '<div class="gap-badges">';
+      html += '<span class="gap-badge '+c.track+'">'+c.track.toUpperCase()+'</span>';
+      html += '<span class="gap-badge">'+c.level+'</span>';
+      html += '<span class="gap-badge">'+sectionLabel+'</span>';
+      html += '</div>';
+      html += '<div class="gap-students">';
+      for (var i=0;i<Math.min(g.studentList.length,5);i++) html += '<span class="gap-dot"></span>';
+      html += '</div>';
+      html += '<span class="gap-names">'+names+'</span>';
+      html += '</div>';
+    });
+  } else if (withLevel.length) {
+    html += '<div class="no-gaps">All content is complete for your current students\' levels.</div>';
+  }
+
+  // Students without level
+  if (noLevel.length) {
+    html += '<p class="gaps-head" style="margin-top:20px">Students without a level set</p>';
+    noLevel.forEach(function(s){
+      html += '<div class="gap-row" style="cursor:pointer" onclick="ensureStudentTab(\''+s.id+'\')">';
+      html += '<div class="gap-chapter">'+esc(s.name)+'</div>';
+      html += '<span style="font-family:var(--font-sans);font-size:.72rem;color:var(--muted)">Click to assign a level</span>';
+      html += '</div>';
+    });
+  }
+
+  el.innerHTML = html;
+}
+
+/* ─────────────────────────── roster ─────────────────────── */
+function getClassCodes() {
+  var codes = new Set();
+  students.forEach(function(s){ if (s.code) codes.add(s.code); });
+  return Array.from(codes).sort();
+}
+
+var activeFilter = 'all';
+
+function renderFilterBar() {
+  var codes = getClassCodes();
+  var bar = document.getElementById('filterBar');
+  if (!codes.length) { bar.style.display = 'none'; return; }
+  bar.style.display = 'flex';
+  var html = '<button class="roster-filter'+(activeFilter==='all'?' active':'')+'" onclick="setFilter(\'all\')">All</button>';
+  codes.forEach(function(code){
+    html += '<button class="roster-filter'+(activeFilter===code?' active':'')+'" onclick="setFilter(\''+esc(code)+'\')">'+esc(code)+'</button>';
+  });
+  bar.innerHTML = html;
+}
+
+function setFilter(f) { activeFilter = f; renderRoster(); }
+
+function stubCount(s) {
+  if (!coverageData || !s.level) return null;
+  return coverageData.chapters.filter(function(c){
+    return c.track === s.course && c.level === s.level && c.status !== 'complete';
+  }).length;
+}
+
+function sortedStudents() {
+  var sort = document.getElementById('rosterSort').value;
+  var list = students.slice();
+  if (activeFilter !== 'all') list = list.filter(function(s){ return s.code === activeFilter; });
+  var levelOrder = {A1:1,A2:2,B1:3,B2:4,C1:5,C2:6,'':99};
+  if (sort === 'name') list.sort(function(a,b){ return a.name.localeCompare(b.name); });
+  else if (sort === 'level') list.sort(function(a,b){ return (levelOrder[a.level||'']||99)-(levelOrder[b.level||'']||99); });
+  else if (sort === 'track') list.sort(function(a,b){ return a.course.localeCompare(b.course) || a.name.localeCompare(b.name); });
+  else if (sort === 'gaps') list.sort(function(a,b){ return (stubCount(b)||0)-(stubCount(a)||0); });
+  return list;
+}
+
+function renderRoster() {
+  renderFilterBar();
+  var list = sortedStudents();
+  var grid = document.getElementById('rosterGrid');
+
+  if (!list.length && !students.length) {
+    grid.innerHTML = '<div class="no-students">No students yet. Click <strong>+ Add student</strong> to get started.</div>';
+    return;
+  }
+  if (!list.length) {
+    grid.innerHTML = '<div class="no-students">No students match this filter.</div>';
+    return;
+  }
+
+  grid.innerHTML = list.map(function(s){
+    var initials = s.name.trim().split(/\s+/).map(function(w){return w[0]}).slice(0,2).join('').toUpperCase();
+    var stubs = stubCount(s);
+    var gapHtml = stubs === null ? '<span class="stu-gap-count">No level set</span>'
+      : stubs === 0 ? '<span class="stu-gap-count ok">All complete</span>'
+      : '<span class="stu-gap-count warn">'+stubs+' stub'+(stubs!==1?'s':'')+'</span>';
     var active = s.id === currentId ? ' active' : '';
-    var levelTag = s.level ? '<span class="sc-level">'+s.level+'</span>' : '';
-    return '<div class="student-card'+active+'" onclick="selectStudent(\''+s.id+'\')">'
-      + '<div class="sc-name">'+esc(s.name)+'</div>'
-      + '<div class="sc-meta">'+levelTag+esc(s.l1)+' &rarr; '+trackLabel(s.course)+'</div>'
+    return '<div class="stu-card'+active+'" onclick="ensureStudentTab(\''+s.id+'\')">'
+      + '<div class="stu-avatar">'+initials+'</div>'
+      + '<div class="stu-name" title="'+esc(s.name)+'">'+esc(s.name)+'</div>'
+      + '<div class="stu-tags">'
+      + (s.level ? '<span class="stu-tag lvl">'+s.level+'</span>' : '')
+      + '<span class="stu-tag">'+esc(s.course.toUpperCase())+'</span>'
+      + '</div>'
+      + gapHtml
       + '</div>';
   }).join('');
 }
 
-function trackLabel(course) {
-  return course === 'es' ? 'ES track' : 'EN track';
-}
-
-/* ---- Select student ---- */
-function selectStudent(id) {
-  currentId = id;
+/* ─────────────────────────── student detail ─────────────────────── */
+function renderStudentDetail(id) {
   var s = students.find(function(x){ return x.id === id; });
   if (!s) return;
-  hideForm();
-  document.getElementById('emptyState').style.display = 'none';
-  document.getElementById('proDetail').classList.add('visible');
-  renderList();
+  var el = document.getElementById('studentContent');
 
-  // Avatar initials
   var initials = s.name.trim().split(/\s+/).map(function(w){return w[0]}).slice(0,2).join('').toUpperCase();
-  document.getElementById('detailAvatar').textContent = initials;
+  var trackLabel = s.course === 'es' ? 'Spanish&rarr;English (ES)' : 'English (EN)';
 
-  document.getElementById('detailName').textContent = s.name;
+  var html = '<div class="detail-card">';
+  html += '<div class="detail-top">';
+  html += '<div class="detail-avatar">'+initials+'</div>';
+  html += '<div class="detail-info">';
+  html += '<div class="detail-name">'+esc(s.name)+'</div>';
+  html += '<div class="detail-tags">';
+  if (s.level) html += '<span class="d-tag lvl">'+s.level+'</span>';
+  html += '<span class="d-tag">'+esc(s.l1)+'</span>';
+  html += '<span class="d-tag">'+trackLabel+'</span>';
+  if (s.age) html += '<span class="d-tag">Age '+esc(s.age)+'</span>';
+  if (s.code) html += '<span class="d-tag">'+esc(s.code)+'</span>';
+  html += '</div>';
+  if (s.notes) html += '<p class="detail-notes">'+esc(s.notes)+'</p>';
+  html += '</div>';
+  html += '<div class="detail-actions">';
+  html += '<button class="detail-btn" onclick="showEditForm()">Edit</button>';
+  html += '<button class="detail-btn danger" onclick="deleteStudent()">Delete</button>';
+  html += '</div>';
+  html += '</div></div>';
 
-  var tags = '';
-  if (s.level) tags += '<span class="detail-tag level-tag">'+s.level+'</span>';
-  tags += '<span class="detail-tag">'+esc(s.l1)+'</span>';
-  tags += '<span class="detail-tag">'+trackLabel(s.course)+'</span>';
-  if (s.code) tags += '<span class="detail-tag">'+esc(s.code)+'</span>';
-  document.getElementById('detailTags').innerHTML = tags;
+  // Inline edit form (hidden by default)
+  html += '<div class="edit-form" id="detailEditForm">'
+    + '<h3 style="margin:0 0 14px;font-size:1rem;color:var(--navy)">Edit student</h3>'
+    + '<div class="form-grid">'
+    + '<div class="f-row"><label class="f-label">Name</label><input class="f-input" id="efName" type="text"></div>'
+    + '<div class="f-row"><label class="f-label">Native language</label><select class="f-select" id="efL1">'
+    + ['Spanish','English','French','Portuguese','Italian','German','Arabic','Chinese','Japanese','Russian','Other'].map(function(l){ return '<option'+(s.l1===l?' selected':'')+'>'+l+'</option>'; }).join('')
+    + '</select></div>'
+    + '<div class="f-row"><label class="f-label">Course track</label><select class="f-select" id="efCourse">'
+    + '<option value="en"'+(s.course==='en'?' selected':'')+'>English (A&ndash;C)</option>'
+    + '<option value="es"'+(s.course==='es'?' selected':'')+'>Spanish&rarr;English (ES)</option>'
+    + '</select></div>'
+    + '<div class="f-row"><label class="f-label">Level</label><select class="f-select" id="efLevel">'
+    + '<option value="">— not assessed —</option>'
+    + ['A1','A2','B1','B2','C1','C2'].map(function(l){ return '<option value="'+l+'"'+(s.level===l?' selected':'')+'>'+l+'</option>'; }).join('')
+    + '</select><p class="placement-hint"><a href="placement-test.html" target="_blank">Run placement test</a></p></div>'
+    + '<div class="f-row"><label class="f-label">Class code</label><input class="f-input" id="efCode" type="text" value="'+esc(s.code||'')+'"></div>'
+    + '<div class="f-row"><label class="f-label">Age</label><input class="f-input" id="efAge" type="number" min="5" max="99" value="'+esc(s.age||'')+'"></div>'
+    + '<textarea class="f-textarea" id="efNotes">'+esc(s.notes||'')+'</textarea>'
+    + '<div class="f-actions"><button class="f-save" onclick="saveEditForm()">Save</button><button class="f-cancel" onclick="hideEditForm()">Cancel</button></div>'
+    + '</div></div>';
 
-  document.getElementById('detailNotes').textContent = s.notes || '';
+  // Content gap
+  html += renderGapHtml(s);
 
-  renderGap(id);
+  // Export
+  html += '<div class="export-bar">'
+    + '<button class="ghost-btn" onclick="exportStudent()">Export this student</button>'
+    + '<button class="ghost-btn" onclick="exportAll()">Export all students</button>'
+    + '</div>';
+
+  el.innerHTML = html;
+
+  // Populate name field (after DOM exists)
+  document.getElementById('efName').value = s.name;
 }
 
-/* ---- Content gap for selected student ---- */
-function renderGap(id) {
-  var s = students.find(function(x){ return x.id === id; });
-  var el = document.getElementById('contentGap');
-  if (!s || !s.level) {
-    el.innerHTML = '<div class="gap-section"><p style="color:var(--muted);font-family:var(--font-sans);font-size:.82rem">Set a level for this student to see content gaps.</p></div>';
-    return;
-  }
-  if (!coverageData) {
-    el.innerHTML = '<div class="gap-section"><p class="coverage-loading">Loading coverage data…</p></div>';
-    return;
-  }
+function renderGapHtml(s) {
+  if (!s.level) return '<div class="gap-section"><p style="font-family:var(--font-sans);font-size:.82rem;color:var(--muted)">Set a level to see content gaps.</p></div>';
+  if (!coverageData) return '<div class="gap-section"><p style="font-family:var(--font-sans);font-size:.82rem;color:var(--muted)">Loading coverage data…</p></div>';
 
-  var chapters = coverageData.chapters.filter(function(c){
-    return c.track === s.course && c.level === s.level;
-  });
-
-  var complete = chapters.filter(function(c){return c.status==='complete'}).length;
-  var stub = chapters.filter(function(c){return c.status==='stub'}).length;
-  var missing = chapters.filter(function(c){return c.status==='missing'}).length;
+  var chapters = coverageData.chapters.filter(function(c){ return c.track === s.course && c.level === s.level; });
+  var complete = chapters.filter(function(c){ return c.status==='complete'; }).length;
+  var stub = chapters.filter(function(c){ return c.status==='stub'; }).length;
+  var missing = chapters.filter(function(c){ return c.status==='missing'; }).length;
   var total = chapters.length;
-
   var pct = total ? Math.round(complete/total*100) : 0;
-  var cPct = total ? Math.round(complete/total*100) : 0;
-  var sPct = total ? Math.round(stub/total*100) : 0;
-  var mPct = total ? Math.round(missing/total*100) : 0;
 
-  var sectionLabels = {grammar:'Grammar',vocabulary:'Vocabulary',writing:'Writing'};
-  var sectionOrder = ['grammar','vocabulary','writing'];
-
+  var trackLabel = s.course === 'es' ? 'Spanish&rarr;English' : 'English';
   var html = '<div class="gap-section">';
-  html += '<div class="gap-head"><span class="gap-title">'+s.level+' content — '+trackLabel(s.course)+'</span>';
-  html += '<span class="gap-subtitle">'+complete+'/'+total+' chapters ready ('+pct+'%)</span></div>';
+  html += '<p class="gs-title">'+s.level+' content &mdash; '+trackLabel+'</p>';
+  html += '<p class="gs-sub">'+complete+' / '+total+' chapters ready ('+pct+'%)</p>';
+  html += '<div class="gs-bar"><div class="gs-complete" style="width:'+Math.round(complete/total*100)+'%"></div><div class="gs-stub" style="width:'+Math.round(stub/total*100)+'%"></div><div class="gs-missing" style="width:'+Math.round(missing/total*100)+'%"></div></div>';
 
-  html += '<div class="gap-bar" style="margin-bottom:6px"><div class="gap-seg-complete" style="width:'+cPct+'%"></div><div class="gap-seg-stub" style="width:'+sPct+'%"></div><div class="gap-seg-missing" style="width:'+mPct+'%"></div></div>';
+  var parts = [];
+  if (complete) parts.push('<strong>'+complete+' complete</strong>');
+  if (stub) parts.push('<span style="color:var(--amber)">'+stub+' need content</span>');
+  if (missing) parts.push('<span style="color:#c0392b">'+missing+' missing</span>');
+  html += '<p class="gs-stat">'+parts.join(' &middot; ')+'</p>';
 
-  var statParts = [];
-  if (complete) statParts.push('<strong>'+complete+' complete</strong>');
-  if (stub) statParts.push('<span style="color:var(--amber)">'+stub+' need content</span>');
-  if (missing) statParts.push('<span style="color:#c0392b">'+missing+' missing files</span>');
-  html += '<p class="gap-stat">'+statParts.join(' &middot; ')+'</p>';
-
-  if (stub > 0 || missing > 0) {
-    html += '<p style="font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin:12px 0 4px">Chapters needing work:</p>';
+  var needWork = chapters.filter(function(c){ return c.status!=='complete'; });
+  if (needWork.length) {
     html += '<div class="ch-grid">';
-    sectionOrder.forEach(function(sec) {
-      var secChaps = chapters.filter(function(c){return c.section===sec && c.status!=='complete'});
+    ['grammar','vocabulary','writing'].forEach(function(sec){
+      var secChaps = needWork.filter(function(c){ return c.section===sec; });
       if (!secChaps.length) return;
-      html += '<div style="grid-column:1/-1" class="sec-label">'+sectionLabels[sec]+'</div>';
-      secChaps.forEach(function(c) {
+      html += '<div class="sec-head">'+{grammar:'Grammar',vocabulary:'Vocabulary',writing:'Writing'}[sec]+'</div>';
+      secChaps.forEach(function(c){
         html += '<a class="ch-chip" href="'+c.url+'" target="_blank"><div class="ch-dot dot-'+c.status+'"></div>'+esc(c.title)+'</a>';
       });
     });
     html += '</div>';
   } else {
-    html += '<p style="font-family:var(--font-sans);font-size:.82rem;color:#27ae60;margin-top:12px">All '+s.level+' content is complete for this track.</p>';
+    html += '<p style="font-family:var(--font-sans);font-size:.82rem;color:#27ae60;margin:8px 0 0">All '+s.level+' content is complete.</p>';
   }
-
   html += '</div>';
-  el.innerHTML = html;
+  return html;
 }
 
-/* ---- Form ---- */
+/* ─────────────────────────── forms ─────────────────────── */
 function showAddForm() {
-  document.getElementById('editId').value = '';
-  document.getElementById('formTitle').textContent = 'New student';
+  var form = document.getElementById('rosterForm');
+  document.getElementById('rosterFormTitle').textContent = 'New student';
+  document.getElementById('fId').value = '';
   document.getElementById('fName').value = '';
   document.getElementById('fL1').value = 'Spanish';
   document.getElementById('fCourse').value = 'en';
   document.getElementById('fLevel').value = '';
-  document.getElementById('fNotes').value = '';
   document.getElementById('fCode').value = '';
-  document.getElementById('proDetail').classList.remove('visible');
-  document.getElementById('emptyState').style.display = 'none';
-  document.getElementById('proForm').classList.add('visible');
+  document.getElementById('fAge').value = '';
+  document.getElementById('fNotes').value = '';
+  form.classList.add('visible');
   document.getElementById('fName').focus();
-}
-
-function editCurrent() {
-  var s = students.find(function(x){ return x.id === currentId; });
-  if (!s) return;
-  document.getElementById('editId').value = s.id;
-  document.getElementById('formTitle').textContent = 'Edit student';
-  document.getElementById('fName').value = s.name;
-  document.getElementById('fL1').value = s.l1;
-  document.getElementById('fCourse').value = s.course;
-  document.getElementById('fLevel').value = s.level || '';
-  document.getElementById('fNotes').value = s.notes || '';
-  document.getElementById('fCode').value = s.code || '';
-  document.getElementById('proDetail').classList.remove('visible');
-  document.getElementById('proForm').classList.add('visible');
-  document.getElementById('fName').focus();
+  form.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
 function hideForm() {
-  document.getElementById('proForm').classList.remove('visible');
-  if (currentId) {
-    document.getElementById('proDetail').classList.add('visible');
-  } else if (!students.length) {
-    document.getElementById('emptyState').style.display = '';
-  }
+  document.getElementById('rosterForm').classList.remove('visible');
+}
+
+function showEditForm() {
+  document.getElementById('detailEditForm').style.display = 'block';
+}
+function hideEditForm() {
+  document.getElementById('detailEditForm').style.display = 'none';
 }
 
 function saveStudent() {
   var name = document.getElementById('fName').value.trim();
   if (!name) { document.getElementById('fName').focus(); return; }
-
-  var id = document.getElementById('editId').value || uid();
+  var id = document.getElementById('fId').value || uid();
   var s = {
-    id: id,
-    name: name,
+    id: id, name: name,
     l1: document.getElementById('fL1').value,
     course: document.getElementById('fCourse').value,
     level: document.getElementById('fLevel').value,
-    notes: document.getElementById('fNotes').value.trim(),
     code: document.getElementById('fCode').value.trim(),
+    age: document.getElementById('fAge').value.trim(),
+    notes: document.getElementById('fNotes').value.trim(),
     updatedAt: new Date().toISOString()
   };
-
   var idx = students.findIndex(function(x){ return x.id === id; });
   if (idx >= 0) students[idx] = s;
   else students.push(s);
-
-  save();
-  document.getElementById('proForm').classList.remove('visible');
-  currentId = id;
-  renderList();
-  selectStudent(id);
+  saveStudents();
+  hideForm();
+  renderRoster();
+  ensureStudentTab(id);
 }
 
-function deleteCurrent() {
+function saveEditForm() {
   var s = students.find(function(x){ return x.id === currentId; });
-  if (!s || !confirm('Delete '+s.name+'?')) return;
-  students = students.filter(function(x){ return x.id !== currentId; });
-  save();
-  currentId = null;
-  document.getElementById('proDetail').classList.remove('visible');
-  renderList();
-  if (!students.length) document.getElementById('emptyState').style.display = '';
+  if (!s) return;
+  var name = document.getElementById('efName').value.trim();
+  if (!name) { document.getElementById('efName').focus(); return; }
+  s.name = name;
+  s.l1 = document.getElementById('efL1').value;
+  s.course = document.getElementById('efCourse').value;
+  s.level = document.getElementById('efLevel').value;
+  s.code = document.getElementById('efCode').value.trim();
+  s.age = document.getElementById('efAge').value.trim();
+  s.notes = document.getElementById('efNotes').value.trim();
+  s.updatedAt = new Date().toISOString();
+  saveStudents();
+  ensureStudentTab(currentId);  // re-renders with updated data
+  if (activeTab === 'overview') renderOverview();
+  if (activeTab === 'roster') renderRoster();
 }
 
-/* ---- Export ---- */
-function exportJSON() {
+function deleteStudent() {
+  var s = students.find(function(x){ return x.id === currentId; });
+  if (!s || !confirm('Delete ' + s.name + '?')) return;
+  students = students.filter(function(x){ return x.id !== currentId; });
+  saveStudents();
+  // Remove dynamic tab
+  var dynTab = document.querySelector('[data-tab="student"]');
+  if (dynTab) dynTab.remove();
+  currentId = null;
+  switchTab('roster');
+  renderRoster();
+}
+
+/* ─────────────────────────── import / export ─────────────────────── */
+function triggerImport() { document.getElementById('importInput').click(); }
+
+function handleImport(e) {
+  var file = e.target.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(ev) {
+    try {
+      var imported = JSON.parse(ev.target.result);
+      if (!Array.isArray(imported)) imported = [imported];
+      var added = 0, updated = 0;
+      imported.forEach(function(s) {
+        if (!s.name) return;
+        if (!s.id) s.id = uid();
+        var idx = students.findIndex(function(x){ return x.id === s.id; });
+        if (idx >= 0) { students[idx] = s; updated++; }
+        else { students.push(s); added++; }
+      });
+      saveStudents();
+      renderRoster();
+      renderOverview();
+      alert('Imported: '+added+' new, '+updated+' updated.');
+    } catch(err) { alert('Invalid JSON file.'); }
+  };
+  reader.readAsText(file);
+  e.target.value = '';
+}
+
+function exportStudent() {
   var s = students.find(function(x){ return x.id === currentId; });
   if (!s) return;
   downloadJSON([s], s.name.replace(/\s+/g,'_')+'_profile.json');
@@ -454,20 +690,16 @@ function downloadJSON(data, filename) {
   a.click();
 }
 
+/* ─────────────────────────── utils ─────────────────────── */
 function esc(s) {
-  if (!s) return '';
+  if (s == null) return '';
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-/* ---- Init ---- */
-load();
+/* ─────────────────────────── init ─────────────────────── */
+loadStudents();
 loadCoverage();
-renderList();
-if (students.length) {
-  selectStudent(students[0].id);
-} else {
-  document.getElementById('emptyState').style.display = '';
-}
+renderOverview();
 </script>
 </body>
 </html>
