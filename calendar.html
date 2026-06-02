@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>Lesson Calendar | Word Play</title>
+<link rel="stylesheet" href="shared/base.css?v=v123">
+<script src="shared/dark-init.js?v=v109"></script>
+<style>
+/* ── Layout ── */
+.cal-wrap{max-width:1100px;margin:0 auto;padding:16px 12px 60px}
+
+/* ── Toolbar ── */
+.cal-toolbar{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+.cal-nav-btn{font-family:var(--font-sans);font-size:.7rem;font-weight:700;padding:6px 12px;border-radius:4px;border:1.5px solid var(--hairline);background:transparent;color:var(--ink);cursor:pointer;transition:border-color .15s,color .15s}
+.cal-nav-btn:hover{border-color:var(--ink)}
+.cal-today-btn{border-color:var(--amber);color:var(--amber)}
+.cal-today-btn:hover{background:var(--amber);color:var(--paper)}
+.cal-title{font-family:var(--font-sans);font-size:.92rem;font-weight:700;color:var(--navy);min-width:160px;text-align:center}
+.cal-view-toggle{display:flex;border:1.5px solid var(--hairline);border-radius:4px;overflow:hidden}
+.cal-view-btn{font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border:none;background:transparent;color:var(--muted);cursor:pointer;transition:background .12s,color .12s}
+.cal-view-btn.active{background:var(--ink);color:var(--paper)}
+.cal-add-btn{margin-left:auto;font-family:var(--font-sans);font-size:.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:4px;border:none;background:var(--ink);color:var(--paper);cursor:pointer;transition:opacity .12s}
+.cal-add-btn:hover{opacity:.85}
+
+/* ── Sync strip ── */
+.cal-sync{font-family:var(--font-sans);font-size:.68rem;padding:6px 12px;border:1px solid var(--hairline);border-radius:4px;margin-bottom:12px}
+.cal-sync.synced{border-color:rgba(39,174,96,.4);color:#27ae60}
+.cal-sync.info{color:var(--muted)}
+
+/* ── Week view wrapper ── */
+.cal-week-outer{border:1px solid var(--hairline);border-radius:8px;overflow:hidden}
+
+/* Sticky day headers — lives OUTSIDE the scrollable body */
+.cal-week-header{display:flex;background:var(--paper);border-bottom:2px solid var(--hairline)}
+.cal-gutter{width:52px;flex-shrink:0}
+.cal-day-head{flex:1;text-align:center;padding:7px 3px;font-family:var(--font-sans);font-size:.62rem;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);border-left:1px solid var(--hairline)}
+.cal-day-head.today{color:var(--amber)}
+.cal-day-num{display:block;font-family:var(--font-sans);font-size:.8rem;font-weight:700;letter-spacing:0;text-transform:none;color:var(--ink);margin-top:2px}
+.cal-day-head.today .cal-day-num{color:var(--amber)}
+
+/* Scrollable week body */
+.cal-week-body{display:flex;overflow-y:auto;max-height:580px}
+.cal-time-axis{width:52px;flex-shrink:0;position:relative}
+.cal-hour-label{position:absolute;right:7px;font-family:var(--font-sans);font-size:.58rem;color:var(--muted);transform:translateY(-50%);user-select:none}
+.cal-day-cols{display:flex;flex:1;position:relative}
+.cal-day-col{position:relative;flex:1;min-width:0;cursor:crosshair}
+.cal-day-col+.cal-day-col{border-left:1px solid var(--hairline)}
+.cal-day-col.today-col{background:rgba(184,134,11,.03)}
+
+/* Lesson blocks */
+.cal-lesson{position:absolute;left:2px;right:2px;border-radius:4px;padding:3px 6px;font-family:var(--font-sans);font-size:.61rem;font-weight:700;line-height:1.3;overflow:hidden;cursor:pointer;box-sizing:border-box;transition:opacity .12s;z-index:1}
+.cal-lesson:hover{opacity:.82}
+.cal-lesson-title{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal-lesson-sub{display:block;font-weight:400;opacity:.8;font-size:.58rem}
+
+/* ── Lesson type colours (amber + ink only) ── */
+.lt-1on1   {background:var(--amber);color:var(--paper)}
+.lt-group  {background:var(--paper);border:2px solid var(--amber);color:var(--ink)}
+.lt-academy{background:var(--ink);color:var(--paper)}
+.lt-school {background:rgba(26,26,26,.65);color:var(--paper)}
+.lt-online {background:var(--paper);border:2px dashed var(--amber);color:var(--ink)}
+body.dark .lt-school{background:rgba(240,240,240,.65);color:#0E0E0E}
+
+/* ── Month view ── */
+.cal-month-grid{display:grid;grid-template-columns:repeat(7,1fr);border:1px solid var(--hairline);border-radius:8px;overflow:hidden}
+.cal-month-dow{font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);text-align:center;padding:8px 4px;background:var(--paper);border-bottom:2px solid var(--hairline)}
+.cal-month-cell{min-height:76px;padding:5px;border-right:1px solid var(--hairline);border-bottom:1px solid var(--hairline);background:var(--paper);cursor:pointer;box-sizing:border-box;vertical-align:top}
+.cal-month-cell:nth-child(7n+8){border-right:none}
+.cal-month-cell.other-month{opacity:.3;pointer-events:none}
+.cal-month-cell.today-cell .cal-month-num{background:var(--amber);color:var(--paper);border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center}
+.cal-month-num{font-family:var(--font-sans);font-size:.72rem;font-weight:700;color:var(--navy);margin-bottom:3px;display:block}
+.cal-month-chip{font-family:var(--font-sans);font-size:.56rem;font-weight:700;padding:1px 5px;border-radius:2px;margin-bottom:2px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;cursor:pointer;display:block}
+.cal-month-more{font-family:var(--font-sans);font-size:.58rem;color:var(--muted);margin-top:1px}
+
+/* ── Day-list (mobile) ── */
+.cal-day-list{display:none}
+.cal-list-day{margin-bottom:14px}
+.cal-list-date{font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);padding:6px 0;border-bottom:2px solid var(--hairline);margin-bottom:6px}
+.cal-list-date.today-lbl{color:var(--amber)}
+.cal-list-row{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:5px;margin-bottom:3px;cursor:pointer}
+.cal-list-time{font-family:var(--font-sans);font-size:.7rem;font-weight:700;width:44px;flex-shrink:0}
+.cal-list-title{font-size:.8rem;font-weight:700}
+.cal-list-empty{font-family:var(--font-sans);font-size:.73rem;color:var(--muted);padding:6px 0}
+
+/* ── Legend ── */
+.cal-legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+.legend-item{display:flex;align-items:center;gap:5px;font-family:var(--font-sans);font-size:.62rem;color:var(--muted)}
+.legend-swatch{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+
+/* ── Modal ── */
+.lm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);align-items:center;justify-content:center;z-index:9998;padding:16px;display:none}
+.lm-box{background:var(--paper);border-radius:12px;width:100%;max-width:540px;max-height:90vh;overflow-y:auto;padding:24px;box-shadow:0 8px 32px rgba(0,0,0,.35)}
+body.dark .lm-box{background:#1A1A1A}
+.lm-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.lm-heading{font-size:1.05rem;font-weight:700;color:var(--navy);margin:0}
+.lm-close{font-family:var(--font-sans);font-size:1.2rem;border:none;background:transparent;color:var(--muted);cursor:pointer;padding:0 4px;line-height:1}
+.lm-close:hover{color:var(--ink)}
+
+/* Student autocomplete */
+.lm-stu-wrap{position:relative}
+.lm-suggestions{position:absolute;top:100%;left:0;right:0;background:var(--paper);border:1.5px solid var(--hairline);border-top:none;border-radius:0 0 4px 4px;z-index:10;max-height:160px;overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,.1)}
+.lm-suggestion{padding:8px 12px;font-family:var(--font-sans);font-size:.82rem;cursor:pointer;border-bottom:1px solid var(--hairline)}
+.lm-suggestion:last-child{border-bottom:none}
+.lm-suggestion:hover{background:var(--cream)}
+.lm-stu-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.lm-stu-tag{font-family:var(--font-sans);font-size:.68rem;font-weight:700;padding:3px 8px;border-radius:12px;background:var(--cream);border:1px solid var(--hairline);color:var(--ink);display:flex;align-items:center;gap:4px}
+.lm-stu-tag button{font-size:.75rem;border:none;background:transparent;color:var(--muted);cursor:pointer;padding:0 1px;line-height:1}
+.lm-stu-tag button:hover{color:var(--ink)}
+
+/* dark mode date/time inputs */
+body.dark .f-input[type="date"],
+body.dark .f-input[type="time"]{color-scheme:dark}
+
+/* Repeat row */
+.lm-repeat-row{grid-column:1/-1}
+.lm-repeat-opts{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
+
+@media(max-width:600px){
+  .cal-week-outer{display:none}
+  .cal-month-grid{display:none}
+  .cal-day-list{display:block}
+  .cal-title{min-width:0;font-size:.78rem}
+  .cal-add-btn{padding:6px 10px}
+}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="teacher.html" class="back back-link" aria-label="Back"></a>
+  <a href="index.html" class="brand">Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+
+<div class="cal-wrap">
+  <div class="cal-toolbar">
+    <button class="cal-nav-btn cal-today-btn" onclick="goToday()">Today</button>
+    <button class="cal-nav-btn" onclick="navPrev()">&larr;</button>
+    <button class="cal-nav-btn" onclick="navNext()">&rarr;</button>
+    <span class="cal-title" id="calTitle"></span>
+    <div class="cal-view-toggle">
+      <button class="cal-view-btn active" id="btnWeek" onclick="switchView('week')">Week</button>
+      <button class="cal-view-btn" id="btnMonth" onclick="switchView('month')">Month</button>
+    </div>
+    <button class="cal-add-btn" onclick="openAddModal(null,null)">+ Add lesson</button>
+  </div>
+
+  <div id="syncStrip" style="display:none" class="cal-sync info"></div>
+
+  <!-- Week view -->
+  <div id="viewWeek">
+    <div class="cal-week-outer">
+      <div class="cal-week-header" id="weekHeader">
+        <div class="cal-gutter"></div>
+        <!-- injected -->
+      </div>
+      <div class="cal-week-body" id="weekBody">
+        <div class="cal-time-axis" id="timeAxis"></div>
+        <div class="cal-day-cols" id="dayCols"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Month view -->
+  <div id="viewMonth" style="display:none">
+    <div class="cal-month-grid" id="monthGrid"></div>
+  </div>
+
+  <!-- Day-list (mobile) -->
+  <div class="cal-day-list" id="viewDayList"></div>
+
+  <div class="cal-legend">
+    <span class="legend-item"><span class="legend-swatch lt-1on1"></span>1-on-1</span>
+    <span class="legend-item"><span class="legend-swatch" style="border:2px solid var(--amber)"></span>Private group</span>
+    <span class="legend-item"><span class="legend-swatch lt-academy"></span>Academy</span>
+    <span class="legend-item"><span class="legend-swatch lt-school"></span>School</span>
+    <span class="legend-item"><span class="legend-swatch" style="border:2px dashed var(--amber)"></span>Online</span>
+  </div>
+</div>
+
+<footer class="site-footer">Word Play &middot; Teacher tools &middot; private</footer>
+
+<!-- Lesson modal -->
+<div id="lessonModal" class="lm-overlay" onclick="handleOverlayClick(event)">
+  <div class="lm-box" onclick="event.stopPropagation()">
+    <div class="lm-header">
+      <h2 class="lm-heading" id="lmHeading">Add lesson</h2>
+      <button class="lm-close" onclick="closeModal()" aria-label="Close">&times;</button>
+    </div>
+
+    <div class="form-grid">
+      <div class="f-row" style="grid-column:1/-1">
+        <label class="f-label" for="lmTitleInput">Title</label>
+        <input class="f-input" id="lmTitleInput" type="text" placeholder="e.g. Monday adults group" autocomplete="off">
+      </div>
+      <div class="f-row">
+        <label class="f-label" for="lmDate">Date</label>
+        <input class="f-input" id="lmDate" type="date">
+      </div>
+      <div class="f-row">
+        <label class="f-label" for="lmType">Type</label>
+        <select class="f-select" id="lmType">
+          <option value="1on1">1-on-1 private</option>
+          <option value="group">Private group</option>
+          <option value="academy">Academy class</option>
+          <option value="school">School lesson</option>
+          <option value="online">Online private</option>
+        </select>
+      </div>
+      <div class="f-row">
+        <label class="f-label" for="lmStart">Start</label>
+        <input class="f-input" id="lmStart" type="time">
+      </div>
+      <div class="f-row">
+        <label class="f-label" for="lmEnd">End</label>
+        <input class="f-input" id="lmEnd" type="time">
+      </div>
+      <div class="f-row" style="grid-column:1/-1">
+        <label class="f-label" for="lmLocation">Location</label>
+        <input class="f-input" id="lmLocation" type="text" placeholder="e.g. Room 3, Academia" autocomplete="off">
+      </div>
+      <div class="f-row" style="grid-column:1/-1">
+        <label class="f-label" for="lmStuInput">Students</label>
+        <div class="lm-stu-wrap">
+          <input class="f-input" id="lmStuInput" type="text" placeholder="Type a name to add…" autocomplete="off" oninput="onStudentInput()">
+          <div id="lmSuggestions" class="lm-suggestions" style="display:none"></div>
+        </div>
+        <div id="lmStuTags" class="lm-stu-tags"></div>
+      </div>
+      <textarea class="f-textarea" id="lmNotes" placeholder="Notes…"></textarea>
+
+      <div class="lm-repeat-row" id="lmRepeatRow">
+        <label class="f-label" style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-bottom:0">
+          <input type="checkbox" id="lmRepeat" onchange="toggleRepeat()"> Repeat weekly
+        </label>
+        <div class="lm-repeat-opts" id="lmRepeatOpts" style="display:none">
+          <select class="f-select" id="lmRepeatWeeks" style="width:auto" onchange="toggleUntilDate()">
+            <option value="4">4 weeks</option>
+            <option value="8">8 weeks</option>
+            <option value="12">12 weeks</option>
+            <option value="custom">Until date&hellip;</option>
+          </select>
+          <input class="f-input" id="lmRepeatUntil" type="date" style="display:none;flex:1">
+        </div>
+      </div>
+
+      <div class="f-actions" style="grid-column:1/-1">
+        <button class="f-save" onclick="saveLesson()">Save lesson</button>
+        <button class="f-cancel" onclick="closeModal()">Cancel</button>
+        <button id="lmDeleteBtn" class="f-cancel" style="margin-left:auto;color:#c0392b;border-color:#c0392b;display:none" onclick="deleteLesson()">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── Constants ── */
+var LESSONS_KEY   = 'wordplay_lessons_cache';
+var SYNC_CODE_KEY = 'wordplay_sync_code';
+var GRID_START    = 7 * 60;    // 07:00
+var GRID_END      = 21 * 60;   // 21:00
+var PX_PER_MIN    = 1.5;
+var GRID_H        = (GRID_END - GRID_START) * PX_PER_MIN;  // 1260px
+
+/* ── State ── */
+var syncCode    = null;
+var lessons     = [];
+var currentView = 'week';
+var currentDate = new Date();
+var editingId   = null;
+var selIds      = [];
+var allStudents = [];
+
+/* ── Utilities ── */
+function esc(s) {
+  if (s == null) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+function todayISO() { return new Date().toISOString().slice(0,10); }
+
+function timeToMin(hhmm) {
+  var p = hhmm.split(':');
+  return parseInt(p[0]) * 60 + parseInt(p[1]);
+}
+function minToHHMM(m) {
+  return String(Math.floor(m/60)).padStart(2,'0') + ':' + String(m%60).padStart(2,'0');
+}
+function addMinutes(hhmm, n) { return minToHHMM(timeToMin(hhmm) + n); }
+
+function addDays(iso, n) {
+  var d = new Date(iso + 'T00:00:00Z');
+  d.setUTCDate(d.getUTCDate() + n);
+  return d.toISOString().slice(0,10);
+}
+
+function weekStart(d) {
+  var c   = new Date(d.getTime());
+  var day = c.getDay();
+  c.setDate(c.getDate() + (day === 0 ? -6 : 1 - day));
+  c.setHours(0,0,0,0);
+  return c;
+}
+function getWeekDates(anchor) {
+  var mon = weekStart(anchor);
+  var out = [];
+  for (var i = 0; i < 7; i++) {
+    var d = new Date(mon.getTime());
+    d.setDate(d.getDate() + i);
+    out.push(d.toISOString().slice(0,10));
+  }
+  return out;
+}
+function monthPad(year, month) {
+  var day = new Date(year, month, 1).getDay();
+  return day === 0 ? 6 : day - 1;
+}
+
+var DOW_SHORT  = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+var MON_SHORT  = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+var MON_LONG   = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+function isoToLocalDate(iso) { return new Date(iso + 'T00:00:00'); }
+function dowIndex(iso) { var d = isoToLocalDate(iso).getDay(); return d === 0 ? 6 : d - 1; }
+
+function weekLabel(dates) {
+  var s = isoToLocalDate(dates[0]);
+  var e = isoToLocalDate(dates[6]);
+  if (s.getMonth() === e.getMonth())
+    return s.getDate() + '–' + e.getDate() + ' ' + MON_SHORT[s.getMonth()] + ' ' + s.getFullYear();
+  return s.getDate() + ' ' + MON_SHORT[s.getMonth()] + ' – ' + e.getDate() + ' ' + MON_SHORT[e.getMonth()] + ' ' + e.getFullYear();
+}
+function monthLabel(d) { return MON_LONG[d.getMonth()] + ' ' + d.getFullYear(); }
+
+function typeLabel(t) {
+  return {
+    '1on1':'1-on-1','group':'Private group','academy':'Academy','school':'School','online':'Online'
+  }[t] || t;
+}
+
+function lessonTop(s)    { return (timeToMin(s) - GRID_START) * PX_PER_MIN; }
+function lessonHeight(s, e) { return Math.max((timeToMin(e) - timeToMin(s)) * PX_PER_MIN, 24); }
+
+/* ── Storage ── */
+function loadSyncCode() { syncCode = localStorage.getItem(SYNC_CODE_KEY) || null; }
+function loadStudents() {
+  try { allStudents = JSON.parse(localStorage.getItem('wordplay_student_profiles')) || []; } catch(e) {}
+}
+function loadCache() {
+  try { lessons = JSON.parse(localStorage.getItem(LESSONS_KEY)) || []; } catch(e) { lessons = []; }
+}
+function saveCache() {
+  try { localStorage.setItem(LESSONS_KEY, JSON.stringify(lessons)); } catch(e) {}
+}
+function upsertLocal(lesson) {
+  var i = lessons.findIndex(function(l){ return l.id === lesson.id; });
+  if (i >= 0) lessons[i] = lesson; else lessons.push(lesson);
+  saveCache();
+}
+function deleteLocal(id) {
+  lessons = lessons.filter(function(l){ return l.id !== id; });
+  saveCache();
+}
+
+/* ── Sync ── */
+function setSyncStrip(msg, cls) {
+  var el = document.getElementById('syncStrip');
+  if (!msg) { el.style.display = 'none'; return; }
+  el.style.display = 'block';
+  el.className = 'cal-sync ' + cls;
+  el.textContent = msg;
+}
+
+function fetchAndMerge() {
+  if (!syncCode) return;
+  setSyncStrip('Syncing…', 'info');
+  var from = addDays(todayISO(), -90);
+  var to   = addDays(todayISO(), 180);
+  fetch('/api/lessons/' + encodeURIComponent(syncCode) + '?from=' + from + '&to=' + to)
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      var remote = d.lessons || [];
+      var map = {};
+      lessons.forEach(function(l){ map[l.id] = l; });
+      remote.forEach(function(l){
+        if (!map[l.id] || l.updated_at > (map[l.id].updated_at || 0)) map[l.id] = l;
+      });
+      lessons = Object.values(map);
+      saveCache();
+      renderCurrentView();
+      setSyncStrip('Synced', 'synced');
+    })
+    .catch(function(){ setSyncStrip('Sync unavailable — complete Cloudflare D1 setup to enable', 'info'); });
+}
+
+function apiUpsert(lesson) {
+  upsertLocal(lesson);
+  renderCurrentView();
+  if (!syncCode) return;
+  fetch('/api/lessons/' + encodeURIComponent(syncCode), {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ action: 'upsert', lesson: lesson })
+  }).catch(function(){});
+}
+
+function apiBulk(list) {
+  list.forEach(upsertLocal);
+  renderCurrentView();
+  if (!syncCode) return;
+  fetch('/api/lessons/' + encodeURIComponent(syncCode), {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ action: 'bulk', lessons: list })
+  }).catch(function(){});
+}
+
+function apiDelete(id) {
+  deleteLocal(id);
+  renderCurrentView();
+  if (!syncCode) return;
+  fetch('/api/lessons/' + encodeURIComponent(syncCode), {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ action: 'delete', id: id })
+  }).catch(function(){});
+}
+
+/* ── Navigation ── */
+function navPrev() {
+  if (currentView === 'week') currentDate.setDate(currentDate.getDate() - 7);
+  else currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
+  renderCurrentView();
+}
+function navNext() {
+  if (currentView === 'week') currentDate.setDate(currentDate.getDate() + 7);
+  else currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
+  renderCurrentView();
+}
+function goToday() { currentDate = new Date(); renderCurrentView(); }
+
+function switchView(v) {
+  currentView = v;
+  document.getElementById('btnWeek').classList.toggle('active', v === 'week');
+  document.getElementById('btnMonth').classList.toggle('active', v === 'month');
+  document.getElementById('viewWeek').style.display  = v === 'week'  ? '' : 'none';
+  document.getElementById('viewMonth').style.display = v === 'month' ? '' : 'none';
+  renderCurrentView();
+}
+
+function renderCurrentView() {
+  if (currentView === 'week') { renderWeek(); renderDayList(); }
+  else renderMonth();
+  updateTitle();
+}
+
+function updateTitle() {
+  var el = document.getElementById('calTitle');
+  el.textContent = currentView === 'week'
+    ? weekLabel(getWeekDates(currentDate))
+    : monthLabel(currentDate);
+}
+
+/* ── Week view ── */
+function renderWeek() {
+  var dates = getWeekDates(currentDate);
+  var today = todayISO();
+
+  /* Header */
+  var hHtml = '<div class="cal-gutter"></div>';
+  dates.forEach(function(iso){
+    var isTod = iso === today;
+    hHtml += '<div class="cal-day-head' + (isTod ? ' today' : '') + '">'
+      + DOW_SHORT[dowIndex(iso)]
+      + '<span class="cal-day-num">' + parseInt(iso.slice(8)) + '</span>'
+      + '</div>';
+  });
+  document.getElementById('weekHeader').innerHTML = hHtml;
+
+  /* Time axis */
+  var axEl   = document.getElementById('timeAxis');
+  var axHtml = '';
+  axEl.style.height = GRID_H + 'px';
+  for (var h = 7; h <= 21; h++) {
+    axHtml += '<span class="cal-hour-label" style="top:' + ((h - 7) * 60 * PX_PER_MIN) + 'px">'
+      + String(h).padStart(2,'0') + ':00</span>';
+  }
+  axEl.innerHTML = axHtml;
+
+  /* Day columns */
+  var colsEl = document.getElementById('dayCols');
+  var cHtml  = '';
+
+  /* Horizontal grid lines */
+  for (var gh = 7; gh <= 21; gh++) {
+    cHtml += '<div style="position:absolute;left:0;right:0;top:' + ((gh-7)*60*PX_PER_MIN) + 'px;height:1px;background:var(--hairline);pointer-events:none;z-index:0"></div>';
+  }
+
+  dates.forEach(function(iso){
+    var isTod = iso === today;
+    var dayL  = lessons.filter(function(l){ return l.date === iso; })
+                       .sort(function(a,b){ return timeToMin(a.time_start) - timeToMin(b.time_start); });
+
+    cHtml += '<div class="cal-day-col' + (isTod ? ' today-col' : '') + '"'
+      + ' style="height:' + GRID_H + 'px"'
+      + ' onclick="onColClick(event,\'' + iso + '\')">';
+
+    dayL.forEach(function(l){
+      var top = lessonTop(l.time_start);
+      var ht  = lessonHeight(l.time_start, l.time_end);
+      if (top < 0 || top >= GRID_H) return;
+      var title = esc(l.title || typeLabel(l.type));
+      cHtml += '<div class="cal-lesson lt-' + l.type + '"'
+        + ' style="top:' + top + 'px;height:' + ht + 'px"'
+        + ' onclick="onLessonClick(event,\'' + l.id + '\')">'
+        + '<span class="cal-lesson-title">' + title + '</span>'
+        + (ht >= 32 ? '<span class="cal-lesson-sub">' + esc(l.time_start) + '–' + esc(l.time_end) + '</span>' : '')
+        + '</div>';
+    });
+    cHtml += '</div>';
+  });
+
+  colsEl.style.height = GRID_H + 'px';
+  colsEl.innerHTML = cHtml;
+
+  /* Scroll to 08:00 */
+  var bodyEl = document.getElementById('weekBody');
+  if (bodyEl.scrollTop < 5) bodyEl.scrollTop = (8 - 7) * 60 * PX_PER_MIN;
+}
+
+/* ── Month view ── */
+function renderMonth() {
+  var yr    = currentDate.getFullYear();
+  var mo    = currentDate.getMonth();
+  var today = todayISO();
+  var dim   = new Date(yr, mo + 1, 0).getDate();
+  var pad   = monthPad(yr, mo);
+
+  var html = DOW_SHORT.map(function(d){ return '<div class="cal-month-dow">' + d + '</div>'; }).join('');
+
+  for (var e = 0; e < pad; e++) html += '<div class="cal-month-cell other-month"></div>';
+
+  for (var day = 1; day <= dim; day++) {
+    var iso   = yr + '-' + String(mo+1).padStart(2,'0') + '-' + String(day).padStart(2,'0');
+    var isTod = iso === today;
+    var dayL  = lessons.filter(function(l){ return l.date === iso; })
+                       .sort(function(a,b){ return timeToMin(a.time_start) - timeToMin(b.time_start); });
+
+    html += '<div class="cal-month-cell' + (isTod ? ' today-cell' : '') + '"'
+      + ' onclick="onMonthCellClick(\'' + iso + '\')">';
+    html += '<span class="cal-month-num">' + day + '</span>';
+
+    dayL.slice(0,3).forEach(function(l){
+      html += '<div class="cal-month-chip lt-' + l.type + '"'
+        + ' onclick="onLessonClick(event,\'' + l.id + '\')">'
+        + esc(l.title || typeLabel(l.type)) + '</div>';
+    });
+    if (dayL.length > 3) html += '<div class="cal-month-more">+' + (dayL.length - 3) + ' more</div>';
+    html += '</div>';
+  }
+
+  document.getElementById('monthGrid').innerHTML = html;
+}
+
+/* ── Day-list (mobile) ── */
+function renderDayList() {
+  var dates = getWeekDates(currentDate);
+  var today = todayISO();
+  var html  = '';
+
+  dates.forEach(function(iso){
+    var d     = isoToLocalDate(iso);
+    var label = DOW_SHORT[dowIndex(iso)] + ' ' + d.getDate() + ' ' + MON_SHORT[d.getMonth()];
+    var dayL  = lessons.filter(function(l){ return l.date === iso; })
+                       .sort(function(a,b){ return timeToMin(a.time_start) - timeToMin(b.time_start); });
+    html += '<div class="cal-list-day">';
+    html += '<div class="cal-list-date' + (iso === today ? ' today-lbl' : '') + '">' + esc(label) + '</div>';
+    if (!dayL.length) {
+      html += '<div class="cal-list-empty">No lessons</div>';
+    } else {
+      dayL.forEach(function(l){
+        html += '<div class="cal-list-row lt-' + l.type + '" onclick="onLessonClick(event,\'' + l.id + '\')">'
+          + '<span class="cal-list-time">' + esc(l.time_start) + '</span>'
+          + '<span class="cal-list-title">' + esc(l.title || typeLabel(l.type)) + '</span>'
+          + '</div>';
+      });
+    }
+    html += '</div>';
+  });
+  document.getElementById('viewDayList').innerHTML = html;
+}
+
+/* ── Click handlers ── */
+function onColClick(e, iso) {
+  if (e.target.closest('.cal-lesson')) return;
+  var col  = e.currentTarget;
+  var rect = col.getBoundingClientRect();
+  var relY = e.clientY - rect.top + document.getElementById('weekBody').scrollTop;
+  // Subtract header height (sticky header is outside weekBody so scrollTop handles the offset)
+  var snap = Math.round(Math.round(relY / PX_PER_MIN) / 15) * 15;
+  var abs  = GRID_START + Math.max(0, Math.min(GRID_END - GRID_START - 60, snap));
+  openAddModal(iso, minToHHMM(abs));
+}
+
+function onLessonClick(e, id) {
+  e.stopPropagation();
+  var l = lessons.find(function(x){ return x.id === id; });
+  if (l) openEditModal(l);
+}
+
+function onMonthCellClick(iso) { openAddModal(iso, null); }
+
+/* ── Modal: add ── */
+function openAddModal(date, time) {
+  editingId = null;
+  document.getElementById('lmHeading').textContent = 'Add lesson';
+  document.getElementById('lmTitleInput').value   = '';
+  document.getElementById('lmDate').value          = date || todayISO();
+  document.getElementById('lmType').value          = '1on1';
+  document.getElementById('lmStart').value         = time || '09:00';
+  document.getElementById('lmEnd').value           = addMinutes(time || '09:00', 60);
+  document.getElementById('lmLocation').value      = '';
+  document.getElementById('lmNotes').value         = '';
+  document.getElementById('lmDeleteBtn').style.display  = 'none';
+  document.getElementById('lmRepeatRow').style.display  = '';
+  document.getElementById('lmRepeat').checked            = false;
+  document.getElementById('lmRepeatOpts').style.display = 'none';
+  document.getElementById('lmRepeatUntil').style.display= 'none';
+  document.getElementById('lmRepeatWeeks').value         = '4';
+  selIds = [];
+  renderStuTags();
+  showModal();
+}
+
+/* ── Modal: edit ── */
+function openEditModal(l) {
+  editingId = l.id;
+  document.getElementById('lmHeading').textContent = 'Edit lesson';
+  document.getElementById('lmTitleInput').value   = l.title || '';
+  document.getElementById('lmDate').value          = l.date;
+  document.getElementById('lmType').value          = l.type;
+  document.getElementById('lmStart').value         = l.time_start;
+  document.getElementById('lmEnd').value           = l.time_end;
+  document.getElementById('lmLocation').value      = l.location || '';
+  document.getElementById('lmNotes').value         = l.notes || '';
+  document.getElementById('lmDeleteBtn').style.display = 'inline-block';
+  document.getElementById('lmRepeatRow').style.display = 'none';
+  selIds = (l.student_ids || []).slice();
+  renderStuTags();
+  showModal();
+}
+
+function showModal() {
+  document.getElementById('lessonModal').style.display = 'flex';
+  document.getElementById('lmTitleInput').focus();
+}
+function closeModal() {
+  document.getElementById('lessonModal').style.display = 'none';
+  document.getElementById('lmSuggestions').style.display = 'none';
+  editingId = null;
+}
+function handleOverlayClick(e) { if (e.target === e.currentTarget) closeModal(); }
+
+/* ── Save / Delete ── */
+function saveLesson() {
+  var date  = document.getElementById('lmDate').value;
+  var start = document.getElementById('lmStart').value;
+  var end   = document.getElementById('lmEnd').value;
+  if (!date || !start || !end) { alert('Date, start, and end time are required.'); return; }
+  if (start >= end) { alert('End time must be after start time.'); return; }
+
+  var now = Date.now();
+  var lesson = {
+    id:          editingId || uid(),
+    title:       document.getElementById('lmTitleInput').value.trim(),
+    date:        date,
+    time_start:  start,
+    time_end:    end,
+    type:        document.getElementById('lmType').value,
+    location:    document.getElementById('lmLocation').value.trim(),
+    notes:       document.getElementById('lmNotes').value.trim(),
+    student_ids: selIds.slice(),
+    created_at:  now,
+    updated_at:  now
+  };
+
+  var doRepeat = !editingId && document.getElementById('lmRepeat').checked;
+  if (doRepeat) {
+    var bulk = buildRecurring(lesson);
+    if (!bulk) { alert('Please set a valid end date (max 52 weeks).'); return; }
+    apiBulk(bulk);
+  } else {
+    apiUpsert(lesson);
+  }
+  closeModal();
+}
+
+function deleteLesson() {
+  var l    = lessons.find(function(x){ return x.id === editingId; });
+  var name = l ? (l.title || typeLabel(l.type)) : 'this lesson';
+  if (!confirm('Delete "' + name + '"?')) return;
+  apiDelete(editingId);
+  closeModal();
+}
+
+function buildRecurring(base) {
+  var wEl = document.getElementById('lmRepeatWeeks');
+  var uEl = document.getElementById('lmRepeatUntil');
+  var weeks;
+  if (wEl.value === 'custom') {
+    if (!uEl.value) return null;
+    var startMs = new Date(base.date + 'T00:00:00Z').getTime();
+    var endMs   = new Date(uEl.value  + 'T00:00:00Z').getTime();
+    weeks = Math.round((endMs - startMs) / (7 * 86400000));
+    if (weeks < 1 || weeks > 52) return null;
+  } else {
+    weeks = parseInt(wEl.value);
+  }
+  var now = Date.now();
+  var list = [];
+  for (var w = 0; w < weeks; w++) {
+    list.push(Object.assign({}, base, { id: uid(), date: addDays(base.date, w*7), created_at: now, updated_at: now }));
+  }
+  return list;
+}
+
+/* ── Student autocomplete ── */
+function onStudentInput() {
+  var q   = document.getElementById('lmStuInput').value.trim().toLowerCase();
+  var sug = document.getElementById('lmSuggestions');
+  if (!q) { sug.style.display = 'none'; return; }
+  var matches = allStudents.filter(function(s){
+    return s.name.toLowerCase().indexOf(q) === 0 && selIds.indexOf(s.id) === -1;
+  }).slice(0, 6);
+  if (!matches.length) { sug.style.display = 'none'; return; }
+  sug.innerHTML = matches.map(function(s){
+    return '<div class="lm-suggestion" data-id="' + esc(s.id) + '">' + esc(s.name) + '</div>';
+  }).join('');
+  sug.style.display = 'block';
+  sug.querySelectorAll('.lm-suggestion').forEach(function(el){
+    el.onmousedown = function(e){ e.preventDefault(); addStudent(el.dataset.id); };
+  });
+}
+function addStudent(id) {
+  if (selIds.indexOf(id) === -1) selIds.push(id);
+  document.getElementById('lmStuInput').value = '';
+  document.getElementById('lmSuggestions').style.display = 'none';
+  renderStuTags();
+}
+function removeStudent(id) {
+  selIds = selIds.filter(function(x){ return x !== id; });
+  renderStuTags();
+}
+function renderStuTags() {
+  document.getElementById('lmStuTags').innerHTML = selIds.map(function(id){
+    var s = allStudents.find(function(x){ return x.id === id; });
+    return '<span class="lm-stu-tag">' + esc(s ? s.name : id)
+      + '<button onclick="removeStudent(\'' + esc(id) + '\')" aria-label="Remove">&times;</button></span>';
+  }).join('');
+}
+
+/* ── Repeat toggles ── */
+function toggleRepeat() {
+  var on = document.getElementById('lmRepeat').checked;
+  document.getElementById('lmRepeatOpts').style.display = on ? 'flex' : 'none';
+  if (!on) document.getElementById('lmRepeatUntil').style.display = 'none';
+}
+function toggleUntilDate() {
+  var custom = document.getElementById('lmRepeatWeeks').value === 'custom';
+  document.getElementById('lmRepeatUntil').style.display = custom ? 'inline-block' : 'none';
+}
+
+/* ── Init ── */
+loadSyncCode();
+loadStudents();
+loadCache();
+renderCurrentView();
+if (syncCode) fetchAndMerge();
+</script>
+</body>
+</html>

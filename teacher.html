@@ -82,6 +82,13 @@
       <div class="hc-desc">Word-data builder, class-context snapshot, raw repo links, and the build roadmap &mdash; the workshop tools.</div>
       <div class="hc-stat">Utilities &amp; roadmap</div>
     </a>
+
+    <a href="calendar.html" class="hub-card">
+      <div class="hc-icon">&#8862;</div>
+      <div class="hc-title">Lesson Calendar</div>
+      <div class="hc-desc">Your full weekly schedule &mdash; 1-on-1, private groups, academy and school lessons all in one view.</div>
+      <div class="hc-stat" id="stat-calendar">Loading&hellip;</div>
+    </a>
   </div>
 
   <div class="hub-sep"><div></div><span>Also</span><div></div></div>
@@ -129,6 +136,30 @@ fetch('shared/coverage-data.json?v=' + Date.now())
   if (students.length) {
     el.innerHTML = '<span class="num">' + students.length + '</span> student' + (students.length !== 1 ? 's' : '') + ' tracked';
   }
+})();
+
+/* Lesson calendar — today's count */
+(function(){
+  var today = new Date().toISOString().slice(0,10);
+  var el    = document.getElementById('stat-calendar');
+  var cached = [];
+  try { cached = JSON.parse(localStorage.getItem('wordplay_lessons_cache')) || []; } catch(e) {}
+  var n = cached.filter(function(l){ return l.date === today; }).length;
+  if (n > 0) {
+    el.innerHTML = '<span class="num">' + n + '</span> lesson' + (n !== 1 ? 's' : '') + ' today';
+    return;
+  }
+  var code = localStorage.getItem('wordplay_sync_code');
+  if (!code) { el.textContent = 'No lessons today'; return; }
+  fetch('/api/lessons/' + encodeURIComponent(code) + '?from=' + today + '&to=' + today)
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      var count = (d.lessons || []).length;
+      el.innerHTML = count > 0
+        ? '<span class="num">' + count + '</span> lesson' + (count !== 1 ? 's' : '') + ' today'
+        : 'No lessons today';
+    })
+    .catch(function(){ el.textContent = 'No lessons today'; });
 })();
 </script>
 </body>
