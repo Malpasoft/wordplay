@@ -68,7 +68,7 @@ No emojis in commit messages.
 ## File conventions
 
 - **Static site only** — vanilla HTML/CSS/JS, no build step, no npm
-- **~2,187 HTML pages** — prefer targeted `Edit` calls over batch scripts
+- **~2,372 HTML pages** — prefer targeted `Edit` calls over batch scripts
 - **Two flashcard templates** — never mix them:
   - Old (A1 vocab): `STORAGE_KEY`, `WORDS[{word, definition, example, pronunciation}]`, `renderCard()`
   - New (A2–C2): `MASTERY_KEY`, `SLUG`, `LEVEL`, `WORDS[{word, ipa, def, ex}]`, `showCard()`
