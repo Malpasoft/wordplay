@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<title>Word Play · Student Profiles</title>
+<link rel="stylesheet" href="shared/base.css?v=v123">
+<script src="shared/dark-init.js?v=v109"></script>
+<style>
+:root {
+  --amber: #B8860B; --paper: #F7F3EE; --ink: #1A1A1A;
+  --muted: #6B6B6B; --hairline: #D4CFC8; --card: #FFFFFF; --green: #2E7D52; --red: #C0392B;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --amber: #C9A050 !important; --paper: #0E0E0E !important; --ink: #F0F0F0 !important;
+          --muted: #999 !important; --hairline: #333 !important; --card: #1A1A1A !important; }
+}
+body.dark-mode {
+  --amber: #C9A050 !important; --paper: #0E0E0E !important; --ink: #F0F0F0 !important;
+  --muted: #999 !important; --hairline: #333 !important; --card: #1A1A1A !important;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+       background: var(--paper); color: var(--ink); font-size: 15px; line-height: 1.6; }
+
+.toolbar { background: var(--ink); color: var(--paper); padding: 14px 20px;
+           display: flex; align-items: center; justify-content: space-between;
+           border-bottom: 3px solid var(--amber); position: sticky; top: 0; z-index: 100; }
+.toolbar-left { display: flex; align-items: center; gap: 12px; }
+.toolbar-right { display: flex; align-items: center; gap: 8px; }
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px;
+       border-radius: 6px; font-size: 0.8rem; font-weight: 700; cursor: pointer;
+       border: none; font-family: inherit; transition: opacity .15s; }
+.btn:active { opacity: 0.75; }
+.btn-amber { background: var(--amber); color: #fff; }
+.btn-ghost { background: transparent; color: var(--paper); border: 1.5px solid rgba(255,255,255,0.25); }
+.btn-sm { padding: 6px 10px; font-size: 0.72rem; }
+
+.container { max-width: 800px; margin: 0 auto; padding: 20px 16px 80px; }
+
+.sync-bar { background: var(--card); border: 1.5px solid var(--hairline); border-radius: 8px;
+            padding: 12px 14px; margin-bottom: 20px; display: flex; align-items: center;
+            gap: 10px; flex-wrap: wrap; }
+.sync-bar input { flex: 1; min-width: 180px; padding: 8px 12px; border: 1.5px solid var(--hairline);
+                  border-radius: 6px; font-size: 0.85rem; font-family: inherit;
+                  background: var(--paper); color: var(--ink); }
+.sync-bar input:focus { outline: none; border-color: var(--amber); }
+.sync-status { font-size: 0.72rem; font-weight: 700; letter-spacing: 1px;
+               text-transform: uppercase; color: var(--muted); }
+.sync-status.ok { color: var(--green); }
+.sync-status.err { color: var(--red); }
+
+.profiles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+                 gap: 12px; margin-bottom: 20px; }
+.profile-card { background: var(--card); border: 1.5px solid var(--hairline); border-radius: 10px;
+                padding: 16px; cursor: pointer; transition: border-color .15s; }
+.profile-card:hover { border-color: var(--amber); }
+.profile-card-name { font-family: Georgia, serif; font-size: 1.1rem; font-weight: 700;
+                     margin-bottom: 4px; }
+.profile-card-meta { font-size: 0.78rem; color: var(--muted); }
+.profile-card-level { display: inline-block; padding: 3px 8px; border-radius: 3px;
+                      background: rgba(184,134,11,0.12); color: var(--amber);
+                      font-size: 0.65rem; font-weight: 800; letter-spacing: 1px;
+                      text-transform: uppercase; margin-top: 8px; }
+.add-card { background: transparent; border: 1.5px dashed var(--hairline); border-radius: 10px;
+            padding: 24px 16px; text-align: center; cursor: pointer; color: var(--muted);
+            font-size: 0.9rem; font-family: inherit; width: 100%; }
+.add-card:hover { border-color: var(--amber); color: var(--amber); }
+
+/* Modal */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+                 display: flex; align-items: flex-end; justify-content: center;
+                 z-index: 1000; }
+@media (min-width: 600px) {
+  .modal-overlay { align-items: center; padding: 20px; }
+}
+.modal { background: var(--paper); border-radius: 16px 16px 0 0; padding: 24px 20px 32px;
+         width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; }
+@media (min-width: 600px) { .modal { border-radius: 12px; } }
+.modal h2 { font-family: Georgia, serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; }
+.field { margin-bottom: 14px; }
+.field label { display: block; font-size: 0.65rem; font-weight: 800; letter-spacing: 2px;
+               text-transform: uppercase; color: var(--amber); margin-bottom: 6px; }
+.field input, .field select, .field textarea {
+  width: 100%; padding: 10px 12px; border: 1.5px solid var(--hairline); border-radius: 7px;
+  font-size: 0.9rem; font-family: inherit; background: var(--card); color: var(--ink); }
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: none; border-color: var(--amber); }
+.field textarea { min-height: 70px; resize: vertical; }
+.field select { appearance: none; -webkit-appearance: none; }
+.modal-actions { display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap; }
+.modal-actions .btn { flex: 1; justify-content: center; }
+.btn-danger { background: transparent; color: var(--red); border: 1.5px solid var(--red); }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="toolbar-left">
+    <a href="teacher.html" style="color:var(--paper);font-size:1.1rem;text-decoration:none">&#8592;</a>
+    <div>
+      <div style="font-family:Georgia,serif;font-size:1.1rem;font-weight:700">Student Profiles</div>
+      <div style="font-size:.72rem;color:rgba(255,255,255,0.5);letter-spacing:1.5px;text-transform:uppercase">Word Play · Teacher Tools</div>
+    </div>
+  </div>
+  <div class="toolbar-right">
+    <button class="btn btn-ghost btn-sm" onclick="toggleDark()">&#9680; Dark</button>
+    <button class="btn btn-amber btn-sm" onclick="openModal(null)">+ Student</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="sync-bar">
+    <input type="text" id="syncCode" placeholder="Sync code (8–64 chars) for cross-device" maxlength="64"
+           oninput="onCodeInput()" autocomplete="off" spellcheck="false">
+    <button class="btn btn-amber btn-sm" onclick="syncNow()">Sync</button>
+    <span class="sync-status" id="syncStatus">Local only</span>
+  </div>
+
+  <div class="profiles-grid" id="profilesGrid"></div>
+
+</div>
+
+<!-- Profile modal -->
+<div class="modal-overlay" id="modalOverlay" style="display:none" onclick="closeModalOnBg(event)">
+  <div class="modal">
+    <h2 id="modalTitle">New Student</h2>
+    <div class="field">
+      <label>Name</label>
+      <input type="text" id="fName" placeholder="Student name" maxlength="80">
+    </div>
+    <div class="field">
+      <label>First language (L1)</label>
+      <input type="text" id="fL1" placeholder="e.g. Spanish, French, Arabic" maxlength="60">
+    </div>
+    <div class="field">
+      <label>Current level</label>
+      <select id="fLevel">
+        <option value="">— select —</option>
+        <option value="A1">A1 Beginner</option>
+        <option value="A2">A2 Elementary</option>
+        <option value="B1">B1 Intermediate</option>
+        <option value="B2">B2 Upper Intermediate</option>
+        <option value="C1">C1 Advanced</option>
+        <option value="C2">C2 Proficient</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Goals</label>
+      <input type="text" id="fGoals" placeholder="e.g. FCE exam, job interview, travel" maxlength="120">
+    </div>
+    <div class="field">
+      <label>Notes</label>
+      <textarea id="fNotes" placeholder="Learning style, difficulties, interests…" maxlength="500"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-amber" onclick="saveProfile()">Save</button>
+      <button class="btn" style="border:1.5px solid var(--hairline)" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-danger" id="btnDelete" onclick="deleteProfile()" style="display:none">Delete</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var PROFILES_KEY = 'wordplay_profiles';
+var CODE_KEY     = 'wordplay_profiles_code';
+var profiles = {};   // {slug: {slug, name, l1, level, goals, notes}}
+var editingSlug = null;
+
+function slugify(name) {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'') + '_' + Date.now();
+}
+
+function load() {
+  try { profiles = JSON.parse(localStorage.getItem(PROFILES_KEY) || '{}'); } catch(e) { profiles = {}; }
+  var code = localStorage.getItem(CODE_KEY) || '';
+  document.getElementById('syncCode').value = code;
+}
+function save() {
+  try { localStorage.setItem(PROFILES_KEY, JSON.stringify(profiles)); } catch(e) {}
+}
+
+function render() {
+  var grid = document.getElementById('profilesGrid');
+  grid.innerHTML = '';
+  var list = Object.values(profiles);
+  list.sort(function(a,b){ return (a.name||'').localeCompare(b.name||''); });
+  list.forEach(function(p) {
+    var card = document.createElement('div');
+    card.className = 'profile-card';
+    card.innerHTML =
+      '<div class="profile-card-name">' + esc(p.name || 'Unnamed') + '</div>' +
+      (p.l1 ? '<div class="profile-card-meta">L1: ' + esc(p.l1) + '</div>' : '') +
+      (p.goals ? '<div class="profile-card-meta">' + esc(p.goals) + '</div>' : '') +
+      (p.level ? '<span class="profile-card-level">' + esc(p.level) + '</span>' : '');
+    card.onclick = function() { openModal(p.slug); };
+    grid.appendChild(card);
+  });
+  var addBtn = document.createElement('button');
+  addBtn.className = 'add-card';
+  addBtn.textContent = '+ Add student';
+  addBtn.onclick = function() { openModal(null); };
+  grid.appendChild(addBtn);
+}
+
+function openModal(slug) {
+  editingSlug = slug;
+  var p = slug ? profiles[slug] : null;
+  document.getElementById('modalTitle').textContent = slug ? 'Edit Student' : 'New Student';
+  document.getElementById('fName').value = p ? p.name : '';
+  document.getElementById('fL1').value = p ? p.l1 : '';
+  document.getElementById('fLevel').value = p ? p.level : '';
+  document.getElementById('fGoals').value = p ? p.goals : '';
+  document.getElementById('fNotes').value = p ? p.notes : '';
+  document.getElementById('btnDelete').style.display = slug ? '' : 'none';
+  document.getElementById('modalOverlay').style.display = 'flex';
+  setTimeout(function(){ document.getElementById('fName').focus(); }, 50);
+}
+function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; editingSlug = null; }
+function closeModalOnBg(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
+
+function saveProfile() {
+  var name = document.getElementById('fName').value.trim();
+  if (!name) { document.getElementById('fName').focus(); return; }
+  var slug = editingSlug || slugify(name);
+  profiles[slug] = {
+    slug, name,
+    l1:    document.getElementById('fL1').value.trim(),
+    level: document.getElementById('fLevel').value,
+    goals: document.getElementById('fGoals').value.trim(),
+    notes: document.getElementById('fNotes').value.trim(),
+  };
+  save(); closeModal(); render(); syncNow();
+}
+function deleteProfile() {
+  if (!editingSlug) return;
+  delete profiles[editingSlug];
+  save(); closeModal(); render();
+}
+
+function onCodeInput() {
+  var code = document.getElementById('syncCode').value.trim();
+  try { localStorage.setItem(CODE_KEY, code); } catch(e) {}
+}
+
+async function syncNow() {
+  var code = document.getElementById('syncCode').value.trim();
+  var status = document.getElementById('syncStatus');
+  if (code.length < 8) { status.className = 'sync-status'; status.textContent = 'Local only'; return; }
+  status.className = 'sync-status'; status.textContent = 'Syncing…';
+  try {
+    await fetch('/api/profiles/' + encodeURIComponent(code), {
+      method: 'PUT', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({profiles: Object.values(profiles)})
+    });
+    var g = await fetch('/api/profiles/' + encodeURIComponent(code));
+    if (!g.ok) throw new Error();
+    var data = await g.json();
+    (data.profiles || []).forEach(function(p) {
+      if (!profiles[p.slug] || p.updated_at > (profiles[p.slug].updated_at || '')) {
+        profiles[p.slug] = p;
+      }
+    });
+    save(); render();
+    status.className = 'sync-status ok'; status.textContent = 'Synced';
+  } catch(e) {
+    status.className = 'sync-status err'; status.textContent = 'Sync failed (offline?)';
+  }
+}
+
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+load(); render();
+</script>
+</body>
+</html>

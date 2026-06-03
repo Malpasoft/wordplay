@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<title>Word Play · Lesson Calendar</title>
+<link rel="stylesheet" href="shared/base.css?v=v123">
+<script src="shared/dark-init.js?v=v109"></script>
+<style>
+:root {
+  --amber: #B8860B; --paper: #F7F3EE; --ink: #1A1A1A;
+  --muted: #6B6B6B; --hairline: #D4CFC8; --card: #FFFFFF;
+  --green: #2E7D52; --red: #C0392B;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --amber: #C9A050 !important; --paper: #0E0E0E !important; --ink: #F0F0F0 !important;
+          --muted: #999 !important; --hairline: #333 !important; --card: #1A1A1A !important; }
+}
+body.dark-mode {
+  --amber: #C9A050 !important; --paper: #0E0E0E !important; --ink: #F0F0F0 !important;
+  --muted: #999 !important; --hairline: #333 !important; --card: #1A1A1A !important;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+       background: var(--paper); color: var(--ink); font-size: 15px; line-height: 1.6; }
+
+.toolbar { background: var(--ink); color: var(--paper); padding: 14px 20px;
+           display: flex; align-items: center; justify-content: space-between;
+           border-bottom: 3px solid var(--amber); position: sticky; top: 0; z-index: 100; }
+.toolbar-left { display: flex; align-items: center; gap: 12px; }
+.toolbar h1 { font-family: Georgia, serif; font-size: 1.1rem; font-weight: 700; }
+.toolbar-sub { font-size: 0.72rem; color: rgba(255,255,255,0.5); letter-spacing: 1.5px;
+               text-transform: uppercase; margin-top: 1px; }
+.toolbar-right { display: flex; align-items: center; gap: 8px; }
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px;
+       border-radius: 6px; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.3px;
+       cursor: pointer; border: none; font-family: inherit; transition: opacity .15s; }
+.btn:active { opacity: 0.75; }
+.btn-amber { background: var(--amber); color: #fff; }
+.btn-ghost { background: transparent; color: var(--paper); border: 1.5px solid rgba(255,255,255,0.25); }
+.btn-ghost:active { background: rgba(255,255,255,0.1); }
+.btn-sm { padding: 6px 10px; font-size: 0.72rem; }
+
+.container { max-width: 900px; margin: 0 auto; padding: 20px 16px 80px; }
+
+/* Sync bar */
+.sync-bar { background: var(--card); border: 1.5px solid var(--hairline); border-radius: 8px;
+            padding: 12px 14px; margin-bottom: 20px; display: flex; align-items: center;
+            gap: 10px; flex-wrap: wrap; }
+.sync-bar input { flex: 1; min-width: 180px; padding: 8px 12px; border: 1.5px solid var(--hairline);
+                  border-radius: 6px; font-size: 0.85rem; font-family: inherit;
+                  background: var(--paper); color: var(--ink); }
+.sync-bar input:focus { outline: none; border-color: var(--amber); }
+.sync-status { font-size: 0.72rem; font-weight: 700; letter-spacing: 1px;
+               text-transform: uppercase; color: var(--muted); }
+.sync-status.ok { color: var(--green); }
+.sync-status.err { color: var(--red); }
+
+/* View toggle */
+.view-toggle { display: flex; gap: 0; margin-bottom: 20px; border: 1.5px solid var(--hairline);
+               border-radius: 6px; overflow: hidden; width: fit-content; }
+.view-btn { padding: 8px 16px; font-size: 0.78rem; font-weight: 700; letter-spacing: 0.5px;
+            text-transform: uppercase; cursor: pointer; border: none; background: transparent;
+            color: var(--muted); font-family: inherit; transition: all .15s; }
+.view-btn.active { background: var(--ink); color: var(--paper); }
+
+/* Week grid */
+.week-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.week-nav { display: flex; align-items: center; gap: 10px; }
+.week-label { font-family: Georgia, serif; font-size: 1rem; font-weight: 700; }
+.week-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 0 -16px; padding: 0 16px 8px; }
+.week-grid { display: grid; grid-template-columns: repeat(7, minmax(110px, 1fr)); gap: 8px;
+             min-width: 770px; }
+.day-col { background: var(--card); border: 1.5px solid var(--hairline); border-radius: 8px;
+           padding: 10px 10px 8px; min-height: 120px; }
+.day-col.today { border-color: var(--amber); }
+.day-name { font-size: 0.62rem; font-weight: 800; letter-spacing: 2px; text-transform: uppercase;
+            color: var(--muted); margin-bottom: 4px; }
+.day-date { font-size: 1.1rem; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+.day-col.today .day-date { color: var(--amber); }
+.lesson-chip { background: rgba(184,134,11,0.12); border: 1px solid var(--amber); border-radius: 4px;
+               padding: 5px 8px; margin-bottom: 5px; cursor: pointer; }
+.lesson-chip.done { opacity: 0.5; text-decoration: line-through; }
+.lesson-chip-student { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.5px;
+                       text-transform: uppercase; color: var(--amber); }
+.lesson-chip-title { font-size: 0.8rem; color: var(--ink); margin-top: 1px; }
+.add-lesson-btn { width: 100%; padding: 5px; border: 1.5px dashed var(--hairline); border-radius: 4px;
+                  background: transparent; color: var(--muted); font-size: 0.75rem; cursor: pointer;
+                  font-family: inherit; margin-top: 4px; }
+.add-lesson-btn:hover { border-color: var(--amber); color: var(--amber); }
+
+/* Month grid */
+.month-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.month-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.month-day-name { font-size: 0.62rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase;
+                  color: var(--muted); text-align: center; padding: 4px 0; }
+.month-cell { border: 1.5px solid var(--hairline); border-radius: 6px; padding: 6px;
+              min-height: 64px; cursor: pointer; background: var(--card); }
+.month-cell.today { border-color: var(--amber); }
+.month-cell.other-month { opacity: 0.35; }
+.month-cell-date { font-size: 0.78rem; font-weight: 700; margin-bottom: 3px; }
+.month-cell.today .month-cell-date { color: var(--amber); }
+.month-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--amber);
+             display: inline-block; margin: 1px; }
+
+/* Modal */
+.modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.55);
+                 display: flex; align-items: flex-end; justify-content: center;
+                 z-index: 1000; padding: 0; }
+@media (min-width: 600px) {
+  .modal-overlay { align-items: center; padding: 20px; }
+}
+.modal { background: var(--paper); border-radius: 16px 16px 0 0; padding: 24px 20px 32px;
+         width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; }
+@media (min-width: 600px) {
+  .modal { border-radius: 12px; }
+}
+.modal h2 { font-family: Georgia, serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 16px; }
+.field { margin-bottom: 14px; }
+.field label { display: block; font-size: 0.65rem; font-weight: 800; letter-spacing: 2px;
+               text-transform: uppercase; color: var(--amber); margin-bottom: 6px; }
+.field input, .field select, .field textarea {
+  width: 100%; padding: 10px 12px; border: 1.5px solid var(--hairline); border-radius: 7px;
+  font-size: 0.9rem; font-family: inherit; background: var(--card); color: var(--ink); }
+.field input:focus, .field select:focus, .field textarea:focus {
+  outline: none; border-color: var(--amber); }
+.field textarea { min-height: 70px; resize: vertical; }
+.field select { appearance: none; -webkit-appearance: none; }
+.modal-actions { display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap; }
+.modal-actions .btn { flex: 1; justify-content: center; }
+.btn-danger { background: transparent; color: var(--red); border: 1.5px solid var(--red); }
+
+.empty-state { text-align: center; padding: 40px 20px; color: var(--muted); font-size: 0.9rem; }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <div class="toolbar-left">
+    <a href="teacher.html" style="color:var(--paper);font-size:1.1rem;text-decoration:none">&#8592;</a>
+    <div>
+      <div class="toolbar h1" style="font-family:Georgia,serif;font-size:1.1rem;font-weight:700">Lesson Calendar</div>
+      <div class="toolbar-sub">Word Play · Teacher Tools</div>
+    </div>
+  </div>
+  <div class="toolbar-right">
+    <button class="btn btn-ghost btn-sm" onclick="toggleDark()">&#9680; Dark</button>
+    <button class="btn btn-amber btn-sm" onclick="openModal(null, todayStr())">+ Lesson</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- Sync bar -->
+  <div class="sync-bar">
+    <input type="text" id="syncCode" placeholder="Sync code (8–64 chars) for cross-device" maxlength="64"
+           oninput="onCodeInput()" autocomplete="off" spellcheck="false">
+    <button class="btn btn-amber btn-sm" onclick="syncNow()">Sync</button>
+    <span class="sync-status" id="syncStatus">Local only</span>
+  </div>
+
+  <!-- View toggle -->
+  <div class="view-toggle">
+    <button class="view-btn active" id="btnWeek" onclick="setView('week')">Week</button>
+    <button class="view-btn" id="btnMonth" onclick="setView('month')">Month</button>
+  </div>
+
+  <!-- Week view -->
+  <div id="viewWeek">
+    <div class="week-header">
+      <div class="week-nav">
+        <button class="btn btn-ghost btn-sm" style="border-color:var(--hairline);color:var(--ink)" onclick="shiftWeek(-1)">&#8592;</button>
+        <span class="week-label" id="weekLabel"></span>
+        <button class="btn btn-ghost btn-sm" style="border-color:var(--hairline);color:var(--ink)" onclick="shiftWeek(1)">&#8594;</button>
+      </div>
+      <button class="btn btn-ghost btn-sm" style="border-color:var(--hairline);color:var(--ink)" onclick="goToToday()">Today</button>
+    </div>
+    <div class="week-scroll">
+      <div class="week-grid" id="weekGrid"></div>
+    </div>
+  </div>
+
+  <!-- Month view -->
+  <div id="viewMonth" style="display:none">
+    <div class="month-header">
+      <div class="week-nav">
+        <button class="btn btn-ghost btn-sm" style="border-color:var(--hairline);color:var(--ink)" onclick="shiftMonth(-1)">&#8592;</button>
+        <span class="week-label" id="monthLabel"></span>
+        <button class="btn btn-ghost btn-sm" style="border-color:var(--hairline);color:var(--ink)" onclick="shiftMonth(1)">&#8594;</button>
+      </div>
+    </div>
+    <div class="month-grid" id="monthGrid"></div>
+  </div>
+
+</div>
+
+<!-- Lesson modal -->
+<div class="modal-overlay" id="modalOverlay" style="display:none" onclick="closeModalOnBg(event)">
+  <div class="modal">
+    <h2 id="modalTitle">New Lesson</h2>
+    <div class="field">
+      <label>Date</label>
+      <input type="date" id="fDate">
+    </div>
+    <div class="field">
+      <label>Student</label>
+      <input type="text" id="fStudent" placeholder="Student name" maxlength="80">
+    </div>
+    <div class="field">
+      <label>Lesson title / topic</label>
+      <input type="text" id="fTitle" placeholder="e.g. B2 Grammar — Conditionals" maxlength="120">
+    </div>
+    <div class="field">
+      <label>Notes</label>
+      <textarea id="fNotes" placeholder="Homework, observations, next steps…" maxlength="500"></textarea>
+    </div>
+    <div class="field">
+      <label>Status</label>
+      <select id="fDone">
+        <option value="0">Scheduled</option>
+        <option value="1">Done</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-amber" onclick="saveLesson()">Save</button>
+      <button class="btn" style="border:1.5px solid var(--hairline)" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-danger" id="btnDelete" onclick="deleteLesson()" style="display:none">Delete</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var LESSONS_KEY = 'wordplay_calendar_lessons';
+var CODE_KEY    = 'wordplay_calendar_code';
+
+var lessons = {};   // {lesson_id: {lesson_id, date, student, title, notes, done}}
+var editingId = null;
+var weekOffset = 0;
+var monthOffset = 0;
+var currentView = 'week';
+
+// ── Storage ──────────────────────────────────────────────────────────────────
+function load() {
+  try { lessons = JSON.parse(localStorage.getItem(LESSONS_KEY) || '{}'); } catch(e) { lessons = {}; }
+  var code = localStorage.getItem(CODE_KEY) || '';
+  document.getElementById('syncCode').value = code;
+}
+function save() {
+  try { localStorage.setItem(LESSONS_KEY, JSON.stringify(lessons)); } catch(e) {}
+}
+
+// ── Date helpers ──────────────────────────────────────────────────────────────
+function todayStr() {
+  var d = new Date(); return d.toISOString().slice(0,10);
+}
+function addDays(dateStr, n) {
+  var d = new Date(dateStr + 'T12:00:00'); d.setDate(d.getDate() + n); return d.toISOString().slice(0,10);
+}
+function weekStart(offset) {
+  var d = new Date(); d.setDate(d.getDate() - d.getDay() + 1 + offset * 7);
+  return d.toISOString().slice(0,10);
+}
+function fmtDate(dateStr) {
+  var d = new Date(dateStr + 'T12:00:00');
+  return d.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' });
+}
+function fmtMonth(dateStr) {
+  var d = new Date(dateStr + 'T12:00:00');
+  return d.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
+}
+function isoWeekLabel(start) {
+  var end = addDays(start, 6);
+  var ds = new Date(start + 'T12:00:00'), de = new Date(end + 'T12:00:00');
+  return ds.toLocaleDateString('en-GB', {day:'numeric',month:'short'}) + ' — ' +
+         de.toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'numeric'});
+}
+
+// ── Render week ───────────────────────────────────────────────────────────────
+function renderWeek() {
+  var start = weekStart(weekOffset);
+  document.getElementById('weekLabel').textContent = isoWeekLabel(start);
+  var today = todayStr();
+  var grid = document.getElementById('weekGrid');
+  grid.innerHTML = '';
+  var DAY_NAMES = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  for (var i = 0; i < 7; i++) {
+    var date = addDays(start, i);
+    var dayLessons = Object.values(lessons).filter(l => l.date === date);
+    var col = document.createElement('div');
+    col.className = 'day-col' + (date === today ? ' today' : '');
+    var d = new Date(date + 'T12:00:00');
+    col.innerHTML = '<div class="day-name">' + DAY_NAMES[i] + '</div>' +
+      '<div class="day-date">' + d.getDate() + '</div>';
+    dayLessons.forEach(function(l) {
+      var chip = document.createElement('div');
+      chip.className = 'lesson-chip' + (l.done ? ' done' : '');
+      chip.innerHTML = (l.student ? '<div class="lesson-chip-student">' + esc(l.student) + '</div>' : '') +
+        '<div class="lesson-chip-title">' + esc(l.title || 'Lesson') + '</div>';
+      chip.onclick = function() { openModal(l.lesson_id, date); };
+      col.appendChild(chip);
+    });
+    var addBtn = document.createElement('button');
+    addBtn.className = 'add-lesson-btn';
+    addBtn.textContent = '+ Add';
+    addBtn.onclick = (function(d){ return function(){ openModal(null, d); }; })(date);
+    col.appendChild(addBtn);
+    grid.appendChild(col);
+  }
+}
+
+// ── Render month ──────────────────────────────────────────────────────────────
+function renderMonth() {
+  var now = new Date();
+  var y = now.getFullYear(), m = now.getMonth() + monthOffset;
+  while (m > 11) { m -= 12; y++; } while (m < 0) { m += 12; y--; }
+  var label = new Date(y, m, 1).toLocaleDateString('en-GB', {month:'long',year:'numeric'});
+  document.getElementById('monthLabel').textContent = label;
+  var today = todayStr();
+  var grid = document.getElementById('monthGrid');
+  grid.innerHTML = '';
+  ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(function(n) {
+    var h = document.createElement('div'); h.className = 'month-day-name'; h.textContent = n;
+    grid.appendChild(h);
+  });
+  var first = new Date(y, m, 1);
+  var startDow = (first.getDay() + 6) % 7; // Mon=0
+  var daysInMonth = new Date(y, m + 1, 0).getDate();
+  var prevDays = new Date(y, m, 0).getDate();
+  function mkCell(dateStr, otherMonth) {
+    var cell = document.createElement('div');
+    var d = new Date(dateStr + 'T12:00:00');
+    cell.className = 'month-cell' + (dateStr === today ? ' today' : '') + (otherMonth ? ' other-month' : '');
+    var count = Object.values(lessons).filter(l => l.date === dateStr).length;
+    cell.innerHTML = '<div class="month-cell-date">' + d.getDate() + '</div>' +
+      (count > 0 ? '<div>' + Array(count).fill('<span class="month-dot"></span>').join('') + '</div>' : '');
+    cell.onclick = (function(ds){ return function(){ openModal(null, ds); }; })(dateStr);
+    grid.appendChild(cell);
+  }
+  for (var i = startDow - 1; i >= 0; i--) {
+    var pd = new Date(y, m, -i); mkCell(pd.toISOString().slice(0,10), true);
+  }
+  for (var d2 = 1; d2 <= daysInMonth; d2++) {
+    mkCell(new Date(y, m, d2).toISOString().slice(0,10), false);
+  }
+  var cells = startDow + daysInMonth;
+  var trailing = cells % 7 === 0 ? 0 : 7 - (cells % 7);
+  for (var t = 1; t <= trailing; t++) {
+    mkCell(new Date(y, m + 1, t).toISOString().slice(0,10), true);
+  }
+}
+
+// ── Navigation ────────────────────────────────────────────────────────────────
+function shiftWeek(n) { weekOffset += n; renderWeek(); }
+function shiftMonth(n) { monthOffset += n; renderMonth(); }
+function goToToday() { weekOffset = 0; renderWeek(); }
+function setView(v) {
+  currentView = v;
+  document.getElementById('viewWeek').style.display = v === 'week' ? '' : 'none';
+  document.getElementById('viewMonth').style.display = v === 'month' ? '' : 'none';
+  document.getElementById('btnWeek').classList.toggle('active', v === 'week');
+  document.getElementById('btnMonth').classList.toggle('active', v === 'month');
+  if (v === 'month') renderMonth(); else renderWeek();
+}
+
+// ── Modal ─────────────────────────────────────────────────────────────────────
+function openModal(id, date) {
+  editingId = id;
+  var l = id ? lessons[id] : null;
+  document.getElementById('modalTitle').textContent = id ? 'Edit Lesson' : 'New Lesson';
+  document.getElementById('fDate').value = (l ? l.date : date) || todayStr();
+  document.getElementById('fStudent').value = l ? l.student : '';
+  document.getElementById('fTitle').value = l ? l.title : '';
+  document.getElementById('fNotes').value = l ? l.notes : '';
+  document.getElementById('fDone').value = l ? String(l.done ? '1' : '0') : '0';
+  document.getElementById('btnDelete').style.display = id ? '' : 'none';
+  document.getElementById('modalOverlay').style.display = 'flex';
+}
+function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; editingId = null; }
+function closeModalOnBg(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
+
+function saveLesson() {
+  var id = editingId || ('lesson_' + Date.now());
+  lessons[id] = {
+    lesson_id: id,
+    date: document.getElementById('fDate').value,
+    student: document.getElementById('fStudent').value.trim(),
+    title: document.getElementById('fTitle').value.trim(),
+    notes: document.getElementById('fNotes').value.trim(),
+    done: document.getElementById('fDone').value === '1' ? 1 : 0,
+  };
+  save(); closeModal(); render(); syncNow();
+}
+function deleteLesson() {
+  if (!editingId) return;
+  delete lessons[editingId];
+  save(); closeModal(); render();
+  var code = document.getElementById('syncCode').value.trim();
+  if (code.length >= 8) {
+    fetch('/api/lessons/' + encodeURIComponent(code), {
+      method: 'DELETE', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({lesson_id: editingId})
+    }).catch(function(){});
+  }
+}
+
+// ── Sync ──────────────────────────────────────────────────────────────────────
+function onCodeInput() {
+  var code = document.getElementById('syncCode').value.trim();
+  try { localStorage.setItem(CODE_KEY, code); } catch(e) {}
+}
+
+async function syncNow() {
+  var code = document.getElementById('syncCode').value.trim();
+  var status = document.getElementById('syncStatus');
+  if (code.length < 8) { status.className = 'sync-status'; status.textContent = 'Local only'; return; }
+  status.className = 'sync-status'; status.textContent = 'Syncing…';
+  try {
+    // Push local
+    var r = await fetch('/api/lessons/' + encodeURIComponent(code), {
+      method: 'PUT', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({lessons: Object.values(lessons)})
+    });
+    if (!r.ok) throw new Error('push failed');
+    // Pull remote
+    var g = await fetch('/api/lessons/' + encodeURIComponent(code));
+    if (!g.ok) throw new Error('pull failed');
+    var data = await g.json();
+    (data.lessons || []).forEach(function(l) {
+      if (!lessons[l.lesson_id] || l.updated_at > (lessons[l.lesson_id].updated_at || '')) {
+        lessons[l.lesson_id] = l;
+      }
+    });
+    save(); render();
+    status.className = 'sync-status ok'; status.textContent = 'Synced';
+  } catch(e) {
+    status.className = 'sync-status err'; status.textContent = 'Sync failed (offline?)';
+  }
+}
+
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function render() { if (currentView === 'week') renderWeek(); else renderMonth(); }
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+load(); render();
+</script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<title>Word Play · Teacher Hub</title>
+<link rel="stylesheet" href="shared/base.css?v=v123">
+<script src="shared/dark-init.js?v=v109"></script>
+<style>
+:root {
+  --amber: #B8860B; --paper: #F7F3EE; --ink: #1A1A1A;
+  --muted: #6B6B6B; --hairline: #D4CFC8; --card: #FFFFFF;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --amber: #C9A050 !important; --paper: #0E0E0E !important; --ink: #F0F0F0 !important;
+          --muted: #999 !important; --hairline: #333 !important; --card: #1A1A1A !important; }
+}
+body.dark-mode {
+  --amber: #C9A050 !important; --paper: #0E0E0E !important; --ink: #F0F0F0 !important;
+  --muted: #999 !important; --hairline: #333 !important; --card: #1A1A1A !important;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+       background: var(--paper); color: var(--ink); font-size: 15px; line-height: 1.6; }
+
+.header { background: var(--ink); color: var(--paper); padding: 20px;
+          border-bottom: 3px solid var(--amber); }
+.header-inner { max-width: 800px; margin: 0 auto; display: flex;
+                align-items: center; justify-content: space-between; }
+.brand { font-family: Georgia, serif; font-size: 1.3rem; font-weight: 700; }
+.brand span { color: var(--amber); }
+.dark-btn { background: transparent; color: rgba(255,255,255,0.7);
+            border: 1.5px solid rgba(255,255,255,0.25); border-radius: 6px;
+            padding: 7px 12px; font-size: 0.8rem; cursor: pointer; font-family: inherit; }
+
+.container { max-width: 800px; margin: 0 auto; padding: 28px 16px 80px; }
+.page-title { font-family: Georgia, serif; font-size: 1.5rem; font-weight: 700;
+              margin-bottom: 4px; }
+.page-sub { font-size: 0.78rem; color: var(--muted); letter-spacing: 1px;
+            text-transform: uppercase; margin-bottom: 28px; }
+
+.tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.tool-card { background: var(--card); border: 1.5px solid var(--hairline); border-radius: 10px;
+             padding: 18px; text-decoration: none; color: var(--ink);
+             display: block; transition: border-color .15s, box-shadow .15s; }
+.tool-card:hover { border-color: var(--amber); box-shadow: 0 2px 10px rgba(184,134,11,0.12); }
+.tool-icon { font-size: 1.4rem; margin-bottom: 10px; color: var(--amber); }
+.tool-name { font-family: Georgia, serif; font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+.tool-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+.tool-badge { display: inline-block; margin-top: 8px; padding: 3px 8px; border-radius: 3px;
+              background: rgba(184,134,11,0.12); color: var(--amber);
+              font-size: 0.62rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+
+h2.section-label { font-size: 0.65rem; font-weight: 800; letter-spacing: 2.5px;
+                   text-transform: uppercase; color: var(--amber); margin: 28px 0 12px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div>
+      <div class="brand">Word <span>Play</span></div>
+      <div style="font-size:.7rem;color:rgba(255,255,255,0.45);letter-spacing:1.5px;text-transform:uppercase;margin-top:2px">Teacher Hub</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <a href="index.html" style="color:rgba(255,255,255,0.6);font-size:.8rem;text-decoration:none">&#8592; Course</a>
+      <button class="dark-btn" onclick="toggleDark()">&#9680; Dark</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="page-title">Teacher Hub</div>
+  <div class="page-sub">All tools in one place</div>
+
+  <h2 class="section-label">Student management</h2>
+  <div class="tools-grid">
+    <a href="profile.html" class="tool-card">
+      <div class="tool-icon">&#128100;</div>
+      <div class="tool-name">Student Profiles</div>
+      <div class="tool-desc">Name, L1, level, goals and notes. Syncs across devices with a passphrase.</div>
+      <span class="tool-badge">D1 Sync</span>
+    </a>
+    <a href="calendar.html" class="tool-card">
+      <div class="tool-icon">&#128197;</div>
+      <div class="tool-name">Lesson Calendar</div>
+      <div class="tool-desc">Week and month views. Log lessons, mark them done, add notes per student.</div>
+      <span class="tool-badge">D1 Sync</span>
+    </a>
+  </div>
+
+  <h2 class="section-label">Content creation</h2>
+  <div class="tools-grid">
+    <a href="dev-hub.html" class="tool-card">
+      <div class="tool-icon">&#9998;</div>
+      <div class="tool-name">Dev Hub</div>
+      <div class="tool-desc">Generate prompts for DeepSeek/Gemini to fill vocab chapters. Paste output back to ingest.</div>
+      <span class="tool-badge">Free AI</span>
+    </a>
+    <a href="coverage.html" class="tool-card">
+      <div class="tool-icon">&#9776;</div>
+      <div class="tool-name">Coverage Map</div>
+      <div class="tool-desc">Static content map showing which chapters are complete across all levels and tracks.</div>
+    </a>
+  </div>
+
+  <h2 class="section-label">Course</h2>
+  <div class="tools-grid">
+    <a href="index.html" class="tool-card">
+      <div class="tool-icon">&#127979;</div>
+      <div class="tool-name">Course Home</div>
+      <div class="tool-desc">The student-facing entry point. A1 through C2 English plus Spanish tracks.</div>
+    </a>
+    <a href="placement-test.html" class="tool-card">
+      <div class="tool-icon">&#10003;</div>
+      <div class="tool-name">Placement Test</div>
+      <div class="tool-desc">Students use this to find their starting level.</div>
+    </a>
+  </div>
+
+</div>
+</body>
+</html>
