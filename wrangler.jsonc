@@ -17,7 +17,7 @@
       // Dashboard → Storage & Databases → D1 SQL → wordplay_db → copy the database ID
       "binding": "DB",
       "database_name": "wordplay_db",
-      "database_id": "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+      "database_id": "cf99f636-d7cb-4ad2-add1-a866f2bddc1b"
     }
   ]
 }
