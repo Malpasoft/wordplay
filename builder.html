@@ -620,7 +620,7 @@ function buildPrompt(){
   var aiId = (document.getElementById('aiSelect')||{}).value || 'other';
   var aiHint = '';
   if (aiId==='deepseek'){
-    aiHint = NL+'NOTE FOR DEEPSEEK: Skip any <think>...</think> block. Do not wrap output in ```json fences. Begin your visible reply with [ immediately.'+NL;
+    aiHint = NL+'NOTE FOR DEEPSEEK: You can browse URLs — FETCH the reference file(s) listed above before generating so your output matches the real format exactly. In your reply, skip the <think>...</think> block entirely. Do not wrap output in ```json fences. Begin your visible reply with [ immediately.'+NL;
   } else if (aiId==='gemini'){
     aiHint = NL+'NOTE FOR GEMINI: Output the JSON array only — no "Here is the data:" preamble, no trailing commentary. Start with [.'+NL;
   } else if (aiId==='gpt'){
@@ -880,7 +880,7 @@ function buildPrimer(){
     +'• No trailing comma after the last object'+NL
     +'• Must pass JSON.parse() without errors — check before replying'+NL
     +'• Do not write "Here is the JSON:" — start with [ immediately'+NL
-    +'• DeepSeek: skip the <think> block entirely, start visible output with ['+NL
+    +'• DeepSeek: you CAN browse — fetch the reference URLs above before generating. Skip <think> block, start visible output with ['+NL
     +'• Gemini: no preamble, no trailing commentary, just the JSON array'+NL
     +'• ChatGPT/GPT-4o: no markdown code block, no explanation before or after'
     + rosterLines;
