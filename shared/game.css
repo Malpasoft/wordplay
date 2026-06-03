@@ -558,4 +558,4 @@ body.dark .game-ref-item .ref-def  { color: rgba(255,255,255,.55) !important; }
 body.dark .game-ref-item .ref-ex   { color: rgba(255,255,255,.38) !important; }
 body.dark .ref-stage-pip { background: rgba(255,255,255,.12); }
 
-.chapter-nav { display: none !important; }
+/* chapter-nav is intentionally shown on flashcard and game pages */

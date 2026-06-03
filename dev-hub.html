@@ -4,28 +4,42 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Word Play · Dev Hub</title>
+<script src="shared/dark-init.js?v=v109"></script>
 <style>
 :root {
   --ink: #1A1A1A; --paper: #F7F3EE; --amber: #B8860B;
   --amber-light: #F5E6B8; --muted: #6B6B6B; --hairline: #D4CFC8;
-  --card: #FFFFFF; --code-bg: #F0EDE8; --green: #2E7D52;
+  --surface: #FFFFFF; --code-bg: #F0EDE8; --green: #2E7D52;
+}
+body.dark {
+  --ink: #F0F0F0; --paper: #0E0E0E; --amber: #C9A050;
+  --amber-light: #3A2C0A; --muted: #9A9A9A; --hairline: #2A2A2A;
+  --surface: #1A1A1A; --code-bg: #141414; --green: #4CAF82;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--paper); color: var(--ink); font-size: 15px; line-height: 1.6; }
-header { background: var(--ink); color: white; padding: 20px; border-bottom: 3px solid var(--amber); }
+header { background: var(--ink); color: white; padding: 16px 20px; border-bottom: 3px solid var(--amber); display: flex; align-items: center; gap: 12px; }
+header .header-left { flex: 1; }
 header h1 { font-family: Georgia, serif; font-size: 1.5rem; font-weight: 700; }
 header p { font-size: 0.75rem; color: rgba(255,255,255,0.5); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
+.dark-toggle {
+  background: rgba(255,255,255,.1); border: 1.5px solid rgba(255,255,255,.25);
+  color: rgba(255,255,255,.85); font-family: inherit; font-size: .72rem;
+  font-weight: 700; letter-spacing: .5px; padding: 6px 12px; border-radius: 4px;
+  cursor: pointer; white-space: nowrap; flex-shrink: 0;
+}
+.dark-toggle:hover { background: rgba(255,255,255,.18); }
 .container { max-width: 680px; margin: 0 auto; padding: 24px 16px 80px; }
 .section { margin-bottom: 32px; }
 .label { font-size: 0.62rem; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
-h2 { font-family: Georgia, serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 14px; }
-.card { background: var(--card); border: 1.5px solid var(--hairline); border-radius: 10px; padding: 18px; margin-bottom: 12px; }
-.card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
+h2 { font-family: Georgia, serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 14px; color: var(--ink); }
+.card { background: var(--surface); border: 1.5px solid var(--hairline); border-radius: 10px; padding: 18px; margin-bottom: 12px; }
+.card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; color: var(--ink); }
 .card p { font-size: 0.85rem; color: var(--muted); }
 select, input, textarea {
   width: 100%; padding: 10px 12px; border: 1.5px solid var(--hairline);
   border-radius: 7px; font-size: 0.9rem; font-family: inherit;
-  background: var(--card); color: var(--ink); margin-bottom: 10px;
+  background: var(--surface); color: var(--ink); margin-bottom: 10px;
   appearance: none; -webkit-appearance: none;
 }
 select:focus, input:focus, textarea:focus { outline: none; border-color: var(--amber); }
@@ -35,31 +49,32 @@ textarea { min-height: 90px; resize: vertical; }
   font-size: 0.85rem; font-weight: 700; letter-spacing: 0.3px;
   cursor: pointer; border: none; font-family: inherit;
 }
-.btn-primary { background: var(--amber); color: white; }
-.btn-secondary { background: var(--card); color: var(--ink); border: 1.5px solid var(--hairline); }
+.btn-primary { background: var(--amber); color: #1A1A1A; }
+.btn-secondary { background: var(--surface); color: var(--ink); border: 1.5px solid var(--hairline); }
 .btn:active { opacity: 0.8; }
 .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
 .prompt-box {
-  background: var(--ink); color: rgba(255,255,255,0.92);
+  background: #111; color: rgba(255,255,255,0.92);
   border-radius: 10px; padding: 16px;
   font-family: "SF Mono", "Menlo", monospace; font-size: 0.72rem;
   line-height: 1.7; white-space: pre-wrap; word-break: break-word;
   margin-top: 12px; display: none;
   -webkit-user-select: all; user-select: all;
+  border: 1px solid rgba(255,255,255,.08);
 }
 .prompt-box.visible { display: block; }
 .copy-btn {
   display: none; margin-top: 8px; width: 100%;
-  padding: 10px; background: var(--amber); color: white;
+  padding: 10px; background: var(--amber); color: #1A1A1A;
   border: none; border-radius: 7px; font-size: 0.85rem;
   font-weight: 700; cursor: pointer; font-family: inherit;
 }
 .copy-btn.visible { display: block; }
-.copy-btn.copied { background: var(--green); }
+.copy-btn.copied { background: var(--green); color: #fff; }
 .link-list { list-style: none; padding: 0; }
 .link-list li { margin-bottom: 8px; }
 .link-list a {
-  display: block; background: var(--card); border: 1.5px solid var(--hairline);
+  display: block; background: var(--surface); border: 1.5px solid var(--hairline);
   border-radius: 7px; padding: 10px 14px; text-decoration: none;
   color: var(--amber); font-size: 0.82rem; font-weight: 600;
   word-break: break-all;
@@ -69,17 +84,37 @@ textarea { min-height: 90px; resize: vertical; }
 .word-row { display: grid; grid-template-columns: 1fr 1fr 2fr 2fr; gap: 6px; margin-bottom: 6px; }
 .word-row input { margin-bottom: 0; font-size: 0.8rem; padding: 7px 9px; }
 .word-row .col-label { font-size: 0.6rem; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 0 2px 2px; }
-.dict-output { display: none; background: var(--code-bg); border: 1px solid var(--hairline); border-radius: 7px; padding: 14px; font-family: "SF Mono","Menlo",monospace; font-size: 0.72rem; white-space: pre-wrap; word-break: break-word; margin-top: 10px; -webkit-user-select: all; user-select: all; }
+.dict-output { display: none; background: var(--code-bg); color: var(--ink); border: 1px solid var(--hairline); border-radius: 7px; padding: 14px; font-family: "SF Mono","Menlo",monospace; font-size: 0.72rem; white-space: pre-wrap; word-break: break-word; margin-top: 10px; -webkit-user-select: all; user-select: all; }
 .dict-output.visible { display: block; }
 hr { border: none; border-top: 1px solid var(--hairline); margin: 32px 0; }
 .status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--green); margin-right: 6px; }
+
+/* ── Dark mode: header must stay dark ── */
+body.dark header { background: #111 !important; border-bottom-color: rgba(255,255,255,.08) !important; }
+
+/* ── Column header row in word builder ── */
+.col-header-row { display: grid; grid-template-columns: 1fr 1fr 2fr 2fr; gap: 6px; margin-bottom: 4px; padding: 0 2px; }
+
+/* ── Mobile: stack word-row to 2x2 grid at 480px, then 1 col at 360px ── */
+@media (max-width: 520px) {
+  .word-row { grid-template-columns: 1fr 1fr; }
+  .col-header-row { grid-template-columns: 1fr 1fr; }
+  /* On mobile, show col-labels inside each input row */
+  .col-header-row { display: none; }
+}
+@media (max-width: 360px) {
+  .word-row { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
 
 <header>
-  <h1>Word Play · Dev Hub</h1>
-  <p>AI content tool · private</p>
+  <div class="header-left">
+    <h1>Word Play · Dev Hub</h1>
+    <p>AI content tool · private</p>
+  </div>
+  <button class="dark-toggle" onclick="toggleDark()">&#9680; Dark</button>
 </header>
 
 <div class="container">
@@ -144,7 +179,7 @@ hr { border: none; border-top: 1px solid var(--hairline); margin: 32px 0; }
       <input id="ch-slug" type="text" placeholder="chapter slug  e.g. abstract-nouns">
       <input id="ch-title" type="text" placeholder="chapter title  e.g. Abstract Nouns">
 
-      <div style="display:grid;grid-template-columns:1fr 1fr 2fr 2fr;gap:6px;margin-bottom:4px;padding:0 2px">
+      <div class="col-header-row">
         <div class="col-label">Word</div>
         <div class="col-label">IPA</div>
         <div class="col-label">Definition</div>
