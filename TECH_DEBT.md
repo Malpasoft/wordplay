@@ -22,7 +22,7 @@ Three Spanish-related tracks are easy to confuse — kept distinct throughout:
   (see `CLOUDFLARE_SETUP.md`).
 - **Cache-bust versions** — every shared asset is pinned to a single `?v=` across all
   consumers (base v123, slides v115, deck v113, game.css v111, game.js v110, store v105,
-  worksheet v106, print v102, dark-init v109). No drift.
+  worksheet v107, print v102, dark-init v109). No drift.
 - **Teacher tools not redundant** — `ai-prompts.html` (prompt factory) → `builder.html`
   (output processor) → `dev-hub.html` (utilities) are sequential, not duplicative.
 
@@ -30,23 +30,19 @@ Three Spanish-related tracks are easy to confuse — kept distinct throughout:
 
 ## HIGH
 
-### H1 — Hardcoded amber hex on chapter-hub activity cards · **status: open**
-- **Scope:** 390 HTML files; 330 are chapter `index.html` hubs using inline
-  `style="--ac-color:#B8860B"` on activity cards (e.g. `b/b1/grammar/modals-obligation/index.html`).
-  Remainder: 7 `certificate.html`, 1 worksheet, 1 game.
-- **Impact:** in dark mode `--ac-color` stays light-amber `#B8860B` instead of `#C9A050` —
-  wrong *shade*, not broken layout. Violates the "amber via `var(--amber)` only" rule sitewide.
-- **Fix:** Python batch replace `--ac-color:#B8860B` → `--ac-color:var(--amber)` on chapter hubs.
-  Certificates are print artefacts — evaluate separately.
+### H1 — Hardcoded amber hex on chapter-hub activity cards · **status: CLOSED**
+- 330 chapter `index.html` hubs batch-updated: `--ac-color:#B8860B` → `--ac-color:var(--amber)`.
+- **Intentional exceptions (not debt):** game cards use `--ac-color:#2E7D52` (green) and print
+  cards use `--ac-color:#6B6B6B` (grey). These distinguish activity types at a glance and are
+  formally documented as allowed exceptions to the amber-only rule. CLAUDE.md updated.
+- 7 `certificate.html` files: amber is hardcoded for print fidelity — intentional, leave as-is.
 
 ---
 
 ## MEDIUM
 
-### M1 — Doc drift: stale dev-branch references · **status: open**
-`CLAUDE.md` says develop on `claude/github-workflow-setup-98Fbf`; `AI_HANDOVER.md` and
-`SESSION_CONTEXT.md` point at `…-1ZNUG`; `CONTRIBUTING.md` references the abandoned 98Fbf
-branch. None is the current branch. Fix: name the active branch (or generic guidance).
+### M1 — Doc drift: stale dev-branch references · **status: CLOSED**
+All four docs updated to generic branch guidance (no hardcoded branch names).
 
 ### M2 — `es/` vocabulary flashcard stubs *(roadmap priority #1)* · **status: open**
 ~77 `es/` vocab `flashcards.html` carry `var WORDS = []` (a1:12, a2:12, b1:11, b2:16, c1:14, c2:12).
@@ -61,9 +57,11 @@ and content, closing both. Fix: `/fill-vocab es <level> <slug>`, starting es/a1.
 24 `espanol-en/a1/grammar/*/slides.html` lack the required `.trap-row` slide. Fix: batch-add per
 CLAUDE.md bulk-edit rules (grep variants first, sample 2–3).
 
-### M5 — `design-check.sh` hook gaps · **status: open**
-The hook missed all 390 H1 hex cases and the `♥`/`♡` in `builder.html`. Extend it to flag inline
-hardcoded amber hex in markup and those glyphs, so H1/L1 cannot recur.
+### M5 — `design-check.sh` hook gaps · **status: partial**
+- H1 hex drift now closed by batch fix — hook wasn't the root cause.
+- `♥`/`♡` eliminated site-wide (match.html, builder.html, worksheet.js all converted to SVG hearts).
+- Remaining gap: hook does not catch `--ac-color:#hex` in inline styles. Low priority now that H1 is
+  closed, but worth adding if activity-card templates are regenerated at scale.
 
 ---
 
@@ -71,11 +69,11 @@ hardcoded amber hex in markup and those glyphs, so H1/L1 cannot recur.
 
 | ID | Item | Status |
 |----|------|--------|
-| L1 | `builder.html` `♥`/`♡` emoji (~lines 1063–1100) violate no-emoji rule | open |
-| L2 | `index.html` 2 inline `onmouseover`/`onmouseout` → move to CSS `:hover` | open |
-| L3 | `wrangler.jsonc` stale "replace database_id" comment (ID is filled) | open |
+| L1 | `builder.html` + `match.html` + `worksheet.js` heart glyphs → SVG hearts with `currentColor` | **CLOSED** |
+| L2 | `index.html` 2 inline `onmouseover`/`onmouseout` → move to CSS `:hover` | **CLOSED** |
+| L3 | `wrangler.jsonc` stale "replace database_id" comment (ID is filled) | **CLOSED** |
 | L4 | 2 empty stubs: `b/b1/vocabulary/applied-grammar-verbs/`, `b/b2/vocabulary/applied-grammar-prepositions/` | open |
-| L5 | `a/a1/vocabulary/animals/flashcards.html` WORDS is unquoted JS literal → pedagogy parse warning (file works) | open |
+| L5 | `a/a1/vocabulary/animals/flashcards.html` WORDS is unquoted JS literal → pedagogy parse warning (file works) | **CLOSED** |
 | L6 | Branch clutter: `…-1ZNUG` merged → prunable (keep `…-5BQiv` active); 9 branches with unmerged commits need triage | open |
 | L7 | `.claude/` playwright-audit `*.{md,json}` + screenshots not git-ignored | open |
 | L8 | ~20 one-off `fix_*`/`migrate_*`/`gen_es_*`/`gen_en_*` scripts linger beside reusable validators | open |

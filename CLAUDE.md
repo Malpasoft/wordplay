@@ -23,11 +23,18 @@ localStorage. Teacher tools (calendar, profiles, dev-hub, builder, coverage) at 
 - **Accent colour: amber only.** Always use `var(--amber)` — never hardcode a hex.
   Its real values are `#B8860B` (light mode) / `#C9A050` (dark mode). No second accent
   colour: no teal, gold, navy, or per-card colours.
+  - **Allowed exception — activity-card type colours:** chapter hub `index.html` pages use
+    `--ac-color` on activity cards. Lesson/practice cards: `var(--amber)`. Game cards:
+    `#2E7D52` (green). Print cards: `#6B6B6B` (grey). These type colours are intentional UX
+    and are **not** a design-system violation.
 - **Background:** `var(--paper)` = `#F7F3EE` (warm parchment) / `#0E0E0E` dark. Ink text
   `var(--ink)` = `#1A1A1A` / `#F0F0F0` dark.
 - **Clean, no-emoji UI.** The only symbols used as UI are `◐`/`◑` (dark-mode toggle) and
   `◆` (streak badge). A `.claude/hooks/design-check.sh` hook enforces this automatically
   on every edit — you don't need to police it manually.
+- **SVG hearts** are used in match.html and worksheet.js for lives/hearts display. Use the
+  standard path with `fill="currentColor"` so CSS color tokens drive the tint — never use
+  the `♥`/`♡` Unicode glyphs (they trigger the hook).
 - **Dark mode works on every element** — use `!important` overrides in CSS where needed.
 - **`class="deck-body"`** on the `<body>` of every `slides.html` lesson page.
 - **`class="sect-card"`** for section cards on level hub pages — never inline

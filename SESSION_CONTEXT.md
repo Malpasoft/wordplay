@@ -55,7 +55,7 @@ A1: fully complete (vocabulary + grammar + writing). A2–C2: stub hub pages onl
 | game.css | v110 | Mastery game styles |
 | game.js | v110 | 4-stage mastery engine |
 | store.js | v105 | localStorage wrapper, FCEStore, XP |
-| worksheet.js | v106 | Auto-grader with explanations |
+| worksheet.js | v107 | Auto-grader with explanations |
 | print.js | v102 | Print/PDF modal |
 | dark-init.js | v109 | Dark/light toggle, back-to-top |
 

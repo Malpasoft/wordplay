@@ -138,7 +138,7 @@ No dependencies, no imports. Pages link with `?v=vNN` cache-busting. Versions ar
 | game.css | v110 | Mastery game styles |
 | game.js | v110 | 4-stage mastery engine (recognition → meaning → context → production) |
 | store.js | v105 | localStorage wrapper, FCEStore, XP, chapter registry |
-| worksheet.js | v106 | Auto-grader (MCQ + text, with explanations) |
+| worksheet.js | v107 | Auto-grader (MCQ + text, with explanations) |
 | print.js | v102 | Print/PDF modal helper |
 | dark-init.js | v109 | Dark/light toggle, back-to-top injection |
 
