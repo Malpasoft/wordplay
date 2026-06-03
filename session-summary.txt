@@ -1,0 +1,165 @@
+WORD PLAY — SESSION SUMMARY & PLAN
+====================================
+Date: 3 June 2026
+Branch: claude/wordplay-design-tokens-5BQiv
+
+
+================================================================
+WHAT WAS DONE THIS SESSION
+================================================================
+
+1. TEACHER TOOLS RESTRUCTURE (complete, deployed)
+   - teacher.html renamed to "Word Play Hub", split into two sections:
+     Developer (Builder, AI Prompts, Coverage, Dev Utilities)
+     Classroom (Student Profiles, Lesson Calendar)
+   - dev-hub.html: removed the confusing "Build chapter word data" word
+     builder tool. Kept student roster snapshot, key links, roadmap.
+   - builder.html: added "Project primer" tab in Step 2 — one click
+     generates full project context to paste into any free AI at the
+     start of a new session.
+
+2. BUILDER STEP 4 — PATH DISPLAY + iPHONE GUIDE (complete, deployed)
+   - After building a file, Step 4 now shows the full repo path
+     (e.g. en/b/b1/vocabulary/travel-holidays/flashcards.html)
+     in an amber box with a Copy path button.
+   - Added collapsible step-by-step guide: "How to upload on GitHub
+     (iPhone / mobile)?" covering: navigate to folder → tap + →
+     Create new file → paste filename → paste content → commit.
+   - Tip: typing a full path with slashes creates missing folders.
+
+3. AI PROMPTS — FULL OVERHAUL (complete, deployed)
+   - Primer now opens with GitHub Raw URLs to CLAUDE.md, AI_HANDOVER.md,
+     and 4 completed reference files (flashcard, slides, worksheet, game).
+     DeepSeek/Gemini with browsing can fetch real context directly.
+   - Chapter prompts (flashcards / slides / worksheet) rewritten:
+     * Each links to a completed reference file on raw.githubusercontent.com
+     * REAL EXAMPLE block shows an actual filled JSON entry
+     * cefrVocabGuide() and cefrGrammarGuide() helpers inject level-
+       specific guidance inline (A1–C2, concrete word lists + grammar)
+     * Slides: explicit 3-part structure guide
+     * Worksheet: "exactly 4 options" and "answer must match
+       character-for-character" now explicit constraints
+   - AI selector (DeepSeek / Gemini / ChatGPT / Other) now drives a
+     one-line AI-specific tip appended to every prompt.
+   - DeepSeek note updated: "You CAN browse — FETCH the reference
+     file(s) listed above before generating."
+
+4. SETTINGS — FORCE-PUSH PERMISSION (complete)
+   - Added Bash permission rule for git push --force-with-lease
+     in .claude/settings.json so the stop-hook git-check can work.
+
+5. VOCAB TEMPLATE FIX
+   - padding:20px 0 → padding:20px in generated flashcard templates
+     (content was flush to screen edges on mobile).
+
+
+================================================================
+ARCHITECTURE CLARIFICATION (from Gemini audit + Em's question)
+================================================================
+
+HOW EDITING WORKS TODAY:
+  Builder (tokenless)    → generates brand-new complete HTML → OVERWRITES everything
+  Bulk scripts           → also regenerate complete HTML → OVERWRITES
+  Claude with tokens     → reads file → targeted edit → safe
+  Em directly on GitHub  → edits specific text → safe
+
+STUDENT PROGRESS: stored in localStorage independently → always safe
+STUDENT NOTES: stored in localStorage → always safe
+CONTENT (words, slides, questions): inside HTML files → at risk from regeneration
+
+Gemini suggested D1 database for content — assessed and rejected for content.
+D1 is right for runtime teacher data (profiles, calendar).
+Course content belongs in git (version controlled, AI-editable, free, offline-safe).
+
+
+================================================================
+PLAN — PHASE 1: BUILDER OVERWRITE GUARD (to implement now)
+================================================================
+
+Context:
+  Builder has zero overwrite protection. If a "complete" chapter is
+  selected and rebuilt, the file is replaced without warning.
+
+What to build (builder.html only):
+  - setTarget(): if coverage data shows chapter is "complete", set a
+    flag on the target object (target.isComplete = true)
+  - Step 4 HTML: add a warning box (.complete-warn) that appears when
+    target.isComplete is true:
+      "This chapter already has content. Building will replace the
+       existing file."
+      Link: "View current file on GitHub" (raw.githubusercontent.com URL)
+      Toggle button: "I understand — overwrite anyway"
+  - buildFile(): if target.isComplete and not acknowledged, block build
+    and show the warning instead.
+  - CSS: .complete-warn styled in amber border, warning text.
+
+Files changed: builder.html only.
+
+Verification:
+  - Enter a "complete" chapter path manually → warning appears with link
+  - Stub chapter → no warning, normal flow unchanged
+
+
+================================================================
+PLAN — PHASE 2: SEPARATE _data.js PER CHAPTER (new chapters only)
+================================================================
+
+Context:
+  Currently template (HTML structure) and content (words, slides,
+  questions) are in the same file. If the template needs updating,
+  the content is at risk. Phase 2 separates them.
+
+What to build:
+  Builder generates TWO files instead of one:
+
+  _data.js — only the content array:
+    var WORDS = [
+      {"word":"Accommodation","ipa":"/əˌkɒməˈdeɪʃən/",
+       "def":"a place to stay","ex":"I booked <b>accommodation</b>..."},
+    ];
+
+  flashcards.html — template only, loads data externally:
+    <script src="_data.js"></script>
+    <!-- rest of engine uses WORDS from _data.js -->
+
+  Builder UI changes:
+  - Step 4 shows TWO download buttons: "Download template" + "Download data"
+  - Placement path shows both files
+  - Instruction: "Put both files in the same chapter folder"
+
+  generateFlashcards(), generateSlides(), generateWorksheet() in
+  builder.html: extracted data block becomes a separate returned string.
+
+What this means in practice:
+  - Fix a typo in a word → edit only _data.js → template untouched
+  - Add a new game feature → edit only flashcards.html → content safe
+  - Claude bulk update → only touches _data.js → never risks HTML
+  - Builder regenerating template → _data.js stays, words are safe
+
+Rollout: new chapters only. Existing 2,400 files stay as-is.
+Migration of old chapters happens naturally when they need updates.
+
+Files changed: builder.html (generators + Step 4 UI).
+
+Verification:
+  - Build any flashcard → two download buttons appear
+  - Place both files in same folder → chapter loads correctly
+  - Re-run builder on same chapter → only template changes, _data.js untouched
+
+
+================================================================
+PENDING CONTENT TASKS (not this session — for reference)
+================================================================
+
+M2  — ~77 es/ vocab flashcard stubs (a1:12, a2:12, b1:11, b2:16, c1:14, c2:12)
+      Fix: /fill-vocab es <level> <slug> — also clears 71 MISSING CRUMB failures
+M3  — 14 EN C1/C2 vocab chapters empty (c1:7, c2:7)
+      Fix: /fill-vocab en c1|c2 <slug>
+M4  — 24 espanol-en/a1 grammar slides missing Common Mistakes slide
+H1  — 330 chapter hub index.html files have --ac-color:#B8860B hardcoded
+      (wrong shade in dark mode) — batch Python replace to var(--amber)
+fr/ — 72 chapters all missing lesson files — fill via tokenless workflow
+
+====================================
+END OF DOCUMENT
+====================================

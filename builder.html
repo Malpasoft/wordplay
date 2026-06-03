@@ -119,6 +119,15 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--amber)}
 .place-tip-body strong{color:var(--ink)}
 .place-tip-body ol{margin:6px 0 0 0;padding-left:20px}
 .place-tip-body ol li{margin-bottom:5px}
+
+/* Overwrite warning (complete chapter) */
+.complete-warn{background:rgba(192,57,43,.06);border:1.5px solid rgba(192,57,43,.45);border-radius:8px;padding:14px 16px;margin-bottom:14px}
+.cw-head{font-family:var(--font-sans);font-size:.78rem;font-weight:700;color:#c0392b;margin-bottom:6px}
+.cw-body{font-family:var(--font-sans);font-size:.74rem;color:var(--muted);margin:0 0 10px;line-height:1.6}
+.cw-link{font-family:var(--font-sans);font-size:.72rem;font-weight:700;color:var(--amber);text-decoration:none}
+.cw-link:hover{text-decoration:underline}
+.cw-ack{margin-top:10px;font-family:var(--font-sans);font-size:.75rem;color:var(--muted);display:flex;align-items:center;gap:8px;cursor:pointer}
+.cw-ack input[type=checkbox]{width:auto;margin:0;cursor:pointer}
 </style>
 </head>
 <body>
@@ -218,6 +227,12 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--amber)}
   <!-- STEP 4 -->
   <div class="step locked" id="step4">
     <div class="step-head"><span class="step-num">4</span> Build &amp; download</div>
+    <div class="complete-warn" id="completeWarn" style="display:none">
+      <div class="cw-head">This chapter already has content</div>
+      <p class="cw-body">Building will replace the existing file and any manual edits will be lost. Check the current file on GitHub before overwriting:</p>
+      <a class="cw-link" id="cwViewLink" href="#" target="_blank">View current file on GitHub Raw</a>
+      <label class="cw-ack"><input type="checkbox" id="cwAck" onchange="toggleAck()"> I have checked the existing file &mdash; overwrite anyway</label>
+    </div>
     <div class="btn-row">
       <button class="btn full" id="buildBtn" onclick="buildFile()">Build file</button>
     </div>
@@ -277,6 +292,7 @@ var slideItems = [];      // [{title,body,note}]
 var questions = [];       // [{q,options:[A,B,C,D],answer,explanation}]
 var builtHtml = '';
 var builtFilename = 'file.html';
+var completionAcknowledged = false;
 
 var ROOT = '../../../../';
 
@@ -515,13 +531,15 @@ function setTarget(path){
         && c.url.indexOf('/'+parsed.slug+'/')!==-1;
     })[0];
   }
+  var dirPath = path.replace(/^\//, '').replace(/[^/]*$/, '');
   target = {
     track: parsed.track,
     level: parsed.level.toLowerCase(),
     slug: parsed.slug,
     section: parsed.section,
     title: match ? match.title : titleFromSlug(parsed.slug),
-    dirPath: path.replace(/^\//, '').replace(/[^/]*$/, '')
+    dirPath: dirPath,
+    isComplete: match ? match.status === 'complete' : false
   };
   // sync section tab
   sectionFilter = parsed.section;
@@ -532,6 +550,11 @@ function setTarget(path){
   info.innerHTML = 'Chapter: <code>' + esc(target.title) + '</code> &mdash; '
     + esc(trackShort(target.track)) + ' ' + target.level.toUpperCase()
     + ' · ' + esc(target.section);
+  // reset overwrite state
+  completionAcknowledged = false;
+  var ackBox = document.getElementById('cwAck');
+  if (ackBox) ackBox.checked = false;
+  updateCompleteWarn();
   unlockSteps();
   buildPrompt();
 }
@@ -554,6 +577,7 @@ function setFt(ft, btn){
   var opt = opts.filter(function(o){ return o.id===ft; })[0];
   builtFilename = opt ? opt.file : ft + '.html';
   document.getElementById('buildBtn').textContent = 'Build ' + builtFilename;
+  updateCompleteWarn();
   var edType = editorTypeFor(ft);
   document.getElementById('edWords').style.display = edType==='words' ? '' : 'none';
   document.getElementById('edSlides').style.display = edType==='slides' ? '' : 'none';
@@ -565,6 +589,10 @@ function setFt(ft, btn){
   document.getElementById('questionEditor').innerHTML = '';
   updateItemCount();
   buildPrompt();
+  completionAcknowledged = false;
+  var ackBox = document.getElementById('cwAck');
+  if (ackBox) ackBox.checked = false;
+  updateCompleteWarn();
   document.getElementById('downloadRow').style.display = 'none';
   document.getElementById('buildStatus').className = 'build-status';
   document.getElementById('previewFrame').classList.remove('on');
@@ -1060,6 +1088,27 @@ function togglePreview(){ document.getElementById('previewFrame').classList.togg
 function fullTargetPath(){
   if (!target || !target.dirPath) return builtFilename;
   return target.dirPath + builtFilename;
+}
+
+function updateCompleteWarn(){
+  var warn = document.getElementById('completeWarn');
+  var btn = document.getElementById('buildBtn');
+  if (!warn || !target) return;
+  if (target.isComplete){
+    warn.style.display = 'block';
+    var link = document.getElementById('cwViewLink');
+    if (link) link.href = 'https://raw.githubusercontent.com/Malpasoft/wordplay/main/' + target.dirPath + builtFilename;
+    if (btn) btn.disabled = !completionAcknowledged;
+  } else {
+    warn.style.display = 'none';
+    if (btn) btn.disabled = false;
+  }
+}
+
+function toggleAck(){
+  completionAcknowledged = document.getElementById('cwAck').checked;
+  var btn = document.getElementById('buildBtn');
+  if (btn) btn.disabled = !completionAcknowledged;
 }
 
 function copyPath(){
