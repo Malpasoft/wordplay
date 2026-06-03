@@ -575,6 +575,32 @@ function lockSteps(){ ['step2','step3','step4'].forEach(function(id){ document.g
 function unlockSteps(){ ['step2','step3','step4'].forEach(function(id){ document.getElementById(id).classList.remove('locked'); }); }
 
 /* ===== Step 2: prompt ===== */
+var GITHUB_RAW = 'https://raw.githubusercontent.com/Malpasoft/wordplay/main/';
+
+function cefrVocabGuide(lv){
+  var g = {
+    A1:'Concrete everyday words (top 500). Nouns: food, family, body parts, colours, numbers, rooms. Simple verbs: be, have, go, like, want. Max 2 syllables.',
+    A2:'Daily situation vocab: shopping, weather, transport, hobbies, health. Simple collocations (do homework, take a bus, make a phone call). Common irregular verbs.',
+    B1:'Topic vocabulary: travel, environment, education, work. Common phrasal verbs (look after, give up, find out, take off). Words a traveller/student needs.',
+    B2:'Abstract nouns, academic vocabulary, idioms, compound adjectives. Topics: technology, society, media, culture. Words found in quality news articles.',
+    C1:'Formal/professional register. Sophisticated collocations, fixed phrases, subtle distinctions. Academic word list (substantiate, pervasive, render, nuanced).',
+    C2:'Native-level nuance. Literary, archaic, or technical terms. Subtle synonyms where word choice signals register (spurious vs false, moot, belie, laconic, obfuscate).'
+  };
+  return g[lv] || 'CEFR-appropriate for '+lv;
+}
+
+function cefrGrammarGuide(lv){
+  var g = {
+    A1:'Present simple/continuous, to be, have got, can/can\'t, imperatives, basic questions, there is/are, possessives.',
+    A2:'Past simple (regular+irregular), going to, will (prediction), comparatives/superlatives, frequency adverbs, object pronouns, some/any.',
+    B1:'Present/past perfect, modals (must/should/might/could), first conditional, passive (simple), reported speech basics, relative clauses (who/which/that).',
+    B2:'Second/third conditional, mixed conditionals, passives (all tenses), complex reported speech, wish/if only, inversions after negative adverbials (Rarely had I...).',
+    C1:'Complex inversions, cleft sentences (It was X that...), nominalisations, subjunctive (It is essential that he be...), advanced passive, ellipsis, hedging.',
+    C2:'All grammar at native level. Subtle mood distinctions, advanced cohesion devices, pragmatic register shifts, archaic/literary constructions.'
+  };
+  return g[lv] || 'CEFR-appropriate grammar for '+lv;
+}
+
 function setTab(which, btn){
   document.querySelectorAll('.bd-tab').forEach(function(b){ b.classList.remove('active'); });
   btn.classList.add('active');
@@ -588,60 +614,144 @@ function buildPrompt(){
   if (!target){ box.textContent = 'Pick a chapter above first.'; return; }
   var prompt = '';
   var LV = target.level.toUpperCase();
-  var T = '"' + target.title + '"';
+  var T = target.title;
+  var NL = '\n';
+
+  var aiId = (document.getElementById('aiSelect')||{}).value || 'other';
+  var aiHint = '';
+  if (aiId==='deepseek'){
+    aiHint = NL+'NOTE FOR DEEPSEEK: Skip any <think>...</think> block. Do not wrap output in ```json fences. Begin your visible reply with [ immediately.'+NL;
+  } else if (aiId==='gemini'){
+    aiHint = NL+'NOTE FOR GEMINI: Output the JSON array only — no "Here is the data:" preamble, no trailing commentary. Start with [.'+NL;
+  } else if (aiId==='gpt'){
+    aiHint = NL+'NOTE FOR CHATGPT / GPT-4o: Return only the raw JSON array. No markdown code block. No explanation before or after. Start with [.'+NL;
+  }
+
+  var fmtWarning = NL+'================================================================'+NL
+    +'CRITICAL OUTPUT FORMAT:'+NL
+    +'================================================================'+NL
+    +'• Start your reply with [ and end with ] — nothing before, nothing after'+NL
+    +'• No markdown code fences (no ```json or ```)'+NL
+    +'• Double quotes only — never single quotes'+NL
+    +'• No trailing comma after the last object'+NL
+    +'• Must pass JSON.parse() without errors'+NL
+    +'• Do not write "Here is the JSON:" — begin with [ immediately'+NL
+    + aiHint;
+
   if (fileType==='flashcards'||fileType==='match'||fileType==='game'){
     var spanishWords = (target.track==='espanol'||target.track==='espanol-en');
     var wordLang = spanishWords ? 'Spanish' : 'English';
-    var explainLang = (target.track==='en'||target.track==='espanol') ? 'the SAME language as the words'
-                    : (target.track==='es') ? 'Spanish — the learner is a native Spanish speaker learning English'
-                    : (target.track==='fr') ? 'French — the learner is a native French speaker learning English'
-                    : 'English (the learner is an English speaker)';
-    var frNote = (target.track==='fr') ? '\nFrench-specific: flag faux amis (false friends) where relevant in the example.' : '';
-    prompt = 'TASK: Build vocabulary flashcard data for a Cambridge English course.\n\n'
-      + 'Chapter: ' + T + '  (CEFR level ' + LV + ')\n'
-      + 'Words are: ' + wordLang + '\n'
-      + 'Definitions and examples in: ' + explainLang + '\n'
-      + frNote + '\n'
-      + 'Return ONLY a JSON array of exactly 10 objects — no prose, no markdown fences, no extra keys. Each object:\n'
-      + '{\n'
-      + '  "word": "the ' + wordLang + ' word or phrase",\n'
-      + '  "ipa":  "/IPA pronunciation/ (British English, or empty string if unsure)",\n'
-      + '  "def":  "a short, clear definition in the explanation language above",\n'
-      + '  "ex":   "one natural example sentence with the target word wrapped in <b>word</b>"\n'
-      + '}\n\n'
-      + 'Rules: CEFR-appropriate for ' + LV + '. No duplicates. Keep examples 8–15 words. '
-      + 'Output must be parseable by JSON.parse — double quotes only, no trailing commas.';
+    var explainLang = (target.track==='en'||target.track==='espanol') ? wordLang
+                    : (target.track==='es') ? 'Spanish'
+                    : (target.track==='fr') ? 'French'
+                    : 'English';
+    var frNote = (target.track==='fr') ? NL+'French learners: flag faux amis (false friends) in the example where relevant.' : '';
+    var esNote = (target.track==='es') ? NL+'Spanish learners: definitions in Spanish; keep the target English word in the "word" field.' : '';
+
+    prompt = 'TASK: Vocabulary flashcard data — Cambridge English course'+NL
+      +'Chapter: "'+T+'"  (CEFR level '+LV+')'+NL
+      +'Words are: '+wordLang+NL
+      +'Definitions and examples in: '+explainLang+NL
+      +frNote+esNote+NL
+      +'REFERENCE — if you can fetch URLs, read this completed example first:'+NL
+      +'  '+GITHUB_RAW+'b/b1/vocabulary/travel-holidays/flashcards.html'+NL
+      +'  (find the WORDS array — that is the exact format you must produce)'+NL
+      +NL
+      +'Return ONLY a JSON array of exactly 10 objects. No prose. No markdown.'+NL
+      +'Each object must have exactly these 4 keys:'+NL
+      +'{'+NL
+      +'  "word": "the '+wordLang+' word or short phrase",'+NL
+      +'  "ipa":  "/British English IPA in forward slashes/ — use empty string if unsure",'+NL
+      +'  "def":  "clear definition in '+explainLang+' — max 12 words, no jargon above the level",'+NL
+      +'  "ex":   "natural sentence 8–15 words — wrap ONLY the target word in <b>like this</b>"'+NL
+      +'}'+NL
+      +NL
+      +'REAL EXAMPLE — copy this style exactly:'+NL
+      +'{"word":"Accommodation","ipa":"/əˌkɒməˈdeɪʃən/","def":"a place to stay, such as a hotel or hostel","ex":"I booked <b>accommodation</b> near the main square."}'+NL
+      +NL
+      +'LEVEL GUIDANCE — '+LV+':'+NL
+      +cefrVocabGuide(LV)+NL
+      +NL
+      +'QUALITY RULES:'+NL
+      +'• Exactly 10 words, all different, covering the full breadth of the topic'+NL
+      +'• IPA: use /slashes/ — e.g. /træˈvɛl/ not "TRAV-ul" — use "" if genuinely unsure'+NL
+      +'• The <b> tag wraps ONLY the target word, not the whole sentence'+NL
+      +'• No near-synonyms or repetitions across the 10 words'+NL
+      +fmtWarning;
+
   } else if (fileType==='slides'){
-    var slideLang = (target.track==='es') ? 'Spanish (the learner is a native Spanish speaker)'
-                  : (target.track==='fr') ? 'French (the learner is a native French speaker)'
-                  : 'English';
-    var trapNote = 'The LAST slide must be a "Common Mistakes" slide — show 1–2 errors typical at this level'
-                  + ((target.track==='fr') ? ' especially interference from French (e.g. word order, false friends, missing aux verbs).' : '.');
-    prompt = 'TASK: Build grammar lesson slide data for a Cambridge English course.\n\n'
-      + 'Chapter: ' + T + '  (CEFR level ' + LV + ')\n'
-      + 'Explain in: ' + slideLang + '\n\n'
-      + 'Return ONLY a JSON array of 5–7 slide objects — no prose, no markdown. Each object:\n'
-      + '{\n'
-      + '  "title": "Slide heading",\n'
-      + '  "body":  "2–4 sentence explanation. Use <b>key terms</b> and English examples in <b>bold</b>.",\n'
-      + '  "note":  "A tip, warning, or contrast with L1 — or empty string"\n'
-      + '}\n\n'
-      + 'Rules: CEFR ' + LV + ' appropriate. ' + trapNote + ' '
-      + 'Output must be valid JSON — double quotes only, no trailing commas.';
+    var slideLang = (target.track==='es') ? 'Spanish' : (target.track==='fr') ? 'French' : 'English';
+    var l1Note = (target.track==='fr') ? NL+'French interference: flag false friends, word-order differences, missing auxiliary verbs.' : '';
+    var l1Note2 = (target.track==='es') ? NL+'Spanish interference: flag false friends, ser/estar confusion, article differences.' : '';
+
+    prompt = 'TASK: Grammar lesson slides — Cambridge English course'+NL
+      +'Chapter: "'+T+'"  (CEFR level '+LV+')'+NL
+      +'Explain everything in: '+slideLang+NL
+      +l1Note+l1Note2+NL
+      +'REFERENCE — if you can fetch URLs, read this completed example first:'+NL
+      +'  '+GITHUB_RAW+'b/b1/grammar/modals-obligation/slides.html'+NL
+      +'  (inspect the HTML slide structure — but you only supply the JSON data below)'+NL
+      +NL
+      +'Return ONLY a JSON array of 5–7 objects. No prose. No markdown.'+NL
+      +'Each object:'+NL
+      +'{'+NL
+      +'  "title": "Clear slide heading (4–8 words)",'+NL
+      +'  "body":  "2–4 sentences. Mark <b>grammar terms</b> in bold. Show examples as complete sentences in <b>bold</b>.",'+NL
+      +'  "note":  "One-sentence tip, common mistake, or L1 contrast — or empty string"'+NL
+      +'}'+NL
+      +NL
+      +'REAL EXAMPLE — copy this style exactly:'+NL
+      +'{"title":"Must vs Have To","body":"Use <b>must</b> for personal obligation: <b>I must finish this today.</b> Use <b>have to</b> for external rules: <b>You have to wear a seatbelt.</b> Use <b>mustn\'t</b> for prohibition: <b>You mustn\'t park here.</b>","note":"Never write \'I must to go\' — no \'to\' after modal verbs."}'+NL
+      +NL
+      +'SLIDE STRUCTURE:'+NL
+      +'1. Slide 1 — introduce the grammar point, state the core rule'+NL
+      +'2. Slides 2–5 — form, usage patterns, examples, affirmative/negative/question contrasts'+NL
+      +'3. LAST slide — MUST be titled "Common Mistakes" — show 1–2 errors typical at '+LV+' level'+((target.track==='fr')?' especially French interference (word order, false friends, missing aux verbs).':target.track==='es'?' especially Spanish interference.':'.')+NL
+      +NL
+      +'LEVEL GUIDANCE — '+LV+':'+NL
+      +cefrGrammarGuide(LV)+NL
+      +NL
+      +'QUALITY RULES:'+NL
+      +'• Every body must contain at least one complete English example sentence in <b>bold</b>'+NL
+      +'• "note" = a teacher tip, not a repetition of the body'+NL
+      +'• Keep explanations at '+LV+' vocabulary level'+NL
+      +'• Common Mistakes: show WRONG first, then RIGHT, then explain why'+NL
+      +fmtWarning;
+
   } else if (fileType==='worksheet'||fileType==='printables'){
     var wsLang = (target.track==='es') ? 'Spanish' : (target.track==='fr') ? 'French' : 'English';
-    prompt = 'TASK: Build practice worksheet questions for a Cambridge English course.\n\n'
-      + 'Chapter: ' + T + '  (CEFR level ' + LV + ', ' + target.section + ')\n'
-      + 'Explanations written in: ' + wsLang + '\n\n'
-      + 'Return ONLY a JSON array of 8–10 multiple-choice question objects — no prose, no markdown. Each object:\n'
-      + '{\n'
-      + '  "q":           "Question text — fill-in-blank, choose-the-correct, or identify-the-error format",\n'
-      + '  "options":     ["Option A", "Option B", "Option C", "Option D"],\n'
-      + '  "answer":      "The exact text of the correct option (must match one of options exactly)",\n'
-      + '  "explanation": "Why that answer is correct — written in ' + wsLang + '"\n'
-      + '}\n\n'
-      + 'Rules: CEFR ' + LV + ' appropriate. Mix question types. Every question MUST have an explanation — no exceptions. '
-      + 'Output must be valid JSON — double quotes only, no trailing commas.';
+    var wsNote = (target.track!=='en') ? NL+'Explanations in '+wsLang+'. English grammar terms may appear in quotes within the '+wsLang+' explanation.' : '';
+
+    prompt = 'TASK: Practice worksheet questions — Cambridge English course'+NL
+      +'Chapter: "'+T+'"  (CEFR level '+LV+', '+target.section+')'+NL
+      +'Explanations written in: '+wsLang+NL
+      +wsNote+NL
+      +'REFERENCE — if you can fetch URLs, read this completed example first:'+NL
+      +'  '+GITHUB_RAW+'b/b1/grammar/past-perfect/worksheet.html'+NL
+      +'  (look at the question HTML structure — that is the output format)'+NL
+      +NL
+      +'Return ONLY a JSON array of 8–10 objects. No prose. No markdown.'+NL
+      +'Each object:'+NL
+      +'{'+NL
+      +'  "q":           "Question — fill-in-blank (use ______), choose-correct, or identify-error",'+NL
+      +'  "options":     ["Option A", "Option B", "Option C", "Option D"],'+NL
+      +'  "answer":      "EXACT text of the correct option — copy character-for-character from options",'+NL
+      +'  "explanation": "Why this answer is correct — in '+wsLang+'"'+NL
+      +'}'+NL
+      +NL
+      +'REAL EXAMPLE — copy this style exactly:'+NL
+      +'{"q":"When we arrived, the film ______ already started.","options":["has","had","have","was having"],"answer":"had","explanation":"Use past perfect (had + past participle) for an action completed before another past action."}'+NL
+      +NL
+      +'CRITICAL RULES:'+NL
+      +'• EXACTLY 4 options per question — always, no exceptions'+NL
+      +'• "answer" must be character-for-character identical to one of the 4 options — no paraphrasing'+NL
+      +'• Every "explanation" must be non-empty — name the rule, not just "this is correct"'+NL
+      +'• Mix types: at least 3 fill-in-blank, 2 choose-correct, 2 identify-error'+NL
+      +'• Distractors must be plausible errors, not obviously wrong'+NL
+      +NL
+      +'LEVEL GUIDANCE — '+LV+':'+NL
+      +cefrGrammarGuide(LV)+NL
+      +fmtWarning;
   }
   box.textContent = prompt;
 }
@@ -658,59 +768,121 @@ function copyPrompt(){
 function buildPrimer(){
   var students = [];
   try { students = JSON.parse(localStorage.getItem('wordplay_student_profiles')) || []; } catch(e) {}
+
   var rosterLines = '';
   if (students.length) {
-    rosterLines = '\n\nCURRENT STUDENTS (' + students.length + '):\n';
+    var lo = {A1:1,A2:2,B1:3,B2:4,C1:5,C2:6};
+    students.sort(function(a,b){ return (lo[a.level]||9)-(lo[b.level]||9); });
+    rosterLines = '\n\n================================================================\nCURRENT STUDENTS ('+students.length+') — prioritise content for these levels:\n';
     students.forEach(function(s){
-      var parts = [s.name, s.level || 'no level', s.l1 + ' speaker', 'track: ' + (s.course||'en')];
-      if (s.notes) parts.push('notes: ' + s.notes);
-      rosterLines += '• ' + parts.join(' | ') + '\n';
+      var parts = [s.name, s.level||'no level', s.l1+' speaker', 'track: '+(s.course||'en')];
+      if (s.notes) parts.push('notes: '+s.notes);
+      rosterLines += '• '+parts.join(' | ')+'\n';
     });
   }
 
-  var primer = 'WORD PLAY — PROJECT CONTEXT\n'
-    + '================================\n\n'
-    + 'Static Cambridge English course (A1–C2). ~2,400 HTML files. Vanilla HTML/CSS/JS, Cloudflare Pages, no build system. All progress in browser localStorage.\n\n'
-    + 'TRACKS:\n'
-    + '• en/  — English course (a/b/c dirs: a=A1-A2, b=B1-B2, c=C1-C2). Main track.\n'
-    + '• es/  — English course explained in Spanish (for native Spanish speakers)\n'
-    + '• fr/  — English course explained in French (for native French speakers, B1+B2 only)\n'
-    + '• espanol-en/ — Spanish course for English speakers (A1 built, A2–C2 stubs)\n\n'
-    + 'SECTION NAMES BY TRACK:\n'
-    + '• en/fr: vocabulary / grammar / writing\n'
-    + '• es: vocabulario / gramática / escritura\n'
-    + '• espanol-en: vocabulary / grammar / writing (English labels)\n'
-    + '• fr dir names: vocabulaire / grammaire / redaction\n\n'
-    + 'FILE TYPES per chapter:\n'
-    + '• flashcards.html — WORDS array: {word, ipa, def, ex}\n'
-    + '• match.html — same WORDS, match-to-definition game, 3 lives\n'
-    + '• game.html — same WORDS, 4-stage mastery game\n'
-    + '• slides.html — SLIDES array: {title, body, note}\n'
-    + '• worksheet.html — QUESTIONS array: {q, options[4], answer, explanation}\n\n'
-    + 'DESIGN RULES:\n'
-    + '• Accent colour: var(--amber) only — never hardcode hex\n'
-    + '• No emoji anywhere in HTML/JS\n'
-    + '• Dark mode must work on every element\n'
-    + '• Audio pronunciation on all vocab (Web Speech API, lang=\'en-GB\', rate=0.9)\n'
-    + '• Every worksheet question must have an EXPLANATION\n'
-    + '• No self-assessment — grading is always deterministic\n\n'
-    + 'SHARED ASSETS (with current cache-bust versions):\n'
-    + '• shared/base.css?v=v123\n'
-    + '• shared/game.css?v=v111\n'
-    + '• shared/game.js?v=v110\n'
-    + '• shared/store.js?v=v105\n'
-    + '• shared/worksheet.js?v=v107\n'
-    + '• shared/dark-init.js?v=v109\n\n'
-    + 'CEFR GUIDANCE:\n'
-    + '• A1–A2: everyday objects, simple present/past, basic phrases\n'
-    + '• B1–B2: topic-specific, phrasal verbs, modals, conditionals, cohesion devices\n'
-    + '• C1–C2: formal/academic register, advanced idioms, nuance, collocation\n\n'
-    + 'WHEN I GIVE YOU A TASK:\n'
-    + '• Return ONLY raw JSON — no markdown fences, no prose before or after\n'
-    + '• All strings use double quotes. No trailing commas.\n'
-    + '• JSON must be parseable by JSON.parse()\n'
-    + '• CEFR-appropriate vocabulary and grammar for the stated level\n'
-    + '• Explanations and definitions in the learner\'s language (French for fr/, Spanish for es/, English otherwise)'
+  var NL = '\n';
+  var SEP = '================================================================'+NL;
+  var primer = 'WORD PLAY — PROJECT CONTEXT'+NL+SEP
+    +'You are helping build content for a static Cambridge English course (A1–C2).'+NL
+    +'~2,400 HTML files. Vanilla HTML/CSS/JS. Cloudflare Pages. No build system.'+NL
+    +'All student progress is stored in browser localStorage.'+NL
+    +NL+SEP
+    +'IF YOU CAN FETCH URLS — read these first (they contain the full real context):'+NL+SEP
+    +'Project rules:    '+GITHUB_RAW+'CLAUDE.md'+NL
+    +'Full handover:    '+GITHUB_RAW+'AI_HANDOVER.md'+NL
+    +NL
+    +'Completed reference files (study these — they show the exact output format):'+NL
+    +'Flashcard (B1):   '+GITHUB_RAW+'b/b1/vocabulary/travel-holidays/flashcards.html'+NL
+    +'Grammar slides:   '+GITHUB_RAW+'b/b1/grammar/modals-obligation/slides.html'+NL
+    +'Worksheet:        '+GITHUB_RAW+'b/b1/grammar/past-perfect/worksheet.html'+NL
+    +'Game (A1):        '+GITHUB_RAW+'a/a1/vocabulary/animals/game.html'+NL
+    +NL+SEP
+    +'IF YOU CANNOT BROWSE — all context is below:'+NL+SEP
+    +NL
+    +'TRACKS:'+NL
+    +'• en/        — English course. Subdirs: a/ (A1+A2), b/ (B1+B2), c/ (C1+C2)'+NL
+    +'               Path example: en/b/b1/vocabulary/travel-holidays/flashcards.html'+NL
+    +'• es/        — English explained in Spanish (native Spanish speakers learning English)'+NL
+    +'               Path example: es/b1/vocabulario/viajes/flashcards.html'+NL
+    +'• fr/        — English explained in French (native French speakers, B1+B2 only)'+NL
+    +'               Path example: fr/b1/vocabulaire/voyages/flashcards.html'+NL
+    +'• espanol-en/ — Spanish for English speakers (A1 built, A2–C2 stubs)'+NL
+    +'               Path example: espanol-en/a1/vocabulary/numbers/flashcards.html'+NL
+    +NL
+    +'SECTION NAMES:'+NL
+    +'• en / espanol-en: vocabulary, grammar, writing'+NL
+    +'• es: vocabulario, gramática, escritura'+NL
+    +'• fr (directory names): vocabulaire, grammaire, redaction'+NL
+    +NL
+    +'FILE TYPES & EXACT JSON SCHEMAS'+NL
+    +'────────────────────────────────'+NL
+    +'flashcards.html / match.html / game.html — WORDS array (exactly 10 items):'+NL
+    +'['+NL
+    +'  {'+NL
+    +'    "word": "Accommodation",'+NL
+    +'    "ipa":  "/əˌkɒməˈdeɪʃən/",'+NL
+    +'    "def":  "a place to stay, such as a hotel or hostel",'+NL
+    +'    "ex":   "I booked <b>accommodation</b> near the tourist attraction."'+NL
+    +'  }'+NL
+    +']'+NL
+    +'Notes: IPA in /slashes/ (British English), empty string "" if unsure. <b> wraps only the target word in "ex". Examples 8–15 words.'+NL
+    +NL
+    +'slides.html — SLIDES array (5–7 items, last MUST be "Common Mistakes"):'+NL
+    +'['+NL
+    +'  {'+NL
+    +'    "title": "Must and Have to",'+NL
+    +'    "body":  "Use <b>must</b> for personal obligation: <b>I must finish this today.</b> Use <b>have to</b> for external rules: <b>You have to wear a seatbelt.</b>",'+NL
+    +'    "note":  "Never write \'I must to go\' — no \'to\' after modal verbs."'+NL
+    +'  }'+NL
+    +']'+NL
+    +'Notes: Use <b> for key grammar terms AND for complete example sentences. "note" = one-sentence teacher tip or L1 contrast.'+NL
+    +NL
+    +'worksheet.html — QUESTIONS array (8–10 items):'+NL
+    +'['+NL
+    +'  {'+NL
+    +'    "q":           "When we arrived, the film ______ already started.",'+NL
+    +'    "options":     ["has", "had", "have", "was having"],'+NL
+    +'    "answer":      "had",'+NL
+    +'    "explanation": "Use past perfect (had + past participle) for an action completed before another past action."'+NL
+    +'  }'+NL
+    +']'+NL
+    +'Notes: EXACTLY 4 options always. "answer" must match one option character-for-character. Every explanation is mandatory.'+NL
+    +NL
+    +'CEFR VOCABULARY LEVELS'+NL
+    +'──────────────────────'+NL
+    +'A1: Concrete everyday nouns — food, family, body, colours, numbers. Max 2 syllables. Top 500 words.'+NL
+    +'A2: Daily situation vocab — shopping, weather, transport, hobbies. Simple collocations (do homework, take a bus).'+NL
+    +'B1: Topic vocab — travel, environment, education, work. Common phrasal verbs (look after, give up, find out).'+NL
+    +'B2: Abstract nouns, academic vocab, idioms, compound adjectives. Technology, society, media.'+NL
+    +'C1: Formal/professional register. Sophisticated collocations, fixed phrases. Academic word list.'+NL
+    +'C2: Native-level nuance. Literary/technical, subtle synonyms (spurious, moot, belie, laconic, obfuscate).'+NL
+    +NL
+    +'CEFR GRAMMAR LEVELS'+NL
+    +'───────────────────'+NL
+    +'A1: Present simple/continuous, to be, have got, can, imperatives, basic questions.'+NL
+    +'A2: Past simple, going to, will (prediction), comparatives, frequency adverbs, some/any.'+NL
+    +'B1: Present/past perfect, modals, first conditional, basic passive, reported speech, relative clauses.'+NL
+    +'B2: Second/third conditional, complex passives, advanced reported speech, wish/if only, inversions.'+NL
+    +'C1: Cleft sentences, nominalisations, subjunctive, advanced passive, ellipsis, hedging.'+NL
+    +'C2: All grammar at native level — pragmatics, register shifts, archaic/literary constructions.'+NL
+    +NL
+    +'PEDAGOGY RULES:'+NL
+    +'• Every worksheet question must have a non-empty explanation — no exceptions'+NL
+    +'• Grading is always deterministic — never ask students to self-assess'+NL
+    +'• Audio pronunciation on all vocabulary (Web Speech API, lang=\'en-GB\', rate=0.9)'+NL
+    +'• Match game: 3 lives, each word must be matched twice to win'+NL
+    +NL+SEP
+    +'OUTPUT FORMAT — CRITICAL (applies to DeepSeek, Gemini, ChatGPT/GPT-4o, and all others):'+NL+SEP
+    +'• Return ONLY the raw JSON array — nothing before [, nothing after ]'+NL
+    +'• NO markdown code fences (no ```json or ```)'+NL
+    +'• Double quotes only — never single quotes'+NL
+    +'• No trailing comma after the last object'+NL
+    +'• Must pass JSON.parse() without errors — check before replying'+NL
+    +'• Do not write "Here is the JSON:" — start with [ immediately'+NL
+    +'• DeepSeek: skip the <think> block entirely, start visible output with ['+NL
+    +'• Gemini: no preamble, no trailing commentary, just the JSON array'+NL
+    +'• ChatGPT/GPT-4o: no markdown code block, no explanation before or after'
     + rosterLines;
 
   document.getElementById('primerBox').textContent = primer;
