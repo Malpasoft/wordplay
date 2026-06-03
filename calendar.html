@@ -147,9 +147,10 @@ body.dark .lm-input[type="date"],body.dark .lm-input[type="time"]{color-scheme:d
 .lm-repeat-opts{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
 
 @media(max-width:600px){
-  .cal-week-outer{display:none}
+  .cal-week-outer{overflow-x:auto}
+  .cal-week-header,.cal-week-body{min-width:560px}
+  .cal-week-body{max-height:480px}
   .cal-month-grid{display:none}
-  .cal-day-list{display:block}
   .cal-title{min-width:0;font-size:.78rem}
   .cal-add-btn{padding:6px 10px}
 }
