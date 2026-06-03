@@ -27,15 +27,7 @@ select:focus,input:focus{outline:none;border-color:var(--amber)}
 .btn-primary{background:var(--amber);color:#fff}
 .btn-secondary{background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline)}
 .btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
-.word-rows{margin-bottom:10px}
-.word-row{display:grid;grid-template-columns:1fr 1fr 2fr 2fr;gap:6px;margin-bottom:6px}
-.word-row input{margin-bottom:0;font-size:.8rem;padding:7px 9px}
-.col-label{font-family:var(--font-sans);font-size:.58rem;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:1px;padding:0 2px 2px}
-.dict-output{display:none;background:var(--cream-deep);border:1px solid var(--hairline);border-radius:7px;padding:14px;font-family:"SF Mono","Menlo",monospace;font-size:.72rem;white-space:pre-wrap;word-break:break-word;margin-top:10px;-webkit-user-select:all;user-select:all}
-.dict-output.visible{display:block}
-.copy-btn{display:none;margin-top:8px;width:100%;padding:10px;background:var(--amber);color:#fff;border:none;border-radius:7px;font-size:.84rem;font-weight:700;cursor:pointer;font-family:var(--font-sans)}
-.copy-btn.visible{display:block}
-.copy-btn.copied{background:#27ae60}
+
 .link-list{list-style:none;padding:0;margin:0}
 .link-list li{margin-bottom:7px}
 .link-list a{display:block;background:var(--cream);border:1.5px solid var(--hairline);border-radius:7px;padding:9px 13px;text-decoration:none;color:var(--amber);font-family:var(--font-sans);font-size:.8rem;font-weight:600;word-break:break-all;transition:border-color .15s}
@@ -55,48 +47,9 @@ hr{border:none;border-top:1px solid var(--hairline);margin:28px 0}
 </div></header>
 
 <div class="dh-wrap">
-  <div class="dh-eyebrow">Teacher Hub &middot; Dev Hub</div>
-  <h1>Workshop tools</h1>
-  <p class="dh-sub">Build word data, snapshot your roster for AIs, grab repo links, and follow the roadmap. For ready-made prompts use <a href="ai-prompts.html">AI Prompts</a>.</p>
-
-  <!-- ── WORD BUILDER ── -->
-  <div class="section">
-    <div class="label">Tool</div>
-    <h2>Build chapter word data</h2>
-    <p style="font-family:var(--font-sans);font-size:.85rem;color:var(--muted);margin-bottom:12px">Fill in 10 words — paste the output into your AI or a fill script.</p>
-    <div class="card">
-      <select id="ch-level">
-        <option value="a1">A1</option><option value="a2">A2</option>
-        <option value="b1">B1</option><option value="b2">B2</option>
-        <option value="c1">C1</option><option value="c2">C2</option>
-      </select>
-      <select id="ch-track">
-        <option value="en">English (en)</option>
-        <option value="es">Spanish explanations (es)</option>
-        <option value="fr">French explanations (fr)</option>
-        <option value="espanol-en">Spanish for EN speakers (espanol-en)</option>
-      </select>
-      <input id="ch-slug" type="text" placeholder="chapter slug  e.g. abstract-nouns">
-      <input id="ch-title" type="text" placeholder="chapter title  e.g. Abstract Nouns">
-
-      <div class="col-header-row">
-        <div class="col-label">Word</div>
-        <div class="col-label">IPA</div>
-        <div class="col-label">Definition</div>
-        <div class="col-label">Example</div>
-      </div>
-      <div class="word-rows" id="word-rows"></div>
-
-      <div class="btn-row">
-        <button class="btn btn-primary" onclick="genDict()">Generate Python dict</button>
-        <button class="btn btn-secondary" onclick="clearWords()">Clear</button>
-      </div>
-      <div id="dict-output" class="dict-output"></div>
-      <button id="copy-dict" class="copy-btn" onclick="copyDict()">Copy dict</button>
-    </div>
-  </div>
-
-  <hr>
+  <div class="dh-eyebrow">Hub &middot; Dev Utilities</div>
+  <h1>Dev utilities</h1>
+  <p class="dh-sub">Snapshot your roster for AIs, grab repo links, and follow the roadmap. To build chapter files use <a href="builder.html">Content Builder</a>. For full-session AI priming use <a href="ai-prompts.html">AI Prompts</a>.</p>
 
   <!-- ── CLASS CONTEXT ── -->
   <div class="section">
@@ -232,72 +185,6 @@ window.addEventListener('load', function(){
   if (ta) ta.value = buildClassContext();
 });
 
-/* ── Word builder ── */
-function buildRows() {
-  const rows = document.getElementById('word-rows');
-  rows.innerHTML = '';
-  for (let i = 0; i < 10; i++) {
-    const d = document.createElement('div');
-    d.className = 'word-row';
-    d.innerHTML =
-      '<input type="text" placeholder="word ' + (i+1) + '" id="w' + i + '_word">' +
-      '<input type="text" placeholder="/ˈɪp.ə/" id="w' + i + '_ipa">' +
-      '<input type="text" placeholder="definition" id="w' + i + '_def">' +
-      '<input type="text" placeholder="Example with <b>word</b>" id="w' + i + '_ex">';
-    rows.appendChild(d);
-  }
-}
-buildRows();
-
-function genDict() {
-  const level = document.getElementById('ch-level').value;
-  const slug = document.getElementById('ch-slug').value.trim() || 'my-chapter';
-  const title = document.getElementById('ch-title').value.trim() || 'My Chapter';
-  const words = [];
-  for (let i = 0; i < 10; i++) {
-    const w = document.getElementById('w' + i + '_word').value.trim();
-    if (!w) continue;
-    words.push({
-      id: w.toLowerCase().replace(/\s+/g,'-'),
-      word: w,
-      ipa: document.getElementById('w' + i + '_ipa').value.trim() || '/…/',
-      def_: document.getElementById('w' + i + '_def').value.trim() || '…',
-      ex: document.getElementById('w' + i + '_ex').value.trim() || ('The <b>' + w + '</b> is used here.')
-    });
-  }
-  if (!words.length) return;
-  let out = '# Paste into a fill script under the CHAPTERS dict\n\n';
-  out += '"' + level + '/' + slug + '": {\n  "title": "' + title + '",\n  "level": "' + level.toUpperCase() + '",\n  "words": [\n';
-  words.forEach((w, i) => {
-    out += '    {"id": "' + w.id + '", "word": "' + w.word + '", "ipa": "' + w.ipa + '", "def_": "' + w.def_ + '", "ex": "' + w.ex + '"}';
-    out += i < words.length - 1 ? ',\n' : '\n';
-  });
-  out += '  ]\n},';
-  const o = document.getElementById('dict-output');
-  o.textContent = out;
-  o.classList.add('visible');
-  const cb = document.getElementById('copy-dict');
-  cb.classList.add('visible');
-  cb.textContent = 'Copy dict';
-  cb.classList.remove('copied');
-}
-
-function copyDict() {
-  navigator.clipboard.writeText(document.getElementById('dict-output').textContent).then(function(){
-    const cb = document.getElementById('copy-dict');
-    cb.textContent = 'Copied!';
-    cb.classList.add('copied');
-    setTimeout(function(){ cb.textContent = 'Copy dict'; cb.classList.remove('copied'); }, 2000);
-  });
-}
-
-function clearWords() {
-  buildRows();
-  document.getElementById('ch-slug').value = '';
-  document.getElementById('ch-title').value = '';
-  document.getElementById('dict-output').classList.remove('visible');
-  document.getElementById('copy-dict').classList.remove('visible');
-}
 </script>
 </body>
 </html>

@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#1A1A1A">
 <meta name="robots" content="noindex">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
-<title>Teacher Hub | Word Play</title>
+<title>Hub | Word Play</title>
 <link rel="stylesheet" href="shared/base.css?v=v123">
 <script src="shared/dark-init.js?v=v109"></script>
 <style>
@@ -16,7 +16,11 @@
 .hub-head h1{font-size:1.8rem;color:var(--navy);margin:0 0 6px}
 .hub-head p{font-family:var(--font-sans);font-size:.82rem;color:var(--muted);margin:0}
 
-.hub-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:28px}
+.hub-section-label{display:flex;align-items:center;gap:12px;margin:32px 0 14px}
+.hub-section-label div{flex:1;height:1px;background:var(--hairline)}
+.hub-section-label span{font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+
+.hub-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:560px){.hub-grid{grid-template-columns:1fr}}
 
 .hub-card{display:block;background:var(--cream);border:1.5px solid var(--hairline);border-radius:12px;padding:22px 20px;text-decoration:none;transition:border-color .15s,transform .12s,box-shadow .15s}
@@ -29,11 +33,7 @@
 .hc-stat.warn .num{color:var(--amber)}
 .hc-stat.ok .num{color:#27ae60}
 
-.hub-sep{display:flex;align-items:center;gap:10px;margin:30px 0 14px}
-.hub-sep div{flex:1;height:1px;background:var(--hairline)}
-.hub-sep span{font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted)}
-
-.hub-mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.hub-mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:14px}
 .mini-card{display:flex;align-items:center;gap:10px;background:transparent;border:1px solid var(--hairline);border-radius:8px;padding:12px 14px;text-decoration:none;transition:border-color .15s}
 .mini-card:hover{border-color:var(--ink)}
 .mini-title{font-family:var(--font-sans);font-size:.8rem;font-weight:700;color:var(--ink)}
@@ -49,45 +49,53 @@
 
 <div class="hub-wrap">
   <div class="hub-head">
-    <div class="hub-eyebrow">Private &middot; Teacher tools</div>
-    <h1>Teacher Hub</h1>
-    <p>Plan content, prime AIs, and track your students &mdash; all in one place.</p>
+    <div class="hub-eyebrow">Private &middot; Admin</div>
+    <h1>Word Play Hub</h1>
+    <p>Build content, manage students, and run your classes &mdash; everything in one place.</p>
   </div>
 
+  <!-- ── DEVELOPER SECTION ── -->
+  <div class="hub-section-label"><div></div><span>Developer</span><div></div></div>
+
   <div class="hub-grid">
+    <a href="builder.html" class="hub-card">
+      <div class="hc-icon">&#9632;</div>
+      <div class="hc-title">Content Builder</div>
+      <div class="hc-desc">Pick a chapter stub, get an AI-ready prompt with full project context, paste the reply back, then download a finished HTML file. Tokenless &mdash; nothing leaves your machine.</div>
+      <div class="hc-stat">Build &amp; download a chapter</div>
+    </a>
+
     <a href="ai-prompts.html" class="hub-card">
       <div class="hc-icon">&#9670;</div>
       <div class="hc-title">AI Prompts</div>
-      <div class="hc-desc">Generate ready-to-paste prompts for DeepSeek, Gemini or Claude &mdash; pre-loaded with project rules and your live content gaps.</div>
-      <div class="hc-stat" id="stat-prompts">Prime an AI to fill content</div>
+      <div class="hc-desc">Complex jobs: bootstrap a whole track, audit content, or generate a custom batch. Pre-loaded with all project rules and live content gaps for DeepSeek, Gemini, or Claude.</div>
+      <div class="hc-stat" id="stat-prompts">Full-session AI priming</div>
     </a>
 
     <a href="coverage.html" class="hub-card">
       <div class="hc-icon">&#9673;</div>
       <div class="hc-title">Content Coverage</div>
-      <div class="hc-desc">See every chapter across both tracks &mdash; complete, stub, or missing &mdash; so you know what to build next.</div>
+      <div class="hc-desc">Every chapter across all tracks &mdash; complete, stub, or missing &mdash; so you always know what to build next.</div>
       <div class="hc-stat warn" id="stat-coverage">Loading&hellip;</div>
-    </a>
-
-    <a href="profile.html" class="hub-card">
-      <div class="hc-icon">&#9633;</div>
-      <div class="hc-title">Student Profiles</div>
-      <div class="hc-desc">Add each student, set their level, and see exactly which chapters you must finish to teach them.</div>
-      <div class="hc-stat" id="stat-profiles">No students yet</div>
-    </a>
-
-    <a href="builder.html" class="hub-card">
-      <div class="hc-icon">&#9632;</div>
-      <div class="hc-title">Content Builder</div>
-      <div class="hc-desc">Turn a free AI&rsquo;s word list into a ready-to-download flashcards page &mdash; tokenless, nothing touches GitHub. You save and push.</div>
-      <div class="hc-stat">Build &amp; download a chapter</div>
     </a>
 
     <a href="dev-hub.html" class="hub-card">
       <div class="hc-icon">&#9881;</div>
-      <div class="hc-title">Dev Hub</div>
-      <div class="hc-desc">Word-data builder, class-context snapshot, raw repo links, and the build roadmap &mdash; the workshop tools.</div>
+      <div class="hc-title">Dev Utilities</div>
+      <div class="hc-desc">Student roster snapshot for AIs, raw repo file links, and the build roadmap. The workshop tools.</div>
       <div class="hc-stat">Utilities &amp; roadmap</div>
+    </a>
+  </div>
+
+  <!-- ── CLASSROOM SECTION ── -->
+  <div class="hub-section-label"><div></div><span>Classroom</span><div></div></div>
+
+  <div class="hub-grid">
+    <a href="profile.html" class="hub-card">
+      <div class="hc-icon">&#9633;</div>
+      <div class="hc-title">Student Profiles</div>
+      <div class="hc-desc">Add each student, set their level and track, and see exactly which chapters you must finish to teach them. One-click context snapshot for any AI.</div>
+      <div class="hc-stat" id="stat-profiles">No students yet</div>
     </a>
 
     <a href="calendar.html" class="hub-card">
@@ -98,7 +106,8 @@
     </a>
   </div>
 
-  <div class="hub-sep"><div></div><span>Also</span><div></div></div>
+  <!-- ── ALSO ── -->
+  <div class="hub-section-label"><div></div><span>Also</span><div></div></div>
 
   <div class="hub-mini">
     <a href="dashboard.html" class="mini-card">
@@ -113,7 +122,7 @@
   </div>
 </div>
 
-<footer class="site-footer">Word Play &middot; Teacher tools &middot; private</footer>
+<footer class="site-footer">Word Play &middot; Private &middot; Admin tools</footer>
 
 <script>
 /* Live coverage stub count */
