@@ -14,7 +14,7 @@
 
 - Static site: ~2,372 HTML files, vanilla HTML/CSS/JS, no build step
 - Shared engines in `shared/` loaded via `?v=vNN` cache-busting (versions are independent per file)
-- All student progress in browser localStorage; teacher calendar + profiles sync to Cloudflare D1 via passphrase code
+- All student progress in browser localStorage; teacher calendar + profiles sync to Cloudflare D1 via passphrase code (DB `wordplay_db`, binding `DB`; functions in `functions/api/`; setup + verify steps in `CLOUDFLARE_SETUP.md`; graceful localStorage fallback if DB unbound)
 - `body class="deck-body"` required on every `slides.html`
 - `.sect-card` CSS class for section cards on hub pages — never inline `onmouseover`/`onmouseout`
 - Design hook at `.claude/hooks/design-check.sh` runs after every Edit/Write and flags emoji + off-palette colours

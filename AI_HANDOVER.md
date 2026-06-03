@@ -112,6 +112,18 @@ Not yet generated as files. The builder (`builder.html`) fully supports `fr` tra
 | `dashboard.html` | Student progress: XP, stats, radar chart, level tiles | localStorage |
 | `placement-test.html` | 24-question level finder | localStorage |
 
+### Cloudflare D1 backend (calendar + profiles cross-device sync)
+
+The D1 code is in the repo but the database binding lives in the Cloudflare dashboard —
+**see `CLOUDFLARE_SETUP.md` for the one-time setup and how to verify it's live.**
+
+- DB name `wordplay_db`, binding `DB`, no `wrangler.toml` (dashboard-configured)
+- Migrations: `migrations/0001_teacher_profiles.sql`, `migrations/0002_lessons.sql`
+- Functions: `functions/api/profiles/[code].js`, `functions/api/lessons/[code].js`
+- Auth = shared passphrase (`wordplay_sync_code`, 8–64 chars), no accounts yet
+- **Graceful fallback:** if the DB isn't bound, both tools still work localStorage-only
+  (single browser). Verify sync at `/api/profiles/testtesttest` → `{"profiles":[],...}` = live.
+
 ---
 
 ## 6. The shared engines in `shared/`

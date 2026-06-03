@@ -10,6 +10,7 @@ A complete Cambridge English course (A1–C2) as a static website on Cloudflare 
 - **CONTRIBUTING.md** — Branch naming, PR workflow, design rules checklist.
 - **PEDAGOGY.md** — Learning design principles that every chapter must follow.
 - **SYLLABUS.md** — Cambridge syllabus → site structure mapping reference.
+- **CLOUDFLARE_SETUP.md** — One-time Cloudflare D1 setup for calendar + profile cross-device sync (database, migrations, binding, verification).
 - **AUTH_PROPOSAL.md** — Future user-account implementation proposal (not yet built).
 - **404.html** — Custom error page.
 - **a/** — CEFR A1 and A2 (Beginner / Elementary).
