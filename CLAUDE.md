@@ -4,6 +4,8 @@
 > workflow, conventions, and pedagogy live here. Other docs (AI_HANDOVER.md,
 > SESSION_CONTEXT.md, CONTRIBUTING.md) link back to this file instead of restating
 > rules — so there is only ever one place to update.
+>
+> **Known technical debt is tracked in `TECH_DEBT.md`** — check it before large refactors.
 
 ## Project
 
@@ -35,9 +37,10 @@ localStorage. Teacher tools (calendar, profiles, dev-hub, builder, coverage) at 
 
 ## Git Workflow & Deployment
 
-- **Develop on `claude/website-design-token-optimization-1ZNUG`.** Commit there as you go.
+- **Develop on the session's feature branch — never commit directly to `main`.** Each session
+  is told its branch name (branch names change per session; don't hardcode one here). Commit there as you go.
 - **Deploy:** `git push origin HEAD:main` — Cloudflare Pages auto-deploys `main` (~2 min).
-  Then keep the dev branch in sync: `git push -u origin claude/website-design-token-optimization-1ZNUG`.
+  Then keep the feature branch in sync: `git push -u origin <feature-branch>`.
 - After completing a task, commit and push — don't stop before deploying.
 - For large tasks, commit after each logical sub-task so a session interruption doesn't
   lose progress.

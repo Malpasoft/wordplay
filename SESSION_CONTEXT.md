@@ -3,7 +3,7 @@
 **Live URL:** `https://wordplay-38t.pages.dev`  
 **Maintainer:** Em — freelance English teacher, Catalunya  
 **Repo:** `malpasoft/wordplay` → auto-deploys to Cloudflare Pages on push to `main`  
-**Working branch:** `claude/website-design-token-optimization-1ZNUG`
+**Working branch:** the session's feature branch (given per session) — never commit to `main` directly
 
 > **Read CLAUDE.md first (all the rules), then AI_HANDOVER.md (orientation).** This file is
 > the deep technical reference — JS contracts, shared-engine wiring, and the localStorage schema.

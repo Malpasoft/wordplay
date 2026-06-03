@@ -32,9 +32,9 @@
 The project is on GitHub. Claude Code is used in remote sessions with direct push access.
 The full git/deploy/cache-bust rules are in **CLAUDE.md** — in short:
 
-1. Develop on `claude/website-design-token-optimization-1ZNUG`.
+1. Develop on the session's feature branch (never `main` directly); the branch name is given per session.
 2. Deploy with `git push origin HEAD:main` (Cloudflare Pages auto-deploys `main`), then
-   sync the dev branch.
+   sync the feature branch.
 3. Bump the per-file `?v=vNN` suffix only on the shared assets you actually change.
 4. No zip packaging. Just commit + push.
 

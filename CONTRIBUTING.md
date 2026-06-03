@@ -10,7 +10,7 @@
 
 | Who | Branch pattern | Example |
 |-----|---------------|---------|
-| Claude (Anthropic) | `claude/topic` | `claude/github-workflow-setup-98Fbf` |
+| Claude (Anthropic) | `claude/topic` | `claude/dark-mode-fix` |
 | Owner | `user/topic` | `user/homepage-hero` |
 | Experiments | `exp/topic` | `exp/new-game-type` |
 
