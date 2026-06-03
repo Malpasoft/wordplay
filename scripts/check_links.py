@@ -47,9 +47,17 @@ def resolve(page_path, link):
     return target
 
 
+# Tool pages that GENERATE HTML in client-side JS template strings. Their
+# href="..." values are content for the file they build (resolved relative to
+# the OUTPUT location, not this page), so crawling them produces false positives.
+EXEMPT_PAGES = {'builder.html'}
+
+
 def main():
     global checked
     for path in glob.glob(f'{BASE}/**/*.html', recursive=True):
+        if os.path.basename(path) in EXEMPT_PAGES:
+            continue
         with open(path, encoding='utf-8') as f:
             html = f.read()
         for link in ATTR_RE.findall(html):

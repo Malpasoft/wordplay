@@ -40,6 +40,12 @@ select:focus,input:focus{outline:none;border-color:var(--amber)}
 .scope-note{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin-top:8px;padding:8px 10px;background:var(--cream-deep);border-radius:6px;display:none}
 .scope-note.visible{display:block}
 .scope-note strong{color:var(--ink)}
+
+.ap-builder-banner{display:flex;align-items:center;justify-content:space-between;gap:14px;background:rgba(184,134,11,.08);border:1.5px solid var(--amber);border-radius:10px;padding:14px 16px;margin-bottom:18px;flex-wrap:wrap}
+.apb-title{font-family:var(--font-sans);font-size:.86rem;font-weight:800;color:var(--ink);margin-bottom:3px}
+.apb-sub{font-family:var(--font-sans);font-size:.74rem;color:var(--muted);line-height:1.45;max-width:430px}
+.apb-sub code{color:var(--ink);font-weight:700;background:transparent}
+.apb-btn{font-family:var(--font-sans);font-size:.78rem;font-weight:700;letter-spacing:.3px;padding:9px 16px;border-radius:7px;background:var(--amber);color:#fff;text-decoration:none;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -52,15 +58,17 @@ select:focus,input:focus{outline:none;border-color:var(--amber)}
 <div class="ap-wrap">
   <div class="ap-eyebrow">Teacher Hub &middot; AI Prompts</div>
   <h1>Prime your AI</h1>
-  <p class="ap-sub">Pick a task &mdash; the prompt is built with project rules and your live content gaps, ready to paste.</p>
+  <p class="ap-sub">Pick a task &mdash; the prompt is built with project rules and your live content gaps, ready to paste into any free AI. The AI <strong>returns text only</strong>; nothing connects to GitHub. You save or build the file yourself.</p>
+
+  <div class="ap-builder-banner">
+    <div>
+      <div class="apb-title">Filling vocabulary cards?</div>
+      <div class="apb-sub">Use the <strong>Content Builder</strong> &mdash; it turns the AI&rsquo;s word list into a ready-to-download <code>flashcards.html</code>, no copy-paste surgery.</div>
+    </div>
+    <a href="builder.html" class="apb-btn">Open Builder &#8594;</a>
+  </div>
 
   <div class="card">
-    <div class="fld">
-      <label class="fld-label" for="dev-branch">Dev branch name</label>
-      <input id="dev-branch" type="text" placeholder="e.g. content/es-stubs-june" oninput="buildPrimer()">
-      <div class="hint">The AI pushes here only &mdash; you review and merge to main.</div>
-    </div>
-
     <div class="fld">
       <label class="fld-label" for="ai-select">Which AI?</label>
       <select id="ai-select" onchange="buildPrimer()">
@@ -68,7 +76,7 @@ select:focus,input:focus{outline:none;border-color:var(--amber)}
         <option value="deepseek">DeepSeek</option>
         <option value="gemini">Gemini</option>
         <option value="gpt">ChatGPT / GPT</option>
-        <option value="claude">Claude Code (new session)</option>
+        <option value="other">Other free AI</option>
       </select>
     </div>
 
@@ -84,17 +92,16 @@ select:focus,input:focus{outline:none;border-color:var(--amber)}
           <option value="cambridge">Cambridge exam pages (KET→CPE)</option>
           <option value="dele">DELE exam pages (Spanish)</option>
         </optgroup>
-        <optgroup label="New tracks (not built yet)">
-          <option value="bootstrap-espanol">Bootstrap /espanol/ — Spanish course + DELE</option>
-          <option value="bootstrap-espanol-en">Bootstrap /espanol-en/ — Spanish for English speakers</option>
+        <optgroup label="Spanish tracks (scaffolded — fill content)">
+          <option value="bootstrap-espanol-en">Fill /espanol-en/ — Spanish for English speakers</option>
+          <option value="bootstrap-espanol">Fill /espanol/ — universal Spanish + DELE</option>
         </optgroup>
         <optgroup label="Build">
-          <option value="new-chapter">Create a new chapter from scratch</option>
+          <option value="new-chapter">Write a new chapter from scratch</option>
         </optgroup>
         <optgroup label="Quality">
-          <option value="verify">Verify a branch — run all checks</option>
           <option value="audit">Audit a file or section</option>
-          <option value="bug">Fix a bug or structure issue</option>
+          <option value="bug">Fix a problem in a file</option>
         </optgroup>
         <option value="generic">General dev help</option>
       </select>
@@ -105,9 +112,10 @@ select:focus,input:focus{outline:none;border-color:var(--amber)}
       <div class="fld" style="margin-bottom:0">
         <label class="fld-label" for="scope-track">Track</label>
         <select id="scope-track" onchange="buildPrimer()">
-          <option value="all">Both tracks</option>
-          <option value="en">English (EN)</option>
-          <option value="es">Spanish&rarr;English (ES)</option>
+          <option value="all">All tracks</option>
+          <option value="en">English (universal)</option>
+          <option value="es">English via Spanish</option>
+          <option value="espanol-en">Spanish via English</option>
         </select>
       </div>
       <div class="fld" style="margin-bottom:0">
@@ -132,7 +140,7 @@ select:focus,input:focus{outline:none;border-color:var(--amber)}
     <button id="copy-primer" class="copy-btn" onclick="copyPrimer()">Copy prompt</button>
   </div>
 
-  <p class="hint" style="text-align:center">Stub lists update automatically from <a href="coverage.html">coverage</a>. Student gaps come from <a href="profile.html">profiles</a>.</p>
+  <p class="hint" style="text-align:center">Stub lists update automatically from <a href="coverage.html">coverage</a>. Student gaps come from <a href="profile.html">profiles</a>. To turn a word list into a file, use the <a href="builder.html">Content Builder</a>.</p>
 </div>
 
 <footer class="site-footer">Word Play &middot; Teacher tools &middot; private</footer>
@@ -147,24 +155,18 @@ fetch('shared/coverage-data.json?v=' + Date.now())
   .then(function(d){ coverageData = d; buildPrimer(); })
   .catch(function(){ coverageData = null; });
 
-function getDevBranch() {
-  return document.getElementById('dev-branch').value.trim() || 'content/dev';
-}
-
 function getCoreContext() {
-  const branch = getDevBranch();
-  return `Repo: ${REPO}
-IMPORTANT: Develop on branch "${branch}" — NEVER push directly to main.
-When done: commit + push to ${branch} only. Owner reviews and merges to main.
-Rules: var(--amber) only · no emoji · Python not sed/awk · pedagogy_check.py must stay 0 failures
-After every change run all checks:
-  python3 scripts/pedagogy_check.py
-  python3 scripts/check_links.py
-  python3 scripts/check_structure.py
-  python3 scripts/gen_coverage.py   (refreshes the teacher coverage view)
-First three must show 0 failures before pushing.
-Key files (read via raw.githubusercontent.com/malpasoft/wordplay/main/):
-  CLAUDE.md, AI_HANDOVER.md, scripts/fill_chapter.py`;
+  return `Project: Word Play — a static Cambridge-English / Spanish course (vanilla HTML/CSS/JS, no build step).
+You do NOT have access to the repo or GitHub and you do NOT push anything.
+Your only job is to RETURN content as text — either a complete file, or a JSON word list — which the teacher saves and commits manually.
+Design rules to follow in any HTML you produce:
+  · accent colour: var(--amber) only — never hardcode a hex, no second accent colour
+  · no emoji in the UI
+  · keep the existing shared classes/IDs and asset versions intact
+Reference templates are read-only on the web (open and copy structure, do not try to edit them):
+  https://raw.githubusercontent.com/malpasoft/wordplay/main/CLAUDE.md
+  https://raw.githubusercontent.com/malpasoft/wordplay/main/es/a1/vocabulary/animals/flashcards.html
+After you hand the file back, the teacher runs the checkers locally (pedagogy_check.py, check_structure.py) and pushes.`;
 }
 
 const ES_TEMPLATE_NOTE = `TEMPLATE (read this raw file first to get the exact HTML):
@@ -177,7 +179,7 @@ Auto-complete: flashcards when fcSeen.size >= WORDS.length, game when completedR
 Word format: {id:"slug", word:"English", ipa:"/ˈɪp.ə/", def:"Spanish definition", ex:"Spanish sentence with <b>word</b> bold"}`;
 
 /* ── Track / level helpers ── */
-function trackName(t){ return t === 'es' ? 'Spanish→English (ES)' : t === 'en' ? 'English (EN)' : 'both tracks'; }
+function trackName(t){ return t === 'es' ? 'English via Spanish' : t === 'en' ? 'English (universal)' : t === 'espanol-en' ? 'Spanish via English' : t === 'espanol' ? 'Spanish (universal)' : 'all tracks'; }
 
 function getStubs(track, level) {
   if (!coverageData) return [];
@@ -195,61 +197,51 @@ function stubListText(stubs) {
 
 /* ── Tasks that are static text ── */
 const STATIC_TASKS = {
-  'cambridge': `TASK: Fill Cambridge exam pages (KET/PET/FCE/CAE/CPE) — English proficiency exams.
-Pages live in exams/ — list them: find exams/ -name "*.html" | head -30
-Read one existing exam page first to understand structure.
-Format: breadcrumb, chapter-nav, worksheet with ANSWERS + EXPLANATIONS arrays, GAME_DATA for game.
+  'cambridge': `TASK: Write a Cambridge exam page (KET/PET/FCE/CAE/CPE) — English proficiency exams.
+Open one existing exam page (raw GitHub, under exams/) to copy the exact structure.
+Format: breadcrumb, chapter-nav, worksheet with ANSWERS + EXPLANATIONS arrays, GAME_DATA for the game.
 Use real Cambridge question types: multiple choice, gap fill, word formation, key word transformation.
-Run python3 scripts/pedagogy_check.py after — must be 0 failures.`,
+RETURN the complete HTML file as text. The teacher saves it and runs pedagogy_check.py before pushing.`,
 
-  'dele': `TASK: Build/fill DELE exam pages — DELE is the official Spanish proficiency exam (Instituto Cervantes), the Spanish equivalent of Cambridge.
+  'dele': `TASK: Write a DELE exam page — DELE is the official Spanish proficiency exam (Instituto Cervantes), the Spanish equivalent of Cambridge.
 DELE prep belongs in the Spanish courses: /espanol/exams/ (universal) and /espanol-en/exams/ (explained in English).
-NOTE: these tracks may not exist yet — if not, scaffold the directory first (see the bootstrap tasks).
-Use real DELE task types: comprensión de lectura, comprensión auditiva, expresión escrita, expresión oral.
-Levels A1–C2. Run python3 scripts/pedagogy_check.py after — must be 0 failures.`,
+Use real DELE task types: comprensión de lectura, comprensión auditiva, expresión escrita, expresión oral. Levels A1–C2.
+RETURN the complete HTML file(s) as text — the teacher saves them. Do not attempt to push or run anything.`,
 
-  'bootstrap-espanol': `TASK: Bootstrap the /espanol/ track — a UNIVERSAL Spanish course (CEFR A1–C2) with DELE exam prep.
+  'bootstrap-espanol': `TASK: Write content for the /espanol/ track — a UNIVERSAL Spanish course (CEFR A1–C2) with DELE exam prep.
 This is Spanish as the TARGET language (like the English course at /), no L1 assumptions.
-Mirror the existing English structure: /espanol/a1/ … /espanol/c2/ with gramatica · vocabulario · escritura sections, plus /espanol/exams/ for DELE.
-Reuse shared engines unchanged (deck.js, worksheet.js, game.js, store.js). Read scripts/gen_chapter.py first.
-Start with ONE complete A1 grammar chapter as a proof, get pedagogy_check.py to 0, then scale.`,
+Mirror the existing structure: /espanol/{level}/ with gramatica · vocabulario · escritura sections.
+Open the reference flashcards.html (raw GitHub) to copy the exact template; reuse the shared engines unchanged.
+RETURN one complete chapter (the file contents) as text — start with ONE A1 grammar chapter as a proof. The teacher saves and checks it.`,
 
-  'bootstrap-espanol-en': `TASK: Bootstrap the /espanol-en/ track — the Spanish course EXPLAINED IN ENGLISH (L1: English).
-Same Spanish content as /espanol/ but with English explanations + interference notes (ser/estar, false cognates, subjunctive traps for English speakers).
-Build /espanol/ first (universal Spanish) — this track layers English scaffolding on top of it.
-DELE prep with English scaffolding goes in /espanol-en/exams/. Read scripts/gen_chapter.py first.`,
+  'bootstrap-espanol-en': `TASK: Write content for the /espanol-en/ track — the Spanish course EXPLAINED IN ENGLISH (L1: English).
+The scaffold already exists (placeholder pages under /espanol-en/a1/). Your job is to fill a chapter's real content.
+Spanish words, English definitions + interference notes (ser/estar, false cognates, subjunctive traps for English speakers).
+TIP: for vocabulary chapters use the Content Builder instead — it builds the file for you. For grammar/writing, RETURN the complete file as text.`,
 
-  'new-chapter': `TASK: Create a new chapter from scratch.
-Read scripts/gen_chapter.py (raw GitHub) first — use the version map exactly (base='v123', etc).
-Chapter needs: slides.html, flashcards.html, game.html, worksheet.html, printables.html, index.html.
-Vocab nav = Flashcards + Lesson + Game only. Grammar nav = Lesson + Review + Game + Printables.
-10 words with IPA, definition, example. All worksheet questions need EXPLANATIONS.
-Run python3 scripts/pedagogy_check.py after — must be 0 failures.`,
+  'new-chapter': `TASK: Write a brand-new chapter.
+Open the reference files on raw GitHub first to copy the exact structure and asset versions (base.css?v=v123 etc).
+A chapter needs: slides.html, flashcards.html, game.html, worksheet.html, index.html (+ printables.html for writing).
+Vocab nav = Lesson + Flashcards + Game. Grammar nav = Lesson + Review + Game.
+10 words with IPA, definition, example. Every worksheet question needs an EXPLANATION.
+RETURN each file's full contents as text. The teacher saves them and runs pedagogy_check.py.`,
 
-  'verify': `TASK: Verify the current branch is clean and ready to merge.
-Run and report:
-  python3 scripts/pedagogy_check.py
-  python3 scripts/check_links.py
-  python3 scripts/check_structure.py
-  python3 scripts/gen_coverage.py
-Expected: pedagogy 0 failures, 0 broken links, 0 structure issues (unfilled flashcard stubs may flag — that is expected until filled).
-Report a clear PASS or FAIL with details. Fix before pushing.`,
+  'audit': `TASK: Audit the file or section I paste below for quality.
+Check: CEFR-appropriate vocab, accurate IPA, natural examples, every question has an EXPLANATION, correct nav for the chapter type (vocab = Lesson/Flashcards/Game; grammar = Lesson/Review/Game).
+Report issues by severity, then RETURN a corrected version of the file as text if I ask for one.`,
 
-  'audit': `TASK: Audit the specified file or section for quality.
-Check: CEFR-appropriate vocab, accurate IPA, natural examples, all questions have EXPLANATIONS, no broken links, correct nav for chapter type (vocab = Flashcards/Lesson/Game; grammar = Lesson/Review/Game/Printables).
-Report issues by severity. List findings before fixing anything.`,
+  'bug': `TASK: Help me fix a problem in a file I paste below.
+Note: grammar and Spanish/vocab pages differ in whitespace, so match structure exactly. Keep var(--amber), no emoji, shared classes intact.
+RETURN the corrected file as text — I apply it and run the checkers myself.`,
 
-  'bug': `TASK: Fix the described bug.
-Before touching anything: grep for ALL structural variants — grammar and Spanish/vocab pages differ in whitespace. Confirm exact file count per variant. Use Python with explicit string matching, never sed/awk. Verify on 2-3 samples before the full run. Run all checkers after.`,
-
-  'generic': `TASK: (paste this primer first, then describe your request below)`
+  'generic': `TASK: (paste this primer first, then describe your request below — remember you only return text, you do not push)`
 };
 
 const AI_NOTES = {
-  deepseek: `You have web browsing. Read the raw GitHub files listed below before starting — they contain all project rules and the exact code templates you must follow.`,
-  gemini: `You have web browsing. Read the raw GitHub files below first. CLAUDE.md overrides any default behaviour.`,
-  gpt: `You have web browsing via the browser tool. Read the raw GitHub files below — do not guess at file structure.`,
-  claude: `Read CLAUDE.md and AI_HANDOVER.md before anything else. The strategic plan is at /root/.claude/plans/before-we-start-i-zazzy-starfish.md. Run all checkers before every push — all must stay at 0 failures.`
+  deepseek: `You have web browsing. Open the raw GitHub reference files below to copy the exact structure — then RETURN your result as text. You do not have repo access and do not push.`,
+  gemini: `You have web browsing. Open the raw reference files below for the exact template. Return the finished content as text only — the teacher saves it.`,
+  gpt: `You have web browsing via the browser tool. Open the raw reference files below — do not guess at file structure. Return content as text; you do not push anything.`,
+  other: `Open the raw GitHub reference links below to see the exact template, then return your result as text. You do not have repo access.`
 };
 
 /* ── UI wiring ── */
@@ -305,9 +297,9 @@ function buildStudentGapTask() {
     }
     lines.push('');
   });
-  lines.push(ES_TEMPLATE_NOTE);
-  lines.push('');
-  lines.push('Fill each chapter with 10 CEFR-appropriate words. Run pedagogy_check.py + gen_coverage.py after.');
+  lines.push('For EACH chapter above, return a separate JSON array of 10 CEFR-appropriate words:');
+  lines.push('[{"word":"...","ipa":"/.../","def":"...","ex":"... <b>word</b> ..."}]');
+  lines.push('I paste each list into the Content Builder (builder.html), which generates the flashcards.html file for me — you do not write HTML or push anything.');
   return lines.join('\n');
 }
 
@@ -327,13 +319,14 @@ function buildScopeTask() {
   if (!stubs.length) {
     return 'TASK: No stubs in this scope — everything is complete. Pick a different track/level.';
   }
-  return `TASK: Fill ${stubs.length} flashcard stub(s) — ${trackName(track)}${level!=='all' ? ' ' + level : ''}.
-${ES_TEMPLATE_NOTE}
+  return `TASK: Provide words for ${stubs.length} flashcard chapter(s) — ${trackName(track)}${level!=='all' ? ' ' + level : ''}.
 
-Chapters to fill:
+Chapters that need words:
 ${stubListText(stubs)}
 
-Fill each with 10 CEFR-appropriate words. Run python3 scripts/pedagogy_check.py + gen_coverage.py after.`;
+For EACH chapter, return a separate JSON array of 10 CEFR-appropriate words:
+[{"word":"...","ipa":"/.../","def":"...","ex":"... <b>word</b> ..."}]
+I paste each list into the Content Builder (builder.html) — it generates the flashcards.html file. You only return JSON; you do not write HTML or push anything.`;
 }
 
 function buildPrimer() {

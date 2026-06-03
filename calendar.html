@@ -39,17 +39,22 @@
 .cal-gutter{width:52px;flex-shrink:0}
 .cal-day-head{flex:1;text-align:center;padding:7px 3px;font-family:var(--font-sans);font-size:.62rem;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);border-left:1px solid var(--hairline)}
 .cal-day-head.today{color:var(--amber)}
+.cal-day-head.weekend{background:rgba(0,0,0,.025)}
+body.dark .cal-day-head.weekend{background:rgba(255,255,255,.03)}
 .cal-day-num{display:block;font-family:var(--font-sans);font-size:.8rem;font-weight:700;letter-spacing:0;text-transform:none;color:var(--ink);margin-top:2px}
 .cal-day-head.today .cal-day-num{color:var(--amber)}
 
 /* Scrollable week body */
-.cal-week-body{display:flex;overflow-y:auto;max-height:580px}
+.cal-week-body{display:flex;overflow-y:auto;max-height:760px}
 .cal-time-axis{width:52px;flex-shrink:0;position:relative}
 .cal-hour-label{position:absolute;right:7px;font-family:var(--font-sans);font-size:.58rem;color:var(--muted);transform:translateY(-50%);user-select:none}
 .cal-day-cols{display:flex;flex:1;position:relative}
 .cal-day-col{position:relative;flex:1;min-width:0;cursor:crosshair}
 .cal-day-col+.cal-day-col{border-left:1px solid var(--hairline)}
 .cal-day-col.today-col{background:rgba(184,134,11,.03)}
+.cal-day-col.weekend-col{background:rgba(0,0,0,.025)}
+body.dark .cal-day-col.weekend-col{background:rgba(255,255,255,.03)}
+.cal-day-head{flex-basis:0}
 
 /* Lesson blocks */
 .cal-lesson{position:absolute;left:2px;right:2px;border-radius:4px;padding:3px 6px;font-family:var(--font-sans);font-size:.61rem;font-weight:700;line-height:1.3;overflow:hidden;cursor:pointer;box-sizing:border-box;transition:opacity .12s;z-index:1}
@@ -262,7 +267,7 @@ var LESSONS_KEY   = 'wordplay_lessons_cache';
 var SYNC_CODE_KEY = 'wordplay_sync_code';
 var GRID_START    = 7 * 60;    // 07:00
 var GRID_END      = 21 * 60;   // 21:00
-var PX_PER_MIN    = 1.5;
+var PX_PER_MIN    = 1.05;
 var GRID_H        = (GRID_END - GRID_START) * PX_PER_MIN;  // 1260px
 
 /* ── State ── */
@@ -470,8 +475,10 @@ function renderWeek() {
   var hHtml = '<div class="cal-gutter"></div>';
   dates.forEach(function(iso){
     var isTod = iso === today;
-    hHtml += '<div class="cal-day-head' + (isTod ? ' today' : '') + '">'
-      + DOW_SHORT[dowIndex(iso)]
+    var di    = dowIndex(iso);
+    var isWk  = (di === 5 || di === 6);
+    hHtml += '<div class="cal-day-head' + (isTod ? ' today' : '') + (isWk ? ' weekend' : '') + '">'
+      + DOW_SHORT[di]
       + '<span class="cal-day-num">' + parseInt(iso.slice(8)) + '</span>'
       + '</div>';
   });
@@ -498,10 +505,12 @@ function renderWeek() {
 
   dates.forEach(function(iso){
     var isTod = iso === today;
+    var di    = dowIndex(iso);
+    var isWk  = (di === 5 || di === 6);
     var dayL  = lessons.filter(function(l){ return l.date === iso; })
                        .sort(function(a,b){ return timeToMin(a.time_start) - timeToMin(b.time_start); });
 
-    cHtml += '<div class="cal-day-col' + (isTod ? ' today-col' : '') + '"'
+    cHtml += '<div class="cal-day-col' + (isTod ? ' today-col' : '') + (isWk ? ' weekend-col' : '') + '"'
       + ' style="height:' + GRID_H + 'px"'
       + ' onclick="onColClick(event,\'' + iso + '\')">';
 

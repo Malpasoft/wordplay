@@ -205,6 +205,69 @@ def scan_spanish():
     return chapters
 
 
+def scan_simple_track(track_id, track_root):
+    """Scan a track laid out as {level}/{section}/{chapter}/ where section is
+    one of grammar/vocabulary/writing (English-named dirs). Used for the
+    espanol-en/ track. Returns list of chapter dicts."""
+    chapters = []
+    root = os.path.join(BASE, track_root)
+    if not os.path.isdir(root):
+        return chapters
+    for level_code in ['A1', 'A2', 'B1', 'B2', 'C1', 'C2']:
+        level_dir = os.path.join(root, level_code.lower())
+        if not os.path.isdir(level_dir):
+            continue
+        for section_dir in ['grammar', 'vocabulary', 'writing']:
+            section_path = os.path.join(level_dir, section_dir)
+            if not os.path.isdir(section_path):
+                continue
+            for chapter_dir in sorted(os.listdir(section_path)):
+                chapter_path = os.path.join(section_path, chapter_dir)
+                if not os.path.isdir(chapter_path):
+                    continue
+                index_path = os.path.join(chapter_path, 'index.html')
+                if not os.path.exists(index_path):
+                    continue
+
+                idx_content = open(index_path, encoding='utf-8').read()
+                title_m = re.search(r'<h1[^>]*>(.*?)</h1>', idx_content, re.DOTALL)
+                title = re.sub(r'<[^>]+>', '', title_m.group(1)).strip() if title_m else chapter_dir
+
+                slides = os.path.join(chapter_path, 'slides.html')
+                worksheet = os.path.join(chapter_path, 'worksheet.html')
+                game = os.path.join(chapter_path, 'game.html')
+                flashcards = os.path.join(chapter_path, 'flashcards.html')
+
+                slides_status = assess_slides(slides)
+
+                if section_dir == 'vocabulary':
+                    fc_status = assess_flashcards(flashcards)
+                    game_status = assess_file(game)
+                    overall = worst([slides_status, fc_status])
+                    details = {'slides': slides_status, 'flashcards': fc_status, 'game': game_status}
+                elif section_dir == 'writing':
+                    ws_status = assess_file(worksheet)
+                    overall = worst([slides_status, ws_status])
+                    details = {'slides': slides_status, 'worksheet': ws_status}
+                else:  # grammar
+                    ws_status = assess_file(worksheet)
+                    game_status = assess_file(game)
+                    overall = worst([slides_status, ws_status])
+                    details = {'slides': slides_status, 'worksheet': ws_status, 'game': game_status}
+
+                url = f'/{track_root}/{level_code.lower()}/{section_dir}/{chapter_dir}/index.html'
+                chapters.append({
+                    'track': track_id,
+                    'level': level_code,
+                    'section': section_dir,
+                    'title': title,
+                    'url': url,
+                    'status': overall,
+                    'details': details,
+                })
+    return chapters
+
+
 def build_summary(chapters):
     summary = {}
     for c in chapters:
@@ -288,11 +351,13 @@ h1{font-size:1.6rem;color:var(--navy);margin:0 0 4px}
 
   <div class="track-tabs">
     <button class="track-tab active" onclick="switchTrack('en',this)">English (A&ndash;C)</button>
-    <button class="track-tab" onclick="switchTrack('es',this)">Spanish (ES)</button>
+    <button class="track-tab" onclick="switchTrack('es',this)">English via Spanish</button>
+    <button class="track-tab" onclick="switchTrack('espanol-en',this)">Spanish via English</button>
   </div>
 
   <div id="track-en" class="track-panel active"></div>
   <div id="track-es" class="track-panel"></div>
+  <div id="track-espanol-en" class="track-panel"></div>
 </div>
 
 <footer class="site-footer">Word Play &middot; Cambridge English A1&rarr;C2</footer>
@@ -384,7 +449,7 @@ function toggleLevel(head) {
 }
 
 function render() {
-  ['en','es'].forEach(function(track) {
+  ['en','es','espanol-en'].forEach(function(track) {
     var panel = document.getElementById('track-'+track);
     var levels = ['A1','A2','B1','B2','C1','C2'];
     var html = '';
@@ -413,7 +478,11 @@ def main():
     es_chapters = scan_spanish()
     print(f'  Found {len(es_chapters)} ES chapters')
 
-    chapters = en_chapters + es_chapters
+    print('Scanning Spanish-for-English-speakers track...')
+    espanol_en_chapters = scan_simple_track('espanol-en', 'espanol-en')
+    print(f'  Found {len(espanol_en_chapters)} espanol-en chapters')
+
+    chapters = en_chapters + es_chapters + espanol_en_chapters
     total = len(chapters)
 
     complete = sum(1 for c in chapters if c['status'] == 'complete')
