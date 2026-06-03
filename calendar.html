@@ -98,31 +98,53 @@ body.dark .lt-school{background:rgba(240,240,240,.65);color:#0E0E0E}
 
 /* ── Modal ── */
 .lm-overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);align-items:center;justify-content:center;z-index:9998;padding:16px;display:none}
-.lm-box{background:var(--paper);border-radius:12px;width:100%;max-width:540px;max-height:90vh;overflow-y:auto;padding:24px;box-shadow:0 8px 32px rgba(0,0,0,.35)}
+.lm-box{background:var(--cream);border-radius:12px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;padding:24px;box-shadow:0 12px 40px rgba(0,0,0,.3)}
 body.dark .lm-box{background:#1A1A1A}
-.lm-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.lm-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
 .lm-heading{font-size:1.05rem;font-weight:700;color:var(--navy);margin:0}
-.lm-close{font-family:var(--font-sans);font-size:1.2rem;border:none;background:transparent;color:var(--muted);cursor:pointer;padding:0 4px;line-height:1}
-.lm-close:hover{color:var(--ink)}
+.lm-close{font-family:var(--font-sans);font-size:1.3rem;border:none;background:transparent;color:var(--muted);cursor:pointer;padding:2px 6px;line-height:1;border-radius:4px;transition:color .12s,background .12s}
+.lm-close:hover{color:var(--ink);background:var(--hairline)}
+
+/* Form grid */
+.lm-form{display:grid;grid-template-columns:1fr 1fr;gap:10px 14px}
+@media(max-width:480px){.lm-form{grid-template-columns:1fr}}
+.lm-full{grid-column:1/-1}
+.lm-fld-label{display:block;font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+.lm-input,.lm-select,.lm-textarea{width:100%;box-sizing:border-box;padding:9px 12px;border:1.5px solid var(--hairline);border-radius:6px;font-size:.88rem;font-family:var(--font-sans);background:var(--paper);color:var(--ink);transition:border-color .15s;appearance:none;-webkit-appearance:none}
+.lm-input:focus,.lm-select:focus,.lm-textarea:focus{outline:none;border-color:var(--amber)}
+body.dark .lm-input,.body.dark .lm-select,.body.dark .lm-textarea{background:#111;color:#f0f0f0}
+body.dark .lm-input[type="date"],body.dark .lm-input[type="time"]{color-scheme:dark}
+.lm-textarea{resize:vertical;min-height:62px;font-family:var(--font-sans);font-size:.85rem}
+
+/* Lesson type select — keep select arrow */
+.lm-select-wrap{position:relative}
+.lm-select-wrap::after{content:"▾";position:absolute;right:12px;top:50%;transform:translateY(-50%);pointer-events:none;font-size:.75rem;color:var(--muted)}
+.lm-select-wrap .lm-select{padding-right:28px}
 
 /* Student autocomplete */
 .lm-stu-wrap{position:relative}
-.lm-suggestions{position:absolute;top:100%;left:0;right:0;background:var(--paper);border:1.5px solid var(--hairline);border-top:none;border-radius:0 0 4px 4px;z-index:10;max-height:160px;overflow-y:auto;box-shadow:0 4px 12px rgba(0,0,0,.1)}
-.lm-suggestion{padding:8px 12px;font-family:var(--font-sans);font-size:.82rem;cursor:pointer;border-bottom:1px solid var(--hairline)}
+.lm-suggestions{position:absolute;top:calc(100% + 2px);left:0;right:0;background:var(--paper);border:1.5px solid var(--hairline);border-radius:6px;z-index:10;max-height:160px;overflow-y:auto;box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.lm-suggestion{padding:9px 12px;font-family:var(--font-sans);font-size:.82rem;cursor:pointer;border-bottom:1px solid var(--hairline)}
 .lm-suggestion:last-child{border-bottom:none}
-.lm-suggestion:hover{background:var(--cream)}
+.lm-suggestion:hover{background:rgba(184,134,11,.06)}
 .lm-stu-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
-.lm-stu-tag{font-family:var(--font-sans);font-size:.68rem;font-weight:700;padding:3px 8px;border-radius:12px;background:var(--cream);border:1px solid var(--hairline);color:var(--ink);display:flex;align-items:center;gap:4px}
-.lm-stu-tag button{font-size:.75rem;border:none;background:transparent;color:var(--muted);cursor:pointer;padding:0 1px;line-height:1}
+.lm-stu-tag{font-family:var(--font-sans);font-size:.68rem;font-weight:700;padding:3px 9px;border-radius:12px;background:rgba(184,134,11,.1);border:1px solid rgba(184,134,11,.3);color:var(--ink);display:flex;align-items:center;gap:4px}
+.lm-stu-tag button{font-size:.8rem;border:none;background:transparent;color:var(--muted);cursor:pointer;padding:0 2px;line-height:1}
 .lm-stu-tag button:hover{color:var(--ink)}
 
-/* dark mode date/time inputs */
-body.dark .f-input[type="date"],
-body.dark .f-input[type="time"]{color-scheme:dark}
+/* Action buttons */
+.lm-btn-row{grid-column:1/-1;display:flex;gap:8px;margin-top:8px;align-items:center}
+.lm-btn{font-family:var(--font-sans);font-size:.8rem;font-weight:700;letter-spacing:.3px;padding:10px 18px;border-radius:6px;border:none;background:var(--amber);color:#fff;cursor:pointer;transition:opacity .12s}
+.lm-btn:hover{opacity:.87}
+.lm-btn.ghost{background:transparent;border:1.5px solid var(--hairline);color:var(--ink)}
+.lm-btn.ghost:hover{border-color:var(--ink)}
+.lm-btn.danger{background:transparent;border:1.5px solid rgba(192,57,43,.35);color:#c0392b;margin-left:auto}
+.lm-btn.danger:hover{background:#c0392b;border-color:#c0392b;color:#fff}
 
 /* Repeat row */
-.lm-repeat-row{grid-column:1/-1}
-.lm-repeat-opts{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
+.lm-repeat-row{grid-column:1/-1;margin-top:2px}
+.lm-repeat-check-label{display:flex;align-items:center;gap:8px;font-family:var(--font-sans);font-size:.82rem;color:var(--ink);cursor:pointer}
+.lm-repeat-opts{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
 
 @media(max-width:600px){
   .cal-week-outer{display:none}
@@ -196,66 +218,86 @@ body.dark .f-input[type="time"]{color-scheme:dark}
       <button class="lm-close" onclick="closeModal()" aria-label="Close">&times;</button>
     </div>
 
-    <div class="form-grid">
-      <div class="f-row" style="grid-column:1/-1">
-        <label class="f-label" for="lmTitleInput">Title</label>
-        <input class="f-input" id="lmTitleInput" type="text" placeholder="e.g. Monday adults group" autocomplete="off">
+    <div class="lm-form">
+      <!-- Title — full width -->
+      <div class="lm-full">
+        <label class="lm-fld-label" for="lmTitleInput">Title</label>
+        <input class="lm-input" id="lmTitleInput" type="text" placeholder="e.g. Monday adults group" autocomplete="off">
       </div>
-      <div class="f-row">
-        <label class="f-label" for="lmDate">Date</label>
-        <input class="f-input" id="lmDate" type="date">
+
+      <!-- Date + Type -->
+      <div>
+        <label class="lm-fld-label" for="lmDate">Date</label>
+        <input class="lm-input" id="lmDate" type="date">
       </div>
-      <div class="f-row">
-        <label class="f-label" for="lmType">Type</label>
-        <select class="f-select" id="lmType">
-          <option value="1on1">1-on-1 private</option>
-          <option value="group">Private group</option>
-          <option value="academy">Academy class</option>
-          <option value="school">School lesson</option>
-          <option value="online">Online private</option>
-        </select>
+      <div>
+        <label class="lm-fld-label" for="lmType">Type</label>
+        <div class="lm-select-wrap">
+          <select class="lm-select" id="lmType">
+            <option value="1on1">1-on-1 private</option>
+            <option value="group">Private group</option>
+            <option value="academy">Academy class</option>
+            <option value="school">School lesson</option>
+            <option value="online">Online private</option>
+          </select>
+        </div>
       </div>
-      <div class="f-row">
-        <label class="f-label" for="lmStart">Start</label>
-        <input class="f-input" id="lmStart" type="time">
+
+      <!-- Start + End -->
+      <div>
+        <label class="lm-fld-label" for="lmStart">Start</label>
+        <input class="lm-input" id="lmStart" type="time">
       </div>
-      <div class="f-row">
-        <label class="f-label" for="lmEnd">End</label>
-        <input class="f-input" id="lmEnd" type="time">
+      <div>
+        <label class="lm-fld-label" for="lmEnd">End</label>
+        <input class="lm-input" id="lmEnd" type="time">
       </div>
-      <div class="f-row" style="grid-column:1/-1">
-        <label class="f-label" for="lmLocation">Location</label>
-        <input class="f-input" id="lmLocation" type="text" placeholder="e.g. Room 3, Academia" autocomplete="off">
+
+      <!-- Location — full width -->
+      <div class="lm-full">
+        <label class="lm-fld-label" for="lmLocation">Location</label>
+        <input class="lm-input" id="lmLocation" type="text" placeholder="e.g. Room 3, Academia" autocomplete="off">
       </div>
-      <div class="f-row" style="grid-column:1/-1">
-        <label class="f-label" for="lmStuInput">Students</label>
+
+      <!-- Students — full width -->
+      <div class="lm-full">
+        <label class="lm-fld-label" for="lmStuInput">Students</label>
         <div class="lm-stu-wrap">
-          <input class="f-input" id="lmStuInput" type="text" placeholder="Type a name to add…" autocomplete="off" oninput="onStudentInput()">
+          <input class="lm-input" id="lmStuInput" type="text" placeholder="Type a name to add…" autocomplete="off" oninput="onStudentInput()">
           <div id="lmSuggestions" class="lm-suggestions" style="display:none"></div>
         </div>
         <div id="lmStuTags" class="lm-stu-tags"></div>
       </div>
-      <textarea class="f-textarea" id="lmNotes" placeholder="Notes…"></textarea>
 
+      <!-- Notes — full width -->
+      <div class="lm-full">
+        <label class="lm-fld-label" for="lmNotes">Notes</label>
+        <textarea class="lm-textarea" id="lmNotes" placeholder="Optional notes…"></textarea>
+      </div>
+
+      <!-- Repeat (add mode only) -->
       <div class="lm-repeat-row" id="lmRepeatRow">
-        <label class="f-label" style="display:flex;align-items:center;gap:8px;cursor:pointer;margin-bottom:0">
+        <label class="lm-repeat-check-label">
           <input type="checkbox" id="lmRepeat" onchange="toggleRepeat()"> Repeat weekly
         </label>
         <div class="lm-repeat-opts" id="lmRepeatOpts" style="display:none">
-          <select class="f-select" id="lmRepeatWeeks" style="width:auto" onchange="toggleUntilDate()">
-            <option value="4">4 weeks</option>
-            <option value="8">8 weeks</option>
-            <option value="12">12 weeks</option>
-            <option value="custom">Until date&hellip;</option>
-          </select>
-          <input class="f-input" id="lmRepeatUntil" type="date" style="display:none;flex:1">
+          <div class="lm-select-wrap" style="width:auto">
+            <select class="lm-select" id="lmRepeatWeeks" style="width:auto" onchange="toggleUntilDate()">
+              <option value="4">4 weeks</option>
+              <option value="8">8 weeks</option>
+              <option value="12">12 weeks</option>
+              <option value="custom">Until date&hellip;</option>
+            </select>
+          </div>
+          <input class="lm-input" id="lmRepeatUntil" type="date" style="display:none;flex:1">
         </div>
       </div>
 
-      <div class="f-actions" style="grid-column:1/-1">
-        <button class="f-save" onclick="saveLesson()">Save lesson</button>
-        <button class="f-cancel" onclick="closeModal()">Cancel</button>
-        <button id="lmDeleteBtn" class="f-cancel" style="margin-left:auto;color:#c0392b;border-color:#c0392b;display:none" onclick="deleteLesson()">Delete</button>
+      <!-- Action buttons -->
+      <div class="lm-btn-row">
+        <button class="lm-btn" onclick="saveLesson()">Save lesson</button>
+        <button class="lm-btn ghost" onclick="closeModal()">Cancel</button>
+        <button id="lmDeleteBtn" class="lm-btn danger" style="display:none" onclick="deleteLesson()">Delete</button>
       </div>
     </div>
   </div>
