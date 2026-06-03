@@ -3,6 +3,11 @@
     "playwright": {
       "command": "npx",
       "args": ["@playwright/mcp@latest", "--headless", "--isolated"]
+    },
+    "cloudflare": {
+      "type": "http",
+      "url": "https://mcp.cloudflare.com/sse",
+      "note": "Official Cloudflare remote MCP — OAuth on first connect. Bindings server covers D1 (wordplay_db), Pages deploy logs, KV, R2. Used to verify D1 binding status and debug edge-cache issues. Docs: https://developers.cloudflare.com/agents/model-context-protocol/mcp-servers-for-cloudflare/"
     }
   }
 }
