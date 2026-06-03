@@ -106,6 +106,19 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--amber)}
 .build-status.err{display:block;background:rgba(192,57,43,.1);color:#a5342a;border:1px solid rgba(192,57,43,.3)}
 .preview-frame{width:100%;height:420px;border:1.5px solid var(--hairline);border-radius:9px;margin-top:12px;display:none;background:#fff}
 .preview-frame.on{display:block}
+
+/* Place-file box (Step 4) */
+.place-box{background:rgba(184,134,11,.06);border:1.5px solid var(--amber);border-radius:8px;padding:14px 16px;margin-bottom:14px}
+.place-label{font-family:var(--font-sans);font-size:.62rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+.place-path-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.place-path{font-family:"SF Mono",Menlo,monospace;font-size:.82rem;color:var(--ink);font-weight:700;word-break:break-all;flex:1}
+.place-copy{font-family:var(--font-sans);font-size:.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 12px;border-radius:4px;border:1.5px solid var(--hairline);background:var(--paper);color:var(--muted);cursor:pointer;flex-shrink:0}
+.place-copy.copied{background:#27ae60;color:#fff;border-color:#27ae60}
+.place-tip>summary{font-family:var(--font-sans);font-size:.72rem;color:var(--amber);cursor:pointer;font-weight:600}
+.place-tip-body{font-family:var(--font-sans);font-size:.74rem;color:var(--muted);line-height:1.8;margin-top:10px;padding-top:10px;border-top:1px solid var(--hairline)}
+.place-tip-body strong{color:var(--ink)}
+.place-tip-body ol{margin:6px 0 0 0;padding-left:20px}
+.place-tip-body ol li{margin-bottom:5px}
 </style>
 </head>
 <body>
@@ -209,17 +222,43 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--amber)}
       <button class="btn full" id="buildBtn" onclick="buildFile()">Build file</button>
     </div>
     <div class="build-status" id="buildStatus"></div>
-    <div class="btn-row" id="downloadRow" style="display:none">
-      <button class="btn" onclick="downloadFile()">&#8595; Download</button>
-      <button class="btn ghost" onclick="togglePreview()">Toggle preview</button>
+    <div id="downloadRow" style="display:none">
+      <div class="place-box">
+        <div class="place-label">Save file to this path in the repo:</div>
+        <div class="place-path-row">
+          <code class="place-path" id="placePath"></code>
+          <button class="place-copy" id="placeCopyBtn" onclick="copyPath()">Copy path</button>
+        </div>
+        <details class="place-tip">
+          <summary>How to upload on GitHub (iPhone / mobile)?</summary>
+          <div class="place-tip-body">
+            <strong>Desktop:</strong> Download the file &rarr; go to the correct folder on github.com &rarr; drag &amp; drop, or use Add file &rarr; Upload files.<br><br>
+            <strong>iPhone / any mobile (no upload button):</strong>
+            <ol>
+              <li>Tap <strong>Download file</strong> below &mdash; it saves to your Files app.</li>
+              <li>Open <strong>github.com</strong> in Safari &rarr; sign in &rarr; go to your repo.</li>
+              <li>Navigate into each folder shown in the path above (tap each folder name in turn).</li>
+              <li>Tap the <strong>pencil / + icon</strong> (top right) &rarr; <strong>Create new file</strong>.</li>
+              <li>In the filename field, type <em>only the last part</em> of the path (e.g. <code>flashcards.html</code>) &mdash; you&rsquo;re already inside the right folder.</li>
+              <li>Go to your Files app, open the downloaded file, select all the text and copy it.</li>
+              <li>Tap inside the file content area on GitHub and paste.</li>
+              <li>Tap <strong>Commit changes</strong> &rarr; commit directly to main (or your branch).</li>
+            </ol>
+            <strong>Tip:</strong> If the folder doesn&rsquo;t exist yet, type the full path in the filename field (e.g. <code>en/b/b1/vocabulary/new-chapter/flashcards.html</code>) &mdash; GitHub creates the folders automatically.
+          </div>
+        </details>
+      </div>
+      <div class="btn-row">
+        <button class="btn" onclick="downloadFile()">&#8595; Download file</button>
+        <button class="btn ghost" onclick="togglePreview()">Preview</button>
+      </div>
     </div>
     <iframe class="preview-frame" id="previewFrame" title="preview"></iframe>
-    <div class="hint" id="placeHint" style="display:none"></div>
   </div>
 
   <div style="margin-top:24px;padding:14px 16px;background:var(--cream);border-radius:8px;font-family:var(--font-sans);font-size:.78rem;color:var(--muted);line-height:1.7">
     <strong style="color:var(--ink)">New AI session?</strong> Go to Step 2 &rarr; <em>Project primer</em> &rarr; copy &rarr; paste into DeepSeek/Gemini first. Then switch to <em>From a free AI</em> for the chapter prompt.<br>
-    <strong style="color:var(--ink)">Standard workflow:</strong> Pick chapter &rarr; copy prompt &rarr; paste into AI &rarr; paste reply back &rarr; build &amp; download. Done. Tell Claude the filename and it commits it.<br>
+    <strong style="color:var(--ink)">Standard workflow:</strong> Pick chapter &rarr; copy prompt &rarr; paste into AI &rarr; paste reply back &rarr; build &amp; download. Step 4 shows the exact file path and upload instructions for iPhone.<br>
     <strong style="color:var(--ink)">Stub list</strong> is live from <a href="coverage.html">coverage</a> (regenerated by Claude after structural changes).<br>
     <strong style="color:var(--ink)">Complex jobs</strong> (bootstrap whole track, audit, batch fix): <a href="ai-prompts.html">AI Prompts</a> page.
   </div>
@@ -481,7 +520,8 @@ function setTarget(path){
     level: parsed.level.toLowerCase(),
     slug: parsed.slug,
     section: parsed.section,
-    title: match ? match.title : titleFromSlug(parsed.slug)
+    title: match ? match.title : titleFromSlug(parsed.slug),
+    dirPath: path.replace(/^\//, '').replace(/[^/]*$/, '')
   };
   // sync section tab
   sectionFilter = parsed.section;
@@ -528,7 +568,7 @@ function setFt(ft, btn){
   document.getElementById('downloadRow').style.display = 'none';
   document.getElementById('buildStatus').className = 'build-status';
   document.getElementById('previewFrame').classList.remove('on');
-  document.getElementById('placeHint').style.display = 'none';
+  document.getElementById('placePath').textContent = '';
 }
 
 function lockSteps(){ ['step2','step3','step4'].forEach(function(id){ document.getElementById(id).classList.add('locked'); }); }
@@ -826,11 +866,9 @@ function buildFile(){
     html = fileType==='worksheet' ? generateWorksheet(target, clean) : generatePrintables(target, clean);
   }
   builtHtml = html;
-  flashStatus('Built. Download below and save to the appropriate folder in your repo.','ok');
-  document.getElementById('downloadRow').style.display='flex';
-  var ph = document.getElementById('placeHint');
-  ph.style.display='block';
-  ph.innerHTML='Save as <code>'+esc(builtFilename)+'</code> in the chapter folder, then commit &amp; push. This page never wrote anything.';
+  flashStatus('Built successfully. Download the file and save it to the path shown below.','ok');
+  document.getElementById('downloadRow').style.display='block';
+  document.getElementById('placePath').textContent = fullTargetPath();
   document.getElementById('previewFrame').srcdoc = html;
   document.getElementById('previewFrame').classList.add('on');
 }
@@ -846,6 +884,19 @@ function downloadFile(){
 }
 
 function togglePreview(){ document.getElementById('previewFrame').classList.toggle('on'); }
+
+function fullTargetPath(){
+  if (!target || !target.dirPath) return builtFilename;
+  return target.dirPath + builtFilename;
+}
+
+function copyPath(){
+  navigator.clipboard.writeText(fullTargetPath()).then(function(){
+    var b = document.getElementById('placeCopyBtn');
+    b.textContent = 'Copied!'; b.classList.add('copied');
+    setTimeout(function(){ b.textContent = 'Copy path'; b.classList.remove('copied'); }, 1800);
+  });
+}
 
 function flashStatus(msg,kind){
   var el=document.getElementById('buildStatus');
@@ -881,7 +932,7 @@ function generateFlashcards(t, words){
 '<link rel="stylesheet" href="'+ROOT+'shared/game.css?v=v111">',
 '<script src="'+ROOT+'shared/dark-init.js?v=v109"><\/script>',
 '<style>',
-'.vocab-page{max-width:800px;margin:0 auto;padding:20px 0}',
+'.vocab-page{max-width:800px;margin:0 auto;padding:20px}',
 '.mode-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}',
 '.mode-tab{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:8px 16px;border-radius:4px;cursor:pointer;border:1.5px solid var(--hairline);background:transparent;color:var(--ink);transition:all .15s}',
 '.mode-tab.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}',
