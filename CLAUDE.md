@@ -8,8 +8,8 @@
 ## Project
 
 Static Cambridge English course (A1–C2) on Cloudflare Pages. Vanilla HTML/CSS/JS, no
-build system, no backend. ~1,157 HTML pages. All student progress lives in browser
-localStorage.
+build system, no backend. ~2,372 HTML pages. All student progress lives in browser
+localStorage. Teacher tools (calendar, profiles, dev-hub, builder, coverage) at root level.
 
 **Repo:** `malpasoft/wordplay`
 **Orientation:** read `AI_HANDOVER.md` after this file for who the project is for and its current state.
@@ -35,9 +35,9 @@ localStorage.
 
 ## Git Workflow & Deployment
 
-- **Develop on `claude/github-workflow-setup-98Fbf`.** Commit there as you go.
+- **Develop on `claude/website-design-token-optimization-1ZNUG`.** Commit there as you go.
 - **Deploy:** `git push origin HEAD:main` — Cloudflare Pages auto-deploys `main` (~2 min).
-  Then keep the dev branch in sync: `git push -u origin claude/github-workflow-setup-98Fbf`.
+  Then keep the dev branch in sync: `git push -u origin claude/website-design-token-optimization-1ZNUG`.
 - After completing a task, commit and push — don't stop before deploying.
 - For large tasks, commit after each logical sub-task so a session interruption doesn't
   lose progress.
@@ -106,7 +106,8 @@ Dashboard reads `lv['vocab_mastered_' + slug].done`. Full schema: see SESSION_CO
 - Every worksheet question has an EXPLANATION — no exceptions.
 - Grading is deterministic — never ask students to self-assess open production.
 - Audio pronunciation on all vocab flashcards (Web Speech API, `lang='en-GB'`, `rate=0.9`).
-- Flashcards auto-complete after viewing all cards; match game auto-completes after 5 rounds.
+- Flashcards auto-complete after viewing all cards.
+- Match game (match.html): 3 lives, each word must be matched to its definition twice to win. Mastery saved to localStorage on win.
 - `python3 scripts/pedagogy_check.py` must stay at 0 failures before pushing.
 
 ---

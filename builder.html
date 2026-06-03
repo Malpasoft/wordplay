@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>Content Builder | Word Play</title>
+<link rel="stylesheet" href="shared/base.css?v=v123">
+<script src="shared/dark-init.js?v=v109"></script>
+<style>
+.bd-wrap{max-width:780px;margin:0 auto;padding:24px 16px 80px}
+.bd-eyebrow{font-family:var(--font-sans);font-size:.62rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+h1{font-size:1.5rem;color:var(--navy);margin:0 0 4px}
+.bd-sub{font-family:var(--font-sans);font-size:.82rem;color:var(--muted);margin:0 0 22px;line-height:1.5}
+
+.step{background:var(--cream);border:1.5px solid var(--hairline);border-radius:10px;padding:18px;margin-bottom:16px}
+.step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--amber);color:#fff;font-family:var(--font-sans);font-size:.74rem;font-weight:800;margin-right:8px;flex-shrink:0}
+.step-head{display:flex;align-items:center;font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:12px}
+.step.locked{opacity:.5;pointer-events:none}
+
+/* Section type tabs */
+.sec-tabs{display:flex;gap:6px;margin-bottom:14px}
+.sec-tab{font-family:var(--font-sans);font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:5px;border:1.5px solid var(--hairline);background:transparent;color:var(--muted);cursor:pointer;transition:all .12s}
+.sec-tab.active{background:var(--amber);color:#fff;border-color:var(--amber)}
+
+/* File type tabs */
+.ft-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.ft-tab{font-family:var(--font-sans);font-size:.7rem;font-weight:700;letter-spacing:.5px;padding:6px 12px;border-radius:5px;border:1.5px solid var(--hairline);background:transparent;color:var(--ink);cursor:pointer;transition:all .12s}
+.ft-tab.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.ft-tab:hover:not(.active){border-color:var(--ink)}
+
+label.fld-label{display:block;font-family:var(--font-sans);font-size:.64rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+select,input,textarea{width:100%;box-sizing:border-box;padding:9px 12px;border:1.5px solid var(--hairline);border-radius:7px;font-size:.9rem;font-family:var(--font-sans);background:var(--paper);color:var(--ink);appearance:none;-webkit-appearance:none}
+select:focus,input:focus,textarea:focus{outline:none;border-color:var(--amber)}
+.hint{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin-top:6px;line-height:1.5}
+
+/* Stub list */
+.stub-search{margin-bottom:10px}
+.stub-list{max-height:240px;overflow-y:auto;border:1px solid var(--hairline);border-radius:8px}
+.stub-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-bottom:1px solid var(--hairline);cursor:pointer;font-size:.84rem}
+.stub-row:last-child{border-bottom:none}
+.stub-row:hover{background:rgba(184,134,11,.06)}
+.stub-row.sel{background:rgba(184,134,11,.12)}
+.stub-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.stub-dot.vocabulary{background:var(--amber)}
+.stub-dot.grammar{background:var(--navy)}
+.stub-dot.writing{background:#27ae60}
+.stub-track{font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);flex-shrink:0;width:80px}
+.stub-title{flex:1;color:var(--ink);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stub-lvl{font-family:var(--font-sans);font-size:.62rem;font-weight:700;color:var(--amber)}
+.stub-sec{font-family:var(--font-sans);font-size:.6rem;color:var(--muted);width:54px;text-align:right;flex-shrink:0}
+
+.target-info{margin-top:12px;padding:10px 12px;background:var(--cream-deep);border-radius:7px;font-family:var(--font-sans);font-size:.74rem;color:var(--muted);display:none}
+.target-info.on{display:block}
+.target-info code{color:var(--ink);font-weight:700;background:transparent}
+
+/* Prompt display */
+.bd-tabs{display:flex;gap:8px;margin-bottom:14px}
+.bd-tab{font-family:var(--font-sans);font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:5px;border:1.5px solid var(--hairline);background:transparent;color:var(--ink);cursor:pointer}
+.bd-tab.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.bd-pane{display:none}.bd-pane.active{display:block}
+
+.prompt-box{background:#0D0D0D;color:rgba(255,255,255,.92);border-radius:9px;padding:14px;font-family:"SF Mono",Menlo,monospace;font-size:.7rem;line-height:1.65;white-space:pre-wrap;word-break:break-word;max-height:230px;overflow-y:auto}
+
+.btn{font-family:var(--font-sans);font-size:.82rem;font-weight:700;letter-spacing:.3px;padding:10px 16px;border-radius:7px;border:none;background:var(--amber);color:#fff;cursor:pointer}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:transparent;border:1.5px solid var(--hairline);color:var(--ink)}
+.btn.full{width:100%;display:block}
+.btn.copied{background:#27ae60}
+.btn-row{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap}
+
+/* Word card editor */
+.card-editor{display:flex;flex-direction:column;gap:10px}
+.word-card{border:1.5px solid var(--hairline);border-radius:8px;padding:12px;background:var(--paper);position:relative}
+.wc-top{display:flex;gap:8px;margin-bottom:8px}
+.wc-top .wc-word{flex:2}.wc-top .wc-ipa{flex:1.4}
+.wc-remove{position:absolute;top:8px;right:8px;border:none;background:transparent;color:var(--muted);font-size:1.1rem;cursor:pointer;line-height:1;padding:2px 6px}
+.wc-remove:hover{color:#c0392b}
+.wc-num{font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+.editor-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;font-family:var(--font-sans);font-size:.74rem;color:var(--muted)}
+
+/* Slide editor */
+.slide-card-ed{border:1.5px solid var(--hairline);border-radius:8px;padding:12px;background:var(--paper);position:relative;margin-bottom:10px}
+.sc-remove{position:absolute;top:8px;right:8px;border:none;background:transparent;color:var(--muted);font-size:1.1rem;cursor:pointer;line-height:1;padding:2px 6px}
+.sc-remove:hover{color:#c0392b}
+.sc-num{font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+.sc-body{width:100%;box-sizing:border-box;min-height:80px;resize:vertical;margin-top:6px}
+.sc-note{margin-top:6px}
+
+/* Question editor */
+.q-card-ed{border:1.5px solid var(--hairline);border-radius:8px;padding:12px;background:var(--paper);position:relative;margin-bottom:10px}
+.qc-remove{position:absolute;top:8px;right:8px;border:none;background:transparent;color:var(--muted);font-size:1.1rem;cursor:pointer;line-height:1;padding:2px 6px}
+.qc-remove:hover{color:#c0392b}
+.qc-num{font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+.qc-opts{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:6px 0}
+.qc-row{display:flex;align-items:center;gap:6px}
+.qc-opt-label{font-family:var(--font-sans);font-size:.7rem;font-weight:800;color:var(--muted);width:14px;flex-shrink:0}
+.qc-answer-row{display:flex;align-items:center;gap:8px;margin-top:8px;font-family:var(--font-sans);font-size:.78rem;color:var(--muted)}
+.qc-answer-row select{width:auto;padding:5px 8px;font-size:.8rem}
+
+/* Status / preview */
+.build-status{margin-top:12px;padding:11px 14px;border-radius:8px;font-family:var(--font-sans);font-size:.8rem;display:none}
+.build-status.ok{display:block;background:rgba(39,174,96,.12);color:#1e7a45;border:1px solid rgba(39,174,96,.3)}
+.build-status.err{display:block;background:rgba(192,57,43,.1);color:#a5342a;border:1px solid rgba(192,57,43,.3)}
+.preview-frame{width:100%;height:420px;border:1.5px solid var(--hairline);border-radius:9px;margin-top:12px;display:none;background:#fff}
+.preview-frame.on{display:block}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="teacher.html" class="back back-link" aria-label="Back"></a>
+  <a href="index.html" class="brand">Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+
+<div class="bd-wrap">
+  <div class="bd-eyebrow">Teacher Hub &middot; Content Builder</div>
+  <h1>Build a chapter file</h1>
+  <p class="bd-sub">Tokenless workflow: pick a chapter, get content from a free AI (or type it yourself), then build and <strong>download</strong> the finished file. Nothing is sent anywhere &mdash; you drop the file into the repo and push it yourself.</p>
+
+  <!-- STEP 1 -->
+  <div class="step" id="step1">
+    <div class="step-head"><span class="step-num">1</span> Pick what to build</div>
+
+    <label class="fld-label">Section</label>
+    <div class="sec-tabs" id="secTabs">
+      <button class="sec-tab active" data-sec="vocabulary" onclick="setSec('vocabulary',this)">Vocabulary</button>
+      <button class="sec-tab" data-sec="grammar" onclick="setSec('grammar',this)">Grammar</button>
+      <button class="sec-tab" data-sec="writing" onclick="setSec('writing',this)">Writing</button>
+    </div>
+
+    <label class="fld-label" style="margin-top:10px">Stub list</label>
+    <input class="stub-search" id="stubSearch" type="text" placeholder="Search by name, level or track…" oninput="renderStubs()">
+    <div class="stub-list" id="stubList"></div>
+
+    <div class="hint" style="margin-top:10px">Or paste a target path manually:
+      <input id="manualPath" type="text" placeholder="/espanol-en/a1/vocabulary/animals/flashcards.html" oninput="onManualPath()" style="margin-top:6px">
+    </div>
+    <div class="target-info" id="targetInfo"></div>
+
+    <div id="ftWrap" style="display:none;margin-top:16px">
+      <label class="fld-label">File to build</label>
+      <div class="ft-tabs" id="ftTabs"></div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="step locked" id="step2">
+    <div class="step-head"><span class="step-num">2</span> Get the content</div>
+    <div class="bd-tabs">
+      <button class="bd-tab active" onclick="setTab('ai',this)">From a free AI</button>
+      <button class="bd-tab" onclick="setTab('manual',this)">Type it myself</button>
+    </div>
+
+    <div class="bd-pane active" id="paneAi">
+      <label class="fld-label" for="aiSelect">Which free AI are you using?</label>
+      <select id="aiSelect" onchange="buildPrompt()" style="margin-bottom:12px">
+        <option value="deepseek">DeepSeek</option>
+        <option value="gemini">Gemini</option>
+        <option value="gpt">ChatGPT</option>
+        <option value="other">Other</option>
+      </select>
+      <div class="prompt-box" id="promptBox">Pick a chapter above first.</div>
+      <div class="btn-row">
+        <button class="btn" id="copyPromptBtn" onclick="copyPrompt()">Copy prompt</button>
+      </div>
+      <div class="hint">Paste the prompt into the AI. It replies with a JSON array. Paste that reply back here:</div>
+      <textarea id="aiResponse" rows="5" placeholder="Paste the AI JSON response here…" style="margin-top:8px"></textarea>
+      <div class="btn-row">
+        <button class="btn ghost" onclick="loadJson()">Load into editor &#8595;</button>
+      </div>
+    </div>
+
+    <div class="bd-pane" id="paneManual">
+      <div class="hint">Skip the AI entirely &mdash; add content by hand in the editor below.</div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="step locked" id="step3">
+    <div class="step-head"><span class="step-num">3</span> Edit the content</div>
+    <div class="editor-meta">
+      <span id="cardCount">0 items</span>
+      <button class="btn ghost" onclick="addItem()">+ Add item</button>
+    </div>
+    <!-- Words editor (flashcards / match / game) -->
+    <div id="edWords"><div class="card-editor" id="cardEditor"></div></div>
+    <!-- Slides editor -->
+    <div id="edSlides" style="display:none"><div id="slideEditor"></div></div>
+    <!-- Questions editor (worksheet / printables) -->
+    <div id="edQuestions" style="display:none"><div id="questionEditor"></div></div>
+  </div>
+
+  <!-- STEP 4 -->
+  <div class="step locked" id="step4">
+    <div class="step-head"><span class="step-num">4</span> Build &amp; download</div>
+    <div class="btn-row">
+      <button class="btn full" id="buildBtn" onclick="buildFile()">Build file</button>
+    </div>
+    <div class="build-status" id="buildStatus"></div>
+    <div class="btn-row" id="downloadRow" style="display:none">
+      <button class="btn" onclick="downloadFile()">&#8595; Download</button>
+      <button class="btn ghost" onclick="togglePreview()">Toggle preview</button>
+    </div>
+    <iframe class="preview-frame" id="previewFrame" title="preview"></iframe>
+    <div class="hint" id="placeHint" style="display:none"></div>
+  </div>
+
+  <p class="hint" style="text-align:center">Stub list from <a href="coverage.html">coverage</a>. Need prompts for other things? See <a href="ai-prompts.html">AI Prompts</a>.</p>
+</div>
+
+<footer class="site-footer">Word Play &middot; Teacher tools &middot; private</footer>
+
+<script>
+/* ===== state ===== */
+var coverageData = null;
+var target = null;        // {track,level,slug,title,path,section}
+var sectionFilter = 'vocabulary';
+var fileType = 'flashcards'; // flashcards|match|game|slides|worksheet|printables
+var cards = [];           // [{word,ipa,def,ex}]
+var slideItems = [];      // [{title,body,note}]
+var questions = [];       // [{q,options:[A,B,C,D],answer,explanation}]
+var builtHtml = '';
+var builtFilename = 'file.html';
+
+var ROOT = '../../../../';
+
+/* ===== track config ===== */
+function trackLevelId(track, level){ return track === 'en' ? level : track + '-' + level; }
+
+function trackConfig(track){
+  if(track === 'fr') return {
+    lang:'fr', speak:'en-GB', darkLabel:'Sombre', home:'Accueil',
+    sec:'Vocabulaire', navLesson:'Leçon', navCards:'Flashcards', navGame:'Jeu',
+    navReview:'Révision', navMatch:'Association', tabFlash:'Flashcards',
+    tapHint:'toucher pour voir', pronounce:'Prononcer', prev:'Précédent', next:'Suivant',
+    wordsLabel:function(n){ return n+' mots · toucher pour voir'; },
+    markBtn:'Marquer comme maîtrisé', masteredDone:'Maîtrisé !',
+    masteredBadge:'Sujet maîtrisé',
+    matchPrompt:'Associez chaque mot à sa définition',
+    allMatched:'Tout associé !', newRound:'Nouveau tour',
+    notesLabel:'Mes notes et exemples',
+    notesPh:'Écris ton propre exemple, une astuce mémo, ou une note…',
+    footer:'Word Play · Cambridge English A1→C2',
+    gameTitle:'Maîtrise en 4 étapes',
+    gameDesc:'Chaque élément passe par quatre étapes : signification, synonyme, identification et complétion.',
+    mastered:'Maîtrisé !', score:'Score', streak:'Série', hint:'Indice',
+    showAnswer:'Voir la réponse', saveQuit:'Sauvegarder et quitter',
+    playAgain:'Rejouer', roundLabel:'Manche', bestTime:'Meilleur temps',
+    matchTitle:'Association', startGame:'Démarrer',
+    roundComplete:'Manche terminée !',
+    allRounds:'Toutes les manches terminées — sujet maîtrisé !',
+    nextRound:'Manche suivante',
+    worksheetAbout:'À propos de cet exercice',
+    worksheetMeta:'Tapez vos réponses, puis Vérifier pour voir votre score.',
+    checkBtn:'Vérifier les réponses', resetBtn:'Réinitialiser',
+    tryAgain:'Réessayer', yourScore:'Votre score'
+  };
+  var english = (track === 'en' || track === 'espanol-en');
+  var spanishTarget = (track === 'espanol' || track === 'espanol-en');
+  return {
+    lang: english ? 'en' : 'es',
+    speak: spanishTarget ? 'es-ES' : 'en-GB',
+    darkLabel: english ? 'Dark' : 'Oscuro',
+    home: english ? 'Home' : 'Inicio',
+    sec: english ? 'Vocabulary' : 'Vocabulario',
+    navLesson: english ? 'Lesson' : 'Lección',
+    navCards: english ? 'Flashcards' : 'Tarjetas',
+    navGame: english ? 'Game' : 'Juego',
+    navReview: english ? 'Review' : 'Práctica',
+    navMatch: english ? 'Match' : 'Emparejar',
+    tabFlash: english ? 'Flashcards' : 'Tarjetas',
+    tapHint: english ? 'tap to reveal' : 'toca para ver',
+    pronounce: english ? 'Pronounce' : 'Pronunciar',
+    prev: english ? 'Prev' : 'Anterior',
+    next: english ? 'Next' : 'Siguiente',
+    wordsLabel: function(n){ return english ? (n + ' words · tap card to reveal') : (n + ' palabras · toca para ver'); },
+    markBtn: english ? 'Mark topic as mastered' : 'Marcar como dominado',
+    masteredDone: english ? 'Mastered!' : '¡Dominado!',
+    masteredBadge: english ? 'Topic mastered' : 'Tema dominado',
+    matchPrompt: english ? 'Match each word to its definition' : 'Empareja cada palabra con su definición',
+    allMatched: english ? 'All matched!' : '¡Todo emparejado!',
+    newRound: english ? 'New round' : 'Nueva ronda',
+    notesLabel: english ? 'My notes &amp; examples' : 'Mis notas y ejemplos',
+    notesPh: english ? 'Write your own example, a memory trick, or a note…' : 'Escribe tu propio ejemplo, un truco de memoria, o una nota…',
+    footer: english ? 'Word Play · Cambridge English A1→C2' : 'Word Play · Cambridge English A1→C2',
+    gameTitle: english ? '4-Stage Mastery' : 'Dominio en 4 fases',
+    gameDesc: english ? 'Each item passes through four stages: meaning, synonym, identification and sentence completion.' : 'Cada elemento pasa por cuatro etapas: significado, sinónimo, identificación y completar la frase.',
+    mastered: english ? 'Mastered!' : '¡Dominado!',
+    score: english ? 'Score' : 'Puntuación',
+    streak: english ? 'Streak' : 'Racha',
+    hint: english ? 'Hint' : 'Pista',
+    showAnswer: english ? 'Show answer' : 'Ver respuesta',
+    saveQuit: english ? 'Save & quit' : 'Guardar y salir',
+    playAgain: english ? 'Play again' : 'Jugar de nuevo',
+    roundLabel: english ? 'Round' : 'Ronda',
+    bestTime: english ? 'Best time' : 'Mejor tiempo',
+    matchTitle: english ? 'Match' : 'Emparejar',
+    startGame: english ? 'Start' : 'Empezar',
+    roundComplete: english ? 'Round complete!' : '¡Ronda completada!',
+    allRounds: english ? 'All rounds complete — topic mastered!' : '¡Todas las rondas completadas — tema dominado!',
+    nextRound: english ? 'Next round' : 'Siguiente ronda',
+    worksheetAbout: english ? 'About this worksheet' : 'Sobre este ejercicio',
+    worksheetMeta: english ? 'Type or tap your answers, then Submit at the bottom to see your score.' : 'Escribe o toca tus respuestas, luego Envía para ver tu puntuación.',
+    checkBtn: english ? 'Check answers' : 'Comprobar respuestas',
+    resetBtn: english ? 'Reset' : 'Reiniciar',
+    tryAgain: english ? 'Try again' : 'Intentar de nuevo',
+    yourScore: english ? 'Your Score' : 'Tu puntuación'
+  };
+}
+
+function sectionLabel(track, section){
+  var e = (track === 'en' || track === 'espanol-en');
+  var fr = (track === 'fr');
+  var m = {
+    vocabulary: e?'Vocabulary': fr?'Vocabulaire':'Vocabulario',
+    grammar:    e?'Grammar':    fr?'Grammaire':'Gramática',
+    writing:    e?'Writing':    fr?'Écriture':'Escritura'
+  };
+  return m[section] || section;
+}
+
+function breadcrumbHtml(track, level, title, section){
+  var LV = level.toUpperCase();
+  var t = esc(title);
+  var sec = sectionLabel(track, section);
+  function a(h, label){ return '<a href="' + h + '">' + label + '</a><span>&#8250;</span>'; }
+  if (track === 'en')
+    return a(ROOT+'index.html','Home') + a('../../index.html', LV) + a('../index.html', sec) + '<strong>' + t + '</strong>';
+  if (track === 'es')
+    return a(ROOT+'index.html','Inicio') + a(ROOT+'es/index.html','Para hispanohablantes') + a('../../index.html', LV) + a('../index.html', sec) + '<strong>' + t + '</strong>';
+  if (track === 'espanol-en')
+    return a(ROOT+'index.html','Home') + a('../../../index.html','Spanish for English Speakers') + a('../../index.html', LV) + a('../index.html', sec) + '<strong>' + t + '</strong>';
+  if (track === 'espanol')
+    return a(ROOT+'index.html','Inicio') + a('../../../index.html','Español') + a('../../index.html', LV) + a('../index.html', sec) + '<strong>' + t + '</strong>';
+  if (track === 'fr')
+    return a(ROOT+'index.html','Accueil') + a(ROOT+'fr/index.html','Pour les francophones') + a('../../index.html', LV) + a('../index.html', sec) + '<strong>' + t + '</strong>';
+  return a(ROOT+'index.html','Home') + a('../../index.html', LV) + a('../index.html', sec) + '<strong>' + t + '</strong>';
+}
+
+/* ===== utilities ===== */
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escAttr(s){ return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function titleFromSlug(slug){ return slug.split('-').map(function(w){ return w.charAt(0).toUpperCase()+w.slice(1); }).join(' '); }
+
+function parsePath(p){
+  p = p.trim().replace(/^\//,'');
+  var parts = p.split('/').filter(Boolean);
+  var track, level, section, slug, idx;
+  if (parts[0]==='es'||parts[0]==='espanol-en'||parts[0]==='espanol'||parts[0]==='fr'){
+    track = parts[0]; level = parts[1]; idx = 2;
+  } else if (parts[0]==='a'||parts[0]==='b'||parts[0]==='c'){
+    track = 'en'; level = parts[1]; idx = 2;
+  } else { return null; }
+  if (!level) return null;
+  section = parts[idx];
+  if (!section) return null;
+  var normSec = null;
+  if (section==='vocabulary'||section==='vocabulario') normSec='vocabulary';
+  else if (section==='grammar'||section==='gramatica'||section==='gramática') normSec='grammar';
+  else if (section==='writing'||section==='escritura') normSec='writing';
+  if (!normSec) return null;
+  slug = parts[idx+1];
+  if (!slug) return null;
+  return { track: track, level: level, section: normSec, slug: slug };
+}
+
+/* ===== File type options by section ===== */
+var FT_OPTIONS = {
+  vocabulary: [
+    {id:'flashcards', label:'Flashcards', file:'flashcards.html'},
+    {id:'match',      label:'Match game', file:'match.html'},
+    {id:'game',       label:'Mastery game', file:'game.html'},
+    {id:'slides',     label:'Lesson slides', file:'slides.html'}
+  ],
+  grammar: [
+    {id:'slides',     label:'Lesson slides', file:'slides.html'},
+    {id:'worksheet',  label:'Worksheet', file:'worksheet.html'},
+    {id:'game',       label:'Mastery game', file:'game.html'}
+  ],
+  writing: [
+    {id:'slides',     label:'Lesson slides', file:'slides.html'},
+    {id:'worksheet',  label:'Worksheet', file:'worksheet.html'},
+    {id:'printables', label:'Printables', file:'printables.html'}
+  ]
+};
+
+function editorTypeFor(ft){
+  if (ft==='flashcards'||ft==='match'||ft==='game') return 'words';
+  if (ft==='slides') return 'slides';
+  return 'questions'; // worksheet, printables
+}
+
+/* ===== Step 1 ===== */
+fetch('shared/coverage-data.json?v=' + Date.now())
+  .then(function(r){ return r.json(); })
+  .then(function(d){ coverageData = d; renderStubs(); })
+  .catch(function(){ document.getElementById('stubList').innerHTML = '<div class="stub-row">Run gen_coverage.py to load the stub list.</div>'; });
+
+function setSec(sec, btn){
+  sectionFilter = sec;
+  document.querySelectorAll('.sec-tab').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  renderStubs();
+  // reset target when section changes
+  target = null;
+  document.getElementById('targetInfo').classList.remove('on');
+  document.getElementById('ftWrap').style.display = 'none';
+  lockSteps();
+}
+
+function allStubs(){
+  if (!coverageData) return [];
+  return coverageData.chapters.filter(function(c){ return c.section === sectionFilter && c.status !== 'complete'; });
+}
+
+function trackShort(t){
+  return t==='en'?'English':t==='es'?'Eng←Esp':t==='espanol-en'?'Esp←Eng':t==='espanol'?'Español':t;
+}
+
+function renderStubs(){
+  var q = (document.getElementById('stubSearch').value||'').toLowerCase();
+  var list = allStubs().filter(function(c){
+    return (c.title+' '+c.level+' '+c.track).toLowerCase().indexOf(q)!==-1;
+  });
+  var el = document.getElementById('stubList');
+  if (!list.length){ el.innerHTML = '<div class="stub-row" style="color:var(--muted)">No matching stubs.</div>'; return; }
+  var defaultFile = FT_OPTIONS[sectionFilter][0].file;
+  el.innerHTML = list.map(function(c){
+    var p = c.url.replace(/index\.html$/, defaultFile);
+    return '<div class="stub-row" data-path="' + escAttr(p) + '" onclick="selectStub(this)">'
+      + '<span class="stub-dot ' + esc(c.section) + '"></span>'
+      + '<span class="stub-track">' + esc(trackShort(c.track)) + '</span>'
+      + '<span class="stub-title">' + esc(c.title) + '</span>'
+      + '<span class="stub-lvl">' + esc(c.level) + '</span>'
+      + '</div>';
+  }).join('');
+}
+
+function selectStub(row){
+  document.querySelectorAll('.stub-row').forEach(function(r){ r.classList.remove('sel'); });
+  row.classList.add('sel');
+  document.getElementById('manualPath').value = row.dataset.path;
+  setTarget(row.dataset.path);
+}
+
+function onManualPath(){
+  document.querySelectorAll('.stub-row').forEach(function(r){ r.classList.remove('sel'); });
+  setTarget(document.getElementById('manualPath').value);
+}
+
+function setTarget(path){
+  var parsed = parsePath(path);
+  var info = document.getElementById('targetInfo');
+  if (!parsed){ target=null; info.classList.remove('on'); document.getElementById('ftWrap').style.display='none'; lockSteps(); return; }
+  var match = null;
+  if (coverageData){
+    match = coverageData.chapters.filter(function(c){
+      return c.track===parsed.track && c.level.toLowerCase()===parsed.level.toLowerCase()
+        && c.url.indexOf('/'+parsed.slug+'/')!==-1;
+    })[0];
+  }
+  target = {
+    track: parsed.track,
+    level: parsed.level.toLowerCase(),
+    slug: parsed.slug,
+    section: parsed.section,
+    title: match ? match.title : titleFromSlug(parsed.slug)
+  };
+  // sync section tab
+  sectionFilter = parsed.section;
+  document.querySelectorAll('.sec-tab').forEach(function(b){ b.classList.toggle('active', b.dataset.sec===sectionFilter); });
+  renderStubs();
+  renderFtTabs();
+  info.classList.add('on');
+  info.innerHTML = 'Chapter: <code>' + esc(target.title) + '</code> &mdash; '
+    + esc(trackShort(target.track)) + ' ' + target.level.toUpperCase()
+    + ' · ' + esc(target.section);
+  unlockSteps();
+  buildPrompt();
+}
+
+function renderFtTabs(){
+  var opts = FT_OPTIONS[sectionFilter] || FT_OPTIONS.vocabulary;
+  var el = document.getElementById('ftTabs');
+  el.innerHTML = opts.map(function(o, i){
+    return '<button class="ft-tab' + (i===0?' active':'') + '" onclick="setFt(\'' + o.id + '\',this)">' + o.label + '</button>';
+  }).join('');
+  setFt(opts[0].id, el.querySelector('.ft-tab'));
+  document.getElementById('ftWrap').style.display = 'block';
+}
+
+function setFt(ft, btn){
+  fileType = ft;
+  document.querySelectorAll('.ft-tab').forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  var opts = FT_OPTIONS[sectionFilter] || FT_OPTIONS.vocabulary;
+  var opt = opts.filter(function(o){ return o.id===ft; })[0];
+  builtFilename = opt ? opt.file : ft + '.html';
+  document.getElementById('buildBtn').textContent = 'Build ' + builtFilename;
+  var edType = editorTypeFor(ft);
+  document.getElementById('edWords').style.display = edType==='words' ? '' : 'none';
+  document.getElementById('edSlides').style.display = edType==='slides' ? '' : 'none';
+  document.getElementById('edQuestions').style.display = edType==='questions' ? '' : 'none';
+  // reset editor
+  cards = []; slideItems = []; questions = [];
+  document.getElementById('cardEditor').innerHTML = '';
+  document.getElementById('slideEditor').innerHTML = '';
+  document.getElementById('questionEditor').innerHTML = '';
+  updateItemCount();
+  buildPrompt();
+  document.getElementById('downloadRow').style.display = 'none';
+  document.getElementById('buildStatus').className = 'build-status';
+  document.getElementById('previewFrame').classList.remove('on');
+  document.getElementById('placeHint').style.display = 'none';
+}
+
+function lockSteps(){ ['step2','step3','step4'].forEach(function(id){ document.getElementById(id).classList.add('locked'); }); }
+function unlockSteps(){ ['step2','step3','step4'].forEach(function(id){ document.getElementById(id).classList.remove('locked'); }); }
+
+/* ===== Step 2: prompt ===== */
+function setTab(which, btn){
+  document.querySelectorAll('.bd-tab').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  document.getElementById('paneAi').classList.toggle('active', which==='ai');
+  document.getElementById('paneManual').classList.toggle('active', which==='manual');
+}
+
+function buildPrompt(){
+  var box = document.getElementById('promptBox');
+  if (!target){ box.textContent = 'Pick a chapter above first.'; return; }
+  var prompt = '';
+  var LV = target.level.toUpperCase();
+  var T = '"' + target.title + '"';
+  if (fileType==='flashcards'||fileType==='match'||fileType==='game'){
+    var spanishWords = (target.track==='espanol'||target.track==='espanol-en');
+    var wordLang = spanishWords ? 'Spanish' : 'English';
+    var explainLang = (target.track==='en'||target.track==='espanol') ? 'the SAME language as the words'
+                    : (target.track==='es') ? 'Spanish (the learner is a Spanish speaker)'
+                    : 'English (the learner is an English speaker)';
+    prompt = 'You are helping build a vocabulary flashcard chapter for an A1–C2 language course.\n\n'
+      + 'Chapter: ' + T + '  (CEFR level ' + LV + ')\n'
+      + 'Target language (the words): ' + wordLang + '\n'
+      + 'Definitions and examples written in: ' + explainLang + '\n\n'
+      + 'Return ONLY a JSON array of exactly 10 objects, no prose, no markdown fences. Each object:\n'
+      + '{\n'
+      + '  "word": "the ' + wordLang + ' word or phrase",\n'
+      + '  "ipa":  "/IPA pronunciation/ (or empty string if unsure)",\n'
+      + '  "def":  "a short, clear definition",\n'
+      + '  "ex":   "one natural example sentence with the target word wrapped in <b>...</b>"\n'
+      + '}\n\n'
+      + 'Rules: CEFR-appropriate for ' + LV + '. No duplicates. Keep examples short. '
+      + 'Output must be valid JSON parseable by JSON.parse — double quotes only, no trailing commas.';
+  } else if (fileType==='slides'){
+    prompt = 'You are helping build a lesson slides page for a language course.\n\n'
+      + 'Chapter: ' + T + '  (CEFR level ' + LV + ', ' + target.section + ')\n\n'
+      + 'Return ONLY a JSON array of 4–6 slide objects, no prose, no markdown fences. Each object:\n'
+      + '{\n'
+      + '  "title": "Slide heading",\n'
+      + '  "body":  "2–4 sentence explanation. Use <b>key terms</b> for important words.",\n'
+      + '  "note":  "Optional tip, warning or common mistake (or empty string)"\n'
+      + '}\n\n'
+      + 'Rules: CEFR ' + LV + ' appropriate. Clear, engaging explanations. '
+      + 'Last slide should be a summary of key points. '
+      + 'Output must be valid JSON — double quotes only, no trailing commas.';
+  } else if (fileType==='worksheet'||fileType==='printables'){
+    prompt = 'You are helping build a practice worksheet for a language course.\n\n'
+      + 'Chapter: ' + T + '  (CEFR level ' + LV + ', ' + target.section + ')\n\n'
+      + 'Return ONLY a JSON array of 8–10 multiple-choice question objects, no prose, no markdown fences. Each object:\n'
+      + '{\n'
+      + '  "q":           "Question text (fill-in-blank, choose-the-correct, or identify-the-error format)",\n'
+      + '  "options":     ["Option A", "Option B", "Option C", "Option D"],\n'
+      + '  "answer":      "The exact text of the correct option",\n'
+      + '  "explanation": "Brief explanation of why that answer is correct"\n'
+      + '}\n\n'
+      + 'Rules: CEFR ' + LV + ' appropriate. Mix question types. The "answer" must be exactly one of the "options". '
+      + 'Output must be valid JSON — double quotes only, no trailing commas.';
+  }
+  box.textContent = prompt;
+}
+
+function copyPrompt(){
+  var box = document.getElementById('promptBox');
+  navigator.clipboard.writeText(box.textContent).then(function(){
+    var b = document.getElementById('copyPromptBtn');
+    b.textContent = 'Copied!'; b.classList.add('copied');
+    setTimeout(function(){ b.textContent = 'Copy prompt'; b.classList.remove('copied'); }, 1800);
+  });
+}
+
+function loadJson(){
+  var raw = (document.getElementById('aiResponse').value||'').trim();
+  if (!raw){ flashStatus('Paste the AI response first.','err'); return; }
+  raw = raw.replace(/^```[a-z]*\s*/i,'').replace(/```\s*$/,'').trim();
+  var data;
+  try { data = JSON.parse(raw); } catch(e){ flashStatus('Could not parse JSON: '+e.message,'err'); return; }
+  if (!Array.isArray(data)){ flashStatus('Expected a JSON array.','err'); return; }
+  var edType = editorTypeFor(fileType);
+  if (edType==='words'){
+    cards = data.map(function(w){ return {word:w.word||'',ipa:w.ipa||'',def:w.def||w.definition||'',ex:w.ex||w.example||''}; });
+    renderWordsEditor();
+    flashStatus('Loaded ' + cards.length + ' cards into the editor.','ok');
+  } else if (edType==='slides'){
+    slideItems = data.map(function(s){ return {title:s.title||'',body:s.body||'',note:s.note||''}; });
+    renderSlidesEditor();
+    flashStatus('Loaded ' + slideItems.length + ' slides into the editor.','ok');
+  } else {
+    questions = data.map(function(q){ return {q:q.q||q.question||'',options:q.options||['','','',''],answer:q.answer||'',explanation:q.explanation||''}; });
+    renderQuestionsEditor();
+    flashStatus('Loaded ' + questions.length + ' questions into the editor.','ok');
+  }
+  updateItemCount();
+}
+
+/* ===== Step 3: editors ===== */
+function updateItemCount(){
+  var edType = editorTypeFor(fileType);
+  var n = edType==='words' ? cards.length : edType==='slides' ? slideItems.length : questions.length;
+  document.getElementById('cardCount').textContent = n + ' item' + (n!==1?'s':'');
+}
+
+function addItem(){
+  var edType = editorTypeFor(fileType);
+  if (edType==='words'){ cards.push({word:'',ipa:'',def:'',ex:''}); renderWordsEditor(); }
+  else if (edType==='slides'){ slideItems.push({title:'',body:'',note:''}); renderSlidesEditor(); }
+  else { questions.push({q:'',options:['','','',''],answer:'',explanation:''}); renderQuestionsEditor(); }
+  updateItemCount();
+}
+
+/* Word cards */
+function renderWordsEditor(){
+  var el = document.getElementById('cardEditor');
+  el.innerHTML = cards.map(function(c,i){
+    return '<div class="word-card">'
+      + '<button class="wc-remove" onclick="removeWord('+i+')" title="Remove">&times;</button>'
+      + '<div class="wc-num">Card '+(i+1)+'</div>'
+      + '<div class="wc-top">'
+      + '<div class="wc-word"><label class="fld-label">Word</label><input value="'+escAttr(c.word)+'" oninput="updW('+i+',\'word\',this.value)"></div>'
+      + '<div class="wc-ipa"><label class="fld-label">IPA</label><input value="'+escAttr(c.ipa)+'" oninput="updW('+i+',\'ipa\',this.value)"></div>'
+      + '</div>'
+      + '<label class="fld-label">Definition</label><input value="'+escAttr(c.def)+'" oninput="updW('+i+',\'def\',this.value)">'
+      + '<label class="fld-label" style="margin-top:8px">Example (use &lt;b&gt; around the word)</label>'
+      + '<input value="'+escAttr(c.ex)+'" oninput="updW('+i+',\'ex\',this.value)">'
+      + '</div>';
+  }).join('');
+  updateItemCount();
+}
+function updW(i,k,v){ cards[i][k]=v; }
+function removeWord(i){ cards.splice(i,1); renderWordsEditor(); }
+
+/* Slides */
+function renderSlidesEditor(){
+  var el = document.getElementById('slideEditor');
+  el.innerHTML = slideItems.map(function(s,i){
+    return '<div class="slide-card-ed">'
+      + '<button class="sc-remove" onclick="removeSlide('+i+')" title="Remove">&times;</button>'
+      + '<div class="sc-num">Slide '+(i+1)+'</div>'
+      + '<label class="fld-label">Title</label>'
+      + '<input value="'+escAttr(s.title)+'" oninput="updS('+i+',\'title\',this.value)" placeholder="Slide heading">'
+      + '<label class="fld-label" style="margin-top:8px">Content</label>'
+      + '<textarea class="sc-body" oninput="updS('+i+',\'body\',this.value)" placeholder="Explanation text. Use <b>key terms</b> for emphasis.">'+escAttr(s.body)+'</textarea>'
+      + '<label class="fld-label sc-note">Tip / watch-out (optional)</label>'
+      + '<input value="'+escAttr(s.note)+'" oninput="updS('+i+',\'note\',this.value)" placeholder="e.g. Common mistake: …">'
+      + '</div>';
+  }).join('');
+  updateItemCount();
+}
+function updS(i,k,v){ slideItems[i][k]=v; }
+function removeSlide(i){ slideItems.splice(i,1); renderSlidesEditor(); }
+
+/* Questions */
+function renderQuestionsEditor(){
+  var el = document.getElementById('questionEditor');
+  el.innerHTML = questions.map(function(q,i){
+    var opts = (q.options && q.options.length===4) ? q.options : ['','','',''];
+    var labels = ['A','B','C','D'];
+    var ansIdx = opts.indexOf(q.answer);
+    return '<div class="q-card-ed">'
+      + '<button class="qc-remove" onclick="removeQ('+i+')" title="Remove">&times;</button>'
+      + '<div class="qc-num">Question '+(i+1)+'</div>'
+      + '<label class="fld-label">Question</label>'
+      + '<input value="'+escAttr(q.q)+'" oninput="updQ('+i+',\'q\',this.value)" placeholder="e.g. Which article is correct?">'
+      + '<div class="qc-opts">'
+      + labels.map(function(l,j){
+          return '<div class="qc-row"><span class="qc-opt-label">'+l+'</span>'
+            + '<input value="'+escAttr(opts[j])+'" oninput="updQOpt('+i+','+j+',this.value)" placeholder="Option '+l+'"></div>';
+        }).join('')
+      + '</div>'
+      + '<div class="qc-answer-row">Correct answer: <select onchange="updQAns('+i+',this.value)">'
+      + labels.map(function(l,j){ return '<option value="'+j+'"'+(ansIdx===j?' selected':'')+'>'+l+'</option>'; }).join('')
+      + '</select></div>'
+      + '<label class="fld-label" style="margin-top:8px">Explanation</label>'
+      + '<input value="'+escAttr(q.explanation)+'" oninput="updQ('+i+',\'explanation\',this.value)" placeholder="Why that answer is correct…">'
+      + '</div>';
+  }).join('');
+  updateItemCount();
+}
+function updQ(i,k,v){ questions[i][k]=v; }
+function updQOpt(i,j,v){ questions[i].options[j]=v; }
+function updQAns(i,idx){ questions[i].answer=questions[i].options[parseInt(idx)]||''; }
+function removeQ(i){ questions.splice(i,1); renderQuestionsEditor(); }
+
+/* ===== Step 4: build ===== */
+function buildFile(){
+  if (!target){ flashStatus('Pick a chapter first.','err'); return; }
+  var html = '';
+  if (fileType==='flashcards'){
+    var clean = cards.filter(function(c){ return (c.word||'').trim(); });
+    if (clean.length<2){ flashStatus('Add at least 2 cards with a word.','err'); return; }
+    html = generateFlashcards(target, clean);
+  } else if (fileType==='match'){
+    var clean = cards.filter(function(c){ return (c.word||'').trim(); });
+    if (clean.length<4){ flashStatus('Add at least 4 cards for the match game.','err'); return; }
+    html = generateMatch(target, clean);
+  } else if (fileType==='game'){
+    var clean = cards.filter(function(c){ return (c.word||'').trim(); });
+    if (clean.length<4){ flashStatus('Add at least 4 word items for the game.','err'); return; }
+    html = generateGame(target, clean);
+  } else if (fileType==='slides'){
+    var clean = slideItems.filter(function(s){ return (s.title||'').trim(); });
+    if (clean.length<2){ flashStatus('Add at least 2 slides with a title.','err'); return; }
+    html = generateSlides(target, clean);
+  } else if (fileType==='worksheet'||fileType==='printables'){
+    var clean = questions.filter(function(q){ return (q.q||'').trim() && (q.answer||'').trim(); });
+    if (clean.length<3){ flashStatus('Add at least 3 questions.','err'); return; }
+    html = fileType==='worksheet' ? generateWorksheet(target, clean) : generatePrintables(target, clean);
+  }
+  builtHtml = html;
+  flashStatus('Built. Download below and save to the appropriate folder in your repo.','ok');
+  document.getElementById('downloadRow').style.display='flex';
+  var ph = document.getElementById('placeHint');
+  ph.style.display='block';
+  ph.innerHTML='Save as <code>'+esc(builtFilename)+'</code> in the chapter folder, then commit &amp; push. This page never wrote anything.';
+  document.getElementById('previewFrame').srcdoc = html;
+  document.getElementById('previewFrame').classList.add('on');
+}
+
+function downloadFile(){
+  if (!builtHtml) return;
+  var blob = new Blob([builtHtml],{type:'text/html'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href=url; a.download=builtFilename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(url); },1000);
+}
+
+function togglePreview(){ document.getElementById('previewFrame').classList.toggle('on'); }
+
+function flashStatus(msg,kind){
+  var el=document.getElementById('buildStatus');
+  el.textContent=msg;
+  el.className='build-status '+kind;
+}
+
+/* ===================================================================
+   GENERATORS
+   =================================================================== */
+
+/* ── Flashcards.html (new template) ── */
+function generateFlashcards(t, words){
+  var cfg = trackConfig(t.track);
+  var LV = t.level.toUpperCase();
+  var tlId = trackLevelId(t.track, t.level);
+  var masteryKey = 'wordplay_vocab_' + tlId + '_' + t.slug + '_mastered';
+  var progKey = tlId;
+  var notesKey = 'wp_notes_' + tlId + '_' + t.slug;
+  var wordObjs = words.map(function(w){ return {word:w.word,def:w.def,ipa:w.ipa||'',ex:w.ex||''}; });
+  var wordsJson = JSON.stringify(wordObjs);
+
+  return [
+'<!DOCTYPE html>',
+'<html lang="'+cfg.lang+'">',
+'<head>',
+'<meta charset="UTF-8">',
+'<meta name="viewport" content="width=device-width,initial-scale=1.0">',
+'<meta name="theme-color" content="#1A1A1A">',
+'<link rel="icon" href="'+ROOT+'favicon.svg" type="image/svg+xml">',
+'<title>'+LV+' Vocab · '+esc(t.title)+' — '+cfg.navCards+' | Word Play</title>',
+'<link rel="stylesheet" href="'+ROOT+'shared/base.css?v=v123">',
+'<link rel="stylesheet" href="'+ROOT+'shared/game.css?v=v110">',
+'<script src="'+ROOT+'shared/dark-init.js?v=v109"><\/script>',
+'<style>',
+'.vocab-page{max-width:800px;margin:0 auto;padding:20px 0}',
+'.mode-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}',
+'.mode-tab{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:8px 16px;border-radius:4px;cursor:pointer;border:1.5px solid var(--hairline);background:transparent;color:var(--ink);transition:all .15s}',
+'.mode-tab.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}',
+'.flashcard-wrap{perspective:800px;margin:0 auto 20px;max-width:480px}',
+'.flashcard{width:100%;height:220px;position:relative;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;border-radius:10px}',
+'.flashcard.flipped{transform:rotateY(180deg)}',
+'.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;border:1px solid var(--hairline)}',
+'.fc-front{background:var(--paper)}',
+'.fc-back{background:var(--paper);transform:rotateY(180deg)}',
+'.fc-word{font-size:1.8rem;font-weight:700;color:var(--ink);margin-bottom:6px}',
+'.fc-ipa{font-family:var(--font-sans);font-size:.85rem;color:var(--muted);margin-bottom:8px}',
+'.fc-def{font-size:.95rem;color:var(--ink);margin-bottom:8px}',
+'.fc-ex{font-size:.85rem;color:var(--muted);font-style:italic}',
+'.fc-hint{font-family:var(--font-sans);font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:12px}',
+'.fc-audio-btn{background:none;border:1px solid var(--hairline);border-radius:4px;padding:5px 12px;font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);cursor:pointer;margin-top:10px}',
+'.fc-audio-btn:hover{border-color:var(--amber);color:var(--amber)}',
+'.fc-nav{display:flex;align-items:center;gap:16px;justify-content:center;margin-bottom:20px}',
+'.fc-btn{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 18px;border-radius:4px;cursor:pointer;border:1.5px solid var(--hairline);background:transparent;color:var(--ink)}',
+'.fc-btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}',
+'.fc-counter{font-family:var(--font-sans);font-size:.75rem;color:var(--muted);font-weight:600}',
+'.mastery-badge{display:inline-block;padding:8px 18px;background:rgba(184,134,11,.12);color:var(--amber);font-family:var(--font-sans);font-size:.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:4px;margin-bottom:16px}',
+'.word-list-item{display:flex;align-items:baseline;gap:12px;padding:10px 0;border-bottom:1px solid var(--hairline)}',
+'.wl-word{font-weight:700;font-size:1rem;min-width:160px}',
+'.wl-def{font-size:.88rem;color:var(--ink)}',
+'</style>',
+'</head>',
+'<body>',
+'<header class="site-header"><div class="site-header-inner">',
+'  <a href="../index.html" class="back back-link" aria-label="Back"></a>',
+'  <a href="'+ROOT+'index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>',
+'  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; '+cfg.darkLabel+'</button>',
+'</div></header>',
+'<div class="container">',
+'  <div class="breadcrumb">'+breadcrumbHtml(t.track, t.level, t.title, 'vocabulary')+'</div>',
+'  <h1>'+esc(t.title)+'</h1>',
+'  <nav class="chapter-nav">',
+'    <a href="slides.html" class="chapter-nav-btn">'+cfg.navLesson+'</a>',
+'    <a href="flashcards.html" class="chapter-nav-btn active">'+cfg.navCards+'</a>',
+'    <a href="game.html" class="chapter-nav-btn">'+cfg.navGame+'</a>',
+'  </nav>',
+'  <div class="vocab-page">',
+'    <div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">'+cfg.masteredBadge+'</span></div>',
+'    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">'+cfg.wordsLabel(words.length)+'</div>',
+'    <div class="mode-tabs">',
+'      <button class="mode-tab active" onclick="setMode(\'flash\',this)">'+cfg.tabFlash+'</button>',
+'      <button class="mode-tab" onclick="setMode(\'list\',this)">'+esc(cfg.navCards==='Tarjetas'?'Lista':'Word list')+'</button>',
+'    </div>',
+'    <div id="modeFlash">',
+'      <div class="flashcard-wrap">',
+'        <div class="flashcard" id="flashcard" onclick="flipCard()">',
+'          <div class="fc-face fc-front">',
+'            <div class="fc-word" id="fcWord"></div>',
+'            <div class="fc-ipa" id="fcIpa"></div>',
+'            <button class="fc-audio-btn" onclick="speakWord(event)">&#9654; '+cfg.pronounce+'</button>',
+'            <div class="fc-hint">'+cfg.tapHint+'</div>',
+'          </div>',
+'          <div class="fc-face fc-back">',
+'            <div class="fc-def" id="fcDef"></div>',
+'            <div class="fc-ex" id="fcEx"></div>',
+'          </div>',
+'        </div>',
+'      </div>',
+'      <div class="fc-nav">',
+'        <button class="fc-btn" onclick="fcPrev()">&#8592; '+cfg.prev+'</button>',
+'        <span class="fc-counter" id="fcCounter"></span>',
+'        <button class="fc-btn" onclick="fcNext()">'+cfg.next+' &#8594;</button>',
+'      </div>',
+'      <div style="text-align:center">',
+'        <button class="fc-btn primary" onclick="markMastered()" id="btnMastered">'+cfg.markBtn+'</button>',
+'      </div>',
+'    </div>',
+'    <div id="modeList" style="display:none"><div id="wordList"></div></div>',
+'  </div>',
+'</div>',
+'<footer class="site-footer">'+cfg.footer+'</footer>',
+'<script src="'+ROOT+'shared/store.js?v=v105"><\/script>',
+'<script>',
+'var SLUG='+JSON.stringify(t.slug)+';',
+'var LEVEL='+JSON.stringify(t.level)+';',
+'var MASTERY_KEY='+JSON.stringify(masteryKey)+';',
+'var PROG_KEY='+JSON.stringify(progKey)+';',
+'var WORDS='+wordsJson+';',
+'var fcIdx=0,flipped=false,mastered=false;',
+'var fcSeen=new Set();',
+'function setMode(mode,btn){document.querySelectorAll(".mode-tab").forEach(function(b){b.classList.remove("active");});btn.classList.add("active");document.getElementById("modeFlash").style.display=mode==="flash"?"":"none";document.getElementById("modeList").style.display=mode==="list"?"":"none";if(mode==="list")renderList();}',
+'function flipCard(){flipped=!flipped;document.getElementById("flashcard").classList.toggle("flipped",flipped);}',
+'function showCard(idx){flipped=false;document.getElementById("flashcard").classList.remove("flipped");var w=WORDS[idx];document.getElementById("fcWord").textContent=w.word;document.getElementById("fcIpa").textContent=w.ipa||"";document.getElementById("fcDef").textContent=w.def;document.getElementById("fcEx").innerHTML=w.ex||"";document.getElementById("fcCounter").textContent=(idx+1)+" / "+WORDS.length;fcSeen.add(idx);if(!mastered&&fcSeen.size>=WORDS.length){mastered=true;setTimeout(markMastered,700);}}',
+'function fcNext(){fcIdx=(fcIdx+1)%WORDS.length;showCard(fcIdx);}',
+'function fcPrev(){fcIdx=(fcIdx-1+WORDS.length)%WORDS.length;showCard(fcIdx);}',
+'function markMastered(){try{localStorage.setItem(MASTERY_KEY,"1");var raw=localStorage.getItem("wordplay_progress");var pd=raw?JSON.parse(raw):{};pd[PROG_KEY]=pd[PROG_KEY]||{};pd[PROG_KEY]["vocab_mastered_"+SLUG]={done:true,date:new Date().toISOString()};localStorage.setItem("wordplay_progress",JSON.stringify(pd));}catch(e){}document.getElementById("masteryBadge").style.display="block";var btn=document.getElementById("btnMastered");btn.textContent='+JSON.stringify(cfg.masteredDone)+';btn.disabled=true;if(window.FCEStore){FCEStore.saveResult(SLUG,1,1,{});}}',
+'function checkMastered(){try{if(localStorage.getItem(MASTERY_KEY)==="1"){document.getElementById("masteryBadge").style.display="block";var b=document.getElementById("btnMastered");b.textContent='+JSON.stringify(cfg.masteredDone)+';b.disabled=true;}}catch(e){}}',
+'function renderList(){document.getElementById("wordList").innerHTML=WORDS.map(function(w){return"<div class=\\"word-list-item\\"><span class=\\"wl-word\\">"+w.word+"</span><span class=\\"wl-def\\">"+w.def+"</span></div>";}).join("");}',
+'function speakWord(e){if(e)e.stopPropagation();if(!window.speechSynthesis)return;var utt=new SpeechSynthesisUtterance(WORDS[fcIdx].word);utt.lang='+JSON.stringify(cfg.speak)+';utt.rate=0.9;window.speechSynthesis.cancel();window.speechSynthesis.speak(utt);}',
+'showCard(0);checkMastered();',
+'<\/script>',
+'<div style="margin-top:24px;border-top:1px solid var(--hairline);padding-top:20px">',
+'  <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">'+cfg.notesLabel+'</div>',
+'  <textarea id="my-notes-area" maxlength="500" placeholder="'+escAttr(cfg.notesPh)+'" style="width:100%;min-height:80px;padding:10px 12px;font-family:Georgia,serif;font-size:.88rem;color:var(--ink);background:var(--paper);border:1.5px solid var(--hairline);border-radius:6px;resize:vertical;line-height:1.6;box-sizing:border-box"></textarea>',
+'  <div style="font-family:var(--font-sans);font-size:.65rem;color:var(--muted);margin-top:4px;text-align:right"><span id="notes-chars">0</span>/500 · auto-saved</div>',
+'</div>',
+'<script>',
+'(function(){var ta=document.getElementById("my-notes-area");var cc=document.getElementById("notes-chars");if(!ta)return;var KEY='+JSON.stringify(notesKey)+';try{ta.value=localStorage.getItem(KEY)||"";cc.textContent=ta.value.length;}catch(e){}var t;ta.addEventListener("input",function(){cc.textContent=ta.value.length;clearTimeout(t);t=setTimeout(function(){try{localStorage.setItem(KEY,ta.value);}catch(e){}},600);});})();',
+'<\/script>',
+'</body>',
+'</html>'
+  ].join('\n');
+}
+
+/* ── Match game (standalone match.html) ── */
+function generateMatch(t, words){
+  var cfg = trackConfig(t.track);
+  var LV = t.level.toUpperCase();
+  var tlId = trackLevelId(t.track, t.level);
+  var masteryKey = 'wordplay_vocab_' + tlId + '_' + t.slug + '_mastered';
+  var progKey = tlId;
+  var wordObjs = words.map(function(w){ return {word:w.word,def:w.def}; });
+  var wordsJson = JSON.stringify(wordObjs);
+  var n = words.length;
+  var totalNeeded = n * 2;
+
+  return [
+'<!DOCTYPE html>',
+'<html lang="'+cfg.lang+'">',
+'<head>',
+'<meta charset="UTF-8">',
+'<meta name="viewport" content="width=device-width,initial-scale=1.0">',
+'<meta name="theme-color" content="#1A1A1A">',
+'<link rel="icon" href="'+ROOT+'favicon.svg" type="image/svg+xml">',
+'<title>'+LV+' · '+esc(t.title)+' — '+cfg.navMatch+' | Word Play</title>',
+'<link rel="stylesheet" href="'+ROOT+'shared/base.css?v=v123">',
+'<script src="'+ROOT+'shared/dark-init.js?v=v109"><\/script>',
+'<style>',
+'.match-page{max-width:780px;margin:0 auto;padding:16px 0 60px}',
+'.match-hud{display:flex;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap}',
+'.match-lives{display:flex;gap:4px;font-size:1.3rem;line-height:1}',
+'.heart{color:var(--amber);transition:color .2s,transform .2s}',
+'.heart.lost{color:var(--hairline)}',
+'.heart.shake{animation:hshake .35s ease}',
+'@keyframes hshake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}',
+'.match-progress-wrap{flex:1;min-width:120px}',
+'.match-progress-bar{height:5px;border-radius:3px;background:var(--hairline);overflow:hidden}',
+'.match-progress-fill{height:100%;background:var(--amber);border-radius:3px;transition:width .25s}',
+'.match-progress-txt{font-family:var(--font-sans);font-size:.62rem;font-weight:700;color:var(--muted);margin-top:4px}',
+'.match-mastery-badge{font-family:var(--font-sans);font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:3px;background:rgba(39,174,96,.12);color:#1e7a45;border:1px solid rgba(39,174,96,.3);display:none}',
+'.match-mastery-badge.show{display:inline-block}',
+'.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}',
+'@media(max-width:460px){.match-grid{gap:7px}}',
+'.match-col-head{font-family:var(--font-sans);font-size:.58rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}',
+'.match-col{display:flex;flex-direction:column;gap:7px}',
+'.mw{padding:10px 12px;border:1.5px solid var(--hairline);border-radius:7px;font-size:.88rem;font-weight:700;color:var(--ink);cursor:pointer;transition:border-color .12s,background .12s,opacity .2s;user-select:none;min-height:40px;display:flex;align-items:center;justify-content:space-between;gap:6px}',
+'.mw:hover:not(.done-word):not(.selected-word){border-color:var(--amber)}',
+'.mw.selected-word{border-color:var(--amber);background:rgba(184,134,11,.1);box-shadow:0 0 0 2px rgba(184,134,11,.2)}',
+'.mw.half-word{border-left:3px solid var(--amber)}',
+'.mw.done-word{opacity:.35;cursor:default;border-color:var(--hairline)}',
+'.mw.wrong-word{border-color:#c0392b;background:rgba(192,57,43,.08);animation:wshake .3s ease}',
+'@keyframes wshake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}',
+'.mw-badge{font-family:var(--font-sans);font-size:.6rem;font-weight:800;padding:2px 5px;border-radius:3px;flex-shrink:0}',
+'.mw-badge.half-badge{background:rgba(184,134,11,.15);color:var(--amber)}',
+'.mw-badge.done-badge{background:rgba(39,174,96,.12);color:#27ae60}',
+'.md{padding:10px 12px;border:1.5px solid var(--hairline);border-radius:7px;font-size:.82rem;color:var(--ink);cursor:pointer;transition:border-color .12s,background .12s;user-select:none;min-height:40px;display:flex;align-items:center;line-height:1.4}',
+'.md:hover:not(.no-select){border-color:var(--ink)}',
+'.md.no-select{cursor:default}',
+'.md.flash-correct{border-color:#27ae60;background:rgba(39,174,96,.1);transition:none}',
+'.md.flash-wrong{border-color:#c0392b;background:rgba(192,57,43,.08);animation:wshake .3s ease}',
+'.match-screen{position:fixed;inset:0;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:900;padding:20px}',
+'.match-screen-box{background:var(--paper);border-radius:14px;padding:32px 28px;text-align:center;max-width:380px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,.3)}',
+'body.dark .match-screen-box{background:#1A1A1A}',
+'.msb-title{font-size:1.4rem;font-weight:700;color:var(--navy);margin-bottom:8px}',
+'.msb-sub{font-family:var(--font-sans);font-size:.82rem;color:var(--muted);margin-bottom:20px;line-height:1.5}',
+'.msb-stat{font-family:var(--font-sans);font-size:.78rem;font-weight:700;padding:6px 12px;border-radius:5px;background:rgba(184,134,11,.08);color:var(--amber);display:inline-block;margin-bottom:20px}',
+'.msb-btn{font-family:var(--font-sans);font-size:.82rem;font-weight:700;padding:11px 24px;border-radius:7px;border:none;background:var(--amber);color:#fff;cursor:pointer;margin:4px}',
+'.msb-btn.ghost{background:transparent;border:1.5px solid var(--hairline);color:var(--ink)}',
+'.msb-lives{font-size:1.4rem;margin-bottom:8px}',
+'</style>',
+'</head>',
+'<body>',
+'<header class="site-header"><div class="site-header-inner">',
+'  <a href="index.html" class="back back-link" aria-label="Back"></a>',
+'  <a href="'+ROOT+'index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>',
+'  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; '+cfg.darkLabel+'</button>',
+'</div></header>',
+'<div class="container">',
+'  <div class="breadcrumb">'+breadcrumbHtml(t.track, t.level, t.title, 'vocabulary')+'</div>',
+'  <h1>'+esc(t.title)+' &mdash; '+cfg.navMatch+'</h1>',
+'  <nav class="chapter-nav">',
+'    <a href="slides.html" class="chapter-nav-btn">'+cfg.navLesson+'</a>',
+'    <a href="flashcards.html" class="chapter-nav-btn">'+cfg.navCards+'</a>',
+'    <a href="match.html" class="chapter-nav-btn active">'+cfg.navMatch+'</a>',
+'    <a href="game.html" class="chapter-nav-btn">'+cfg.navGame+'</a>',
+'  </nav>',
+'  <div class="match-page">',
+'    <div class="match-hud">',
+'      <div class="match-lives" id="livesDisplay">',
+'        <span class="heart" id="h1">&#9829;</span>',
+'        <span class="heart" id="h2">&#9829;</span>',
+'        <span class="heart" id="h3">&#9829;</span>',
+'      </div>',
+'      <div class="match-progress-wrap">',
+'        <div class="match-progress-bar"><div class="match-progress-fill" id="progressFill" style="width:0%"></div></div>',
+'        <div class="match-progress-txt" id="progressTxt">0 / '+totalNeeded+' matches</div>',
+'      </div>',
+'      <span class="match-mastery-badge" id="masteryBadge">'+cfg.masteredBadge+'</span>',
+'    </div>',
+'    <div class="match-col-head">'+cfg.sec+'</div>',
+'    <div class="match-grid">',
+'      <div class="match-col" id="leftCol"></div>',
+'      <div class="match-col" id="rightCol"></div>',
+'    </div>',
+'  </div>',
+'</div>',
+'<footer class="site-footer">'+cfg.footer+'</footer>',
+'<div class="match-screen" id="winScreen" style="display:none">',
+'  <div class="match-screen-box">',
+'    <div class="msb-title">'+cfg.masteredDone+'</div>',
+'    <div class="msb-lives" id="winLives"></div>',
+'    <div class="msb-sub">'+cfg.allMatched+'</div>',
+'    <div class="msb-stat" id="winStat"></div>',
+'    <button class="msb-btn" onclick="resetGame()">'+cfg.playAgain+'</button>',
+'    <a href="flashcards.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">'+cfg.navCards+'</a>',
+'    <a href="game.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">'+cfg.navGame+'</a>',
+'  </div>',
+'</div>',
+'<div class="match-screen" id="loseScreen" style="display:none">',
+'  <div class="match-screen-box">',
+'    <div class="msb-title">Out of lives!</div>',
+'    <div class="msb-sub">Keep practising — match each word twice without 3 mistakes to win.</div>',
+'    <div class="msb-stat" id="loseStat"></div>',
+'    <button class="msb-btn" onclick="resetGame()">'+cfg.tryAgain+'</button>',
+'    <a href="flashcards.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">'+cfg.navCards+'</a>',
+'  </div>',
+'</div>',
+'<script src="'+ROOT+'shared/store.js?v=v105"><\/script>',
+'<script>',
+'var WORDS='+wordsJson+';',
+'var MASTERY_KEY='+JSON.stringify(masteryKey)+';',
+'var PROG_KEY='+JSON.stringify(progKey)+';',
+'var SLUG='+JSON.stringify(t.slug)+';',
+'var TOTAL_NEEDED='+totalNeeded+';',
+'var state=[],lives=3,selIdx=null,totalDone=0,rightPool=[],animLock=false;',
+'function initState(){state=WORDS.map(function(w){return{word:w.word,def:w.def,matchCount:0};});lives=3;selIdx=null;totalDone=0;animLock=false;rebuildPool();}',
+'function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var tmp=b[i];b[i]=b[j];b[j]=tmp;}return b;}',
+'function rebuildPool(){rightPool=shuffle(state.filter(function(w){return w.matchCount<2;}).map(function(w){return{word:w.word,def:w.def};}));}',
+'function escH(s){return String(s||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}',
+'function renderLeft(){',
+'  var el=document.getElementById("leftCol");el.innerHTML="";',
+'  state.forEach(function(w,i){',
+'    var div=document.createElement("div");',
+'    div.className="mw";',
+'    if(w.matchCount===2){div.className+=" done-word";}',
+'    else if(w.matchCount===1){div.className+=" half-word";}',
+'    if(selIdx===i&&w.matchCount<2){div.className+=" selected-word";}',
+'    var txt=document.createTextNode(escH(w.word));div.appendChild(txt);',
+'    if(w.matchCount===1){var b=document.createElement("span");b.className="mw-badge half-badge";b.textContent="1/2";div.appendChild(b);}',
+'    else if(w.matchCount===2){var b=document.createElement("span");b.className="mw-badge done-badge";b.innerHTML="&#10003;";div.appendChild(b);}',
+'    if(w.matchCount<2){div.setAttribute("onclick","clickWord("+i+")");}',
+'    el.appendChild(div);',
+'  });',
+'}',
+'function renderRight(){',
+'  var el=document.getElementById("rightCol");el.innerHTML="";',
+'  rightPool.forEach(function(item,i){',
+'    var div=document.createElement("div");',
+'    div.className="md"+(selIdx===null?" no-select":"");',
+'    div.id="def"+i;',
+'    div.setAttribute("onclick","clickDef("+i+")");',
+'    div.textContent=item.def;',
+'    el.appendChild(div);',
+'  });',
+'}',
+'function render(){renderLeft();renderRight();updateHud();}',
+'function updateHud(){',
+'  var pct=Math.round(totalDone/TOTAL_NEEDED*100);',
+'  document.getElementById("progressFill").style.width=pct+"%";',
+'  document.getElementById("progressTxt").textContent=totalDone+" / "+TOTAL_NEEDED+" matches";',
+'  ["h1","h2","h3"].forEach(function(id,i){',
+'    var el=document.getElementById(id);',
+'    if(i<lives){el.textContent="♥";el.className="heart";}',
+'    else{el.textContent="♡";el.className="heart lost";}',
+'  });',
+'}',
+'function clickWord(i){if(animLock)return;if(state[i].matchCount>=2)return;selIdx=(selIdx===i)?null:i;render();}',
+'function clickDef(i){',
+'  if(animLock)return;if(selIdx===null)return;',
+'  var def=rightPool[i];var word=state[selIdx];',
+'  if(def.word===word.word){',
+'    var defEl=document.getElementById("def"+i);var wordIdx=selIdx;',
+'    if(defEl)defEl.classList.add("flash-correct");',
+'    animLock=true;',
+'    setTimeout(function(){',
+'      state[wordIdx].matchCount++;totalDone++;selIdx=null;rebuildPool();animLock=false;',
+'      if(state.every(function(w){return w.matchCount>=2;})){masterGame();}else{render();}',
+'    },320);',
+'  } else {',
+'    var defEl=document.getElementById("def"+i);',
+'    var wrdEl=document.querySelector(".mw.selected-word");',
+'    if(defEl)defEl.classList.add("flash-wrong");',
+'    if(wrdEl){wrdEl.classList.add("wrong-word");wrdEl.classList.remove("selected-word");}',
+'    lives--;selIdx=null;animLock=true;',
+'    var heartEl=document.getElementById("h"+(lives+1));',
+'    if(heartEl){heartEl.textContent="♡";heartEl.className="heart lost shake";}',
+'    updateHud();',
+'    setTimeout(function(){',
+'      if(defEl)defEl.classList.remove("flash-wrong");',
+'      if(wrdEl)wrdEl.classList.remove("wrong-word");',
+'      animLock=false;',
+'      if(lives<=0){gameOver();}else{render();}',
+'    },560);',
+'  }',
+'}',
+'function masterGame(){',
+'  try{localStorage.setItem(MASTERY_KEY,"1");var raw=localStorage.getItem("wordplay_progress");var pd=raw?JSON.parse(raw):{};pd[PROG_KEY]=pd[PROG_KEY]||{};pd[PROG_KEY]["vocab_mastered_"+SLUG]={done:true,date:new Date().toISOString()};localStorage.setItem("wordplay_progress",JSON.stringify(pd));}catch(e){}',
+'  if(window.FCEStore)FCEStore.saveResult(SLUG,1,1,{});',
+'  document.getElementById("masteryBadge").classList.add("show");',
+'  var ls="♥".repeat(lives)+"♡".repeat(3-lives);',
+'  document.getElementById("winLives").textContent=ls;',
+'  document.getElementById("winStat").textContent=lives+" of 3 lives remaining";',
+'  document.getElementById("winScreen").style.display="flex";',
+'}',
+'function gameOver(){document.getElementById("loseStat").textContent=totalDone+" of "+TOTAL_NEEDED+" matches completed";document.getElementById("loseScreen").style.display="flex";}',
+'function resetGame(){document.getElementById("winScreen").style.display="none";document.getElementById("loseScreen").style.display="none";document.getElementById("masteryBadge").classList.remove("show");initState();render();}',
+'(function(){try{if(localStorage.getItem(MASTERY_KEY)==="1"){document.getElementById("masteryBadge").classList.add("show");}}catch(e){}})();',
+'initState();render();',
+'<\/script>',
+'</body>',
+'</html>'
+  ].join('\n');
+}
+
+/* ── Game.html (game.js engine) ── */
+function generateGame(t, words){
+  var cfg = trackConfig(t.track);
+  var LV = t.level.toUpperCase();
+  var tlId = trackLevelId(t.track, t.level);
+  var storageKey = 'wordplay_game_' + tlId + '_' + t.slug;
+  var isVocab = (t.section === 'vocabulary');
+  var gameItems = words.map(function(w,i){
+    var completion = (w.ex||'').replace(/<b>([^<]+)<\/b>/i, '_____');
+    if (completion === (w.ex||'')) completion = 'Use _____ in a sentence.';
+    return {
+      id: 'i'+i,
+      term: w.word,
+      meaning: w.def,
+      synonym: w.ipa||'(vocab)',
+      example: w.ex||w.word,
+      completion: completion,
+      answer: w.word
+    };
+  });
+
+  var navLinks = isVocab
+    ? '<a href="slides.html" class="chapter-nav-btn">'+cfg.navLesson+'</a><a href="flashcards.html" class="chapter-nav-btn">'+cfg.navCards+'</a><a href="game.html" class="chapter-nav-btn active">'+cfg.navGame+'</a>'
+    : '<a href="slides.html" class="chapter-nav-btn">'+cfg.navLesson+'</a><a href="worksheet.html" class="chapter-nav-btn">'+cfg.navReview+'</a><a href="game.html" class="chapter-nav-btn active">'+cfg.navGame+'</a>';
+
+  return [
+'<!DOCTYPE html>',
+'<html lang="'+cfg.lang+'">',
+'<head>',
+'<meta charset="UTF-8">',
+'<meta name="viewport" content="width=device-width,initial-scale=1.0">',
+'<meta name="theme-color" content="#1A1A1A">',
+'<link rel="icon" href="'+ROOT+'favicon.svg" type="image/svg+xml">',
+'<title>'+LV+' · '+esc(t.title)+' — '+cfg.navGame+' | Word Play</title>',
+'<link rel="stylesheet" href="'+ROOT+'shared/base.css?v=v123">',
+'<link rel="stylesheet" href="'+ROOT+'shared/game.css?v=v110">',
+'<script src="'+ROOT+'shared/dark-init.js?v=v109"><\/script>',
+'</head>',
+'<body>',
+'<header class="site-header"><div class="site-header-inner">',
+'  <a href="index.html" class="back back-link" aria-label="Back"></a>',
+'  <a href="'+ROOT+'index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>',
+'  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; '+cfg.darkLabel+'</button>',
+'</div></header>',
+'<div class="breadcrumb">'+breadcrumbHtml(t.track, t.level, t.title, t.section)+'</div>',
+'<div class="container">',
+'  <div class="eyebrow">'+LV+' · '+esc(sectionLabel(t.track, t.section))+'</div>',
+'  <h1>'+esc(t.title)+'</h1>',
+'  <nav class="chapter-nav">'+navLinks+'</nav>',
+'  <div class="game-wrap">',
+'    <div id="gameStart" class="game-screen active">',
+'      <div class="game-start">',
+'        <h2>'+cfg.gameTitle+'</h2>',
+'        <p>'+cfg.gameDesc+'</p>',
+'        <div class="game-stats-row">',
+'          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>',
+'          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>',
+'        </div>',
+'        <div id="gResumeSection" style="display:none"></div>',
+'        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">'+cfg.startGame+'</button></div>',
+'      </div>',
+'      <div class="game-ref-panel" style="margin-top:20px">',
+'        <div class="game-ref-head" id="gRefToggle">&#9660; All items</div>',
+'        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>',
+'      </div>',
+'    </div>',
+'    <div id="gamePlay" class="game-screen">',
+'      <div class="game-play">',
+'        <div class="game-mode-tag" id="gModeTag"></div>',
+'        <div class="game-term" id="gTerm"></div>',
+'        <div class="game-prompt" id="gPrompt"></div>',
+'        <div class="game-options" id="gOptions"></div>',
+'        <div class="game-feedback" id="gFeedback"></div>',
+'        <div class="game-example" id="gExample" style="display:none"></div>',
+'        <div style="text-align:center;margin:12px 0"><button id="gBtnNext" class="game-btn primary" style="display:none">Next &#8594;</button></div>',
+'        <div class="game-helpers">',
+'          <button id="gBtnHint" class="game-btn ghost small">'+cfg.hint+'</button>',
+'          <button id="gBtnReveal" class="game-btn ghost small">'+cfg.showAnswer+'</button>',
+'          <button id="gBtnKnow" class="game-btn know small" style="display:none">I know this</button>',
+'        </div>',
+'        <div class="game-progress-strip">',
+'          <div class="game-progress-bar"><div class="game-progress-fill" id="gProgressBar" style="width:0%"></div></div>',
+'          <div class="game-progress-text" id="gProgressTxt">0 / 0 mastered</div>',
+'        </div>',
+'        <div class="game-score-streak">'+cfg.score+': <strong id="gScore">0</strong>&nbsp;&nbsp;'+cfg.streak+': <strong id="gStreak">0</strong></div>',
+'        <div style="text-align:center;margin-top:14px"><button id="gBtnSaveQuit" class="game-btn ghost small">'+cfg.saveQuit+'</button></div>',
+'      </div>',
+'    </div>',
+'    <div id="gameCompletion" class="game-screen">',
+'      <div class="game-completion">',
+'        <h2>'+cfg.mastered+'</h2>',
+'        <p>You have completed all items in this chapter.</p>',
+'        <div class="game-stats-row" style="margin:20px 0">',
+'          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">'+cfg.score+'</div></div>',
+'          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">'+cfg.streak+'</div></div>',
+'          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>',
+'        </div>',
+'        <div id="gMasteryMap"></div>',
+'        <div class="game-btn-row">',
+'          <button id="gBtnPlayAgain" class="game-btn primary">'+cfg.playAgain+'</button>',
+'          <a href="'+(isVocab?'flashcards':'worksheet')+'.html" class="game-btn secondary">'+(isVocab?cfg.navCards:cfg.navReview)+'</a>',
+'        </div>',
+'      </div>',
+'    </div>',
+'  </div>',
+'</div>',
+'<div class="game-toast" id="gToast"></div>',
+'<footer class="site-footer">'+cfg.footer+'</footer>',
+'<script>',
+'window.GAME_DATA={chapterId:'+JSON.stringify(t.slug)+',level:'+JSON.stringify(t.level)+',title:'+JSON.stringify(t.title)+',storageKey:'+JSON.stringify(storageKey)+',items:'+JSON.stringify(gameItems)+'};',
+'<\/script>',
+'<script src="'+ROOT+'shared/store.js?v=v105"><\/script>',
+'<script src="'+ROOT+'shared/game.js?v=v110"><\/script>',
+'</body>',
+'</html>'
+  ].join('\n');
+}
+
+/* ── Slides.html (deck.js engine) ── */
+function generateSlides(t, slides){
+  var cfg = trackConfig(t.track);
+  var LV = t.level.toUpperCase();
+  var isVocab = (t.section === 'vocabulary');
+  var nextFile = isVocab ? 'game.html' : 'worksheet.html';
+  var nextLabel = isVocab ? cfg.navGame : cfg.navReview;
+  var navLinks = isVocab
+    ? '<a href="slides.html" class="chapter-nav-btn active">'+cfg.navLesson+'</a><a href="flashcards.html" class="chapter-nav-btn">'+cfg.navCards+'</a><a href="game.html" class="chapter-nav-btn">'+cfg.navGame+'</a>'
+    : '<a href="slides.html" class="chapter-nav-btn active">'+cfg.navLesson+'</a><a href="worksheet.html" class="chapter-nav-btn">'+cfg.navReview+'</a><a href="game.html" class="chapter-nav-btn">'+cfg.navGame+'</a>';
+
+  var slideDivs = slides.map(function(s){
+    var noteHtml = s.note ? '<div class="watch-out">'+esc(s.note)+'</div>' : '';
+    return '<div class="slide"><div class="slide-card">'
+      + '<div class="slide-header"><h2>'+esc(s.title)+'</h2></div>'
+      + '<p class="slide-explanation">'+s.body+'</p>'
+      + noteHtml
+      + '</div></div>';
+  }).join('\n');
+
+  var ctaHtml = '<div class="slide summary-slide"><div class="slide-card">'
+    + '<h2>Summary</h2>'
+    + '<div style="margin-top:28px;text-align:center">'
+    + '<a href="'+nextFile+'" style="display:inline-block;padding:13px 32px;background:var(--amber);color:#1A1A1A;font-family:var(--font-sans);font-size:.8rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;border-radius:5px">'+nextLabel+' &#8594;</a>'
+    + '</div></div></div>';
+
+  return [
+'<!DOCTYPE html>',
+'<html lang="'+cfg.lang+'">',
+'<head>',
+'<meta charset="UTF-8">',
+'<meta name="viewport" content="width=device-width,initial-scale=1.0">',
+'<meta name="theme-color" content="#1A1A1A">',
+'<link rel="icon" href="'+ROOT+'favicon.svg" type="image/svg+xml">',
+'<title>'+LV+' · '+esc(t.title)+' — '+cfg.navLesson+' | Word Play</title>',
+'<link rel="stylesheet" href="'+ROOT+'shared/base.css?v=v123">',
+'<link rel="stylesheet" href="'+ROOT+'shared/slides.css?v=v115">',
+'<script src="'+ROOT+'shared/dark-init.js?v=v109"><\/script>',
+'</head>',
+'<body class="deck-body">',
+'<div class="deck-progress"><div class="deck-progress-fill" id="deck-progress-fill"></div></div>',
+'<header class="site-header"><div class="site-header-inner">',
+'  <a href="index.html" class="back back-link" aria-label="Back"></a>',
+'  <a href="'+ROOT+'index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>',
+'  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; '+cfg.darkLabel+'</button>',
+'</div></header>',
+'<div class="breadcrumb">'+breadcrumbHtml(t.track, t.level, t.title, t.section)+'</div>',
+'<nav class="chapter-nav">'+navLinks+'</nav>',
+'<h1>'+esc(t.title)+'</h1>',
+'<div class="slide-deck" id="slide-deck">',
+slideDivs,
+ctaHtml,
+'</div>',
+'<div class="deck-nav">',
+'  <button class="deck-btn" id="deck-prev">&#9664; '+cfg.prev+'</button>',
+'  <div class="counter" id="slide-counter"></div>',
+'  <button class="deck-btn" id="deck-next">'+cfg.next+' &#9654;</button>',
+'</div>',
+'<script>window.CHAPTER_ID='+JSON.stringify(t.slug)+';window.LEVEL='+JSON.stringify(t.level)+';window.SECTION='+JSON.stringify(t.section)+';<\/script>',
+'<script src="'+ROOT+'shared/store.js?v=v105"><\/script>',
+'<script src="'+ROOT+'shared/deck.js?v=v113"><\/script>',
+'<footer class="site-footer">'+cfg.footer+'</footer>',
+'</body>',
+'</html>'
+  ].join('\n');
+}
+
+/* ── Worksheet.html (worksheet.js engine) ── */
+function generateWorksheet(t, qs){
+  var cfg = trackConfig(t.track);
+  var LV = t.level.toUpperCase();
+  var isVocab = (t.section === 'vocabulary');
+  var navLinks = isVocab
+    ? '<a href="slides.html" class="chapter-nav-btn">'+cfg.navLesson+'</a><a href="flashcards.html" class="chapter-nav-btn">'+cfg.navCards+'</a><a href="game.html" class="chapter-nav-btn">'+cfg.navGame+'</a>'
+    : '<a href="slides.html" class="chapter-nav-btn">'+cfg.navLesson+'</a><a href="worksheet.html" class="chapter-nav-btn active">'+cfg.navReview+'</a><a href="game.html" class="chapter-nav-btn">'+cfg.navGame+'</a>';
+
+  // Build ANSWERS and EXPLANATIONS
+  var answers = {};
+  var explanations = {};
+  qs.forEach(function(q,i){
+    var key = 'q'+(i+1);
+    answers[key] = {answer: q.answer};
+    explanations[key] = q.explanation || q.answer;
+  });
+
+  var qHtml = qs.map(function(q,i){
+    var key = 'q'+(i+1);
+    var btns = (q.options||[]).map(function(o){
+      return '<button type="button" class="choice-btn" data-value="'+escAttr(o)+'">'+esc(o)+'</button>';
+    }).join('');
+    return '<div class="q"><span class="q-num">'+(i+1)+'</span>'
+      + '<div class="q-text">'+esc(q.q)+'</div>'
+      + '<div class="choice-group" data-q="'+key+'" data-answer="'+escAttr(q.answer)+'">'+btns+'</div>'
+      + '</div>';
+  }).join('\n');
+
+  return [
+'<!DOCTYPE html>',
+'<html lang="'+cfg.lang+'">',
+'<head>',
+'<meta charset="UTF-8">',
+'<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">',
+'<meta name="theme-color" content="#1A1A1A">',
+'<link rel="icon" href="'+ROOT+'favicon.svg" type="image/svg+xml">',
+'<title>'+LV+' · '+esc(t.title)+' — '+cfg.navReview+' | Word Play</title>',
+'<link rel="stylesheet" href="'+ROOT+'shared/base.css?v=v123">',
+'<link rel="stylesheet" href="'+ROOT+'shared/worksheet.css?v=v106">',
+'<link rel="stylesheet" href="'+ROOT+'shared/game.css?v=v110">',
+'<script src="'+ROOT+'shared/dark-init.js?v=v109"><\/script>',
+'</head>',
+'<body>',
+'<header class="site-header"><div class="site-header-inner">',
+'  <a href="index.html" class="back back-link" aria-label="Back"></a>',
+'  <a href="'+ROOT+'index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>',
+'  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; '+cfg.darkLabel+'</button>',
+'</div></header>',
+'<div class="breadcrumb">'+breadcrumbHtml(t.track, t.level, t.title, t.section)+'</div>',
+'<div class="container">',
+'<nav class="chapter-nav">'+navLinks+'</nav>',
+'<div class="eyebrow">'+LV+' · '+esc(t.title)+'</div>',
+'<h1>'+esc(t.title)+' &mdash; '+cfg.navReview+'</h1>',
+'<div class="intro">',
+'  <div class="intro-title">'+cfg.worksheetAbout+'</div>',
+'  <div class="intro-body">'+qs.length+' questions · '+qs.length+' points</div>',
+'  <div class="intro-meta">'+cfg.worksheetMeta+'</div>',
+'</div>',
+'<form id="worksheet">',
+'<section class="exercise" id="ex1">',
+'  <div class="ex-head">Exercise 1</div>',
+'  <div class="ex-title">'+esc(t.title)+'</div>',
+'  <div class="ex-meta">'+qs.length+' points</div>',
+qHtml,
+'</section>',
+'</form>',
+'<div class="submit-wrap">',
+'  <button type="button" class="submit" onclick="checkAnswers()">'+cfg.checkBtn+'</button>',
+'  <button type="button" class="reset" onclick="resetAll()">'+cfg.resetBtn+'</button>',
+'</div>',
+'<div id="results" class="results-panel">',
+'  <div class="score-display">',
+'    <div class="big"><span id="score-got">0</span> / <span id="score-total">'+qs.length+'</span></div>',
+'    <div class="label">'+cfg.yourScore+'</div>',
+'    <div class="pct" id="score-pct">0%</div>',
+'    <div id="pass-msg" class="pass-msg" style="margin-top:6px"></div>',
+'  </div>',
+'  <div id="breakdown" class="breakdown"></div>',
+'  <button type="button" class="submit" style="background:var(--navy);margin-top:16px" onclick="tryAgain()">'+cfg.tryAgain+'</button>',
+'</div>',
+'</div>',
+'<footer class="site-footer">'+cfg.footer+'</footer>',
+'<script>',
+'window.CHAPTER_ID='+JSON.stringify(t.slug)+';',
+'window.LEVEL='+JSON.stringify(t.level)+';',
+'window.SECTION='+JSON.stringify(t.section)+';',
+'window.TOTAL_POINTS='+qs.length+';',
+'window.ANSWERS='+JSON.stringify(answers)+';',
+'window.EXERCISE_TITLES={ex1:"Exercise 1 — '+esc(t.title)+'"};',
+'<\/script>',
+'<script>',
+'window.EXPLANATIONS='+JSON.stringify(explanations)+';',
+'<\/script>',
+'<script src="'+ROOT+'shared/store.js?v=v105"><\/script>',
+'<script src="'+ROOT+'shared/worksheet.js?v=v106"><\/script>',
+'</body>',
+'</html>'
+  ].join('\n');
+}
+
+/* ── Printables.html (print-friendly MCQ) ── */
+function generatePrintables(t, qs){
+  var cfg = trackConfig(t.track);
+  var LV = t.level.toUpperCase();
+
+  var qHtml = qs.map(function(q,i){
+    var opts = (q.options||[]).map(function(o,j){
+      return '<span style="margin-right:16px">'+String.fromCharCode(65+j)+') '+esc(o)+'</span>';
+    }).join('');
+    return '<div class="ps-q"><strong>'+(i+1)+'.</strong> '+esc(q.q)+'<br><div style="margin-top:6px;font-size:.85rem">'+opts+'</div></div>';
+  }).join('\n');
+
+  var keyHtml = qs.map(function(q,i){
+    return '<div style="font-size:.82rem;padding:4px 0;border-bottom:1px solid var(--hairline)">'+(i+1)+'. <strong>'+esc(q.answer)+'</strong> &mdash; '+esc(q.explanation)+'</div>';
+  }).join('\n');
+
+  return [
+'<!DOCTYPE html>',
+'<html lang="'+cfg.lang+'">',
+'<head>',
+'<meta charset="UTF-8">',
+'<meta name="viewport" content="width=device-width,initial-scale=1.0">',
+'<meta name="theme-color" content="#1A1A1A">',
+'<link rel="icon" href="'+ROOT+'favicon.svg" type="image/svg+xml">',
+'<title>'+LV+' · '+esc(t.title)+' — Printables | Word Play</title>',
+'<link rel="stylesheet" href="'+ROOT+'shared/base.css?v=v123">',
+'<script src="'+ROOT+'shared/dark-init.js?v=v109"><\/script>',
+'<style>',
+'@media print{.site-header,.chapter-nav,.breadcrumb,.no-print{display:none!important}body{background:white}}',
+'.ps{max-width:680px;margin:0 auto}',
+'.ps-ey{font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}',
+'.ps-title{font-size:1.4rem;font-weight:700;font-family:Georgia,serif;margin-bottom:20px;padding-bottom:10px;border-bottom:2px solid var(--hairline)}',
+'.ps-ex{margin-bottom:22px}',
+'.ps-ex-h{font-family:var(--font-sans);font-size:.68rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:10px}',
+'.ps-q{padding:8px 0;border-bottom:1px solid var(--hairline);font-size:.88rem;min-height:44px}',
+'.key-section{margin-top:40px;padding-top:20px;border-top:2px solid var(--hairline)}',
+'</style>',
+'</head>',
+'<body>',
+'<header class="site-header"><div class="site-header-inner">',
+'  <a href="index.html" class="back back-link" aria-label="Back"></a>',
+'  <a href="'+ROOT+'index.html" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>',
+'  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; '+cfg.darkLabel+'</button>',
+'</div></header>',
+'<div class="breadcrumb">'+breadcrumbHtml(t.track, t.level, t.title, t.section)+'</div>',
+'<div class="container">',
+'  <nav class="chapter-nav no-print">',
+'    <a href="slides.html" class="chapter-nav-btn">'+cfg.navLesson+'</a>',
+'    <a href="worksheet.html" class="chapter-nav-btn">'+cfg.navReview+'</a>',
+'    <a href="printables.html" class="chapter-nav-btn active">Printables</a>',
+'  </nav>',
+'  <div class="no-print" style="margin-bottom:20px">',
+'    <button onclick="window.print()" style="font-family:var(--font-sans);font-size:.8rem;font-weight:700;padding:9px 18px;border-radius:6px;border:none;background:var(--amber);color:#fff;cursor:pointer">Print worksheet</button>',
+'  </div>',
+'  <div class="ps">',
+'    <div class="ps-ey">'+LV+' · '+esc(sectionLabel(t.track, t.section))+'</div>',
+'    <div class="ps-title">'+esc(t.title)+'</div>',
+'    <div class="ps-ex">',
+'      <div class="ps-ex-h">Questions</div>',
+qHtml,
+'    </div>',
+'    <div class="key-section">',
+'      <div class="ps-ex-h">Answer key</div>',
+keyHtml,
+'    </div>',
+'  </div>',
+'</div>',
+'<footer class="site-footer">'+cfg.footer+'</footer>',
+'</body>',
+'</html>'
+  ].join('\n');
+}
+</script>
+</body>
+</html>

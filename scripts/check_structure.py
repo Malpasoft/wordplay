@@ -23,6 +23,9 @@ checked = 0
 EXEMPT_BREADCRUMB = {
     'index.html', '404.html', 'test-grader.html',
     'progress-certificate.html', 'placement-test.html', 'dashboard.html',
+    # Teacher tools — top-level utility pages with hub/back navigation, no breadcrumb.
+    'teacher.html', 'dev-hub.html', 'ai-prompts.html', 'coverage.html', 'profile.html',
+    'calendar.html', 'builder.html',
 }
 
 

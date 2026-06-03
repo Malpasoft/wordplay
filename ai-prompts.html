@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>AI Prompts | Word Play</title>
+<link rel="stylesheet" href="shared/base.css?v=v123">
+<script src="shared/dark-init.js?v=v109"></script>
+<style>
+.ap-wrap{max-width:680px;margin:0 auto;padding:24px 16px 70px}
+.ap-eyebrow{font-family:var(--font-sans);font-size:.62rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+h1{font-size:1.5rem;color:var(--navy);margin:0 0 4px}
+.ap-sub{font-family:var(--font-sans);font-size:.82rem;color:var(--muted);margin:0 0 24px}
+
+.card{background:var(--cream);border:1.5px solid var(--hairline);border-radius:10px;padding:18px;margin-bottom:14px}
+.fld{margin-bottom:12px}
+.fld:last-child{margin-bottom:0}
+label.fld-label{display:block;font-family:var(--font-sans);font-size:.64rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
+select,input{width:100%;box-sizing:border-box;padding:9px 12px;border:1.5px solid var(--hairline);border-radius:7px;font-size:.9rem;font-family:var(--font-sans);background:var(--paper);color:var(--ink);appearance:none;-webkit-appearance:none}
+select:focus,input:focus{outline:none;border-color:var(--amber)}
+.hint{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin-top:4px}
+
+.scope-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.scope-row.hidden{display:none}
+
+.quickfill{display:none;margin-top:10px;padding:12px;border:1.5px dashed var(--amber);border-radius:8px;background:rgba(184,134,11,.05)}
+.quickfill.visible{display:block}
+.qf-title{font-family:var(--font-sans);font-size:.72rem;font-weight:700;color:var(--ink);margin-bottom:6px}
+.qf-btn{font-family:var(--font-sans);font-size:.7rem;font-weight:700;letter-spacing:.5px;padding:7px 14px;border-radius:6px;border:none;background:var(--amber);color:#fff;cursor:pointer}
+
+.prompt-box{background:var(--navy-deep,#0D0D0D);color:rgba(255,255,255,.92);border-radius:10px;padding:16px;font-family:"SF Mono","Menlo",monospace;font-size:.72rem;line-height:1.7;white-space:pre-wrap;word-break:break-word;margin-top:14px;display:none;-webkit-user-select:all;user-select:all}
+.prompt-box.visible{display:block}
+.copy-btn{display:none;margin-top:8px;width:100%;padding:11px;background:var(--amber);color:#fff;border:none;border-radius:7px;font-size:.85rem;font-weight:700;cursor:pointer;font-family:var(--font-sans)}
+.copy-btn.visible{display:block}
+.copy-btn.copied{background:#27ae60}
+
+.scope-note{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin-top:8px;padding:8px 10px;background:var(--cream-deep);border-radius:6px;display:none}
+.scope-note.visible{display:block}
+.scope-note strong{color:var(--ink)}
+
+.ap-builder-banner{display:flex;align-items:center;justify-content:space-between;gap:14px;background:rgba(184,134,11,.08);border:1.5px solid var(--amber);border-radius:10px;padding:14px 16px;margin-bottom:18px;flex-wrap:wrap}
+.apb-title{font-family:var(--font-sans);font-size:.86rem;font-weight:800;color:var(--ink);margin-bottom:3px}
+.apb-sub{font-family:var(--font-sans);font-size:.74rem;color:var(--muted);line-height:1.45;max-width:430px}
+.apb-sub code{color:var(--ink);font-weight:700;background:transparent}
+.apb-btn{font-family:var(--font-sans);font-size:.78rem;font-weight:700;letter-spacing:.3px;padding:9px 16px;border-radius:7px;background:var(--amber);color:#fff;text-decoration:none;white-space:nowrap}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="teacher.html" class="back back-link" aria-label="Back"></a>
+  <a href="index.html" class="brand">Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+
+<div class="ap-wrap">
+  <div class="ap-eyebrow">Teacher Hub &middot; AI Prompts</div>
+  <h1>Prime your AI</h1>
+  <p class="ap-sub">Pick a task &mdash; the prompt is built with project rules and your live content gaps, ready to paste into any free AI. The AI <strong>returns text only</strong>; nothing connects to GitHub. You save or build the file yourself.</p>
+
+  <div class="ap-builder-banner">
+    <div>
+      <div class="apb-title">Filling vocabulary cards?</div>
+      <div class="apb-sub">Use the <strong>Content Builder</strong> &mdash; it turns the AI&rsquo;s word list into a ready-to-download <code>flashcards.html</code>, no copy-paste surgery.</div>
+    </div>
+    <a href="builder.html" class="apb-btn">Open Builder &#8594;</a>
+  </div>
+
+  <div class="card">
+    <div class="fld">
+      <label class="fld-label" for="ai-select">Which AI?</label>
+      <select id="ai-select" onchange="buildPrimer()">
+        <option value="">— select —</option>
+        <option value="deepseek">DeepSeek</option>
+        <option value="gemini">Gemini</option>
+        <option value="gpt">ChatGPT / GPT</option>
+        <option value="other">Other free AI</option>
+      </select>
+    </div>
+
+    <div class="fld">
+      <label class="fld-label" for="task-select">Task</label>
+      <select id="task-select" onchange="onTaskChange()">
+        <option value="">— select task —</option>
+        <optgroup label="Fill content gaps (auto-synced)">
+          <option value="fill-scope">Fill stubs — choose track + level</option>
+          <option value="fill-students">Fill what my students need</option>
+        </optgroup>
+        <optgroup label="Exam prep">
+          <option value="cambridge">Cambridge exam pages (KET→CPE)</option>
+          <option value="dele">DELE exam pages (Spanish)</option>
+        </optgroup>
+        <optgroup label="Spanish tracks (scaffolded — fill content)">
+          <option value="bootstrap-espanol-en">Fill /espanol-en/ — Spanish for English speakers</option>
+          <option value="bootstrap-espanol">Fill /espanol/ — universal Spanish + DELE</option>
+        </optgroup>
+        <optgroup label="Build">
+          <option value="new-chapter">Write a new chapter from scratch</option>
+        </optgroup>
+        <optgroup label="Quality">
+          <option value="audit">Audit a file or section</option>
+          <option value="bug">Fix a problem in a file</option>
+        </optgroup>
+        <option value="generic">General dev help</option>
+      </select>
+    </div>
+
+    <!-- Scope picker for fill-scope -->
+    <div class="scope-row hidden" id="scopeRow">
+      <div class="fld" style="margin-bottom:0">
+        <label class="fld-label" for="scope-track">Track</label>
+        <select id="scope-track" onchange="buildPrimer()">
+          <option value="all">All tracks</option>
+          <option value="en">English (universal)</option>
+          <option value="es">English via Spanish</option>
+          <option value="espanol-en">Spanish via English</option>
+        </select>
+      </div>
+      <div class="fld" style="margin-bottom:0">
+        <label class="fld-label" for="scope-level">Level</label>
+        <select id="scope-level" onchange="buildPrimer()">
+          <option value="all">All levels</option>
+          <option value="A1">A1</option><option value="A2">A2</option>
+          <option value="B1">B1</option><option value="B2">B2</option>
+          <option value="C1">C1</option><option value="C2">C2</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="scope-note" id="scopeNote"></div>
+
+    <!-- Quick-fill from roster -->
+    <div class="quickfill" id="quickfill">
+      <div class="qf-title" id="qfText">Reading your roster&hellip;</div>
+    </div>
+
+    <div id="prompt-output" class="prompt-box"></div>
+    <button id="copy-primer" class="copy-btn" onclick="copyPrimer()">Copy prompt</button>
+  </div>
+
+  <p class="hint" style="text-align:center">Stub lists update automatically from <a href="coverage.html">coverage</a>. Student gaps come from <a href="profile.html">profiles</a>. To turn a word list into a file, use the <a href="builder.html">Content Builder</a>.</p>
+</div>
+
+<footer class="site-footer">Word Play &middot; Teacher tools &middot; private</footer>
+
+<script>
+const REPO = 'malpasoft/wordplay';
+var coverageData = null;
+
+/* ── Load coverage data for auto-synced stub lists ── */
+fetch('shared/coverage-data.json?v=' + Date.now())
+  .then(function(r){ return r.json(); })
+  .then(function(d){ coverageData = d; buildPrimer(); })
+  .catch(function(){ coverageData = null; });
+
+function getCoreContext() {
+  return `Project: Word Play — a static Cambridge-English / Spanish course (vanilla HTML/CSS/JS, no build step).
+You do NOT have access to the repo or GitHub and you do NOT push anything.
+Your only job is to RETURN content as text — either a complete file, or a JSON word list — which the teacher saves and commits manually.
+Design rules to follow in any HTML you produce:
+  · accent colour: var(--amber) only — never hardcode a hex, no second accent colour
+  · no emoji in the UI
+  · keep the existing shared classes/IDs and asset versions intact
+Reference templates are read-only on the web (open and copy structure, do not try to edit them):
+  https://raw.githubusercontent.com/malpasoft/wordplay/main/CLAUDE.md
+  https://raw.githubusercontent.com/malpasoft/wordplay/main/es/a1/vocabulary/animals/flashcards.html
+After you hand the file back, the teacher runs the checkers locally (pedagogy_check.py, check_structure.py) and pushes.`;
+}
+
+const ES_TEMPLATE_NOTE = `TEMPLATE (read this raw file first to get the exact HTML):
+https://raw.githubusercontent.com/malpasoft/wordplay/main/es/a1/vocabulary/animals/flashcards.html
+Key parts: MASTERY_KEY, SLUG, LEVEL, WORDS [{word,ipa,def,ex}]
+speakWord() — lang='en-GB' rate=0.9 (words ARE English, UI is Spanish)
+showCard() flip interface, markMastered(), initMatch() match game
+Auto-complete: flashcards when fcSeen.size >= WORDS.length, game when completedRounds >= 5
+10 CEFR-appropriate English words per chapter. Spanish UI labels (Pronunciar, Dominar, Tarjetas, Juego, Lección).
+Word format: {id:"slug", word:"English", ipa:"/ˈɪp.ə/", def:"Spanish definition", ex:"Spanish sentence with <b>word</b> bold"}`;
+
+/* ── Track / level helpers ── */
+function trackName(t){ return t === 'es' ? 'English via Spanish' : t === 'en' ? 'English (universal)' : t === 'espanol-en' ? 'Spanish via English' : t === 'espanol' ? 'Spanish (universal)' : 'all tracks'; }
+
+function getStubs(track, level) {
+  if (!coverageData) return [];
+  return coverageData.chapters.filter(function(c){
+    if (c.status === 'complete') return false;
+    if (track && track !== 'all' && c.track !== track) return false;
+    if (level && level !== 'all' && c.level !== level) return false;
+    return true;
+  });
+}
+
+function stubListText(stubs) {
+  return stubs.map(function(c){ return c.url.replace('/index.html',''); }).join('\n');
+}
+
+/* ── Tasks that are static text ── */
+const STATIC_TASKS = {
+  'cambridge': `TASK: Write a Cambridge exam page (KET/PET/FCE/CAE/CPE) — English proficiency exams.
+Open one existing exam page (raw GitHub, under exams/) to copy the exact structure.
+Format: breadcrumb, chapter-nav, worksheet with ANSWERS + EXPLANATIONS arrays, GAME_DATA for the game.
+Use real Cambridge question types: multiple choice, gap fill, word formation, key word transformation.
+RETURN the complete HTML file as text. The teacher saves it and runs pedagogy_check.py before pushing.`,
+
+  'dele': `TASK: Write a DELE exam page — DELE is the official Spanish proficiency exam (Instituto Cervantes), the Spanish equivalent of Cambridge.
+DELE prep belongs in the Spanish courses: /espanol/exams/ (universal) and /espanol-en/exams/ (explained in English).
+Use real DELE task types: comprensión de lectura, comprensión auditiva, expresión escrita, expresión oral. Levels A1–C2.
+RETURN the complete HTML file(s) as text — the teacher saves them. Do not attempt to push or run anything.`,
+
+  'bootstrap-espanol': `TASK: Write content for the /espanol/ track — a UNIVERSAL Spanish course (CEFR A1–C2) with DELE exam prep.
+This is Spanish as the TARGET language (like the English course at /), no L1 assumptions.
+Mirror the existing structure: /espanol/{level}/ with gramatica · vocabulario · escritura sections.
+Open the reference flashcards.html (raw GitHub) to copy the exact template; reuse the shared engines unchanged.
+RETURN one complete chapter (the file contents) as text — start with ONE A1 grammar chapter as a proof. The teacher saves and checks it.`,
+
+  'bootstrap-espanol-en': `TASK: Write content for the /espanol-en/ track — the Spanish course EXPLAINED IN ENGLISH (L1: English).
+The scaffold already exists (placeholder pages under /espanol-en/a1/). Your job is to fill a chapter's real content.
+Spanish words, English definitions + interference notes (ser/estar, false cognates, subjunctive traps for English speakers).
+TIP: for vocabulary chapters use the Content Builder instead — it builds the file for you. For grammar/writing, RETURN the complete file as text.`,
+
+  'new-chapter': `TASK: Write a brand-new chapter.
+Open the reference files on raw GitHub first to copy the exact structure and asset versions (base.css?v=v123 etc).
+A chapter needs: slides.html, flashcards.html, game.html, worksheet.html, index.html (+ printables.html for writing).
+Vocab nav = Lesson + Flashcards + Game. Grammar nav = Lesson + Review + Game.
+10 words with IPA, definition, example. Every worksheet question needs an EXPLANATION.
+RETURN each file's full contents as text. The teacher saves them and runs pedagogy_check.py.`,
+
+  'audit': `TASK: Audit the file or section I paste below for quality.
+Check: CEFR-appropriate vocab, accurate IPA, natural examples, every question has an EXPLANATION, correct nav for the chapter type (vocab = Lesson/Flashcards/Game; grammar = Lesson/Review/Game).
+Report issues by severity, then RETURN a corrected version of the file as text if I ask for one.`,
+
+  'bug': `TASK: Help me fix a problem in a file I paste below.
+Note: grammar and Spanish/vocab pages differ in whitespace, so match structure exactly. Keep var(--amber), no emoji, shared classes intact.
+RETURN the corrected file as text — I apply it and run the checkers myself.`,
+
+  'generic': `TASK: (paste this primer first, then describe your request below — remember you only return text, you do not push)`
+};
+
+const AI_NOTES = {
+  deepseek: `You have web browsing. Open the raw GitHub reference files below to copy the exact structure — then RETURN your result as text. You do not have repo access and do not push.`,
+  gemini: `You have web browsing. Open the raw reference files below for the exact template. Return the finished content as text only — the teacher saves it.`,
+  gpt: `You have web browsing via the browser tool. Open the raw reference files below — do not guess at file structure. Return content as text; you do not push anything.`,
+  other: `Open the raw GitHub reference links below to see the exact template, then return your result as text. You do not have repo access.`
+};
+
+/* ── UI wiring ── */
+function onTaskChange() {
+  const task = document.getElementById('task-select').value;
+  document.getElementById('scopeRow').classList.toggle('hidden', task !== 'fill-scope');
+  document.getElementById('quickfill').classList.toggle('visible', task === 'fill-students');
+  if (task === 'fill-students') renderQuickfill();
+  buildPrimer();
+}
+
+function renderQuickfill() {
+  var students = [];
+  try { students = JSON.parse(localStorage.getItem('wordplay_student_profiles')) || []; } catch(e) {}
+  var el = document.getElementById('qfText');
+  var withLevel = students.filter(function(s){ return s.level; });
+  if (!withLevel.length) {
+    el.innerHTML = 'No students with a level set. Add them in <a href="profile.html">profiles</a> first, then the prompt will target exactly their gaps.';
+    return;
+  }
+  // Unique track+level combos
+  var combos = {};
+  withLevel.forEach(function(s){ combos[s.course + ' ' + s.level] = true; });
+  el.innerHTML = 'Targeting <strong>' + withLevel.length + ' student' + (withLevel.length!==1?'s':'') + '</strong> across ' + Object.keys(combos).length + ' level' + (Object.keys(combos).length!==1?'s':'') + '. The prompt below lists only the chapters they need.';
+}
+
+function buildStudentGapTask() {
+  var students = [];
+  try { students = JSON.parse(localStorage.getItem('wordplay_student_profiles')) || []; } catch(e) {}
+  var withLevel = students.filter(function(s){ return s.level; });
+  if (!withLevel.length) return 'TASK: No students with a level set yet. Add students in profile.html, then regenerate this prompt.';
+  if (!coverageData) return 'TASK: Coverage data not loaded — run python3 scripts/gen_coverage.py.';
+
+  // Collect needed track+level combos and which students drive them
+  var combos = {};
+  withLevel.forEach(function(s){
+    var key = s.course + '|' + s.level;
+    if (!combos[key]) combos[key] = [];
+    combos[key].push(s.name);
+  });
+
+  var lines = ['TASK: Fill the content gaps blocking my actual students.', ''];
+  Object.keys(combos).sort().forEach(function(key){
+    var parts = key.split('|');
+    var track = parts[0], level = parts[1];
+    var stubs = getStubs(track, level);
+    lines.push('— ' + trackName(track) + ' ' + level + '  (students: ' + combos[key].join(', ') + ')');
+    if (!stubs.length) {
+      lines.push('  All content complete for this level. Nothing to do.');
+    } else {
+      lines.push('  ' + stubs.length + ' chapter(s) to fill:');
+      stubs.forEach(function(c){ lines.push('  ' + c.url.replace('/index.html','')); });
+    }
+    lines.push('');
+  });
+  lines.push('For EACH chapter above, return a separate JSON array of 10 CEFR-appropriate words:');
+  lines.push('[{"word":"...","ipa":"/.../","def":"...","ex":"... <b>word</b> ..."}]');
+  lines.push('I paste each list into the Content Builder (builder.html), which generates the flashcards.html file for me — you do not write HTML or push anything.');
+  return lines.join('\n');
+}
+
+function buildScopeTask() {
+  const track = document.getElementById('scope-track').value;
+  const level = document.getElementById('scope-level').value;
+  const note = document.getElementById('scopeNote');
+
+  if (!coverageData) {
+    note.classList.remove('visible');
+    return 'TASK: Coverage data not loaded — run python3 scripts/gen_coverage.py first.';
+  }
+  const stubs = getStubs(track, level);
+  note.classList.add('visible');
+  note.innerHTML = '<strong>' + stubs.length + '</strong> stub' + (stubs.length!==1?'s':'') + ' in ' + trackName(track) + (level!=='all' ? ' ' + level : ', all levels') + '.';
+
+  if (!stubs.length) {
+    return 'TASK: No stubs in this scope — everything is complete. Pick a different track/level.';
+  }
+  return `TASK: Provide words for ${stubs.length} flashcard chapter(s) — ${trackName(track)}${level!=='all' ? ' ' + level : ''}.
+
+Chapters that need words:
+${stubListText(stubs)}
+
+For EACH chapter, return a separate JSON array of 10 CEFR-appropriate words:
+[{"word":"...","ipa":"/.../","def":"...","ex":"... <b>word</b> ..."}]
+I paste each list into the Content Builder (builder.html) — it generates the flashcards.html file. You only return JSON; you do not write HTML or push anything.`;
+}
+
+function buildPrimer() {
+  const ai = document.getElementById('ai-select').value;
+  const task = document.getElementById('task-select').value;
+  const box = document.getElementById('prompt-output');
+  const btn = document.getElementById('copy-primer');
+  const note = document.getElementById('scopeNote');
+
+  if (task !== 'fill-scope') note.classList.remove('visible');
+
+  if (!ai || !task) { box.classList.remove('visible'); btn.classList.remove('visible'); return; }
+
+  let taskText;
+  if (task === 'fill-scope') taskText = buildScopeTask();
+  else if (task === 'fill-students') taskText = buildStudentGapTask();
+  else taskText = STATIC_TASKS[task] || '';
+
+  const prompt = `${AI_NOTES[ai] || ''}
+
+${getCoreContext()}
+
+${taskText}`;
+  box.textContent = prompt.trim();
+  box.classList.add('visible');
+  btn.classList.add('visible');
+  btn.classList.remove('copied');
+  btn.textContent = 'Copy prompt';
+}
+
+function copyPrimer() {
+  const box = document.getElementById('prompt-output');
+  navigator.clipboard.writeText(box.textContent).then(function(){
+    const btn = document.getElementById('copy-primer');
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(function(){ btn.textContent = 'Copy prompt'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+</script>
+</body>
+</html>

@@ -1,65 +1,58 @@
-// GET /api/profiles/:code  — load all profiles for a sync code
-// PUT /api/profiles/:code  — save profiles array (full replace)
-export async function onRequest(context) {
-  const { env, params, request } = context;
-  const code = params.code;
+// Cloudflare Pages Function: GET/POST /api/profiles/:code
+// Stores teacher profiles in D1 keyed by a shared passphrase.
+// B1 upgrade path: add auth middleware + /api/profiles (cookie-based) without
+// removing this route — existing clients keep working during the transition.
 
-  const headers = {
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Methods': 'GET, PUT, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
-  };
+const MAX_BODY = 512 * 1024;
 
-  if (request.method === 'OPTIONS') {
-    return new Response(null, { status: 204, headers });
+export async function onRequestGet({ params, env }) {
+  const code = params.code || '';
+  if (!isValidCode(code)) {
+    return json({ error: 'code must be 8–64 characters' }, 400);
   }
-
-  if (!env.DB) {
-    return new Response(JSON.stringify({ error: 'DB not bound' }), { status: 503, headers });
+  const row = await env.DB.prepare(
+    'SELECT data, updated_at FROM teacher_profiles WHERE code = ?'
+  ).bind(code).first();
+  if (!row) {
+    return json({ profiles: [], updated_at: null });
   }
+  return json({ profiles: JSON.parse(row.data), updated_at: row.updated_at });
+}
 
-  if (code.length < 8 || code.length > 64) {
-    return new Response(JSON.stringify({ error: 'Invalid sync code' }), { status: 400, headers });
+export async function onRequestPost({ params, env, request }) {
+  const code = params.code || '';
+  if (!isValidCode(code)) {
+    return json({ error: 'code must be 8–64 characters' }, 400);
   }
-
-  if (request.method === 'GET') {
-    const rows = await env.DB.prepare(
-      'SELECT slug, name, l1, level, goals, notes, updated_at FROM profiles WHERE sync_code = ? ORDER BY id'
-    ).bind(code).all();
-
-    const updated_at = rows.results.length
-      ? rows.results.reduce((a, b) => a.updated_at > b.updated_at ? a : b).updated_at
-      : null;
-
-    return new Response(JSON.stringify({ profiles: rows.results, updated_at }), { headers });
+  const contentLength = parseInt(request.headers.get('content-length') || '0');
+  if (contentLength > MAX_BODY) {
+    return json({ error: 'payload too large' }, 413);
   }
-
-  if (request.method === 'PUT') {
-    let body;
-    try { body = await request.json(); } catch {
-      return new Response(JSON.stringify({ error: 'Invalid JSON' }), { status: 400, headers });
-    }
-
-    const profiles = Array.isArray(body.profiles) ? body.profiles : [];
-    const now = new Date().toISOString();
-
-    const stmts = profiles.map(p =>
-      env.DB.prepare(
-        `INSERT INTO profiles (sync_code, slug, name, l1, level, goals, notes, updated_at)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-         ON CONFLICT(sync_code, slug) DO UPDATE SET
-           name=excluded.name, l1=excluded.l1, level=excluded.level,
-           goals=excluded.goals, notes=excluded.notes, updated_at=excluded.updated_at`
-      ).bind(code, p.slug || '', p.name || '', p.l1 || '', p.level || '', p.goals || '', p.notes || '', now)
-    );
-
-    if (stmts.length > 0) {
-      await env.DB.batch(stmts);
-    }
-
-    return new Response(JSON.stringify({ ok: true, saved: stmts.length, updated_at: now }), { headers });
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return json({ error: 'invalid JSON' }, 400);
   }
+  if (!Array.isArray(body.profiles)) {
+    return json({ error: 'profiles must be an array' }, 400);
+  }
+  const now = Date.now();
+  await env.DB.prepare(
+    `INSERT INTO teacher_profiles (code, data, updated_at)
+     VALUES (?, ?, ?)
+     ON CONFLICT(code) DO UPDATE SET data = excluded.data, updated_at = excluded.updated_at`
+  ).bind(code, JSON.stringify(body.profiles), now).run();
+  return json({ ok: true, updated_at: now });
+}
 
-  return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405, headers });
+function isValidCode(c) {
+  return typeof c === 'string' && c.length >= 8 && c.length <= 64;
+}
+
+function json(data, status = 200) {
+  return new Response(JSON.stringify(data), {
+    status,
+    headers: { 'Content-Type': 'application/json' }
+  });
 }

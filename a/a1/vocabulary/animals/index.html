@@ -31,8 +31,13 @@
       <span class="ac-arrow">&#8594;</span>
     </a>
     <a href="flashcards.html" class="activity-card" data-activity="practice">
-      <span class="ac-title">Flashcards &amp; Match</span>
-      <p class="ac-desc">Flip cards, then match words to definitions</p>
+      <span class="ac-title">Flashcards</span>
+      <p class="ac-desc">Flip through all 10 words &mdash; see IPA, definition and example</p>
+      <span class="ac-arrow">&#8594;</span>
+    </a>
+    <a href="match.html" class="activity-card" data-activity="match">
+      <span class="ac-title">Match game</span>
+      <p class="ac-desc">Match each word to its definition &mdash; 3 lives, match every word twice to win</p>
       <span class="ac-arrow">&#8594;</span>
     </a>
     <a href="game.html" class="activity-card" data-activity="game">
@@ -49,9 +54,11 @@
   try {
     var prog=JSON.parse(localStorage.getItem('wordplay_progress')||'{}');
     var lvl=prog['a1']||{};
+    var masteryKey='wordplay_vocab_a1_animals_mastered';
     var defs=[
       ['slides.html', lvl['slides_animals']&&lvl['slides_animals'].done],
-      ['flashcards.html', !!localStorage.getItem('wordplay_vocab_a1_animals_mastered')],
+      ['flashcards.html', !!localStorage.getItem(masteryKey)],
+      ['match.html', !!localStorage.getItem(masteryKey)],
       ['game.html', lvl['wordplay_game_a1_animals']&&lvl['wordplay_game_a1_animals'].pct>=70]
     ];
     defs.forEach(function(d){

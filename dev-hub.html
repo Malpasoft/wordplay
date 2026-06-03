@@ -2,177 +2,75 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Word Play · Dev Hub</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>Dev Hub | Word Play</title>
+<link rel="stylesheet" href="shared/base.css?v=v123">
 <script src="shared/dark-init.js?v=v109"></script>
 <style>
-:root {
-  --ink: #1A1A1A; --paper: #F7F3EE; --amber: #B8860B;
-  --amber-light: #F5E6B8; --muted: #6B6B6B; --hairline: #D4CFC8;
-  --surface: #FFFFFF; --code-bg: #F0EDE8; --green: #2E7D52;
-}
-body.dark {
-  --ink: #F0F0F0; --paper: #0E0E0E; --amber: #C9A050;
-  --amber-light: #3A2C0A; --muted: #9A9A9A; --hairline: #2A2A2A;
-  --surface: #1A1A1A; --code-bg: #141414; --green: #4CAF82;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: var(--paper); color: var(--ink); font-size: 15px; line-height: 1.6; }
-header { background: var(--ink); color: white; padding: 16px 20px; border-bottom: 3px solid var(--amber); display: flex; align-items: center; gap: 12px; }
-header .header-left { flex: 1; }
-header h1 { font-family: Georgia, serif; font-size: 1.5rem; font-weight: 700; }
-header p { font-size: 0.75rem; color: rgba(255,255,255,0.5); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
-.dark-toggle {
-  background: rgba(255,255,255,.1); border: 1.5px solid rgba(255,255,255,.25);
-  color: rgba(255,255,255,.85); font-family: inherit; font-size: .72rem;
-  font-weight: 700; letter-spacing: .5px; padding: 6px 12px; border-radius: 4px;
-  cursor: pointer; white-space: nowrap; flex-shrink: 0;
-}
-.dark-toggle:hover { background: rgba(255,255,255,.18); }
-.container { max-width: 680px; margin: 0 auto; padding: 24px 16px 80px; }
-.section { margin-bottom: 32px; }
-.label { font-size: 0.62rem; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
-h2 { font-family: Georgia, serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 14px; color: var(--ink); }
-.card { background: var(--surface); border: 1.5px solid var(--hairline); border-radius: 10px; padding: 18px; margin-bottom: 12px; }
-.card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; color: var(--ink); }
-.card p { font-size: 0.85rem; color: var(--muted); }
-select, input, textarea {
-  width: 100%; padding: 10px 12px; border: 1.5px solid var(--hairline);
-  border-radius: 7px; font-size: 0.9rem; font-family: inherit;
-  background: var(--surface); color: var(--ink); margin-bottom: 10px;
-  appearance: none; -webkit-appearance: none;
-}
-select:focus, input:focus, textarea:focus { outline: none; border-color: var(--amber); }
-textarea { min-height: 90px; resize: vertical; }
-.btn {
-  display: inline-block; padding: 10px 20px; border-radius: 7px;
-  font-size: 0.85rem; font-weight: 700; letter-spacing: 0.3px;
-  cursor: pointer; border: none; font-family: inherit;
-}
-.btn-primary { background: var(--amber); color: #1A1A1A; }
-.btn-secondary { background: var(--surface); color: var(--ink); border: 1.5px solid var(--hairline); }
-.btn:active { opacity: 0.8; }
-.btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
-.prompt-box {
-  background: #111; color: rgba(255,255,255,0.92);
-  border-radius: 10px; padding: 16px;
-  font-family: "SF Mono", "Menlo", monospace; font-size: 0.72rem;
-  line-height: 1.7; white-space: pre-wrap; word-break: break-word;
-  margin-top: 12px; display: none;
-  -webkit-user-select: all; user-select: all;
-  border: 1px solid rgba(255,255,255,.08);
-}
-.prompt-box.visible { display: block; }
-.copy-btn {
-  display: none; margin-top: 8px; width: 100%;
-  padding: 10px; background: var(--amber); color: #1A1A1A;
-  border: none; border-radius: 7px; font-size: 0.85rem;
-  font-weight: 700; cursor: pointer; font-family: inherit;
-}
-.copy-btn.visible { display: block; }
-.copy-btn.copied { background: var(--green); color: #fff; }
-.link-list { list-style: none; padding: 0; }
-.link-list li { margin-bottom: 8px; }
-.link-list a {
-  display: block; background: var(--surface); border: 1.5px solid var(--hairline);
-  border-radius: 7px; padding: 10px 14px; text-decoration: none;
-  color: var(--amber); font-size: 0.82rem; font-weight: 600;
-  word-break: break-all;
-}
-.link-list a:active { background: var(--amber-light); }
-.word-rows { margin-bottom: 10px; }
-.word-row { display: grid; grid-template-columns: 1fr 1fr 2fr 2fr; gap: 6px; margin-bottom: 6px; }
-.word-row input { margin-bottom: 0; font-size: 0.8rem; padding: 7px 9px; }
-.word-row .col-label { font-size: 0.6rem; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 0 2px 2px; }
-.dict-output { display: none; background: var(--code-bg); color: var(--ink); border: 1px solid var(--hairline); border-radius: 7px; padding: 14px; font-family: "SF Mono","Menlo",monospace; font-size: 0.72rem; white-space: pre-wrap; word-break: break-word; margin-top: 10px; -webkit-user-select: all; user-select: all; }
-.dict-output.visible { display: block; }
-hr { border: none; border-top: 1px solid var(--hairline); margin: 32px 0; }
-.status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--green); margin-right: 6px; }
-
-/* ── Dark mode: header must stay dark ── */
-body.dark header { background: #111 !important; border-bottom-color: rgba(255,255,255,.08) !important; }
-
-/* ── Column header row in word builder ── */
-.col-header-row { display: grid; grid-template-columns: 1fr 1fr 2fr 2fr; gap: 6px; margin-bottom: 4px; padding: 0 2px; }
-
-/* ── Mobile: stack word-row to 2x2 grid at 480px, then 1 col at 360px ── */
-@media (max-width: 520px) {
-  .word-row { grid-template-columns: 1fr 1fr; }
-  .col-header-row { grid-template-columns: 1fr 1fr; }
-  /* On mobile, show col-labels inside each input row */
-  .col-header-row { display: none; }
-}
-@media (max-width: 360px) {
-  .word-row { grid-template-columns: 1fr; }
-}
+.dh-wrap{max-width:680px;margin:0 auto;padding:24px 16px 70px}
+.dh-eyebrow{font-family:var(--font-sans);font-size:.62rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+h1{font-size:1.5rem;color:var(--navy);margin:0 0 4px}
+.dh-sub{font-family:var(--font-sans);font-size:.82rem;color:var(--muted);margin:0 0 24px}
+.section{margin-bottom:28px}
+.label{font-family:var(--font-sans);font-size:.62rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+h2{font-size:1.15rem;color:var(--navy);margin:0 0 12px}
+.card{background:var(--cream);border:1.5px solid var(--hairline);border-radius:10px;padding:16px;margin-bottom:12px}
+.card h3{font-size:.95rem;font-weight:700;color:var(--navy);margin:0 0 6px}
+.card p{font-family:var(--font-sans);font-size:.85rem;color:var(--muted);margin:0}
+.card code{font-family:"SF Mono","Menlo",monospace;font-size:.78rem;background:var(--cream-deep);padding:1px 5px;border-radius:3px;color:var(--ink)}
+select,input{width:100%;box-sizing:border-box;padding:9px 12px;border:1.5px solid var(--hairline);border-radius:7px;font-size:.9rem;font-family:var(--font-sans);background:var(--paper);color:var(--ink);margin-bottom:8px;appearance:none;-webkit-appearance:none}
+select:focus,input:focus{outline:none;border-color:var(--amber)}
+.btn{display:inline-block;padding:9px 18px;border-radius:7px;font-size:.82rem;font-weight:700;cursor:pointer;border:none;font-family:var(--font-sans)}
+.btn-primary{background:var(--amber);color:#fff}
+.btn-secondary{background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline)}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.word-rows{margin-bottom:10px}
+.word-row{display:grid;grid-template-columns:1fr 1fr 2fr 2fr;gap:6px;margin-bottom:6px}
+.word-row input{margin-bottom:0;font-size:.8rem;padding:7px 9px}
+.col-label{font-family:var(--font-sans);font-size:.58rem;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:1px;padding:0 2px 2px}
+.dict-output{display:none;background:var(--cream-deep);border:1px solid var(--hairline);border-radius:7px;padding:14px;font-family:"SF Mono","Menlo",monospace;font-size:.72rem;white-space:pre-wrap;word-break:break-word;margin-top:10px;-webkit-user-select:all;user-select:all}
+.dict-output.visible{display:block}
+.copy-btn{display:none;margin-top:8px;width:100%;padding:10px;background:var(--amber);color:#fff;border:none;border-radius:7px;font-size:.84rem;font-weight:700;cursor:pointer;font-family:var(--font-sans)}
+.copy-btn.visible{display:block}
+.copy-btn.copied{background:#27ae60}
+.link-list{list-style:none;padding:0;margin:0}
+.link-list li{margin-bottom:7px}
+.link-list a{display:block;background:var(--cream);border:1.5px solid var(--hairline);border-radius:7px;padding:9px 13px;text-decoration:none;color:var(--amber);font-family:var(--font-sans);font-size:.8rem;font-weight:600;word-break:break-all;transition:border-color .15s}
+.link-list a:hover{border-color:var(--amber)}
+.ctx-box{position:relative}
+.ctx-box textarea{width:100%;box-sizing:border-box;font-family:"SF Mono","Menlo",monospace;font-size:.74rem;padding:12px;border:1.5px solid var(--hairline);border-radius:8px;background:var(--paper);color:var(--ink);resize:vertical}
+.ctx-copy{position:absolute;top:8px;right:8px;font-family:var(--font-sans);font-size:.62rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:4px;border:1.5px solid var(--hairline);background:var(--paper);color:var(--muted);cursor:pointer}
+hr{border:none;border-top:1px solid var(--hairline);margin:28px 0}
+.run-block{font-family:"SF Mono","Menlo",monospace;font-size:.78rem;background:var(--cream-deep);padding:10px 12px;border-radius:6px;margin-top:6px;line-height:1.9;color:var(--ink)}
 </style>
 </head>
 <body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="teacher.html" class="back back-link" aria-label="Back"></a>
+  <a href="index.html" class="brand">Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
 
-<header>
-  <div class="header-left">
-    <h1>Word Play · Dev Hub</h1>
-    <p>AI content tool · private</p>
-  </div>
-  <button class="dark-toggle" onclick="toggleDark()">&#9680; Dark</button>
-</header>
+<div class="dh-wrap">
+  <div class="dh-eyebrow">Teacher Hub &middot; Dev Hub</div>
+  <h1>Workshop tools</h1>
+  <p class="dh-sub">Build word data, snapshot your roster for AIs, grab repo links, and follow the roadmap. For ready-made prompts use <a href="ai-prompts.html">AI Prompts</a>.</p>
 
-<div class="container">
-
-  <!-- ── SECTION 1: AI PRIMER ── -->
+  <!-- ── WORD BUILDER ── -->
   <div class="section">
-    <div class="label">Step 1</div>
-    <h2>Prime your AI</h2>
-    <div class="card">
-      <h3>Dev branch name</h3>
-      <input id="dev-branch" type="text" placeholder="e.g. content/es-stubs-june" oninput="buildPrimer()">
-      <p style="font-size:.78rem;color:var(--muted);margin-top:-6px;margin-bottom:10px">AI will push here only — you review and merge to main.</p>
-      <h3>Which AI are you using?</h3>
-      <select id="ai-select" onchange="buildPrimer()">
-        <option value="">— select —</option>
-        <option value="deepseek">DeepSeek</option>
-        <option value="gemini">Gemini</option>
-        <option value="gpt">ChatGPT / GPT-4</option>
-        <option value="claude">Claude Code (new session)</option>
-      </select>
-      <h3 style="margin-top:10px">What do you want to do?</h3>
-      <select id="task-select" onchange="buildPrimer()">
-        <option value="">— select task —</option>
-        <optgroup label="ES Stubs — do in order">
-          <option value="fill-es-a">Batch A: ES A1+A2 stubs (18 chapters)</option>
-          <option value="fill-es-b">Batch B: ES B1+B2 stubs (27 chapters)</option>
-          <option value="fill-es-c">Batch C: ES C1+C2 stubs (26 chapters)</option>
-        </optgroup>
-        <optgroup label="Content">
-          <option value="cambridge">Fill Cambridge exam pages (KET→CPE)</option>
-          <option value="new-chapter">Create a new chapter from scratch</option>
-        </optgroup>
-        <optgroup label="Quality">
-          <option value="verify">Verify a branch — run all checks + report</option>
-          <option value="audit">Audit a file or section for quality</option>
-          <option value="bug">Fix a bug or structure issue</option>
-        </optgroup>
-        <option value="generic">General dev help</option>
-      </select>
-      <div id="prompt-output" class="prompt-box"></div>
-      <button id="copy-primer" class="copy-btn" onclick="copyPrimer()">Copy prompt</button>
-    </div>
-  </div>
-
-  <hr>
-
-  <!-- ── SECTION 2: CHAPTER WORD BUILDER ── -->
-  <div class="section">
-    <div class="label">Step 2 (optional)</div>
+    <div class="label">Tool</div>
     <h2>Build chapter word data</h2>
-    <p style="font-size:.85rem;color:var(--muted);margin-bottom:14px">Fill in 10 words — paste the output into your AI or directly into a fill script.</p>
+    <p style="font-family:var(--font-sans);font-size:.85rem;color:var(--muted);margin-bottom:12px">Fill in 10 words — paste the output into your AI or a fill script.</p>
     <div class="card">
-      <select id="ch-level" style="margin-bottom:6px">
+      <select id="ch-level">
         <option value="a1">A1</option><option value="a2">A2</option>
         <option value="b1">B1</option><option value="b2">B2</option>
         <option value="c1">C1</option><option value="c2">C2</option>
       </select>
-      <select id="ch-track" style="margin-bottom:6px">
+      <select id="ch-track">
         <option value="en">English track (en)</option>
         <option value="es">Spanish track (es)</option>
       </select>
@@ -183,7 +81,7 @@ body.dark header { background: #111 !important; border-bottom-color: rgba(255,25
         <div class="col-label">Word</div>
         <div class="col-label">IPA</div>
         <div class="col-label">Definition</div>
-        <div class="col-label">Example sentence</div>
+        <div class="col-label">Example</div>
       </div>
       <div class="word-rows" id="word-rows"></div>
 
@@ -192,23 +90,40 @@ body.dark header { background: #111 !important; border-bottom-color: rgba(255,25
         <button class="btn btn-secondary" onclick="clearWords()">Clear</button>
       </div>
       <div id="dict-output" class="dict-output"></div>
-      <button id="copy-dict" class="copy-btn" onclick="copyDict()" style="display:none">Copy dict</button>
+      <button id="copy-dict" class="copy-btn" onclick="copyDict()">Copy dict</button>
     </div>
   </div>
 
   <hr>
 
-  <!-- ── SECTION 3: RAW FILE LINKS ── -->
+  <!-- ── CLASS CONTEXT ── -->
+  <div class="section">
+    <div class="label">Tool</div>
+    <h2>Student roster snapshot</h2>
+    <p style="font-family:var(--font-sans);font-size:.85rem;color:var(--muted);margin-bottom:12px">Paste into any AI so it knows what to prioritise for your real students.</p>
+    <div class="ctx-box">
+      <textarea id="classContext" rows="8" readonly placeholder="Loading student profiles…"></textarea>
+      <button class="ctx-copy" onclick="copyClassContext()">Copy</button>
+    </div>
+    <p style="font-family:var(--font-sans);font-size:.75rem;color:var(--muted);margin-top:6px">Add students in <a href="profile.html">profiles</a> first. Reads your current list from localStorage.</p>
+  </div>
+
+  <hr>
+
+  <!-- ── RAW LINKS ── -->
   <div class="section">
     <div class="label">Quick links</div>
-    <h2>Key repo files (raw)</h2>
-    <p style="font-size:.85rem;color:var(--muted);margin-bottom:12px">Paste these URLs into any AI with web browsing — it can read them directly.</p>
+    <h2>Key repo files</h2>
+    <p style="font-family:var(--font-sans);font-size:.85rem;color:var(--muted);margin-bottom:12px">Paste raw URLs into any AI with web browsing — it can read them directly.</p>
     <ul class="link-list">
-      <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/CLAUDE.md" target="_blank">CLAUDE.md — project rules</a></li>
-      <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/AI_HANDOVER.md" target="_blank">AI_HANDOVER.md — full context</a></li>
+      <li><a href="coverage.html">coverage.html — content status</a></li>
+      <li><a href="profile.html">profile.html — student profiles + gaps</a></li>
+      <li><a href="ai-prompts.html">ai-prompts.html — prompt generator</a></li>
+      <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/CLAUDE.md" target="_blank">CLAUDE.md — project rules (raw)</a></li>
+      <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/AI_HANDOVER.md" target="_blank">AI_HANDOVER.md — full context (raw)</a></li>
       <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/scripts/gen_chapter.py" target="_blank">gen_chapter.py — scaffold generator</a></li>
       <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/scripts/fill_chapter.py" target="_blank">fill_chapter.py — content filler</a></li>
-      <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/scripts/fill_en_c1c2_vocab.py" target="_blank">fill_en_c1c2_vocab.py — reference fill script</a></li>
+      <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/scripts/gen_coverage.py" target="_blank">gen_coverage.py — refresh coverage</a></li>
       <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/scripts/pedagogy_check.py" target="_blank">pedagogy_check.py — quality gate</a></li>
       <li><a href="https://raw.githubusercontent.com/malpasoft/wordplay/main/shared/store.js" target="_blank">store.js — localStorage engine</a></li>
     </ul>
@@ -216,256 +131,112 @@ body.dark header { background: #111 !important; border-bottom-color: rgba(255,25
 
   <hr>
 
-  <!-- ── SECTION 4: NEXT STEPS ── -->
+  <!-- ── ROADMAP ── -->
   <div class="section">
     <div class="label">Roadmap</div>
     <h2>Next steps — in order</h2>
 
-    <div class="card">
-      <div class="meta" style="color:var(--amber);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px">Step 1 — now</div>
-      <h3>ES Batch A: A1 + A2 stubs (18 chapters)</h3>
-      <p>Select DeepSeek + "Batch A", name branch <code>content/es-a1-a2</code>, run script, verify, merge.</p>
+    <div class="card" style="border-left:3px solid #27ae60">
+      <h3 style="color:#27ae60">Done — Teacher toolkit</h3>
+      <p>Menu (teacher.html) → AI Prompts, Coverage, Profiles, Dev Hub. Prompts auto-sync stub lists from coverage. Profiles surface per-student gaps.</p>
     </div>
 
     <div class="card">
-      <div class="meta" style="color:var(--amber);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px">Step 2</div>
-      <h3>ES Batch B: B1 + B2 stubs (27 chapters)</h3>
-      <p>Branch <code>content/es-b1-b2</code>. Same process. B1/B2 words = FCE phrasal verbs + collocations.</p>
+      <h3>Step 1 — ES flashcard stubs (A→B→C)</h3>
+      <p>Open <a href="ai-prompts.html">AI Prompts</a> → "Fill stubs — choose track + level" → ES → pick a level → copy → run with DeepSeek. Or "Fill what my students need" to target your roster.</p>
     </div>
 
     <div class="card">
-      <div class="meta" style="color:var(--amber);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px">Step 3</div>
-      <h3>ES Batch C: C1 + C2 stubs (26 chapters)</h3>
-      <p>Branch <code>content/es-c1-c2</code>. C1/C2 = CAE/CPE academic + nuanced register.</p>
+      <h3>Step 2 — Cambridge exam pages</h3>
+      <p>Branch <code>content/cambridge-exams</code>. KET → CPE, real exam formats.</p>
     </div>
 
     <div class="card">
-      <div class="meta" style="color:var(--amber);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px">Step 4</div>
-      <h3>Cambridge exam pages</h3>
-      <p>Branch <code>content/cambridge-exams</code>. KET → CPE. Real exam question formats.</p>
+      <h3>Step 3 — Spanish course + DELE</h3>
+      <p>Bootstrap <code>/espanol/</code> (universal Spanish, DELE prep) then <code>/espanol-en/</code> (Spanish for English speakers). Use the "Bootstrap" prompts.</p>
     </div>
 
     <div class="card">
-      <div class="meta" style="color:var(--amber);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px">Step 5 — needs Claude</div>
-      <h3>Auth + payments (Phase 3/4)</h3>
-      <p>Custom domain first. Then Cloudflare Worker + D1 + argon2 + passkeys. Stripe Checkout. Needs judgment — use Claude for this one.</p>
+      <h3>Step 4 — Accounts + cloud sync</h3>
+      <p>Needs Claude: Cloudflare Worker + D1 + passkeys. Profiles migrate from localStorage to real accounts.</p>
     </div>
 
     <div class="card" style="border-top:3px solid var(--amber)">
-      <h3>After every batch — run this</h3>
-      <p style="font-family:monospace;font-size:.78rem;background:var(--code-bg);padding:8px;border-radius:5px;margin-top:6px">
+      <h3>After every batch</h3>
+      <div class="run-block">
         python3 scripts/pedagogy_check.py<br>
         python3 scripts/check_links.py<br>
-        python3 scripts/check_structure.py
-      </p>
-      <p style="margin-top:8px;font-size:.82rem;color:var(--muted)">All must show 0 before merging to main.</p>
+        python3 scripts/check_structure.py<br>
+        python3 scripts/gen_coverage.py
+      </div>
+      <p style="margin-top:8px">First three at 0 failures before merging. gen_coverage refreshes the teacher view.</p>
     </div>
   </div>
-
 </div>
+
+<footer class="site-footer">Word Play &middot; Teacher tools &middot; private</footer>
 
 <script>
 const REPO = 'malpasoft/wordplay';
 
-function getDevBranch() {
-  return document.getElementById('dev-branch').value.trim() || 'content/dev';
+/* ── Class context snapshot ── */
+function buildClassContext() {
+  try {
+    var students = JSON.parse(localStorage.getItem('wordplay_student_profiles')) || [];
+    if (!students.length) return 'No students found in profile.html yet.';
+
+    var levelOrder = {A1:1,A2:2,B1:3,B2:4,C1:5,C2:6};
+    students.sort(function(a,b){ return (levelOrder[a.level]||9)-(levelOrder[b.level]||9)||a.name.localeCompare(b.name); });
+
+    var lines = ['STUDENT ROSTER — ' + new Date().toLocaleDateString(), ''];
+    students.forEach(function(s) {
+      var trackLabel = s.course === 'es' ? 'Spanish→English (ES)' : 'English (EN)';
+      var parts = [s.name, s.level || 'No level', s.l1 + ' speaker', trackLabel];
+      if (s.age) parts.push('age ' + s.age);
+      if (s.code) parts.push('group: ' + s.code);
+      lines.push('• ' + parts.join(' | '));
+      if (s.notes) lines.push('  Notes: ' + s.notes);
+    });
+
+    lines.push('', 'PRIORITY — students by level:');
+    var groups = {};
+    students.forEach(function(s) {
+      if (!s.level) return;
+      var key = s.course.toUpperCase() + ' ' + s.level;
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(s.name);
+    });
+    Object.keys(groups).sort().forEach(function(k) {
+      lines.push('• ' + k + ': ' + groups[k].join(', ') + ' (' + groups[k].length + ' student' + (groups[k].length!==1?'s':'')+')');
+    });
+    lines.push('', 'Focus content fill on the levels with the most students first.');
+    return lines.join('\n');
+  } catch(e) {
+    return 'Could not load student profiles.';
+  }
 }
 
-function getCoreContext() {
-  const branch = getDevBranch();
-  return `Repo: ${REPO}
-IMPORTANT: Develop on branch "${branch}" — NEVER push directly to main.
-When done: commit + push to ${branch} only. Owner reviews and merges to main.
-Rules: var(--amber) only · no emoji · Python not sed/awk · pedagogy_check.py must stay 0 failures
-After every change run all three checks:
-  python3 scripts/pedagogy_check.py
-  python3 scripts/check_links.py
-  python3 scripts/check_structure.py
-All must show 0 failures before pushing.
-Key files (read via raw.githubusercontent.com/malpasoft/wordplay/main/):
-  CLAUDE.md, AI_HANDOVER.md, scripts/fill_en_c1c2_vocab.py`;
+function copyClassContext() {
+  navigator.clipboard.writeText(document.getElementById('classContext').value).then(function(){ alert('Copied!'); });
 }
 
-const ES_TEMPLATE_NOTE = `TEMPLATE (read this raw file first to get the exact HTML):
-https://raw.githubusercontent.com/malpasoft/wordplay/main/es/a1/vocabulary/animals/flashcards.html
-Key parts: MASTERY_KEY, SLUG, LEVEL, WORDS [{word,ipa,def,ex}]
-speakWord() — lang='en-GB' rate=0.9 (words ARE English, UI is Spanish)
-showCard() flip interface, markMastered(), initMatch() match game
-Auto-complete: flashcards when fcSeen.size >= WORDS.length, game when completedRounds >= 5
-10 CEFR-appropriate English words per chapter. Spanish UI labels (Pronunciar, Dominar, Tarjetas, Juego, Lección).
-Word format: {id:"slug", word:"English", ipa:"/ˈɪp.ə/", def:"Spanish definition", ex:"Spanish sentence with <b>word</b> bold"}
-Write scripts/fill_es_vocab.py with a CHAPTERS dict, generate all files, run python3 scripts/pedagogy_check.py.`;
+window.addEventListener('load', function(){
+  var ta = document.getElementById('classContext');
+  if (ta) ta.value = buildClassContext();
+});
 
-const TASKS = {
-
-  'fill-es-a': `TASK — Batch A: Fill 18 ES flashcard stubs (A1 + A2 levels).
-${ES_TEMPLATE_NOTE}
-
-Chapters to fill:
-es/a1/vocabulary/clothes
-es/a1/vocabulary/hobbies
-es/a1/vocabulary/house-and-rooms
-es/a1/vocabulary/jobs
-es/a1/vocabulary/places-in-town
-es/a1/vocabulary/weather
-es/a2/vocabulary/cooking
-es/a2/vocabulary/feelings-emotions
-es/a2/vocabulary/health-and-body
-es/a2/vocabulary/music
-es/a2/vocabulary/problems-solutions
-es/a2/vocabulary/school-subjects
-es/a2/vocabulary/shopping-and-money
-es/a2/vocabulary/sports
-es/a2/vocabulary/technology-and-media
-es/a2/vocabulary/transport-and-travel
-es/a2/vocabulary/weather-detail
-es/a2/vocabulary/work-and-jobs`,
-
-  'fill-es-b': `TASK — Batch B: Fill 27 ES flashcard stubs (B1 + B2 levels).
-${ES_TEMPLATE_NOTE}
-
-Chapters to fill:
-es/b1/vocabulary/adjective-preposition
-es/b1/vocabulary/applied-grammar-verbs
-es/b1/vocabulary/collocations-make-do
-es/b1/vocabulary/education-school
-es/b1/vocabulary/environment-nature
-es/b1/vocabulary/phrasal-verbs-get-take
-es/b1/vocabulary/phrasal-verbs-go-come
-es/b1/vocabulary/sport-leisure
-es/b1/vocabulary/technology-media
-es/b1/vocabulary/travel-holidays
-es/b1/vocabulary/word-families-basic
-es/b2/vocabulary/applied-grammar-prepositions
-es/b2/vocabulary/collocations-adj-noun
-es/b2/vocabulary/collocations-verbs
-es/b2/vocabulary/environment-climate
-es/b2/vocabulary/expressions-idioms
-es/b2/vocabulary/false-friends
-es/b2/vocabulary/health-lifestyle
-es/b2/vocabulary/phrasal-verbs-look-bring
-es/b2/vocabulary/phrasal-verbs-put-set
-es/b2/vocabulary/phrasal-verbs-turn-run
-es/b2/vocabulary/society-culture
-es/b2/vocabulary/technology-innovation
-es/b2/vocabulary/word-formation-adjectives
-es/b2/vocabulary/word-formation-nouns
-es/b2/vocabulary/word-formation-prefixes
-es/b2/vocabulary/work-careers`,
-
-  'fill-es-c': `TASK — Batch C: Fill 26 ES flashcard stubs (C1 + C2 levels).
-${ES_TEMPLATE_NOTE}
-
-Chapters to fill:
-es/c1/vocabulary/abstract-nouns
-es/c1/vocabulary/academic-verbs
-es/c1/vocabulary/academic-vocabulary
-es/c1/vocabulary/applied-grammar-register
-es/c1/vocabulary/attitudes-opinions
-es/c1/vocabulary/cause-effect
-es/c1/vocabulary/collocations-advanced
-es/c1/vocabulary/contrast-concession
-es/c1/vocabulary/formal-synonyms
-es/c1/vocabulary/idioms-fixed-expressions
-es/c1/vocabulary/paraphrasing-synonyms
-es/c1/vocabulary/register-style
-es/c1/vocabulary/topic-vocabulary-arts
-es/c1/vocabulary/word-formation-advanced
-es/c2/vocabulary/academic-collocations
-es/c2/vocabulary/advanced-idioms
-es/c2/vocabulary/applied-grammar-collocation
-es/c2/vocabulary/connotation-register
-es/c2/vocabulary/corpus-vocabulary
-es/c2/vocabulary/discourse-vocabulary
-es/c2/vocabulary/lexical-sophistication
-es/c2/vocabulary/literary-devices
-es/c2/vocabulary/nuanced-synonyms
-es/c2/vocabulary/persuasive-language
-es/c2/vocabulary/precision-vocabulary
-es/c2/vocabulary/spoken-written-modes`,
-
-  'verify': `TASK: Verify the current branch is clean and ready to merge.
-Run all three checkers and report results:
-  python3 scripts/pedagogy_check.py
-  python3 scripts/check_links.py
-  python3 scripts/check_structure.py
-Expected: pedagogy 0 failures, 0 broken links, 0 structure issues (71 ES flashcard stubs are allowed to flag as missing breadcrumb — that is expected until they are filled).
-If anything fails: fix it before pushing. Report a clear PASS or FAIL with details.`,
-
-  'new-chapter': `TASK: Create a new chapter from scratch.
-Read scripts/gen_chapter.py (raw GitHub) first — use the V = dict(base='v123'...) version map exactly.
-Chapter needs: slides.html, flashcards.html, game.html, worksheet.html, printables.html, index.html.
-Vocab chapters nav = Flashcards + Lesson + Game only (no worksheet/printables tabs).
-Grammar chapters nav = Lesson + Review + Game + Printables.
-Content: 10 words with IPA, definition, example. All worksheet questions need EXPLANATIONS array.
-Run python3 scripts/pedagogy_check.py after — must be 0 failures.`,
-
-  'cambridge': `TASK: Fill Cambridge exam pages (KET/PET/FCE/CAE/CPE).
-Pages live in the exams/ directory — list them with: find exams/ -name "*.html" | head -30
-Read one existing exam page first to understand the current structure.
-Format: breadcrumb, chapter-nav, worksheet with ANSWERS + EXPLANATIONS arrays, GAME_DATA for game page.
-Use real Cambridge exam question types: multiple choice, gap fill, word formation, key word transformation.
-Run python3 scripts/pedagogy_check.py after — must be 0 failures.`,
-
-  'audit': `TASK: Audit the specified file or section for quality and correctness.
-Check: CEFR-appropriate vocabulary, accurate IPA, natural example sentences, all questions have EXPLANATIONS, no broken links, correct nav for chapter type (vocab = Flashcards/Lesson/Game; grammar = Lesson/Review/Game/Printables).
-Report issues by severity. Do not fix anything without listing findings first.`,
-
-  'bug': `TASK: Fix the described bug.
-Before touching anything: grep for ALL structural variants across the repo — grammar and Spanish/vocab pages often differ in whitespace. Confirm exact file count per variant. Use Python with explicit string matching, never sed/awk. Verify on 2-3 sample files before running the full set. Run all three checkers after.`,
-
-  'generic': `TASK: (paste this primer first, then describe your request below)`
-};
-
-const AI_NOTES = {
-  deepseek: `You have web browsing. Read the raw GitHub files listed below before starting — they contain all project rules and the exact code templates you must follow.`,
-  gemini: `You have web browsing. Read the raw GitHub files listed below before starting. Pay attention to CLAUDE.md — it overrides any default behaviour.`,
-  gpt: `You have web browsing via the browser tool. Read the raw GitHub files listed below. Do not guess at file structure — read the actual files first.`,
-  claude: `Read CLAUDE.md and AI_HANDOVER.md before doing anything else. The strategic plan is at /root/.claude/plans/before-we-start-i-zazzy-starfish.md — read it before touching anything. Phase 1 done. Phase 2 next: fill 71 ES flashcard stubs (scripts/fill_es_vocab.py), then Cambridge exam pages. Run all three checkers before every push — pedagogy_check.py, check_links.py, check_structure.py — all must stay at 0 failures.`
-};
-
-function buildPrimer() {
-  const ai = document.getElementById('ai-select').value;
-  const task = document.getElementById('task-select').value;
-  const box = document.getElementById('prompt-output');
-  const btn = document.getElementById('copy-primer');
-  if (!ai || !task) { box.classList.remove('visible'); btn.classList.remove('visible'); return; }
-  const note = AI_NOTES[ai] || '';
-  const taskText = TASKS[task] || '';
-  const prompt = `${note}
-
-${getCoreContext()}
-
-${taskText}`;
-  box.textContent = prompt.trim();
-  box.classList.add('visible');
-  btn.classList.add('visible');
-  btn.classList.remove('copied');
-  btn.textContent = 'Copy prompt';
-}
-
-function copyPrimer() {
-  const box = document.getElementById('prompt-output');
-  navigator.clipboard.writeText(box.textContent).then(() => {
-    const btn = document.getElementById('copy-primer');
-    btn.textContent = 'Copied!';
-    btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Copy prompt'; btn.classList.remove('copied'); }, 2000);
-  });
-}
-
-// ── WORD BUILDER ──
+/* ── Word builder ── */
 function buildRows() {
   const rows = document.getElementById('word-rows');
   rows.innerHTML = '';
   for (let i = 0; i < 10; i++) {
     const d = document.createElement('div');
     d.className = 'word-row';
-    d.innerHTML = `
-      <input type="text" placeholder="word ${i+1}" id="w${i}_word">
-      <input type="text" placeholder="/ˈɪp.ə/" id="w${i}_ipa">
-      <input type="text" placeholder="definition" id="w${i}_def">
-      <input type="text" placeholder="Example with <b>word</b> bold" id="w${i}_ex">`;
+    d.innerHTML =
+      '<input type="text" placeholder="word ' + (i+1) + '" id="w' + i + '_word">' +
+      '<input type="text" placeholder="/ˈɪp.ə/" id="w' + i + '_ipa">' +
+      '<input type="text" placeholder="definition" id="w' + i + '_def">' +
+      '<input type="text" placeholder="Example with <b>word</b>" id="w' + i + '_ex">';
     rows.appendChild(d);
   }
 }
@@ -473,47 +244,43 @@ buildRows();
 
 function genDict() {
   const level = document.getElementById('ch-level').value;
-  const track = document.getElementById('ch-track').value;
   const slug = document.getElementById('ch-slug').value.trim() || 'my-chapter';
   const title = document.getElementById('ch-title').value.trim() || 'My Chapter';
   const words = [];
   for (let i = 0; i < 10; i++) {
-    const w = document.getElementById(`w${i}_word`).value.trim();
+    const w = document.getElementById('w' + i + '_word').value.trim();
     if (!w) continue;
     words.push({
       id: w.toLowerCase().replace(/\s+/g,'-'),
       word: w,
-      ipa: document.getElementById(`w${i}_ipa`).value.trim() || '/…/',
-      def_: document.getElementById(`w${i}_def`).value.trim() || '…',
-      ex: document.getElementById(`w${i}_ex`).value.trim() || `The <b>${w}</b> is used here.`
+      ipa: document.getElementById('w' + i + '_ipa').value.trim() || '/…/',
+      def_: document.getElementById('w' + i + '_def').value.trim() || '…',
+      ex: document.getElementById('w' + i + '_ex').value.trim() || ('The <b>' + w + '</b> is used here.')
     });
   }
-  if (words.length === 0) return;
-  const key = track === 'es' ? `"${level}/${slug}"` : `"${level}/${slug}"`;
-  let out = `# Paste this into scripts/fill_en_c1c2_vocab.py (or fill_es_vocab.py)\n`;
-  out += `# under the CHAPTERS dict\n\n`;
-  out += `${key}: {\n  "title": "${title}",\n  "level": "${level.toUpperCase()}",\n  "words": [\n`;
+  if (!words.length) return;
+  let out = '# Paste into a fill script under the CHAPTERS dict\n\n';
+  out += '"' + level + '/' + slug + '": {\n  "title": "' + title + '",\n  "level": "' + level.toUpperCase() + '",\n  "words": [\n';
   words.forEach((w, i) => {
-    out += `    {"id": "${w.id}", "word": "${w.word}", "ipa": "${w.ipa}", "def_": "${w.def_}", "ex": "${w.ex}"}`;
+    out += '    {"id": "' + w.id + '", "word": "' + w.word + '", "ipa": "' + w.ipa + '", "def_": "' + w.def_ + '", "ex": "' + w.ex + '"}';
     out += i < words.length - 1 ? ',\n' : '\n';
   });
-  out += `  ]\n},`;
+  out += '  ]\n},';
   const o = document.getElementById('dict-output');
   o.textContent = out;
   o.classList.add('visible');
   const cb = document.getElementById('copy-dict');
-  cb.style.display = 'block';
+  cb.classList.add('visible');
   cb.textContent = 'Copy dict';
   cb.classList.remove('copied');
 }
 
 function copyDict() {
-  const o = document.getElementById('dict-output');
-  navigator.clipboard.writeText(o.textContent).then(() => {
+  navigator.clipboard.writeText(document.getElementById('dict-output').textContent).then(function(){
     const cb = document.getElementById('copy-dict');
     cb.textContent = 'Copied!';
     cb.classList.add('copied');
-    setTimeout(() => { cb.textContent = 'Copy dict'; cb.classList.remove('copied'); }, 2000);
+    setTimeout(function(){ cb.textContent = 'Copy dict'; cb.classList.remove('copied'); }, 2000);
   });
 }
 
@@ -522,7 +289,7 @@ function clearWords() {
   document.getElementById('ch-slug').value = '';
   document.getElementById('ch-title').value = '';
   document.getElementById('dict-output').classList.remove('visible');
-  document.getElementById('copy-dict').style.display = 'none';
+  document.getElementById('copy-dict').classList.remove('visible');
 }
 </script>
 </body>

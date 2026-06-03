@@ -1,6 +1,6 @@
 # Word Play — Project Root
 
-A complete Cambridge English course (A1–C2) as a static website on Cloudflare Pages. Vanilla HTML/CSS/JS, no build system, ~2,187 HTML pages. Two parallel tracks: English (main course) and Spanish-native (`/es/`).
+A complete Cambridge English course (A1–C2) as a static website on Cloudflare Pages. Vanilla HTML/CSS/JS, no build system, ~2,372 HTML pages. Tracks: English (main), Spanish-explained (`/es/`), Spanish-for-English-speakers (`/espanol-en/`), French support in builder (`/fr/`).
 
 ## Top-level files and directories
 
@@ -10,13 +10,21 @@ A complete Cambridge English course (A1–C2) as a static website on Cloudflare 
 - **CONTRIBUTING.md** — Branch naming, PR workflow, design rules checklist.
 - **PEDAGOGY.md** — Learning design principles that every chapter must follow.
 - **SYLLABUS.md** — Cambridge syllabus → site structure mapping reference.
+- **CLOUDFLARE_SETUP.md** — One-time Cloudflare D1 setup for calendar + profile cross-device sync (database, migrations, binding, verification).
 - **AUTH_PROPOSAL.md** — Future user-account implementation proposal (not yet built).
 - **404.html** — Custom error page.
 - **a/** — CEFR A1 and A2 (Beginner / Elementary).
 - **b/** — CEFR B1 and B2 (Pre-Intermediate / Upper-Intermediate, FCE exam prep).
 - **c/** — CEFR C1 and C2 (Advanced / Proficiency, CAE and CPE exam prep).
-- **es/** — Spanish-native parallel course. Full A1–C2 curriculum scaffolded across all 6 levels and 3 sections (grammar, vocabulary, writing).
-- **shared/** — CSS and JS engines shared across all ~2,187 pages.
+- **es/** — Spanish-explained track. A1–C2 vocab + writing scaffolded; grammar section not yet built; 71 vocab flashcards are stubs.
+- **espanol-en/** — Spanish course for English speakers. A1 complete; A2–C2 are stub hubs.
+- **shared/** — CSS and JS engines shared across all ~2,372 pages.
+- **teacher.html** — Teacher hub: calendar, profiles, dev-hub, builder, coverage, AI prompts.
+- **calendar.html** — Full lesson calendar with D1 cloud sync.
+- **profile.html** — Student profiles with D1 cloud sync.
+- **builder.html** — Tokenless content creator: fill data in browser, download file, push to git.
+- **dev-hub.html** — AI prompt generator for content tasks (use with DeepSeek/Gemini free tier).
+- **coverage.html** — Static content coverage map per level/section.
 - **scripts/** — Python generation and maintenance scripts. `fill_chapter.py` + `scripts/content/` hold content-fill tooling.
 
 ---
@@ -28,4 +36,4 @@ Start with **CLAUDE.md** (rules), then **AI_HANDOVER.md** (orientation). PR and 
 All student progress lives in browser localStorage — no backend, no accounts (yet).
 
 ---
-_Last updated: May 2026_
+_Last updated: June 2026_

@@ -1,14 +1,8 @@
--- Teacher student profiles
-CREATE TABLE IF NOT EXISTS profiles (
-  id         INTEGER PRIMARY KEY AUTOINCREMENT,
-  sync_code  TEXT    NOT NULL,
-  slug       TEXT    NOT NULL,
-  name       TEXT    NOT NULL DEFAULT '',
-  l1         TEXT    NOT NULL DEFAULT '',
-  level      TEXT    NOT NULL DEFAULT '',
-  goals      TEXT    NOT NULL DEFAULT '',
-  notes      TEXT    NOT NULL DEFAULT '',
-  updated_at TEXT    NOT NULL DEFAULT (datetime('now')),
-  UNIQUE(sync_code, slug)
+-- Teacher profile sync table.
+-- user_id is NULL until B1 auth is live; reserved for the upgrade path.
+CREATE TABLE IF NOT EXISTS teacher_profiles (
+  code       TEXT    PRIMARY KEY,
+  data       TEXT    NOT NULL DEFAULT '[]',
+  updated_at INTEGER NOT NULL,
+  user_id    TEXT
 );
-CREATE INDEX IF NOT EXISTS idx_profiles_code ON profiles(sync_code);
