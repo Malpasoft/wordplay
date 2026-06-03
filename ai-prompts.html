@@ -92,6 +92,9 @@ select:focus,input:focus{outline:none;border-color:var(--amber)}
           <option value="cambridge">Cambridge exam pages (KET→CPE)</option>
           <option value="dele">DELE exam pages (Spanish)</option>
         </optgroup>
+        <optgroup label="French track (scaffolded — fill content)">
+          <option value="bootstrap-fr">Fill /fr/ — English via French (B1–B2)</option>
+        </optgroup>
         <optgroup label="Spanish tracks (scaffolded — fill content)">
           <option value="bootstrap-espanol-en">Fill /espanol-en/ — Spanish for English speakers</option>
           <option value="bootstrap-espanol">Fill /espanol/ — universal Spanish + DELE</option>
@@ -115,6 +118,7 @@ select:focus,input:focus{outline:none;border-color:var(--amber)}
           <option value="all">All tracks</option>
           <option value="en">English (universal)</option>
           <option value="es">English via Spanish</option>
+          <option value="fr">English via French</option>
           <option value="espanol-en">Spanish via English</option>
         </select>
       </div>
@@ -179,7 +183,7 @@ Auto-complete: flashcards when fcSeen.size >= WORDS.length, game when completedR
 Word format: {id:"slug", word:"English", ipa:"/ˈɪp.ə/", def:"Spanish definition", ex:"Spanish sentence with <b>word</b> bold"}`;
 
 /* ── Track / level helpers ── */
-function trackName(t){ return t === 'es' ? 'English via Spanish' : t === 'en' ? 'English (universal)' : t === 'espanol-en' ? 'Spanish via English' : t === 'espanol' ? 'Spanish (universal)' : 'all tracks'; }
+function trackName(t){ return t === 'es' ? 'English via Spanish' : t === 'en' ? 'English (universal)' : t === 'fr' ? 'English via French' : t === 'espanol-en' ? 'Spanish via English' : t === 'espanol' ? 'Spanish (universal)' : 'all tracks'; }
 
 function getStubs(track, level) {
   if (!coverageData) return [];
@@ -207,6 +211,22 @@ RETURN the complete HTML file as text. The teacher saves it and runs pedagogy_ch
 DELE prep belongs in the Spanish courses: /espanol/exams/ (universal) and /espanol-en/exams/ (explained in English).
 Use real DELE task types: comprensión de lectura, comprensión auditiva, expresión escrita, expresión oral. Levels A1–C2.
 RETURN the complete HTML file(s) as text — the teacher saves them. Do not attempt to push or run anything.`,
+
+  'bootstrap-fr': `TASK: Write content for the /fr/ track — English course EXPLAINED IN FRENCH for French speakers (B1 and B2 only).
+Structure: /fr/{b1|b2}/{grammaire|vocabulaire|redaction}/{slug}/ — slides.html, worksheet.html, game.html (vocab also needs flashcards.html).
+The scaffold (hub pages) already exists. You are filling ONE chapter's lesson files.
+
+For grammar chapters:
+- slides.html: grammar explanation in FRENCH + English examples. Include a .trap-row slide for common French-speaker mistakes (e.g. false friends, interference from French syntax).
+- worksheet.html: 8–12 questions, EXPLANATIONS for all, CEFR B1/B2 appropriate.
+- game.html: GAME_DATA with 8 items (term=English example, meaning=French explanation).
+
+For vocabulary chapters:
+- flashcards.html: 10 English words, IPA, French definition, French example sentence with <b>word</b> bold. Use showCard()/MASTERY_KEY template. Audio: speakWord() lang='en-GB'.
+- game.html: same 10 words in GAME_DATA format.
+
+UI labels must be in French: Leçon · Révision · Jeu · Flashcards · Accueil · Retour.
+Return the complete file(s) as text. Teacher saves them and runs pedagogy_check.py before pushing.`,
 
   'bootstrap-espanol': `TASK: Write content for the /espanol/ track — a UNIVERSAL Spanish course (CEFR A1–C2) with DELE exam prep.
 This is Spanish as the TARGET language (like the English course at /), no L1 assumptions.

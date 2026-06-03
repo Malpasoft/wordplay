@@ -71,8 +71,10 @@ hr{border:none;border-top:1px solid var(--hairline);margin:28px 0}
         <option value="c1">C1</option><option value="c2">C2</option>
       </select>
       <select id="ch-track">
-        <option value="en">English track (en)</option>
-        <option value="es">Spanish track (es)</option>
+        <option value="en">English (en)</option>
+        <option value="es">Spanish explanations (es)</option>
+        <option value="fr">French explanations (fr)</option>
+        <option value="espanol-en">Spanish for EN speakers (espanol-en)</option>
       </select>
       <input id="ch-slug" type="text" placeholder="chapter slug  e.g. abstract-nouns">
       <input id="ch-title" type="text" placeholder="chapter title  e.g. Abstract Nouns">
@@ -137,28 +139,33 @@ hr{border:none;border-top:1px solid var(--hairline);margin:28px 0}
     <h2>Next steps — in order</h2>
 
     <div class="card" style="border-left:3px solid #27ae60">
-      <h3 style="color:#27ae60">Done — Teacher toolkit</h3>
-      <p>Menu (teacher.html) → AI Prompts, Coverage, Profiles, Dev Hub. Prompts auto-sync stub lists from coverage. Profiles surface per-student gaps.</p>
+      <h3 style="color:#27ae60">Done — Teacher toolkit + fr/ B1–B2</h3>
+      <p>Teacher hub, AI Prompts, Coverage, Profiles, Builder, Dev Hub. French B1+B2 scaffold live at <a href="fr/index.html">fr/index.html</a> (81 pages — needs lesson content filling).</p>
+    </div>
+
+    <div class="card" style="border-left:3px solid var(--amber)">
+      <h3>Priority 1 — Fill fr/ B1+B2 lesson content</h3>
+      <p>Use <a href="ai-prompts.html">AI Prompts</a> → choose track "fr" → level B1 or B2 → copy prompt → paste into DeepSeek/Gemini → get 10 words or grammar slides → paste into <a href="builder.html">Builder</a> → download file.</p>
     </div>
 
     <div class="card">
-      <h3>Step 1 — ES flashcard stubs (A→B→C)</h3>
-      <p>Open <a href="ai-prompts.html">AI Prompts</a> → "Fill stubs — choose track + level" → ES → pick a level → copy → run with DeepSeek. Or "Fill what my students need" to target your roster.</p>
+      <h3>Priority 2 — ES flashcard stubs (A→B→C)</h3>
+      <p>Open <a href="ai-prompts.html">AI Prompts</a> → "Fill stubs — choose track + level" → ES → pick a level → copy → run with DeepSeek.</p>
     </div>
 
     <div class="card">
-      <h3>Step 2 — Cambridge exam pages</h3>
-      <p>Branch <code>content/cambridge-exams</code>. KET → CPE, real exam formats.</p>
+      <h3>Priority 3 — EN C1/C2 vocab stubs (23 chapters)</h3>
+      <p>CAE (C1) and CPE (C2) vocabulary chapters need word data. Use AI Prompts → English → C1/C2.</p>
     </div>
 
     <div class="card">
-      <h3>Step 3 — Spanish course + DELE</h3>
-      <p>Bootstrap <code>/espanol/</code> (universal Spanish, DELE prep) then <code>/espanol-en/</code> (Spanish for English speakers). Use the "Bootstrap" prompts.</p>
+      <h3>Priority 4 — match.html rollout</h3>
+      <p>The match game (3 lives, match twice to win) exists only for Animals A1. Builder generates it — needs rolling out to all ~76 vocab chapters.</p>
     </div>
 
     <div class="card">
-      <h3>Step 4 — Accounts + cloud sync</h3>
-      <p>Needs Claude: Cloudflare Worker + D1 + passkeys. Profiles migrate from localStorage to real accounts.</p>
+      <h3>Horizon — Accounts + cloud sync</h3>
+      <p>Cloudflare D1 is wired. Passkeys + proper auth when ready. Phase 3.</p>
     </div>
 
     <div class="card" style="border-top:3px solid var(--amber)">
