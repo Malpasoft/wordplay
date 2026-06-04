@@ -239,10 +239,16 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--amber)}
     <div class="build-status" id="buildStatus"></div>
     <div id="downloadRow" style="display:none">
       <div class="place-box">
-        <div class="place-label">Save file to this path in the repo:</div>
+        <div class="place-label" id="placeLabel">Save file to this path in the repo:</div>
         <div class="place-path-row">
           <code class="place-path" id="placePath"></code>
           <button class="place-copy" id="placeCopyBtn" onclick="copyPath()">Copy path</button>
+        </div>
+        <div id="dataPathRow" style="display:none">
+          <div class="place-path-row" style="margin-top:6px">
+            <code class="place-path" id="dataPlacePath"></code>
+            <button class="place-copy" id="dataCopyBtn" onclick="copyDataPath()">Copy path</button>
+          </div>
         </div>
         <details class="place-tip">
           <summary>How to upload on GitHub (iPhone / mobile)?</summary>
@@ -265,6 +271,7 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--amber)}
       </div>
       <div class="btn-row">
         <button class="btn" onclick="downloadFile()">&#8595; Download file</button>
+        <button class="btn" id="dataDownloadBtn" style="display:none" onclick="downloadDataFile()">&#8595; Download _data.js</button>
         <button class="btn ghost" onclick="togglePreview()">Preview</button>
       </div>
     </div>
@@ -292,6 +299,7 @@ var slideItems = [];      // [{title,body,note}]
 var questions = [];       // [{q,options:[A,B,C,D],answer,explanation}]
 var builtHtml = '';
 var builtFilename = 'file.html';
+var builtDataJs = '';
 var completionAcknowledged = false;
 
 var ROOT = '../../../../';
@@ -593,7 +601,10 @@ function setFt(ft, btn){
   var ackBox = document.getElementById('cwAck');
   if (ackBox) ackBox.checked = false;
   updateCompleteWarn();
+  builtDataJs = '';
   document.getElementById('downloadRow').style.display = 'none';
+  var _dpr = document.getElementById('dataPathRow');
+  if (_dpr) _dpr.style.display = 'none';
   document.getElementById('buildStatus').className = 'build-status';
   document.getElementById('previewFrame').classList.remove('on');
   document.getElementById('placePath').textContent = '';
@@ -1043,33 +1054,53 @@ function removeQ(i){ questions.splice(i,1); renderQuestionsEditor(); }
 /* ===== Step 4: build ===== */
 function buildFile(){
   if (!target){ flashStatus('Pick a chapter first.','err'); return; }
-  var html = '';
+  var result = null;
   if (fileType==='flashcards'){
     var clean = cards.filter(function(c){ return (c.word||'').trim(); });
     if (clean.length<2){ flashStatus('Add at least 2 cards with a word.','err'); return; }
-    html = generateFlashcards(target, clean);
+    result = generateFlashcards(target, clean);
   } else if (fileType==='match'){
     var clean = cards.filter(function(c){ return (c.word||'').trim(); });
     if (clean.length<4){ flashStatus('Add at least 4 cards for the match game.','err'); return; }
-    html = generateMatch(target, clean);
+    result = generateMatch(target, clean);
   } else if (fileType==='game'){
     var clean = cards.filter(function(c){ return (c.word||'').trim(); });
     if (clean.length<4){ flashStatus('Add at least 4 word items for the game.','err'); return; }
-    html = generateGame(target, clean);
+    result = generateGame(target, clean);
   } else if (fileType==='slides'){
     var clean = slideItems.filter(function(s){ return (s.title||'').trim(); });
     if (clean.length<2){ flashStatus('Add at least 2 slides with a title.','err'); return; }
-    html = generateSlides(target, clean);
+    result = {html: generateSlides(target, clean), data: ''};
   } else if (fileType==='worksheet'||fileType==='printables'){
     var clean = questions.filter(function(q){ return (q.q||'').trim() && (q.answer||'').trim(); });
     if (clean.length<3){ flashStatus('Add at least 3 questions.','err'); return; }
-    html = fileType==='worksheet' ? generateWorksheet(target, clean) : generatePrintables(target, clean);
+    result = {html: fileType==='worksheet' ? generateWorksheet(target, clean) : generatePrintables(target, clean), data: ''};
   }
-  builtHtml = html;
+  builtHtml = result.html;
+  builtDataJs = result.data || '';
   flashStatus('Built successfully. Download the file and save it to the path shown below.','ok');
   document.getElementById('downloadRow').style.display='block';
-  document.getElementById('placePath').textContent = fullTargetPath();
-  document.getElementById('previewFrame').srcdoc = html;
+  var pp = document.getElementById('placePath');
+  if (pp) pp.textContent = fullTargetPath();
+  var lb = document.getElementById('placeLabel');
+  if (lb) lb.textContent = builtDataJs ? 'Save BOTH files to this folder in the repo:' : 'Save file to this path in the repo:';
+  var dpr = document.getElementById('dataPathRow');
+  var dpp = document.getElementById('dataPlacePath');
+  var ddb = document.getElementById('dataDownloadBtn');
+  if (builtDataJs){
+    if (dpr) dpr.style.display = '';
+    if (dpp) dpp.textContent = (target.dirPath||'') + '_data.js';
+    if (ddb) ddb.style.display = '';
+  } else {
+    if (dpr) dpr.style.display = 'none';
+    if (ddb) ddb.style.display = 'none';
+  }
+  // Preview can't load the external _data.js (no server in srcdoc) — inline it just for the preview.
+  var previewHtml = builtHtml;
+  if (builtDataJs){
+    previewHtml = builtHtml.replace('<script src="_data.js"><\/script>', '<script>'+builtDataJs+'<\/script>');
+  }
+  document.getElementById('previewFrame').srcdoc = previewHtml;
   document.getElementById('previewFrame').classList.add('on');
 }
 
@@ -1119,6 +1150,26 @@ function copyPath(){
   });
 }
 
+function copyDataPath(){
+  var dp = document.getElementById('dataPlacePath');
+  if (!dp) return;
+  navigator.clipboard.writeText(dp.textContent).then(function(){
+    var b = document.getElementById('dataCopyBtn');
+    b.textContent = 'Copied!'; b.classList.add('copied');
+    setTimeout(function(){ b.textContent = 'Copy path'; b.classList.remove('copied'); }, 1800);
+  });
+}
+
+function downloadDataFile(){
+  if (!builtDataJs) return;
+  var blob = new Blob([builtDataJs],{type:'application/javascript'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href=url; a.download='_data.js';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(url); },1000);
+}
+
 function flashStatus(msg,kind){
   var el=document.getElementById('buildStatus');
   el.textContent=msg;
@@ -1140,7 +1191,7 @@ function generateFlashcards(t, words){
   var wordObjs = words.map(function(w){ return {word:w.word,def:w.def,ipa:w.ipa||'',ex:w.ex||''}; });
   var wordsJson = JSON.stringify(wordObjs);
 
-  return [
+  var _html = [
 '<!DOCTYPE html>',
 '<html lang="'+cfg.lang+'">',
 '<head>',
@@ -1196,7 +1247,7 @@ function generateFlashcards(t, words){
 '  </nav>',
 '  <div class="vocab-page">',
 '    <div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">'+cfg.masteredBadge+'</span></div>',
-'    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">'+cfg.wordsLabel(words.length)+'</div>',
+'    <div id="fcWordsLabel" style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px"></div>',
 '    <div class="mode-tabs">',
 '      <button class="mode-tab active" onclick="setMode(\'flash\',this)">'+cfg.tabFlash+'</button>',
 '      <button class="mode-tab" onclick="setMode(\'list\',this)">'+esc(cfg.navCards==='Tarjetas'?'Lista':'Word list')+'</button>',
@@ -1229,13 +1280,10 @@ function generateFlashcards(t, words){
 '  </div>',
 '</div>',
 '<footer class="site-footer">'+cfg.footer+'</footer>',
+'<script src="_data.js"><\/script>',
 '<script src="'+ROOT+'shared/store.js?v=v105"><\/script>',
 '<script>',
-'var SLUG='+JSON.stringify(t.slug)+';',
-'var LEVEL='+JSON.stringify(t.level)+';',
-'var MASTERY_KEY='+JSON.stringify(masteryKey)+';',
-'var PROG_KEY='+JSON.stringify(progKey)+';',
-'var WORDS='+wordsJson+';',
+'var WORDS_SUFFIX='+JSON.stringify(cfg.wordsLabel(0).replace(/^0\s*/,'').trim())+';',
 'var fcIdx=0,flipped=false,mastered=false;',
 'var fcSeen=new Set();',
 'function setMode(mode,btn){document.querySelectorAll(".mode-tab").forEach(function(b){b.classList.remove("active");});btn.classList.add("active");document.getElementById("modeFlash").style.display=mode==="flash"?"":"none";document.getElementById("modeList").style.display=mode==="list"?"":"none";if(mode==="list")renderList();}',
@@ -1248,6 +1296,7 @@ function generateFlashcards(t, words){
 'function renderList(){document.getElementById("wordList").innerHTML=WORDS.map(function(w){return"<div class=\\"word-list-item\\"><span class=\\"wl-word\\">"+w.word+"</span><span class=\\"wl-def\\">"+w.def+"</span></div>";}).join("");}',
 'function speakWord(e){if(e)e.stopPropagation();if(!window.speechSynthesis)return;var utt=new SpeechSynthesisUtterance(WORDS[fcIdx].word);utt.lang='+JSON.stringify(cfg.speak)+';utt.rate=0.9;window.speechSynthesis.cancel();window.speechSynthesis.speak(utt);}',
 'showCard(0);checkMastered();',
+'(function(){var el=document.getElementById("fcWordsLabel");if(el)el.textContent=WORDS.length+" "+WORDS_SUFFIX;})();',
 '<\/script>',
 '<div style="margin-top:24px;border-top:1px solid var(--hairline);padding-top:20px">',
 '  <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">'+cfg.notesLabel+'</div>',
@@ -1260,6 +1309,14 @@ function generateFlashcards(t, words){
 '</body>',
 '</html>'
   ].join('\n');
+  var _data = [
+    'var SLUG='+JSON.stringify(t.slug)+';',
+    'var LEVEL='+JSON.stringify(t.level)+';',
+    'var MASTERY_KEY='+JSON.stringify(masteryKey)+';',
+    'var PROG_KEY='+JSON.stringify(progKey)+';',
+    'var WORDS='+wordsJson+';'
+  ].join('\n');
+  return {html: _html, data: _data};
 }
 
 /* ── Match game (standalone match.html) ── */
@@ -1274,7 +1331,7 @@ function generateMatch(t, words){
   var n = words.length;
   var totalNeeded = n * 2;
 
-  return [
+  var _matchHtml = [
 '<!DOCTYPE html>',
 '<html lang="'+cfg.lang+'">',
 '<head>',
@@ -1353,7 +1410,7 @@ function generateMatch(t, words){
 '      </div>',
 '      <div class="match-progress-wrap">',
 '        <div class="match-progress-bar"><div class="match-progress-fill" id="progressFill" style="width:0%"></div></div>',
-'        <div class="match-progress-txt" id="progressTxt">0 / '+totalNeeded+' matches</div>',
+'        <div class="match-progress-txt" id="progressTxt">0 / 0 matches</div>',
 '      </div>',
 '      <span class="match-mastery-badge" id="masteryBadge">'+cfg.masteredBadge+'</span>',
 '    </div>',
@@ -1385,13 +1442,9 @@ function generateMatch(t, words){
 '    <a href="flashcards.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">'+cfg.navCards+'</a>',
 '  </div>',
 '</div>',
+'<script src="_data.js"><\/script>',
 '<script src="'+ROOT+'shared/store.js?v=v105"><\/script>',
 '<script>',
-'var WORDS='+wordsJson+';',
-'var MASTERY_KEY='+JSON.stringify(masteryKey)+';',
-'var PROG_KEY='+JSON.stringify(progKey)+';',
-'var SLUG='+JSON.stringify(t.slug)+';',
-'var TOTAL_NEEDED='+totalNeeded+';',
 'var state=[],lives=3,selIdx=null,totalDone=0,rightPool=[],animLock=false;',
 'var HEART_FULL=\'<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>\';',
 'var HEART_EMPTY=\'<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>\';',
@@ -1482,6 +1535,14 @@ function generateMatch(t, words){
 '</body>',
 '</html>'
   ].join('\n');
+  var _matchData = [
+    'var WORDS='+wordsJson+';',
+    'var MASTERY_KEY='+JSON.stringify(masteryKey)+';',
+    'var PROG_KEY='+JSON.stringify(progKey)+';',
+    'var SLUG='+JSON.stringify(t.slug)+';',
+    'var TOTAL_NEEDED='+totalNeeded+';'
+  ].join('\n');
+  return {html: _matchHtml, data: _matchData};
 }
 
 /* ── Game.html (game.js engine) ── */
@@ -1509,7 +1570,7 @@ function generateGame(t, words){
     ? '<a href="slides.html" class="chapter-nav-btn">'+cfg.navLesson+'</a><a href="flashcards.html" class="chapter-nav-btn">'+cfg.navCards+'</a><a href="game.html" class="chapter-nav-btn active">'+cfg.navGame+'</a>'
     : '<a href="slides.html" class="chapter-nav-btn">'+cfg.navLesson+'</a><a href="worksheet.html" class="chapter-nav-btn">'+cfg.navReview+'</a><a href="game.html" class="chapter-nav-btn active">'+cfg.navGame+'</a>';
 
-  return [
+  var _gameHtml = [
 '<!DOCTYPE html>',
 '<html lang="'+cfg.lang+'">',
 '<head>',
@@ -1592,14 +1653,14 @@ function generateGame(t, words){
 '</div>',
 '<div class="game-toast" id="gToast"></div>',
 '<footer class="site-footer">'+cfg.footer+'</footer>',
-'<script>',
-'window.GAME_DATA={chapterId:'+JSON.stringify(t.slug)+',level:'+JSON.stringify(t.level)+',title:'+JSON.stringify(t.title)+',storageKey:'+JSON.stringify(storageKey)+',items:'+JSON.stringify(gameItems)+'};',
-'<\/script>',
+'<script src="_data.js"><\/script>',
 '<script src="'+ROOT+'shared/store.js?v=v105"><\/script>',
 '<script src="'+ROOT+'shared/game.js?v=v110"><\/script>',
 '</body>',
 '</html>'
   ].join('\n');
+  var _gameData = 'window.GAME_DATA={chapterId:'+JSON.stringify(t.slug)+',level:'+JSON.stringify(t.level)+',title:'+JSON.stringify(t.title)+',storageKey:'+JSON.stringify(storageKey)+',items:'+JSON.stringify(gameItems)+'};';
+  return {html: _gameHtml, data: _gameData};
 }
 
 /* ── Slides.html (deck.js engine) ── */
