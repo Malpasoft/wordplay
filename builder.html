@@ -158,7 +158,7 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--amber)}
     <div class="stub-list" id="stubList"></div>
 
     <div class="hint" style="margin-top:10px">Or paste a target path manually:
-      <input id="manualPath" type="text" placeholder="/espanol-en/a1/vocabulary/animals/flashcards.html" oninput="onManualPath()" style="margin-top:6px">
+      <input id="manualPath" type="text" placeholder="/b/b1/vocabulary/travel-holidays/flashcards.html" oninput="onManualPath()" style="margin-top:6px">
     </div>
     <div class="target-info" id="targetInfo"></div>
 
@@ -548,7 +548,7 @@ function setTarget(path){
     section: parsed.section,
     title: match ? match.title : titleFromSlug(parsed.slug),
     dirPath: dirPath,
-    isComplete: match ? match.status === 'complete' : false
+    fileDetails: match ? (match.details || {}) : {}
   };
   // sync section tab
   sectionFilter = parsed.section;
@@ -1163,7 +1163,7 @@ function buildFile(){
     previewHtml = builtHtml.replace('<script src="_data.js"><\/script>', '<script>'+builtDataJs+'<\/script>');
   }
   document.getElementById('previewFrame').srcdoc = previewHtml;
-  document.getElementById('previewFrame').classList.add('on');
+  document.getElementById('previewFrame').classList.remove('on');
 }
 
 function downloadFile(){
@@ -1183,11 +1183,17 @@ function fullTargetPath(){
   return target.dirPath + builtFilename;
 }
 
+function isCurrentFileComplete(){
+  if (!target) return false;
+  var ftKey = fileType;
+  return (target.fileDetails[ftKey] === 'complete');
+}
+
 function updateCompleteWarn(){
   var warn = document.getElementById('completeWarn');
   var btn = document.getElementById('buildBtn');
   if (!warn || !target) return;
-  if (target.isComplete){
+  if (isCurrentFileComplete()){
     warn.style.display = 'block';
     var link = document.getElementById('cwViewLink');
     if (link) link.href = 'https://raw.githubusercontent.com/Malpasoft/wordplay/main/' + target.dirPath + builtFilename;
