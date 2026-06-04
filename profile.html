@@ -9,9 +9,17 @@
 <link rel="stylesheet" href="shared/base.css?v=v123">
 <script src="shared/dark-init.js?v=v109"></script>
 <style>
+/* ── Semantic status colours (dark-mode safe) ── */
+:root{--green:#27ae60;--red:#c0392b;--blue:#5b8dd9}
+body.dark{--green:#5fd068;--red:#e05a4a;--blue:#7da8d9}
+/* Sync status helper classes */
+.ss-ok{color:var(--green)!important}
+.ss-err{color:var(--red)!important}
+.ss-busy{color:var(--amber)!important}
+
 /* ── Layout ── */
 .pro-wrap{max-width:1000px;margin:0 auto;padding:20px 16px}
-h1{font-size:1.4rem;color:var(--navy);margin:0}
+h1{font-size:1.4rem;color:var(--ink);margin:0}
 .pro-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
 .pro-header-actions{margin-left:auto;display:flex;gap:8px}
 
@@ -34,13 +42,13 @@ h1{font-size:1.4rem;color:var(--navy);margin:0}
 .gaps-head{font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
 .gap-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:6px;border:1px solid var(--hairline);background:var(--paper);margin-bottom:6px;flex-wrap:wrap}
 .gap-row:hover{border-color:var(--ink)}
-.gap-chapter{font-weight:700;font-size:.88rem;color:var(--navy);flex:1;min-width:120px}
+.gap-chapter{font-weight:700;font-size:.88rem;color:var(--ink);flex:1;min-width:120px}
 .gap-chapter a{color:inherit;text-decoration:none}
 .gap-chapter a:hover{color:var(--amber)}
 .gap-badges{display:flex;gap:5px;flex-shrink:0}
 .gap-badge{font-family:var(--font-sans);font-size:.58rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:2px;border:1px solid var(--hairline);color:var(--muted)}
-.gap-badge.es{border-color:#5b8dd9;color:#5b8dd9}
-.gap-badge.en{border-color:#27ae60;color:#27ae60}
+.gap-badge.es{border-color:var(--blue);color:var(--blue)}
+.gap-badge.en{border-color:var(--green);color:var(--green)}
 .gap-students{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);display:flex;align-items:center;gap:6px;flex-shrink:0}
 .gap-dot{width:7px;height:7px;border-radius:50%;background:var(--amber);display:inline-block}
 .gap-names{font-size:.72rem;color:var(--muted)}
@@ -56,13 +64,13 @@ h1{font-size:1.4rem;color:var(--navy);margin:0}
 .stu-card:hover{border-color:var(--amber);transform:translateY(-1px)}
 .stu-card.active{border-color:var(--amber);background:rgba(184,134,11,.05)}
 .stu-avatar{width:40px;height:40px;border-radius:50%;background:var(--amber);display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700;color:#fff;margin:0 auto 8px}
-.stu-name{font-weight:700;font-size:.88rem;color:var(--navy);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stu-name{font-weight:700;font-size:.88rem;color:var(--ink);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .stu-tags{display:flex;gap:4px;justify-content:center;flex-wrap:wrap;margin-bottom:4px}
 .stu-tag{font-family:var(--font-sans);font-size:.56rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:1px 5px;border-radius:2px;border:1px solid var(--hairline);color:var(--muted)}
 .stu-tag.lvl{border-color:var(--amber);color:var(--amber)}
 .stu-gap-count{font-family:var(--font-sans);font-size:.65rem;color:var(--muted)}
 .stu-gap-count.warn{color:var(--amber)}
-.stu-gap-count.ok{color:#27ae60}
+.stu-gap-count.ok{color:var(--green)}
 .no-students{grid-column:1/-1;padding:40px;text-align:center;color:var(--muted);font-family:var(--font-sans);font-size:.85rem}
 
 /* ── Roster actions ── */
@@ -75,7 +83,7 @@ h1{font-size:1.4rem;color:var(--navy);margin:0}
 .detail-top{display:flex;align-items:flex-start;gap:12px}
 .detail-avatar{width:42px;height:42px;border-radius:50%;background:var(--amber);display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;color:#fff;flex-shrink:0}
 .detail-info{flex:1}
-.detail-name{font-size:1.1rem;font-weight:700;color:var(--navy);margin:0 0 5px}
+.detail-name{font-size:1.1rem;font-weight:700;color:var(--ink);margin:0 0 5px}
 .detail-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:5px}
 .d-tag{font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:2px;border:1px solid var(--hairline);color:var(--muted)}
 .d-tag.lvl{border-color:var(--amber);color:var(--amber)}
@@ -83,17 +91,17 @@ h1{font-size:1.4rem;color:var(--navy);margin:0}
 .detail-actions{display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap}
 .detail-btn{font-family:var(--font-sans);font-size:.62rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:6px 11px;border-radius:3px;border:1.5px solid var(--hairline);background:transparent;color:var(--ink);cursor:pointer;transition:border-color .15s}
 .detail-btn:hover{border-color:var(--ink)}
-.detail-btn.danger{border-color:#c0392b;color:#c0392b}
-.detail-btn.danger:hover{background:#c0392b;color:#fff}
+.detail-btn.danger{border-color:var(--red);color:var(--red)}
+.detail-btn.danger:hover{background:var(--red);color:#fff}
 
 /* ── Content gap ── */
 .gap-section{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:18px;margin-bottom:16px}
-.gs-title{font-weight:700;font-size:.95rem;color:var(--navy);margin:0 0 4px}
+.gs-title{font-weight:700;font-size:.95rem;color:var(--ink);margin:0 0 4px}
 .gs-sub{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin:0 0 12px}
 .gs-bar{height:7px;border-radius:4px;overflow:hidden;display:flex;background:var(--hairline);margin-bottom:6px}
-.gs-complete{height:100%;background:#27ae60}
+.gs-complete{height:100%;background:var(--green)}
 .gs-stub{height:100%;background:var(--amber)}
-.gs-missing{height:100%;background:#c0392b}
+.gs-missing{height:100%;background:var(--red)}
 .gs-stat{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin-bottom:12px}
 .ch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:5px;margin-top:8px}
 .ch-chip{display:flex;align-items:center;gap:7px;padding:6px 9px;border-radius:4px;border:1px solid var(--hairline);font-size:.78rem;color:var(--ink);text-decoration:none;transition:border-color .15s}
@@ -124,7 +132,7 @@ h1{font-size:1.4rem;color:var(--navy);margin:0}
 
 /* ── Empty overview ── */
 .empty-overview{padding:48px 24px;text-align:center;color:var(--muted);font-family:var(--font-sans);font-size:.85rem}
-.empty-overview strong{display:block;font-size:1rem;color:var(--navy);margin-bottom:6px}
+.empty-overview strong{display:block;font-size:1rem;color:var(--ink);margin-bottom:6px}
 
 /* ── Cloud sync panel ── */
 .sync-panel{display:none;background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:16px;margin-bottom:16px}
@@ -193,7 +201,7 @@ h1{font-size:1.4rem;color:var(--navy);margin:0}
 
     <!-- Inline add/edit form -->
     <div class="edit-form" id="rosterForm" style="margin-top:16px">
-      <h3 id="rosterFormTitle" style="margin:0 0 14px;font-size:1rem;color:var(--navy)">New student</h3>
+      <h3 id="rosterFormTitle" style="margin:0 0 14px;font-size:1rem;color:var(--ink)">New student</h3>
       <input type="hidden" id="fId">
       <div class="form-grid">
         <div class="f-row">
@@ -573,7 +581,7 @@ function renderStudentDetail(id) {
 
   // Inline edit form (hidden by default)
   html += '<div class="edit-form" id="detailEditForm">'
-    + '<h3 style="margin:0 0 14px;font-size:1rem;color:var(--navy)">Edit student</h3>'
+    + '<h3 style="margin:0 0 14px;font-size:1rem;color:var(--ink)">Edit student</h3>'
     + '<div class="form-grid">'
     + '<div class="f-row"><label class="f-label">Name</label><input class="f-input" id="efName" type="text"></div>'
     + '<div class="f-row"><label class="f-label">Native language</label><select class="f-select" id="efL1">'
@@ -652,7 +660,7 @@ function renderGapHtml(s) {
   var parts = [];
   if (complete) parts.push('<strong>'+complete+' complete</strong>');
   if (stub) parts.push('<span style="color:var(--amber)">'+stub+' need content</span>');
-  if (missing) parts.push('<span style="color:#c0392b">'+missing+' missing</span>');
+  if (missing) parts.push('<span class="ss-err">'+missing+' missing</span>');
   html += '<p class="gs-stat">'+parts.join(' &middot; ')+'</p>';
 
   var needWork = chapters.filter(function(c){ return c.status!=='complete'; });
@@ -668,7 +676,7 @@ function renderGapHtml(s) {
     });
     html += '</div>';
   } else {
-    html += '<p style="font-family:var(--font-sans);font-size:.82rem;color:#27ae60;margin:8px 0 0">All '+s.level+' content is complete.</p>';
+    html += '<p class="ss-ok" style="font-family:var(--font-sans);font-size:.82rem;margin:8px 0 0">All '+s.level+' content is complete.</p>';
   }
   html += '</div>';
   return html;
@@ -700,10 +708,14 @@ function hideForm() {
 }
 
 function showEditForm() {
-  document.getElementById('detailEditForm').style.display = 'block';
+  var f = document.getElementById('detailEditForm');
+  if (!f) return;
+  f.classList.add('visible');
+  f.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 function hideEditForm() {
-  document.getElementById('detailEditForm').style.display = 'none';
+  var f = document.getElementById('detailEditForm');
+  if (f) f.classList.remove('visible');
 }
 
 function saveStudent() {
@@ -795,7 +807,14 @@ function handleImport(e) {
     } catch(err) { alert('Invalid JSON file.'); }
   };
   reader.readAsText(file);
-  e.target.value = '';
+  /* Reset file input cross-browser — reassigning value works on most browsers;
+     replacing the element is the safe fallback for iOS Safari */
+  try { e.target.value = ''; } catch(_) {}
+  if (e.target.value) {
+    var inp = e.target;
+    inp.parentNode.replaceChild(inp.cloneNode(true), inp);
+    document.getElementById('importInput').addEventListener('change', function(ev){ handleImport(ev); }, {once:true});
+  }
 }
 
 function exportStudent() {
@@ -823,17 +842,17 @@ function updateSyncStatusText() {
   var el = document.getElementById('syncStatusText');
   var lastRaw = localStorage.getItem(SYNC_LAST_KEY);
   if (!syncCode) {
-    el.style.color = '';
+    el.className = '';
     el.textContent = 'All data stored locally — set up cloud sync to access from any device.';
     return;
   }
   if (lastRaw) {
     var diff = Math.round((Date.now() - parseInt(lastRaw)) / 1000);
     var ago = diff < 60 ? 'just now' : diff < 3600 ? Math.floor(diff / 60) + 'm ago' : Math.floor(diff / 3600) + 'h ago';
-    el.style.color = '#27ae60';
+    el.className = 'ss-ok';
     el.textContent = 'Synced ' + ago + ' via cloud.';
   } else {
-    el.style.color = '';
+    el.className = 'ss-busy';
     el.textContent = 'Cloud sync active — syncing now…';
   }
 }
@@ -854,7 +873,7 @@ function activateSync() {
   var code = document.getElementById('syncCodeInput').value.trim();
   var statusEl = document.getElementById('syncDetailStatus');
   if (code.length < 8) {
-    statusEl.style.color = '#c0392b';
+    statusEl.className = 'ss-err';
     statusEl.textContent = 'Passphrase must be at least 8 characters.';
     return;
   }
@@ -874,11 +893,17 @@ function clearSync() {
   updateSyncStatusText();
 }
 
+function setSyncBusy(busy) {
+  syncBusy = busy;
+  var btn = document.getElementById('syncNowBtn');
+  if (btn) { btn.disabled = busy; btn.textContent = busy ? 'Syncing…' : 'Sync now'; }
+}
+
 function syncNow() {
   if (!syncCode || syncBusy) return;
-  syncBusy = true;
+  setSyncBusy(true);
   var statusEl = document.getElementById('syncDetailStatus');
-  statusEl.style.color = 'var(--amber)';
+  statusEl.className = 'ss-busy';
   statusEl.textContent = 'Syncing…';
 
   fetch('/api/profiles/' + encodeURIComponent(syncCode))
@@ -896,9 +921,9 @@ function syncNow() {
     .then(function(r) { return r.json(); })
     .then(function() {
       localStorage.setItem(SYNC_LAST_KEY, String(Date.now()));
-      syncBusy = false;
-      var statusEl = document.getElementById('syncDetailStatus');
-      statusEl.style.color = '#27ae60';
+      setSyncBusy(false);
+      statusEl = document.getElementById('syncDetailStatus');
+      statusEl.className = 'ss-ok';
       statusEl.textContent = 'Synced successfully.';
       updateSyncStatusText();
       renderOverview();
@@ -906,10 +931,10 @@ function syncNow() {
       if (activeTab === 'student' && currentId) renderStudentDetail(currentId);
     })
     .catch(function() {
-      syncBusy = false;
-      var statusEl = document.getElementById('syncDetailStatus');
-      statusEl.style.color = '#c0392b';
-      statusEl.textContent = 'Sync failed — check your connection.';
+      setSyncBusy(false);
+      statusEl = document.getElementById('syncDetailStatus');
+      statusEl.className = 'ss-err';
+      statusEl.textContent = 'Sync failed — check your connection or the database setup.';
     });
 }
 
