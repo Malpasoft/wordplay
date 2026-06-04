@@ -435,9 +435,9 @@ function parsePath(p){
   section = parts[idx];
   if (!section) return null;
   var normSec = null;
-  if (section==='vocabulary'||section==='vocabulario') normSec='vocabulary';
-  else if (section==='grammar'||section==='gramatica'||section==='gramática') normSec='grammar';
-  else if (section==='writing'||section==='escritura') normSec='writing';
+  if (section==='vocabulary'||section==='vocabulario'||section==='vocabulaire') normSec='vocabulary';
+  else if (section==='grammar'||section==='gramatica'||section==='gramática'||section==='grammaire') normSec='grammar';
+  else if (section==='writing'||section==='escritura'||section==='redaction'||section==='rédaction') normSec='writing';
   if (!normSec) return null;
   slug = parts[idx+1];
   if (!slug) return null;
@@ -1076,6 +1076,7 @@ function buildFile(){
     if (clean.length<3){ flashStatus('Add at least 3 questions.','err'); return; }
     result = {html: fileType==='worksheet' ? generateWorksheet(target, clean) : generatePrintables(target, clean), data: ''};
   }
+  if (!result){ flashStatus('Unknown file type — please refresh and try again.','err'); return; }
   builtHtml = result.html;
   builtDataJs = result.data || '';
   flashStatus('Built successfully. Download the file and save it to the path shown below.','ok');
