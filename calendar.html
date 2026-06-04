@@ -503,10 +503,17 @@ function apiBulk(list) {
   list.forEach(upsertLocal);
   renderCurrentView();
   if (!syncCode) return;
-  fetch('/api/lessons/' + encodeURIComponent(syncCode), {
-    method: 'POST', headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({ action: 'bulk', lessons: list })
-  }).catch(function(){});
+  /* Send in chunks of 100 so large initial loads don't hit the server limit */
+  var CHUNK = 100;
+  function sendChunk(i) {
+    if (i >= list.length) return;
+    var chunk = list.slice(i, i + CHUNK);
+    fetch('/api/lessons/' + encodeURIComponent(syncCode), {
+      method: 'POST', headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ action: 'bulk', lessons: chunk })
+    }).then(function(){ sendChunk(i + CHUNK); }).catch(function(){});
+  }
+  sendChunk(0);
 }
 
 function apiDelete(id) {
