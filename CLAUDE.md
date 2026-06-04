@@ -67,6 +67,12 @@ different numbers). When you change a shared file:
 
 `version.json` is a coarse project-state marker only — not a per-asset version.
 
+**Mascot assets** (added Q2 2026):
+- `shared/mascot.css` — sprite animation rules (versions with `index.html`)
+- `shared/mascot.js` — state manager & click handler (versions with `index.html`)
+- `shared/mascot-bee.png` — sprite sheet image (versions with `index.html`)
+- All cached 1 year; PNG also matches `/shared/*.png` rule in `_headers`
+
 ---
 
 ## Bulk Edits
