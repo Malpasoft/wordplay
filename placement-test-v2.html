@@ -11,21 +11,21 @@
 <style>
 /* ── Shell ── */
 .pt-wrap{max-width:620px;margin:20px auto 56px;padding:0 14px}
-.pt-card{background:var(--paper);border-radius:14px;border:1.5px solid var(--hairline);box-shadow:0 3px 22px rgba(0,0,0,.09);overflow:hidden;will-change:transform;user-select:none}
+.pt-card{background:var(--paper);border-radius:14px;border:1.5px solid var(--hairline);box-shadow:0 3px 24px rgba(0,0,0,.09);overflow:hidden;will-change:transform;user-select:none}
 body.dark .pt-card{background:#1E1E1E;border-color:rgba(255,255,255,.1)}
 
-/* ── Timer bar (replaces progress bar) ── */
+/* ── Timer bar ── */
 .pt-timer-bar{height:5px;background:var(--hairline)}
 .pt-timer-fill{height:100%;background:var(--amber);transition:width 1s linear}
 .pt-timer-fill.warn{background:#c0392b}
 
 /* ── Question body ── */
-.pt-body{padding:24px 24px 20px}
+.pt-body{padding:24px 24px 22px}
 .pt-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
 .pt-qnum{font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
-.pt-clock{font-family:var(--font-sans);font-size:.8rem;font-weight:700;color:var(--amber);transition:color .3s;letter-spacing:.5px}
+.pt-clock{font-family:var(--font-sans);font-size:.8rem;font-weight:700;color:var(--amber);letter-spacing:.5px;transition:color .3s}
 .pt-clock.warn{color:#c0392b}
-.pt-qtext{font-family:Georgia,serif;font-size:1.06rem;line-height:1.7;color:var(--ink);margin:0 0 20px}
+.pt-qtext{font-family:Georgia,serif;font-size:1.06rem;line-height:1.72;color:var(--ink);margin:0 0 20px}
 body.dark .pt-qtext{color:#F0F0F0}
 
 /* ── Choices ── */
@@ -35,16 +35,16 @@ body.dark .pt-qtext{color:#F0F0F0}
 .pt-opt:disabled{cursor:default}
 .pt-opt.correct{background:rgba(39,174,96,.1);border-color:#27ae60}
 .pt-opt.wrong{background:rgba(192,57,43,.09);border-color:#c0392b}
-.pt-opt.reveal{background:rgba(39,174,96,.06);border-color:#27ae60;opacity:.72}
+.pt-opt.reveal{background:rgba(39,174,96,.06);border-color:#27ae60;opacity:.7}
 body.dark .pt-opt{background:#2A2A2A;border-color:#3C3C3C;color:#E0E0E0}
 body.dark .pt-opt.correct{background:rgba(39,174,96,.18);border-color:#3dba78}
 body.dark .pt-opt.wrong{background:rgba(192,57,43,.18);border-color:#e05252}
 body.dark .pt-opt.reveal{background:rgba(39,174,96,.1);border-color:#3dba78;opacity:.62}
 
 /* ── Intro ── */
-.pt-intro{text-align:center;padding:42px 26px 36px}
+.pt-intro{text-align:center;padding:44px 26px 38px}
 .pt-intro-eyebrow{font-family:var(--font-sans);font-size:.58rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:12px}
-.pt-intro h2{font-family:Georgia,serif;font-size:1.52rem;font-weight:700;color:var(--ink);margin:0 0 10px;line-height:1.35}
+.pt-intro h2{font-family:Georgia,serif;font-size:1.55rem;font-weight:700;color:var(--ink);margin:0 0 10px;line-height:1.35}
 body.dark .pt-intro h2{color:#F0F0F0}
 .pt-intro-sub{font-family:var(--font-sans);font-size:.84rem;color:var(--muted);line-height:1.65;margin:0 0 22px}
 .pt-pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
@@ -53,38 +53,59 @@ body.dark .pt-intro h2{color:#F0F0F0}
 .pt-start:hover{opacity:.87}
 
 /* ── Results ── */
-.pt-results{padding:28px 24px 30px}
-.pt-res-eyebrow{font-family:var(--font-sans);font-size:.58rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);text-align:center;margin-bottom:18px}
-.pt-level-badge{text-align:center;margin-bottom:6px}
-.pt-level-code{font-family:Georgia,serif;font-size:3.6rem;font-weight:700;color:var(--amber);line-height:1;display:block}
-.pt-level-name{font-family:var(--font-sans);font-size:.7rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);display:block;margin-top:4px}
-.pt-level-desc{font-family:var(--font-sans);font-size:.84rem;line-height:1.7;color:var(--ink);text-align:center;margin:18px 0 24px;padding:0 6px}
+.pt-results{padding:28px 24px 32px}
+.pt-res-eyebrow{font-family:var(--font-sans);font-size:.58rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);text-align:center;margin-bottom:16px}
+.pt-level-badge{text-align:center;margin-bottom:4px}
+.pt-level-code{font-family:Georgia,serif;font-size:3.8rem;font-weight:700;color:var(--amber);line-height:1;display:block}
+.pt-level-name{font-family:var(--font-sans);font-size:.68rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);display:block;margin-top:5px}
+.pt-level-stat{font-family:var(--font-sans);font-size:.7rem;color:var(--muted);text-align:center;margin:10px 0 0}
+.pt-level-desc{font-family:var(--font-sans);font-size:.84rem;line-height:1.7;color:var(--ink);text-align:center;margin:16px 0 22px;padding:0 4px}
 body.dark .pt-level-desc{color:#E0E0E0}
 
-/* Skill bars */
-.pt-skills{margin-bottom:22px}
+/* ── Skill bars ── */
+.pt-skills{margin-bottom:20px}
 .pt-skills-label{font-family:var(--font-sans);font-size:.57rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
-.pt-skill-row{margin-bottom:11px}
+.pt-skill-row{margin-bottom:10px}
 .pt-skill-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
 .pt-skill-name{font-family:var(--font-sans);font-size:.72rem;font-weight:700;color:var(--ink)}
 body.dark .pt-skill-name{color:#D0D0D0}
 .pt-skill-lvl{font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--amber)}
 .pt-skill-track{height:6px;background:var(--hairline);border-radius:3px;overflow:hidden}
-.pt-skill-fill{height:100%;border-radius:3px;background:var(--amber);transition:width .9s ease .2s;width:0}
+.pt-skill-fill{height:100%;border-radius:3px;background:var(--amber);transition:width .9s ease .15s;width:0}
 
-/* Clinical notes */
-.pt-notes{background:rgba(184,134,11,.05);border:1px solid rgba(184,134,11,.14);border-radius:8px;padding:16px 18px;margin-bottom:22px}
+/* ── Clinical notes ── */
+.pt-notes{background:rgba(184,134,11,.05);border:1px solid rgba(184,134,11,.14);border-radius:8px;padding:16px 18px;margin-bottom:20px}
 body.dark .pt-notes{background:rgba(184,134,11,.09);border-color:rgba(184,134,11,.22)}
 .pt-notes-label{font-family:var(--font-sans);font-size:.57rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:10px}
-.pt-notes ul{font-family:var(--font-sans);font-size:.8rem;line-height:1.75;color:var(--ink);margin:0;padding-left:18px}
+.pt-notes ul{font-family:var(--font-sans);font-size:.8rem;line-height:1.8;color:var(--ink);margin:0;padding-left:18px}
 body.dark .pt-notes ul{color:#D0D0D0}
 
-/* CTAs */
+/* ── Email capture ── */
+.pt-email-box{border:1.5px solid var(--hairline);border-radius:8px;padding:16px 18px;margin-bottom:12px}
+.pt-email-title{font-family:var(--font-sans);font-size:.72rem;font-weight:700;color:var(--ink);margin-bottom:3px}
+body.dark .pt-email-title{color:#D0D0D0}
+.pt-email-sub{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);line-height:1.5;margin-bottom:10px}
+.pt-email-row{display:flex;gap:8px}
+.pt-email-inp{flex:1;min-width:0;padding:9px 12px;font-family:var(--font-sans);font-size:.82rem;border:1.5px solid var(--hairline);border-radius:6px;background:var(--paper);color:var(--ink)}
+.pt-email-inp:focus{outline:none;border-color:var(--amber)}
+body.dark .pt-email-inp{background:#2A2A2A;border-color:#3C3C3C;color:#E0E0E0}
+.pt-email-btn{padding:9px 16px;background:var(--ink);color:var(--paper);font-family:var(--font-sans);font-size:.75rem;font-weight:700;border:none;border-radius:6px;cursor:pointer;white-space:nowrap;transition:opacity .12s}
+.pt-email-btn:hover{opacity:.82}
+.pt-email-done{font-family:var(--font-sans);font-size:.78rem;color:#27ae60;padding:4px 0}
+body.dark .pt-email-done{color:#5fd068}
+
+/* ── CTAs ── */
 .pt-cta-primary{display:block;width:100%;padding:13px;background:var(--ink);color:var(--paper);font-family:var(--font-sans);font-size:.73rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-align:center;text-decoration:none;border-radius:7px;border:none;cursor:pointer;box-sizing:border-box;transition:opacity .12s;margin-bottom:10px}
 .pt-cta-primary:hover{opacity:.82}
-.pt-cta-consult{display:block;width:100%;padding:12px;background:transparent;color:var(--amber);font-family:var(--font-sans);font-size:.73rem;font-weight:700;letter-spacing:.5px;text-align:center;text-decoration:none;border-radius:7px;border:1.5px solid var(--amber);box-sizing:border-box;cursor:pointer;transition:background .12s,color .12s;margin-bottom:16px}
-.pt-cta-consult:hover{background:var(--amber);color:#1A1A1A}
-.pt-cta-row{display:flex;gap:12px;justify-content:center}
+.pt-cta-wa{display:block;width:100%;padding:12px;background:transparent;color:var(--amber);font-family:var(--font-sans);font-size:.73rem;font-weight:700;letter-spacing:.5px;text-align:center;text-decoration:none;border-radius:7px;border:1.5px solid var(--amber);box-sizing:border-box;cursor:pointer;transition:background .12s,color .12s;margin-bottom:18px}
+.pt-cta-wa:hover{background:var(--amber);color:#1A1A1A}
+.pt-divider{height:1px;background:var(--hairline);margin:0 0 16px}
+.pt-bottom-row{display:flex;justify-content:space-between;align-items:center}
+.pt-bmac{font-family:var(--font-sans);font-size:.72rem;color:var(--muted)}
+.pt-bmac a{color:var(--muted);text-decoration:none}
+.pt-bmac a:hover{color:var(--ink)}
+body.dark .pt-bmac a:hover{color:#D0D0D0}
+.pt-tertiary{display:flex;gap:14px}
 .pt-cta-sm{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);text-decoration:none;cursor:pointer;background:none;border:none;padding:0}
 .pt-cta-sm:hover{color:var(--ink)}
 body.dark .pt-cta-sm:hover{color:#D0D0D0}
@@ -104,11 +125,15 @@ body.dark .pt-cta-sm:hover{color:#D0D0D0}
 <footer class="site-footer">Word Play &middot; Cambridge English A1&rarr;C2</footer>
 
 <script>
+/* ── Placeholders — fill these in before going live ── */
+var WHATSAPP_NUMBER = '34600000000'; // Em's WhatsApp number (no + or spaces)
+var BMAC_URL        = 'https://buymeacoffee.com/wordplay'; // Buy Me a Coffee URL
+
 /* ── Question bank: 48 questions, 8 per level (4 grammar + 4 vocab) ── */
 var BANK = [
   /* A1 GRAMMAR */
   {id:'a1g1',level:'a1',skill:'grammar',topic:'verb to be',text:'Choose the correct form: "She ___ a teacher at the local school."',choices:['is','are','am','were'],answer:'is'},
-  {id:'a1g2',level:'a1',skill:'grammar',topic:'present simple',text:'He ___ to the gym three times a week.',choices:['goes','go','is going','goed'],answer:'goes'},
+  {id:'a1g2',level:'a1',skill:'grammar',topic:'present simple 3rd person',text:'He ___ to the gym three times a week.',choices:['goes','go','is going','goed'],answer:'goes'},
   {id:'a1g3',level:'a1',skill:'grammar',topic:'there is / there are',text:'"___ a problem with the internet." Choose the correct form.',choices:['There is','There are','It is','They are'],answer:'There is'},
   {id:'a1g4',level:'a1',skill:'grammar',topic:'question forms',text:'___ you like coffee? — Yes, I love it!',choices:['Do','Does','Are','Is'],answer:'Do'},
   /* A1 VOCABULARY */
@@ -168,30 +193,36 @@ var BANK = [
   {id:'c2v4',level:'c2',skill:'vocab',topic:'precision adverbs',text:'The policy changes were implemented ___, with little public consultation.',choices:['surreptitiously','simultaneously','substantially','serendipitously'],answer:'surreptitiously'}
 ];
 
-/* ── Config ── */
+/* ── Constants ── */
 var BANDS      = ['a1','a2','b1','b2','c1','c2'];
 var START_IDX  = 2;  // start at B1
 var MIN_Q      = 12;
 var MAX_Q      = 16;
 var TIMER_SECS = 300;
 
-var LEVEL_NAMES = {a1:'A1 Beginner',a2:'A2 Elementary',b1:'B1 Pre-intermediate',b2:'B2 Upper-intermediate',c1:'C1 Advanced',c2:'C2 Proficiency'};
-var LEVEL_DESC  = {
+var LEVEL_NAMES = {
+  a1:'A1 Beginner', a2:'A2 Elementary', b1:'B1 Pre-intermediate',
+  b2:'B2 Upper-intermediate', c1:'C1 Advanced', c2:'C2 Proficiency'
+};
+var LEVEL_DESC = {
   a1:'You know core words and phrases in English. You can introduce yourself, ask simple questions, and understand slow, clear speech on familiar topics.',
   a2:'You can communicate in simple, everyday situations. You manage routine exchanges about familiar topics — shopping, travel, your background — without difficulty.',
-  b1:'You are an independent communicator. You handle most travel situations, express opinions, and follow the main points of standard speech on familiar subjects.',
+  b1:'You are an independent communicator. You handle most travel and everyday situations, express opinions, and follow standard speech on familiar subjects.',
   b2:'You have upper-intermediate fluency. You understand complex texts, discuss abstract topics, and interact with native speakers naturally and without strain.',
-  c1:'You are an advanced user. You express yourself fluently and precisely, handle demanding academic or professional language, and pick up on nuance and implication.',
+  c1:'You are an advanced user. You express yourself fluently and precisely, handle demanding academic or professional English, and pick up on nuance and implication.',
   c2:'You have near-native proficiency. You understand virtually everything you hear or read and can express yourself with precision in any context.'
 };
-var SKILL_PCT = {a1:14,a2:28,b1:44,b2:60,c1:76,c2:93};
+var SKILL_BAR_PCT = {a1:14, a2:28, b1:44, b2:60, c1:76, c2:93};
 
 /* ── State ── */
-var pools = {}, cursor = START_IDX, answered = [];
-var bandCorrect = {}, bandAsked = {};
+var pools = {}, cursor = START_IDX;
+var cursorHistory = [];              // cursor position after each answer — source of truth for level
+var skillCursorHistory = {grammar:[], vocab:[]};
+var answered = [], bandCorrect = {}, bandAsked = {};
 var timerSec = TIMER_SECS, timerInterval = null;
 var currentQ = null, ptAnswered = false, ptLastCorrect = false, advTimer = null;
 var stage = document.getElementById('pt-stage');
+var _finalLevel = null;
 
 /* ── Helpers ── */
 function shuffle(a) {
@@ -209,53 +240,79 @@ function startTimer() {
     timerSec--;
     var fill = document.getElementById('timerFill');
     var clock = document.getElementById('timerClock');
-    if (fill) {
-      fill.style.width = (timerSec / TIMER_SECS * 100) + '%';
-      if (timerSec <= 30) fill.classList.add('warn');
-    }
-    if (clock) {
-      clock.textContent = fmtTime(timerSec);
-      if (timerSec <= 30) clock.classList.add('warn');
-    }
-    if (timerSec <= 0) { clearInterval(timerInterval); timerInterval = null; showResults(); }
+    if (fill){ fill.style.width=(timerSec/TIMER_SECS*100)+'%'; if(timerSec<=30)fill.classList.add('warn'); }
+    if (clock){ clock.textContent=fmtTime(timerSec); if(timerSec<=30)clock.classList.add('warn'); }
+    if (timerSec<=0){ clearInterval(timerInterval); timerInterval=null; showResults(); }
   }, 1000);
 }
-function stopTimer() { if (timerInterval) { clearInterval(timerInterval); timerInterval = null; } }
+function stopTimer(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
 
 /* ── Adaptive engine ── */
 function initPools() {
-  BANDS.forEach(function(b) {
-    pools[b] = shuffle(BANK.filter(function(q){ return q.level === b; }).slice());
-  });
+  BANDS.forEach(function(b){ pools[b]=shuffle(BANK.filter(function(q){ return q.level===b; }).slice()); });
 }
 
 function nextQuestion() {
   if (pools[BANDS[cursor]] && pools[BANDS[cursor]].length) return pools[BANDS[cursor]].shift();
   for (var d=1;d<BANDS.length;d++) {
     var hi=cursor+d, lo=cursor-d;
-    if (hi<BANDS.length && pools[BANDS[hi]] && pools[BANDS[hi]].length) { cursor=hi; return pools[BANDS[cursor]].shift(); }
-    if (lo>=0 && pools[BANDS[lo]] && pools[BANDS[lo]].length) { cursor=lo; return pools[BANDS[cursor]].shift(); }
+    if (hi<BANDS.length && pools[BANDS[hi]] && pools[BANDS[hi]].length){ cursor=hi; return pools[BANDS[cursor]].shift(); }
+    if (lo>=0 && pools[BANDS[lo]] && pools[BANDS[lo]].length){ cursor=lo; return pools[BANDS[cursor]].shift(); }
   }
   return null;
 }
 
+/*
+ * Stop when converged: last 6 cursor positions span at most 1 level apart.
+ * This catches both "settled at one level" and "oscillating between two adjacent
+ * levels" — both mean we've found the ceiling. Conservative: only triggers after MIN_Q.
+ */
 function shouldStop() {
   if (answered.length >= MAX_Q) return true;
-  if (answered.length >= MIN_Q) {
-    var last4 = answered.slice(-4);
-    if (last4.length === 4) {
-      var lvl0 = BANK.find(function(q){ return q.id === last4[0].id; }).level;
-      if (last4.every(function(a){ return BANK.find(function(q){ return q.id===a.id; }).level === lvl0; })) return true;
-    }
+  if (answered.length >= MIN_Q && cursorHistory.length >= 6) {
+    var last6 = cursorHistory.slice(-6);
+    var mn = Math.min.apply(null, last6), mx = Math.max.apply(null, last6);
+    if (mx - mn <= 1) return true;
   }
   return false;
+}
+
+/*
+ * Level determination: mode of cursor positions in the second half of the test.
+ * Using cursor positions (not accuracy ratios) prevents one lucky question at a high
+ * level from inflating the result. When the cursor oscillates between two levels, the
+ * tie is broken toward the lower level — more conservative and more accurate.
+ */
+function modeOfHistory(history) {
+  if (!history || history.length === 0) return START_IDX;
+  var half = history.slice(Math.floor(history.length / 2));
+  if (half.length === 0) half = history;
+  var freq = {};
+  half.forEach(function(c){ freq[c]=(freq[c]||0)+1; });
+  var maxFreq=0, finalIdx=START_IDX;
+  Object.keys(freq).forEach(function(k){
+    var ki=parseInt(k);
+    // Ties go to the lower (more conservative) level
+    if(freq[k]>maxFreq||(freq[k]===maxFreq&&ki<finalIdx)){ maxFreq=freq[k]; finalIdx=ki; }
+  });
+  return finalIdx;
+}
+
+function overallLevel() {
+  return BANDS[modeOfHistory(cursorHistory)];
+}
+
+function skillLevel(skill) {
+  var h = skillCursorHistory[skill];
+  if (!h || h.length === 0) return null;
+  return BANDS[modeOfHistory(h)];
 }
 
 /* ── Audio ── */
 function playTone(correct) {
   try {
-    var ctx = new (window.AudioContext || window.webkitAudioContext)();
-    if (correct) {
+    var ctx=new(window.AudioContext||window.webkitAudioContext)();
+    if(correct){
       [[660,0],[880,.12]].forEach(function(p){
         var o=ctx.createOscillator(),g=ctx.createGain(); o.connect(g); g.connect(ctx.destination);
         o.type='sine'; o.frequency.value=p[0]; var t=ctx.currentTime+p[1];
@@ -267,19 +324,19 @@ function playTone(correct) {
       o.type='sawtooth'; o.frequency.value=160;
       g.gain.setValueAtTime(.18,ctx.currentTime); g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.28);
       o.start(); o.stop(ctx.currentTime+.28);
-      try { navigator.vibrate && navigator.vibrate([60,20,60]); } catch(e2) {}
+      try{ navigator.vibrate&&navigator.vibrate([60,20,60]); }catch(e2){}
     }
-    setTimeout(function(){ try{ctx.close();}catch(e2){} }, 1200);
-  } catch(e) {}
+    setTimeout(function(){ try{ctx.close();}catch(e2){} },1200);
+  } catch(e){}
 }
 
-/* ── Swipe ── */
-(function() {
+/* ── Swipe to advance ── */
+(function(){
   var sx=0,sy=0,active=false,delta=0;
   stage.addEventListener('touchstart',function(e){ if(!ptAnswered||e.touches.length>1)return; sx=e.touches[0].clientX; sy=e.touches[0].clientY; active=false; delta=0; stage.style.transition='none'; },{passive:true});
   stage.addEventListener('touchmove',function(e){
     if(!ptAnswered)return;
-    var dx=e.touches[0].clientX-sx, dy=e.touches[0].clientY-sy;
+    var dx=e.touches[0].clientX-sx,dy=e.touches[0].clientY-sy;
     if(!active){ if(Math.abs(dy)>Math.abs(dx)+8||Math.abs(dx)<8)return; active=true; }
     e.preventDefault(); delta=dx;
     stage.style.transform='translateX('+dx+'px)';
@@ -288,7 +345,7 @@ function playTone(correct) {
   stage.addEventListener('touchend',function(){
     if(!active||Math.abs(delta)<30){ stage.style.transition='transform .22s ease-out,opacity .22s ease-out'; stage.style.transform=''; stage.style.opacity=''; setTimeout(function(){ stage.style.transition=''; },230); active=false; return; }
     if(delta<0){ stage.style.transition='transform .26s ease-in,opacity .22s ease-in'; stage.style.transform='translateX('+(-window.innerWidth*1.3)+'px) rotate(-18deg)'; stage.style.opacity='0'; clearTimeout(advTimer); advTimer=null; var lc=ptLastCorrect; setTimeout(function(){ advance(lc); },270); }
-    else { stage.style.transition='transform .22s ease-out,opacity .22s ease-out'; stage.style.transform=''; stage.style.opacity=''; setTimeout(function(){ stage.style.transition=''; },230); }
+    else{ stage.style.transition='transform .22s ease-out,opacity .22s ease-out'; stage.style.transform=''; stage.style.opacity=''; setTimeout(function(){ stage.style.transition=''; },230); }
     active=false;
   },{passive:true});
 })();
@@ -300,7 +357,7 @@ function showIntro() {
     '<div class="pt-intro-eyebrow">English Proficiency Diagnosis</div>' +
     '<h2>Find your exact level<br>in 5 minutes</h2>' +
     '<p class="pt-intro-sub">Grammar, vocabulary, and a personal action plan — like a doctor\'s check-up for your English.</p>' +
-    '<div class="pt-pills"><span class="pt-pill">Free</span><span class="pt-pill">No sign-up</span><span class="pt-pill">A1 to C2</span><span class="pt-pill">5-minute timer</span></div>' +
+    '<div class="pt-pills"><span class="pt-pill">Free</span><span class="pt-pill">No sign-up needed</span><span class="pt-pill">A1 to C2</span><span class="pt-pill">5-minute timer</span></div>' +
     '<button class="pt-start" onclick="startTest()">Begin diagnosis &rarr;</button>' +
     '</div>';
 }
@@ -308,147 +365,161 @@ function showIntro() {
 function startTest() {
   initPools();
   cursor = START_IDX;
-  answered = [];
-  bandCorrect = {}; bandAsked = {};
-  BANDS.forEach(function(b){ bandCorrect[b+'_grammar']=0; bandAsked[b+'_grammar']=0; bandCorrect[b+'_vocab']=0; bandAsked[b+'_vocab']=0; });
+  cursorHistory = [];
+  skillCursorHistory = {grammar:[], vocab:[]};
+  answered = []; bandCorrect = {}; bandAsked = {};
+  _finalLevel = null;
+  BANDS.forEach(function(b){
+    bandCorrect[b+'_grammar']=0; bandAsked[b+'_grammar']=0;
+    bandCorrect[b+'_vocab']=0;   bandAsked[b+'_vocab']=0;
+  });
   startTimer();
   var q = nextQuestion();
   if (q) showQ(q); else showResults();
 }
 
 function showQ(q) {
-  currentQ = q; ptAnswered = false;
-  if (advTimer) { clearTimeout(advTimer); advTimer = null; }
-  var display = shuffle(q.choices.slice());
-  var timePct = (timerSec / TIMER_SECS * 100);
-  var warnCls = timerSec <= 30 ? ' warn' : '';
-  var html =
-    '<div class="pt-timer-bar"><div class="pt-timer-fill'+warnCls+'" id="timerFill" style="width:'+timePct+'%"></div></div>' +
-    '<div class="pt-body">' +
-    '<div class="pt-meta"><span class="pt-qnum">Question ' + (answered.length + 1) + '</span>' +
-    '<span class="pt-clock'+warnCls+'" id="timerClock">'+fmtTime(timerSec)+'</span></div>' +
-    '<p class="pt-qtext">' + esc(q.text) + '</p>' +
+  currentQ=q; ptAnswered=false;
+  if(advTimer){ clearTimeout(advTimer); advTimer=null; }
+  var display=shuffle(q.choices.slice());
+  var timePct=timerSec/TIMER_SECS*100;
+  var warnCls=timerSec<=30?' warn':'';
+  var html=
+    '<div class="pt-timer-bar"><div class="pt-timer-fill'+warnCls+'" id="timerFill" style="width:'+timePct+'%"></div></div>'+
+    '<div class="pt-body">'+
+    '<div class="pt-meta"><span class="pt-qnum">Question '+(answered.length+1)+'</span>'+
+    '<span class="pt-clock'+warnCls+'" id="timerClock">'+fmtTime(timerSec)+'</span></div>'+
+    '<p class="pt-qtext">'+esc(q.text)+'</p>'+
     '<div class="pt-choices">';
-  display.forEach(function(c) {
-    html += '<button class="pt-opt" data-val="'+esc(c)+'" onclick="onAnswer(this)">'+esc(c)+'</button>';
+  display.forEach(function(c){
+    html+='<button class="pt-opt" data-val="'+esc(c)+'" onclick="onAnswer(this)">'+esc(c)+'</button>';
   });
-  html += '</div></div>';
-  stage.innerHTML = html;
+  html+='</div></div>';
+  stage.innerHTML=html;
 }
 
 function onAnswer(btn) {
-  var q = currentQ;
-  stage.querySelectorAll('.pt-opt').forEach(function(b){ b.disabled = true; });
-  var isCorrect = btn.dataset.val === q.answer;
-  btn.classList.add(isCorrect ? 'correct' : 'wrong');
-  if (!isCorrect) {
-    stage.querySelectorAll('.pt-opt').forEach(function(b){ if (b.dataset.val === q.answer) b.classList.add('reveal'); });
-  }
-  var key = q.level + '_' + q.skill;
-  bandAsked[key]++; if (isCorrect) bandCorrect[key]++;
-  answered.push({id: q.id, correct: isCorrect});
+  var q=currentQ;
+  stage.querySelectorAll('.pt-opt').forEach(function(b){ b.disabled=true; });
+  var isCorrect=btn.dataset.val===q.answer;
+  btn.classList.add(isCorrect?'correct':'wrong');
+  if(!isCorrect) stage.querySelectorAll('.pt-opt').forEach(function(b){ if(b.dataset.val===q.answer)b.classList.add('reveal'); });
+  var key=q.level+'_'+q.skill;
+  bandAsked[key]++; if(isCorrect)bandCorrect[key]++;
+  answered.push({id:q.id, correct:isCorrect});
+  skillCursorHistory[q.skill].push(cursor);  // record cursor position for this skill
   playTone(isCorrect);
-  ptAnswered = true; ptLastCorrect = isCorrect;
-  advTimer = setTimeout(function(){ advTimer=null; advance(isCorrect); }, isCorrect ? 800 : 1500);
+  ptAnswered=true; ptLastCorrect=isCorrect;
+  advTimer=setTimeout(function(){ advTimer=null; advance(isCorrect); }, isCorrect?800:1500);
 }
 
 function advance(wasCorrect) {
-  cursor = wasCorrect ? Math.min(cursor+1, BANDS.length-1) : Math.max(cursor-1, 0);
-  if (shouldStop()) { stopTimer(); showResults(); return; }
-  var q = nextQuestion();
-  if (q) showQ(q); else { stopTimer(); showResults(); }
+  cursor=wasCorrect?Math.min(cursor+1,BANDS.length-1):Math.max(cursor-1,0);
+  cursorHistory.push(cursor);
+  if(shouldStop()){ stopTimer(); showResults(); return; }
+  var q=nextQuestion();
+  if(q) showQ(q); else{ stopTimer(); showResults(); }
 }
 
 /* ── Results ── */
-function skillLevel(skill) {
-  var ordered = ['c2','c1','b2','b1','a2','a1'];
-  for (var i=0;i<ordered.length;i++) {
-    var b = ordered[i], key = b+'_'+skill;
-    if (bandAsked[key] > 0 && bandCorrect[key]/bandAsked[key] >= 0.5) return b;
-  }
-  return null;
-}
-
-function overallLevel() {
-  var ordered = ['c2','c1','b2','b1','a2','a1'];
-  for (var i=0;i<ordered.length;i++) {
-    var b = ordered[i];
-    var tot = (bandAsked[b+'_grammar']||0) + (bandAsked[b+'_vocab']||0);
-    var cor = (bandCorrect[b+'_grammar']||0) + (bandCorrect[b+'_vocab']||0);
-    if (tot > 0 && cor/tot >= 0.5) return b;
-  }
-  return 'a1';
-}
-
 function clinicalNotes() {
-  var gWrong = [], vWrong = [];
-  answered.forEach(function(a) {
-    if (!a.correct) {
-      var q = BANK.find(function(x){ return x.id===a.id; });
-      if (q.skill === 'grammar') gWrong.push(q.topic);
+  var gWrong=[], vWrong=[];
+  answered.forEach(function(a){
+    if(!a.correct){
+      var q=BANK.find(function(x){ return x.id===a.id; });
+      if(q.skill==='grammar') gWrong.push(q.topic);
       else vWrong.push(q.topic);
     }
   });
-  var notes = [];
-  if (gWrong.length > 0) notes.push('Grammar: ' + gWrong.slice(0,3).join(', '));
-  if (vWrong.length > 0) notes.push('Vocabulary: ' + vWrong.slice(0,3).join(', '));
-  if (notes.length === 0) notes.push('Excellent across all areas — focus on pushing to the next level');
+  var notes=[];
+  if(gWrong.length>0) notes.push('Grammar: '+gWrong.slice(0,3).join(', '));
+  if(vWrong.length>0) notes.push('Vocabulary: '+vWrong.slice(0,3).join(', '));
+  if(notes.length===0) notes.push('Excellent across all areas — focus on pushing to the next level up');
   return notes;
 }
 
 function barHtml(skill, label) {
-  var lvl = skillLevel(skill);
-  var pct = lvl ? SKILL_PCT[lvl] : 10;
-  var lvlLabel = lvl ? lvl.toUpperCase() : '—';
-  return '<div class="pt-skill-row">' +
-    '<div class="pt-skill-top"><span class="pt-skill-name">'+label+'</span><span class="pt-skill-lvl">'+lvlLabel+'</span></div>' +
-    '<div class="pt-skill-track"><div class="pt-skill-fill" style="width:0" data-pct="'+pct+'"></div></div>' +
+  var lvl=skillLevel(skill);
+  var pct=lvl?SKILL_BAR_PCT[lvl]:8;
+  var lvlLabel=lvl?lvl.toUpperCase():'—';
+  return '<div class="pt-skill-row">'+
+    '<div class="pt-skill-top"><span class="pt-skill-name">'+label+'</span><span class="pt-skill-lvl">'+lvlLabel+'</span></div>'+
+    '<div class="pt-skill-track"><div class="pt-skill-fill" data-pct="'+pct+'" style="width:0"></div></div>'+
     '</div>';
 }
 
 function showResults() {
   stopTimer();
-  var level = overallLevel();
-  var notes = clinicalNotes();
-  var path  = {a1:'a/a1',a2:'a/a2',b1:'b/b1',b2:'b/b2',c1:'c/c1',c2:'c/c2'}[level];
+  var level=overallLevel();
+  _finalLevel=level;
+  var notes=clinicalNotes();
+  var totalCorrect=answered.filter(function(a){ return a.correct; }).length;
+  var path={a1:'a/a1',a2:'a/a2',b1:'b/b1',b2:'b/b2',c1:'c/c1',c2:'c/c2'}[level];
+  var waText=encodeURIComponent('Hi! I just completed the Word Play English placement test and got '+level.toUpperCase()+' ('+LEVEL_NAMES[level]+'). I\'d love to discuss my results and next steps!');
+  var waHref='https://wa.me/'+WHATSAPP_NUMBER+'?text='+waText;
 
   try {
     localStorage.setItem('wordplay_recommended_level', level);
-    localStorage.setItem('wordplay_placement_v2', JSON.stringify({
-      level: level, date: new Date().toISOString(),
-      answered: answered.length
-    }));
-  } catch(e) {}
+    localStorage.setItem('wordplay_placement_v2', JSON.stringify({ level:level, date:new Date().toISOString(), answered:answered.length, correct:totalCorrect }));
+  } catch(e){}
 
-  var noteItems = notes.map(function(n){ return '<li>'+esc(n)+'</li>'; }).join('');
+  var noteItems=notes.map(function(n){ return '<li>'+esc(n)+'</li>'; }).join('');
 
-  stage.innerHTML =
-    '<div class="pt-timer-bar"><div class="pt-timer-fill" style="width:100%"></div></div>' +
-    '<div class="pt-results">' +
-    '<div class="pt-res-eyebrow">Language Health Check — Complete</div>' +
-    '<div class="pt-level-badge"><span class="pt-level-code">'+level.toUpperCase()+'</span><span class="pt-level-name">'+LEVEL_NAMES[level]+'</span></div>' +
-    '<p class="pt-level-desc">'+esc(LEVEL_DESC[level])+'</p>' +
-    '<div class="pt-skills"><div class="pt-skills-label">Skill breakdown</div>' +
-    barHtml('grammar','Grammar') + barHtml('vocab','Vocabulary') +
-    '</div>' +
-    '<div class="pt-notes"><div class="pt-notes-label">Areas to develop</div><ul>'+noteItems+'</ul></div>' +
-    '<a href="'+path+'/index.html" class="pt-cta-primary">Start '+level.toUpperCase()+' on Word Play &rarr;</a>' +
-    '<a href="teacher.html" class="pt-cta-consult">Book a free 15-min level check with a teacher</a>' +
-    '<div class="pt-cta-row">' +
-    '<button class="pt-cta-sm" onclick="startTest()">Retake test</button>' +
-    '<a href="index.html" class="pt-cta-sm">Back to home</a>' +
-    '</div></div>';
+  stage.innerHTML=
+    '<div class="pt-timer-bar"><div class="pt-timer-fill" style="width:100%"></div></div>'+
+    '<div class="pt-results">'+
+    '<div class="pt-res-eyebrow">Language Health Check &mdash; Complete</div>'+
+    '<div class="pt-level-badge"><span class="pt-level-code">'+level.toUpperCase()+'</span><span class="pt-level-name">'+LEVEL_NAMES[level]+'</span></div>'+
+    '<p class="pt-level-stat">'+answered.length+' questions &middot; '+totalCorrect+' correct</p>'+
+    '<p class="pt-level-desc">'+esc(LEVEL_DESC[level])+'</p>'+
+    '<div class="pt-skills"><div class="pt-skills-label">Skill breakdown</div>'+barHtml('grammar','Grammar')+barHtml('vocab','Vocabulary')+'</div>'+
+    '<div class="pt-notes"><div class="pt-notes-label">Areas to develop</div><ul>'+noteItems+'</ul></div>'+
+    /* Email capture */
+    '<div class="pt-email-box">'+
+    '<div class="pt-email-title">Get your results by email</div>'+
+    '<div class="pt-email-sub">We\'ll send your level report and a personalised study plan.</div>'+
+    '<div class="pt-email-row" id="ptEmailRow">'+
+    '<input type="email" id="ptEmailInput" class="pt-email-inp" placeholder="your@email.com" autocomplete="email">'+
+    '<button class="pt-email-btn" onclick="saveEmail()">Send</button>'+
+    '</div>'+
+    '<div id="ptEmailDone" class="pt-email-done" style="display:none">Got it &mdash; study tips coming your way.</div>'+
+    '</div>'+
+    /* Primary CTA */
+    '<a href="'+path+'/index.html" class="pt-cta-primary">Start '+level.toUpperCase()+' on Word Play &rarr;</a>'+
+    /* WhatsApp CTA — level pre-filled in message */
+    '<a href="'+waHref+'" target="_blank" rel="noopener" class="pt-cta-wa">Book a free 15-min level check with a teacher</a>'+
+    '<div class="pt-divider"></div>'+
+    '<div class="pt-bottom-row">'+
+    '<div class="pt-bmac"><a href="'+BMAC_URL+'" target="_blank" rel="noopener">Support Word Play</a></div>'+
+    '<div class="pt-tertiary">'+
+    '<button class="pt-cta-sm" onclick="startTest()">Retake</button>'+
+    '<a href="index.html" class="pt-cta-sm">Home</a>'+
+    '</div></div>'+
+    '</div>';
 
-  /* Animate bars after render */
-  setTimeout(function() {
-    stage.querySelectorAll('.pt-skill-fill').forEach(function(el) {
-      el.style.width = el.dataset.pct + '%';
+  /* Animate skill bars after DOM settles */
+  setTimeout(function(){
+    stage.querySelectorAll('.pt-skill-fill').forEach(function(el){
+      el.style.width=el.dataset.pct+'%';
     });
   }, 80);
 }
 
+/* ── Email capture ── */
+function saveEmail() {
+  var val=document.getElementById('ptEmailInput').value.trim();
+  if(!val||!val.includes('@')){ document.getElementById('ptEmailInput').focus(); return; }
+  try {
+    var leads=JSON.parse(localStorage.getItem('wordplay_leads')||'[]');
+    leads.push({ email:val, level:_finalLevel, date:new Date().toISOString() });
+    localStorage.setItem('wordplay_leads', JSON.stringify(leads));
+  } catch(e){}
+  document.getElementById('ptEmailRow').style.display='none';
+  document.getElementById('ptEmailDone').style.display='block';
+}
+
 /* ── Init ── */
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', showIntro);
+if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',showIntro);
 else showIntro();
 </script>
 </body>
