@@ -12,7 +12,7 @@
 <style>
 .ap-wrap{max-width:680px;margin:0 auto;padding:24px 16px 70px}
 .ap-eyebrow{font-family:var(--font-sans);font-size:.62rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
-h1{font-size:1.5rem;color:var(--navy);margin:0 0 4px}
+h1{font-size:1.5rem;color:var(--ink);margin:0 0 4px}
 .ap-sub{font-family:var(--font-sans);font-size:.82rem;color:var(--muted);margin:0 0 24px}
 
 .card{background:var(--cream);border:1.5px solid var(--hairline);border-radius:10px;padding:18px;margin-bottom:14px}
@@ -72,8 +72,7 @@ select:focus,input:focus{outline:none;border-color:var(--amber)}
     <div class="fld">
       <label class="fld-label" for="ai-select">Which AI?</label>
       <select id="ai-select" onchange="buildPrimer()">
-        <option value="">— select —</option>
-        <option value="deepseek">DeepSeek</option>
+        <option value="deepseek" selected>DeepSeek (default)</option>
         <option value="gemini">Gemini</option>
         <option value="gpt">ChatGPT / GPT</option>
         <option value="other">Other free AI</option>

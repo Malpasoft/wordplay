@@ -12,13 +12,13 @@
 <style>
 .dh-wrap{max-width:680px;margin:0 auto;padding:24px 16px 70px}
 .dh-eyebrow{font-family:var(--font-sans);font-size:.62rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
-h1{font-size:1.5rem;color:var(--navy);margin:0 0 4px}
+h1{font-size:1.5rem;color:var(--ink);margin:0 0 4px}
 .dh-sub{font-family:var(--font-sans);font-size:.82rem;color:var(--muted);margin:0 0 24px}
 .section{margin-bottom:28px}
 .label{font-family:var(--font-sans);font-size:.62rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
-h2{font-size:1.15rem;color:var(--navy);margin:0 0 12px}
+h2{font-size:1.15rem;color:var(--ink);margin:0 0 12px}
 .card{background:var(--cream);border:1.5px solid var(--hairline);border-radius:10px;padding:16px;margin-bottom:12px}
-.card h3{font-size:.95rem;font-weight:700;color:var(--navy);margin:0 0 6px}
+.card h3{font-size:.95rem;font-weight:700;color:var(--ink);margin:0 0 6px}
 .card p{font-family:var(--font-sans);font-size:.85rem;color:var(--muted);margin:0}
 .card code{font-family:"SF Mono","Menlo",monospace;font-size:.78rem;background:var(--cream-deep);padding:1px 5px;border-radius:3px;color:var(--ink)}
 select,input{width:100%;box-sizing:border-box;padding:9px 12px;border:1.5px solid var(--hairline);border-radius:7px;font-size:.9rem;font-family:var(--font-sans);background:var(--paper);color:var(--ink);margin-bottom:8px;appearance:none;-webkit-appearance:none}
@@ -58,7 +58,7 @@ hr{border:none;border-top:1px solid var(--hairline);margin:28px 0}
     <p style="font-family:var(--font-sans);font-size:.85rem;color:var(--muted);margin-bottom:12px">Paste into any AI so it knows what to prioritise for your real students.</p>
     <div class="ctx-box">
       <textarea id="classContext" rows="8" readonly placeholder="Loading student profiles…"></textarea>
-      <button class="ctx-copy" onclick="copyClassContext()">Copy</button>
+      <button class="ctx-copy" id="ctxCopyBtn" onclick="copyClassContext()">Copy</button>
     </div>
     <p style="font-family:var(--font-sans);font-size:.75rem;color:var(--muted);margin-top:6px">Add students in <a href="profile.html">profiles</a> first. Reads your current list from localStorage.</p>
   </div>
@@ -177,7 +177,16 @@ function buildClassContext() {
 }
 
 function copyClassContext() {
-  navigator.clipboard.writeText(document.getElementById('classContext').value).then(function(){ alert('Copied!'); });
+  var val = document.getElementById('classContext').value || '';
+  if (!val || val.startsWith('No students') || val.startsWith('Could not') || val.length < 30){
+    var btn = document.getElementById('ctxCopyBtn');
+    if (btn){ btn.textContent = 'Nothing to copy'; setTimeout(function(){ btn.textContent='Copy'; }, 2000); }
+    return;
+  }
+  navigator.clipboard.writeText(val).then(function(){
+    var btn = document.getElementById('ctxCopyBtn');
+    if (btn){ btn.textContent = 'Copied (' + val.length + ' chars)'; setTimeout(function(){ btn.textContent='Copy'; }, 2200); }
+  });
 }
 
 window.addEventListener('load', function(){

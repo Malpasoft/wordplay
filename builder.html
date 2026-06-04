@@ -12,12 +12,12 @@
 <style>
 .bd-wrap{max-width:780px;margin:0 auto;padding:24px 16px 80px}
 .bd-eyebrow{font-family:var(--font-sans);font-size:.62rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
-h1{font-size:1.5rem;color:var(--navy);margin:0 0 4px}
+h1{font-size:1.5rem;color:var(--ink);margin:0 0 4px}
 .bd-sub{font-family:var(--font-sans);font-size:.82rem;color:var(--muted);margin:0 0 22px;line-height:1.5}
 
 .step{background:var(--cream);border:1.5px solid var(--hairline);border-radius:10px;padding:18px;margin-bottom:16px}
 .step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--amber);color:#fff;font-family:var(--font-sans);font-size:.74rem;font-weight:800;margin-right:8px;flex-shrink:0}
-.step-head{display:flex;align-items:center;font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:12px}
+.step-head{display:flex;align-items:center;font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:12px}
 .step.locked{opacity:.5;pointer-events:none}
 
 /* Section type tabs */
@@ -190,9 +190,10 @@ select:focus,input:focus,textarea:focus{outline:none;border-color:var(--amber)}
         <button class="btn" id="copyPromptBtn" onclick="copyPrompt()">Copy prompt</button>
       </div>
       <div class="hint">Paste the prompt into the AI. It replies with a JSON array. Paste that reply back here:</div>
-      <textarea id="aiResponse" rows="5" placeholder="Paste the AI JSON response here…" style="margin-top:8px"></textarea>
+      <textarea id="aiResponse" rows="5" placeholder="Paste the AI JSON response here…" style="margin-top:8px" oninput="onAiResponseInput()"></textarea>
+      <div id="jsonStatus" style="font-family:var(--font-sans);font-size:.76rem;min-height:18px;margin:4px 0 6px;padding:0 2px"></div>
       <div class="btn-row">
-        <button class="btn ghost" onclick="loadJson()">Load into editor &#8595;</button>
+        <button class="btn ghost" id="loadJsonBtn" onclick="loadJson()">Load into editor &#8595;</button>
       </div>
     </div>
 
@@ -939,13 +940,62 @@ function copyPrimer(){
 /* Build primer on load so it's ready */
 window.addEventListener('load', buildPrimer);
 
+var _autoLoadTimer = null;
+function onAiResponseInput(){
+  clearTimeout(_autoLoadTimer);
+  var raw = (document.getElementById('aiResponse').value||'').trim();
+  if (!raw){ setJsonStatus('',''); return; }
+  _autoLoadTimer = setTimeout(function(){
+    var cleaned = raw.replace(/^```[a-z]*\s*/i,'').replace(/```\s*$/,'').trim();
+    // Strip DeepSeek <think>...</think> blocks
+    cleaned = cleaned.replace(/<think>[\s\S]*?<\/think>/i,'').trim();
+    var start = cleaned.indexOf('[');
+    if (start > 0) cleaned = cleaned.slice(start);
+    if (!cleaned.startsWith('[')){ setJsonStatus('Starts with "'+cleaned.slice(0,20)+'…" — should start with [','warn'); return; }
+    var data;
+    try { data = JSON.parse(cleaned); } catch(e){
+      var msg = diagnoseJsonError(cleaned, e.message);
+      setJsonStatus(msg,'err'); return;
+    }
+    if (!Array.isArray(data)){ setJsonStatus('Expected an array — got an object. Check AI output.','err'); return; }
+    var edType = editorTypeFor(fileType);
+    var expected = edType==='words' ? 10 : edType==='slides' ? 6 : 10;
+    if (data.length !== expected){
+      setJsonStatus('Valid JSON — but ' + data.length + ' items (expected ' + expected + '). Tap Load to use it anyway.','warn');
+    } else {
+      setJsonStatus('Valid JSON — ' + data.length + ' items ready. Tap Load or keep editing.','ok');
+    }
+  }, 600);
+}
+
+function diagnoseJsonError(raw, msg){
+  if (/<think>/i.test(raw)) return 'AI included a <think> block — remove everything before the first [';
+  if (/^```/.test(raw)) return 'Remove the ``` code fences — paste only the [ ... ] part';
+  if (/,\s*\]/.test(raw)) return 'Trailing comma after the last item — remove it';
+  if (/,\s*}/.test(raw)) return 'Trailing comma in an object — remove the last comma before }';
+  if (/'/.test(raw.replace(/IPA|ipa|\\/g,''))) return 'Single quotes found — JSON needs double quotes "like this"';
+  return 'JSON invalid: ' + msg.split(' at ')[0];
+}
+
+function setJsonStatus(msg, kind){
+  var el = document.getElementById('jsonStatus');
+  if (!el) return;
+  var colors = {ok:'#1e7a45', warn:'var(--amber)', err:'#c0392b', '':''};
+  el.style.color = colors[kind] || '';
+  el.textContent = msg;
+}
+
 function loadJson(){
   var raw = (document.getElementById('aiResponse').value||'').trim();
   if (!raw){ flashStatus('Paste the AI response first.','err'); return; }
   raw = raw.replace(/^```[a-z]*\s*/i,'').replace(/```\s*$/,'').trim();
+  raw = raw.replace(/<think>[\s\S]*?<\/think>/i,'').trim();
+  var start = raw.indexOf('['); if (start > 0) raw = raw.slice(start);
   var data;
-  try { data = JSON.parse(raw); } catch(e){ flashStatus('Could not parse JSON: '+e.message,'err'); return; }
-  if (!Array.isArray(data)){ flashStatus('Expected a JSON array.','err'); return; }
+  try { data = JSON.parse(raw); } catch(e){
+    flashStatus(diagnoseJsonError(raw, e.message),'err'); return;
+  }
+  if (!Array.isArray(data)){ flashStatus('Expected a JSON array — got something else.','err'); return; }
   var edType = editorTypeFor(fileType);
   if (edType==='words'){
     cards = data.map(function(w){ return {word:w.word||'',ipa:w.ipa||'',def:w.def||w.definition||'',ex:w.ex||w.example||''}; });
@@ -960,6 +1010,7 @@ function loadJson(){
     renderQuestionsEditor();
     flashStatus('Loaded ' + questions.length + ' questions into the editor.','ok');
   }
+  setJsonStatus('','');
   updateItemCount();
 }
 
@@ -967,7 +1018,17 @@ function loadJson(){
 function updateItemCount(){
   var edType = editorTypeFor(fileType);
   var n = edType==='words' ? cards.length : edType==='slides' ? slideItems.length : questions.length;
-  document.getElementById('cardCount').textContent = n + ' item' + (n!==1?'s':'');
+  var expected = edType==='words' ? 10 : edType==='slides' ? 6 : 10;
+  var el = document.getElementById('cardCount');
+  el.textContent = n + ' item' + (n!==1?'s':'');
+  if (n > 0 && n !== expected){
+    el.style.color = 'var(--amber)';
+    el.title = 'Expected ' + expected + ' — you have ' + n;
+    el.textContent += ' (expected ' + expected + ')';
+  } else {
+    el.style.color = '';
+    el.title = '';
+  }
 }
 
 function addItem(){
