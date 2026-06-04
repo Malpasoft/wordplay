@@ -11,7 +11,7 @@
 <style>
 /* ── Shell ── */
 .pt-wrap{max-width:620px;margin:20px auto 56px;padding:0 14px}
-.pt-card{background:var(--paper);border-radius:14px;border:1.5px solid var(--hairline);box-shadow:0 3px 24px rgba(0,0,0,.09);overflow:hidden;will-change:transform;user-select:none}
+.pt-card{background:var(--paper);border-radius:14px;border:1.5px solid var(--hairline);box-shadow:0 3px 24px rgba(0,0,0,.09);overflow:hidden;user-select:none}
 body.dark .pt-card{background:#1E1E1E;border-color:rgba(255,255,255,.1)}
 
 /* ── Timer bar ── */
@@ -41,6 +41,11 @@ body.dark .pt-opt.correct{background:rgba(39,174,96,.18);border-color:#3dba78}
 body.dark .pt-opt.wrong{background:rgba(192,57,43,.18);border-color:#e05252}
 body.dark .pt-opt.reveal{background:rgba(39,174,96,.1);border-color:#3dba78;opacity:.62}
 
+/* ── Next button (shown after answering) ── */
+.pt-next-btn{display:none;width:100%;margin-top:14px;padding:12px;background:var(--ink);color:var(--paper);font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border:none;border-radius:7px;cursor:pointer;transition:opacity .12s}
+.pt-next-btn:hover{opacity:.82}
+.pt-next-btn.visible{display:block}
+
 /* ── Intro ── */
 .pt-intro{text-align:center;padding:44px 26px 38px}
 .pt-intro-eyebrow{font-family:var(--font-sans);font-size:.58rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:12px}
@@ -58,54 +63,72 @@ body.dark .pt-intro h2{color:#F0F0F0}
 .pt-level-badge{text-align:center;margin-bottom:4px}
 .pt-level-code{font-family:Georgia,serif;font-size:3.8rem;font-weight:700;color:var(--amber);line-height:1;display:block}
 .pt-level-name{font-family:var(--font-sans);font-size:.68rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);display:block;margin-top:5px}
-.pt-level-stat{font-family:var(--font-sans);font-size:.7rem;color:var(--muted);text-align:center;margin:10px 0 0}
-.pt-level-desc{font-family:var(--font-sans);font-size:.84rem;line-height:1.7;color:var(--ink);text-align:center;margin:16px 0 22px;padding:0 4px}
+.pt-level-stat{font-family:var(--font-sans);font-size:.7rem;color:var(--muted);text-align:center;margin:10px 0 20px}
+.pt-level-desc{font-family:var(--font-sans);font-size:.84rem;line-height:1.7;color:var(--ink);text-align:center;margin:0 0 22px;padding:0 4px}
 body.dark .pt-level-desc{color:#E0E0E0}
+
+/* ── Level scale ── */
+.pt-scale{margin-bottom:22px}
+.pt-scale-label-row{display:flex;justify-content:space-between;margin-bottom:6px}
+.pt-scale-lbl{font-family:var(--font-sans);font-size:.6rem;font-weight:700;color:var(--muted);letter-spacing:.5px}
+.pt-scale-lbl.active{color:var(--amber);font-weight:800}
+.pt-scale-track{height:8px;background:var(--hairline);border-radius:4px;overflow:hidden;margin-bottom:4px}
+.pt-scale-fill{height:100%;border-radius:4px;background:linear-gradient(to right,rgba(184,134,11,.25),var(--amber));transition:width .9s ease .2s;width:0}
 
 /* ── Skill bars ── */
 .pt-skills{margin-bottom:20px}
-.pt-skills-label{font-family:var(--font-sans);font-size:.57rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.pt-block-label{font-family:var(--font-sans);font-size:.57rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
 .pt-skill-row{margin-bottom:10px}
 .pt-skill-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
 .pt-skill-name{font-family:var(--font-sans);font-size:.72rem;font-weight:700;color:var(--ink)}
 body.dark .pt-skill-name{color:#D0D0D0}
 .pt-skill-lvl{font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--amber)}
 .pt-skill-track{height:6px;background:var(--hairline);border-radius:3px;overflow:hidden}
-.pt-skill-fill{height:100%;border-radius:3px;background:var(--amber);transition:width .9s ease .15s;width:0}
+.pt-skill-fill{height:100%;border-radius:3px;background:var(--amber);transition:width .9s ease .35s;width:0}
 
-/* ── Clinical notes ── */
-.pt-notes{background:rgba(184,134,11,.05);border:1px solid rgba(184,134,11,.14);border-radius:8px;padding:16px 18px;margin-bottom:20px}
-body.dark .pt-notes{background:rgba(184,134,11,.09);border-color:rgba(184,134,11,.22)}
-.pt-notes-label{font-family:var(--font-sans);font-size:.57rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:10px}
-.pt-notes ul{font-family:var(--font-sans);font-size:.8rem;line-height:1.8;color:var(--ink);margin:0;padding-left:18px}
-body.dark .pt-notes ul{color:#D0D0D0}
-
-/* ── Email capture ── */
-.pt-email-box{border:1.5px solid var(--hairline);border-radius:8px;padding:16px 18px;margin-bottom:12px}
-.pt-email-title{font-family:var(--font-sans);font-size:.72rem;font-weight:700;color:var(--ink);margin-bottom:3px}
-body.dark .pt-email-title{color:#D0D0D0}
-.pt-email-sub{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);line-height:1.5;margin-bottom:10px}
-.pt-email-row{display:flex;gap:8px}
-.pt-email-inp{flex:1;min-width:0;padding:9px 12px;font-family:var(--font-sans);font-size:.82rem;border:1.5px solid var(--hairline);border-radius:6px;background:var(--paper);color:var(--ink)}
-.pt-email-inp:focus{outline:none;border-color:var(--amber)}
-body.dark .pt-email-inp{background:#2A2A2A;border-color:#3C3C3C;color:#E0E0E0}
-.pt-email-btn{padding:9px 16px;background:var(--ink);color:var(--paper);font-family:var(--font-sans);font-size:.75rem;font-weight:700;border:none;border-radius:6px;cursor:pointer;white-space:nowrap;transition:opacity .12s}
-.pt-email-btn:hover{opacity:.82}
-.pt-email-done{font-family:var(--font-sans);font-size:.78rem;color:#27ae60;padding:4px 0}
-body.dark .pt-email-done{color:#5fd068}
-
-/* ── CTAs ── */
+/* ── Primary CTAs ── */
 .pt-cta-primary{display:block;width:100%;padding:13px;background:var(--ink);color:var(--paper);font-family:var(--font-sans);font-size:.73rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-align:center;text-decoration:none;border-radius:7px;border:none;cursor:pointer;box-sizing:border-box;transition:opacity .12s;margin-bottom:10px}
 .pt-cta-primary:hover{opacity:.82}
-.pt-cta-wa{display:block;width:100%;padding:12px;background:transparent;color:var(--amber);font-family:var(--font-sans);font-size:.73rem;font-weight:700;letter-spacing:.5px;text-align:center;text-decoration:none;border-radius:7px;border:1.5px solid var(--amber);box-sizing:border-box;cursor:pointer;transition:background .12s,color .12s;margin-bottom:18px}
-.pt-cta-wa:hover{background:var(--amber);color:#1A1A1A}
-.pt-divider{height:1px;background:var(--hairline);margin:0 0 16px}
+.pt-cta-retry{display:block;width:100%;padding:11px;background:transparent;color:var(--ink);font-family:var(--font-sans);font-size:.73rem;font-weight:700;letter-spacing:.5px;text-align:center;text-decoration:none;border-radius:7px;border:1.5px solid var(--hairline);box-sizing:border-box;cursor:pointer;transition:border-color .12s;margin-bottom:20px}
+.pt-cta-retry:hover{border-color:var(--ink)}
+body.dark .pt-cta-retry{color:#D0D0D0}
+
+/* ── Email gate ── */
+.pt-gate-box{border:1.5px solid var(--amber);border-radius:10px;padding:20px;margin-bottom:16px;background:rgba(184,134,11,.04)}
+body.dark .pt-gate-box{background:rgba(184,134,11,.08)}
+.pt-gate-title{font-family:var(--font-sans);font-size:.78rem;font-weight:700;color:var(--ink);margin-bottom:4px}
+body.dark .pt-gate-title{color:#D0D0D0}
+.pt-gate-sub{font-family:var(--font-sans);font-size:.73rem;color:var(--muted);line-height:1.5;margin-bottom:12px}
+.pt-gate-row{display:flex;gap:8px}
+.pt-gate-inp{flex:1;min-width:0;padding:9px 12px;font-family:var(--font-sans);font-size:.82rem;border:1.5px solid var(--hairline);border-radius:6px;background:var(--paper);color:var(--ink)}
+.pt-gate-inp:focus{outline:none;border-color:var(--amber)}
+body.dark .pt-gate-inp{background:#2A2A2A;border-color:#3C3C3C;color:#E0E0E0}
+.pt-gate-btn{padding:9px 16px;background:var(--amber);color:#1A1A1A;font-family:var(--font-sans);font-size:.75rem;font-weight:700;border:none;border-radius:6px;cursor:pointer;white-space:nowrap;transition:opacity .12s}
+.pt-gate-btn:hover{opacity:.87}
+.pt-gate-done{font-family:var(--font-sans);font-size:.78rem;color:#27ae60;padding:4px 0}
+body.dark .pt-gate-done{color:#5fd068}
+
+/* ── Diagnostic report (revealed after email) ── */
+.pt-diagnostic{display:none;margin-top:16px}
+.pt-diag-intro{font-family:var(--font-sans);font-size:.78rem;color:var(--muted);line-height:1.55;margin-bottom:14px}
+.pt-diag-card{border:1px solid var(--hairline);border-radius:8px;padding:14px 16px;margin-bottom:10px}
+body.dark .pt-diag-card{border-color:rgba(255,255,255,.1)}
+.pt-diag-q{font-family:Georgia,serif;font-size:.82rem;color:var(--ink);margin:0 0 8px;line-height:1.55}
+body.dark .pt-diag-q{color:#D0D0D0}
+.pt-diag-row{display:flex;gap:10px;margin-bottom:6px;flex-wrap:wrap}
+.pt-diag-chip{font-family:var(--font-sans);font-size:.67rem;font-weight:700;padding:3px 9px;border-radius:4px}
+.pt-diag-chip.wrong{background:rgba(192,57,43,.1);border:1px solid rgba(192,57,43,.3);color:#c0392b}
+.pt-diag-chip.correct{background:rgba(39,174,96,.1);border:1px solid rgba(39,174,96,.3);color:#27ae60}
+body.dark .pt-diag-chip.wrong{color:#e05252}
+body.dark .pt-diag-chip.correct{color:#5fd068}
+.pt-diag-msg{font-family:var(--font-sans);font-size:.73rem;color:var(--muted);line-height:1.55}
+
+/* ── Bottom row ── */
+.pt-divider{height:1px;background:var(--hairline);margin:18px 0 14px}
 .pt-bottom-row{display:flex;justify-content:space-between;align-items:center}
-.pt-bmac{font-family:var(--font-sans);font-size:.72rem;color:var(--muted)}
-.pt-bmac a{color:var(--muted);text-decoration:none}
-.pt-bmac a:hover{color:var(--ink)}
-body.dark .pt-bmac a:hover{color:#D0D0D0}
-.pt-tertiary{display:flex;gap:14px}
+.pt-cta-wa{font-family:var(--font-sans);font-size:.72rem;color:var(--amber);text-decoration:none}
+.pt-cta-wa:hover{opacity:.8}
+.pt-aux-links{display:flex;gap:14px}
 .pt-cta-sm{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);text-decoration:none;cursor:pointer;background:none;border:none;padding:0}
 .pt-cta-sm:hover{color:var(--ink)}
 body.dark .pt-cta-sm:hover{color:#D0D0D0}
@@ -125,11 +148,11 @@ body.dark .pt-cta-sm:hover{color:#D0D0D0}
 <footer class="site-footer">Word Play &middot; Cambridge English A1&rarr;C2</footer>
 
 <script>
-/* ── Placeholders — fill these in before going live ── */
-var WHATSAPP_NUMBER = '34600000000'; // Em's WhatsApp number (no + or spaces)
-var BMAC_URL        = 'https://buymeacoffee.com/wordplay'; // Buy Me a Coffee URL
+/* ── Config — fill these before going live ── */
+var WHATSAPP_NUMBER = '34600000000'; // Em's WhatsApp (no +)
+var BMAC_URL        = 'https://buymeacoffee.com/wordplay';
 
-/* ── Question bank: 48 questions, 8 per level (4 grammar + 4 vocab) ── */
+/* ── Question bank: 48 questions, 8 per level ── */
 var BANK = [
   /* A1 GRAMMAR */
   {id:'a1g1',level:'a1',skill:'grammar',topic:'verb to be',text:'Choose the correct form: "She ___ a teacher at the local school."',choices:['is','are','am','were'],answer:'is'},
@@ -193,12 +216,66 @@ var BANK = [
   {id:'c2v4',level:'c2',skill:'vocab',topic:'precision adverbs',text:'The policy changes were implemented ___, with little public consultation.',choices:['surreptitiously','simultaneously','substantially','serendipitously'],answer:'surreptitiously'}
 ];
 
+/* ── Diagnostic messages per question — what a wrong answer reveals ── */
+var WRONG_MSG = {
+  a1g1:"'She is' — verb 'to be' must agree with its subject. 'She/he/it = is'. Getting this wrong suggests the subject-verb agreement rule isn't yet automatic.",
+  a1g2:"'He goes' — in present simple, add -s for he/she/it. This is one of the most common A1 errors: omitting or adding -s incorrectly.",
+  a1g3:"'There is' for a single thing, 'there are' for multiple. Mixing these up is a typical A1 gap in basic agreement.",
+  a1g4:"'Do you like?' — present simple questions use do/does, not 'are'. Confusing 'be' and 'do' is a fundamental A1 challenge.",
+  a1v1:"'Hospital' is a core A1 place word. Mixing up buildings and institutions suggests foundational vocabulary needs consolidating.",
+  a1v2:"'Huge' = very big — a high-frequency A1/A2 adjective. Errors here point to a gap in basic descriptive vocabulary.",
+  a1v3:"'Thirsty' (wanting water) vs 'hungry' (wanting food) — common A1 physical-state vocabulary often confused at the early stages.",
+  a1v4:"February follows January — months are core A1 knowledge. Missing this suggests time vocabulary needs review.",
+  a2g1:"'Went' is the irregular past of 'go'. Irregular verbs are a central A2 challenge — there is no pattern, so they must be memorised.",
+  a2g2:"Past continuous 'was talking' describes what was in progress when something else happened. Choosing past simple here is a common A2 confusion.",
+  a2g3:"Superlatives use 'the best/worst/biggest' — always with 'the', never 'more good' or 'most good'. A high-frequency A2 error.",
+  a2g4:"'Has lost' (present perfect) links a past action to a current result — she lost them and still can't find them. Choosing simple past misses this connection.",
+  a2v1:"'Expensive' = costs a lot. If you chose another option, core A2 adjectives for describing prices and products need strengthening.",
+  a2v2:"'Dentist' = teeth specialist. Confusing professional titles is a sign that job and role vocabulary at A2 needs more practice.",
+  a2v3:"'Babysit' = temporarily look after children. Choosing 'give up' or 'grow up' suggests phrasal verb meanings aren't secure at A2 yet.",
+  a2v4:"'Check in' = register your arrival. Travel phrasal verbs are essential A2 vocabulary — check in/out, take off, board.",
+  b1g1:"'Have never been' — present perfect needs 'have' for I/you/we/they. Choosing 'had' suggests perfect tense formation isn't yet automatic.",
+  b1g2:"Second conditional: if + past simple → would + base form. 'If I had… I would.' Choosing 'will' = treating it as a real future, not a hypothesis.",
+  b1g3:"Passive voice: was/were + past participle. 'Built' alone sounds like active past. The was/were carrier verb is essential.",
+  b1g4:"In reported speech, 'will' shifts back to 'would'. Tense backshift is a core B1 grammar challenge.",
+  b1v1:"'Speed up' = make faster. Phrasal verb direction (speed up vs slow down) is a B1 differentiation many learners struggle with.",
+  b1v2:"'Trainee' = someone learning on the job. Workplace vocabulary distinctions (trainee/intern vs consultant/supervisor) are B1 level.",
+  b1v3:"'However' signals contrast (not addition or cause). Understanding how discourse markers connect ideas is a key B1 reading and writing skill.",
+  b1v4:"'Cosy' implies small + warm + comfortable — not grand or cheap. Reading connotation (not just denotation) is a B1/B2 turning point.",
+  b2g1:"After 'not only', the auxiliary verb inverts before the subject: 'Not only did he fail.' Choosing 'had/was' shows formal inversion isn't yet secure at B2.",
+  b2g2:"'Regret + gerund' (not accepting) = regretting a real past action. 'Regret + infinitive' = delivering bad news now. This distinction is a classic B2 trap.",
+  b2g3:"Third conditional: had + past participle → would have + past participle. Using 'would take' (not 'would have taken') collapses past and present hypotheticals.",
+  b2g4:"'Reported to contain' uses infinitive after a passive reporting verb. 'Containing' here would be a participial phrase, not the structure needed.",
+  b2v1:"'Indispensable' = cannot be done without — a formal synonym of essential. B2 vocabulary requires Latin-root formal adjectives.",
+  b2v2:"'Embark on' = begin (a journey or undertaking). Formal phrasal verbs appear heavily in B2+ reading — beginning, finishing, abandoning are all different.",
+  b2v3:"'Take with a pinch of salt' = be sceptical. Idioms are a B2 challenge because their meaning can't be deduced word by word.",
+  b2v4:"'Soar' = rise very sharply and rapidly. Choosing 'grow' or 'increase' is technically acceptable but misses the precision of collocation at B2.",
+  c1g1:"Mandative subjunctive: 'essential that he be' (not 'is') — the bare infinitive is required in formal recommendations. Missing this is typical at B2/C1 boundary.",
+  c1g2:"Adverb-fronted inversion: 'Rarely do we see' — 'do' inverts with the subject after a negative frequency adverb. A key formal register marker at C1.",
+  c1g3:"Reduced relative clause: 'renovated last year' = 'which was renovated'. The past participle alone can replace 'which was' — a C1 compression technique.",
+  c1g4:"'Goes without saying' is a fixed collocation — 'saying', not 'said' or 'to say'. C1 vocabulary includes these idiomatic nominal phrases.",
+  c1v1:"'Hedge' in academic writing = soften claims with uncertainty markers. This register-specific use of vocabulary is a C1 academic writing skill.",
+  c1v2:"'Meticulous' = extremely careful and precise — not emotional or creative. High-register precise adjectives are a reliable C1/C2 marker.",
+  c1v3:"'Repudiate' = officially reject or deny — a formal Latinate verb. Confusing it with 'refrain' or 'reconsider' suggests C1 formal verbs need attention.",
+  c1v4:"'Catalyst' (metaphorical) = trigger for rapid change. Figurative use of scientific terms in non-scientific contexts is a C1 vocabulary skill.",
+  c2g1:"'Scarcely had she arrived' — scarcely/hardly/barely + had + subject inverts in formal narrative. This is a C2 literary/journalistic structure.",
+  c2g2:"'Is believed to have been altered' = complex passive with perfect infinitive. This double-layer structure is characteristic of formal C2 reporting.",
+  c2g3:"Concessive 'as': 'ambitious as it was' = 'although it was ambitious'. The adjective precedes the subject — a unique C2 literary/formal construction.",
+  c2g4:"'Had the evidence come to light' = conditional inversion without 'if'. This formal omission of 'if' is a C2 written English feature.",
+  c2v1:"'Obfuscate' = deliberately make unclear. Choosing a simpler near-synonym shows that C2-level precision vocabulary is still developing.",
+  c2v2:"'Sycophantic' = excessively and insincerely flattering. Distinguishing this from 'diplomatic' or 'assertive' requires C2 register and connotation awareness.",
+  c2v3:"'Palimpsest' = manuscript written over erased earlier text. C2 vocabulary includes rare specialist nouns used as powerful metaphors in formal writing.",
+  c2v4:"'Surreptitiously' = secretly, without others noticing. Precision adverbs of manner are a reliable C2 differentiator — they demand both meaning and register."
+};
+
 /* ── Constants ── */
 var BANDS      = ['a1','a2','b1','b2','c1','c2'];
-var START_IDX  = 2;  // start at B1
+var START_IDX  = 2;
 var MIN_Q      = 12;
 var MAX_Q      = 16;
 var TIMER_SECS = 300;
+var SCALE_PCT  = {a1:17, a2:33, b1:50, b2:67, c1:83, c2:100};
+var SKILL_PCT  = {a1:14, a2:28, b1:44, b2:60, c1:76, c2:93};
 
 var LEVEL_NAMES = {
   a1:'A1 Beginner', a2:'A2 Elementary', b1:'B1 Pre-intermediate',
@@ -209,24 +286,22 @@ var LEVEL_DESC = {
   a2:'You can communicate in simple, everyday situations. You manage routine exchanges about familiar topics — shopping, travel, your background — without difficulty.',
   b1:'You are an independent communicator. You handle most travel and everyday situations, express opinions, and follow standard speech on familiar subjects.',
   b2:'You have upper-intermediate fluency. You understand complex texts, discuss abstract topics, and interact with native speakers naturally and without strain.',
-  c1:'You are an advanced user. You express yourself fluently and precisely, handle demanding academic or professional English, and pick up on nuance and implication.',
+  c1:'You are an advanced user. You express yourself fluently and precisely, handle demanding academic or professional English, and recognise nuance and implication.',
   c2:'You have near-native proficiency. You understand virtually everything you hear or read and can express yourself with precision in any context.'
 };
-var SKILL_BAR_PCT = {a1:14, a2:28, b1:44, b2:60, c1:76, c2:93};
 
 /* ── State ── */
 var pools = {}, cursor = START_IDX;
-var cursorHistory = [];              // cursor position after each answer — source of truth for level
-var skillCursorHistory = {grammar:[], vocab:[]};
+var cursorHistory = [], skillCursorHistory = {grammar:[], vocab:[]};
 var answered = [], bandCorrect = {}, bandAsked = {};
 var timerSec = TIMER_SECS, timerInterval = null;
-var currentQ = null, ptAnswered = false, ptLastCorrect = false, advTimer = null;
+var currentQ = null, ptAnswered = false, ptLastCorrect = false;
 var stage = document.getElementById('pt-stage');
 var _finalLevel = null;
 
 /* ── Helpers ── */
-function shuffle(a) {
-  for (var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}
+function shuffle(a){
+  for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}
   return a;
 }
 function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
@@ -234,85 +309,59 @@ function pad(n){ return n<10?'0'+n:String(n); }
 function fmtTime(s){ return Math.floor(s/60)+':'+pad(s%60); }
 
 /* ── Timer ── */
-function startTimer() {
-  timerSec = TIMER_SECS;
-  timerInterval = setInterval(function() {
+function startTimer(){
+  timerSec=TIMER_SECS;
+  timerInterval=setInterval(function(){
     timerSec--;
-    var fill = document.getElementById('timerFill');
-    var clock = document.getElementById('timerClock');
-    if (fill){ fill.style.width=(timerSec/TIMER_SECS*100)+'%'; if(timerSec<=30)fill.classList.add('warn'); }
-    if (clock){ clock.textContent=fmtTime(timerSec); if(timerSec<=30)clock.classList.add('warn'); }
-    if (timerSec<=0){ clearInterval(timerInterval); timerInterval=null; showResults(); }
-  }, 1000);
+    var fill=document.getElementById('timerFill'), clock=document.getElementById('timerClock');
+    if(fill){ fill.style.width=(timerSec/TIMER_SECS*100)+'%'; if(timerSec<=30)fill.classList.add('warn'); }
+    if(clock){ clock.textContent=fmtTime(timerSec); if(timerSec<=30)clock.classList.add('warn'); }
+    if(timerSec<=0){ clearInterval(timerInterval); timerInterval=null; showResults(); }
+  },1000);
 }
 function stopTimer(){ if(timerInterval){ clearInterval(timerInterval); timerInterval=null; } }
 
 /* ── Adaptive engine ── */
-function initPools() {
+function initPools(){
   BANDS.forEach(function(b){ pools[b]=shuffle(BANK.filter(function(q){ return q.level===b; }).slice()); });
 }
-
-function nextQuestion() {
-  if (pools[BANDS[cursor]] && pools[BANDS[cursor]].length) return pools[BANDS[cursor]].shift();
-  for (var d=1;d<BANDS.length;d++) {
+function nextQuestion(){
+  if(pools[BANDS[cursor]]&&pools[BANDS[cursor]].length) return pools[BANDS[cursor]].shift();
+  for(var d=1;d<BANDS.length;d++){
     var hi=cursor+d, lo=cursor-d;
-    if (hi<BANDS.length && pools[BANDS[hi]] && pools[BANDS[hi]].length){ cursor=hi; return pools[BANDS[cursor]].shift(); }
-    if (lo>=0 && pools[BANDS[lo]] && pools[BANDS[lo]].length){ cursor=lo; return pools[BANDS[cursor]].shift(); }
+    if(hi<BANDS.length&&pools[BANDS[hi]]&&pools[BANDS[hi]].length){ cursor=hi; return pools[BANDS[cursor]].shift(); }
+    if(lo>=0&&pools[BANDS[lo]]&&pools[BANDS[lo]].length){ cursor=lo; return pools[BANDS[cursor]].shift(); }
   }
   return null;
 }
-
-/*
- * Stop when converged: last 6 cursor positions span at most 1 level apart.
- * This catches both "settled at one level" and "oscillating between two adjacent
- * levels" — both mean we've found the ceiling. Conservative: only triggers after MIN_Q.
- */
-function shouldStop() {
-  if (answered.length >= MAX_Q) return true;
-  if (answered.length >= MIN_Q && cursorHistory.length >= 6) {
-    var last6 = cursorHistory.slice(-6);
-    var mn = Math.min.apply(null, last6), mx = Math.max.apply(null, last6);
-    if (mx - mn <= 1) return true;
+function shouldStop(){
+  if(answered.length>=MAX_Q) return true;
+  if(answered.length>=MIN_Q&&cursorHistory.length>=6){
+    var last6=cursorHistory.slice(-6);
+    if(Math.max.apply(null,last6)-Math.min.apply(null,last6)<=1) return true;
   }
   return false;
 }
-
-/*
- * Level determination: mode of cursor positions in the second half of the test.
- * Using cursor positions (not accuracy ratios) prevents one lucky question at a high
- * level from inflating the result. When the cursor oscillates between two levels, the
- * tie is broken toward the lower level — more conservative and more accurate.
- */
-function modeOfHistory(history) {
-  if (!history || history.length === 0) return START_IDX;
-  var half = history.slice(Math.floor(history.length / 2));
-  if (half.length === 0) half = history;
-  var freq = {};
+function modeOfHistory(h){
+  if(!h||h.length===0) return START_IDX;
+  var half=h.slice(Math.floor(h.length/2));
+  var freq={};
   half.forEach(function(c){ freq[c]=(freq[c]||0)+1; });
-  var maxFreq=0, finalIdx=START_IDX;
+  var maxFreq=0,finalIdx=START_IDX;
   Object.keys(freq).forEach(function(k){
     var ki=parseInt(k);
-    // Ties go to the lower (more conservative) level
     if(freq[k]>maxFreq||(freq[k]===maxFreq&&ki<finalIdx)){ maxFreq=freq[k]; finalIdx=ki; }
   });
   return finalIdx;
 }
-
-function overallLevel() {
-  return BANDS[modeOfHistory(cursorHistory)];
-}
-
-function skillLevel(skill) {
-  var h = skillCursorHistory[skill];
-  if (!h || h.length === 0) return null;
-  return BANDS[modeOfHistory(h)];
-}
+function overallLevel(){ return BANDS[modeOfHistory(cursorHistory)]; }
+function skillLevel(s){ var h=skillCursorHistory[s]; return(!h||h.length===0)?null:BANDS[modeOfHistory(h)]; }
 
 /* ── Audio ── */
-function playTone(correct) {
-  try {
+function playTone(ok){
+  try{
     var ctx=new(window.AudioContext||window.webkitAudioContext)();
-    if(correct){
+    if(ok){
       [[660,0],[880,.12]].forEach(function(p){
         var o=ctx.createOscillator(),g=ctx.createGain(); o.connect(g); g.connect(ctx.destination);
         o.type='sine'; o.frequency.value=p[0]; var t=ctx.currentTime+p[1];
@@ -324,68 +373,75 @@ function playTone(correct) {
       o.type='sawtooth'; o.frequency.value=160;
       g.gain.setValueAtTime(.18,ctx.currentTime); g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.28);
       o.start(); o.stop(ctx.currentTime+.28);
-      try{ navigator.vibrate&&navigator.vibrate([60,20,60]); }catch(e2){}
+      try{ navigator.vibrate&&navigator.vibrate([60,20,60]); }catch(e){}
     }
-    setTimeout(function(){ try{ctx.close();}catch(e2){} },1200);
-  } catch(e){}
+    setTimeout(function(){ try{ctx.close();}catch(e){} },1200);
+  }catch(e){}
 }
 
-/* ── Swipe to advance ── */
+/* ── Swipe (left only — advances after answering) ── */
 (function(){
   var sx=0,sy=0,active=false,delta=0;
   stage.addEventListener('touchstart',function(e){ if(!ptAnswered||e.touches.length>1)return; sx=e.touches[0].clientX; sy=e.touches[0].clientY; active=false; delta=0; stage.style.transition='none'; },{passive:true});
   stage.addEventListener('touchmove',function(e){
     if(!ptAnswered)return;
-    var dx=e.touches[0].clientX-sx,dy=e.touches[0].clientY-sy;
-    if(!active){ if(Math.abs(dy)>Math.abs(dx)+8||Math.abs(dx)<8)return; active=true; }
+    var dx=e.touches[0].clientX-sx, dy=e.touches[0].clientY-sy;
+    if(!active){ if(Math.abs(dy)>Math.abs(dx)+8||Math.abs(dx)<8||dx>0)return; active=true; }
+    if(!active)return;
     e.preventDefault(); delta=dx;
     stage.style.transform='translateX('+dx+'px)';
     stage.style.opacity=Math.max(.25,1-Math.min(1,Math.abs(dx)/(window.innerWidth*.55)));
   },{passive:false});
   stage.addEventListener('touchend',function(){
-    if(!active||Math.abs(delta)<30){ stage.style.transition='transform .22s ease-out,opacity .22s ease-out'; stage.style.transform=''; stage.style.opacity=''; setTimeout(function(){ stage.style.transition=''; },230); active=false; return; }
-    if(delta<0){ stage.style.transition='transform .26s ease-in,opacity .22s ease-in'; stage.style.transform='translateX('+(-window.innerWidth*1.3)+'px) rotate(-18deg)'; stage.style.opacity='0'; clearTimeout(advTimer); advTimer=null; var lc=ptLastCorrect; setTimeout(function(){ advance(lc); },270); }
-    else{ stage.style.transition='transform .22s ease-out,opacity .22s ease-out'; stage.style.transform=''; stage.style.opacity=''; setTimeout(function(){ stage.style.transition=''; },230); }
+    if(!active||Math.abs(delta)<30||delta>0){
+      stage.style.transition='transform .22s ease-out,opacity .22s ease-out';
+      stage.style.transform=''; stage.style.opacity='';
+      setTimeout(function(){ stage.style.transition=''; },230);
+      active=false; return;
+    }
+    stage.style.transition='transform .26s ease-in,opacity .22s ease-in';
+    stage.style.transform='translateX('+(-window.innerWidth*1.3)+'px) rotate(-12deg)';
+    stage.style.opacity='0';
+    var lc=ptLastCorrect;
+    setTimeout(function(){ advance(lc); },270);
     active=false;
   },{passive:true});
 })();
 
 /* ── Screens ── */
-function showIntro() {
-  stage.innerHTML =
-    '<div class="pt-intro">' +
-    '<div class="pt-intro-eyebrow">English Proficiency Diagnosis</div>' +
-    '<h2>Find your exact level<br>in 5 minutes</h2>' +
-    '<p class="pt-intro-sub">Grammar, vocabulary, and a personal action plan — like a doctor\'s check-up for your English.</p>' +
-    '<div class="pt-pills"><span class="pt-pill">Free</span><span class="pt-pill">No sign-up needed</span><span class="pt-pill">A1 to C2</span><span class="pt-pill">5-minute timer</span></div>' +
-    '<button class="pt-start" onclick="startTest()">Begin diagnosis &rarr;</button>' +
+function showIntro(){
+  stage.innerHTML=
+    '<div class="pt-intro">'+
+    '<div class="pt-intro-eyebrow">English Proficiency Diagnosis</div>'+
+    '<h2>Find your exact level<br>in 5 minutes</h2>'+
+    '<p class="pt-intro-sub">Grammar, vocabulary, and a personal action plan — like a doctor\'s check-up for your English.</p>'+
+    '<div class="pt-pills"><span class="pt-pill">Free</span><span class="pt-pill">No sign-up needed</span><span class="pt-pill">A1 to C2</span><span class="pt-pill">5-minute timer</span></div>'+
+    '<button class="pt-start" onclick="startTest()">Begin diagnosis &rarr;</button>'+
     '</div>';
 }
 
-function startTest() {
-  initPools();
-  cursor = START_IDX;
-  cursorHistory = [];
-  skillCursorHistory = {grammar:[], vocab:[]};
-  answered = []; bandCorrect = {}; bandAsked = {};
-  _finalLevel = null;
-  BANDS.forEach(function(b){
-    bandCorrect[b+'_grammar']=0; bandAsked[b+'_grammar']=0;
-    bandCorrect[b+'_vocab']=0;   bandAsked[b+'_vocab']=0;
-  });
+function startTest(){
+  initPools(); cursor=START_IDX;
+  cursorHistory=[]; skillCursorHistory={grammar:[],vocab:[]};
+  answered=[]; bandCorrect={}; bandAsked={}; _finalLevel=null;
+  BANDS.forEach(function(b){ bandCorrect[b+'_g']=0; bandAsked[b+'_g']=0; bandCorrect[b+'_v']=0; bandAsked[b+'_v']=0; });
   startTimer();
-  var q = nextQuestion();
-  if (q) showQ(q); else showResults();
+  var q=nextQuestion();
+  if(q) showQ(q); else showResults();
 }
 
-function showQ(q) {
+function showQ(q){
+  /* ── Critical bug fix: reset any swipe animation before rendering ── */
+  stage.style.transition='';
+  stage.style.transform='';
+  stage.style.opacity='';
+
   currentQ=q; ptAnswered=false;
-  if(advTimer){ clearTimeout(advTimer); advTimer=null; }
   var display=shuffle(q.choices.slice());
-  var timePct=timerSec/TIMER_SECS*100;
   var warnCls=timerSec<=30?' warn':'';
+
   var html=
-    '<div class="pt-timer-bar"><div class="pt-timer-fill'+warnCls+'" id="timerFill" style="width:'+timePct+'%"></div></div>'+
+    '<div class="pt-timer-bar"><div class="pt-timer-fill'+warnCls+'" id="timerFill" style="width:'+(timerSec/TIMER_SECS*100)+'%"></div></div>'+
     '<div class="pt-body">'+
     '<div class="pt-meta"><span class="pt-qnum">Question '+(answered.length+1)+'</span>'+
     '<span class="pt-clock'+warnCls+'" id="timerClock">'+fmtTime(timerSec)+'</span></div>'+
@@ -394,26 +450,34 @@ function showQ(q) {
   display.forEach(function(c){
     html+='<button class="pt-opt" data-val="'+esc(c)+'" onclick="onAnswer(this)">'+esc(c)+'</button>';
   });
-  html+='</div></div>';
+  html+='</div>'+
+    '<button id="ptNext" class="pt-next-btn" onclick="doAdvance()">Next &rarr;</button>'+
+    '</div>';
   stage.innerHTML=html;
 }
 
-function onAnswer(btn) {
+function onAnswer(btn){
+  if(ptAnswered) return;
   var q=currentQ;
   stage.querySelectorAll('.pt-opt').forEach(function(b){ b.disabled=true; });
   var isCorrect=btn.dataset.val===q.answer;
   btn.classList.add(isCorrect?'correct':'wrong');
   if(!isCorrect) stage.querySelectorAll('.pt-opt').forEach(function(b){ if(b.dataset.val===q.answer)b.classList.add('reveal'); });
-  var key=q.level+'_'+q.skill;
-  bandAsked[key]++; if(isCorrect)bandCorrect[key]++;
-  answered.push({id:q.id, correct:isCorrect});
-  skillCursorHistory[q.skill].push(cursor);  // record cursor position for this skill
+
+  var sk=q.skill==='grammar'?'_g':'_v';
+  bandAsked[q.level+sk]++; if(isCorrect)bandCorrect[q.level+sk]++;
+  skillCursorHistory[q.skill].push(cursor);
+  answered.push({id:q.id, correct:isCorrect, chosen:btn.dataset.val});
   playTone(isCorrect);
   ptAnswered=true; ptLastCorrect=isCorrect;
-  advTimer=setTimeout(function(){ advTimer=null; advance(isCorrect); }, isCorrect?800:1500);
+
+  var nb=document.getElementById('ptNext');
+  if(nb) nb.classList.add('visible');
 }
 
-function advance(wasCorrect) {
+function doAdvance(){ advance(ptLastCorrect); }
+
+function advance(wasCorrect){
   cursor=wasCorrect?Math.min(cursor+1,BANDS.length-1):Math.max(cursor-1,0);
   cursorHistory.push(cursor);
   if(shouldStop()){ stopTimer(); showResults(); return; }
@@ -422,100 +486,128 @@ function advance(wasCorrect) {
 }
 
 /* ── Results ── */
-function clinicalNotes() {
-  var gWrong=[], vWrong=[];
-  answered.forEach(function(a){
-    if(!a.correct){
-      var q=BANK.find(function(x){ return x.id===a.id; });
-      if(q.skill==='grammar') gWrong.push(q.topic);
-      else vWrong.push(q.topic);
-    }
-  });
-  var notes=[];
-  if(gWrong.length>0) notes.push('Grammar: '+gWrong.slice(0,3).join(', '));
-  if(vWrong.length>0) notes.push('Vocabulary: '+vWrong.slice(0,3).join(', '));
-  if(notes.length===0) notes.push('Excellent across all areas — focus on pushing to the next level up');
-  return notes;
+function buildScaleBar(level){
+  var pct=SCALE_PCT[level];
+  var lbls=BANDS.map(function(b){
+    return '<span class="pt-scale-lbl'+(b===level?' active':'')+'">'+(b.toUpperCase())+'</span>';
+  }).join('');
+  return '<div class="pt-scale">'+
+    '<div class="pt-scale-track"><div class="pt-scale-fill" data-pct="'+pct+'" style="width:0"></div></div>'+
+    '<div class="pt-scale-label-row">'+lbls+'</div>'+
+    '</div>';
 }
 
-function barHtml(skill, label) {
+function buildSkillBar(skill,label){
   var lvl=skillLevel(skill);
-  var pct=lvl?SKILL_BAR_PCT[lvl]:8;
-  var lvlLabel=lvl?lvl.toUpperCase():'—';
+  var pct=lvl?SKILL_PCT[lvl]:8, lblTxt=lvl?lvl.toUpperCase():'—';
   return '<div class="pt-skill-row">'+
-    '<div class="pt-skill-top"><span class="pt-skill-name">'+label+'</span><span class="pt-skill-lvl">'+lvlLabel+'</span></div>'+
+    '<div class="pt-skill-top"><span class="pt-skill-name">'+label+'</span><span class="pt-skill-lvl">'+lblTxt+'</span></div>'+
     '<div class="pt-skill-track"><div class="pt-skill-fill" data-pct="'+pct+'" style="width:0"></div></div>'+
     '</div>';
 }
 
-function showResults() {
+function buildDiagnostic(){
+  var wrong=answered.filter(function(a){ return !a.correct; });
+  if(wrong.length===0) return '<p class="pt-diag-intro">No errors — excellent result across all areas.</p>';
+  var cards=wrong.slice(0,3).map(function(a){
+    var q=BANK.find(function(x){ return x.id===a.id; });
+    var msg=WRONG_MSG[q.id]||'';
+    var qShort=q.text.length>72?q.text.slice(0,72)+'…':q.text;
+    return '<div class="pt-diag-card">'+
+      '<p class="pt-diag-q">'+esc(qShort)+'</p>'+
+      '<div class="pt-diag-row">'+
+      '<span class="pt-diag-chip wrong">You chose: '+esc(a.chosen)+'</span>'+
+      '<span class="pt-diag-chip correct">Correct: '+esc(q.answer)+'</span>'+
+      '</div>'+
+      '<p class="pt-diag-msg">'+esc(msg)+'</p>'+
+      '</div>';
+  }).join('');
+  return '<p class="pt-diag-intro">Here are the most revealing errors from your test, with an explanation of what each one shows:</p>'+cards;
+}
+
+function showResults(){
   stopTimer();
-  var level=overallLevel();
-  _finalLevel=level;
-  var notes=clinicalNotes();
-  var totalCorrect=answered.filter(function(a){ return a.correct; }).length;
+  var level=overallLevel(); _finalLevel=level;
+  var correct=answered.filter(function(a){ return a.correct; }).length;
   var path={a1:'a/a1',a2:'a/a2',b1:'b/b1',b2:'b/b2',c1:'c/c1',c2:'c/c2'}[level];
-  var waText=encodeURIComponent('Hi! I just completed the Word Play English placement test and got '+level.toUpperCase()+' ('+LEVEL_NAMES[level]+'). I\'d love to discuss my results and next steps!');
-  var waHref='https://wa.me/'+WHATSAPP_NUMBER+'?text='+waText;
+  var waText=encodeURIComponent('Hi! I just got '+level.toUpperCase()+' ('+LEVEL_NAMES[level]+') on the Word Play English placement test. I\'d love to discuss my results!');
 
-  try {
-    localStorage.setItem('wordplay_recommended_level', level);
-    localStorage.setItem('wordplay_placement_v2', JSON.stringify({ level:level, date:new Date().toISOString(), answered:answered.length, correct:totalCorrect }));
-  } catch(e){}
-
-  var noteItems=notes.map(function(n){ return '<li>'+esc(n)+'</li>'; }).join('');
+  try{
+    localStorage.setItem('wordplay_recommended_level',level);
+    localStorage.setItem('wordplay_placement_v2',JSON.stringify({level:level,date:new Date().toISOString(),answered:answered.length,correct:correct}));
+  }catch(e){}
 
   stage.innerHTML=
     '<div class="pt-timer-bar"><div class="pt-timer-fill" style="width:100%"></div></div>'+
     '<div class="pt-results">'+
     '<div class="pt-res-eyebrow">Language Health Check &mdash; Complete</div>'+
+
+    /* Level badge */
     '<div class="pt-level-badge"><span class="pt-level-code">'+level.toUpperCase()+'</span><span class="pt-level-name">'+LEVEL_NAMES[level]+'</span></div>'+
-    '<p class="pt-level-stat">'+answered.length+' questions &middot; '+totalCorrect+' correct</p>'+
+    '<p class="pt-level-stat">'+answered.length+' questions &middot; '+correct+' correct</p>'+
+
+    /* A1→C2 scale bar */
+    buildScaleBar(level)+
+
+    /* Description */
     '<p class="pt-level-desc">'+esc(LEVEL_DESC[level])+'</p>'+
-    '<div class="pt-skills"><div class="pt-skills-label">Skill breakdown</div>'+barHtml('grammar','Grammar')+barHtml('vocab','Vocabulary')+'</div>'+
-    '<div class="pt-notes"><div class="pt-notes-label">Areas to develop</div><ul>'+noteItems+'</ul></div>'+
-    /* Email capture */
-    '<div class="pt-email-box">'+
-    '<div class="pt-email-title">Get your results by email</div>'+
-    '<div class="pt-email-sub">We\'ll send your level report and a personalised study plan.</div>'+
-    '<div class="pt-email-row" id="ptEmailRow">'+
-    '<input type="email" id="ptEmailInput" class="pt-email-inp" placeholder="your@email.com" autocomplete="email">'+
-    '<button class="pt-email-btn" onclick="saveEmail()">Send</button>'+
+
+    /* Skill breakdown */
+    '<div class="pt-skills"><div class="pt-block-label">Skill breakdown</div>'+
+    buildSkillBar('grammar','Grammar')+buildSkillBar('vocab','Vocabulary')+
     '</div>'+
-    '<div id="ptEmailDone" class="pt-email-done" style="display:none">Got it &mdash; study tips coming your way.</div>'+
-    '</div>'+
-    /* Primary CTA */
+
+    /* Primary CTAs */
     '<a href="'+path+'/index.html" class="pt-cta-primary">Start '+level.toUpperCase()+' on Word Play &rarr;</a>'+
-    /* WhatsApp CTA — level pre-filled in message */
-    '<a href="'+waHref+'" target="_blank" rel="noopener" class="pt-cta-wa">Book a free 15-min level check with a teacher</a>'+
+    '<button class="pt-cta-retry" onclick="startTest()">Try again</button>'+
+
+    /* Email gate → reveals diagnostic */
+    '<div class="pt-gate-box">'+
+    '<div class="pt-gate-title">Get your full diagnostic report</div>'+
+    '<div class="pt-gate-sub">Enter your email to unlock a detailed review of your mistakes and a personalised study plan. Free, one email, no spam.</div>'+
+    '<div class="pt-gate-row" id="ptGateRow">'+
+    '<input type="email" id="ptGateEmail" class="pt-gate-inp" placeholder="your@email.com" autocomplete="email">'+
+    '<button class="pt-gate-btn" onclick="unlockDiagnostic()">Unlock</button>'+
+    '</div>'+
+    '<div id="ptGateDone" class="pt-gate-done" style="display:none">Report unlocked &mdash; scroll down for your full diagnosis.</div>'+
+    '</div>'+
+
+    /* Diagnostic (hidden until email) */
+    '<div id="ptDiagnostic" class="pt-diagnostic">'+
+    '<div class="pt-block-label">Question review</div>'+
+    buildDiagnostic()+
+    '</div>'+
+
+    /* Bottom row */
     '<div class="pt-divider"></div>'+
     '<div class="pt-bottom-row">'+
-    '<div class="pt-bmac"><a href="'+BMAC_URL+'" target="_blank" rel="noopener">Support Word Play</a></div>'+
-    '<div class="pt-tertiary">'+
-    '<button class="pt-cta-sm" onclick="startTest()">Retake</button>'+
+    '<a href="https://wa.me/'+WHATSAPP_NUMBER+'?text='+waText+'" target="_blank" rel="noopener" class="pt-cta-wa">Book a free lesson</a>'+
+    '<div class="pt-aux-links">'+
+    '<a href="'+BMAC_URL+'" target="_blank" rel="noopener" class="pt-cta-sm">Support Word Play</a>'+
     '<a href="index.html" class="pt-cta-sm">Home</a>'+
     '</div></div>'+
     '</div>';
 
-  /* Animate skill bars after DOM settles */
+  /* Animate bars */
   setTimeout(function(){
-    stage.querySelectorAll('.pt-skill-fill').forEach(function(el){
+    stage.querySelectorAll('[data-pct]').forEach(function(el){
       el.style.width=el.dataset.pct+'%';
     });
-  }, 80);
+  },80);
 }
 
-/* ── Email capture ── */
-function saveEmail() {
-  var val=document.getElementById('ptEmailInput').value.trim();
-  if(!val||!val.includes('@')){ document.getElementById('ptEmailInput').focus(); return; }
-  try {
+function unlockDiagnostic(){
+  var val=document.getElementById('ptGateEmail').value.trim();
+  if(!val||!val.includes('@')){ document.getElementById('ptGateEmail').focus(); return; }
+  try{
     var leads=JSON.parse(localStorage.getItem('wordplay_leads')||'[]');
-    leads.push({ email:val, level:_finalLevel, date:new Date().toISOString() });
-    localStorage.setItem('wordplay_leads', JSON.stringify(leads));
-  } catch(e){}
-  document.getElementById('ptEmailRow').style.display='none';
-  document.getElementById('ptEmailDone').style.display='block';
+    leads.push({email:val,level:_finalLevel,answered:answered.length,date:new Date().toISOString()});
+    localStorage.setItem('wordplay_leads',JSON.stringify(leads));
+  }catch(e){}
+  document.getElementById('ptGateRow').style.display='none';
+  document.getElementById('ptGateDone').style.display='block';
+  var d=document.getElementById('ptDiagnostic');
+  if(d){ d.style.display='block'; d.scrollIntoView({behavior:'smooth',block:'start'}); }
 }
 
 /* ── Init ── */
