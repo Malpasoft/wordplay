@@ -91,6 +91,19 @@ body.dark .lt-school{background:rgba(240,240,240,.65);color:#0E0E0E}
 .cal-list-title{font-size:.8rem;font-weight:700}
 .cal-list-empty{font-family:var(--font-sans);font-size:.73rem;color:var(--muted);padding:6px 0}
 
+/* ── First-visit empty state ── */
+.cal-empty{background:var(--cream);border:1.5px dashed var(--hairline);border-radius:10px;padding:28px 24px;text-align:center;margin-bottom:14px}
+.cal-empty-eyebrow{font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
+.cal-empty h3{font-size:1.05rem;font-weight:700;color:var(--ink);margin:0 0 6px}
+.cal-empty p{font-family:var(--font-sans);font-size:.82rem;color:var(--muted);margin:0 0 18px;line-height:1.6;max-width:460px;margin-left:auto;margin-right:auto}
+.cal-empty-btn{font-family:var(--font-sans);font-size:.82rem;font-weight:700;letter-spacing:.3px;padding:11px 22px;border-radius:6px;border:none;background:var(--amber);color:#fff;cursor:pointer;transition:opacity .12s}
+.cal-empty-btn:hover{opacity:.87}
+.cal-empty-skip{display:inline-block;margin-top:12px;font-family:var(--font-sans);font-size:.72rem;color:var(--muted);cursor:pointer;background:none;border:none;text-decoration:underline;text-underline-offset:2px}
+
+/* ── Sync / how-it-works strip ── */
+.cal-info-strip{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);padding:8px 12px;border:1px solid var(--hairline);border-radius:4px;margin-bottom:10px;line-height:1.5}
+.cal-info-strip strong{color:var(--ink)}
+
 /* ── Legend ── */
 .cal-legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
 .legend-item{display:flex;align-items:center;gap:5px;font-family:var(--font-sans);font-size:.62rem;color:var(--muted)}
@@ -189,6 +202,22 @@ body.dark .lm-input[type="date"],body.dark .lm-input[type="time"]{color-scheme:d
   </div>
 
   <div id="syncStrip" style="display:none" class="cal-sync info"></div>
+
+  <!-- How it works strip (shown when no sync code set) -->
+  <div id="calInfoStrip" class="cal-info-strip" style="display:none">
+    <strong>Saved on this device.</strong> Your lessons are stored in this browser — nothing leaves your phone or laptop. Sync across devices needs the server to be set up (a separate step).
+  </div>
+
+  <!-- First-visit empty state -->
+  <div id="calEmpty" style="display:none">
+    <div class="cal-empty">
+      <div class="cal-empty-eyebrow">First time here</div>
+      <h3>Your calendar is empty</h3>
+      <p>Load your real weekly schedule automatically — all 16 classes added for the next 16 weeks. You can edit or delete any class afterwards, or add extra one-off lessons any time.</p>
+      <button class="cal-empty-btn" onclick="loadMySchedule()">Load my weekly schedule</button><br>
+      <button class="cal-empty-skip" onclick="document.getElementById('calEmpty').style.display='none'">Skip — I'll add lessons manually</button>
+    </div>
+  </div>
 
   <!-- Week view -->
   <div id="viewWeek">
@@ -909,12 +938,71 @@ document.addEventListener('keydown', function(e){
   if (e.key === 'Escape') closeModal();
 });
 
+/* ── Load my weekly schedule ── */
+function loadMySchedule() {
+  var mon = weekStart(new Date());
+  var monISO = mon.toISOString().slice(0, 10);
+  var now = Date.now();
+  var WEEKS = 16;
+
+  var templates = [
+    {dayOff:0, title:'Private FCE',                 time_start:'15:15', time_end:'16:15', type:'1on1',    level:'FCE',  location:'Bilbao'},
+    {dayOff:0, title:'Escola Provençals — 2nd grade', time_start:'16:30', time_end:'17:30', type:'school',  level:'300',  location:'Escola Provençals'},
+    {dayOff:0, title:'Ari — Private FCE',      time_start:'18:40', time_end:'19:40', type:'1on1',    level:'FCE',  location:'Bilbao'},
+    {dayOff:1, title:'Anna — Private',          time_start:'16:00', time_end:'17:00', type:'1on1',    level:'FCE?', location:'Bilbao'},
+    {dayOff:1, title:'Sira & Aran — Private group', time_start:'17:15', time_end:'18:15', type:'group',   level:'900',  location:'House'},
+    {dayOff:1, title:'FCE Grammar',                 time_start:'19:40', time_end:'20:40', type:'academy', level:'FCE',  location:'Bilbao'},
+    {dayOff:2, title:'FCE Grammar',                 time_start:'15:30', time_end:'16:30', type:'academy', level:'FCE',  location:'Gran Vía'},
+    {dayOff:2, title:'FCE Exam part',               time_start:'16:30', time_end:'17:30', type:'academy', level:'FCE',  location:'Gran Vía'},
+    {dayOff:2, title:'Biel — Private FCE',     time_start:'17:30', time_end:'19:00', type:'1on1',    level:'FCE',  location:'House'},
+    {dayOff:2, title:'Ivet — Private FCE',     time_start:'19:00', time_end:'20:30', type:'1on1',    level:'FCE',  location:'House'},
+    {dayOff:3, title:'Alexia — Private FCE',   time_start:'16:15', time_end:'17:15', type:'1on1',    level:'FCE',  location:'Gran Vía'},
+    {dayOff:3, title:'PET Grammar',                 time_start:'18:10', time_end:'18:50', type:'academy', level:'PET',  location:'Gran Vía'},
+    {dayOff:3, title:'FCE Grammar',                 time_start:'18:50', time_end:'19:50', type:'academy', level:'FCE',  location:'Gran Vía'},
+    {dayOff:3, title:'PET Exam part',               time_start:'19:50', time_end:'20:10', type:'academy', level:'PET',  location:'Gran Vía'},
+    {dayOff:4, title:'PET Grammar',                 time_start:'15:30', time_end:'16:30', type:'academy', level:'PET',  location:'Bilbao'},
+    {dayOff:4, title:'FCE Grammar',                 time_start:'16:30', time_end:'17:30', type:'academy', level:'FCE',  location:'Bilbao'}
+  ];
+
+  var all = [];
+  for (var w = 0; w < WEEKS; w++) {
+    templates.forEach(function(t) {
+      all.push({
+        id: uid(),
+        title: t.title,
+        date: addDays(monISO, w * 7 + t.dayOff),
+        time_start: t.time_start,
+        time_end: t.time_end,
+        type: t.type,
+        level: t.level,
+        location: t.location,
+        notes: '',
+        student_ids: [],
+        created_at: now,
+        updated_at: now
+      });
+    });
+  }
+  apiBulk(all);
+  document.getElementById('calEmpty').style.display = 'none';
+}
+
 /* ── Init ── */
 loadSyncCode();
 loadStudents();
 loadCache();
 renderCurrentView();
 if (syncCode) fetchAndMerge();
+
+/* Show empty state on first visit */
+if (!lessons.length) {
+  document.getElementById('calEmpty').style.display = 'block';
+}
+
+/* Show info strip when not synced */
+if (!syncCode) {
+  document.getElementById('calInfoStrip').style.display = 'block';
+}
 </script>
 </body>
 </html>
