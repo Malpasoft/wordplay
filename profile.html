@@ -907,7 +907,7 @@ function syncNow() {
   statusEl.textContent = 'Syncing…';
 
   fetch('/api/profiles/' + encodeURIComponent(syncCode))
-    .then(function(r) { return r.json(); })
+    .then(readSyncJson)
     .then(function(d) {
       var remote = d.profiles || [];
       students = mergeProfiles(students, remote);
@@ -918,7 +918,7 @@ function syncNow() {
         body: JSON.stringify({ profiles: students })
       });
     })
-    .then(function(r) { return r.json(); })
+    .then(readSyncJson)
     .then(function() {
       localStorage.setItem(SYNC_LAST_KEY, String(Date.now()));
       setSyncBusy(false);
@@ -930,11 +930,29 @@ function syncNow() {
       if (activeTab === 'roster') renderRoster();
       if (activeTab === 'student' && currentId) renderStudentDetail(currentId);
     })
-    .catch(function() {
+    .catch(function(err) {
       setSyncBusy(false);
       statusEl = document.getElementById('syncDetailStatus');
       statusEl.className = 'ss-err';
-      statusEl.textContent = 'Sync failed — check your connection or the database setup.';
+      statusEl.textContent = (err && err.message)
+        ? err.message
+        : 'Sync failed — check your connection or the database setup.';
+    });
+}
+
+// Parses a sync API response, throwing the server's plain-language error
+// message (or a generic one) so the catch block can show exactly what failed.
+function readSyncJson(r) {
+  return r.json()
+    .catch(function() {
+      throw new Error('Sync failed — the server returned an error. The cloud ' +
+                      'database may not be set up yet (see CLOUDFLARE_SETUP.md).');
+    })
+    .then(function(d) {
+      if (!r.ok || (d && d.error)) {
+        throw new Error((d && d.error) || ('Sync failed (HTTP ' + r.status + ').'));
+      }
+      return d;
     });
 }
 

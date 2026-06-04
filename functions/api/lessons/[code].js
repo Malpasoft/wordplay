@@ -21,23 +21,30 @@ export async function onRequestGet({ params, env, request }) {
     return json({ error: 'from/to must be YYYY-MM-DD' }, 400);
   }
 
-  let result;
-  if (from && to) {
-    result = await env.DB.prepare(
-      'SELECT * FROM lessons WHERE code = ? AND date >= ? AND date <= ? ORDER BY date, time_start'
-    ).bind(code, from, to).all();
-  } else {
-    result = await env.DB.prepare(
-      'SELECT * FROM lessons WHERE code = ? ORDER BY date, time_start'
-    ).bind(code).all();
-  }
+  const notReady = dbNotReady(env);
+  if (notReady) return notReady;
 
-  const lessons = (result.results || []).map(function(row) {
-    return Object.assign({}, row, {
-      student_ids: JSON.parse(row.student_ids || '[]')
+  try {
+    let result;
+    if (from && to) {
+      result = await env.DB.prepare(
+        'SELECT * FROM lessons WHERE code = ? AND date >= ? AND date <= ? ORDER BY date, time_start'
+      ).bind(code, from, to).all();
+    } else {
+      result = await env.DB.prepare(
+        'SELECT * FROM lessons WHERE code = ? ORDER BY date, time_start'
+      ).bind(code).all();
+    }
+
+    const lessons = (result.results || []).map(function(row) {
+      return Object.assign({}, row, {
+        student_ids: JSON.parse(row.student_ids || '[]')
+      });
     });
-  });
-  return json({ lessons });
+    return json({ lessons });
+  } catch (e) {
+    return dbError(e);
+  }
 }
 
 export async function onRequestPost({ params, env, request }) {
@@ -58,16 +65,23 @@ export async function onRequestPost({ params, env, request }) {
     return json({ error: 'invalid JSON' }, 400);
   }
 
+  const notReady = dbNotReady(env);
+  if (notReady) return notReady;
+
   const { action } = body;
 
-  if (action === 'upsert') {
-    return handleUpsert(env, code, body.lesson);
-  } else if (action === 'delete') {
-    return handleDelete(env, code, body.id);
-  } else if (action === 'bulk') {
-    return handleBulk(env, code, body.lessons);
+  try {
+    if (action === 'upsert') {
+      return await handleUpsert(env, code, body.lesson);
+    } else if (action === 'delete') {
+      return await handleDelete(env, code, body.id);
+    } else if (action === 'bulk') {
+      return await handleBulk(env, code, body.lessons);
+    }
+    return json({ error: 'unknown action' }, 400);
+  } catch (e) {
+    return dbError(e);
   }
-  return json({ error: 'unknown action' }, 400);
 }
 
 async function handleUpsert(env, code, lesson) {
@@ -153,6 +167,35 @@ function validateLesson(l) {
 
 function isValidCode(c) {
   return typeof c === 'string' && c.length >= 8 && c.length <= 64;
+}
+
+// Returns a clear 503 if the D1 binding "DB" is missing (one-time Cloudflare
+// setup not done), else null. See CLOUDFLARE_SETUP.md.
+function dbNotReady(env) {
+  if (!env || !env.DB) {
+    return json({
+      error: 'Cloud sync is not connected yet. In Cloudflare → Pages → ' +
+             'wordplay-38t → Settings → Functions, add a D1 binding named ' +
+             '"DB" pointing at wordplay_db, then redeploy.',
+      reason: 'no_binding'
+    }, 503);
+  }
+  return null;
+}
+
+// Turns a thrown D1 error into a plain-language response. A missing table
+// means the database is bound but the migrations were never run.
+function dbError(e) {
+  const msg = (e && e.message) || String(e);
+  if (/no such table/i.test(msg)) {
+    return json({
+      error: 'Database is connected but its tables have not been created. ' +
+             'Open Cloudflare → D1 → wordplay_db → Console and run the SQL ' +
+             'in migrations/0001_teacher_profiles.sql and 0002_lessons.sql.',
+      reason: 'no_table'
+    }, 503);
+  }
+  return json({ error: 'Database error: ' + msg, reason: 'db_error' }, 500);
 }
 
 function json(data, status = 200) {
