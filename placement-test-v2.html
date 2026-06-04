@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>English Level Test — 5-Minute Diagnosis | Word Play</title>
+<link rel="stylesheet" href="shared/base.css?v=v123">
+<script src="shared/dark-init.js?v=v109"></script>
+<style>
+/* ── Shell ── */
+.pt-wrap{max-width:620px;margin:20px auto 56px;padding:0 14px}
+.pt-card{background:var(--paper);border-radius:14px;border:1.5px solid var(--hairline);box-shadow:0 3px 22px rgba(0,0,0,.09);overflow:hidden;will-change:transform;user-select:none}
+body.dark .pt-card{background:#1E1E1E;border-color:rgba(255,255,255,.1)}
+
+/* ── Timer bar (replaces progress bar) ── */
+.pt-timer-bar{height:5px;background:var(--hairline)}
+.pt-timer-fill{height:100%;background:var(--amber);transition:width 1s linear}
+.pt-timer-fill.warn{background:#c0392b}
+
+/* ── Question body ── */
+.pt-body{padding:24px 24px 20px}
+.pt-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.pt-qnum{font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.pt-clock{font-family:var(--font-sans);font-size:.8rem;font-weight:700;color:var(--amber);transition:color .3s;letter-spacing:.5px}
+.pt-clock.warn{color:#c0392b}
+.pt-qtext{font-family:Georgia,serif;font-size:1.06rem;line-height:1.7;color:var(--ink);margin:0 0 20px}
+body.dark .pt-qtext{color:#F0F0F0}
+
+/* ── Choices ── */
+.pt-choices{display:flex;flex-direction:column;gap:8px}
+.pt-opt{background:var(--paper);border:1.5px solid var(--hairline);border-radius:7px;color:var(--ink);font-family:var(--font-sans);font-size:.86rem;line-height:1.5;padding:12px 15px;text-align:left;cursor:pointer;transition:border-color .1s,background .1s;width:100%}
+.pt-opt:hover:not(:disabled){border-color:var(--amber);background:rgba(184,134,11,.04)}
+.pt-opt:disabled{cursor:default}
+.pt-opt.correct{background:rgba(39,174,96,.1);border-color:#27ae60}
+.pt-opt.wrong{background:rgba(192,57,43,.09);border-color:#c0392b}
+.pt-opt.reveal{background:rgba(39,174,96,.06);border-color:#27ae60;opacity:.72}
+body.dark .pt-opt{background:#2A2A2A;border-color:#3C3C3C;color:#E0E0E0}
+body.dark .pt-opt.correct{background:rgba(39,174,96,.18);border-color:#3dba78}
+body.dark .pt-opt.wrong{background:rgba(192,57,43,.18);border-color:#e05252}
+body.dark .pt-opt.reveal{background:rgba(39,174,96,.1);border-color:#3dba78;opacity:.62}
+
+/* ── Intro ── */
+.pt-intro{text-align:center;padding:42px 26px 36px}
+.pt-intro-eyebrow{font-family:var(--font-sans);font-size:.58rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:12px}
+.pt-intro h2{font-family:Georgia,serif;font-size:1.52rem;font-weight:700;color:var(--ink);margin:0 0 10px;line-height:1.35}
+body.dark .pt-intro h2{color:#F0F0F0}
+.pt-intro-sub{font-family:var(--font-sans);font-size:.84rem;color:var(--muted);line-height:1.65;margin:0 0 22px}
+.pt-pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+.pt-pill{font-family:var(--font-sans);font-size:.63rem;font-weight:700;padding:4px 12px;border-radius:20px;border:1px solid var(--hairline);color:var(--muted);white-space:nowrap}
+.pt-start{padding:13px 44px;background:var(--amber);color:#1A1A1A;font-family:var(--font-sans);font-size:.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:6px;cursor:pointer;transition:opacity .12s}
+.pt-start:hover{opacity:.87}
+
+/* ── Results ── */
+.pt-results{padding:28px 24px 30px}
+.pt-res-eyebrow{font-family:var(--font-sans);font-size:.58rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);text-align:center;margin-bottom:18px}
+.pt-level-badge{text-align:center;margin-bottom:6px}
+.pt-level-code{font-family:Georgia,serif;font-size:3.6rem;font-weight:700;color:var(--amber);line-height:1;display:block}
+.pt-level-name{font-family:var(--font-sans);font-size:.7rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);display:block;margin-top:4px}
+.pt-level-desc{font-family:var(--font-sans);font-size:.84rem;line-height:1.7;color:var(--ink);text-align:center;margin:18px 0 24px;padding:0 6px}
+body.dark .pt-level-desc{color:#E0E0E0}
+
+/* Skill bars */
+.pt-skills{margin-bottom:22px}
+.pt-skills-label{font-family:var(--font-sans);font-size:.57rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.pt-skill-row{margin-bottom:11px}
+.pt-skill-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
+.pt-skill-name{font-family:var(--font-sans);font-size:.72rem;font-weight:700;color:var(--ink)}
+body.dark .pt-skill-name{color:#D0D0D0}
+.pt-skill-lvl{font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--amber)}
+.pt-skill-track{height:6px;background:var(--hairline);border-radius:3px;overflow:hidden}
+.pt-skill-fill{height:100%;border-radius:3px;background:var(--amber);transition:width .9s ease .2s;width:0}
+
+/* Clinical notes */
+.pt-notes{background:rgba(184,134,11,.05);border:1px solid rgba(184,134,11,.14);border-radius:8px;padding:16px 18px;margin-bottom:22px}
+body.dark .pt-notes{background:rgba(184,134,11,.09);border-color:rgba(184,134,11,.22)}
+.pt-notes-label{font-family:var(--font-sans);font-size:.57rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:10px}
+.pt-notes ul{font-family:var(--font-sans);font-size:.8rem;line-height:1.75;color:var(--ink);margin:0;padding-left:18px}
+body.dark .pt-notes ul{color:#D0D0D0}
+
+/* CTAs */
+.pt-cta-primary{display:block;width:100%;padding:13px;background:var(--ink);color:var(--paper);font-family:var(--font-sans);font-size:.73rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-align:center;text-decoration:none;border-radius:7px;border:none;cursor:pointer;box-sizing:border-box;transition:opacity .12s;margin-bottom:10px}
+.pt-cta-primary:hover{opacity:.82}
+.pt-cta-consult{display:block;width:100%;padding:12px;background:transparent;color:var(--amber);font-family:var(--font-sans);font-size:.73rem;font-weight:700;letter-spacing:.5px;text-align:center;text-decoration:none;border-radius:7px;border:1.5px solid var(--amber);box-sizing:border-box;cursor:pointer;transition:background .12s,color .12s;margin-bottom:16px}
+.pt-cta-consult:hover{background:var(--amber);color:#1A1A1A}
+.pt-cta-row{display:flex;gap:12px;justify-content:center}
+.pt-cta-sm{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);text-decoration:none;cursor:pointer;background:none;border:none;padding:0}
+.pt-cta-sm:hover{color:var(--ink)}
+body.dark .pt-cta-sm:hover{color:#D0D0D0}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="index.html" class="back back-link" aria-label="Back"></a>
+  <a href="index.html" class="brand">Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+
+<div class="pt-wrap">
+  <div id="pt-stage" class="pt-card"></div>
+</div>
+
+<footer class="site-footer">Word Play &middot; Cambridge English A1&rarr;C2</footer>
+
+<script>
+/* ── Question bank: 48 questions, 8 per level (4 grammar + 4 vocab) ── */
+var BANK = [
+  /* A1 GRAMMAR */
+  {id:'a1g1',level:'a1',skill:'grammar',topic:'verb to be',text:'Choose the correct form: "She ___ a teacher at the local school."',choices:['is','are','am','were'],answer:'is'},
+  {id:'a1g2',level:'a1',skill:'grammar',topic:'present simple',text:'He ___ to the gym three times a week.',choices:['goes','go','is going','goed'],answer:'goes'},
+  {id:'a1g3',level:'a1',skill:'grammar',topic:'there is / there are',text:'"___ a problem with the internet." Choose the correct form.',choices:['There is','There are','It is','They are'],answer:'There is'},
+  {id:'a1g4',level:'a1',skill:'grammar',topic:'question forms',text:'___ you like coffee? — Yes, I love it!',choices:['Do','Does','Are','Is'],answer:'Do'},
+  /* A1 VOCABULARY */
+  {id:'a1v1',level:'a1',skill:'vocab',topic:'everyday places',text:'A doctor works in a ___.',choices:['hospital','school','library','shop'],answer:'hospital'},
+  {id:'a1v2',level:'a1',skill:'vocab',topic:'common adjectives',text:'Which word means "very big"?',choices:['huge','quick','old','soft'],answer:'huge'},
+  {id:'a1v3',level:'a1',skill:'vocab',topic:'physical states',text:'"I\'m not hungry, but I am very ___. Can I have some water?"',choices:['thirsty','cold','busy','tired'],answer:'thirsty'},
+  {id:'a1v4',level:'a1',skill:'vocab',topic:'months and time',text:'The month that comes after January is ___.',choices:['February','March','November','April'],answer:'February'},
+  /* A2 GRAMMAR */
+  {id:'a2g1',level:'a2',skill:'grammar',topic:'past simple',text:'I ___ to Paris last summer for the first time.',choices:['went','go','gone','was going'],answer:'went'},
+  {id:'a2g2',level:'a2',skill:'grammar',topic:'past continuous',text:'When I arrived at the party, she ___ on the phone.',choices:['was talking','talked','is talking','talk'],answer:'was talking'},
+  {id:'a2g3',level:'a2',skill:'grammar',topic:'superlatives',text:'"What\'s ___ restaurant in the city?" — "Definitely La Maison."',choices:['the best','the better','the most good','better'],answer:'the best'},
+  {id:'a2g4',level:'a2',skill:'grammar',topic:'present perfect',text:'She ___ her keys and can\'t get into her house!',choices:['has lost','lost','loses','had lost'],answer:'has lost'},
+  /* A2 VOCABULARY */
+  {id:'a2v1',level:'a2',skill:'vocab',topic:'everyday adjectives',text:'If a product costs much more than you expected, it is ___.',choices:['expensive','popular','modern','comfortable'],answer:'expensive'},
+  {id:'a2v2',level:'a2',skill:'vocab',topic:'jobs and professions',text:'The person whose job is to fix your teeth is a ___.',choices:['dentist','surgeon','chemist','therapist'],answer:'dentist'},
+  {id:'a2v3',level:'a2',skill:'vocab',topic:'phrasal verbs',text:'Which phrase means "to look after children while their parents are out"?',choices:['babysit','grow up','look forward to','give up'],answer:'babysit'},
+  {id:'a2v4',level:'a2',skill:'vocab',topic:'travel vocabulary',text:'I need to ___ online before I arrive at the airport.',choices:['check in','check out','check up','check off'],answer:'check in'},
+  /* B1 GRAMMAR */
+  {id:'b1g1',level:'b1',skill:'grammar',topic:'present perfect',text:'I ___ never been to Japan — I hope to go one day.',choices:['have','had','has','am'],answer:'have'},
+  {id:'b1g2',level:'b1',skill:'grammar',topic:'second conditional',text:'If I had more free time, I ___ travel to more countries.',choices:['would','will','can','should'],answer:'would'},
+  {id:'b1g3',level:'b1',skill:'grammar',topic:'passive voice',text:'The new bridge ___ in 1925 by a famous engineer.',choices:['was built','built','is built','has been built'],answer:'was built'},
+  {id:'b1g4',level:'b1',skill:'grammar',topic:'reported speech',text:'She told me she ___ be late because of the traffic.',choices:['would','will','is','was'],answer:'would'},
+  /* B1 VOCABULARY */
+  {id:'b1v1',level:'b1',skill:'vocab',topic:'phrasal verbs',text:'To ___ a process means to make it happen more quickly.',choices:['speed up','slow down','make out','take on'],answer:'speed up'},
+  {id:'b1v2',level:'b1',skill:'vocab',topic:'work vocabulary',text:'Someone new to a job, still learning the basics, is called a ___.',choices:['trainee','expert','supervisor','consultant'],answer:'trainee'},
+  {id:'b1v3',level:'b1',skill:'vocab',topic:'discourse markers',text:'The word "however" is used to express ___.',choices:['contrast','addition','cause','time'],answer:'contrast'},
+  {id:'b1v4',level:'b1',skill:'vocab',topic:'nuanced adjectives',text:'A hotel described as "cosy" is best described as ___.',choices:['small but comfortable and warm','large and impressively grand','cheap and very basic','modern and minimalist'],answer:'small but comfortable and warm'},
+  /* B2 GRAMMAR */
+  {id:'b2g1',level:'b2',skill:'grammar',topic:'formal inversion',text:'Not only ___ he fail the exam, but he also lost his scholarship.',choices:['did','had','was','has'],answer:'did'},
+  {id:'b2g2',level:'b2',skill:'grammar',topic:'gerunds and infinitives',text:'She regrets ___ the job offer — it was a terrible mistake.',choices:['not accepting','to not accept','not to accept','to have not accepted'],answer:'not accepting'},
+  {id:'b2g3',level:'b2',skill:'grammar',topic:'third conditional',text:'Had I known about the delay, I ___ a different route.',choices:['would have taken','had taken','will have taken','would take'],answer:'would have taken'},
+  {id:'b2g4',level:'b2',skill:'grammar',topic:'complex passive',text:'The new software is reported ___ several critical bugs.',choices:['to contain','containing','to have contained','to be containing'],answer:'to contain'},
+  /* B2 VOCABULARY */
+  {id:'b2v1',level:'b2',skill:'vocab',topic:'formal adjectives',text:'Something that is "indispensable" is ___.',choices:['absolutely essential','completely optional','extremely rare','quite common'],answer:'absolutely essential'},
+  {id:'b2v2',level:'b2',skill:'vocab',topic:'formal phrasal verbs',text:'To "embark on" a new project means to ___.',choices:['begin it','finish it','abandon it','criticise it'],answer:'begin it'},
+  {id:'b2v3',level:'b2',skill:'vocab',topic:'idioms',text:'"To take something with a pinch of salt" means to ___.',choices:['be sceptical about it','add seasoning carefully','accept it without question','test it before deciding'],answer:'be sceptical about it'},
+  {id:'b2v4',level:'b2',skill:'vocab',topic:'collocations',text:'The price of oil has ___ due to increased global demand.',choices:['soared','spread','shifted','grown'],answer:'soared'},
+  /* C1 GRAMMAR */
+  {id:'c1g1',level:'c1',skill:'grammar',topic:'subjunctive',text:'It is essential that every employee ___ the new policy guidelines.',choices:['follow','follows','followed','is following'],answer:'follow'},
+  {id:'c1g2',level:'c1',skill:'grammar',topic:'formal inversion',text:'Rarely ___ we see such a committed performance from any team.',choices:['do','have','did','are'],answer:'do'},
+  {id:'c1g3',level:'c1',skill:'grammar',topic:'reduced relative clause',text:'The old building, ___ last year, has been converted into a hotel.',choices:['renovated','renovating','which renovating','that is renovated'],answer:'renovated'},
+  {id:'c1g4',level:'c1',skill:'grammar',topic:'fixed collocations',text:'It goes without ___ that punctuality is essential in any professional setting.',choices:['saying','said','to say','being said'],answer:'saying'},
+  /* C1 VOCABULARY */
+  {id:'c1v1',level:'c1',skill:'vocab',topic:'academic vocabulary',text:'To "hedge" in academic writing means to ___.',choices:['express uncertainty carefully','refuse to take any position','avoid the topic entirely','argue more forcefully'],answer:'express uncertainty carefully'},
+  {id:'c1v2',level:'c1',skill:'vocab',topic:'formal adjectives',text:'"Meticulous" describes someone who is ___.',choices:['extremely careful and precise','deeply emotional and sensitive','highly creative and original','very confident and outspoken'],answer:'extremely careful and precise'},
+  {id:'c1v3',level:'c1',skill:'vocab',topic:'formal verbs',text:'Which word means "to officially reject or deny something"?',choices:['repudiate','rephrase','reconsider','refrain'],answer:'repudiate'},
+  {id:'c1v4',level:'c1',skill:'vocab',topic:'figurative language',text:'A "catalyst" in a non-scientific context is something that ___.',choices:['speeds up a process or change','gradually slows something down','prevents unwanted change','measures progress objectively'],answer:'speeds up a process or change'},
+  /* C2 GRAMMAR */
+  {id:'c2g1',level:'c2',skill:'grammar',topic:'formal inversion',text:'Scarcely ___ she arrived when the fire alarm went off.',choices:['had','has','have','did'],answer:'had'},
+  {id:'c2g2',level:'c2',skill:'grammar',topic:'complex passive',text:'The data ___ to have been altered before the report was published.',choices:['is believed','believes','believed','is believing'],answer:'is believed'},
+  {id:'c2g3',level:'c2',skill:'grammar',topic:'concessive structures',text:'The project, ambitious ___ it was, ultimately failed to deliver results.',choices:['as','though','however','yet'],answer:'as'},
+  {id:'c2g4',level:'c2',skill:'grammar',topic:'conditional inversion',text:'"___ the new evidence come to light earlier, the verdict might have been different."',choices:['Had','Were','Should','Did'],answer:'Had'},
+  /* C2 VOCABULARY */
+  {id:'c2v1',level:'c2',skill:'vocab',topic:'advanced verbs',text:'"Obfuscate" means to ___.',choices:['deliberately make something unclear','explain something very clearly','make a formal complaint','delay a decision indefinitely'],answer:'deliberately make something unclear'},
+  {id:'c2v2',level:'c2',skill:'vocab',topic:'personality vocabulary',text:'Which word describes someone who praises others excessively and insincerely?',choices:['sycophantic','diplomatic','assertive','rhetorical'],answer:'sycophantic'},
+  {id:'c2v3',level:'c2',skill:'vocab',topic:'rare and precise nouns',text:'A "palimpsest" is a manuscript ___.',choices:['written on again after earlier text was erased','written simultaneously in two languages','containing deliberate scholarly errors','never intended for public circulation'],answer:'written on again after earlier text was erased'},
+  {id:'c2v4',level:'c2',skill:'vocab',topic:'precision adverbs',text:'The policy changes were implemented ___, with little public consultation.',choices:['surreptitiously','simultaneously','substantially','serendipitously'],answer:'surreptitiously'}
+];
+
+/* ── Config ── */
+var BANDS      = ['a1','a2','b1','b2','c1','c2'];
+var START_IDX  = 2;  // start at B1
+var MIN_Q      = 12;
+var MAX_Q      = 16;
+var TIMER_SECS = 300;
+
+var LEVEL_NAMES = {a1:'A1 Beginner',a2:'A2 Elementary',b1:'B1 Pre-intermediate',b2:'B2 Upper-intermediate',c1:'C1 Advanced',c2:'C2 Proficiency'};
+var LEVEL_DESC  = {
+  a1:'You know core words and phrases in English. You can introduce yourself, ask simple questions, and understand slow, clear speech on familiar topics.',
+  a2:'You can communicate in simple, everyday situations. You manage routine exchanges about familiar topics — shopping, travel, your background — without difficulty.',
+  b1:'You are an independent communicator. You handle most travel situations, express opinions, and follow the main points of standard speech on familiar subjects.',
+  b2:'You have upper-intermediate fluency. You understand complex texts, discuss abstract topics, and interact with native speakers naturally and without strain.',
+  c1:'You are an advanced user. You express yourself fluently and precisely, handle demanding academic or professional language, and pick up on nuance and implication.',
+  c2:'You have near-native proficiency. You understand virtually everything you hear or read and can express yourself with precision in any context.'
+};
+var SKILL_PCT = {a1:14,a2:28,b1:44,b2:60,c1:76,c2:93};
+
+/* ── State ── */
+var pools = {}, cursor = START_IDX, answered = [];
+var bandCorrect = {}, bandAsked = {};
+var timerSec = TIMER_SECS, timerInterval = null;
+var currentQ = null, ptAnswered = false, ptLastCorrect = false, advTimer = null;
+var stage = document.getElementById('pt-stage');
+
+/* ── Helpers ── */
+function shuffle(a) {
+  for (var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}
+  return a;
+}
+function esc(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function pad(n){ return n<10?'0'+n:String(n); }
+function fmtTime(s){ return Math.floor(s/60)+':'+pad(s%60); }
+
+/* ── Timer ── */
+function startTimer() {
+  timerSec = TIMER_SECS;
+  timerInterval = setInterval(function() {
+    timerSec--;
+    var fill = document.getElementById('timerFill');
+    var clock = document.getElementById('timerClock');
+    if (fill) {
+      fill.style.width = (timerSec / TIMER_SECS * 100) + '%';
+      if (timerSec <= 30) fill.classList.add('warn');
+    }
+    if (clock) {
+      clock.textContent = fmtTime(timerSec);
+      if (timerSec <= 30) clock.classList.add('warn');
+    }
+    if (timerSec <= 0) { clearInterval(timerInterval); timerInterval = null; showResults(); }
+  }, 1000);
+}
+function stopTimer() { if (timerInterval) { clearInterval(timerInterval); timerInterval = null; } }
+
+/* ── Adaptive engine ── */
+function initPools() {
+  BANDS.forEach(function(b) {
+    pools[b] = shuffle(BANK.filter(function(q){ return q.level === b; }).slice());
+  });
+}
+
+function nextQuestion() {
+  if (pools[BANDS[cursor]] && pools[BANDS[cursor]].length) return pools[BANDS[cursor]].shift();
+  for (var d=1;d<BANDS.length;d++) {
+    var hi=cursor+d, lo=cursor-d;
+    if (hi<BANDS.length && pools[BANDS[hi]] && pools[BANDS[hi]].length) { cursor=hi; return pools[BANDS[cursor]].shift(); }
+    if (lo>=0 && pools[BANDS[lo]] && pools[BANDS[lo]].length) { cursor=lo; return pools[BANDS[cursor]].shift(); }
+  }
+  return null;
+}
+
+function shouldStop() {
+  if (answered.length >= MAX_Q) return true;
+  if (answered.length >= MIN_Q) {
+    var last4 = answered.slice(-4);
+    if (last4.length === 4) {
+      var lvl0 = BANK.find(function(q){ return q.id === last4[0].id; }).level;
+      if (last4.every(function(a){ return BANK.find(function(q){ return q.id===a.id; }).level === lvl0; })) return true;
+    }
+  }
+  return false;
+}
+
+/* ── Audio ── */
+function playTone(correct) {
+  try {
+    var ctx = new (window.AudioContext || window.webkitAudioContext)();
+    if (correct) {
+      [[660,0],[880,.12]].forEach(function(p){
+        var o=ctx.createOscillator(),g=ctx.createGain(); o.connect(g); g.connect(ctx.destination);
+        o.type='sine'; o.frequency.value=p[0]; var t=ctx.currentTime+p[1];
+        g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(.2,t+.01); g.gain.exponentialRampToValueAtTime(.001,t+.44);
+        o.start(t); o.stop(t+.44);
+      });
+    } else {
+      var o=ctx.createOscillator(),g=ctx.createGain(); o.connect(g); g.connect(ctx.destination);
+      o.type='sawtooth'; o.frequency.value=160;
+      g.gain.setValueAtTime(.18,ctx.currentTime); g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.28);
+      o.start(); o.stop(ctx.currentTime+.28);
+      try { navigator.vibrate && navigator.vibrate([60,20,60]); } catch(e2) {}
+    }
+    setTimeout(function(){ try{ctx.close();}catch(e2){} }, 1200);
+  } catch(e) {}
+}
+
+/* ── Swipe ── */
+(function() {
+  var sx=0,sy=0,active=false,delta=0;
+  stage.addEventListener('touchstart',function(e){ if(!ptAnswered||e.touches.length>1)return; sx=e.touches[0].clientX; sy=e.touches[0].clientY; active=false; delta=0; stage.style.transition='none'; },{passive:true});
+  stage.addEventListener('touchmove',function(e){
+    if(!ptAnswered)return;
+    var dx=e.touches[0].clientX-sx, dy=e.touches[0].clientY-sy;
+    if(!active){ if(Math.abs(dy)>Math.abs(dx)+8||Math.abs(dx)<8)return; active=true; }
+    e.preventDefault(); delta=dx;
+    stage.style.transform='translateX('+dx+'px)';
+    stage.style.opacity=Math.max(.25,1-Math.min(1,Math.abs(dx)/(window.innerWidth*.55)));
+  },{passive:false});
+  stage.addEventListener('touchend',function(){
+    if(!active||Math.abs(delta)<30){ stage.style.transition='transform .22s ease-out,opacity .22s ease-out'; stage.style.transform=''; stage.style.opacity=''; setTimeout(function(){ stage.style.transition=''; },230); active=false; return; }
+    if(delta<0){ stage.style.transition='transform .26s ease-in,opacity .22s ease-in'; stage.style.transform='translateX('+(-window.innerWidth*1.3)+'px) rotate(-18deg)'; stage.style.opacity='0'; clearTimeout(advTimer); advTimer=null; var lc=ptLastCorrect; setTimeout(function(){ advance(lc); },270); }
+    else { stage.style.transition='transform .22s ease-out,opacity .22s ease-out'; stage.style.transform=''; stage.style.opacity=''; setTimeout(function(){ stage.style.transition=''; },230); }
+    active=false;
+  },{passive:true});
+})();
+
+/* ── Screens ── */
+function showIntro() {
+  stage.innerHTML =
+    '<div class="pt-intro">' +
+    '<div class="pt-intro-eyebrow">English Proficiency Diagnosis</div>' +
+    '<h2>Find your exact level<br>in 5 minutes</h2>' +
+    '<p class="pt-intro-sub">Grammar, vocabulary, and a personal action plan — like a doctor\'s check-up for your English.</p>' +
+    '<div class="pt-pills"><span class="pt-pill">Free</span><span class="pt-pill">No sign-up</span><span class="pt-pill">A1 to C2</span><span class="pt-pill">5-minute timer</span></div>' +
+    '<button class="pt-start" onclick="startTest()">Begin diagnosis &rarr;</button>' +
+    '</div>';
+}
+
+function startTest() {
+  initPools();
+  cursor = START_IDX;
+  answered = [];
+  bandCorrect = {}; bandAsked = {};
+  BANDS.forEach(function(b){ bandCorrect[b+'_grammar']=0; bandAsked[b+'_grammar']=0; bandCorrect[b+'_vocab']=0; bandAsked[b+'_vocab']=0; });
+  startTimer();
+  var q = nextQuestion();
+  if (q) showQ(q); else showResults();
+}
+
+function showQ(q) {
+  currentQ = q; ptAnswered = false;
+  if (advTimer) { clearTimeout(advTimer); advTimer = null; }
+  var display = shuffle(q.choices.slice());
+  var timePct = (timerSec / TIMER_SECS * 100);
+  var warnCls = timerSec <= 30 ? ' warn' : '';
+  var html =
+    '<div class="pt-timer-bar"><div class="pt-timer-fill'+warnCls+'" id="timerFill" style="width:'+timePct+'%"></div></div>' +
+    '<div class="pt-body">' +
+    '<div class="pt-meta"><span class="pt-qnum">Question ' + (answered.length + 1) + '</span>' +
+    '<span class="pt-clock'+warnCls+'" id="timerClock">'+fmtTime(timerSec)+'</span></div>' +
+    '<p class="pt-qtext">' + esc(q.text) + '</p>' +
+    '<div class="pt-choices">';
+  display.forEach(function(c) {
+    html += '<button class="pt-opt" data-val="'+esc(c)+'" onclick="onAnswer(this)">'+esc(c)+'</button>';
+  });
+  html += '</div></div>';
+  stage.innerHTML = html;
+}
+
+function onAnswer(btn) {
+  var q = currentQ;
+  stage.querySelectorAll('.pt-opt').forEach(function(b){ b.disabled = true; });
+  var isCorrect = btn.dataset.val === q.answer;
+  btn.classList.add(isCorrect ? 'correct' : 'wrong');
+  if (!isCorrect) {
+    stage.querySelectorAll('.pt-opt').forEach(function(b){ if (b.dataset.val === q.answer) b.classList.add('reveal'); });
+  }
+  var key = q.level + '_' + q.skill;
+  bandAsked[key]++; if (isCorrect) bandCorrect[key]++;
+  answered.push({id: q.id, correct: isCorrect});
+  playTone(isCorrect);
+  ptAnswered = true; ptLastCorrect = isCorrect;
+  advTimer = setTimeout(function(){ advTimer=null; advance(isCorrect); }, isCorrect ? 800 : 1500);
+}
+
+function advance(wasCorrect) {
+  cursor = wasCorrect ? Math.min(cursor+1, BANDS.length-1) : Math.max(cursor-1, 0);
+  if (shouldStop()) { stopTimer(); showResults(); return; }
+  var q = nextQuestion();
+  if (q) showQ(q); else { stopTimer(); showResults(); }
+}
+
+/* ── Results ── */
+function skillLevel(skill) {
+  var ordered = ['c2','c1','b2','b1','a2','a1'];
+  for (var i=0;i<ordered.length;i++) {
+    var b = ordered[i], key = b+'_'+skill;
+    if (bandAsked[key] > 0 && bandCorrect[key]/bandAsked[key] >= 0.5) return b;
+  }
+  return null;
+}
+
+function overallLevel() {
+  var ordered = ['c2','c1','b2','b1','a2','a1'];
+  for (var i=0;i<ordered.length;i++) {
+    var b = ordered[i];
+    var tot = (bandAsked[b+'_grammar']||0) + (bandAsked[b+'_vocab']||0);
+    var cor = (bandCorrect[b+'_grammar']||0) + (bandCorrect[b+'_vocab']||0);
+    if (tot > 0 && cor/tot >= 0.5) return b;
+  }
+  return 'a1';
+}
+
+function clinicalNotes() {
+  var gWrong = [], vWrong = [];
+  answered.forEach(function(a) {
+    if (!a.correct) {
+      var q = BANK.find(function(x){ return x.id===a.id; });
+      if (q.skill === 'grammar') gWrong.push(q.topic);
+      else vWrong.push(q.topic);
+    }
+  });
+  var notes = [];
+  if (gWrong.length > 0) notes.push('Grammar: ' + gWrong.slice(0,3).join(', '));
+  if (vWrong.length > 0) notes.push('Vocabulary: ' + vWrong.slice(0,3).join(', '));
+  if (notes.length === 0) notes.push('Excellent across all areas — focus on pushing to the next level');
+  return notes;
+}
+
+function barHtml(skill, label) {
+  var lvl = skillLevel(skill);
+  var pct = lvl ? SKILL_PCT[lvl] : 10;
+  var lvlLabel = lvl ? lvl.toUpperCase() : '—';
+  return '<div class="pt-skill-row">' +
+    '<div class="pt-skill-top"><span class="pt-skill-name">'+label+'</span><span class="pt-skill-lvl">'+lvlLabel+'</span></div>' +
+    '<div class="pt-skill-track"><div class="pt-skill-fill" style="width:0" data-pct="'+pct+'"></div></div>' +
+    '</div>';
+}
+
+function showResults() {
+  stopTimer();
+  var level = overallLevel();
+  var notes = clinicalNotes();
+  var path  = {a1:'a/a1',a2:'a/a2',b1:'b/b1',b2:'b/b2',c1:'c/c1',c2:'c/c2'}[level];
+
+  try {
+    localStorage.setItem('wordplay_recommended_level', level);
+    localStorage.setItem('wordplay_placement_v2', JSON.stringify({
+      level: level, date: new Date().toISOString(),
+      answered: answered.length
+    }));
+  } catch(e) {}
+
+  var noteItems = notes.map(function(n){ return '<li>'+esc(n)+'</li>'; }).join('');
+
+  stage.innerHTML =
+    '<div class="pt-timer-bar"><div class="pt-timer-fill" style="width:100%"></div></div>' +
+    '<div class="pt-results">' +
+    '<div class="pt-res-eyebrow">Language Health Check — Complete</div>' +
+    '<div class="pt-level-badge"><span class="pt-level-code">'+level.toUpperCase()+'</span><span class="pt-level-name">'+LEVEL_NAMES[level]+'</span></div>' +
+    '<p class="pt-level-desc">'+esc(LEVEL_DESC[level])+'</p>' +
+    '<div class="pt-skills"><div class="pt-skills-label">Skill breakdown</div>' +
+    barHtml('grammar','Grammar') + barHtml('vocab','Vocabulary') +
+    '</div>' +
+    '<div class="pt-notes"><div class="pt-notes-label">Areas to develop</div><ul>'+noteItems+'</ul></div>' +
+    '<a href="'+path+'/index.html" class="pt-cta-primary">Start '+level.toUpperCase()+' on Word Play &rarr;</a>' +
+    '<a href="teacher.html" class="pt-cta-consult">Book a free 15-min level check with a teacher</a>' +
+    '<div class="pt-cta-row">' +
+    '<button class="pt-cta-sm" onclick="startTest()">Retake test</button>' +
+    '<a href="index.html" class="pt-cta-sm">Back to home</a>' +
+    '</div></div>';
+
+  /* Animate bars after render */
+  setTimeout(function() {
+    stage.querySelectorAll('.pt-skill-fill').forEach(function(el) {
+      el.style.width = el.dataset.pct + '%';
+    });
+  }, 80);
+}
+
+/* ── Init ── */
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', showIntro);
+else showIntro();
+</script>
+</body>
+</html>
