@@ -19,7 +19,7 @@
 .cal-nav-btn:hover{border-color:var(--ink)}
 .cal-today-btn{border-color:var(--amber);color:var(--amber)}
 .cal-today-btn:hover{background:var(--amber);color:var(--paper)}
-.cal-title{font-family:var(--font-sans);font-size:.92rem;font-weight:700;color:var(--navy);min-width:160px;text-align:center}
+.cal-title{font-family:var(--font-sans);font-size:.92rem;font-weight:700;color:var(--ink);min-width:160px;text-align:center}
 .cal-view-toggle{display:flex;border:1.5px solid var(--hairline);border-radius:4px;overflow:hidden}
 .cal-view-btn{font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border:none;background:transparent;color:var(--muted);cursor:pointer;transition:background .12s,color .12s}
 .cal-view-btn.active{background:var(--ink);color:var(--paper)}
@@ -77,7 +77,7 @@ body.dark .lt-school{background:rgba(240,240,240,.65);color:#0E0E0E}
 .cal-month-cell:nth-child(7n+8){border-right:none}
 .cal-month-cell.other-month{opacity:.3;pointer-events:none}
 .cal-month-cell.today-cell .cal-month-num{background:var(--amber);color:var(--paper);border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center}
-.cal-month-num{font-family:var(--font-sans);font-size:.72rem;font-weight:700;color:var(--navy);margin-bottom:3px;display:block}
+.cal-month-num{font-family:var(--font-sans);font-size:.72rem;font-weight:700;color:var(--ink);margin-bottom:3px;display:block}
 .cal-month-chip{font-family:var(--font-sans);font-size:.56rem;font-weight:700;padding:1px 5px;border-radius:2px;margin-bottom:2px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;cursor:pointer;display:block}
 .cal-month-more{font-family:var(--font-sans);font-size:.58rem;color:var(--muted);margin-top:1px}
 
@@ -101,7 +101,7 @@ body.dark .lt-school{background:rgba(240,240,240,.65);color:#0E0E0E}
 .lm-box{background:var(--cream);border-radius:12px;width:100%;max-width:500px;max-height:90vh;overflow-y:auto;padding:24px;box-shadow:0 12px 40px rgba(0,0,0,.3)}
 body.dark .lm-box{background:#1A1A1A}
 .lm-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-.lm-heading{font-size:1.05rem;font-weight:700;color:var(--navy);margin:0}
+.lm-heading{font-size:1.05rem;font-weight:700;color:var(--ink);margin:0}
 .lm-close{font-family:var(--font-sans);font-size:1.3rem;border:none;background:transparent;color:var(--muted);cursor:pointer;padding:2px 6px;line-height:1;border-radius:4px;transition:color .12s,background .12s}
 .lm-close:hover{color:var(--ink);background:var(--hairline)}
 
@@ -112,7 +112,7 @@ body.dark .lm-box{background:#1A1A1A}
 .lm-fld-label{display:block;font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:5px}
 .lm-input,.lm-select,.lm-textarea{width:100%;box-sizing:border-box;padding:9px 12px;border:1.5px solid var(--hairline);border-radius:6px;font-size:.88rem;font-family:var(--font-sans);background:var(--paper);color:var(--ink);transition:border-color .15s;appearance:none;-webkit-appearance:none}
 .lm-input:focus,.lm-select:focus,.lm-textarea:focus{outline:none;border-color:var(--amber)}
-body.dark .lm-input,.body.dark .lm-select,.body.dark .lm-textarea{background:#111;color:#f0f0f0}
+body.dark .lm-input,body.dark .lm-select,body.dark .lm-textarea{background:#111;color:#f0f0f0}
 body.dark .lm-input[type="date"],body.dark .lm-input[type="time"]{color-scheme:dark}
 .lm-textarea{resize:vertical;min-height:62px;font-family:var(--font-sans);font-size:.85rem}
 
@@ -146,6 +146,13 @@ body.dark .lm-input[type="date"],body.dark .lm-input[type="time"]{color-scheme:d
 .lm-repeat-check-label{display:flex;align-items:center;gap:8px;font-family:var(--font-sans);font-size:.82rem;color:var(--ink);cursor:pointer}
 .lm-repeat-opts{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
 
+/* Current-time indicator */
+.cal-now-line{position:absolute;left:0;right:0;height:2px;background:rgba(184,134,11,.75);z-index:2;pointer-events:none}
+.cal-now-line::before{content:'';position:absolute;left:-4px;top:-3px;width:8px;height:8px;border-radius:50%;background:var(--amber)}
+
+/* Level badge inside lesson block */
+.cal-lesson-level{display:inline-block;font-size:.52rem;font-weight:800;letter-spacing:.5px;text-transform:uppercase;opacity:.85;margin-right:3px}
+
 @media(max-width:600px){
   .cal-week-outer{overflow-x:auto}
   .cal-week-header,.cal-week-body{min-width:560px}
@@ -153,6 +160,10 @@ body.dark .lm-input[type="date"],body.dark .lm-input[type="time"]{color-scheme:d
   .cal-month-grid{display:none}
   .cal-title{min-width:0;font-size:.78rem}
   .cal-add-btn{padding:6px 10px}
+  /* Day-list replaces the week grid on small screens */
+  .cal-week-outer{display:none}
+  .cal-day-list{display:block}
+  .cal-legend{display:none}
 }
 </style>
 </head>
@@ -169,6 +180,7 @@ body.dark .lm-input[type="date"],body.dark .lm-input[type="time"]{color-scheme:d
     <button class="cal-nav-btn" onclick="navPrev()">&larr;</button>
     <button class="cal-nav-btn" onclick="navNext()">&rarr;</button>
     <span class="cal-title" id="calTitle"></span>
+    <span id="calSummary" style="font-family:var(--font-sans);font-size:.65rem;color:var(--muted)"></span>
     <div class="cal-view-toggle">
       <button class="cal-view-btn active" id="btnWeek" onclick="switchView('week')">Week</button>
       <button class="cal-view-btn" id="btnMonth" onclick="switchView('month')">Month</button>
@@ -254,10 +266,14 @@ body.dark .lm-input[type="date"],body.dark .lm-input[type="time"]{color-scheme:d
         <input class="lm-input" id="lmEnd" type="time">
       </div>
 
-      <!-- Location — full width -->
-      <div class="lm-full">
+      <!-- Level + Location -->
+      <div>
+        <label class="lm-fld-label" for="lmLevel">Level / Course</label>
+        <input class="lm-input" id="lmLevel" type="text" placeholder="e.g. FCE, PET, B1, 900" autocomplete="off">
+      </div>
+      <div>
         <label class="lm-fld-label" for="lmLocation">Location</label>
-        <input class="lm-input" id="lmLocation" type="text" placeholder="e.g. Room 3, Academia" autocomplete="off">
+        <input class="lm-input" id="lmLocation" type="text" placeholder="e.g. Bilbao, Gran Vía, House" autocomplete="off">
       </div>
 
       <!-- Students — full width -->
@@ -298,7 +314,7 @@ body.dark .lm-input[type="date"],body.dark .lm-input[type="time"]{color-scheme:d
       <div class="lm-btn-row">
         <button class="lm-btn" onclick="saveLesson()">Save lesson</button>
         <button class="lm-btn ghost" onclick="closeModal()">Cancel</button>
-        <button id="lmDeleteBtn" class="lm-btn danger" style="display:none" onclick="deleteLesson()">Delete</button>
+        <button id="lmDeleteBtn" class="lm-btn danger" style="display:none" onclick="deleteLesson()" aria-label="Delete this lesson permanently">Delete</button>
       </div>
     </div>
   </div>
@@ -308,10 +324,10 @@ body.dark .lm-input[type="date"],body.dark .lm-input[type="time"]{color-scheme:d
 /* ── Constants ── */
 var LESSONS_KEY   = 'wordplay_lessons_cache';
 var SYNC_CODE_KEY = 'wordplay_sync_code';
-var GRID_START    = 7 * 60;    // 07:00
+var GRID_START    = 13 * 60;   // 13:00
 var GRID_END      = 21 * 60;   // 21:00
-var PX_PER_MIN    = 1.05;
-var GRID_H        = (GRID_END - GRID_START) * PX_PER_MIN;  // 1260px
+var PX_PER_MIN    = 1.3;
+var GRID_H        = (GRID_END - GRID_START) * PX_PER_MIN;  // 624px
 
 /* ── State ── */
 var syncCode    = null;
@@ -507,6 +523,23 @@ function updateTitle() {
   el.textContent = currentView === 'week'
     ? weekLabel(getWeekDates(currentDate))
     : monthLabel(currentDate);
+
+  var sumEl = document.getElementById('calSummary');
+  if (currentView === 'week') {
+    var dates = getWeekDates(currentDate);
+    var wkLessons = lessons.filter(function(l){ return dates.indexOf(l.date) >= 0; });
+    var totalMins = wkLessons.reduce(function(acc, l){
+      return acc + timeToMin(l.time_end) - timeToMin(l.time_start);
+    }, 0);
+    var hrs = Math.floor(totalMins / 60);
+    var mins = totalMins % 60;
+    var timeStr = hrs + (mins ? 'h ' + mins + 'min' : 'h');
+    sumEl.textContent = wkLessons.length
+      ? wkLessons.length + ' lesson' + (wkLessons.length !== 1 ? 's' : '') + ' · ' + timeStr
+      : '';
+  } else {
+    sumEl.textContent = '';
+  }
 }
 
 /* ── Week view ── */
@@ -528,11 +561,13 @@ function renderWeek() {
   document.getElementById('weekHeader').innerHTML = hHtml;
 
   /* Time axis */
-  var axEl   = document.getElementById('timeAxis');
-  var axHtml = '';
+  var axEl      = document.getElementById('timeAxis');
+  var axHtml    = '';
+  var gridStartH = GRID_START / 60;
+  var gridEndH   = GRID_END / 60;
   axEl.style.height = GRID_H + 'px';
-  for (var h = 7; h <= 21; h++) {
-    axHtml += '<span class="cal-hour-label" style="top:' + ((h - 7) * 60 * PX_PER_MIN) + 'px">'
+  for (var h = gridStartH; h <= gridEndH; h++) {
+    axHtml += '<span class="cal-hour-label" style="top:' + ((h - gridStartH) * 60 * PX_PER_MIN) + 'px">'
       + String(h).padStart(2,'0') + ':00</span>';
   }
   axEl.innerHTML = axHtml;
@@ -542,8 +577,8 @@ function renderWeek() {
   var cHtml  = '';
 
   /* Horizontal grid lines */
-  for (var gh = 7; gh <= 21; gh++) {
-    cHtml += '<div style="position:absolute;left:0;right:0;top:' + ((gh-7)*60*PX_PER_MIN) + 'px;height:1px;background:var(--hairline);pointer-events:none;z-index:0"></div>';
+  for (var gh = gridStartH; gh <= gridEndH; gh++) {
+    cHtml += '<div style="position:absolute;left:0;right:0;top:' + ((gh-gridStartH)*60*PX_PER_MIN) + 'px;height:1px;background:var(--hairline);pointer-events:none;z-index:0"></div>';
   }
 
   dates.forEach(function(iso){
@@ -562,11 +597,15 @@ function renderWeek() {
       var ht  = lessonHeight(l.time_start, l.time_end);
       if (top < 0 || top >= GRID_H) return;
       var title = esc(l.title || typeLabel(l.type));
+      var subParts = [];
+      if (l.level) subParts.push(esc(l.level));
+      if (l.location) subParts.push(esc(l.location));
+      subParts.push(esc(l.time_start) + '–' + esc(l.time_end));
       cHtml += '<div class="cal-lesson lt-' + l.type + '"'
         + ' style="top:' + top + 'px;height:' + ht + 'px"'
         + ' onclick="onLessonClick(event,\'' + l.id + '\')">'
         + '<span class="cal-lesson-title">' + title + '</span>'
-        + (ht >= 32 ? '<span class="cal-lesson-sub">' + esc(l.time_start) + '–' + esc(l.time_end) + '</span>' : '')
+        + (ht >= 30 ? '<span class="cal-lesson-sub">' + subParts.join(' · ') + '</span>' : '')
         + '</div>';
     });
     cHtml += '</div>';
@@ -575,9 +614,19 @@ function renderWeek() {
   colsEl.style.height = GRID_H + 'px';
   colsEl.innerHTML = cHtml;
 
-  /* Scroll to 08:00 */
+  /* Scroll to earliest lesson in week (or grid start) on first load */
   var bodyEl = document.getElementById('weekBody');
-  if (bodyEl.scrollTop < 5) bodyEl.scrollTop = (8 - 7) * 60 * PX_PER_MIN;
+  if (bodyEl.scrollTop < 5) {
+    var wkDates = getWeekDates(currentDate);
+    var wkMins = lessons
+      .filter(function(l){ return wkDates.indexOf(l.date) >= 0; })
+      .map(function(l){ return timeToMin(l.time_start); });
+    var earliest = wkMins.length ? Math.min.apply(null, wkMins) : GRID_START + 60;
+    var scrollTo = Math.max(0, (earliest - 30 - GRID_START) * PX_PER_MIN);
+    bodyEl.scrollTop = scrollTo;
+  }
+
+  renderNowLine();
 }
 
 /* ── Month view ── */
@@ -671,6 +720,7 @@ function openAddModal(date, time) {
   document.getElementById('lmType').value          = '1on1';
   document.getElementById('lmStart').value         = time || '09:00';
   document.getElementById('lmEnd').value           = addMinutes(time || '09:00', 60);
+  document.getElementById('lmLevel').value         = '';
   document.getElementById('lmLocation').value      = '';
   document.getElementById('lmNotes').value         = '';
   document.getElementById('lmDeleteBtn').style.display  = 'none';
@@ -693,6 +743,7 @@ function openEditModal(l) {
   document.getElementById('lmType').value          = l.type;
   document.getElementById('lmStart').value         = l.time_start;
   document.getElementById('lmEnd').value           = l.time_end;
+  document.getElementById('lmLevel').value         = l.level || '';
   document.getElementById('lmLocation').value      = l.location || '';
   document.getElementById('lmNotes').value         = l.notes || '';
   document.getElementById('lmDeleteBtn').style.display = 'inline-block';
@@ -709,6 +760,13 @@ function showModal() {
 function closeModal() {
   document.getElementById('lessonModal').style.display = 'none';
   document.getElementById('lmSuggestions').style.display = 'none';
+  document.getElementById('lmTitleInput').value = '';
+  document.getElementById('lmLevel').value = '';
+  document.getElementById('lmLocation').value = '';
+  document.getElementById('lmNotes').value = '';
+  document.getElementById('lmRepeat').checked = false;
+  document.getElementById('lmRepeatOpts').style.display = 'none';
+  selIds = [];
   editingId = null;
 }
 function handleOverlayClick(e) { if (e.target === e.currentTarget) closeModal(); }
@@ -729,6 +787,7 @@ function saveLesson() {
     time_start:  start,
     time_end:    end,
     type:        document.getElementById('lmType').value,
+    level:       document.getElementById('lmLevel').value.trim(),
     location:    document.getElementById('lmLocation').value.trim(),
     notes:       document.getElementById('lmNotes').value.trim(),
     student_ids: selIds.slice(),
@@ -821,6 +880,34 @@ function toggleUntilDate() {
   var custom = document.getElementById('lmRepeatWeeks').value === 'custom';
   document.getElementById('lmRepeatUntil').style.display = custom ? 'inline-block' : 'none';
 }
+
+/* ── Current-time line ── */
+function renderNowLine() {
+  var dates = getWeekDates(currentDate);
+  var todayIso = todayISO();
+  var dayIdx = dates.indexOf(todayIso);
+  var colsEl = document.getElementById('dayCols');
+  if (!colsEl) return;
+  var existing = colsEl.querySelector('.cal-now-line');
+  if (existing) existing.parentNode.removeChild(existing);
+  if (dayIdx < 0 || currentView !== 'week') return;
+  var now = new Date();
+  var min = now.getHours() * 60 + now.getMinutes();
+  if (min < GRID_START || min >= GRID_END) return;
+  var top = (min - GRID_START) * PX_PER_MIN;
+  var cols = colsEl.querySelectorAll('.cal-day-col');
+  if (!cols[dayIdx]) return;
+  var line = document.createElement('div');
+  line.className = 'cal-now-line';
+  line.style.top = top + 'px';
+  cols[dayIdx].appendChild(line);
+}
+setInterval(function(){ if (currentView === 'week') renderNowLine(); }, 60000);
+
+/* ── Keyboard shortcuts ── */
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Escape') closeModal();
+});
 
 /* ── Init ── */
 loadSyncCode();
