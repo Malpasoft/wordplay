@@ -110,8 +110,8 @@ async function handleBulk(env, code, lessons) {
   if (!Array.isArray(lessons) || lessons.length === 0) {
     return json({ error: 'lessons must be a non-empty array' }, 400);
   }
-  if (lessons.length > 52) {
-    return json({ error: 'bulk limit is 52 lessons' }, 400);
+  if (lessons.length > 300) {
+    return json({ error: 'bulk limit is 300 lessons' }, 400);
   }
 
   const now = Date.now();
