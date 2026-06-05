@@ -52,11 +52,11 @@
 }
 
 @keyframes idle-anim {
-  0%   { background-position: 0% 0%; }
-  25%  { background-position: 33.33% 0%; }
-  50%  { background-position: 66.67% 0%; }
-  75%  { background-position: 100% 0%; }
-  100% { background-position: 0% 0%; }
+  0%   { background-position: 0px 0px; }
+  25%  { background-position: -48px 0px; }
+  50%  { background-position: -96px 0px; }
+  75%  { background-position: -144px 0px; }
+  100% { background-position: 0px 0px; }
 }
 
 /* FLY: Row 1, frames 0–3 (0.8s one-shot) */
@@ -65,11 +65,11 @@
 }
 
 @keyframes fly-anim {
-  0%   { background-position: 0% 20%; }
-  25%  { background-position: 33.33% 20%; }
-  50%  { background-position: 66.67% 20%; }
-  75%  { background-position: 100% 20%; }
-  100% { background-position: 100% 20%; }
+  0%   { background-position: 0px -48px; }
+  25%  { background-position: -48px -48px; }
+  50%  { background-position: -96px -48px; }
+  75%  { background-position: -144px -48px; }
+  100% { background-position: -144px -48px; }
 }
 
 /* SPELL: Row 2, frames 0–3 */
@@ -78,11 +78,11 @@
 }
 
 @keyframes spell-anim {
-  0%   { background-position: 0% 40%; }
-  25%  { background-position: 33.33% 40%; }
-  50%  { background-position: 66.67% 40%; }
-  75%  { background-position: 100% 40%; }
-  100% { background-position: 100% 40%; }
+  0%   { background-position: 0px -96px; }
+  25%  { background-position: -48px -96px; }
+  50%  { background-position: -96px -96px; }
+  75%  { background-position: -144px -96px; }
+  100% { background-position: -144px -96px; }
 }
 
 /* WALK: Row 3, frames 0–3 */
@@ -91,11 +91,11 @@
 }
 
 @keyframes walk-anim {
-  0%   { background-position: 0% 60%; }
-  25%  { background-position: 33.33% 60%; }
-  50%  { background-position: 66.67% 60%; }
-  75%  { background-position: 100% 60%; }
-  100% { background-position: 100% 60%; }
+  0%   { background-position: 0px -144px; }
+  25%  { background-position: -48px -144px; }
+  50%  { background-position: -96px -144px; }
+  75%  { background-position: -144px -144px; }
+  100% { background-position: -144px -144px; }
 }
 
 /* HAPPY: Row 4, frames 0–3 */
@@ -104,11 +104,11 @@
 }
 
 @keyframes happy-anim {
-  0%   { background-position: 0% 80%; }
-  25%  { background-position: 33.33% 80%; }
-  50%  { background-position: 66.67% 80%; }
-  75%  { background-position: 100% 80%; }
-  100% { background-position: 100% 80%; }
+  0%   { background-position: 0px -192px; }
+  25%  { background-position: -48px -192px; }
+  50%  { background-position: -96px -192px; }
+  75%  { background-position: -144px -192px; }
+  100% { background-position: -144px -192px; }
 }
 
 /* SAD: Row 5, frames 0–3 */
@@ -117,11 +117,11 @@
 }
 
 @keyframes sad-anim {
-  0%   { background-position: 0% 100%; }
-  25%  { background-position: 33.33% 100%; }
-  50%  { background-position: 66.67% 100%; }
-  75%  { background-position: 100% 100%; }
-  100% { background-position: 100% 100%; }
+  0%   { background-position: 0px -240px; }
+  25%  { background-position: -48px -240px; }
+  50%  { background-position: -96px -240px; }
+  75%  { background-position: -144px -240px; }
+  100% { background-position: -144px -240px; }
 }
 
 /* Mobile: scales proportionally */
