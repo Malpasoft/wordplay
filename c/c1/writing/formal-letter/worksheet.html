@@ -128,6 +128,12 @@ var DRAFT_KEY = 'wordplay_writing_c1_formal-letter';
 var ta = document.getElementById('ta_formal-letter');
 var wc = document.getElementById('wc_formal-letter');
 var MODEL = 'Dear Ms Hartley,\n\nI am writing with regard to the Creative Writing course advertised in your autumn prospectus. I would be grateful if you could provide me with further information regarding the course content and entry requirements.\n\nI have been writing short fiction for several years and have recently completed a collection of stories, one of which was commended in a national competition. I am particularly interested in developing my skills in structure and character development.\n\nI would also like to enquire whether the course includes opportunities for workshop feedback from published writers. Should this be the case, I believe the programme would be ideally suited to my current stage of development.\n\nI look forward to hearing from you at your earliest convenience.\n\nYours sincerely,\nA. Morgan';
+// WRITING RUBRIC — Consistent C1 grading standard
+// Rubric dimensions (each scored 0–5):
+// • Content: Task completion, relevance, coverage of required points
+// • Language: Grammar accuracy, vocabulary range, register appropriateness
+// • Organisation: Structure, paragraphing, cohesion, linking words
+// • Range: Variety of vocabulary and structures relative to C1 level
 window.WRITING_CONFIG = {"taskType": "formal-letter", "register": "formal", "minWords": 140, "maxWords": 195, "level": "c1"};
 
 function countW(s) { return s.trim() ? s.trim().split(/\s+/).length : 0; }
