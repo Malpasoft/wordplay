@@ -63,12 +63,12 @@ A **static** Cambridge English course (A1 to C2) on Cloudflare Pages. Vanilla HT
 **Vocabulary — 77 topics**
 | Level | Topics | Template | Notes |
 |-------|--------|----------|-------|
-| A1    | 12     | Old (renderCard / STORAGE_KEY) | animals chapter: split flashcards + match game |
-| A2    | 12     | New (showCard / MASTERY_KEY) | |
-| B1    | 11     | New | |
-| B2    | 16     | New | |
-| C1    | 14     | New | 13/14 chapters have placeholder word data |
-| C2    | 12     | New | 10/12 chapters have placeholder word data |
+| A1    | 12     | Old (renderCard / STORAGE_KEY) except animals | animals chapter: uses new template, has match.html |
+| A2    | 12     | New (showCard / MASTERY_KEY) | Fully enriched |
+| B1    | 11     | New | Fully enriched |
+| B2    | 16     | New | Fully enriched |
+| C1    | 14     | New | All chapters enriched; 1 intentional applied-grammar stub (no flashcards) |
+| C2    | 12     | New | All chapters enriched; 1 intentional applied-grammar stub (no flashcards) |
 
 **Writing — 26 chapters** (A1/A2/B1: 3 each; B2: 5; C1/C2: 6 each)
 
@@ -76,26 +76,26 @@ A **static** Cambridge English course (A1 to C2) on Cloudflare Pages. Vanilla HT
 
 ---
 
-### Spanish / ES track (`/es/`) — vocab + writing, all 6 levels
+### Spanish / ES track (`/es/`) — English course explained in Spanish, all 6 levels
 
-Grammar section is entirely missing from the ES track (no es/*/grammar folders).  
-All 71 vocabulary flashcard files (es/a1–c2/vocabulary/*/flashcards.html) are stub placeholders.  
-Writing sections are complete across all levels.
+**Grammar — 107 chapters** (`gramatica/` folders, Spanish-named) across all levels. All filled with real content.  
+**Vocabulary — 77 chapters**, of which **71 are stub placeholders** (flashcards.html + game.html both empty). a1: 6 filled + 6 stubs; a2–c2: all stubs.  
+**Writing — 26 chapters**, all complete across all levels.
 
-Fill tooling: `scripts/fill_chapter.py` + content modules in `scripts/content/`.
+Fill tooling: `scripts/fill_chapter.py` + content modules in `scripts/content/`. Total HTML: 988 (largest track).
 
 ---
 
 ### Espanol-en track (`/espanol-en/`) — Spanish course for English speakers
 
-A1: fully complete (vocabulary + grammar + writing).  
+A1: hub scaffold exists (24 grammar, 12 vocabulary, 3 writing chapter directories + index.html); however, **all 120 content files are placeholder stubs** ("Content coming soon" boilerplate, no real lessons). Hub structure is complete; lesson content does not exist.  
 A2–C2: stub hub pages only (index.html per level, no chapter content).
 
 ---
 
 ### French track (`/fr/`)
 
-Not yet generated as files. The builder (`builder.html`) fully supports `fr` track content creation with French UI strings. No actual lesson files exist yet.
+English for French speakers (b1/b2 only). 81 index.html navigational hub files exist (real, styled chapter hubs), but **all chapter-content files (slides.html, worksheet.html, game.html, flashcards.html) are missing** — dead links throughout. The builder supports `fr` track content creation with French UI strings, but no lessons have been generated yet.
 
 ---
 
@@ -229,45 +229,51 @@ Custom skills: `/insights` — generates a styled HTML project report (coverage,
 
 ## 12. Roadmap
 
-**Active (next sessions):**
-1. Fill 71 ES vocabulary flashcard stubs — use dev-hub + DeepSeek/Gemini, run `fill_chapter.py`
-2. Fill C1/C2 English vocabulary — 23 chapters with placeholder word data, use `fill_en_c1c2_vocab.py`
-3. Roll out match.html to all vocab chapters — pattern proven in animals, builder generates the file
-4. Espanol-en A2–C2 content fill
-5. ES grammar section (all 6 levels — currently completely missing)
+**Active (priority order):**
+1. ⚠️ **Clean up code: mascot debug statements + mobile sprite bug.** Shipped to production with 3 `console.log`s left in `shared/mascot.js` from the debug commits; mobile frames mis-crop ≤640px.
+2. ⚠️ **Fix doc/repo clutter:** Remove 11 root PNG screenshots, content-dump JSONs, `test em tool builder` file, stale TECH_DEBT items. Clean git tree for next session.
+3. **Fill 71 ES vocabulary flashcard stubs** — use dev-hub + DeepSeek/Gemini, run `fill_chapter.py`. (a1: 6 stubs; a2–c2: all stubs.)
+4. **Generate fr/ lesson content** — 81 hub pages exist with dead links. Builder supports `fr` but content never generated. ~72 chapter-files needed (lessons, worksheets, games).
+5. **Espanol-en A1 content fill** — hub scaffold complete but 120/120 content files are "coming soon" stubs. Also add 24 missing `.trap-row` common-mistakes slides to grammar sections.
+6. **Roll out match.html to all vocab chapters** — pattern proven in animals, builder generates the file. ~76 chapters remaining.
+7. Espanol-en A2–C2 content fill
 
 **Parked / horizon:**
 - Auth: email + password → passkey (Phase 3, needs custom domain first)
 - Payments: Stripe Pro tier (Phase 4, after auth)
 - Audio: R2 + OpenAI TTS for listening practice (Phase 5)
-- /espanol/ Spanish course + DELE prep (Phase 6)
-- /fr/ French track file generation (builder ready, no files yet)
+- /espanol/ universal Spanish course + DELE prep (Phase 6)
 - Review pages + Printable pages (0 exist site-wide)
 
 ---
 
 ## 13. Known pending items
 
-- A2–C2 vocab flashcards: missing audio button — pedagogy check enforces `speakWord` but A2–C2 template doesn't have it yet
-- C1/C2 English vocabulary: 23 of 26 chapters are structural shells with placeholder word data
-- 71 ES flashcard stubs: all ES vocabulary flashcards are placeholders
-- ES grammar: entire section missing across all 6 levels
-- Espanol-en A2–C2: stub hubs only, no chapter content
-- match.html: only 1 of ~77 vocab chapters has it (animals/A1)
-- 26 pedagogy warnings: espanol-en/a1/grammar slides missing `.trap-row` common-mistakes slide
+- **English vocab:** Fully complete. A1–C2 all enriched. Only 2 intentional "applied-grammar" chapters lack flashcards (by design).
+- **ES vocab:** 71 stub chapters (flashcards + game both empty). a1: 6 of 12 filled; a2–c2: all 71 total stubs.
+- **ES grammar:** Not pending — 107 `gramatica/` chapters fully built across all 6 levels.
+- **Espanol-en A1:** Hub structure exists but **all 120 content files are placeholder stubs** ("Content coming soon"). Not yet filled.
+- **Espanol-en A2–C2:** Stub hubs only, no chapter content.
+- **match.html:** Exists for 1 of ~165 vocab chapters (animals/A1). ~76 remaining to roll out via builder.
+- **fr/ lessons:** 81 hub pages exist with dead links to non-existent slides/worksheets/games. ~72 content-files need generation.
+- **Mascot debug:** 3 `console.log` statements shipped live in `shared/mascot.js`. Mobile sprite cropping bug ≤640px.
+- **Code clutter:** 11 PNG screenshots, 3 content-dump JSONs, `test em tool builder` file, ~19 stale scripts lingering.
 
 ---
 
 ## 14. Recent work (June 2026)
 
-- **Animals chapter split:** `a/a1/vocabulary/animals/` now has separate `flashcards.html` (new template) + `match.html` (new 3-lives double-match game) + `index.html` 4-card hub
+- **Mascot sprite animation (5 June):** 20-commit iterative fix (CSS steps → % bg-position → px offsets → JS frame-cycling). Live on homepage but shipped with 3 `console.log` debug statements + mobile cropping bug.
+- **Placement-test-v2 (5 June):** Enhanced level-finder with email capture and skill breakdown; homepage now links only to v2.
+- **Animals chapter split (3 June):** `a/a1/vocabulary/animals/` split into separate `flashcards.html` (new template) + `match.html` (new 3-lives double-match game) + `index.html` 4-card hub
 - **Builder (`builder.html`):** extended to all content types (lesson, game, worksheet, flashcard, match); French (`fr/`) track support; auto-preview after build
 - **Calendar (`calendar.html`):** mobile week-grid now horizontally scrollable on iPhone; lesson modal redesigned to match design system
 - **Lesson calendar:** full week/month views, D1 sync via passphrase, 5 lesson types, student autocomplete from profiles
 - **Student profiles (`profile.html`):** D1 cloud sync, 4 language tracks, exam target, lesson format fields
 - **Teacher hub (`teacher.html`):** menu structure, AI Prompts sub-page, hub cards for all tools
-- **Espanol-en scaffold:** A1 complete (vocabulary + 24 grammar + writing); A2–C2 hub stubs
-- **Content builder tooling:** `scripts/gen_scaffold.py`, `fill_chapter.py`, `content/` modules
+- **Espanol-en scaffold:** A1 hub scaffold (vocabulary + 24 grammar + writing directories); content is placeholder stubs.
+- **Content builder tooling:** `scripts/gen_scaffold.py`, `fill_chapter.py`, `content/` modules for content generation and filling
 - **Search index:** 424 chapters indexed
+- **ES grammar discovery:** 107 `gramatica/` chapters exist across all 6 levels (Spanish-named folder, previously undocumented).
 
-*Updated 3 June 2026*
+*Last verified/updated 5 June 2026*

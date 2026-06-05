@@ -24,22 +24,24 @@
 
 ## 2. Content inventory
 
-### English track — 213 chapters
+### English track — 213 chapters (all complete)
 | Section | A1 | A2 | B1 | B2 | C1 | C2 |
 |---------|----|----|----|----|----|----|
 | Grammar | 24 | 19 | 21 | 18 | 17 | 11 |
 | Vocabulary | 12 | 12 | 11 | 16 | 14 | 12 |
 | Writing | 3 | 3 | 3 | 5 | 6 | 6 |
 
-C1/C2 vocabulary: 23 of 26 chapters contain only structural shells with placeholder word data.  
-A1 vocabulary: old template (`renderCard`/`STORAGE_KEY`); A2–C2: new template (`showCard`/`MASTERY_KEY`).
+All vocabulary chapters enriched. Only 2 intentional "applied-grammar" chapters (c1, c2) lack flashcards by design.  
+A1 vocabulary: old template (`renderCard`/`STORAGE_KEY`) in 11 chapters, new template in 1 (animals); A2–C2: new template (`showCard`/`MASTERY_KEY`).
 
-### Spanish track (`/es/`) — vocab + writing only, all 6 levels
-71 vocabulary flashcard files are stub placeholders. Grammar section not yet built.  
+### Spanish track (`/es/`) — English explained in Spanish, all 6 levels
+**Grammar:** 107 `gramatica/` chapters (Spanish-named) across all 6 levels, all filled with real content.  
+**Vocabulary:** 77 chapters total; 71 are stub placeholders (flashcards.html + game.html both empty). a1: 6 filled, 6 stubs; a2–c2: all 71 total stubs.  
+**Writing:** 26 chapters, all complete.  
 Fill tooling: `scripts/fill_chapter.py` + `scripts/content/` modules.
 
 ### Espanol-en track — Spanish for English speakers
-A1: fully complete (vocabulary + grammar + writing). A2–C2: stub hub pages only.
+A1: hub scaffold complete (24 grammar, 12 vocabulary, 3 writing chapters) but **all 120 content files are placeholder stubs** ("Content coming soon"). A2–C2: stub hub pages only.
 
 ### Total search index: 424 chapters
 
@@ -163,13 +165,14 @@ UI symbols only: `◐` / `◑` (dark toggle), `◆` (streak badge). No emoji any
 
 ## 7. Next steps (priority order)
 
-1. **Fill 71 ES vocabulary flashcard stubs** — use dev-hub + DeepSeek/Gemini to generate word data, run `fill_chapter.py` per chapter. Start with es/a1 (students most likely to use it first).
-2. **Fill C1/C2 English vocabulary** — 23 chapters need word data. Script: `fill_en_c1c2_vocab.py`. CAE-grade (C1) and CPE-grade (C2) vocabulary.
-3. **Roll out match.html to all vocab chapters** — `builder.html` generates the file. Pattern is proven at animals/A1. ~76 chapters remaining.
-4. **Fix 26 pedagogy warnings** — espanol-en/a1/grammar slides missing `.trap-row`. Batch fix with Python.
-5. **Espanol-en A2–C2 content fill** — expand beyond A1 stub hubs.
-6. **ES grammar section** — entirely missing across all 6 levels; mirrors the English grammar structure.
+1. **⚠️ Clean mascot code** — remove 3 `console.log` debug statements from `shared/mascot.js` (live in production); fix mobile sprite-cropping bug ≤640px.
+2. **⚠️ Git hygiene** — remove 11 root PNG screenshots, 3 content-dump JSON files, stale `test em tool builder` file; clean up TECH_DEBT items (L6, L7, L8).
+3. **Fill 71 ES vocabulary flashcard stubs** — use dev-hub + DeepSeek/Gemini to generate word data, run `fill_chapter.py`. a1: 6 stubs (start here); a2–c2: all remaining.
+4. **Generate fr/ lesson content** — 81 hub pages exist with dead links. Need ~72 lesson files (slides, worksheets, games, flashcards). Builder supports `fr` track.
+5. **Fill espanol-en A1 content** — 120/120 content files are placeholder stubs. Add 24 missing `.trap-row` common-mistakes slides to grammar sections.
+6. **Roll out match.html** — pattern proven at animals/A1. ~76 vocab chapters remaining.
+7. **Espanol-en A2–C2 content fill** — expand beyond stub hubs.
 
 ---
 
-*Updated 3 June 2026 — teacher tools added, animals split, builder expanded, calendar/profiles with D1 sync, espanol-en A1 complete.*
+*Last verified 5 June 2026 — Mascot sprite (with debug artifacts), placement-test-v2, content audit complete. English vocab is done. ES grammar actually built (107 chapters, previously undocumented). Roadmap realigned to reflect actual state.*
