@@ -1,0 +1,42 @@
+{
+  "metadata": {
+    "specialist": "UX/Design Lead | Learning Expert | Engineering Lead",
+    "timestamp": "2026-06-05T14:30:00Z",
+    "pages_audited": ["index.html", "a/index.html", "a/a1/grammar/present-simple/slides.html", "profile.html", "calendar.html"],
+    "issues_found": ["Dark mode contrast on secondary text", "Mobile touch targets too small", "Hardcoded colors in inline styles"],
+    "total_proposals": 8
+  },
+  "proposals": [
+    {
+      "id": "xxx-001",
+      "title": "Concise title (3–7 words)",
+      "category": "bug",
+      "scope": "small",
+      "priority": "high",
+      "impact": "One-line user/business benefit",
+      "description": "2–3 sentences: what's wrong, why it matters, what we should do about it",
+      "files_affected": ["path/to/file1.html", "path/to/file2.css", "path/to/script.js"],
+      "success_metric": "How to verify this is done (screenshot, test output, checklist)",
+      "notes": "Any dependencies, gotchas, follow-ups, or context"
+    },
+    {
+      "id": "xxx-002",
+      "title": "Another proposal",
+      "category": "feature",
+      "scope": "medium",
+      "priority": "medium",
+      "impact": "Brief benefit statement",
+      "description": "Problem → Solution",
+      "files_affected": ["file1.js"],
+      "success_metric": "Verification approach",
+      "notes": "Any context"
+    }
+  ],
+  "summary": {
+    "high_priority_count": 2,
+    "medium_priority_count": 4,
+    "low_priority_count": 2,
+    "recommended_start": ["xxx-001", "xxx-003"],
+    "themes": ["Dark mode polish", "Accessibility compliance", "Code maintainability"]
+  }
+}
