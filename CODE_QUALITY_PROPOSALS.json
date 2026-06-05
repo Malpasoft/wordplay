@@ -1,0 +1,138 @@
+[
+  {
+    "id": "eng-code-001",
+    "title": "Migrate chapter hub inline styles to CSS classes",
+    "category": "refactor",
+    "scope": "large",
+    "priority": "high",
+    "impact": "Improves maintainability, reduces HTML bloat, enables responsive design patterns without rebuilding 264 files",
+    "description": "213 of 264 chapter hub index.html files use inline style= attributes for grid, flex, display, and typography. Extract these to .css and use semantic class names. Python script can batch-migrate (verify on 3 samples first). This reduces file size, improves separation of concerns, and makes dark-mode overrides centralized.",
+    "files_affected": [
+      "es/a1/index.html",
+      "es/a2/index.html",
+      "en/a1/index.html",
+      "... (213 total chapter hubs)"
+    ],
+    "success_metric": "All 264 chapter hub index.html files use semantic CSS classes (e.g., .ch-hero, .ch-grid) instead of inline styles; HTML validation passes; visual appearance unchanged across light/dark modes and all breakpoints",
+    "estimated_effort": "4–6 hours (1 hr validation prep, 2–3 hrs script + review, 1–2 hrs testing)",
+    "notes": "Template differences between English/Spanish/French tracks — grep for variants before script. Use Python with explicit string matching, not sed/awk."
+  },
+  {
+    "id": "eng-code-002",
+    "title": "Fix 243 broken links in French (fr/) course",
+    "category": "bug",
+    "scope": "medium",
+    "priority": "high",
+    "impact": "Makes French course navigable; unblocks students from accessing slides, worksheets, games for 81 B1–C2 grammar topics",
+    "description": "French fr/b1, fr/b2, fr/c1, fr/c2 grammar and vocabulary index.html files link to slides.html, game.html, worksheet.html that don't exist. Script checked 35,576 links; 243 broken. These are navigation stubs — content needs to be generated or stubs created. Check TECH_DEBT.md roadmap item #4.",
+    "files_affected": [
+      "fr/b1/grammaire/*/index.html (18 broken)",
+      "fr/b2/grammaire/*/index.html (22 broken)",
+      "fr/b1/vocabulaire/*/index.html (31 broken)",
+      "... (243 total)"
+    ],
+    "success_metric": "python3 scripts/check_links.py returns 0 broken links for fr/ track (or shows only expected stubs); students can navigate from hub to lesson/game/worksheet",
+    "estimated_effort": "3–4 hours (1 hr audit, 2–3 hrs content gen or stub creation)",
+    "notes": "Roadmap priority #4 — use builder.html to generate content or create minimal stubs (title + placeholder). Don't link until files exist."
+  },
+  {
+    "id": "eng-code-003",
+    "title": "Add breadcrumb navigation to 72 Spanish flashcard pages",
+    "category": "bug",
+    "scope": "medium",
+    "priority": "medium",
+    "impact": "Fixes navigation context for students; improves SEO; aligns 72 pages with structure validation rules",
+    "description": "Structure check found 72 flashcard pages missing .breadcrumb element (es/a1, es/a2, es/b1, es/b2 vocab flashcards.html). Breadcrumb template: <div class=\"breadcrumb\"><a href=\"...\">Level</a>...<strong>Topic</strong></div>. Python script can batch-add after header, before content. Verify 2 samples first.",
+    "files_affected": [
+      "es/a1/vocabulary/*/flashcards.html (6)",
+      "es/a2/vocabulary/*/flashcards.html (10)",
+      "es/b1/vocabulary/*/flashcards.html (8)",
+      "... (72 total)"
+    ],
+    "success_metric": "python3 scripts/check_structure.py returns 0 MISSING CRUMB errors; all breadcrumbs render correctly in light/dark modes; links point to correct parents",
+    "estimated_effort": "1–2 hours (30 min script, 30 min review, 30 min testing)",
+    "notes": "Breadcrumb structure differs slightly between tracks — confirm file count matches expectation before running batch script."
+  },
+  {
+    "id": "eng-code-004",
+    "title": "Remove or document console logging in mascot.js",
+    "category": "polish",
+    "scope": "small",
+    "priority": "medium",
+    "impact": "Cleans up developer console; reduces noise in production logs for error tracking",
+    "description": "mascot.js contains 6 console.warn and console.error statements (lines 52, 70, 77, 94, 111, 143). These are appropriate for debugging, but should be wrapped in a DEBUG flag or removed before final release. TECH_DEBT.md shows this was partially addressed but console statements remain.",
+    "files_affected": [
+      "shared/mascot.js"
+    ],
+    "success_metric": "No console.log/warn/error statements in mascot.js (or all wrapped in configurable DEBUG flag); dev console clean when mascot loads",
+    "estimated_effort": "30 minutes",
+    "notes": "Verify whether errors are production-critical (e.g., mascot sprite load failure) before removing; consider a global DEBUG constant if logging is useful for rollout monitoring."
+  },
+  {
+    "id": "eng-code-005",
+    "title": "Consolidate shared asset version variables into a single source",
+    "category": "refactor",
+    "scope": "small",
+    "priority": "medium",
+    "impact": "Reduces cache-bust version drift; enables single-point updates; improves maintainability",
+    "description": "Shared assets currently pinned individually (?v=vNN) across 50+ consumer files (e.g., base.css?v=v123, slides.css?v=115, game.js?v=110). While verified drift-free by TECH_DEBT.md, a shared manifest or templating system would prevent future misalignment. Options: (1) manifest.json with asset versions, (2) shared template partial, (3) server-side header rewriting (if Pages Functions support it).",
+    "files_affected": [
+      "version.json",
+      "index.html",
+      "profile.html",
+      "... (50+ HTML files)"
+    ],
+    "success_metric": "Single source of truth for asset versions; all consumers read from manifest; version bumps propagate automatically; no orphaned version numbers",
+    "estimated_effort": "2–3 hours (1 hr design, 1–2 hrs implementation + testing)",
+    "notes": "Current /ship skill automates cache-bust bumps — verify it's being used before adding new system. Don't introduce breaking changes to existing consumers."
+  },
+  {
+    "id": "eng-code-006",
+    "title": "Refactor onclick= handlers to semantic buttons in profile.html",
+    "category": "refactor",
+    "scope": "small",
+    "priority": "low",
+    "impact": "Improves accessibility (keyboard nav, screen readers); aligns with HTML5 semantics; reduces cognitive load",
+    "description": "profile.html has 24 onclick= handlers on divs and buttons. Most are already <button> elements (good), but 3–4 are <div onclick>. Refactor to semantic <button> with class names. Replace inline handlers with data attributes + event delegation if scale warrants. Modern practice: buttons should be <button> elements, not divs.",
+    "files_affected": [
+      "profile.html"
+    ],
+    "success_metric": "All interactive elements use <button> or <a> tags; no <div onclick=>; Axe accessibility audit reports no violations; keyboard navigation works (Tab, Enter, Space)",
+    "estimated_effort": "1 hour",
+    "notes": "Low priority because design-check hook doesn't police this, and profile.html is not public-facing (teacher tool). But good for code quality baseline."
+  },
+  {
+    "id": "eng-code-007",
+    "title": "Backfill 71 Spanish vocabulary stub pages with content",
+    "category": "feature",
+    "scope": "large",
+    "priority": "high",
+    "impact": "Completes es/ Spanish course (grammar + writing done; vocab stubs only); unblocks students from learning vocabulary",
+    "description": "TECH_DEBT.md roadmap item #3: 71 Spanish vocab chapters have <!-- FLASHCARDS CONTENT PLACEHOLDER --> stub files (es/a1: 6, es/a2–c2: 65 remaining). These map to 24 topics × 3 levels + extras. Use /fill-vocab skill or dev-hub builder to populate with real content, or confirm placeholder design is intentional.",
+    "files_affected": [
+      "es/a1/vocabulary/*/flashcards.html (6 stubs)",
+      "es/a2/vocabulary/*/flashcards.html (10 stubs)",
+      "... (71 total)"
+    ],
+    "success_metric": "All 71 vocab flashcard pages have real card data (word, IPA, definition, example); pedagogy_check.py shows 0 warnings for these files; students can flip cards, hear pronunciation, track mastery",
+    "estimated_effort": "8–12 hours (content generation bulk; /fill-vocab can automate if integrated)",
+    "notes": "Marked as MEDIUM in debt register, but roadmap priority #3. Consider batch generation with DeepSeek or Gemini if content pattern is consistent."
+  },
+  {
+    "id": "eng-code-008",
+    "title": "Create or regenerate 120 Spanish (espanol-en/a1) content stubs",
+    "category": "feature",
+    "scope": "large",
+    "priority": "high",
+    "impact": "Completes Spanish-for-English-speakers course foundation; unblocks A1 students",
+    "description": "TECH_DEBT.md roadmap item #5: espanol-en/a1 hub scaffold is built (all nav wired), but 120/120 content files are placeholder stubs ('Content coming soon'). Additionally, 24 grammar chapters lack the required .trap-row common-mistakes slide. Use builder.html to generate content, or mark as intentional placeholders if not yet in roadmap.",
+    "files_affected": [
+      "espanol-en/a1/gramatica/*/slides.html (24 need .trap-row)",
+      "espanol-en/a1/gramatica/*/game.html (24)",
+      "espanol-en/a1/vocabulario/*/flashcards.html (all 120)"
+    ],
+    "success_metric": "All 120 content files have real lessons/vocab; pedagogy_check.py passes for espanol-en; students see actual content instead of placeholders; 24 grammar slides include .trap-row common-mistakes",
+    "estimated_effort": "12–16 hours (bulk content gen + trap-row templating)",
+    "notes": "Roadmap priority #5. Largest pending work. Consider parallel generation if builder scales to batch mode."
+  }
+]

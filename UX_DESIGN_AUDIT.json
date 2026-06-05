@@ -1,0 +1,120 @@
+[
+  {
+    "id": "ux-design-001",
+    "title": "Light mode text contrast fails WCAG AA",
+    "category": "bug",
+    "scope": "small",
+    "priority": "high",
+    "impact": "Users with moderate vision impairment cannot read secondary text in light mode",
+    "description": "Muted text (#9A9A9A) achieves only 2.55:1 contrast on paper background (#F7F3EE), failing WCAG AA 4.5:1 requirement. Similarly, --muted-deep (#6B6B6B) and amber (#B8860B) fall short on light backgrounds. Dark mode is compliant (6.86:1 for muted on dark), but light mode affects the majority of users.",
+    "files_affected": [
+      "/home/user/wordplay/shared/base.css",
+      "/home/user/wordplay/index.html",
+      "/home/user/wordplay/a/index.html",
+      "/home/user/wordplay/profile.html",
+      "/home/user/wordplay/calendar.html"
+    ],
+    "success_metric": "All text colors meet WCAG AA 4.5:1 contrast in light mode. Verify with axe-core or similar tool.",
+    "notes": "Update --muted to ~#6B6B6B, --muted-deep to #5E5E5E, and --amber (light) to #8B6B0B or similar. Test on all sections that use these tokens."
+  },
+  {
+    "id": "ux-design-002",
+    "title": "Profile form buttons below 48×48px touch target",
+    "category": "bug",
+    "scope": "small",
+    "priority": "high",
+    "impact": "Mobile users struggle to tap small buttons; especially critical on 360px screens",
+    "description": "All form action buttons (.f-save, .ghost-btn, .detail-btn) use padding of 6-8px, resulting in ~28-32px height. WCAG 2.5.5 Level AAA recommends 44px minimum. This affects profile.html roster management, edit forms, and detail card actions.",
+    "files_affected": [
+      "/home/user/wordplay/profile.html"
+    ],
+    "success_metric": "All interactive buttons reach 44px minimum height (48px preferred). Test on 360px mobile with browser DevTools.",
+    "notes": "Consider using uniform padding for consistency (e.g., padding: 11px 16px for ~44px height). Alternative: use larger font sizes or increase padding."
+  },
+  {
+    "id": "ux-design-003",
+    "title": "Index.html inline styles use hardcoded #1A1A1A instead of CSS tokens",
+    "category": "refactor",
+    "scope": "medium",
+    "priority": "high",
+    "impact": "Dark mode color changes in base.css don't apply to onboarding modal and inline scripts; inconsistent theming",
+    "description": "Onboarding modal (line 237-246) hardcodes color:#1A1A1A on amber circles. This should use CSS tokens (--text-1 for dark mode contrast). Similarly, inline banner HTML constructs break token system. If --ink changes, these hardcodes won't update.",
+    "files_affected": [
+      "/home/user/wordplay/index.html"
+    ],
+    "success_metric": "All inline color styles replaced with CSS variables. Verify in dark mode that modal circles use correct amber and maintain contrast.",
+    "notes": "Move onboarding modal styles to a <style> block or external CSS, using --amber, --ink, and --paper tokens. Same for banner HTML."
+  },
+  {
+    "id": "ux-design-004",
+    "title": "Calendar.html (360px) lacks responsive grid/column layout",
+    "category": "bug",
+    "scope": "medium",
+    "priority": "high",
+    "impact": "Mobile users cannot view week calendar or month grid; horizontal scrolling required on narrow screens",
+    "description": "Calendar week view (.cal-week-outer) has no max-width constraint and .cal-day-cols doesn't collapse below 640px. Month grid uses 7-column layout regardless of viewport. No mobile-specific layout (e.g., day-list fallback for <480px) is displayed by default.",
+    "files_affected": [
+      "/home/user/wordplay/calendar.html"
+    ],
+    "success_metric": "At 360px: month grid hides and day-list view (.cal-day-list) is visible instead. Week view columns stack or compress appropriately.",
+    "notes": "Add @media (max-width: 480px) to hide .cal-week-outer and show .cal-day-list. Consider 2-column month grid at 360px."
+  },
+  {
+    "id": "ux-design-005",
+    "title": "Profile form missing keyboard accessibility (missing tabindex)",
+    "category": "bug",
+    "scope": "small",
+    "priority": "medium",
+    "impact": "Keyboard-only users cannot navigate or complete student profile forms; form inputs lack logical tab order",
+    "description": "Form fields (.f-input, .f-select, .f-textarea) in profile.html lack explicit tabindex. While native form elements should be naturally focusable, inline edit forms (#detailEditForm, #rosterForm) are hidden/shown dynamically without focus management. No focus trap or initial focus set on form reveal.",
+    "files_affected": [
+      "/home/user/wordplay/profile.html"
+    ],
+    "success_metric": "Tab through profile form completely using keyboard alone. First form field receives focus on form show(). Escape key closes form.",
+    "notes": "Add autofocus to first .f-input in showAddForm() and showEditForm(). Implement focus trap (trap focus within form while open). Add Escape key listener."
+  },
+  {
+    "id": "ux-design-006",
+    "title": "Typography: index.html hero h1 uses custom font-size instead of design system",
+    "category": "polish",
+    "scope": "small",
+    "priority": "medium",
+    "impact": "Homepage hero h1 (2.6rem) doesn't match design system --fs-h1 (2.4rem); inconsistent scaling across pages",
+    "description": "Index.html line 16 defines h1 { font-size: 2.6rem; } inline, while base.css uses --fs-h1: 2.4rem for all other pages. This creates a scaling inconsistency and makes future updates harder. Same issue on a/index.html (2rem) and profile.html (1.4rem).",
+    "files_affected": [
+      "/home/user/wordplay/index.html",
+      "/home/user/wordplay/a/index.html",
+      "/home/user/wordplay/profile.html"
+    ],
+    "success_metric": "All pages use var(--fs-h1), var(--fs-h2), var(--fs-h3) consistently. Inline style font-size removed.",
+    "notes": "Replace all h1/h2/h3 inline font-size styles with CSS variables. Update base.css if needed to support hero-specific h1 size via .root-hero h1 class."
+  },
+  {
+    "id": "ux-design-007",
+    "title": "Calendar sync strip low contrast on light mode",
+    "category": "bug",
+    "scope": "small",
+    "priority": "medium",
+    "impact": "Synced status message is hard to read on light background; low visual hierarchy",
+    "description": "Calendar.html .cal-sync.synced uses border-color: rgba(39,174,96,.4) and color: #27ae60 (green) on light paper. The rgba border is too subtle; green text (#27ae60) on #F7F3EE achieves only ~3.8:1 contrast, below WCAG AA.",
+    "files_affected": [
+      "/home/user/wordplay/calendar.html"
+    ],
+    "success_metric": "Sync status text meets 4.5:1 contrast. Border is visible. Status message clearly distinguishable in both light and dark modes.",
+    "notes": "Update color to #27ae60 (keep), improve border-color opacity to rgba(39,174,96,.6) or use solid #27ae60. Verify on light background."
+  },
+  {
+    "id": "ux-design-008",
+    "title": "Profile.html detail buttons too small and poorly spaced on mobile",
+    "category": "refactor",
+    "scope": "small",
+    "priority": "medium",
+    "impact": "Roster student cards have cramped buttons on 360px; difficult to interact with",
+    "description": ".detail-btn uses padding: 6px 11px and font-size: .62rem, resulting in ~24-26px height. On mobile when detail card actions stack in a row (flex-wrap: wrap), buttons are too tight and risk finger slip. No gap between buttons increases accidental taps.",
+    "files_affected": [
+      "/home/user/wordplay/profile.html"
+    ],
+    "success_metric": "Detail action buttons reach 36px+ height. Gap between buttons is at least 8px. Verify in mobile DevTools at 360px width.",
+    "notes": "Increase .detail-btn padding to 8px 12px (or similar for 36px height). Ensure .detail-actions { gap: 8px; } is set. Consider stacking actions vertically on <480px."
+  }
+]
