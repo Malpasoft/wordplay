@@ -149,6 +149,8 @@ function toggleDark() {
   var _input   = null;
   var _panel   = null;
   var _results = null;
+  var _searchClickHandler = null;  // Keep reference for cleanup
+  var _searchEscHandler = null;    // Keep reference for cleanup
 
   function injectSearch() {
     var inner = document.querySelector('.site-header-inner');
@@ -187,12 +189,16 @@ function toggleDark() {
     else document.body.insertBefore(_panel, document.body.firstChild);
 
     _input.addEventListener('input', onInput);
-    _input.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeSearch(); });
+    // Store escape handler for cleanup
+    _searchEscHandler = function(e) { if (e.key === 'Escape') closeSearch(); };
+    _input.addEventListener('keydown', _searchEscHandler);
     _inline.querySelector('.header-search-close').onclick = closeSearch;
-    document.addEventListener('click', function(e) {
+    // Store click handler for cleanup
+    _searchClickHandler = function(e) {
       if (!_inner.classList.contains('searching')) return;
       if (!_inner.contains(e.target) && !_panel.contains(e.target)) closeSearch();
-    }, true);
+    };
+    document.addEventListener('click', _searchClickHandler, true);
   }
 
   function toggleSearch() {
@@ -209,6 +215,9 @@ function toggleDark() {
   function closeSearch() {
     if (_inner) _inner.classList.remove('searching');
     if (_panel) _panel.style.display = 'none';
+    // Clean up event listeners when closing search
+    if (_searchClickHandler) document.removeEventListener('click', _searchClickHandler, true);
+    if (_searchEscHandler && _input) _input.removeEventListener('keydown', _searchEscHandler);
   }
 
   function loadSearch() {
