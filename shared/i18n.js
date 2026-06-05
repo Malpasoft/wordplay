@@ -66,6 +66,12 @@
     ws_gameBtn:       { es: 'Ir al Juego de Dominio',            en: 'Start Mastery Game' },
     ws_seeResults:    { es: 'Ver resultados',                    en: 'See results' },
     ws_back:          { es: '← Volver al capítulo',              en: '← Back to chapter' },
+
+    // deck.js strings
+    deck_reviewStart:  { es: 'Empezar el Repaso',                 en: 'Start Review' },
+    deck_complete:     { es: '¡Lección completada!',              en: 'Lesson complete!' },
+    deck_wellDone:     { es: '¡Bien hecho!',                      en: 'Well done!' },
+    deck_ready:        { es: 'Has terminado la lección. ¿Listo para repasar?', en: "You've finished this lesson. Ready to test yourself?" },
   };
 
   /**

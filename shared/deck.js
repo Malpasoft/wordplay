@@ -188,13 +188,14 @@ function triggerConfetti() {
 
     triggerConfetti();
 
-    // Detect language from window.LEVEL or html lang
-    var isSpanish = (window.LEVEL || '').indexOf('es-') === 0 || document.documentElement.lang === 'es';
-    var reviewLabel = isSpanish ? 'Empezar el Repaso' : 'Start Review';
-    var completeLabel = isSpanish ? '¡Lección completada!' : 'Lesson complete!';
-    var wellDoneLabel = isSpanish ? '¡Bien hecho!' : 'Well done!';
-    var readyLabel = isSpanish ? 'Has terminado la lección. ¿Listo para repasar?' : "You've finished this lesson. Ready to test yourself?";
-    var backLabel = isSpanish ? '← Volver al capítulo' : '← Back to chapter';
+    // Language detection via i18n module
+    var isEs = window.i18n ? window.i18n.isSpanish(window.LEVEL) : ((window.LEVEL || '').indexOf('es-') === 0 || document.documentElement.lang === 'es');
+    var getString = window.i18n ? window.i18n.getString : function(key) { return key; };
+    var reviewLabel = getString('deck_reviewStart');
+    var completeLabel = getString('deck_complete');
+    var wellDoneLabel = getString('deck_wellDone');
+    var readyLabel = getString('deck_ready');
+    var backLabel = getString('ws_back');
 
     var screen = document.createElement('div');
     screen.id = 'deck-complete';
