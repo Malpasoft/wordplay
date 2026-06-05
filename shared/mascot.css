@@ -47,10 +47,11 @@
 /* States are managed by JavaScript frame animation in mascot.js */
 /* No CSS animations - all frame cycling done via setInterval */
 
-/* Mobile: scales proportionally */
+/* Mobile: scales proportionally with sprite */
 @media (max-width: 640px) {
   #mascot {
     width: 40px;
     height: 40px;
+    background-size: 160px 240px;
   }
 }
