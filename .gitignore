@@ -1,5 +1,7 @@
 .DS_Store
 .playwright-mcp/
+.playwright-audit-*
+.claude/playwright-audit*
 
 # wrangler files
 .wrangler
@@ -11,3 +13,8 @@ __pycache__/
 *.png
 *.jpg
 !shared/mascot-bee.png
+
+# temporary content/test files
+scratch/
+*_content*.json
+*_template.json
