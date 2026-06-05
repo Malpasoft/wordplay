@@ -1,0 +1,131 @@
+{
+  "audit_date": "2026-06-05",
+  "engineer": "Engineering Lead",
+  "summary": {
+    "files_audited": "2372 HTML pages, 1000+ JS files, 150+ CSS files, shared assets, teacher tools",
+    "test_results": {
+      "pedagogy_check": "PASS (1041 pass, 24 warnings, 0 failures) — 24 Spanish A1 grammar chapters missing common-mistakes trap-row slides (expected, per TECH_DEBT M4)",
+      "check_links": "243 broken links — all in fr/b1 grammar hubs (dead links to non-existent slides/game/worksheet files); Spanish/English tracks clean",
+      "check_structure": "72 structure issues — all Spanish vocab flashcard breadcrumb errors (72 es/* flashcards.html missing crumbs); expected per TECH_DEBT M2",
+      "html_semantics": "CLEAN — profile.html uses semantic <button> throughout, no div onclick or inline event handlers found site-wide",
+      "css_variables": "CLEAN — all accent colors use var(--amber), hardcoded hex only in CSS var definitions and intentional exceptions (game green #2E7D52, print grey #6B6B6B, certificate amber)",
+      "cache_bust": "GOOD — shared assets pinned consistently (base.css v123, dark-init.js v109, mascot.js/css v2) across all consumers",
+      "console_logs": "4 console.error, 1 console.warn in mascot.js + 1 in store.js — all error handling, no debug logs"
+    },
+    "themes_found": [
+      "Minor console statements are error handlers (acceptable)",
+      "Spanish content stubs and French missing content are tracked roadmap items, not bugs",
+      "HTML markup quality is excellent — semantic buttons, no inline handlers, no duplicate IDs",
+      "Design system compliance is 100% on accent color usage after H1 batch fix",
+      "Two legacy one-off scripts worth archiving",
+      "Small opportunities to harden CI/CD and tighten version management"
+    ],
+    "proposal_count": 8
+  },
+  "proposals": [
+    {
+      "id": "eng-code-001",
+      "title": "Remove error-handler console.log from production code (mascot.js, store.js)",
+      "category": "polish",
+      "scope": "small",
+      "priority": "high",
+      "impact": "Reduces noise in production DevTools; console should only show user-facing errors when genuinely critical",
+      "description": "mascot.js has 5 console.error/warn calls and store.js has 1 console.warn for error handling. These help during dev but should be removed or wrapped in debug-only guards for production. Suggest replacing with optional error reporting hook or removing entirely since failures are already caught.",
+      "files_affected": ["shared/mascot.js", "shared/store.js"],
+      "success_metric": "Zero console.* statements in production files (except optional error reporting hook if added)",
+      "estimated_effort": "15 minutes",
+      "notes": "These are currently wrapped in try-catch, so they're defensive. Removing them is safe; alternatively wrap in `if (window.DEBUG)` guard. Test mascot.js animations after change."
+    },
+    {
+      "id": "eng-code-002",
+      "title": "Consolidate Spanish vocab flashcard breadcrumbs (es/* flashcards.html missing crumbs)",
+      "category": "bug",
+      "scope": "medium",
+      "priority": "high",
+      "impact": "Fixes 72 structure validation failures; improves user navigation consistency",
+      "description": "72 Spanish vocabulary flashcard pages (es/a1-c2/vocabulary/*/flashcards.html) are missing breadcrumb HTML. This is tracked as TECH_DEBT M2 and shows as MISSING CRUMB errors in check_structure output. Add breadcrumb block (matching English pattern) to all es/* flashcard files.",
+      "files_affected": ["es/a1-c2/vocabulary/*/flashcards.html (72 files)"],
+      "success_metric": "python3 scripts/check_structure.py returns 0 structure issues; all es/ flashcard breadcrumbs render correctly",
+      "estimated_effort": "30 minutes (script-based batch edit, test on 3 samples first)",
+      "notes": "Use Python script to match template, not sed/awk per CLAUDE.md. Verify breadcrumb path structure matches es/ hierarchy before batch apply. Do 3-file test first."
+    },
+    {
+      "id": "eng-code-003",
+      "title": "Fix French B1+ grammar hub dead links (fr/b1+ slides/game/worksheet paths missing)",
+      "category": "bug",
+      "scope": "large",
+      "priority": "high",
+      "impact": "Unblocks 243 broken links; allows French roadmap #4 content generation to proceed with valid link structure",
+      "description": "81 French navigation hubs exist (fr/*/grammaire/*/index.html) but link to non-existent slides.html, game.html, worksheet.html files. These show as 243 BROKEN links (all in fr/b1 grammaire). Two options: (a) create placeholder stubs for all 81 chapters, or (b) conditionally hide links until content exists. Recommend (a) for consistency with existing Spanish placeholders.",
+      "files_affected": ["fr/b1-c2/grammaire/*/index.html (81 files)", "fr/b1-c2/grammaire/*/slides.html (to create)"],
+      "success_metric": "python3 scripts/check_links.py shows 0 broken links in fr/ section; French hubs validate structurally",
+      "estimated_effort": "45 minutes (create stub templates, batch generate for 81 chapters)",
+      "notes": "Check fr/ hub index templates first to understand structure. Stubs should include the standard placeholder 'Content coming soon' pattern. Run link checker on fr/ subset after batch creation."
+    },
+    {
+      "id": "eng-code-004",
+      "title": "Audit and archive legacy one-off scripts (fix_*, migrate_*, gen_*)",
+      "category": "refactor",
+      "scope": "small",
+      "priority": "medium",
+      "impact": "Reduces repo clutter; makes it clear which scripts are actively maintained vs. historical",
+      "description": "TECH_DEBT L8 notes ~19 one-off migration/generator scripts (fix_*, migrate_*, gen_es_*, gen_en_*) linger beside reusable validators (check_links.py, pedagogy_check.py, etc.). Audit which are still needed vs. dead code, then move unused ones to scripts/archive/ or delete if truly one-time.",
+      "files_affected": ["scripts/*.py (audit all fix_* and migrate_* files)"],
+      "success_metric": "scripts/ directory contains only maintained validators + 1-2 essential builders; legacy scripts moved to archive/ or removed",
+      "estimated_effort": "30 minutes (audit + move/delete)",
+      "notes": "Do a grep search for any external references to these scripts before deleting. Check git history (git log --oneline -- scripts/) to confirm they're not actively used."
+    },
+    {
+      "id": "eng-code-005",
+      "title": "Pin shared asset versions in .env or config to reduce cache-bust coordination",
+      "category": "refactor",
+      "scope": "medium",
+      "priority": "medium",
+      "impact": "Single source of truth for all shared asset versions; reduces risk of version drift when updating assets",
+      "description": "Currently each shared asset has its own independent ?v= parameter (base.css v123, slides.css v115, mascot.js v2, etc.). If you need to update base.css, you must grep and update all 330+ HTML consumers. Suggest a central version map (version.json or shared/.versions) that page generators or a build-time hook reads, so bumping one asset version updates all references automatically.",
+      "files_affected": ["version.json", "shared/.versions (new)"],
+      "success_metric": "When base.css version is bumped, all consumer pages automatically get the new ?v= without manual grep-and-replace",
+      "estimated_effort": "2 hours (design map schema, write update hook, test on 3 pages, document in CLAUDE.md)",
+      "notes": "This requires either a static build step or a simple template injector. Since Word Play has no build system, a shell hook in .claude/hooks could do it at deploy time."
+    },
+    {
+      "id": "eng-code-006",
+      "title": "Add lint rule to reject hardcoded hex colors (except --amber variable definitions)",
+      "category": "refactor",
+      "scope": "small",
+      "priority": "medium",
+      "impact": "Prevents future color drift; enforces design system compliance automatically",
+      "description": "design-check.sh hook (per TECH_DEBT M5) currently catches emoji but not hardcoded hex colors in inline styles. A few outliers remain (certificate.html amber hardcoding, activity card type colors #2E7D52 green #6B6B6B grey — all intentional and documented). Add a linter that rejects new hex codes except in approved contexts (CSS var defs, intentional exceptions list).",
+      "files_affected": [".claude/hooks/design-check.sh", "CLAUDE.md (update exceptions list)"],
+      "success_metric": "Commit hook rejects any PR adding new hardcoded hex colors outside approved list; exceptions are documented in CLAUDE.md",
+      "estimated_effort": "1 hour (enhance hook regex, test on sample files)",
+      "notes": "Requires maintaining an exception list. Current intentional exceptions: #2E7D52 (game green), #6B6B6B (print grey), amber in certificates. Document why each exists."
+    },
+    {
+      "id": "eng-code-007",
+      "title": "Add landing-page dark-mode CSS variable fallback audit",
+      "category": "polish",
+      "scope": "small",
+      "priority": "medium",
+      "impact": "Ensures consistent dark mode rendering across all landing pages; catches any fallback variable misses",
+      "description": "index.html and a/index.html use --navy, --navy-light, --muted-deep variables which have fallbacks (e.g., `var(--muted-deep,#8A96A8)`). These fallbacks should only be in CSS, never in HTML inline styles. Audit all inline style attributes to ensure they use CSS variables only, with fallbacks managed in base.css.",
+      "files_affected": ["index.html", "a/index.html", "es/index.html", "b/index.html", "c/index.html"],
+      "success_metric": "Zero fallback hex values in inline style attributes; all color values use CSS variables",
+      "estimated_effort": "30 minutes (grep for style= and verify all colors use var())",
+      "notes": "This is preventative; the current code is correct but worth locking down to prevent future regression."
+    },
+    {
+      "id": "eng-code-008",
+      "title": "Document and validate mascot.js state machine thoroughly",
+      "category": "refactor",
+      "scope": "small",
+      "priority": "low",
+      "impact": "Reduces cognitive load for future maintainers; prevents state machine bugs",
+      "description": "mascot.js implements a frame-based animation state machine with 6 states (idle, fly, spell, walk, happy, sad) and localStorage persistence. The state cycle is non-obvious (IDLE → HAPPY → FLY → SPELL → WALK → SAD → IDLE). Add JSDoc comments explaining state transitions, frame durations, and the localStorage recovery logic. Verify idle state loops infinitely while others play once then revert.",
+      "files_affected": ["shared/mascot.js"],
+      "success_metric": "mascot.js has clear JSDoc on init(), setBeeState(), state machine, and frame animation logic; test coverage for state transitions documented",
+      "estimated_effort": "45 minutes (add JSDoc, verify test cases mentally)",
+      "notes": "No functional changes needed. This is documentation + defensive testing prep in case mascot behavior needs tweaking later."
+    }
+  ]
+}
