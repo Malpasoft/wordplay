@@ -48,7 +48,10 @@
 
 /* IDLE: Row 0, frames 0–3 (smooth 1.2s loop) */
 #mascot.bee-idle {
-  animation: idle-anim 1.2s steps(4) infinite;
+  animation-name: idle-anim;
+  animation-duration: 1.2s;
+  animation-timing-function: steps(4, end);
+  animation-iteration-count: infinite;
 }
 
 @keyframes idle-anim {
@@ -61,7 +64,11 @@
 
 /* FLY: Row 1, frames 0–3 (0.8s one-shot) */
 #mascot.bee-fly {
-  animation: fly-anim 0.8s steps(4) 1 forwards;
+  animation-name: fly-anim;
+  animation-duration: 0.8s;
+  animation-timing-function: steps(4, end);
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
 @keyframes fly-anim {
@@ -74,7 +81,11 @@
 
 /* SPELL: Row 2, frames 0–3 */
 #mascot.bee-spell {
-  animation: spell-anim 0.8s steps(4) 1 forwards;
+  animation-name: spell-anim;
+  animation-duration: 0.8s;
+  animation-timing-function: steps(4, end);
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
 @keyframes spell-anim {
@@ -87,7 +98,11 @@
 
 /* WALK: Row 3, frames 0–3 */
 #mascot.bee-walk {
-  animation: walk-anim 0.8s steps(4) 1 forwards;
+  animation-name: walk-anim;
+  animation-duration: 0.8s;
+  animation-timing-function: steps(4, end);
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
 @keyframes walk-anim {
@@ -100,7 +115,11 @@
 
 /* HAPPY: Row 4, frames 0–3 */
 #mascot.bee-happy {
-  animation: happy-anim 0.8s steps(4) 1 forwards;
+  animation-name: happy-anim;
+  animation-duration: 0.8s;
+  animation-timing-function: steps(4, end);
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
 @keyframes happy-anim {
@@ -113,7 +132,11 @@
 
 /* SAD: Row 5, frames 0–3 */
 #mascot.bee-sad {
-  animation: sad-anim 0.8s steps(4) 1 forwards;
+  animation-name: sad-anim;
+  animation-duration: 0.8s;
+  animation-timing-function: steps(4, end);
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
 }
 
 @keyframes sad-anim {
