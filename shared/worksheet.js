@@ -109,7 +109,15 @@
     });
   });
 
-  if (!questions.length) return;
+  // ── Error boundary: show message if no questions found ────────────
+  if (!questions.length) {
+    var msgEl = document.createElement('div');
+    msgEl.style.cssText = 'padding:20px;background:var(--paper);border:1px solid var(--muted);border-radius:8px;color:var(--ink);font-family:var(--font-sans);line-height:1.5;margin:40px 20px;max-width:500px';
+    msgEl.innerHTML = '<strong>Worksheet Error:</strong> No questions found on this page. The worksheet may not be configured correctly.<br><br><a href="index.html" style="color:var(--amber);text-decoration:none">← Back to chapter</a>';
+    var container = document.querySelector('.container') || document.body;
+    container.insertBefore(msgEl, container.firstChild);
+    return;
+  }
 
   // ── Hide legacy form + results panel ────────────────────────────
   var formEl   = document.getElementById('worksheet');

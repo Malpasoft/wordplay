@@ -40,6 +40,18 @@ window.GAME_CONFIG = {
     init();
   }
 
+  // ── Error boundary: user-facing message for missing data ──────────
+  function showErrorMessage(msg) {
+    var gameStart = document.getElementById('gameStart');
+    if (!gameStart) return;
+    var msgEl = document.createElement('div');
+    msgEl.className = 'game-error-message';
+    msgEl.style.cssText = 'padding:20px;background:var(--paper);border:1px solid var(--muted);border-radius:8px;color:var(--ink);font-family:var(--font-sans);line-height:1.5;margin:20px 0';
+    msgEl.innerHTML = '<strong>Game Error:</strong> ' + msg + '<br><br><a href="index.html" style="color:var(--amber);text-decoration:none">← Back to chapter</a>';
+    gameStart.innerHTML = '';
+    gameStart.appendChild(msgEl);
+  }
+
   function init() {
     // ── Error boundary: ensure GAME_DATA is present ─────────────────
     if (!window.GAME_DATA) {
