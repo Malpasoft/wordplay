@@ -81,6 +81,23 @@ body {
   --text-2:     #5E5E5E;   /* secondary / body copy   */
   --text-3:     #6B6B6B;   /* muted / meta            */
   --line:       #E5E5E5;   /* hairline borders        */
+
+  /* ─── Feedback & status colors (light mode) ── */
+  --color-success-bg:       rgba(39,174,96,0.10);     /* correct answer BG        */
+  --color-success-border:   #27ae60;                   /* correct border           */
+  --color-success-text:     #1d7d45;                   /* correct text             */
+  --color-error-bg:         rgba(192,57,43,0.07);     /* wrong answer BG          */
+  --color-error-border:     #c0392b;                   /* wrong border             */
+  --color-error-text:       #a0342a;                   /* wrong text               */
+  --color-option-bg-hover:  rgba(184,134,11,.05);     /* MC option hover BG       */
+  --color-option-bg-focus:  rgba(184,134,11,.12);     /* MC option focus BG       */
+  --color-mastery-weak-bg:  rgba(184,134,11,.12);     /* weak mastery chip        */
+
+  /* ─── Overlay & transparency (light mode) ── */
+  --color-overlay-dark:     rgba(20,20,20,0.92);      /* modal backdrop           */
+  --color-overlay-light:    rgba(26,26,26,0.22);      /* soft overlay             */
+  --color-text-muted:       rgba(255,255,255,.6);     /* over dark backgrounds    */
+  --color-text-subtle:      rgba(255,255,255,.5);     /* subtle text              */
 }
 
 body.dark {
