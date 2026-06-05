@@ -236,6 +236,20 @@ body.deck-body .deck-progress {
 .watch-out strong { color: var(--amber); }
 .watch-out::before { content: 'Note — '; color: var(--amber); font-weight: 700; }
 
+/* ─── EXAM STRATEGY CALLOUTS (B2+) ──────────────────────────── */
+.exam-note {
+  background: rgba(46, 125, 82, 0.08);
+  border: 1px solid var(--green);
+  border-radius: 4px;
+  padding: 10px 14px;
+  margin-top: 16px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.exam-note strong { color: var(--green); }
+.exam-note::before { content: 'FCE Strategy — '; color: var(--green); font-weight: 700; }
+
 /* ─── OVERVIEW / SUMMARY ROWS ─────────────────────────────────── */
 .overview-row, .summary-row {
   display: flex;
@@ -602,6 +616,15 @@ body.dark .slide-card .watch-out {
 }
 body.dark .slide-card .watch-out strong { color: var(--amber) !important; }
 body.dark .slide-card .watch-out em     { color: #FFD080 !important; }
+
+/* Exam strategy callouts */
+body.dark .slide-card .exam-note {
+  background: rgba(46, 125, 82, 0.25) !important;
+  border-color: #5ecf85 !important;
+  color: #A0E8B0 !important;
+}
+body.dark .slide-card .exam-note strong { color: #5ecf85 !important; }
+body.dark .slide-card .exam-note em     { color: #7FE89F !important; }
 
 /* Compare pair */
 body.dark .slide-card .compare-pair .side {

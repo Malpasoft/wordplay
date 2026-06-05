@@ -7,29 +7,32 @@
 (function () {
   'use strict';
 
-  // ── Language detection ───────────────────────────────────────────
-  var isEs = (window.LEVEL || '').indexOf('es-') === 0 || document.documentElement.lang === 'es';
+  // ── Language detection (via i18n module) ─────────────────────────
+  // window.i18n.isSpanish() checks LEVEL or html lang attribute
+  var isEs = window.i18n ? window.i18n.isSpanish(window.LEVEL) : ((window.LEVEL || '').indexOf('es-') === 0 || document.documentElement.lang === 'es');
+  var getString = window.i18n ? window.i18n.getString : function(key) { return key; };
+
   var L = {
-    check:       isEs ? 'Comprobar' : 'Check',
-    next:        isEs ? 'Siguiente' : 'Next',
-    correct:     isEs ? 'Correcto' : 'Correct',
-    wrong:       isEs ? 'Incorrecto' : 'Incorrect',
-    correctAns:  isEs ? 'Respuesta correcta:' : 'Correct answer:',
-    remaining:   isEs ? 'restantes' : 'remaining',
-    typeHere:    isEs ? 'Escribe tu respuesta' : 'Type your answer',
-    mcLabel:     isEs ? 'Elige la respuesta correcta' : 'Choose the correct answer',
-    fillLabel:   isEs ? 'Rellena el hueco' : 'Fill in the blank',
-    transLabel:  isEs ? 'Traduce al inglés' : 'Translate into English',
-    prevBest:    isEs ? 'Mejor puntuación anterior:' : 'Previous best:',
-    completed:   isEs ? 'Repaso completado' : 'Review complete',
-    wellDone:    isEs ? '¡Buen trabajo!' : 'Well done!',
-    keepGoing:   isEs ? '¡Sigue practicando!' : 'Keep practising!',
-    noLives:     isEs ? 'Sin vidas' : 'Out of lives',
-    firstPass:   isEs ? 'A la primera:' : 'First-pass score:',
-    tryAgain:    isEs ? 'Intentar de nuevo' : 'Try again',
-    gameBtn:     isEs ? 'Ir al Juego de Dominio' : 'Start Mastery Game',
-    seeResults:  isEs ? 'Ver resultados' : 'See results',
-    back:        isEs ? '← Volver al capítulo' : '← Back to chapter',
+    check:       getString('ws_check'),
+    next:        getString('ws_next'),
+    correct:     getString('ws_correct'),
+    wrong:       getString('ws_wrong'),
+    correctAns:  getString('ws_correctAns'),
+    remaining:   getString('ws_remaining'),
+    typeHere:    getString('ws_typeHere'),
+    mcLabel:     getString('ws_mcLabel'),
+    fillLabel:   getString('ws_fillLabel'),
+    transLabel:  getString('ws_transLabel'),
+    prevBest:    getString('ws_prevBest'),
+    completed:   getString('ws_completed'),
+    wellDone:    getString('ws_wellDone'),
+    keepGoing:   getString('ws_keepGoing'),
+    noLives:     getString('ws_noLives'),
+    firstPass:   getString('ws_firstPass'),
+    tryAgain:    getString('ws_tryAgain'),
+    gameBtn:     getString('ws_gameBtn'),
+    seeResults:  getString('ws_seeResults'),
+    back:        getString('ws_back'),
   };
 
   // ── Helpers ──────────────────────────────────────────────────────

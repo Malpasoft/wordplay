@@ -74,6 +74,7 @@ function toggleDark() {
         '</div>';
       modal.querySelector('.wp-qr-close').onclick = function(){ modal.style.display = 'none'; };
       modal.onclick = function(e){ if (e.target === modal) modal.style.display = 'none'; };
+      document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && modal.style.display !== 'none') modal.style.display = 'none'; });
       document.body.appendChild(modal);
     }
     var url = window.location.href;

@@ -24,31 +24,30 @@
     var STORAGE_KEY = DATA.storageKey || ('game_' + (DATA.level || '') + '_' + (DATA.chapterId || ''));
     var SCORE_GOAL  = 100;
 
-    // ── Language ──────────────────────────────────────────────────
-    var isEs = ((DATA.level || '').indexOf('es-') === 0) || (document.documentElement.lang === 'es');
+    // ── Language (via i18n module) ────────────────────────────────
+    // window.i18n.isSpanish() checks DATA.level or html lang attribute
+    var isEs = window.i18n ? window.i18n.isSpanish(DATA.level) : ((DATA.level || '').indexOf('es-') === 0) || (document.documentElement.lang === 'es');
+    var getString = window.i18n ? window.i18n.getString : function(key) { return key; };
+
     var L = {
-      start:      isEs ? 'Empezar'           : 'Start',
-      resume:     isEs ? 'Continuar'          : 'Resume',
-      newGame:    isEs ? 'Empezar de nuevo'   : 'New game',
-      check:      isEs ? 'Comprobar'          : 'Check',
-      next:       isEs ? 'Continuar'          : 'Continue',
-      correct:    isEs ? '¡Correcto!'         : 'Correct!',
-      wrong:      isEs ? 'Incorrecto'         : 'Incorrect',
-      answer:     isEs ? 'Respuesta:'         : 'Answer:',
-      placeholder:isEs ? 'Escribe en inglés…' : 'Type your answer…',
-      sigLabel:   isEs ? 'Significado'        : 'Meaning',
-      ctxLabel:   isEs ? 'Contexto'           : 'Context',
-      prodLabel:  isEs ? 'Producción'         : 'Production',
-      sigSub:     isEs ? '¿Qué significa esta expresión?' : 'What does this expression mean?',
-      ctxSub:     isEs ? 'Completa la frase'  : 'Complete the sentence',
-      prodSub:    isEs ? 'Escribe la expresión en inglés' : 'Write the English expression',
-      toWin:      isEs ? '/ ' + SCORE_GOAL + ' para ganar' : '/ ' + SCORE_GOAL + ' to win',
-      desc:       isEs
-        ? (ITEMS.length + ' conceptos clave · 3 rondas cada uno · llega a ' + SCORE_GOAL + ' puntos')
-        : (ITEMS.length + ' key concepts · 3 rounds each · reach ' + SCORE_GOAL + ' points'),
-      hint:       isEs
-        ? 'Aciertos consecutivos del mismo concepto y rachas entre conceptos añaden puntos extra.'
-        : 'Same-concept runs and cross-concept streaks add bonus points.',
+      start:      getString('game_start'),
+      resume:     getString('game_resume'),
+      newGame:    getString('game_newGame'),
+      check:      getString('game_check'),
+      next:       getString('game_next'),
+      correct:    getString('game_correct'),
+      wrong:      getString('game_wrong'),
+      answer:     getString('game_answer'),
+      placeholder:getString('game_placeholder'),
+      sigLabel:   getString('game_sigLabel'),
+      ctxLabel:   getString('game_ctxLabel'),
+      prodLabel:  getString('game_prodLabel'),
+      sigSub:     getString('game_sigSub'),
+      ctxSub:     getString('game_ctxSub'),
+      prodSub:    getString('game_prodSub'),
+      toWin:      '/ ' + SCORE_GOAL + ' ' + getString('game_toWin_suffix'),
+      desc:       ITEMS.length + ' ' + getString('game_desc_prefix') + ' ' + SCORE_GOAL + ' ' + (isEs ? 'puntos' : 'points'),
+      hint:       getString('game_hint'),
       bestScore:  isEs ? 'Mejor puntuación:' : 'Best score:',
       dominio:    isEs ? '¡Dominio alcanzado!' : 'Mastery achieved!',
       wellDone:   isEs ? '¡Bien hecho!'      : 'Well done!',

@@ -15,15 +15,15 @@
 
 /* ── Toolbar ── */
 .cal-toolbar{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
-.cal-nav-btn{font-family:var(--font-sans);font-size:.7rem;font-weight:700;padding:6px 12px;border-radius:4px;border:1.5px solid var(--hairline);background:transparent;color:var(--ink);cursor:pointer;transition:border-color .15s,color .15s}
+.cal-nav-btn{font-family:var(--font-sans);font-size:.7rem;font-weight:700;padding:6px 12px;border-radius:4px;border:1.5px solid var(--hairline);background:transparent;color:var(--ink);cursor:pointer;transition:border-color .15s,color .15s;min-height:44px;display:flex;align-items:center}
 .cal-nav-btn:hover{border-color:var(--ink)}
 .cal-today-btn{border-color:var(--amber);color:var(--amber)}
 .cal-today-btn:hover{background:var(--amber);color:var(--paper)}
 .cal-title{font-family:var(--font-sans);font-size:.92rem;font-weight:700;color:var(--ink);min-width:160px;text-align:center}
 .cal-view-toggle{display:flex;border:1.5px solid var(--hairline);border-radius:4px;overflow:hidden}
-.cal-view-btn{font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border:none;background:transparent;color:var(--muted);cursor:pointer;transition:background .12s,color .12s}
+.cal-view-btn{font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border:none;background:transparent;color:var(--muted);cursor:pointer;transition:background .12s,color .12s;min-height:44px;display:flex;align-items:center}
 .cal-view-btn.active{background:var(--ink);color:var(--paper)}
-.cal-add-btn{margin-left:auto;font-family:var(--font-sans);font-size:.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:4px;border:none;background:var(--ink);color:var(--paper);cursor:pointer;transition:opacity .12s}
+.cal-add-btn{margin-left:auto;font-family:var(--font-sans);font-size:.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:4px;border:none;background:var(--ink);color:var(--paper);cursor:pointer;transition:opacity .12s;min-height:44px;display:flex;align-items:center;justify-content:center}
 .cal-add-btn:hover{opacity:.85}
 
 /* ── Sync strip ── */
@@ -102,7 +102,7 @@ body.dark .lt-school{background:rgba(240,240,240,.65);color:#0E0E0E}
 .cal-empty-eyebrow{font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:8px}
 .cal-empty h3{font-size:1.05rem;font-weight:700;color:var(--ink);margin:0 0 6px}
 .cal-empty p{font-family:var(--font-sans);font-size:.82rem;color:var(--muted);margin:0 0 18px;line-height:1.6;max-width:460px;margin-left:auto;margin-right:auto}
-.cal-empty-btn{font-family:var(--font-sans);font-size:.82rem;font-weight:700;letter-spacing:.3px;padding:11px 22px;border-radius:6px;border:none;background:var(--amber);color:#fff;cursor:pointer;transition:opacity .12s}
+.cal-empty-btn{font-family:var(--font-sans);font-size:.82rem;font-weight:700;letter-spacing:.3px;padding:11px 22px;border-radius:6px;border:none;background:var(--amber);color:#fff;cursor:pointer;transition:opacity .12s;min-height:44px;display:flex;align-items:center;justify-content:center}
 .cal-empty-btn:hover{opacity:.87}
 .cal-empty-skip{display:inline-block;margin-top:12px;font-family:var(--font-sans);font-size:.72rem;color:var(--muted);cursor:pointer;background:none;border:none;text-decoration:underline;text-underline-offset:2px}
 
@@ -153,9 +153,9 @@ body.dark .lm-input[type="date"],body.dark .lm-input[type="time"]{color-scheme:d
 
 /* Action buttons */
 .lm-btn-row{grid-column:1/-1;display:flex;gap:8px;margin-top:8px;align-items:center}
-.lm-btn{font-family:var(--font-sans);font-size:.8rem;font-weight:700;letter-spacing:.3px;padding:10px 18px;border-radius:6px;border:none;background:var(--amber);color:#fff;cursor:pointer;transition:opacity .12s}
+.lm-btn{font-family:var(--font-sans);font-size:.8rem;font-weight:700;letter-spacing:.3px;padding:10px 18px;border-radius:6px;border:none;background:var(--amber);color:#fff;cursor:pointer;transition:opacity .12s;min-height:44px;display:flex;align-items:center;justify-content:center}
 .lm-btn:hover{opacity:.87}
-.lm-btn.ghost{background:transparent;border:1.5px solid var(--hairline);color:var(--ink)}
+.lm-btn.ghost{background:transparent;border:1.5px solid var(--hairline);color:var(--ink);min-height:44px;display:flex;align-items:center;justify-content:center}
 .lm-btn.ghost:hover{border-color:var(--ink)}
 .lm-btn.danger{background:transparent;border:1.5px solid rgba(192,57,43,.35);color:#c0392b;margin-left:auto}
 .lm-btn.danger:hover{background:#c0392b;border-color:#c0392b;color:#fff}

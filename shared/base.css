@@ -114,7 +114,9 @@ body.dark {
 }
 
 button { font-family: inherit; -webkit-tap-highlight-color: transparent; border: none; background: none; cursor: pointer; }
+button:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
 input, select, textarea { font-family: inherit; -webkit-tap-highlight-color: transparent; }
+input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
 a { color: inherit; }
 
 /* ─── GLOBAL HEADER / NAV ──────────────────────────────────────── */
