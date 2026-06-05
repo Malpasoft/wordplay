@@ -27,9 +27,9 @@
   cursor: pointer;
   user-select: none;
   background-image: url(/shared/mascot-bee.png?v=v1);
-  background-size: 400% 600%;
+  background-size: 192px 288px;
   background-repeat: no-repeat;
-  background-position: 0% 0%;
+  background-position: 0px 0px;
   overflow: hidden;
   border-radius: 4px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.15);
