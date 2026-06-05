@@ -31,6 +31,7 @@ function toggleDark() {
 // Back to top button — appears on long pages
 (function(){
   if (typeof document === 'undefined') return;
+  var scrollHandler = null;  // Keep reference for cleanup
   function setup() {
     if (document.getElementById('back-to-top')) return;
     var btn = document.createElement('button');
@@ -39,10 +40,11 @@ function toggleDark() {
     btn.innerHTML = '&#8593;';
     btn.onclick = function() { window.scrollTo({top:0, behavior:'smooth'}); };
     document.body.appendChild(btn);
-    window.addEventListener('scroll', function() {
+    scrollHandler = function() {
       if (window.scrollY > 400) btn.classList.add('visible');
       else btn.classList.remove('visible');
-    }, {passive:true});
+    };
+    window.addEventListener('scroll', scrollHandler, {passive:true});
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', setup);
@@ -51,6 +53,7 @@ function toggleDark() {
 
 // QR code button — lets teachers share the current page with students
 (function(){
+  var qrEscapeHandler = null;  // Keep reference for cleanup
   function injectQR() {
     var inner = document.querySelector('.site-header-inner');
     if (!inner || inner.querySelector('.qr-toggle')) return;
@@ -74,7 +77,9 @@ function toggleDark() {
         '</div>';
       modal.querySelector('.wp-qr-close').onclick = function(){ modal.style.display = 'none'; };
       modal.onclick = function(e){ if (e.target === modal) modal.style.display = 'none'; };
-      document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && modal.style.display !== 'none') modal.style.display = 'none'; });
+      // Use a shared handler variable for proper cleanup
+      qrEscapeHandler = function(e){ if (e.key === 'Escape' && modal.style.display !== 'none') modal.style.display = 'none'; };
+      document.addEventListener('keydown', qrEscapeHandler);
       document.body.appendChild(modal);
     }
     var url = window.location.href;
