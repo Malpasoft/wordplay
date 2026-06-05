@@ -107,11 +107,15 @@
 
   function startFrameAnimation(stateName) {
     try {
-      if (!mascot) return;
+      if (!mascot) {
+        console.error('mascot is null in startFrameAnimation');
+        return;
+      }
 
       if (animationFrame) clearInterval(animationFrame);
 
       var rowOffset = ROW_OFFSETS[stateName];
+      console.log('startFrameAnimation:', {stateName, rowOffset, mascotExists: !!mascot});
       var frameIdx = 0;
       var isIdleState = (stateName === IDLE_STATE);
       var frameTiming = isIdleState ? IDLE_FRAME_DURATION : FRAME_DURATION;
@@ -119,7 +123,9 @@
 
       function showFrame() {
         var frameX = frameIdx * -48; // 0px, -48px, -96px, -144px
-        mascot.style.backgroundPosition = frameX + 'px ' + rowOffset + 'px';
+        var posValue = frameX + 'px ' + rowOffset + 'px';
+        console.log('showFrame setting position to:', posValue);
+        mascot.style.backgroundPosition = posValue;
 
         if (isIdleState) {
           // Idle loops infinitely
