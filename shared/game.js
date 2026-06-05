@@ -431,6 +431,30 @@ window.GAME_CONFIG = {
     }
 
     // ── Grade answer ──────────────────────────────────────────────
+    /**
+     * GAME ALGORITHM: Dominio Mastery Model
+     *
+     * The game implements a 4-stage mastery progression:
+     * 1. ITEM MASTERY: Each of 4 key items must be answered correctly once (significado, contexto, produccion).
+     *    All 3 question types = 12 total questions (4 items × 3 types).
+     *
+     * 2. SCORING: Each correct answer = 10 points.
+     *    - Bonuses apply on top of base 10 points:
+     *      * Same-concept run (sameRunCount >= 2): +5 bonus (stay focused)
+     *      * Cross-concept streak (crossStreak >= 3): +3 bonus (prove flexibility)
+     *    - Incorrect answer: lose 3 points (min 0). Requeue at end. Resets both streaks.
+     *
+     * 3. WIN CONDITION: Score >= SCORE_GOAL (100 points) AND all 4 items correct.
+     *    Without both, the game loops with fresh questions. After win, save to localStorage.
+     *
+     * 4. GRADING LOGIC:
+     *    - significado (meaning): MC from 4 options (correct + 3 distractors). Exact match.
+     *    - contexto (context): MC from gapped sentence. Exact match or accept[] variants.
+     *    - produccion (production): Free-form text input → correct term (case-insensitive,
+     *      punctuation-insensitive, or any item.accept[] alias).
+     *
+     * @param {string} userVal - The user's answer (from input field or selected button)
+     */
     function gradeAnswer(userVal) {
       if (!currentQItem) return;
       var qItem  = currentQItem;

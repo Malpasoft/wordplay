@@ -123,6 +123,7 @@ Dashboard reads `lv['vocab_mastered_' + slug].done`. Full schema: see SESSION_CO
 - Grading is deterministic — never ask students to self-assess open production.
 - Audio pronunciation on all vocab flashcards (Web Speech API, `lang='en-GB'`, `rate=0.9`).
 - Flashcards auto-complete after viewing all cards.
+- **Dominio Mastery Game (game.js):** 4 key items × 3 question types (significado/meaning, contexto/context, produccion/production). Score toward 100 points. Win = score ≥ 100 AND all 4 items correct. Correct answer = 10 pts (+5 same-item run bonus, +3 cross-item streak bonus). Wrong = -3 pts, requeue. Grading: significado/contexto = MC exact match; produccion = norm'd text match or item.accept[] aliases. See game.js JSDoc for full algorithm.
 - Match game (match.html): 3 lives, each word must be matched to its definition twice to win. Mastery saved to localStorage on win.
 - `python3 scripts/pedagogy_check.py` must stay at 0 failures before pushing.
 
