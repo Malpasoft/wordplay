@@ -53,15 +53,15 @@ body {
   --paper: #F7F3EE;
   --navy: #1A1A1A;
   --navy-light: #6B6B6B;
-  --muted: #9A9A9A;
+  --muted: #6B6B6B;
   --hairline: #E5E5E5;
-  --amber: #B8860B;
+  --amber: #8B6B0B;
   --teal: #1A7A8A;
-  --accent: #B8860B;
-  --accent-dark: #8A6208;
+  --accent: #8B6B0B;
+  --accent-dark: #704B08;
   --cream: #FAFAFA;
   --cream-deep: #F0EDE8;
-  --muted-deep: #6B6B6B;
+  --muted-deep: #5E5E5E;
   --border-soft: rgba(26,26,26,0.22);
   --navy-deep: #0D0D0D;
   --navy-mid: #3A3A3A;
@@ -79,7 +79,7 @@ body {
   --surface-2:  #FFFFFF;   /* raised surfaces / cards */
   --text-1:     #1A1A1A;   /* primary text / titles   */
   --text-2:     #5E5E5E;   /* secondary / body copy   */
-  --text-3:     #9A9A9A;   /* muted / meta            */
+  --text-3:     #6B6B6B;   /* muted / meta            */
   --line:       #E5E5E5;   /* hairline borders        */
 }
 

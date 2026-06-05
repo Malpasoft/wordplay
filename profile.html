@@ -19,7 +19,7 @@ body.dark{--green:#5fd068;--red:#e05a4a;--blue:#7da8d9}
 
 /* ── Layout ── */
 .pro-wrap{max-width:1000px;margin:0 auto;padding:20px 16px}
-h1{font-size:1.4rem;color:var(--ink);margin:0}
+h1{font-size:var(--fs-h2);color:var(--ink);margin:0}
 .pro-header{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
 .pro-header-actions{margin-left:auto;display:flex;gap:8px}
 
@@ -74,8 +74,8 @@ h1{font-size:1.4rem;color:var(--ink);margin:0}
 .no-students{grid-column:1/-1;padding:40px;text-align:center;color:var(--muted);font-family:var(--font-sans);font-size:.85rem}
 
 /* ── Roster actions ── */
-.add-btn{font-family:var(--font-sans);font-size:.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:7px 16px;border-radius:4px;border:none;background:var(--ink);color:var(--paper);cursor:pointer}
-.ghost-btn{font-family:var(--font-sans);font-size:.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:7px 14px;border-radius:4px;border:1.5px solid var(--hairline);background:transparent;color:var(--muted);cursor:pointer;transition:border-color .15s,color .15s}
+.add-btn{font-family:var(--font-sans);font-size:.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:11px 16px;border-radius:4px;border:none;background:var(--ink);color:var(--paper);cursor:pointer;min-height:44px;display:flex;align-items:center;justify-content:center}
+.ghost-btn{font-family:var(--font-sans);font-size:.68rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:11px 14px;border-radius:4px;border:1.5px solid var(--hairline);background:transparent;color:var(--muted);cursor:pointer;transition:border-color .15s,color .15s;min-height:44px;display:flex;align-items:center;justify-content:center}
 .ghost-btn:hover{border-color:var(--ink);color:var(--ink)}
 
 /* ── Student detail ── */
@@ -88,8 +88,8 @@ h1{font-size:1.4rem;color:var(--ink);margin:0}
 .d-tag{font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:2px 7px;border-radius:2px;border:1px solid var(--hairline);color:var(--muted)}
 .d-tag.lvl{border-color:var(--amber);color:var(--amber)}
 .detail-notes{font-size:.83rem;color:var(--muted);font-style:italic;margin:0}
-.detail-actions{display:flex;gap:6px;flex-shrink:0;flex-wrap:wrap}
-.detail-btn{font-family:var(--font-sans);font-size:.62rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:6px 11px;border-radius:3px;border:1.5px solid var(--hairline);background:transparent;color:var(--ink);cursor:pointer;transition:border-color .15s}
+.detail-actions{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}
+.detail-btn{font-family:var(--font-sans);font-size:.62rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:8px 12px;border-radius:3px;border:1.5px solid var(--hairline);background:transparent;color:var(--ink);cursor:pointer;transition:border-color .15s;min-height:36px;display:flex;align-items:center}
 .detail-btn:hover{border-color:var(--ink)}
 .detail-btn.danger{border-color:var(--red);color:var(--red)}
 .detail-btn.danger:hover{background:var(--red);color:#fff}
@@ -122,8 +122,8 @@ h1{font-size:1.4rem;color:var(--ink);margin:0}
 .f-input:focus,.f-select:focus,.f-textarea:focus{outline:none;border-color:var(--amber)}
 .f-textarea{min-height:64px;resize:vertical;grid-column:1/-1}
 .f-actions{display:flex;gap:8px;margin-top:12px;grid-column:1/-1}
-.f-save{font-family:var(--font-sans);font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:8px 18px;border-radius:4px;border:none;background:var(--ink);color:var(--paper);cursor:pointer}
-.f-cancel{font-family:var(--font-sans);font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:8px 14px;border-radius:4px;border:1.5px solid var(--hairline);background:transparent;color:var(--ink);cursor:pointer}
+.f-save{font-family:var(--font-sans);font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:11px 18px;border-radius:4px;border:none;background:var(--ink);color:var(--paper);cursor:pointer;min-height:44px;display:flex;align-items:center;justify-content:center}
+.f-cancel{font-family:var(--font-sans);font-size:.7rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:11px 14px;border-radius:4px;border:1.5px solid var(--hairline);background:transparent;color:var(--ink);cursor:pointer;min-height:44px;display:flex;align-items:center;justify-content:center}
 .placement-hint{font-family:var(--font-sans);font-size:.68rem;color:var(--muted);margin-top:4px}
 .placement-hint a{color:var(--amber)}
 
@@ -700,11 +700,23 @@ function showAddForm() {
   document.getElementById('fNotes').value = '';
   form.classList.add('visible');
   document.getElementById('fName').focus();
+  document.addEventListener('keydown', rosterFormEscapeHandler);
   form.scrollIntoView({behavior:'smooth', block:'nearest'});
 }
 
 function hideForm() {
-  document.getElementById('rosterForm').classList.remove('visible');
+  var form = document.getElementById('rosterForm');
+  form.classList.remove('visible');
+  document.removeEventListener('keydown', rosterFormEscapeHandler);
+}
+
+function rosterFormEscapeHandler(e) {
+  if (e.key === 'Escape') {
+    var form = document.getElementById('rosterForm');
+    if (form && form.classList.contains('visible')) {
+      hideForm();
+    }
+  }
 }
 
 function showEditForm() {
@@ -712,10 +724,24 @@ function showEditForm() {
   if (!f) return;
   f.classList.add('visible');
   f.scrollIntoView({behavior:'smooth', block:'nearest'});
+  var firstInput = f.querySelector('.f-input, .f-select, .f-textarea');
+  if (firstInput) firstInput.focus();
+  document.addEventListener('keydown', editFormEscapeHandler);
 }
+
+function editFormEscapeHandler(e) {
+  if (e.key === 'Escape') {
+    var form = document.getElementById('detailEditForm');
+    if (form && form.classList.contains('visible')) {
+      hideEditForm();
+    }
+  }
+}
+
 function hideEditForm() {
   var f = document.getElementById('detailEditForm');
   if (f) f.classList.remove('visible');
+  document.removeEventListener('keydown', editFormEscapeHandler);
 }
 
 function saveStudent() {

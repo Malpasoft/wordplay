@@ -28,7 +28,7 @@
 
 /* ── Sync strip ── */
 .cal-sync{font-family:var(--font-sans);font-size:.68rem;padding:6px 12px;border:1px solid var(--hairline);border-radius:4px;margin-bottom:12px}
-.cal-sync.synced{border-color:rgba(39,174,96,.4);color:#27ae60}
+.cal-sync.synced{border-color:#27ae60;color:#27ae60}
 .cal-sync.info{color:var(--muted)}
 
 /* ── Week view wrapper ── */
@@ -179,6 +179,14 @@ body.dark .lm-input[type="date"],body.dark .lm-input[type="time"]{color-scheme:d
   .cal-title{min-width:0;font-size:.78rem}
   .cal-add-btn{padding:6px 10px}
   .cal-legend{display:none}
+}
+
+@media(max-width:480px){
+  .cal-week-outer{display:none}
+  .cal-month-grid{display:grid;grid-template-columns:repeat(2,1fr)}
+  .cal-month-cell{min-height:60px;padding:4px}
+  .cal-day-list{display:block}
+  .cal-view-toggle{display:none}
 }
 </style>
 </head>
