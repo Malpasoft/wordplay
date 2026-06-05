@@ -48,10 +48,8 @@
 
 /* IDLE: Row 0, frames 0–3 (smooth 1.2s loop) */
 #mascot.bee-idle {
-  animation-name: idle-anim;
-  animation-duration: 1.2s;
-  animation-timing-function: steps(4, end);
-  animation-iteration-count: infinite;
+  /* STATIC TEST: no animation, just frame 0 */
+  background-position: 0px 0px !important;
 }
 
 @keyframes idle-anim {
