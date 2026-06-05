@@ -170,16 +170,26 @@
     }
   };
 
-  function findChapter(slug) {
-    for (var level in CHAPTERS) {
-      for (var section in CHAPTERS[level]) {
-        var chs = CHAPTERS[level][section];
+  // ── Flat slug index for O(1) chapter lookup ──────────────────────
+  // Built once at load time from CHAPTERS; replaces O(n·m) scan.
+  // Format: { 'slug': { level: 'a1', section: 'grammar' }, ... }
+  var slugIndex = {};
+
+  function buildSlugIndex(chapters) {
+    slugIndex = {};
+    for (var level in chapters) {
+      for (var section in chapters[level]) {
+        var chs = chapters[level][section];
         for (var i = 0; i < chs.length; i++) {
-          if (chs[i].slug === slug) return { level: level, section: section };
+          slugIndex[chs[i].slug] = { level: level, section: section };
         }
       }
     }
-    return null;
+  }
+
+  function findChapter(slug) {
+    // O(1) lookup via pre-built index
+    return slugIndex[slug] || null;
   }
 
   var CHAPTERS = {
@@ -402,6 +412,9 @@
       ],
     },
   };
+
+  // ── Build flat index for O(1) lookups ────────────────────────────
+  buildSlugIndex(CHAPTERS);
 
   window.FCEStore.CHAPTERS = CHAPTERS;
 })();
