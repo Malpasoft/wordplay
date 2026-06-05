@@ -4,6 +4,33 @@
 // GAME_DATA interface unchanged; per-chapter HTML needs no edits.
 // ══════════════════════════════════════════════════════════════════
 
+
+// ── Game Configuration (magic numbers extracted) ───────────────────
+// Window-scoped for discovery and tuning. Consumers read but do not modify.
+window.GAME_CONFIG = {
+  SCORE_GOAL: 100,        // Points to reach to win a game
+  BONUSES: {
+    same:  5,             // Bonus for 2+ consecutive correct on same concept
+    cross: 3              // Bonus for 3+ consecutive correct across concepts
+  },
+  AUDIO_TONES: {
+    correct: [            // Two-tone correct answer sound (Hz, delay)
+      [660, 0],           // 660 Hz at start
+      [880, 0.1]          // 880 Hz at 100ms delay
+    ],
+    error: {
+      frequency: 160,     // Hz for error buzz
+      duration: 0.22      // Seconds
+    }
+  },
+  CONFETTI: {
+    count: 32,            // Number of confetti particles to emit
+    fallDuration: [1.8, 2.2], // Min/max animation duration in seconds
+    staggerDelay: 0.5,    // Max random stagger between particles
+    lifetime: 4500        // Milliseconds before DOM cleanup
+  }
+};
+
 (function () {
   'use strict';
 
@@ -22,7 +49,7 @@
     if (!ITEMS.length) return;
 
     var STORAGE_KEY = DATA.storageKey || ('game_' + (DATA.level || '') + '_' + (DATA.chapterId || ''));
-    var SCORE_GOAL  = 100;
+    var SCORE_GOAL  = window.GAME_CONFIG.SCORE_GOAL;
 
     // ── Language (via i18n module) ────────────────────────────────
     // window.i18n.isSpanish() checks DATA.level or html lang attribute
@@ -65,7 +92,7 @@
       try {
         var ctx = new (window.AudioContext || window.webkitAudioContext)();
         if (correct) {
-          [[660,0],[880,0.1]].forEach(function(pair) {
+          window.GAME_CONFIG.AUDIO_TONES.correct.forEach(function(pair) {
             var o = ctx.createOscillator(), g = ctx.createGain();
             o.connect(g); g.connect(ctx.destination);
             o.type = 'sine'; o.frequency.value = pair[0];
@@ -76,12 +103,13 @@
             o.start(t); o.stop(t + 0.4);
           });
         } else {
+          var errTone = window.GAME_CONFIG.AUDIO_TONES.error;
           var o = ctx.createOscillator(), g = ctx.createGain();
           o.connect(g); g.connect(ctx.destination);
-          o.type = 'sawtooth'; o.frequency.value = 160;
+          o.type = 'sawtooth'; o.frequency.value = errTone.frequency;
           g.gain.setValueAtTime(0.18, ctx.currentTime);
-          g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.22);
-          o.start(); o.stop(ctx.currentTime + 0.22);
+          g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + errTone.duration);
+          o.start(); o.stop(ctx.currentTime + errTone.duration);
           try { navigator.vibrate && navigator.vibrate([50, 20, 50]); } catch(e2) {}
         }
         setTimeout(function() { try { ctx.close(); } catch(e2) {} }, 1200);
@@ -97,12 +125,15 @@
         document.head.appendChild(s);
       }
       var colors = ['#C9A050','#E8A020','#D4B060','#B8860B','#F5D080','#C9A050'];
-      for (var i = 0; i < 32; i++) {
+      var cfg = window.GAME_CONFIG.CONFETTI;
+      for (var i = 0; i < cfg.count; i++) {
         var p = document.createElement('div');
         var sz = 6 + Math.random() * 6;
-        p.style.cssText = 'position:fixed;top:-12px;width:' + sz + 'px;height:' + sz + 'px;border-radius:' + Math.round(Math.random()) + 'px;background:' + colors[Math.floor(Math.random() * colors.length)] + ';left:' + (5 + Math.random() * 90) + '%;animation:cfFall ' + (1.8 + Math.random() * 2.2) + 's ' + (Math.random() * 0.5) + 's ease-in forwards;z-index:999;pointer-events:none';
+        var duration = cfg.fallDuration[0] + Math.random() * (cfg.fallDuration[1] - cfg.fallDuration[0]);
+        var stagger = Math.random() * cfg.staggerDelay;
+        p.style.cssText = 'position:fixed;top:-12px;width:' + sz + 'px;height:' + sz + 'px;border-radius:' + Math.round(Math.random()) + 'px;background:' + colors[Math.floor(Math.random() * colors.length)] + ';left:' + (5 + Math.random() * 90) + '%;animation:cfFall ' + duration + 's ' + stagger + 's ease-in forwards;z-index:999;pointer-events:none';
         document.body.appendChild(p);
-        setTimeout(function(el) { if (el.parentNode) el.parentNode.removeChild(el); }, 4500, p);
+        setTimeout(function(el) { if (el.parentNode) el.parentNode.removeChild(el); }, cfg.lifetime, p);
       }
     }
 
@@ -439,13 +470,13 @@
           // Same-item run: previous correct was same item
           state.sameRunCount++;
           state.crossStreak = 0;
-          if (state.sameRunCount >= 2) { pts += 5; bonusMsg = L.bonusSame; }
+          if (state.sameRunCount >= 2) { pts += window.GAME_CONFIG.BONUSES.same; bonusMsg = L.bonusSame; }
         } else if (prevId !== null && prevId !== item.id) {
           // Different item: extend cross-item streak
           state.crossStreak++;
           state.sameRunCount = 1;
           if (state.crossStreak > state.bestStreak) state.bestStreak = state.crossStreak;
-          if (state.crossStreak >= 3) { pts += 3; bonusMsg = L.bonusCross; }
+          if (state.crossStreak >= 3) { pts += window.GAME_CONFIG.BONUSES.cross; bonusMsg = L.bonusCross; }
         } else {
           // First correct answer ever
           state.crossStreak = 0;
