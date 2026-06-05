@@ -204,9 +204,9 @@
   touch-action: manipulation;
 }
 .game-option:active { transform: scale(0.97); }
-.game-option:hover:not(:disabled) { background: rgba(184,134,11,.05); border-color: var(--amber); }
-.game-option.correct { background: rgba(39,174,96,0.10); color: #1d7d45; border-color: #27ae60; font-weight: 700; }
-.game-option.wrong   { background: rgba(192,57,43,0.07); color: #a0342a; border-color: #c0392b; text-decoration: line-through; }
+.game-option:hover:not(:disabled) { background: var(--color-option-bg-hover); border-color: var(--amber); }
+.game-option.correct { background: var(--color-success-bg); color: var(--color-success-text); border-color: var(--color-success-border); font-weight: 700; }
+.game-option.wrong   { background: var(--color-error-bg); color: var(--color-error-text); border-color: var(--color-error-border); text-decoration: line-through; }
 .game-option:disabled { cursor: default; opacity: 0.75; }
 
 /* ─── FEEDBACK & EXAMPLE ────────────────────────────────────────── */
@@ -218,19 +218,19 @@
   padding-bottom: 2px;
 }
 .game-feedback.correct {
-  background: rgba(39,174,96,0.08);
-  border-left: 3px solid #27ae60;
+  background: var(--color-success-bg);
+  border-left: 3px solid var(--color-success-border);
   padding: 12px 26px;
-  color: #1d7d45;
+  color: var(--color-success-text);
   font-weight: 700;
   text-align: left;
   margin-top: 6px;
 }
 .game-feedback.wrong {
-  background: rgba(192,57,43,0.06);
-  border-left: 3px solid #c0392b;
+  background: var(--color-error-bg);
+  border-left: 3px solid var(--color-error-border);
   padding: 12px 26px;
-  color: #a0342a;
+  color: var(--color-error-text);
   font-weight: 600;
   text-align: left;
   margin-top: 6px;
@@ -503,14 +503,14 @@ body.dark .game-prompt         { color: rgba(255,255,255,.6) !important; }
 body.dark .game-example        { color: rgba(255,255,255,.5) !important; border-top-color: rgba(255,255,255,.1) !important; }
 body.dark .game-feedback { color: var(--ink) !important; }
 body.dark .game-feedback.correct {
-  background: rgba(39,174,96,0.13) !important;
-  border-left-color: #4CAF82 !important;
-  color: #5ecf85 !important;
+  background: var(--color-success-bg) !important;
+  border-left-color: var(--color-success-border) !important;
+  color: var(--color-success-text) !important;
 }
 body.dark .game-feedback.wrong {
-  background: rgba(192,57,43,0.13) !important;
-  border-left-color: #E05A4A !important;
-  color: #FFA090 !important;
+  background: var(--color-error-bg) !important;
+  border-left-color: var(--color-error-border) !important;
+  color: var(--color-error-text) !important;
 }
 
 body.dark .gp-prog { background: rgba(255,255,255,.12); }

@@ -128,6 +128,23 @@ body.dark {
   --text-2:     #B5B5B5;
   --text-3:     #8A8A8A;
   --line:       #2A2A2A;
+
+  /* ─── Feedback & status colors (dark mode) ── */
+  --color-success-bg:       rgba(39,174,96,0.13);     /* correct answer BG        */
+  --color-success-border:   #4CAF82;                   /* correct border           */
+  --color-success-text:     #5ecf85;                   /* correct text             */
+  --color-error-bg:         rgba(192,57,43,0.13);     /* wrong answer BG          */
+  --color-error-border:     #E05A4A;                   /* wrong border             */
+  --color-error-text:       #FFA090;                   /* wrong text               */
+  --color-option-bg-hover:  rgba(255,255,255,.07);    /* MC option hover BG       */
+  --color-option-bg-focus:  rgba(255,255,255,.14);    /* MC option focus BG       */
+  --color-mastery-weak-bg:  rgba(255,255,255,.07);    /* weak mastery chip        */
+
+  /* ─── Overlay & transparency (dark mode) ── */
+  --color-overlay-dark:     rgba(20,20,20,0.92);      /* modal backdrop           */
+  --color-overlay-light:    rgba(255,255,255,.08);    /* soft overlay             */
+  --color-text-muted:       rgba(255,255,255,.4);     /* muted text               */
+  --color-text-subtle:      rgba(255,255,255,.38);    /* subtle text              */
 }
 
 button { font-family: inherit; -webkit-tap-highlight-color: transparent; border: none; background: none; cursor: pointer; }
