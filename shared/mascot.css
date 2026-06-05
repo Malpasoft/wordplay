@@ -37,10 +37,10 @@
 
 @keyframes idle-anim {
   0%   { background-position: 0% 0%; }
-  25%  { background-position: -100% 0%; }
-  50%  { background-position: -200% 0%; }
-  75%  { background-position: -300% 0%; }
-  100% { background-position: -300% 0%; }
+  25%  { background-position: -25% 0%; }
+  50%  { background-position: -50% 0%; }
+  75%  { background-position: -75% 0%; }
+  100% { background-position: 0% 0%; }
 }
 
 /* FLY: Row 1, frames 0–3 (0.8s one-shot) */
@@ -49,11 +49,11 @@
 }
 
 @keyframes fly-anim {
-  0%   { background-position: 0% -100%; }
-  25%  { background-position: -100% -100%; }
-  50%  { background-position: -200% -100%; }
-  75%  { background-position: -300% -100%; }
-  100% { background-position: -300% -100%; }
+  0%   { background-position: 0% -16.67%; }
+  25%  { background-position: -25% -16.67%; }
+  50%  { background-position: -50% -16.67%; }
+  75%  { background-position: -75% -16.67%; }
+  100% { background-position: -75% -16.67%; }
 }
 
 /* SPELL: Row 2, frames 0–3 */
@@ -62,11 +62,11 @@
 }
 
 @keyframes spell-anim {
-  0%   { background-position: 0% -200%; }
-  25%  { background-position: -100% -200%; }
-  50%  { background-position: -200% -200%; }
-  75%  { background-position: -300% -200%; }
-  100% { background-position: -300% -200%; }
+  0%   { background-position: 0% -33.33%; }
+  25%  { background-position: -25% -33.33%; }
+  50%  { background-position: -50% -33.33%; }
+  75%  { background-position: -75% -33.33%; }
+  100% { background-position: -75% -33.33%; }
 }
 
 /* WALK: Row 3, frames 0–3 */
@@ -75,11 +75,11 @@
 }
 
 @keyframes walk-anim {
-  0%   { background-position: 0% -300%; }
-  25%  { background-position: -100% -300%; }
-  50%  { background-position: -200% -300%; }
-  75%  { background-position: -300% -300%; }
-  100% { background-position: -300% -300%; }
+  0%   { background-position: 0% -50%; }
+  25%  { background-position: -25% -50%; }
+  50%  { background-position: -50% -50%; }
+  75%  { background-position: -75% -50%; }
+  100% { background-position: -75% -50%; }
 }
 
 /* HAPPY: Row 4, frames 0–3 */
@@ -88,11 +88,11 @@
 }
 
 @keyframes happy-anim {
-  0%   { background-position: 0% -400%; }
-  25%  { background-position: -100% -400%; }
-  50%  { background-position: -200% -400%; }
-  75%  { background-position: -300% -400%; }
-  100% { background-position: -300% -400%; }
+  0%   { background-position: 0% -66.67%; }
+  25%  { background-position: -25% -66.67%; }
+  50%  { background-position: -50% -66.67%; }
+  75%  { background-position: -75% -66.67%; }
+  100% { background-position: -75% -66.67%; }
 }
 
 /* SAD: Row 5, frames 0–3 */
@@ -101,11 +101,11 @@
 }
 
 @keyframes sad-anim {
-  0%   { background-position: 0% -500%; }
-  25%  { background-position: -100% -500%; }
-  50%  { background-position: -200% -500%; }
-  75%  { background-position: -300% -500%; }
-  100% { background-position: -300% -500%; }
+  0%   { background-position: 0% -83.33%; }
+  25%  { background-position: -25% -83.33%; }
+  50%  { background-position: -50% -83.33%; }
+  75%  { background-position: -75% -83.33%; }
+  100% { background-position: -75% -83.33%; }
 }
 
 /* Mobile: scales proportionally */
