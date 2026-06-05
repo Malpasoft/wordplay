@@ -404,7 +404,7 @@
     var gameCTA = success
       ? '<a href="game.html" style="display:inline-block;padding:13px 32px;background:var(--amber);color:#1A1A1A;font-family:var(--font-sans);font-size:.8rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;border-radius:5px">' + L.gameBtn + ' &#8594;</a><br>'
       : '';
-    var retryBtn = '<button onclick="location.reload()" style="display:inline-block;margin-top:12px;padding:11px 26px;background:transparent;color:var(--ink);font-family:var(--font-sans);font-size:.76rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:1.5px solid var(--hairline);border-radius:4px;cursor:pointer">' + L.tryAgain + '</button>';
+    var retryBtn = '<button id="wsq-retry-btn" style="display:inline-block;margin-top:12px;padding:11px 26px;background:transparent;color:var(--ink);font-family:var(--font-sans);font-size:.76rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:1.5px solid var(--hairline);border-radius:4px;cursor:pointer">' + L.tryAgain + '</button>';
 
     var done = document.createElement('div');
     done.id = 'wsq-done';
@@ -422,6 +422,12 @@
     var footer = document.querySelector('.site-footer');
     if (footer) footer.before(done);
     else document.body.appendChild(done);
+
+    // Wire retry button (replace inline onclick with addEventListener)
+    var retryBtn = done.querySelector('#wsq-retry-btn');
+    if (retryBtn) {
+      retryBtn.addEventListener('click', function() { location.reload(); });
+    }
   }
 
   // ── Wire events ──────────────────────────────────────────────────
