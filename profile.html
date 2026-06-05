@@ -237,7 +237,7 @@ h1{font-size:1.4rem;color:var(--ink);margin:0}
             <option value="C1">C1 — Advanced</option>
             <option value="C2">C2 — Proficiency</option>
           </select>
-          <p class="placement-hint">Not sure? <a href="placement-test.html" target="_blank">Run placement test</a> then return.</p>
+          <p class="placement-hint">Not sure? <a href="placement-test-v2.html" target="_blank">Run placement test</a> then return.</p>
         </div>
         <div class="f-row">
           <label class="f-label" for="fCode">Class / group code</label>
@@ -596,7 +596,7 @@ function renderStudentDetail(id) {
     + '<div class="f-row"><label class="f-label">Level</label><select class="f-select" id="efLevel">'
     + '<option value="">— not assessed —</option>'
     + ['A1','A2','B1','B2','C1','C2'].map(function(l){ return '<option value="'+l+'"'+(s.level===l?' selected':'')+'>'+l+'</option>'; }).join('')
-    + '</select><p class="placement-hint"><a href="placement-test.html" target="_blank">Run placement test</a></p></div>'
+    + '</select><p class="placement-hint"><a href="placement-test-v2.html" target="_blank">Run placement test</a></p></div>'
     + '<div class="f-row"><label class="f-label">Target level</label><select class="f-select" id="efTargetLevel">'
     + '<option value="">— not set —</option>'
     + ['A1','A2','B1','B2','C1','C2'].map(function(l){ return '<option value="'+l+'"'+(s.targetLevel===l?' selected':'')+'>'+l+'</option>'; }).join('')

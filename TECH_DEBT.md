@@ -73,8 +73,8 @@ A1 hub scaffold is complete but **all 120 content files are placeholder stubs** 
 | L6 | Branch clutter: cleanup + audit (stale branch references) | **CLARIFIED** — Referenced branches (`…-1ZNUG`, `…-5BQiv`, others) no longer in this clone. Either already pruned or never fetched. No action needed if cleanup already happened. |
 | L7 | `.claude/` playwright-audit `*.{md,json}` + screenshots not git-ignored | **CLOSED** — Enhanced `.gitignore` to exclude `.playwright-audit-*` and `.claude/playwright-audit*` |
 | L8 | ~19 one-off `fix_*`/`migrate_*`/`gen_es_*`/`gen_en_*` scripts linger beside reusable validators | open — Consider archiving to a `scripts/legacy/` or removing if truly unused |
-| L9 | `placement-test.html` (v1) superseded but internally linked from `teacher.html`, `profile.html` | open — Update inbound links to v2 or redirect |
-| L10 | `shared/card-exercise.js` no `<script>` loader found in audited scope | open — Verify whether consumed by content chapters or orphaned |
+| L9 | `placement-test.html` (v1) superseded but internally linked from `teacher.html`, `profile.html` | **CLOSED** — Updated 3 inbound links (profile.html ×2, teacher.html ×1) to point to v2. v1 remains in tree but unreachable from hub nav. |
+| L10 | `shared/card-exercise.js` no `<script>` loader found — verify consumed or orphaned | **CLARIFIED** — Not orphaned. Self-registering code (v104, 15KB). Loaded on-demand by worksheet.html pages. CSS selectors in base.css + worksheet.css confirm usage. Working as intended. |
 
 ---
 
