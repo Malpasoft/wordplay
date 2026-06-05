@@ -1,7 +1,7 @@
-/* Bee mascot sprite animation system.
-   Each state is a row in the sprite sheet (6 rows × 4 frames per row).
-   Dimensions: 48×48px per frame, sprite is 192×288px total.
-   Use CSS steps() for crisp pixel-art animation (4 frames × ~0.2s = 0.8s loop).
+/* Bee mascot sprite animation.
+   Sprite: 192×288px (6 rows × 4 frames, 48×48 per frame).
+   Background-position uses percentages so it works at any scale.
+   Each row is 1/6 of height (16.67%); each frame is 1/4 of width (25%).
 */
 
 #mascot {
@@ -14,164 +14,109 @@
   cursor: pointer;
   user-select: none;
   background-image: url(/shared/mascot-bee.png?v=v1);
-  background-size: 192px 288px;
+  background-size: 400% 600%;
   background-repeat: no-repeat;
-  background-position: 0 0;
+  background-position: 0% 0%;
+  overflow: hidden;
   border-radius: 4px;
-  transition: transform 0.1s ease-out;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.1s ease-out;
 }
 
 #mascot:hover {
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
 
 #mascot:active {
-  transform: scale(0.95);
+  transform: scale(0.9);
 }
 
 /* ─────────────────────────────────── States ─────────────────────────────────── */
 
-/* IDLE: Row 0 (top), frames 0–3 cycling left-to-right */
+/* IDLE: Row 0, frames 0–3 (smooth 1.2s loop) */
 #mascot.bee-idle {
-  animation: idle-anim 0.8s steps(4) infinite;
-  background-position: 0 0;
+  animation: idle-anim 1.2s steps(4) infinite;
 }
 
 @keyframes idle-anim {
-  0%   { background-position: 0px 0px; }
-  25%  { background-position: -48px 0px; }
-  50%  { background-position: -96px 0px; }
-  75%  { background-position: -144px 0px; }
-  100% { background-position: -192px 0px; }
+  0%   { background-position: 0% 0%; }
+  25%  { background-position: -100% 0%; }
+  50%  { background-position: -200% 0%; }
+  75%  { background-position: -300% 0%; }
+  100% { background-position: -300% 0%; }
 }
 
-/* FLY: Row 1, frames 0–3 */
+/* FLY: Row 1, frames 0–3 (0.8s one-shot) */
 #mascot.bee-fly {
-  animation: fly-anim 0.8s steps(4) 1;
-  background-position: 0 -48px;
+  animation: fly-anim 0.8s steps(4) 1 forwards;
 }
 
 @keyframes fly-anim {
-  0%   { background-position: 0px -48px; }
-  25%  { background-position: -48px -48px; }
-  50%  { background-position: -96px -48px; }
-  75%  { background-position: -144px -48px; }
-  100% { background-position: -192px -48px; }
+  0%   { background-position: 0% -100%; }
+  25%  { background-position: -100% -100%; }
+  50%  { background-position: -200% -100%; }
+  75%  { background-position: -300% -100%; }
+  100% { background-position: -300% -100%; }
 }
 
 /* SPELL: Row 2, frames 0–3 */
 #mascot.bee-spell {
-  animation: spell-anim 0.8s steps(4) 1;
-  background-position: 0 -96px;
+  animation: spell-anim 0.8s steps(4) 1 forwards;
 }
 
 @keyframes spell-anim {
-  0%   { background-position: 0px -96px; }
-  25%  { background-position: -48px -96px; }
-  50%  { background-position: -96px -96px; }
-  75%  { background-position: -144px -96px; }
-  100% { background-position: -192px -96px; }
+  0%   { background-position: 0% -200%; }
+  25%  { background-position: -100% -200%; }
+  50%  { background-position: -200% -200%; }
+  75%  { background-position: -300% -200%; }
+  100% { background-position: -300% -200%; }
 }
 
 /* WALK: Row 3, frames 0–3 */
 #mascot.bee-walk {
-  animation: walk-anim 0.8s steps(4) 1;
-  background-position: 0 -144px;
+  animation: walk-anim 0.8s steps(4) 1 forwards;
 }
 
 @keyframes walk-anim {
-  0%   { background-position: 0px -144px; }
-  25%  { background-position: -48px -144px; }
-  50%  { background-position: -96px -144px; }
-  75%  { background-position: -144px -144px; }
-  100% { background-position: -192px -144px; }
+  0%   { background-position: 0% -300%; }
+  25%  { background-position: -100% -300%; }
+  50%  { background-position: -200% -300%; }
+  75%  { background-position: -300% -300%; }
+  100% { background-position: -300% -300%; }
 }
 
 /* HAPPY: Row 4, frames 0–3 */
 #mascot.bee-happy {
-  animation: happy-anim 0.8s steps(4) 1;
-  background-position: 0 -192px;
+  animation: happy-anim 0.8s steps(4) 1 forwards;
 }
 
 @keyframes happy-anim {
-  0%   { background-position: 0px -192px; }
-  25%  { background-position: -48px -192px; }
-  50%  { background-position: -96px -192px; }
-  75%  { background-position: -144px -192px; }
-  100% { background-position: -192px -192px; }
+  0%   { background-position: 0% -400%; }
+  25%  { background-position: -100% -400%; }
+  50%  { background-position: -200% -400%; }
+  75%  { background-position: -300% -400%; }
+  100% { background-position: -300% -400%; }
 }
 
 /* SAD: Row 5, frames 0–3 */
 #mascot.bee-sad {
-  animation: sad-anim 0.8s steps(4) 1;
-  background-position: 0 -240px;
+  animation: sad-anim 0.8s steps(4) 1 forwards;
 }
 
 @keyframes sad-anim {
-  0%   { background-position: 0px -240px; }
-  25%  { background-position: -48px -240px; }
-  50%  { background-position: -96px -240px; }
-  75%  { background-position: -144px -240px; }
-  100% { background-position: -192px -240px; }
+  0%   { background-position: 0% -500%; }
+  25%  { background-position: -100% -500%; }
+  50%  { background-position: -200% -500%; }
+  75%  { background-position: -300% -500%; }
+  100% { background-position: -300% -500%; }
 }
 
-/* ─────────────────────────────────── Mobile ─────────────────────────────────── */
-
+/* Mobile: percentage-based positioning scales automatically */
 @media (max-width: 640px) {
   #mascot {
-    top: 12px;
-    right: 12px;
     width: 40px;
     height: 40px;
-    background-size: 160px 240px;
-  }
-
-  @keyframes idle-anim {
-    0%   { background-position: 0px 0px; }
-    25%  { background-position: -40px 0px; }
-    50%  { background-position: -80px 0px; }
-    75%  { background-position: -120px 0px; }
-    100% { background-position: -160px 0px; }
-  }
-
-  @keyframes fly-anim {
-    0%   { background-position: 0px -40px; }
-    25%  { background-position: -40px -40px; }
-    50%  { background-position: -80px -40px; }
-    75%  { background-position: -120px -40px; }
-    100% { background-position: -160px -40px; }
-  }
-
-  @keyframes spell-anim {
-    0%   { background-position: 0px -80px; }
-    25%  { background-position: -40px -80px; }
-    50%  { background-position: -80px -80px; }
-    75%  { background-position: -120px -80px; }
-    100% { background-position: -160px -80px; }
-  }
-
-  @keyframes walk-anim {
-    0%   { background-position: 0px -120px; }
-    25%  { background-position: -40px -120px; }
-    50%  { background-position: -80px -120px; }
-    75%  { background-position: -120px -120px; }
-    100% { background-position: -160px -120px; }
-  }
-
-  @keyframes happy-anim {
-    0%   { background-position: 0px -160px; }
-    25%  { background-position: -40px -160px; }
-    50%  { background-position: -80px -160px; }
-    75%  { background-position: -120px -160px; }
-    100% { background-position: -160px -160px; }
-  }
-
-  @keyframes sad-anim {
-    0%   { background-position: 0px -200px; }
-    25%  { background-position: -40px -200px; }
-    50%  { background-position: -80px -200px; }
-    75%  { background-position: -120px -200px; }
-    100% { background-position: -160px -200px; }
+    bottom: 16px;
+    right: 16px;
   }
 }
