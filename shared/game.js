@@ -41,12 +41,19 @@ window.GAME_CONFIG = {
   }
 
   function init() {
-    if (!window.GAME_DATA) return;
+    // ── Error boundary: ensure GAME_DATA is present ─────────────────
+    if (!window.GAME_DATA) {
+      showErrorMessage('Game data not found. Please ensure this page is loaded from a valid chapter.');
+      return;
+    }
 
     var DATA      = window.GAME_DATA;
     var ALL_ITEMS = DATA.items || [];
     var ITEMS     = ALL_ITEMS.slice(0, 4);
-    if (!ITEMS.length) return;
+    if (!ITEMS.length) {
+      showErrorMessage('No game items found. The chapter may not have content configured for this game.');
+      return;
+    }
 
     var STORAGE_KEY = DATA.storageKey || ('game_' + (DATA.level || '') + '_' + (DATA.chapterId || ''));
     var SCORE_GOAL  = window.GAME_CONFIG.SCORE_GOAL;
