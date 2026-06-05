@@ -13,11 +13,13 @@ All three specialists audit their domains in parallel and generate proposals:
 
 Each specialist produces 5–10 proposals in JSON format, prioritized by impact.
 
+**For subsequent meetings:** Specialists reflect on previous proposals, discuss what's been implemented, refine ideas based on results, and propose new improvements.
+
 ### Phase 2: Review & Selection
 You'll see:
-- **Summary** from each specialist (issues found, themes)
+- **Summary** from each specialist (issues found, themes, reflection on previous cycle)
 - **High/Medium/Low priority** grouping
-- **Full JSON array** of all proposals
+- **Full JSON array** of all proposals (refined + new)
 
 **Your job:** Read through all proposals and select **1–2** to focus on this cycle.
 
@@ -26,8 +28,8 @@ Tell the team which proposals you've selected:
 
 ```
 I'm approving these proposals:
-1. ux-design-001: Dark mode contrast improvement
-2. ped-pedagogy-001: FCE Part 2 exam prep gap
+1. ux-design-009: Improve spacing consistency on chapter hubs
+2. ped-pedagogy-004: Expand B1 vocabulary coverage
 
 Proceed with implementation.
 ```
@@ -46,11 +48,12 @@ You'll see:
 
 Approve or request revisions.
 
-### Phase 5: Next Cycle Planning
-After approval, the team reflects:
-- "Did we miss anything in other domains?"
+### Phase 5: Reflection & Next Cycle Planning
+After approval, the specialists reflect:
+- "What went well with this implementation?"
+- "What can we refine in the next round?"
+- "Are there related improvements we should tackle?"
 - "Do we need a junior specialist (graphic design, game design, accessibility)?"
-- "What should we focus on next?"
 
 ---
 
@@ -80,6 +83,7 @@ After approval, the team reflects:
 - **Mix domains:** Don't only pick design or only pick pedagogy. Rotate focus.
 - **Unblock others:** If two proposals depend on each other, do the prerequisite first.
 - **Timeline awareness:** Save "large" scope proposals for longer sessions.
+- **Iteration:** Refine proposals based on implementation feedback each cycle.
 
 ---
 
@@ -93,7 +97,7 @@ After approval, the team reflects:
   "scope": "small",
   "priority": "high",
   "impact": "Improve readability for students in low-light environments; WCAG AA compliance",
-  "description": "The `--muted` color (#6B6560 light / #9A9590 dark) on dark mode barely meets WCAG AA at 4.5:1. Consider lightening dark mode muted to #B0A8A0 or higher for better readability.",
+  "description": "The muted color on dark mode barely meets WCAG AA. Lighten it for better readability.",
   "files_affected": ["shared/base.css"],
   "success_metric": "Run contrast checker on dark mode text; verify all secondary text passes WCAG AAA (7:1)",
   "notes": "Check calendar.html, profile.html, chapter hubs for muted text impact."
@@ -135,7 +139,8 @@ The format is the same: SKILL.md file in `.claude/skills/`, outputs proposals.
 3. **Ask for clarification** — if a proposal is vague, ask the specialist for details
 4. **Track approved proposals** — keep a list of what's been done (builds pride and momentum)
 5. **Iterate on specialist roles** — if a specialist misses issues in their domain, adjust their audit checklist
-6. **Celebrate wins** — when a proposal lands and improves the project, acknowledge it
+6. **Reflect with the team** — after each implementation, discuss what worked and what to refine
+7. **Celebrate wins** — when a proposal lands and improves the project, acknowledge it
 
 ---
 
@@ -155,6 +160,9 @@ A: Totally fine. Ask the specialists to go deeper in a specific area next meetin
 
 **Q: How often should we have meetings?**  
 A: As often as makes sense. Could be weekly, bi-weekly, or whenever you want a status update. No fixed schedule.
+
+**Q: What happens to proposals that didn't get selected?**  
+A: They carry forward to the next meeting. Specialists can refine them or swap them out for new ideas based on implementation results.
 
 ---
 
@@ -183,4 +191,4 @@ A: As often as makes sense. Could be weekly, bi-weekly, or whenever you want a s
 
 ---
 
-*Use this guide to run smooth, focused review cycles. Pick 1–2 proposals, implement them thoroughly, and iterate.*
+*Use this guide to run smooth, focused review cycles. Pick 1–2 proposals, implement them thoroughly, iterate based on results, and steadily improve the codebase.*
