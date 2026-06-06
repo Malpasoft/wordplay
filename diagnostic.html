@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Word Play Load Diagnostic</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    .test { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+    .pass { background: #d4edda; color: #155724; }
+    .fail { background: #f8d7da; color: #721c24; }
+    .wait { background: #fff3cd; color: #856404; }
+  </style>
+</head>
+<body>
+
+<h1>Word Play — Load Diagnostic</h1>
+<p>This page tests if the main site loads, and what might be blocking it.</p>
+
+<div id="tests"></div>
+
+<script>
+const tests = document.getElementById('tests');
+
+function test(name, fn) {
+  const div = document.createElement('div');
+  div.className = 'test wait';
+  div.textContent = '⏳ Testing: ' + name;
+  tests.appendChild(div);
+
+  Promise.resolve().then(() => {
+    try {
+      fn();
+      div.className = 'test pass';
+      div.textContent = '✓ ' + name;
+    } catch (e) {
+      div.className = 'test fail';
+      div.textContent = '✗ ' + name + ': ' + e.message;
+    }
+  }).catch(err => {
+    div.className = 'test fail';
+    div.textContent = '✗ ' + name + ' (async error): ' + err.message;
+  });
+}
+
+// Test 1: localStorage available
+test('localStorage accessible', () => {
+  localStorage.setItem('test', '1');
+  localStorage.removeItem('test');
+});
+
+// Test 2: Fetch API works
+test('fetch() API available', () => {
+  if (typeof fetch !== 'function') throw new Error('fetch not defined');
+});
+
+// Test 3: Check if base.css loaded
+test('base.css loaded (check for CSS variables)', () => {
+  const computed = window.getComputedStyle(document.documentElement);
+  const color = computed.getPropertyValue('--amber');
+  if (!color || !color.trim()) throw new Error('CSS variables not loaded');
+});
+
+// Test 4: Check for word play init scripts
+test('auth.js functions available', () => {
+  if (typeof getAuthToken !== 'function') throw new Error('getAuthToken not found');
+  if (typeof getCurrentUser !== 'function') throw new Error('getCurrentUser not found');
+});
+
+// Test 5: Check if store.js loaded
+test('store.js (FCEStore) available', () => {
+  if (typeof window.FCEStore === 'undefined') throw new Error('FCEStore not defined');
+  if (typeof window.FCEStore.saveResult !== 'function') throw new Error('FCEStore.saveResult missing');
+});
+
+// Test 6: Try to fetch a lesson page
+test('Can fetch lesson pages', () => {
+  fetch('/a/a1/vocabulary/numbers/slides.html', { method: 'HEAD' })
+    .then(r => {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+    });
+});
+
+// Test 7: Check if API endpoint responds
+test('API /api/auth/login available', () => {
+  fetch('/api/auth/login', { method: 'POST', body: '{}' })
+    .then(r => {
+      // Any response means endpoint exists (even 400 is OK for this test)
+    })
+    .catch(err => {
+      // Network error
+      throw new Error('Cannot reach API: ' + err.message);
+    });
+});
+
+</script>
+
+<hr>
+<p><strong>If all tests pass:</strong> The main site should load. Try visiting <a href="/">the homepage</a>.</p>
+<p><strong>If some tests fail:</strong> The failure tells us what's blocking the page.</p>
+
+</body>
+</html>
