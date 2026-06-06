@@ -371,6 +371,66 @@ body { background: var(--paper); }
   }
 }
 
+@media (max-width: 480px) {
+  .students-table {
+    display: block;
+    border: none;
+    font-size: 0.8rem;
+  }
+
+  .students-table thead {
+    display: none;
+  }
+
+  .students-table tbody {
+    display: block;
+  }
+
+  .students-table tr {
+    display: block;
+    border: 1.5px solid var(--hairline);
+    border-radius: 8px;
+    margin-bottom: 12px;
+    padding: 12px;
+    background: var(--cream);
+  }
+
+  .students-table td {
+    display: block;
+    text-align: left;
+    padding: 6px 0;
+    border: none;
+  }
+
+  .students-table td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    display: inline-block;
+    width: 60px;
+    color: var(--muted);
+  }
+
+  .controls {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    padding: 12px;
+    font-size: 0.9rem;
+  }
+
+  .page-wrap {
+    padding: 16px 12px 60px;
+  }
+
+  .page-head h1 {
+    font-size: 1.4rem;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   .modal {
     background: rgba(0, 0, 0, 0.7);
@@ -759,9 +819,9 @@ async function loadStudents() {
         <tbody>
           ${students.map(s => `
             <tr>
-              <td class="student-email">${s.email}</td>
-              <td class="student-date">${new Date(s.created_at).toLocaleDateString()}</td>
-              <td class="student-actions">
+              <td class="student-email" data-label="Email">${s.email}</td>
+              <td class="student-date" data-label="Created">${new Date(s.created_at).toLocaleDateString()}</td>
+              <td class="student-actions" data-label="Actions">
                 <button class="btn-secondary btn-small btn-danger" onclick="removeStudent(${s.id})">Remove</button>
               </td>
             </tr>
