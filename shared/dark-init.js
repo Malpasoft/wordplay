@@ -112,11 +112,37 @@ function toggleDark() {
   } else { groupUtils(); }
 })();
 
+// Sign-in button — shows when user is not logged in
+(function(){
+  function injectSignIn() {
+    var inner = document.querySelector('.site-header-inner');
+    if (!inner || inner.querySelector('.header-signin-btn')) return;
+
+    // Only show sign-in if user is NOT logged in
+    if (typeof getCurrentUser === 'function' && getCurrentUser()) return;
+
+    var btn = document.createElement('a');
+    btn.className = 'header-signin-btn';
+    btn.href = '/login.html';
+    btn.textContent = 'Sign In';
+    btn.title = 'Sign in to your account';
+    btn.style.cssText = 'display:inline-block; padding:7px 14px; background:var(--amber); color:var(--paper); border-radius:4px; font-size:.85rem; font-weight:600; text-decoration:none; margin-left:auto;';
+    inner.appendChild(btn);
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', injectSignIn);
+  } else { injectSignIn(); }
+})();
+
 // XP badge — shows level name + mini progress bar
 (function(){
   function injectXP() {
     var inner = document.querySelector('.site-header-inner');
     if (!inner || inner.querySelector('.header-xp') || !window.FCEStore) return;
+
+    // Don't show XP badge if user is not logged in (sign-in button takes priority)
+    if (typeof getCurrentUser === 'function' && !getCurrentUser()) return;
+
     var lv   = FCEStore.getXPLevel();
     var pct  = lv.pct;
     var next = lv.max ? lv.xp + ' / ' + lv.max : lv.xp + ' XP';
