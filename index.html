@@ -264,10 +264,17 @@ function wpOnboardClose() {
   var m = document.getElementById('onboardingModal');
   if (m) {
     // Click on the dark backdrop (but not the card) closes the modal.
-    m.addEventListener('click', function(e) { if (e.target === m) wpOnboardClose(); });
+    var onboardClickHandler = function(e) { if (e.target === m) wpOnboardClose(); };
+    m.addEventListener('click', onboardClickHandler);
     if (!onboarded) { m.style.display = 'flex'; }
     // Escape key closes the modal
-    document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && m.style.display !== 'none') wpOnboardClose(); });
+    var onboardKeyHandler = function(e) { if (e.key === 'Escape' && m.style.display !== 'none') wpOnboardClose(); };
+    document.addEventListener('keydown', onboardKeyHandler);
+    // Clean up on page unload
+    window.addEventListener('pagehide', function() {
+      m.removeEventListener('click', onboardClickHandler);
+      document.removeEventListener('keydown', onboardKeyHandler);
+    });
   }
 })();
 </script>

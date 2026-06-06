@@ -11,29 +11,29 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Georgia,"Times New Roman",serif;font-size:11pt;color:#000;line-height:1.5;background:var(--paper);padding:15mm 18mm 20mm}
 h1{font-size:18pt;margin-bottom:2pt}
-h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-bottom:3pt}
-.meta{font-family:Arial,Helvetica,sans-serif;font-size:8pt;color:#666;letter-spacing:1pt;text-transform:uppercase;margin-bottom:10pt}
+h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid var(--print-border-dark);padding-bottom:3pt}
+.meta{font-family:Arial,Helvetica,sans-serif;font-size:8pt;color:var(--print-text-muted);letter-spacing:1pt;text-transform:uppercase;margin-bottom:10pt}
 .rule{border:none;border-top:1pt solid #000;margin:12pt 0}
 .q{margin-bottom:8pt;page-break-inside:avoid}
-.q-num{font-family:Arial,sans-serif;font-size:8pt;font-weight:bold;color:#333;margin-right:4pt}
+.q-num{font-family:Arial,sans-serif;font-size:8pt;font-weight:bold;color:var(--print-text-secondary);margin-right:4pt}
 .q-text{display:inline}
 .blank{display:inline-block;min-width:80pt;border-bottom:0.75pt solid #000;margin:0 2pt}
-.writing-box{border:0.5pt solid #999;min-height:50pt;border-radius:2pt;padding:4pt;margin-top:4pt}
+.writing-box{border:0.5pt solid var(--print-border-dark);min-height:50pt;border-radius:2pt;padding:4pt;margin-top:4pt}
 .options{font-family:Arial,sans-serif;font-size:9pt;margin:3pt 0 0 18pt}
 .options span{margin-right:12pt}
 .answer{margin-bottom:3pt;font-size:10pt}
-.answer b{font-family:Arial,sans-serif;font-size:8pt;color:#333;margin-right:4pt}
-.footer{margin-top:16pt;font-family:Arial,sans-serif;font-size:7pt;color:#999;text-align:center;letter-spacing:1pt;text-transform:uppercase}
+.answer b{font-family:Arial,sans-serif;font-size:8pt;color:var(--print-text-secondary);margin-right:4pt}
+.footer{margin-top:16pt;font-family:Arial,sans-serif;font-size:7pt;color:var(--print-border-dark);text-align:center;letter-spacing:1pt;text-transform:uppercase}
 
 /* Print hub web view */
-.print-hub-web{font-family:Arial,sans-serif;margin-bottom:12pt;padding-bottom:10pt;border-bottom:1pt solid #eee}
-.phw-back{display:inline-block;font-size:8.5pt;color:#555;text-decoration:none;margin-bottom:8pt}
+.print-hub-web{font-family:Arial,sans-serif;margin-bottom:12pt;padding-bottom:10pt;border-bottom:1pt solid var(--print-border-light)}
+.phw-back{display:inline-block;font-size:8.5pt;color:var(--print-text-tertiary);text-decoration:none;margin-bottom:8pt}
 .phw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8pt;margin-bottom:10pt}
-.phw-card{display:block;padding:10pt;border:1pt solid #ddd;border-radius:4pt;text-decoration:none;color:#1A1A1A;border-top:2.5pt solid #B8860B;transition:background .15s}
-.phw-card:hover{background:#fffbf0}
+.phw-card{display:block;padding:10pt;border:1pt solid var(--print-border);border-radius:4pt;text-decoration:none;color:var(--print-text-primary);border-top:2.5pt solid var(--print-accent);transition:background .15s}
+.phw-card:hover{background:var(--print-hover-bg)}
 .phw-title{font-weight:700;font-size:9pt;margin-bottom:3pt}
-.phw-desc{font-size:7.5pt;color:#777}
-.phw-print-btn{font-family:Arial,sans-serif;font-size:7.5pt;font-weight:700;letter-spacing:.5pt;text-transform:uppercase;background:#B8860B;color:#fff;padding:5pt 14pt;border-radius:3pt;cursor:pointer;border:none}
+.phw-desc{font-size:7.5pt;color:var(--print-text-light)}
+.phw-print-btn{font-family:Arial,sans-serif;font-size:7.5pt;font-weight:700;letter-spacing:.5pt;text-transform:uppercase;background:var(--print-accent);color:var(--print-text-white);padding:5pt 14pt;border-radius:3pt;cursor:pointer;border:none}
 @media(max-width:480px){.phw-grid{grid-template-columns:1fr}}
 @media print{.no-print{display:none!important}.print-hub{display:none!important}body{padding:10mm 15mm 15mm}}
 @page{size:A4;margin:12mm 15mm 15mm}
@@ -79,11 +79,11 @@ h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-botto
 <div class="meta" style="margin-top:2pt">Lesson Handout</div>
 <hr class="rule">
 <h2>What is an FCE Review?</h2>
-<p style="margin:6pt 0;padding:6pt 10pt;background:#f5f0e8;border-left:2pt solid var(--amber);font-size:10pt">A review evaluates something — a book, film, restaurant, product, place or event — and gives a recommendation. It is written for a specific audience and must be engaging and informative.</p>
+<p style="margin:6pt 0;padding:6pt 10pt;background:var(--print-warm-bg);border-left:2pt solid var(--amber);font-size:10pt">A review evaluates something — a book, film, restaurant, product, place or event — and gives a recommendation. It is written for a specific audience and must be engaging and informative.</p>
 <h2>Review Structure</h2>
 <h2>Language for reviews</h2>
 <p style="margin-top:8pt"><b>Positive language</b></p>
-<p style="margin-left:12pt;color:#333">• The film was utterly gripping from start to finish.</p>
+<p style="margin-left:12pt;color:var(--print-text-secondary)">• The film was utterly gripping from start to finish.</p>
 <h2>Recommendation phrases</h2>
 <h2>Sample review (annotated)</h2>
 <h2>Summary</h2>
@@ -92,18 +92,18 @@ h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-botto
 <div class="meta">B2 · Writing</div>
 <h1>The Review</h1>
 <div class="meta" style="margin-top:2pt">Worksheet</div>
-<div style="font-size:9pt;color:#666;margin-bottom:8pt">Name: ___________________________ &nbsp;&nbsp; Date: _______________</div>
+<div style="font-size:9pt;color:var(--print-text-muted);margin-bottom:8pt">Name: ___________________________ &nbsp;&nbsp; Date: _______________</div>
 <hr class="rule">
-<h2>Identify the review features <span style="font-weight:normal;font-size:9pt;color:#666">(6 points)</span></h2>
-<p style="font-size:9.5pt;color:#444;margin-bottom:6pt">Read each sentence and identify its function in a review.</p>
+<h2>Identify the review features <span style="font-weight:normal;font-size:9pt;color:var(--print-text-muted)">(6 points)</span></h2>
+<p style="font-size:9.5pt;color:var(--print-instructions);margin-bottom:6pt">Read each sentence and identify its function in a review.</p>
 <div class="q"><span class="q-num">1.</span> <span class="q-text">"The service was attentive without being intrusive." This sentence is part of the ______.</span><div class="options"><span>☐ introduction</span><span>☐ main body</span><span>☐ recommendation</span></div></div>
 <div class="q"><span class="q-num">2.</span> <span class="q-text">"I would highly recommend this to anyone who enjoys live music." This is the ______.</span><div class="options"><span>☐ introduction</span><span>☐ main body</span><span>☐ recommendation</span></div></div>
 <div class="q"><span class="q-num">3.</span> <span class="q-text">"Having heard so much about it, I finally visited with high expectations." This sentence opens the ______.</span><div class="options"><span>☐ introduction</span><span>☐ main body</span><span>☐ recommendation</span></div></div>
 <div class="q"><span class="q-num">4.</span> <span class="q-text">Which tone is most appropriate for a review in a student magazine?</span><div class="options"><span>☐ semi-formal and engaging</span><span>☐ formal and academic</span><span>☐ informal and chatty</span></div></div>
 <div class="q"><span class="q-num">5.</span> <span class="q-text">What is the main purpose of a review?</span><div class="options"><span>☐ to evaluate and recommend</span><span>☐ to inform objectively</span><span>☐ to argue one point of view</span></div></div>
 <div class="q"><span class="q-num">6.</span> <span class="q-text">Which element makes a review credible?</span><div class="options"><span>☐ including both positives and negatives</span><span>☐ only focusing on positives</span><span>☐ using technical language</span></div></div>
-<h2>Vocabulary — stronger adjectives and phrases <span style="font-weight:normal;font-size:9pt;color:#666">(8 points)</span></h2>
-<p style="font-size:9.5pt;color:#444;margin-bottom:6pt">Replace each underlined word with a more vivid or precise alternative.</p>
+<h2>Vocabulary — stronger adjectives and phrases <span style="font-weight:normal;font-size:9pt;color:var(--print-text-muted)">(8 points)</span></h2>
+<p style="font-size:9.5pt;color:var(--print-instructions);margin-bottom:6pt">Replace each underlined word with a more vivid or precise alternative.</p>
 <div class="q"><span class="q-num">7.</span> <span class="q-text">The film was very good from start to finish. → The film was ___________ from start to finish.</span></div>
 <div class="q"><span class="q-num">8.</span> <span class="q-text">The food was nice. → The food was ___________.</span></div>
 <div class="q"><span class="q-num">9.</span> <span class="q-text">I think you should see this film. → I would ___________ this film.</span></div>
@@ -112,16 +112,16 @@ h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-botto
 <div class="q"><span class="q-num">12.</span> <span class="q-text">It was worth going. → It was well ___________ the journey.</span></div>
 <div class="q"><span class="q-num">13.</span> <span class="q-text">What makes it special is the view. → What ___________ it apart is the view.</span></div>
 <div class="q"><span class="q-num">14.</span> <span class="q-text">I was surprised by how good the service was. → I was ___________ by the quality of the service.</span></div>
-<h2>Reorder the review <span style="font-weight:normal;font-size:9pt;color:#666">(6 points)</span></h2>
-<p style="font-size:9.5pt;color:#444;margin-bottom:6pt">These sentences from a review are in the wrong order. Number them 1–6 in the correct order.</p>
+<h2>Reorder the review <span style="font-weight:normal;font-size:9pt;color:var(--print-text-muted)">(6 points)</span></h2>
+<p style="font-size:9.5pt;color:var(--print-instructions);margin-bottom:6pt">These sentences from a review are in the wrong order. Number them 1–6 in the correct order.</p>
 <div class="q"><span class="q-num">15.</span> <span class="q-text">A"On the whole, I would strongly recommend this documentary to anyone interested in climate change." → Position: ___________</span></div>
 <div class="q"><span class="q-num">16.</span> <span class="q-text">B"However, some sections feel repetitive and could have been edited more tightly." → Position: ___________</span></div>
 <div class="q"><span class="q-num">17.</span> <span class="q-text">C"The interviews with scientists are particularly compelling." → Position: ___________</span></div>
 <div class="q"><span class="q-num">18.</span> <span class="q-text">D"Last month I watched a documentary about sustainability and carbon emissions." → Position: ___________</span></div>
 <div class="q"><span class="q-num">19.</span> <span class="q-text">E"It presents a broad range of perspectives on fossil fuels and renewable energy." → Position: ___________</span></div>
 <div class="q"><span class="q-num">20.</span> <span class="q-text">F"Overall, it is a thought-provoking watch that raises important questions." → Position: ___________</span></div>
-<h2>Write a review <span style="font-weight:normal;font-size:9pt;color:#666">(10 points)</span></h2>
-<p style="font-size:9.5pt;color:#444;margin-bottom:6pt">Write a review of a film, book, restaurant or place you know. Include: a catchy title, introduction, body (positives and negatives), and a clear recommendation. Write 140–190 words.</p>
+<h2>Write a review <span style="font-weight:normal;font-size:9pt;color:var(--print-text-muted)">(10 points)</span></h2>
+<p style="font-size:9.5pt;color:var(--print-instructions);margin-bottom:6pt">Write a review of a film, book, restaurant or place you know. Include: a catchy title, introduction, body (positives and negatives), and a clear recommendation. Write 140–190 words.</p>
 <div class="q"><span class="q-num">21.</span> <span class="q-text">[Open writing task — see instructions above]</span><div class="writing-box"></div></div>
 <div class="footer">Word Play · Cambridge English</div>
 <div id="ph-key" style="page-break-before:always"></div>
@@ -135,21 +135,21 @@ h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-botto
 <div class="answer"><b>4.</b> semi-formal and engaging</div>
 <div class="answer"><b>5.</b> to evaluate and recommend</div>
 <div class="answer"><b>6.</b> including both positives and negatives</div>
-<div class="answer"><b>7.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>8.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>9.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>10.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>11.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>12.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>13.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>14.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>15.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>16.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>17.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>18.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>19.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>20.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>21.</b> <i style="color:#999">Open task — assess individually</i></div>
+<div class="answer"><b>7.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>8.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>9.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>10.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>11.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>12.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>13.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>14.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>15.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>16.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>17.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>18.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>19.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>20.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>21.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
 <div class="footer">Word Play · Cambridge English</div>
 </body>
 </html>

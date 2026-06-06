@@ -27,6 +27,9 @@
     init();
   }
 
+  var mascotClickHandler = null;
+  var mascotKeyHandler = null;
+
   function init() {
     try {
       mascot = document.getElementById('mascot');
@@ -40,12 +43,21 @@
         applyState(IDLE_STATE);
       }
 
-      mascot.addEventListener('click', handleClick);
-      mascot.addEventListener('keydown', function(e) {
+      mascotClickHandler = handleClick;
+      mascot.addEventListener('click', mascotClickHandler);
+
+      mascotKeyHandler = function(e) {
         if (e.key === ' ' || e.key === 'Enter') {
           e.preventDefault();
           handleClick();
         }
+      };
+      mascot.addEventListener('keydown', mascotKeyHandler);
+
+      // Clean up on page unload
+      window.addEventListener('pagehide', function() {
+        if (mascot && mascotClickHandler) mascot.removeEventListener('click', mascotClickHandler);
+        if (mascot && mascotKeyHandler) mascot.removeEventListener('keydown', mascotKeyHandler);
       });
 
     } catch (e) {

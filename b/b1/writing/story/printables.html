@@ -11,29 +11,29 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Georgia,"Times New Roman",serif;font-size:11pt;color:#000;line-height:1.5;background:var(--paper);padding:15mm 18mm 20mm}
 h1{font-size:18pt;margin-bottom:2pt}
-h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-bottom:3pt}
-.meta{font-family:Arial,Helvetica,sans-serif;font-size:8pt;color:#666;letter-spacing:1pt;text-transform:uppercase;margin-bottom:10pt}
+h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid var(--print-border-dark);padding-bottom:3pt}
+.meta{font-family:Arial,Helvetica,sans-serif;font-size:8pt;color:var(--print-text-muted);letter-spacing:1pt;text-transform:uppercase;margin-bottom:10pt}
 .rule{border:none;border-top:1pt solid #000;margin:12pt 0}
 .q{margin-bottom:8pt;page-break-inside:avoid}
-.q-num{font-family:Arial,sans-serif;font-size:8pt;font-weight:bold;color:#333;margin-right:4pt}
+.q-num{font-family:Arial,sans-serif;font-size:8pt;font-weight:bold;color:var(--print-text-secondary);margin-right:4pt}
 .q-text{display:inline}
 .blank{display:inline-block;min-width:80pt;border-bottom:0.75pt solid #000;margin:0 2pt}
-.writing-box{border:0.5pt solid #999;min-height:50pt;border-radius:2pt;padding:4pt;margin-top:4pt}
+.writing-box{border:0.5pt solid var(--print-border-dark);min-height:50pt;border-radius:2pt;padding:4pt;margin-top:4pt}
 .options{font-family:Arial,sans-serif;font-size:9pt;margin:3pt 0 0 18pt}
 .options span{margin-right:12pt}
 .answer{margin-bottom:3pt;font-size:10pt}
-.answer b{font-family:Arial,sans-serif;font-size:8pt;color:#333;margin-right:4pt}
-.footer{margin-top:16pt;font-family:Arial,sans-serif;font-size:7pt;color:#999;text-align:center;letter-spacing:1pt;text-transform:uppercase}
+.answer b{font-family:Arial,sans-serif;font-size:8pt;color:var(--print-text-secondary);margin-right:4pt}
+.footer{margin-top:16pt;font-family:Arial,sans-serif;font-size:7pt;color:var(--print-border-dark);text-align:center;letter-spacing:1pt;text-transform:uppercase}
 
 /* Print hub web view */
-.print-hub-web{font-family:Arial,sans-serif;margin-bottom:12pt;padding-bottom:10pt;border-bottom:1pt solid #eee}
-.phw-back{display:inline-block;font-size:8.5pt;color:#555;text-decoration:none;margin-bottom:8pt}
+.print-hub-web{font-family:Arial,sans-serif;margin-bottom:12pt;padding-bottom:10pt;border-bottom:1pt solid var(--print-border-light)}
+.phw-back{display:inline-block;font-size:8.5pt;color:var(--print-text-tertiary);text-decoration:none;margin-bottom:8pt}
 .phw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8pt;margin-bottom:10pt}
-.phw-card{display:block;padding:10pt;border:1pt solid #ddd;border-radius:4pt;text-decoration:none;color:#1A1A1A;border-top:2.5pt solid #B8860B;transition:background .15s}
-.phw-card:hover{background:#fffbf0}
+.phw-card{display:block;padding:10pt;border:1pt solid var(--print-border);border-radius:4pt;text-decoration:none;color:var(--print-text-primary);border-top:2.5pt solid var(--print-accent);transition:background .15s}
+.phw-card:hover{background:var(--print-hover-bg)}
 .phw-title{font-weight:700;font-size:9pt;margin-bottom:3pt}
-.phw-desc{font-size:7.5pt;color:#777}
-.phw-print-btn{font-family:Arial,sans-serif;font-size:7.5pt;font-weight:700;letter-spacing:.5pt;text-transform:uppercase;background:#B8860B;color:#fff;padding:5pt 14pt;border-radius:3pt;cursor:pointer;border:none}
+.phw-desc{font-size:7.5pt;color:var(--print-text-light)}
+.phw-print-btn{font-family:Arial,sans-serif;font-size:7.5pt;font-weight:700;letter-spacing:.5pt;text-transform:uppercase;background:var(--print-accent);color:var(--print-text-white);padding:5pt 14pt;border-radius:3pt;cursor:pointer;border:none}
 @media(max-width:480px){.phw-grid{grid-template-columns:1fr}}
 @media print{.no-print{display:none!important}.print-hub{display:none!important}body{padding:10mm 15mm 15mm}}
 @page{size:A4;margin:12mm 15mm 15mm}
@@ -79,7 +79,7 @@ h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-botto
 <div class="meta" style="margin-top:2pt">Lesson Handout</div>
 <hr class="rule">
 <h2>Writing a Story at B1</h2>
-<p style="margin:6pt 0;padding:6pt 10pt;background:#f5f0e8;border-left:2pt solid var(--amber);font-size:10pt">At B1 level you may be asked to continue a story or write one based on a first line. Use past tenses and narrative connectors to build tension and interest.</p>
+<p style="margin:6pt 0;padding:6pt 10pt;background:var(--print-warm-bg);border-left:2pt solid var(--amber);font-size:10pt">At B1 level you may be asked to continue a story or write one based on a first line. Use past tenses and narrative connectors to build tension and interest.</p>
 <h2>Narrative tenses — quick review</h2>
 <h2>Story connectors</h2>
 <h2>Creating tension</h2>
@@ -89,22 +89,22 @@ h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-botto
 <div class="meta">B1 · Writing</div>
 <h1>Story</h1>
 <div class="meta" style="margin-top:2pt">Worksheet</div>
-<div style="font-size:9pt;color:#666;margin-bottom:8pt">Name: ___________________________ &nbsp;&nbsp; Date: _______________</div>
+<div style="font-size:9pt;color:var(--print-text-muted);margin-bottom:8pt">Name: ___________________________ &nbsp;&nbsp; Date: _______________</div>
 <hr class="rule">
-<h2>Choose the correct narrative tense <span style="font-weight:normal;font-size:9pt;color:#666">(6 points)</span></h2>
+<h2>Choose the correct narrative tense <span style="font-weight:normal;font-size:9pt;color:var(--print-text-muted)">(6 points)</span></h2>
 <div class="q"><span class="q-num">1.</span> <span class="q-text">The sun shone / was shining / had shone brightly when Maria left the house. (background)</span><div class="options"><span>☐ was shining</span><span>☐ shone</span><span>☐ had shone</span></div></div>
 <div class="q"><span class="q-num">2.</span> <span class="q-text">She opened / was opening / had opened the letter and gasped. (main event)</span><div class="options"><span>☐ opened</span><span>☐ was opening</span><span>☐ had opened</span></div></div>
 <div class="q"><span class="q-num">3.</span> <span class="q-text">She realised she left / was leaving / had left her bag at the café. (earlier event)</span><div class="options"><span>☐ had left</span><span>☐ left</span><span>☐ was leaving</span></div></div>
 <div class="q"><span class="q-num">4.</span> <span class="q-text">While they walked / were walking / had walked along the beach, it started to rain.</span><div class="options"><span>☐ were walking</span><span>☐ walked</span><span>☐ had walked</span></div></div>
 <div class="q"><span class="q-num">5.</span> <span class="q-text">______, they reached the top of the mountain and looked around in amazement. (sequencer)</span><div class="options"><span>☐ Finally</span><span>☐ However</span><span>☐ Despite</span></div></div>
 <div class="q"><span class="q-num">6.</span> <span class="q-text">______, a car stopped and a woman leaned out of the window. (sudden event)</span><div class="options"><span>☐ Suddenly</span><span>☐ Nevertheless</span><span>☐ Furthermore</span></div></div>
-<h2>Complete the story extract <span style="font-weight:normal;font-size:9pt;color:#666">(6 points)</span></h2>
-<p style="font-size:9.5pt;color:#444;margin-bottom:6pt">Use the verbs in brackets in the correct narrative tense.</p>
+<h2>Complete the story extract <span style="font-weight:normal;font-size:9pt;color:var(--print-text-muted)">(6 points)</span></h2>
+<p style="font-size:9.5pt;color:var(--print-instructions);margin-bottom:6pt">Use the verbs in brackets in the correct narrative tense.</p>
 <div class="q"><span class="q-num">7.</span> <span class="q-text">It ___________ (be) a cold winter evening when she first ___________ (notice) the light in the old house.</span></div>
 <div class="q"><span class="q-num">8.</span> <span class="q-text">She ___________ (walk) towards it slowly when suddenly the door ___________ (open).</span></div>
 <div class="q"><span class="q-num">9.</span> <span class="q-text">She realised she ___________ (see) this place before — but she ___________ (never / go) inside.</span></div>
-<h2>Write a story <span style="font-weight:normal;font-size:9pt;color:#666">(8 points)</span></h2>
-<p style="font-size:9.5pt;color:#444;margin-bottom:6pt">Continue this story opening. Write 120–160 words. Use past simple, past continuous and past perfect. Include at least three story connectors.<br><em>"It had been raining all day when Sara finally arrived at the airport..."</em></p>
+<h2>Write a story <span style="font-weight:normal;font-size:9pt;color:var(--print-text-muted)">(8 points)</span></h2>
+<p style="font-size:9.5pt;color:var(--print-instructions);margin-bottom:6pt">Continue this story opening. Write 120–160 words. Use past simple, past continuous and past perfect. Include at least three story connectors.<br><em>"It had been raining all day when Sara finally arrived at the airport..."</em></p>
 <div class="q"><span class="q-num">10.</span> <span class="q-text">[Open writing task — see instructions above]</span><div class="writing-box"></div></div>
 <div class="footer">Word Play · Cambridge English</div>
 <div id="ph-key" style="page-break-before:always"></div>
@@ -118,10 +118,10 @@ h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-botto
 <div class="answer"><b>4.</b> were walking</div>
 <div class="answer"><b>5.</b> Finally</div>
 <div class="answer"><b>6.</b> Suddenly</div>
-<div class="answer"><b>7.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>8.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>9.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>10.</b> <i style="color:#999">Open task — assess individually</i></div>
+<div class="answer"><b>7.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>8.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>9.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>10.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
 <div class="footer">Word Play · Cambridge English</div>
 </body>
 </html>

@@ -111,6 +111,10 @@ body {
   --print-text-light:       #777;                      /* lighter muted            */
   --print-text-white:       #fff;                      /* white on dark buttons    */
   --print-hover-bg:         #fffbf0;                   /* card hover background    */
+  --print-instructions:     #444;                      /* instruction text color   */
+  --print-model-border:     #ccc;                      /* model text left border   */
+  --print-background:       #F0F0F0;                   /* light background         */
+  --print-warm-bg:          #f5f0e8;                   /* warm page background     */
 }
 
 body.dark {
@@ -171,6 +175,10 @@ body.dark {
   --print-text-light:       #888;                      /* lighter muted            */
   --print-text-white:       #000;                      /* black on light buttons   */
   --print-hover-bg:         #1A1A1A;                   /* card hover background    */
+  --print-instructions:     #C0C0C0;                   /* instruction text color   */
+  --print-model-border:     #555;                      /* model text left border   */
+  --print-background:       #1A1A1A;                   /* light background         */
+  --print-warm-bg:          #2A2A2A;                   /* warm page background     */
 }
 
 button { font-family: inherit; -webkit-tap-highlight-color: transparent; border: none; background: none; cursor: pointer; }

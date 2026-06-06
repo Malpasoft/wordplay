@@ -775,7 +775,7 @@ window.GAME_CONFIG = {
     }
 
     // Keyboard shortcuts
-    document.addEventListener('keydown', function(e) {
+    var gameKeyHandler = function(e) {
       if (!screens.play || !screens.play.classList.contains('active')) return;
       if (!currentQItem) return;
       var type = currentQItem.qtype;
@@ -787,11 +787,12 @@ window.GAME_CONFIG = {
       if ((e.key === 'Enter' || e.key === ' ') && el.btnNext && el.btnNext.style.display !== 'none') {
         e.preventDefault(); el.btnNext.click();
       }
-    });
+    };
+    document.addEventListener('keydown', gameKeyHandler);
 
     // ── Touch swipe to advance (after answering) ──────────────────
     var swX=0, swY=0, swActive=false, swDelta=0, swCard=null;
-    document.addEventListener('touchstart', function(e) {
+    var gameTouchStartHandler = function(e) {
       if (!currentQItem || e.touches.length > 1) return;
       if (!el.btnNext || el.btnNext.style.display === 'none') return;
       var card = document.querySelector('.game-play');
@@ -799,8 +800,10 @@ window.GAME_CONFIG = {
       swX = e.touches[0].clientX; swY = e.touches[0].clientY;
       swActive = false; swDelta = 0; swCard = card;
       swCard.style.transition = 'none';
-    }, { passive: true });
-    document.addEventListener('touchmove', function(e) {
+    };
+    document.addEventListener('touchstart', gameTouchStartHandler, { passive: true });
+
+    var gameTouchMoveHandler = function(e) {
       if (!swCard) return;
       var dx = e.touches[0].clientX - swX, dy = e.touches[0].clientY - swY;
       if (!swActive) {
@@ -812,8 +815,10 @@ window.GAME_CONFIG = {
       swDelta = dx;
       swCard.style.transform = 'translateX(' + dx + 'px)';
       swCard.style.opacity   = String(Math.max(0.25, 1 - Math.abs(dx) / (window.innerWidth * 0.55)));
-    }, { passive: false });
-    document.addEventListener('touchend', function() {
+    };
+    document.addEventListener('touchmove', gameTouchMoveHandler, { passive: false });
+
+    var gameTouchEndHandler = function() {
       if (!swCard) return;
       var card = swCard; swCard = null;
       if (!swActive || Math.abs(swDelta) < 30) {
@@ -832,7 +837,17 @@ window.GAME_CONFIG = {
         card.style.transform = ''; card.style.opacity = '';
         setTimeout(function() { card.style.transition = ''; }, 230);
       }
-    }, { passive: true });
+    };
+    document.addEventListener('touchend', gameTouchEndHandler, { passive: true });
+
+    // ── Cleanup on page unload ───────────────────────────────────────
+    function cleanupGameListeners() {
+      document.removeEventListener('keydown', gameKeyHandler);
+      document.removeEventListener('touchstart', gameTouchStartHandler);
+      document.removeEventListener('touchmove', gameTouchMoveHandler);
+      document.removeEventListener('touchend', gameTouchEndHandler);
+    }
+    window.addEventListener('pagehide', cleanupGameListeners);
 
     // ── Boot ──────────────────────────────────────────────────────
     var hasSaved = loadState();

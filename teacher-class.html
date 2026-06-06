@@ -838,19 +838,31 @@ async function loadStudents() {
 }
 
 // Close modals on escape key
-document.addEventListener('keydown', (e) => {
+var tcEscapeHandler = function(e) {
   if (e.key === 'Escape') {
     closeCreateStudentModal();
     closeBulkImportModal();
   }
-});
+};
+document.addEventListener('keydown', tcEscapeHandler);
 
 // Close modals on background click
+var tcModalClickHandlers = [];
 document.querySelectorAll('.modal').forEach(modal => {
-  modal.addEventListener('click', (e) => {
+  var clickHandler = function(e) {
     if (e.target === modal) {
       modal.classList.remove('active');
     }
+  };
+  modal.addEventListener('click', clickHandler);
+  tcModalClickHandlers.push({ modal: modal, handler: clickHandler });
+});
+
+// Clean up on page unload
+window.addEventListener('pagehide', function() {
+  document.removeEventListener('keydown', tcEscapeHandler);
+  tcModalClickHandlers.forEach(function(item) {
+    item.modal.removeEventListener('click', item.handler);
   });
 });
 

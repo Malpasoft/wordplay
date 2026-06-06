@@ -11,29 +11,29 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Georgia,"Times New Roman",serif;font-size:11pt;color:#000;line-height:1.5;background:var(--paper);padding:15mm 18mm 20mm}
 h1{font-size:18pt;margin-bottom:2pt}
-h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-bottom:3pt}
-.meta{font-family:Arial,Helvetica,sans-serif;font-size:8pt;color:#666;letter-spacing:1pt;text-transform:uppercase;margin-bottom:10pt}
+h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid var(--print-border-dark);padding-bottom:3pt}
+.meta{font-family:Arial,Helvetica,sans-serif;font-size:8pt;color:var(--print-text-muted);letter-spacing:1pt;text-transform:uppercase;margin-bottom:10pt}
 .rule{border:none;border-top:1pt solid #000;margin:12pt 0}
 .q{margin-bottom:8pt;page-break-inside:avoid}
-.q-num{font-family:Arial,sans-serif;font-size:8pt;font-weight:bold;color:#333;margin-right:4pt}
+.q-num{font-family:Arial,sans-serif;font-size:8pt;font-weight:bold;color:var(--print-text-secondary);margin-right:4pt}
 .q-text{display:inline}
 .blank{display:inline-block;min-width:80pt;border-bottom:0.75pt solid #000;margin:0 2pt}
-.writing-box{border:0.5pt solid #999;min-height:50pt;border-radius:2pt;padding:4pt;margin-top:4pt}
+.writing-box{border:0.5pt solid var(--print-border-dark);min-height:50pt;border-radius:2pt;padding:4pt;margin-top:4pt}
 .options{font-family:Arial,sans-serif;font-size:9pt;margin:3pt 0 0 18pt}
 .options span{margin-right:12pt}
 .answer{margin-bottom:3pt;font-size:10pt}
-.answer b{font-family:Arial,sans-serif;font-size:8pt;color:#333;margin-right:4pt}
-.footer{margin-top:16pt;font-family:Arial,sans-serif;font-size:7pt;color:#999;text-align:center;letter-spacing:1pt;text-transform:uppercase}
+.answer b{font-family:Arial,sans-serif;font-size:8pt;color:var(--print-text-secondary);margin-right:4pt}
+.footer{margin-top:16pt;font-family:Arial,sans-serif;font-size:7pt;color:var(--print-border-dark);text-align:center;letter-spacing:1pt;text-transform:uppercase}
 
 /* Print hub web view */
-.print-hub-web{font-family:Arial,sans-serif;margin-bottom:12pt;padding-bottom:10pt;border-bottom:1pt solid #eee}
-.phw-back{display:inline-block;font-size:8.5pt;color:#555;text-decoration:none;margin-bottom:8pt}
+.print-hub-web{font-family:Arial,sans-serif;margin-bottom:12pt;padding-bottom:10pt;border-bottom:1pt solid var(--print-border-light)}
+.phw-back{display:inline-block;font-size:8.5pt;color:var(--print-text-tertiary);text-decoration:none;margin-bottom:8pt}
 .phw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8pt;margin-bottom:10pt}
-.phw-card{display:block;padding:10pt;border:1pt solid #ddd;border-radius:4pt;text-decoration:none;color:#1A1A1A;border-top:2.5pt solid #B8860B;transition:background .15s}
-.phw-card:hover{background:#fffbf0}
+.phw-card{display:block;padding:10pt;border:1pt solid var(--print-border);border-radius:4pt;text-decoration:none;color:var(--print-text-primary);border-top:2.5pt solid var(--print-accent);transition:background .15s}
+.phw-card:hover{background:var(--print-hover-bg)}
 .phw-title{font-weight:700;font-size:9pt;margin-bottom:3pt}
-.phw-desc{font-size:7.5pt;color:#777}
-.phw-print-btn{font-family:Arial,sans-serif;font-size:7.5pt;font-weight:700;letter-spacing:.5pt;text-transform:uppercase;background:#B8860B;color:#fff;padding:5pt 14pt;border-radius:3pt;cursor:pointer;border:none}
+.phw-desc{font-size:7.5pt;color:var(--print-text-light)}
+.phw-print-btn{font-family:Arial,sans-serif;font-size:7.5pt;font-weight:700;letter-spacing:.5pt;text-transform:uppercase;background:var(--print-accent);color:var(--print-text-white);padding:5pt 14pt;border-radius:3pt;cursor:pointer;border:none}
 @media(max-width:480px){.phw-grid{grid-template-columns:1fr}}
 @media print{.no-print{display:none!important}.print-hub{display:none!important}body{padding:10mm 15mm 15mm}}
 @page{size:A4;margin:12mm 15mm 15mm}
@@ -87,9 +87,9 @@ h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-botto
 <div class="meta">B2 · Vocabulary</div>
 <h1>Work and Careers</h1>
 <div class="meta" style="margin-top:2pt">Worksheet</div>
-<div style="font-size:9pt;color:#666;margin-bottom:8pt">Name: ___________________________ &nbsp;&nbsp; Date: _______________</div>
+<div style="font-size:9pt;color:var(--print-text-muted);margin-bottom:8pt">Name: ___________________________ &nbsp;&nbsp; Date: _______________</div>
 <hr class="rule">
-<h2>Match the definition <span style="font-weight:normal;font-size:9pt;color:#666">(8 points)</span></h2>
+<h2>Match the definition <span style="font-weight:normal;font-size:9pt;color:var(--print-text-muted)">(8 points)</span></h2>
 <div class="q"><span class="q-num">1.</span> <span class="q-text">Someone who starts and runs their own business: ___________</span></div>
 <div class="q"><span class="q-num">2.</span> <span class="q-text">Working independently for several clients: ___________</span></div>
 <div class="q"><span class="q-num">3.</span> <span class="q-text">A move to a higher, better-paid position: ___________</span></div>
@@ -98,7 +98,7 @@ h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-botto
 <div class="q"><span class="q-num">6.</span> <span class="q-text">The feeling of fulfilment from your work: ___________</span></div>
 <div class="q"><span class="q-num">7.</span> <span class="q-text">A newly established business, often in technology: ___________</span></div>
 <div class="q"><span class="q-num">8.</span> <span class="q-text">Building professional relationships for career benefit: ___________</span></div>
-<h2>Complete the sentences <span style="font-weight:normal;font-size:9pt;color:#666">(10 points)</span></h2>
+<h2>Complete the sentences <span style="font-weight:normal;font-size:9pt;color:var(--print-text-muted)">(10 points)</span></h2>
 <div class="q"><span class="q-num">9.</span> <span class="q-text">After losing her job due to ___________, she decided to launch her own ___________.</span></div>
 <div class="q"><span class="q-num">10.</span> <span class="q-text">She has excellent ___________ — she always goes above and beyond what is expected.</span></div>
 <div class="q"><span class="q-num">11.</span> <span class="q-text">The whole ___________ will need to be retrained as automation replaces many manual tasks.</span></div>
@@ -108,7 +108,7 @@ h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-botto
 <div class="q"><span class="q-num">15.</span> <span class="q-text">High levels of ___________ are linked to lower staff turnover and better productivity.</span></div>
 <div class="q"><span class="q-num">16.</span> <span class="q-text">The rise of ___________ has fundamentally changed where and how people do their jobs.</span></div>
 <div class="q"><span class="q-num">17.</span> <span class="q-text">She updated her ___________ and applied for six positions in one week.</span></div>
-<h2>Open writing <span style="font-weight:normal;font-size:9pt;color:#666">(8 points)</span></h2>
+<h2>Open writing <span style="font-weight:normal;font-size:9pt;color:var(--print-text-muted)">(8 points)</span></h2>
 <div class="q"><span class="q-num">18.</span> <span class="q-text">Write about what you think makes a successful career. Use at least six words from this chapter.<br></span><div class="writing-box"></div></div>
 <div class="footer">Word Play · Cambridge English</div>
 <div id="ph-key" style="page-break-before:always"></div>
@@ -116,24 +116,24 @@ h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-botto
 <h1>Work and Careers</h1>
 <div class="meta" style="margin-top:2pt">Answer Key</div>
 <hr class="rule">
-<div class="answer"><b>1.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>2.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>3.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>4.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>5.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>6.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>7.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>8.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>9.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>10.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>11.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>12.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>13.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>14.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>15.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>16.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>17.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>18.</b> <i style="color:#999">Open task — assess individually</i></div>
+<div class="answer"><b>1.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>2.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>3.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>4.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>5.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>6.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>7.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>8.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>9.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>10.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>11.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>12.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>13.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>14.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>15.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>16.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>17.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>18.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
 <div class="footer">Word Play · Cambridge English</div>
 </body>
 </html>
