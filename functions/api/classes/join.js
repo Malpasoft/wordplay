@@ -38,7 +38,7 @@ export async function onRequest(context) {
     return json({ error: 'Invite code limit reached' }, 400);
   }
 
-  // Get or create student record for this user
+  // Get or create student record for this user (unified system)
   const student = await db.prepare(`
     SELECT id FROM students WHERE user_id = ?
   `).bind(user.id).first();
@@ -46,11 +46,12 @@ export async function onRequest(context) {
   let studentId = student?.id;
 
   if (!studentId) {
-    // Create student record if doesn't exist
+    // Auto-create student record linked to user's account
+    const now = Date.now();
     const result = await db.prepare(`
       INSERT INTO students (user_id, teacher_id, name, status, created_at, updated_at)
       VALUES (?, (SELECT teacher_id FROM classes WHERE id = ?), ?, 'active', ?, ?)
-    `).bind(user.id, inviteData.class_id, user.email, Date.now(), Date.now()).run();
+    `).bind(user.id, inviteData.class_id, user.email || 'Student', now, now).run();
 
     studentId = result.meta.last_row_id;
   }

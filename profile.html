@@ -282,6 +282,21 @@ h1{font-size:var(--fs-h2);color:var(--ink);margin:0}
   </div>
 </div>
 
+<!-- Passcode modal -->
+<div id="passcodeModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:9999;align-items:center;justify-content:center" onclick="if(event.target===event.currentTarget)closePasscodeModal()">
+  <div style="background:var(--cream);border-radius:12px;padding:28px;max-width:420px;width:90%;box-shadow:0 12px 40px rgba(0,0,0,.3)">
+    <h2 style="margin:0 0 8px;color:var(--ink);font-size:1.1rem">Student created!</h2>
+    <p style="margin:0 0 16px;color:var(--muted);font-size:.85rem">Share this passcode with <strong id="modalStudentName"></strong>:</p>
+    <div style="display:flex;gap:8px;margin-bottom:16px">
+      <input id="modalPasscode" type="text" readonly style="flex:1;padding:12px;border:1.5px solid var(--hairline);border-radius:6px;font-family:monospace;font-size:1rem;background:var(--paper);color:var(--ink);font-weight:700">
+      <button onclick="copyPasscode()" style="padding:12px 16px;background:var(--amber);color:#fff;border:none;border-radius:6px;cursor:pointer;font-weight:700;min-height:44px">Copy</button>
+    </div>
+    <p style="margin:0 0 16px;color:var(--muted);font-size:.75rem"><strong>Email:</strong> <code id="modalEmail" style="font-family:monospace;background:var(--paper);padding:2px 4px;border-radius:3px"></code></p>
+    <p style="margin:0 0 16px;color:var(--muted);font-size:.75rem">They can sign in at <strong>/login.html</strong> using the email above and this passcode.</p>
+    <button onclick="closePasscodeModal()" style="width:100%;padding:12px;background:var(--ink);color:var(--paper);border:none;border-radius:6px;cursor:pointer;font-weight:700;min-height:44px">Done</button>
+  </div>
+</div>
+
 <footer class="site-footer">Word Play &middot; Cambridge English A1&rarr;C2</footer>
 
 <script>
@@ -760,10 +775,14 @@ function hideEditForm() {
   document.removeEventListener('keydown', editFormEscapeHandler);
 }
 
-function saveStudent() {
+async function saveStudent() {
   var name = document.getElementById('fName').value.trim();
   if (!name) { document.getElementById('fName').focus(); return; }
+
+  var token = getAuthToken();
+  var isCreating = !document.getElementById('fId').value;
   var id = document.getElementById('fId').value || uid();
+
   var s = {
     id: id, name: name,
     l1: document.getElementById('fL1').value,
@@ -778,13 +797,58 @@ function saveStudent() {
     notes: document.getElementById('fNotes').value.trim(),
     updatedAt: new Date().toISOString()
   };
+
+  // If creating new student and authenticated, call API to create user account + passcode
+  if (isCreating && token) {
+    try {
+      var res = await fetch('/api/students', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name: name })
+      });
+
+      if (!res.ok) throw new Error('Failed to create student');
+      var data = await res.json();
+
+      // Store D1 record ID and credentials
+      s.id = data.id;
+      s.user_id = data.user_id;
+      s.email = data.email;
+      s.passcode = data.passcode;
+
+      // Show passcode modal
+      document.getElementById('modalStudentName').textContent = name;
+      document.getElementById('modalPasscode').value = data.passcode;
+      document.getElementById('modalEmail').textContent = data.email;
+      document.getElementById('passcodeModal').style.display = 'flex';
+    } catch (err) {
+      console.error('Student creation error:', err);
+      alert('Error creating student account. Saving locally only.');
+    }
+  }
+
   var idx = students.findIndex(function(x){ return x.id === id; });
   if (idx >= 0) students[idx] = s;
   else students.push(s);
+
   saveStudents();
   hideForm();
   renderRoster();
   ensureStudentTab(id);
+}
+
+function copyPasscode() {
+  var code = document.getElementById('modalPasscode').value;
+  navigator.clipboard.writeText(code).then(function() {
+    alert('Passcode copied to clipboard!');
+  });
+}
+
+function closePasscodeModal() {
+  document.getElementById('passcodeModal').style.display = 'none';
 }
 
 function saveEditForm() {

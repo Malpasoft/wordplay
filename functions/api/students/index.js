@@ -1,5 +1,7 @@
 // GET /api/students — List all students for logged-in teacher
-// POST /api/students — Create a new student (teacher-created or self-signup)
+// POST /api/students — Create a new student with auto-generated user account and passcode
+
+import { verifyToken, json, requireRole } from '../_shared.js';
 
 export async function onRequest(context) {
   const { request, env } = context;
@@ -43,31 +45,65 @@ async function handleGetStudents(user, env) {
   return json(students.results || []);
 }
 
+// Generate a random 6-character alphanumeric passcode
+function generatePasscode() {
+  return Math.random().toString(36).substring(2, 8).toUpperCase();
+}
+
+// Hash a password using simple PBKDF2 (Cloudflare Workers has built-in crypto)
+async function hashPassword(password) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(password);
+  const salt = crypto.getRandomValues(new Uint8Array(32));
+
+  // PBKDF2: 100K iterations
+  const key = await crypto.subtle.pbkdf2(data, salt, 100000, 32, 'SHA-256');
+
+  // Return base64 encoded salt + hash
+  const saltB64 = btoa(String.fromCharCode(...salt));
+  const hashB64 = btoa(String.fromCharCode(...new Uint8Array(key)));
+  return `${saltB64}:${hashB64}`;
+}
+
 async function handleCreateStudent(user, request, env) {
-  if (user.role !== 'admin' && user.role !== 'teacher') {
-    return json({ error: 'Only teachers can create students' }, 403);
+  try {
+    requireRole(user, ['admin', 'teacher']);
+  } catch (e) {
+    return json({ error: e.message }, 403);
   }
 
   const body = await request.json();
-  const { name, email, class_id } = body;
+  const { name, class_id } = body;
 
   if (!name) return json({ error: 'Name required' }, 400);
 
   const db = env.DB;
   const teacherId = user.role === 'admin' ? body.teacher_id : user.id;
+  const now = Date.now();
 
   try {
-    // Create student record (no user_id yet if teacher-created without account)
-    const stmt = db.prepare(`
-      INSERT INTO students (teacher_id, name, email, status, created_at, updated_at)
+    // Generate passcode and auto-generate email from name
+    const passcode = generatePasscode();
+    const autoEmail = `student_${Date.now().toString(36)}@wordplay.local`;
+    const passwordHash = await hashPassword(passcode);
+
+    // Create user account for student
+    const userResult = await db.prepare(`
+      INSERT INTO users (email, password_hash, role, created_at, updated_at)
+      VALUES (?, ?, 'student', ?, ?)
+    `).bind(autoEmail, passwordHash, now, now).run();
+
+    const userId = userResult.meta.last_row_id;
+
+    // Create student record linked to user
+    const studentResult = await db.prepare(`
+      INSERT INTO students (user_id, teacher_id, name, status, created_at, updated_at)
       VALUES (?, ?, ?, 'active', ?, ?)
-    `);
-    const now = Date.now();
-    const result = await stmt.bind(teacherId, name, email || null, now, now).run();
+    `).bind(userId, teacherId, name, now, now).run();
 
-    const studentId = result.meta.last_row_id;
+    const studentId = studentResult.meta.last_row_id;
 
-    // If class_id provided, enroll student
+    // If class_id provided, enroll student in class
     if (class_id) {
       await db.prepare(`
         INSERT INTO class_enrollments (class_id, student_id, enrolled_at)
@@ -75,30 +111,18 @@ async function handleCreateStudent(user, request, env) {
       `).bind(class_id, studentId, now).run();
     }
 
-    return json({ id: studentId, name, email, teacher_id: teacherId }, 201);
+    // Return student info including passcode for teacher to share
+    return json({
+      id: studentId,
+      user_id: userId,
+      name,
+      email: autoEmail,
+      passcode,  // Teacher-only: share this with student
+      teacher_id: teacherId,
+      class_id: class_id || null
+    }, 201);
   } catch (err) {
     console.error('Create student error:', err);
     return json({ error: err.message }, 400);
   }
-}
-
-// Helper: Verify token (reused across APIs)
-async function verifyToken(token, env) {
-  const db = env.DB;
-  const result = await db.prepare(`
-    SELECT u.id, u.email, u.role
-    FROM auth_tokens at
-    JOIN users u ON at.user_id = u.id
-    WHERE at.token = ? AND at.expires_at > ?
-    LIMIT 1
-  `).bind(token, Date.now()).first();
-
-  return result;
-}
-
-function json(data, status = 200) {
-  return new Response(JSON.stringify(data), {
-    status,
-    headers: { 'Content-Type': 'application/json' },
-  });
 }
