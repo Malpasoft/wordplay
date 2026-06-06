@@ -316,18 +316,38 @@ function toggleDark() {
 })();
 
 // Cross-device sync: pull cloud progress ONCE per session (deep-merge, no
-// data loss). Pushing back to the cloud is handled inside store.js right
-// after each save, so there's no per-page write here.
+// data loss). Show a notification if merging data from >1 day ago (new device).
 (function() {
+  function showMergeNotification() {
+    var toast = document.createElement('div');
+    toast.style.cssText = 'position:fixed;bottom:20px;right:20px;background:#27ae60;color:#fff;' +
+      'padding:12px 16px;border-radius:6px;font-size:0.9rem;z-index:9999;max-width:300px;' +
+      'font-family:var(--font-sans);box-shadow:0 2px 8px rgba(0,0,0,0.2)';
+    toast.textContent = '✓ Your progress synced from another device.';
+    document.body.appendChild(toast);
+    setTimeout(function() { toast.remove(); }, 4000);
+  }
+
   function pullOnce() {
     if (typeof FCEStore === 'undefined' || !FCEStore.mergeFromD1) return;
     try {
       if (sessionStorage.getItem('wp_synced') === '1') return;
     } catch (e) {}
-    FCEStore.mergeFromD1().then(function() {
+
+    var localProgress = {};
+    try { localProgress = JSON.parse(localStorage.getItem('wordplay_progress')) || {}; } catch (e) {}
+    var localUpdated = localProgress.updated_at || 0;
+    var dayAgo = Date.now() - 86400000;
+
+    FCEStore.mergeFromD1().then(function(merged) {
       try { sessionStorage.setItem('wp_synced', '1'); } catch (e) {}
+      // Show notification if local was >1 day old (multi-device scenario)
+      if (localUpdated > 0 && localUpdated < dayAgo) {
+        showMergeNotification();
+      }
     }).catch(function() {});
   }
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', pullOnce);
   } else { pullOnce(); }

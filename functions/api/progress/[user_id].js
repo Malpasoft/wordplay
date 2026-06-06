@@ -75,19 +75,41 @@ export async function onRequestGet(context) {
       return json({ error: 'Cannot access another user\'s progress' }, 403);
     }
 
-    const progress = await context.env.DB.prepare(
-      'SELECT progress_data, updated_at FROM student_progress WHERE user_id = ?'
+    // Fetch from normalized schema: chapters + XP
+    const chapters = await context.env.DB.prepare(
+      'SELECT level, chapter_slug, score, total, pct, date FROM chapter_results WHERE user_id = ? ORDER BY level, chapter_slug'
+    )
+      .bind(parseInt(user_id))
+      .all();
+
+    const xpRow = await context.env.DB.prepare(
+      'SELECT xp, streak, last_day, updated_at FROM user_xp WHERE user_id = ?'
     )
       .bind(parseInt(user_id))
       .first();
 
-    if (!progress) {
-      return json({ progress: {}, updated_at: Date.now() });
+    // Reconstruct blob shape for compatibility with client's mergeProgress()
+    const progress = {};
+    for (const ch of chapters.results || []) {
+      if (!progress[ch.level]) progress[ch.level] = {};
+      progress[ch.level][ch.chapter_slug] = {
+        score: ch.score,
+        total: ch.total,
+        pct: ch.pct,
+        date: ch.date
+      };
+    }
+
+    if (xpRow) {
+      progress.xp = xpRow.xp;
+      progress.streak = xpRow.streak;
+      progress.lastDay = xpRow.last_day;
+      progress.updated_at = xpRow.updated_at;
     }
 
     return json({
-      progress: JSON.parse(progress.progress_data),
-      updated_at: progress.updated_at
+      progress: progress,
+      updated_at: progress.updated_at || Date.now()
     });
   } catch (error) {
     console.error('Progress fetch error:', error);
@@ -151,48 +173,22 @@ export async function onRequestPost(context) {
         .bind(studentId, payload.xp || 0, payload.streak || 0, payload.lastDay || null, now)
         .run();
 
+      // Log success (sample every 10th write to reduce noise)
+      if (Math.random() < 0.1) {
+        console.log(`PROGRESS_WRITE: user_id=${studentId}, chapters=${payload.chapters.length}, xp=${payload.xp}`);
+      }
+
       return json({
         ok: true,
-        message: 'Progress saved to normalized schema'
+        message: 'Progress saved'
       }, 200);
     }
 
-    // Fallback: handle old blob format for migration period (backward compat)
-    const clientData = payload;
-    const existing = await context.env.DB.prepare(
-      'SELECT progress_data FROM student_progress WHERE user_id = ?'
-    )
-      .bind(studentId)
-      .first();
-
-    let mergedData = clientData;
-    if (existing) {
-      mergedData = mergeProgress(JSON.parse(existing.progress_data), clientData);
-    }
-
-    mergedData.updated_at = now;
-
-    if (existing) {
-      await context.env.DB.prepare(
-        'UPDATE student_progress SET progress_data = ?, updated_at = ? WHERE user_id = ?'
-      )
-        .bind(JSON.stringify(mergedData), now, studentId)
-        .run();
-    } else {
-      await context.env.DB.prepare(
-        'INSERT INTO student_progress (user_id, progress_data, updated_at) VALUES (?, ?, ?)'
-      )
-        .bind(studentId, JSON.stringify(mergedData), now)
-        .run();
-    }
-
-    return json({
-      ok: true,
-      progress: mergedData,
-      updated_at: now
-    });
+    // Only normalized format supported; old blob format rejected
+    return json({ error: 'Invalid payload format. Expected {chapters, xp, streak, lastDay}' }, 400);
   } catch (error) {
-    console.error('Progress save error:', error);
+    // CRITICAL: Log all write failures — these are data loss events
+    console.error(`PROGRESS_WRITE_FAIL: user_id=${user_id}, error=${error.message}, stack=${error.stack}`);
     return json({ error: 'Failed to save progress' }, 500);
   }
 }
