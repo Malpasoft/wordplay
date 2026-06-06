@@ -358,13 +358,23 @@ function toggleDark() {
     var localUpdated = localProgress.updated_at || 0;
     var dayAgo = Date.now() - 86400000;
 
+    // Add 5-second timeout to prevent page hang if API is slow
+    var timeoutId = setTimeout(function() {
+      console.warn('[WordPlay] Progress sync timeout after 5s; continuing with local data');
+      try { sessionStorage.setItem('wp_synced', '1'); } catch (e) {}
+    }, 5000);
+
     FCEStore.mergeFromD1().then(function(merged) {
+      clearTimeout(timeoutId);
       try { sessionStorage.setItem('wp_synced', '1'); } catch (e) {}
       // Show notification if local was >1 day old (multi-device scenario)
       if (localUpdated > 0 && localUpdated < dayAgo) {
         showMergeNotification();
       }
-    }).catch(function() {});
+    }).catch(function(err) {
+      clearTimeout(timeoutId);
+      console.warn('[WordPlay] Progress sync failed:', err.message || err);
+    });
   }
 
   if (document.readyState === 'loading') {

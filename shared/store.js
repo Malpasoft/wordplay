@@ -187,7 +187,8 @@
       var user  = getCurrentUser ? getCurrentUser() : null;
       if (!token || !user) return Promise.resolve(null);
 
-      return fetch('/api/progress/' + user.user_id, {
+      // Wrap fetch with 5-second timeout to prevent page hang
+      var promise = fetch('/api/progress/' + user.user_id, {
         headers: { 'Authorization': 'Bearer ' + token }
       })
         .then(function(res) {
@@ -203,6 +204,17 @@
           console.warn('[WordPlay] D1 merge failed, using local progress:', err.message);
           return load();
         });
+
+      // Add 5-second timeout wrapper
+      return Promise.race([
+        promise,
+        new Promise(function(resolve) {
+          setTimeout(function() {
+            console.warn('[WordPlay] Progress fetch timeout (5s); using local data');
+            resolve(load());
+          }, 5000);
+        })
+      ]);
     }
   };
 
