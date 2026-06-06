@@ -449,25 +449,111 @@ function typeLabel(t) {
 function lessonTop(s)    { return (timeToMin(s) - GRID_START) * PX_PER_MIN; }
 function lessonHeight(s, e) { return Math.max((timeToMin(e) - timeToMin(s)) * PX_PER_MIN, 24); }
 
-/* ── Storage ── */
+/* ── Storage: D1-backed via API ── */
 function loadSyncCode() { syncCode = localStorage.getItem(SYNC_CODE_KEY) || null; }
 function loadStudents() {
+  // For now, load from localStorage (backward compat)
+  // In Phase 2, fetch from /api/students
   try { allStudents = JSON.parse(localStorage.getItem('wordplay_student_profiles')) || []; } catch(e) {}
 }
-function loadCache() {
-  try { lessons = JSON.parse(localStorage.getItem(LESSONS_KEY)) || []; } catch(e) { lessons = []; }
+
+var currentClassId = null;
+
+async function loadCache() {
+  var token = getAuthToken();
+  if (!token) {
+    // Fall back to localStorage if not logged in
+    try { lessons = JSON.parse(localStorage.getItem(LESSONS_KEY)) || []; } catch(e) { lessons = []; }
+    return;
+  }
+
+  try {
+    // Get all classes for this teacher
+    var classRes = await fetch('/api/classes', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    if (!classRes.ok) throw new Error('Failed to load classes');
+    var classes = await classRes.json();
+
+    if (classes.length === 0) {
+      lessons = [];
+      return;
+    }
+
+    // For now, load lessons from the first class
+    // TODO: later allow switching between classes
+    currentClassId = classes[0].id;
+
+    var lessonRes = await fetch('/api/lessons?class_id=' + currentClassId, {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    if (!lessonRes.ok) throw new Error('Failed to load lessons');
+    var dbLessons = await lessonRes.json();
+
+    // Convert D1 lessons to calendar format
+    lessons = (dbLessons || []).map(function(l) {
+      return {
+        id: String(l.id),
+        date: new Date(l.date).toISOString().slice(0, 10),
+        time_start: '09:00', // TODO: add time fields to D1 schema
+        time_end: '10:00',
+        title: l.title || l.chapter_slug || '',
+        type: '1on1',
+        level: '',
+        location: '',
+        notes: l.notes || '',
+        student_ids: []
+      };
+    });
+  } catch (err) {
+    console.warn('Failed to load from D1, falling back to localStorage:', err);
+    try { lessons = JSON.parse(localStorage.getItem(LESSONS_KEY)) || []; } catch(e) { lessons = []; }
+  }
 }
+
 function saveCache() {
-  try { localStorage.setItem(LESSONS_KEY, JSON.stringify(lessons)); } catch(e) {}
+  var token = getAuthToken();
+  if (!token) {
+    // Fall back to localStorage if not logged in
+    try { localStorage.setItem(LESSONS_KEY, JSON.stringify(lessons)); } catch(e) {}
+    return;
+  }
+  // D1 sync happens via API on individual lesson save
 }
-function upsertLocal(lesson) {
+
+async function upsertLocal(lesson) {
   var i = lessons.findIndex(function(l){ return l.id === lesson.id; });
   if (i >= 0) lessons[i] = lesson; else lessons.push(lesson);
+
+  var token = getAuthToken();
+  if (token && currentClassId) {
+    // Sync to D1
+    try {
+      await fetch('/api/lessons', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          class_id: currentClassId,
+          date: new Date(lesson.date).getTime(),
+          chapter_slug: lesson.title,
+          title: lesson.title,
+          notes: lesson.notes
+        })
+      });
+    } catch (err) {
+      console.warn('Failed to sync lesson to D1:', err);
+    }
+  }
   saveCache();
 }
-function deleteLocal(id) {
+
+async function deleteLocal(id) {
   lessons = lessons.filter(function(l){ return l.id !== id; });
   saveCache();
+  // TODO: add DELETE /api/lessons/[id] endpoint
 }
 
 /* ── Sync ── */
@@ -502,9 +588,11 @@ function fetchAndMerge() {
 }
 
 function apiUpsert(lesson) {
+  // Async, but don't await here to keep UI responsive
   upsertLocal(lesson);
   renderCurrentView();
   if (!syncCode) return;
+  // Legacy passphrase sync (still supported)
   fetch('/api/lessons/' + encodeURIComponent(syncCode), {
     method: 'POST', headers: {'Content-Type':'application/json'},
     body: JSON.stringify({ action: 'upsert', lesson: lesson })
@@ -512,7 +600,8 @@ function apiUpsert(lesson) {
 }
 
 function apiBulk(list) {
-  list.forEach(upsertLocal);
+  // Async, but non-blocking
+  list.forEach(function(lesson) { upsertLocal(lesson); });
   renderCurrentView();
   if (!syncCode) return;
   /* Send in chunks of 100 so large initial loads don't hit the server limit */
@@ -529,9 +618,11 @@ function apiBulk(list) {
 }
 
 function apiDelete(id) {
+  // Async, but non-blocking
   deleteLocal(id);
   renderCurrentView();
   if (!syncCode) return;
+  // Legacy passphrase sync (still supported)
   fetch('/api/lessons/' + encodeURIComponent(syncCode), {
     method: 'POST', headers: {'Content-Type':'application/json'},
     body: JSON.stringify({ action: 'delete', id: id })
@@ -1058,21 +1149,41 @@ function loadMySchedule() {
 }
 
 /* ── Init ── */
-loadSyncCode();
-loadStudents();
-loadCache();
-renderCurrentView();
-if (syncCode) fetchAndMerge();
+async function initCalendar() {
+  // Check if user is logged in (teacher)
+  var token = getAuthToken();
+  var user = getCurrentUser();
 
-/* Show empty state on first visit */
-if (!lessons.length) {
-  document.getElementById('calEmpty').style.display = 'block';
+  if (!token || (user && user.role === 'student')) {
+    // Students can view shared calendars but not create
+    document.getElementById('calAdd').style.display = 'none';
+  }
+
+  loadSyncCode();
+  loadStudents();
+  await loadCache();
+  renderCurrentView();
+
+  if (syncCode) fetchAndMerge();
+
+  // Show empty state on first visit
+  if (!lessons.length) {
+    document.getElementById('calEmpty').style.display = 'block';
+  }
+
+  // Show info strip when not synced (legacy passphrase sync)
+  if (!syncCode && !token) {
+    document.getElementById('calInfoStrip').style.display = 'block';
+  }
 }
 
-/* Show info strip when not synced */
-if (!syncCode) {
-  document.getElementById('calInfoStrip').style.display = 'block';
-}
+// Start initialization
+initCalendar().catch(function(err) {
+  console.error('Calendar init failed:', err);
+  // Fall back to localStorage
+  loadCache();
+  renderCurrentView();
+});
 </script>
 </body>
 </html>
