@@ -574,12 +574,29 @@ window.GAME_CONFIG = {
       // ── Feedback ──────────────────────────────────────────────
       if (el.feedback) {
         el.feedback.className = 'game-feedback ' + (isCorrect ? 'correct' : 'wrong');
-        el.feedback.innerHTML = isCorrect
-          ? ('✓ ' + L.correct + (bonusMsg ? '  <em>' + bonusMsg + '</em>' : ''))
-          : (L.wrong + '. ' + L.answer + ' <strong>' + esc(correct) + '</strong>');
+        el.feedback.innerHTML = '';
+
+        if (isCorrect) {
+          var checkMark = document.createTextNode('✓ ' + L.correct);
+          el.feedback.appendChild(checkMark);
+
+          if (bonusMsg) {
+            el.feedback.appendChild(document.createTextNode('  '));
+            var em = document.createElement('em');
+            em.textContent = bonusMsg;
+            el.feedback.appendChild(em);
+          }
+        } else {
+          var errorMsg = document.createTextNode(L.wrong + '. ' + L.answer + ' ');
+          el.feedback.appendChild(errorMsg);
+
+          var strong = document.createElement('strong');
+          strong.textContent = correct;
+          el.feedback.appendChild(strong);
+        }
       }
       if (item.example && el.example) {
-        el.example.innerHTML  = item.example;
+        el.example.textContent = item.example;
         el.example.style.display = 'block';
       }
 
@@ -633,14 +650,30 @@ window.GAME_CONFIG = {
     // ── Reference panel ───────────────────────────────────────────
     function renderReference() {
       if (!el.refList) return;
-      el.refList.innerHTML = ITEMS.map(function(item) {
+      el.refList.innerHTML = '';
+      ITEMS.forEach(function(item) {
         var done = state && state.itemCorrect && state.itemCorrect[item.id];
-        return '<div class="game-ref-item">' +
-          '<span class="ref-term">' + esc(item.term) + (done ? ' ✓' : '') + '</span>' +
-          '<div class="ref-def">' + esc(item.meaning) + '</div>' +
-          '<div class="ref-ex">' + (item.example || '') + '</div>' +
-        '</div>';
-      }).join('');
+
+        var itemDiv = document.createElement('div');
+        itemDiv.className = 'game-ref-item';
+
+        var termSpan = document.createElement('span');
+        termSpan.className = 'ref-term';
+        termSpan.textContent = item.term + (done ? ' ✓' : '');
+        itemDiv.appendChild(termSpan);
+
+        var defDiv = document.createElement('div');
+        defDiv.className = 'ref-def';
+        defDiv.textContent = item.meaning;
+        itemDiv.appendChild(defDiv);
+
+        var exDiv = document.createElement('div');
+        exDiv.className = 'ref-ex';
+        exDiv.textContent = item.example || '';
+        itemDiv.appendChild(exDiv);
+
+        el.refList.appendChild(itemDiv);
+      });
     }
 
     // ── Completion screen ─────────────────────────────────────────
