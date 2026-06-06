@@ -211,6 +211,7 @@ body.dark .lm-input[type="date"],body.dark .lm-input[type="time"]{color-scheme:d
       <button class="cal-view-btn" id="btnMonth" onclick="switchView('month')">Month</button>
     </div>
     <button class="cal-add-btn" onclick="openAddModal(null,null)">+ Add lesson</button>
+    <button class="cal-add-btn" id="inviteBtn" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline)" onclick="openInviteModal()" title="Generate invite code for students" hidden>🔗 Invite</button>
   </div>
 
   <div id="syncStrip" style="display:none" class="cal-sync info"></div>
@@ -357,6 +358,23 @@ body.dark .lm-input[type="date"],body.dark .lm-input[type="time"]{color-scheme:d
         <button class="lm-btn ghost" onclick="closeModal()">Cancel</button>
         <button id="lmDeleteBtn" class="lm-btn danger" style="display:none" onclick="deleteLesson()" aria-label="Delete this lesson permanently">Delete</button>
       </div>
+    </div>
+  </div>
+
+  <!-- Invite modal -->
+  <div id="inviteModal" class="lm-overlay" onclick="if(event.target===event.currentTarget)closeInviteModal()">
+    <div class="lm-box">
+      <div class="lm-header">
+        <h2 class="lm-heading">Share Class Invite</h2>
+        <button class="lm-close" onclick="closeInviteModal()" aria-label="Close">&times;</button>
+      </div>
+      <p style="color:var(--muted);font-size:.85rem;margin:0 0 16px">Students can use this code to join your class:</p>
+      <div style="display:flex;gap:8px;margin-bottom:16px">
+        <input id="inviteCodeInput" type="text" readonly style="flex:1;padding:10px;border:1.5px solid var(--hairline);border-radius:6px;font-family:monospace;font-size:.9rem;background:var(--cream);color:var(--ink)">
+        <button onclick="copyInviteCode()" class="lm-btn" style="margin:0">Copy</button>
+      </div>
+      <p style="color:var(--muted);font-size:.75rem;margin:0 0 16px">Share this code. When students click it or use it, they'll be automatically added to your class.</p>
+      <button onclick="closeInviteModal()" class="lm-btn ghost" style="width:100%">Done</button>
     </div>
   </div>
 </div>
@@ -1141,6 +1159,50 @@ function loadMySchedule() {
 }
 
 /* ── Init ── */
+/* ── Invite code management ── */
+async function openInviteModal() {
+  if (!currentClassId) {
+    alert('No class selected. Create a class first.');
+    return;
+  }
+
+  var token = getAuthToken();
+  if (!token) {
+    alert('Please sign in to share invite codes.');
+    return;
+  }
+
+  document.getElementById('inviteCodeInput').value = 'Generating...';
+  document.getElementById('inviteModal').style.display = 'flex';
+
+  try {
+    var res = await fetch('/api/classes/' + currentClassId + '/invite-code/generate', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+
+    if (!res.ok) throw new Error('Failed to generate code');
+    var data = await res.json();
+    document.getElementById('inviteCodeInput').value = data.code || 'Error';
+  } catch (err) {
+    console.error('Invite code error:', err);
+    document.getElementById('inviteCodeInput').value = 'Error generating code';
+  }
+}
+
+function closeInviteModal() {
+  document.getElementById('inviteModal').style.display = 'none';
+  document.getElementById('inviteCodeInput').value = '';
+}
+
+function copyInviteCode() {
+  var code = document.getElementById('inviteCodeInput').value;
+  if (!code || code.includes('Error')) return;
+  navigator.clipboard.writeText(code).then(function() {
+    alert('Invite code copied! Share it with students.');
+  });
+}
+
 async function initCalendar() {
   // Check if user is logged in (teacher)
   var token = getAuthToken();
@@ -1154,6 +1216,15 @@ async function initCalendar() {
   loadSyncCode();
   loadStudents();
   await loadCache();
+
+  // Show invite button only if teacher/admin is logged in and has a class
+  var inviteBtn = document.getElementById('inviteBtn');
+  if (token && user && (user.role === 'teacher' || user.role === 'admin') && currentClassId) {
+    inviteBtn.removeAttribute('hidden');
+  } else {
+    inviteBtn.setAttribute('hidden', '');
+  }
+
   renderCurrentView();
 
   // Show empty state on first visit
