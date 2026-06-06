@@ -187,16 +187,8 @@
           role: data.role
         });
 
-        // Redirect based on role
-        if (data.role === 'admin') {
-          location.href = '/dev-hub.html';
-        } else if (data.role === 'teacher') {
-          location.href = '/teacher.html';
-        } else if (data.role === 'student') {
-          location.href = '/';
-        } else {
-          location.href = '/';
-        }
+        // Redirect to home for all roles
+        location.href = '/';
       } catch (e) {
         error.textContent = 'Network error. Please try again.';
         error.style.display = 'block';
