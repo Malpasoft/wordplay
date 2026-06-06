@@ -259,8 +259,16 @@
   }
 
   // Flush on pagehide (more reliable than beforeunload, with keepalive).
+  var _pushTimer = null;
+  function schedulePush() {
+    if (!getCurrentUser || !getCurrentUser()) return;
+    if (_pushTimer) clearTimeout(_pushTimer);
+    _pushTimer = setTimeout(function(){ _pushTimer = null; doPushNormalized(); }, 1500);
+  }
+
   if (typeof window !== 'undefined') {
     window.addEventListener('pagehide', function(){
+      if (_pushTimer) clearTimeout(_pushTimer);
       doPushNormalized();
     });
   }
