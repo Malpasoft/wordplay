@@ -492,17 +492,21 @@ async function loadCache() {
 
     // Convert D1 lessons to calendar format
     lessons = (dbLessons || []).map(function(l) {
+      var dateStr = typeof l.date === 'number'
+        ? new Date(l.date).toISOString().slice(0, 10)
+        : l.date;
       return {
         id: String(l.id),
-        date: new Date(l.date).toISOString().slice(0, 10),
-        time_start: '09:00', // TODO: add time fields to D1 schema
-        time_end: '10:00',
-        title: l.title || l.chapter_slug || '',
-        type: '1on1',
-        level: '',
-        location: '',
+        date: dateStr,
+        time_start: l.time_start || '09:00',
+        time_end: l.time_end || '10:00',
+        title: l.title || l.chapter_slug || 'Lesson',
+        type: l.type || '1on1',
+        level: l.level || '',
+        location: l.location || '',
         notes: l.notes || '',
-        student_ids: []
+        student_ids: l.student_ids ? JSON.parse(l.student_ids) : [],
+        chapter_slug: l.chapter_slug || ''
       };
     });
   } catch (err) {

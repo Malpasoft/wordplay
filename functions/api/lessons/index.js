@@ -75,10 +75,10 @@ async function handleCreateLesson(user, request, env) {
   }
 
   const body = await request.json();
-  const { class_id, date, chapter_slug, title, notes } = body;
+  const { class_id, date, time_start, time_end, chapter_slug, title, type, level, location, notes } = body;
 
-  if (!class_id || !date) {
-    return json({ error: 'class_id and date required' }, 400);
+  if (!class_id || !date || !title) {
+    return json({ error: 'class_id, date, and title required' }, 400);
   }
 
   const db = env.DB;
@@ -96,16 +96,21 @@ async function handleCreateLesson(user, request, env) {
 
   try {
     const result = await db.prepare(`
-      INSERT INTO lessons (class_id, date, chapter_slug, title, notes, created_at, updated_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?)
-    `).bind(class_id, date, chapter_slug || null, title || null, notes || null, now, now).run();
+      INSERT INTO lessons (class_id, date, time_start, time_end, chapter_slug, title, type, level, location, notes, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `).bind(class_id, date, time_start || null, time_end || null, chapter_slug || null, title, type || '1on1', level || null, location || null, notes || null, now, now).run();
 
     return json({
       id: result.meta.last_row_id,
       class_id,
       date,
+      time_start,
+      time_end,
       chapter_slug,
       title,
+      type: type || '1on1',
+      level,
+      location,
       notes
     }, 201);
   } catch (err) {
