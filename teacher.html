@@ -1,159 +1,232 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#1A1A1A">
-<meta name="robots" content="noindex">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<title>Hub | Word Play</title>
-<link rel="stylesheet" href="shared/base.css?v=v123">
-<script src="shared/auth.js?v=1"></script>
-<script src="shared/dark-init.js?v=v109"></script>
-<style>
-.hub-wrap{max-width:760px;margin:0 auto;padding:32px 16px 60px}
-.hub-head{text-align:center;margin-bottom:8px}
-.hub-eyebrow{font-family:var(--font-sans);font-size:.62rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
-.hub-head h1{font-size:1.8rem;color:var(--ink);margin:0 0 6px}
-.hub-head p{font-family:var(--font-sans);font-size:.82rem;color:var(--muted);margin:0}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="theme-color" content="#1A1A1A">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <title>Hub | Word Play</title>
+  <link rel="stylesheet" href="shared/base.css?v=v124">
+  <script src="/shared/auth.js?v=1"></script>
+  <script src="shared/dark-init.js?v=v112"></script>
+  <style>
+    .hub-wrap { max-width: 900px; margin: 0 auto; padding: 32px 16px 60px; }
+    .hub-head { text-align: center; margin-bottom: 8px; }
+    .hub-eyebrow { font-family: var(--font-sans); font-size: 0.62rem; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: var(--amber); margin-bottom: 6px; }
+    .hub-head h1 { font-size: 1.8rem; color: var(--ink); margin: 0 0 6px; }
+    .hub-head p { font-family: var(--font-sans); font-size: 0.82rem; color: var(--muted); margin: 0; }
 
-.hub-section-label{display:flex;align-items:center;gap:12px;margin:32px 0 14px}
-.hub-section-label div{flex:1;height:1px;background:var(--hairline)}
-.hub-section-label span{font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+    .hub-section-label { display: flex; align-items: center; gap: 12px; margin: 32px 0 14px; }
+    .hub-section-label div { flex: 1; height: 1px; background: var(--hairline); }
+    .hub-section-label span { font-family: var(--font-sans); font-size: 0.6rem; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
 
-.hub-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media(max-width:560px){.hub-grid{grid-template-columns:1fr}}
+    .hub-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    @media(max-width: 560px) { .hub-grid { grid-template-columns: 1fr; } }
 
-.hub-card{display:block;background:var(--cream);border:1.5px solid var(--hairline);border-radius:12px;padding:22px 20px;text-decoration:none;transition:border-color .15s,transform .12s,box-shadow .15s}
-.hub-card:hover{border-color:var(--amber);transform:translateY(-2px);box-shadow:0 6px 20px rgba(184,134,11,.10)}
-.hc-icon{font-family:var(--font-serif);font-size:1.6rem;font-weight:700;color:var(--amber);line-height:1;margin-bottom:12px}
-.hc-title{font-size:1.05rem;font-weight:700;color:var(--ink);margin-bottom:5px}
-.hc-desc{font-family:var(--font-sans);font-size:.78rem;color:var(--muted);line-height:1.5;margin-bottom:10px}
-.hc-stat{font-family:var(--font-sans);font-size:.68rem;font-weight:700;letter-spacing:.5px;color:var(--muted)}
-.hc-stat .num{color:var(--amber);font-weight:800}
-.hc-stat.warn .num{color:var(--amber)}
-.hc-stat.ok .num{color:#27ae60}
+    .hub-card { display: block; background: var(--cream); border: 1.5px solid var(--hairline); border-radius: 12px; padding: 22px 20px; text-decoration: none; transition: border-color 0.15s, transform 0.12s, box-shadow 0.15s; }
+    .hub-card:hover { border-color: var(--amber); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(184, 134, 11, 0.10); }
+    .hc-icon { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 700; color: var(--amber); line-height: 1; margin-bottom: 12px; }
+    .hc-title { font-size: 1.05rem; font-weight: 700; color: var(--ink); margin-bottom: 5px; }
+    .hc-desc { font-family: var(--font-sans); font-size: 0.78rem; color: var(--muted); line-height: 1.5; margin-bottom: 10px; }
+    .hc-stat { font-family: var(--font-sans); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.5px; color: var(--muted); }
+    .hc-stat .num { color: var(--amber); font-weight: 800; }
+    .hc-stat.ok .num { color: #27ae60; }
 
-.hub-mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:14px}
-.mini-card{display:flex;align-items:center;gap:10px;background:transparent;border:1px solid var(--hairline);border-radius:8px;padding:12px 14px;text-decoration:none;transition:border-color .15s}
-.mini-card:hover{border-color:var(--ink)}
-.mini-title{font-family:var(--font-sans);font-size:.8rem;font-weight:700;color:var(--ink)}
-.mini-sub{font-family:var(--font-sans);font-size:.66rem;color:var(--muted);margin-top:1px}
-</style>
+    .inline-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+    @media(max-width: 560px) { .inline-grid { grid-template-columns: 1fr; } }
+
+    .mini-card { display: flex; align-items: center; gap: 10px; background: transparent; border: 1px solid var(--hairline); border-radius: 8px; padding: 12px 14px; text-decoration: none; transition: border-color 0.15s; }
+    .mini-card:hover { border-color: var(--ink); }
+    .mini-title { font-family: var(--font-sans); font-size: 0.8rem; font-weight: 700; color: var(--ink); }
+    .mini-sub { font-family: var(--font-sans); font-size: 0.66rem; color: var(--muted); margin-top: 1px; }
+
+    .tool-section { background: var(--cream); border: 1.5px solid var(--hairline); border-radius: 10px; padding: 20px; margin-bottom: 16px; }
+    .tool-section h2 { font-size: 1.05rem; color: var(--ink); margin: 0 0 12px; }
+    .tool-section p { font-family: var(--font-sans); font-size: 0.85rem; color: var(--muted); margin: 0 0 12px; }
+
+    input, select, textarea { width: 100%; box-sizing: border-box; padding: 9px 12px; border: 1.5px solid var(--hairline); border-radius: 7px; font-size: 0.9rem; font-family: var(--font-sans); background: var(--paper); color: var(--ink); margin-bottom: 8px; }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--amber); }
+
+    .btn { display: inline-block; padding: 9px 18px; border-radius: 7px; font-size: 0.82rem; font-weight: 700; cursor: pointer; border: none; font-family: var(--font-sans); }
+    .btn-primary { background: var(--amber); color: #fff; }
+    .btn-secondary { background: var(--paper); color: var(--ink); border: 1.5px solid var(--hairline); }
+    .btn-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+
+    .link-list { list-style: none; padding: 0; margin: 0; max-height: 400px; overflow-y: auto; }
+    .link-list li { margin-bottom: 7px; }
+    .link-list a { display: block; background: var(--cream); border: 1.5px solid var(--hairline); border-radius: 7px; padding: 9px 13px; text-decoration: none; color: var(--amber); font-family: var(--font-sans); font-size: 0.8rem; font-weight: 600; word-break: break-all; transition: border-color 0.15s; }
+    .link-list a:hover { border-color: var(--amber); }
+
+    .copy-btn { position: absolute; top: 8px; right: 8px; font-size: 0.62rem; font-weight: 700; padding: 4px 10px; border-radius: 4px; border: 1.5px solid var(--hairline); background: var(--paper); color: var(--muted); cursor: pointer; }
+
+    .sign-out-btn { position: absolute; top: 12px; right: 60px; padding: 6px 12px; background: transparent; border: 1.5px solid var(--hairline); border-radius: 6px; color: var(--ink); font-family: var(--font-sans); font-size: 0.8rem; cursor: pointer; }
+  </style>
 </head>
 <body>
-<header class="site-header"><div class="site-header-inner">
-  <a href="index.html" class="back back-link" aria-label="Back"></a>
-  <a href="/" class="brand">Word Play</a>
-  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
-</div></header>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="index.html" class="back back-link" aria-label="Back"></a>
+    <a href="/" class="brand">Word Play</a>
+    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+    <button id="signout-btn" class="sign-out-btn" onclick="logout()" style="display: none;">Sign Out</button>
+  </div>
+</header>
 
 <div class="hub-wrap">
   <div class="hub-head">
-    <div class="hub-eyebrow">Private &middot; Admin</div>
+    <div class="hub-eyebrow">Private · Dashboard</div>
     <h1>Word Play Hub</h1>
-    <p>Build content, manage students, and run your classes &mdash; everything in one place.</p>
+    <p>Build, teach, manage, and debug everything in one place.</p>
   </div>
 
-  <!-- ── DEVELOPER SECTION ── -->
-  <div class="hub-section-label"><div></div><span>Developer</span><div></div></div>
-
+  <!-- ── DEVELOPER TOOLS ── -->
+  <div class="hub-section-label"><div></div><span>Developer Tools</span><div></div></div>
   <div class="hub-grid">
     <a href="builder.html" class="hub-card">
-      <div class="hc-icon">&#9632;</div>
+      <div class="hc-icon">■</div>
       <div class="hc-title">Content Builder</div>
-      <div class="hc-desc">Pick a chapter stub, get an AI-ready prompt with full project context, paste the reply back, then download a finished HTML file. Tokenless &mdash; nothing leaves your machine.</div>
-      <div class="hc-stat">Build &amp; download a chapter</div>
+      <div class="hc-desc">AI-powered: pick a chapter stub, get a prompt, paste the reply, download finished HTML. Tokenless.</div>
+      <div class="hc-stat">Create &amp; download chapters</div>
     </a>
-
     <a href="ai-prompts.html" class="hub-card">
-      <div class="hc-icon">&#9670;</div>
+      <div class="hc-icon">◆</div>
       <div class="hc-title">AI Prompts</div>
-      <div class="hc-desc">Complex jobs: bootstrap a whole track, audit content, or generate a custom batch. Pre-loaded with all project rules and live content gaps for DeepSeek, Gemini, or Claude.</div>
-      <div class="hc-stat" id="stat-prompts">Full-session AI priming</div>
+      <div class="hc-desc">Pre-loaded with project rules. Bootstrap tracks, audit content, generate batches. Copy→paste→run.</div>
+      <div class="hc-stat">Full-session AI priming</div>
     </a>
-
     <a href="coverage.html" class="hub-card">
-      <div class="hc-icon">&#9673;</div>
+      <div class="hc-icon">◇</div>
       <div class="hc-title">Content Coverage</div>
-      <div class="hc-desc">Every chapter across all tracks &mdash; complete, stub, or missing &mdash; so you always know what to build next.</div>
-      <div class="hc-stat warn" id="stat-coverage">Loading&hellip;</div>
+      <div class="hc-desc">See which chapters are complete, stub, or missing across all tracks. Refresh before each work session.</div>
+      <div class="hc-stat warn" id="stat-coverage">Loading…</div>
     </a>
-
-    <a href="dev-hub.html" class="hub-card">
-      <div class="hc-icon">&#9881;</div>
-      <div class="hc-title">Dev Utilities</div>
-      <div class="hc-desc">Student roster snapshot for AIs, raw repo file links, and the build roadmap. The workshop tools.</div>
-      <div class="hc-stat">Utilities &amp; roadmap</div>
+    <a href="link-generator.html" class="hub-card">
+      <div class="hc-icon">⧉</div>
+      <div class="hc-title">Link Generator</div>
+      <div class="hc-desc">Generate raw.githubusercontent URLs for all chapters, vocabulary, and scripts. Browse project when offline.</div>
+      <div class="hc-stat">Browse all content</div>
     </a>
   </div>
 
-  <!-- ── CLASSROOM SECTION ── -->
+  <!-- ── CLASSROOM TOOLS ── -->
   <div class="hub-section-label"><div></div><span>Classroom</span><div></div></div>
-
   <div class="hub-grid">
     <a href="profile.html" class="hub-card">
-      <div class="hc-icon">&#9633;</div>
+      <div class="hc-icon">■</div>
       <div class="hc-title">Student Profiles</div>
-      <div class="hc-desc">Add each student, set their level and track, and see exactly which chapters you must finish to teach them. One-click context snapshot for any AI.</div>
+      <div class="hc-desc">Add students, set level and track, see which chapters you must finish. One-click AI snapshot.</div>
       <div class="hc-stat" id="stat-profiles">No students yet</div>
     </a>
-
     <a href="calendar.html" class="hub-card">
-      <div class="hc-icon">&#8862;</div>
+      <div class="hc-icon">≡</div>
       <div class="hc-title">Lesson Calendar</div>
-      <div class="hc-desc">Your full weekly schedule &mdash; 1-on-1, private groups, academy and school lessons all in one view.</div>
-      <div class="hc-stat" id="stat-calendar">Loading&hellip;</div>
+      <div class="hc-desc">Your weekly schedule: 1-on-1, groups, academy, schools — all in one view.</div>
+      <div class="hc-stat" id="stat-calendar">Loading…</div>
     </a>
-
     <a href="teacher-analytics.html" class="hub-card">
-      <div class="hc-icon">&#9632;</div>
+      <div class="hc-icon">■</div>
       <div class="hc-title">Class Analytics</div>
-      <div class="hc-desc">Student performance trends, average scores, XP levels, and weakest chapters. Export class data as CSV for deeper analysis.</div>
-      <div class="hc-stat">Class-level insights &amp; trends</div>
+      <div class="hc-desc">Student trends, average scores, XP levels, weakest chapters. Export CSV for deeper analysis.</div>
+      <div class="hc-stat">Class insights</div>
+    </a>
+    <a href="teacher-class.html" class="hub-card">
+      <div class="hc-icon">♥</div>
+      <div class="hc-title">Class Roster</div>
+      <div class="hc-desc">Bulk create/import students. Manage your class roster without coding.</div>
+      <div class="hc-stat" id="stat-roster">Manage students</div>
     </a>
   </div>
 
-  <!-- ── ALSO ── -->
-  <div class="hub-section-label"><div></div><span>Also</span><div></div></div>
+  <!-- ── ADMIN TOOLS ── -->
+  <div class="hub-section-label"><div></div><span>Admin (Logged In)</span><div></div></div>
+  <div class="tool-section">
+    <h2>Create Accounts</h2>
+    <p>Create teacher and student accounts for your school or private class.</p>
+    <form id="create-user-form">
+      <input type="email" id="new-email" placeholder="Email (e.g. teacher@example.com)" required style="margin-bottom: 8px;">
+      <input type="password" id="new-password" placeholder="Password (min 8 chars)" required style="margin-bottom: 8px;">
+      <select id="new-role" style="margin-bottom: 8px;">
+        <option value="student">Student</option>
+        <option value="teacher">Teacher</option>
+      </select>
+      <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
+      <div id="create-error" style="color: #d32f2f; font-size: 0.85rem; margin-top: 8px; display: none;"></div>
+      <div id="create-status" style="color: var(--muted); font-size: 0.85rem; margin-top: 8px; display: none;"></div>
+    </form>
+  </div>
 
-  <div class="hub-mini">
+  <div class="tool-section">
+    <h2>Users</h2>
+    <p>All accounts in the system.</p>
+    <div id="users-list" style="font-family: var(--font-sans); font-size: 0.85rem;">Loading users…</div>
+  </div>
+
+  <!-- ── QUICK LINKS ── -->
+  <div class="hub-section-label"><div></div><span>Quick Links</span><div></div></div>
+  <div class="inline-grid">
     <a href="dashboard.html" class="mini-card">
-      <div><div class="mini-title">Dashboard</div><div class="mini-sub">Student progress radar</div></div>
+      <div><div class="mini-title">Dashboard</div><div class="mini-sub">Progress radar</div></div>
     </a>
     <a href="placement-test-v2.html" class="mini-card">
-      <div><div class="mini-title">Placement test</div><div class="mini-sub">CEFR level check</div></div>
+      <div><div class="mini-title">Placement Test</div><div class="mini-sub">CEFR check</div></div>
     </a>
     <a href="index.html" class="mini-card">
-      <div><div class="mini-title">Back to site</div><div class="mini-sub">Student-facing home</div></div>
+      <div><div class="mini-title">Student Home</div><div class="mini-sub">Public site</div></div>
+    </a>
+    <a href="/api-docs" class="mini-card" style="display: none;" id="api-docs-link">
+      <div><div class="mini-title">API Docs</div><div class="mini-sub">Endpoints</div></div>
     </a>
   </div>
+
+  <!-- ── ROADMAP ── -->
+  <div class="hub-section-label"><div></div><span>Roadmap</span><div></div></div>
+  <div class="tool-section" style="border-left: 3px solid #27ae60;">
+    <h2 style="color: #27ae60;">✓ Done</h2>
+    <p>Auth system, teacher hub, all EN tracks, dev tools, builder, AI prompts.</p>
+  </div>
+  <div class="tool-section" style="border-left: 3px solid var(--amber);">
+    <h2>Priority 1: Spanish Vocab Stubs</h2>
+    <p>71 flashcard placeholders across A2–C2. Use <a href="ai-prompts.html">AI Prompts</a> → ES → level → copy → run with DeepSeek.</p>
+  </div>
+  <div class="tool-section">
+    <h2>Priority 2: French Content</h2>
+    <p>B1/B2 scaffold live. Use Builder to fill 81 lesson pages.</p>
+  </div>
+  <div class="tool-section">
+    <h2>Priority 3: Engine Consolidation</h2>
+    <p>Merge 7 shared files → 3. Reduce cache-bust overhead by 70%.</p>
+  </div>
+
 </div>
 
-<footer class="site-footer">Word Play &middot; Private &middot; Admin tools</footer>
+<footer class="site-footer">Word Play · Private Dashboard</footer>
 
 <script>
-/* Live coverage stub count */
+// Show sign-out if logged in
+var user = getCurrentUser();
+if (user) {
+  var btn = document.getElementById('signout-btn');
+  if (btn) btn.style.display = 'inline-block';
+}
+
+// Coverage stats
 fetch('shared/coverage-data.json?v=' + Date.now())
-  .then(function(r){ return r.json(); })
-  .then(function(d){
-    var stubs = d.chapters.filter(function(c){ return c.status !== 'complete'; }).length;
-    var total = d.chapters.length;
+  .then(function(r) { return r.json(); })
+  .then(function(d) {
+    var stubs = d.chapters.filter(function(c) { return c.status !== 'complete'; }).length;
     var el = document.getElementById('stat-coverage');
-    if (stubs === 0) {
-      el.className = 'hc-stat ok';
-      el.innerHTML = '<span class="num">All ' + total + '</span> chapters complete';
-    } else {
-      el.className = 'hc-stat warn';
-      el.innerHTML = '<span class="num">' + stubs + '</span> chapters need content';
-    }
+    el.className = 'hc-stat ' + (stubs === 0 ? 'ok' : 'warn');
+    el.innerHTML = stubs === 0
+      ? '<span class="num">All ' + d.chapters.length + '</span> chapters complete'
+      : '<span class="num">' + stubs + '</span> chapters need content';
   })
-  .catch(function(){
-    document.getElementById('stat-coverage').textContent = 'Run gen_coverage.py to update';
+  .catch(function() {
+    document.getElementById('stat-coverage').textContent = 'Run gen_coverage.py';
   });
 
-/* Live student count */
-(function(){
+// Student count
+(function() {
   var students = [];
   try { students = JSON.parse(localStorage.getItem('wordplay_student_profiles')) || []; } catch(e) {}
   var el = document.getElementById('stat-profiles');
@@ -162,29 +235,103 @@ fetch('shared/coverage-data.json?v=' + Date.now())
   }
 })();
 
-/* Lesson calendar — today's count */
-(function(){
-  var today = new Date().toISOString().slice(0,10);
-  var el    = document.getElementById('stat-calendar');
+// Lesson count today
+(function() {
+  var today = new Date().toISOString().slice(0, 10);
+  var el = document.getElementById('stat-calendar');
   var cached = [];
   try { cached = JSON.parse(localStorage.getItem('wordplay_lessons_cache')) || []; } catch(e) {}
-  var n = cached.filter(function(l){ return l.date === today; }).length;
+  var n = cached.filter(function(l) { return l.date === today; }).length;
   if (n > 0) {
     el.innerHTML = '<span class="num">' + n + '</span> lesson' + (n !== 1 ? 's' : '') + ' today';
     return;
   }
-  var code = localStorage.getItem('wordplay_sync_code');
-  if (!code) { el.textContent = 'No lessons today'; return; }
-  fetch('/api/lessons/' + encodeURIComponent(code) + '?from=' + today + '&to=' + today)
-    .then(function(r){ return r.json(); })
-    .then(function(d){
-      var count = (d.lessons || []).length;
-      el.innerHTML = count > 0
-        ? '<span class="num">' + count + '</span> lesson' + (count !== 1 ? 's' : '') + ' today'
-        : 'No lessons today';
-    })
-    .catch(function(){ el.textContent = 'No lessons today'; });
+  el.textContent = 'No lessons today';
 })();
+
+// User management
+function loadUsers() {
+  var token = getAuthToken();
+  if (!token) return;
+
+  var list = document.getElementById('users-list');
+  fetch('/api/admin/users', {
+    headers: { 'Authorization': 'Bearer ' + token }
+  })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (!data.users || data.users.length === 0) {
+        list.textContent = 'No users yet.';
+        return;
+      }
+      var html = '<div style="max-height: 300px; overflow-y: auto;">';
+      data.users.forEach(function(user) {
+        html += '<div style="padding: 8px; border-bottom: 1px solid var(--hairline); display: flex; justify-content: space-between;">';
+        html += '<span><strong>' + user.email + '</strong> <span style="color: var(--amber);">' + user.role + '</span></span>';
+        html += '<span style="color: var(--muted); font-size: 0.8rem;">' + new Date(user.created_at).toLocaleDateString() + '</span>';
+        html += '</div>';
+      });
+      html += '</div>';
+      list.innerHTML = html;
+    })
+    .catch(function(err) {
+      list.textContent = 'Error loading users.';
+    });
+}
+
+var form = document.getElementById('create-user-form');
+if (form) {
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var email = document.getElementById('new-email').value.trim();
+    var password = document.getElementById('new-password').value;
+    var role = document.getElementById('new-role').value;
+    var errorDiv = document.getElementById('create-error');
+    var statusDiv = document.getElementById('create-status');
+
+    if (!email || !password) {
+      errorDiv.textContent = 'Email and password required.';
+      errorDiv.style.display = 'block';
+      return;
+    }
+    if (password.length < 8) {
+      errorDiv.textContent = 'Password must be at least 8 characters.';
+      errorDiv.style.display = 'block';
+      return;
+    }
+
+    errorDiv.style.display = 'none';
+    statusDiv.textContent = 'Creating account…';
+    statusDiv.style.display = 'block';
+
+    var token = getAuthToken();
+    fetch('/api/admin/users', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email: email, password: password, role: role })
+    })
+      .then(function(res) {
+        if (!res.ok) return res.json().then(function(err) { throw err; });
+        return res.json();
+      })
+      .then(function(data) {
+        statusDiv.textContent = 'Account created! (' + data.user_id + ')';
+        form.reset();
+        loadUsers();
+        setTimeout(function() { statusDiv.style.display = 'none'; }, 3000);
+      })
+      .catch(function(err) {
+        errorDiv.textContent = err.error || 'Failed to create account.';
+        errorDiv.style.display = 'block';
+        statusDiv.style.display = 'none';
+      });
+  });
+}
+
+loadUsers();
 </script>
 </body>
 </html>

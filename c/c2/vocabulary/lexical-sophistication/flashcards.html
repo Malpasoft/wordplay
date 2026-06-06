@@ -3,10 +3,10 @@
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
 <title>C2 Vocab · Lexical Sophistication | Word Play</title>
-<link rel="stylesheet" href="../../../../shared/base.css?v=v123">
-<link rel="stylesheet" href="../../../../shared/game.css?v=v111">
-<script src="shared/auth.js?v=1"></script>
-<script src="../../../../shared/dark-init.js?v=v109"></script>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
 <style>
 .vocab-page{max-width:800px;margin:0 auto;padding:20px 0}
 .mode-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
@@ -57,10 +57,10 @@
     </div>
     <div id="modeFlash">
       <div class="flashcard-wrap">
-        <div class="flashcard" id="flashcard" onclick="flipCard()">
+        <button class="flashcard" id="flashcard" onclick="flipCard()">
           <div class="fc-face fc-front"><div class="fc-word" id="fcWord"></div><div class="fc-hint">tap to reveal</div>
           <button class="fc-audio-btn" onclick="speakWord(event)">&#9654; Pronounce</button></div>
-          <div class="fc-face fc-back"><div class="fc-def" id="fcDef"></div><div class="fc-ex" id="fcEx"></div></div>
+          <div class="fc-face fc-back"><div class="fc-def" id="fcDef"></div><div class="fc-ex" id="fcEx"></div></button>
         </div>
       </div>
       <div class="fc-nav">
@@ -73,7 +73,7 @@
   </div>
 </div>
 <footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
-<script src="../../../../shared/store.js?v=v105"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
 <script>
 var WORDS=[{"id": "connotation", "word": "Connotation", "def": "the emotional or cultural associations a word carries beyond its literal meaning", "ipa": "implication / undertone", "ex": "Connotation: \"house\" is neutral; \"home\" has warm connotations."}, {"id": "denotation", "word": "Denotation", "def": "the literal, dictionary meaning of a word, without emotional associations", "ipa": "literal meaning / primary sense", "ex": "The denotation of \"snake\" is a reptile; its connotation may be treachery."}, {"id": "amelioration", "word": "Amelioration", "def": "a process by which a word gains a more positive meaning over time", "ipa": "semantic elevation / meaning improvement", "ex": "Amelioration: \"knight\" originally meant servant; it later gained prestige."}, {"id": "pejoration", "word": "Pejoration", "def": "a process by which a word gains a more negative meaning over time", "ipa": "semantic degradation / meaning worsening", "ex": "Pejoration: \"villain\" originally meant farm worker; now it means evil person."}, {"id": "hyperbole", "word": "Hyperbole", "def": "deliberate exaggeration for rhetorical or emphatic effect", "ipa": "overstatement / exaggeration", "ex": "Hyperbole: \"I’ve told you a million times.\""}, {"id": "litotes", "word": "Litotes", "def": "understatement using a negative to affirm a positive, often for emphasis or irony", "ipa": "understatement / negative affirmation", "ex": "Litotes: \"not bad\" meaning \"very good\" / \"not unlike\" meaning \"similar\""}, {"id": "euphemism", "word": "Euphemism", "def": "a mild or indirect word used in place of one that might seem harsh or offensive", "ipa": "indirect expression / softening term", "ex": "Euphemism: \"passed away\" instead of \"died\""}, {"id": "dysphemism", "word": "Dysphemism", "def": "a harsh or deliberately offensive word used in place of a neutral or positive one", "ipa": "offensive substitute / blunt term", "ex": "Dysphemism: \"croak\" for \"die\" / \"shrink\" for \"therapist\""}, {"id": "synecdoche", "word": "Synecdoche", "def": "a figure of speech where a part represents the whole, or vice versa", "ipa": "part-for-whole substitution", "ex": "Synecdoche: \"All hands on deck\" — hands = sailors"}, {"id": "metonymy", "word": "Metonymy", "def": "using a closely associated concept to refer to something else", "ipa": "name substitution / associated reference", "ex": "Metonymy: \"The Crown\" for the monarchy / \"The press\" for journalism"}, {"id": "register_shift", "word": "Register shift", "def": "changing the formality level of language to suit the audience or context", "ipa": "style shift / code-switching", "ex": "A register shift from \"I wish to enquire\" to \"Can I ask?\" signals informality."}, {"id": "semantic_field", "word": "Semantic field", "def": "a group of words all related to the same topic or concept", "ipa": "lexical field / word family", "ex": "The semantic field of medicine: diagnosis, treatment, prognosis, recovery."}];
 var fcIdx=0,flipped=false;

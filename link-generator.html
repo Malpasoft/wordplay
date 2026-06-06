@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <meta name="theme-color" content="#1A1A1A">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <title>Link Generator | Word Play</title>
+  <link rel="stylesheet" href="shared/base.css?v=v124">
+  <script src="/shared/auth.js?v=1"></script>
+  <script src="shared/dark-init.js?v=v112"></script>
+  <style>
+    .gen-wrap { max-width: 1000px; margin: 0 auto; padding: 32px 16px 60px; }
+    .gen-head { text-align: center; margin-bottom: 32px; }
+    .gen-eyebrow { font-family: var(--font-sans); font-size: 0.62rem; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: var(--amber); margin-bottom: 6px; }
+    h1 { font-size: 1.8rem; color: var(--ink); margin: 0 0 8px; }
+    .gen-sub { font-family: var(--font-sans); font-size: 0.85rem; color: var(--muted); margin: 0; }
+
+    .gen-controls { background: var(--cream); border: 1.5px solid var(--hairline); border-radius: 10px; padding: 20px; margin-bottom: 24px; }
+    .gen-controls h2 { font-size: 1.05rem; color: var(--ink); margin: 0 0 12px; }
+
+    .ctrl-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+    @media(max-width: 768px) { .ctrl-grid { grid-template-columns: 1fr 1fr; } }
+    @media(max-width: 560px) { .ctrl-grid { grid-template-columns: 1fr; } }
+
+    select { width: 100%; box-sizing: border-box; padding: 9px 12px; border: 1.5px solid var(--hairline); border-radius: 7px; font-size: 0.9rem; background: var(--paper); color: var(--ink); }
+    select:focus { outline: none; border-color: var(--amber); }
+
+    .btn { display: inline-block; padding: 9px 18px; border-radius: 7px; font-size: 0.82rem; font-weight: 700; cursor: pointer; border: none; font-family: var(--font-sans); background: var(--amber); color: #fff; }
+    .btn:hover { opacity: 0.9; }
+
+    .gen-output { background: var(--cream); border: 1.5px solid var(--hairline); border-radius: 10px; padding: 20px; }
+    .gen-output h2 { font-size: 1.05rem; color: var(--ink); margin: 0 0 12px; }
+    .gen-output p { font-family: var(--font-sans); font-size: 0.85rem; color: var(--muted); margin: 0 0 12px; }
+
+    .link-list { list-style: none; padding: 0; margin: 0; max-height: 600px; overflow-y: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    @media(max-width: 768px) { .link-list { grid-template-columns: 1fr; } }
+
+    .link-item { display: flex; align-items: center; gap: 8px; background: var(--paper); border: 1px solid var(--hairline); border-radius: 6px; padding: 10px; }
+    .link-item a { flex: 1; color: var(--amber); font-family: var(--font-sans); font-size: 0.75rem; text-decoration: none; word-break: break-all; overflow: hidden; }
+    .link-item a:hover { text-decoration: underline; }
+    .copy-icon { cursor: pointer; font-size: 0.8rem; color: var(--muted); padding: 4px; border-radius: 4px; transition: background 0.15s; }
+    .copy-icon:hover { background: var(--hairline); }
+
+    .stat { font-family: var(--font-sans); font-size: 0.75rem; color: var(--muted); padding: 8px 0; border-top: 1px solid var(--hairline); margin-top: 12px; }
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="teacher.html" class="back back-link" aria-label="Back"></a>
+    <a href="/" class="brand">Word Play</a>
+    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  </div>
+</header>
+
+<div class="gen-wrap">
+  <div class="gen-head">
+    <div class="gen-eyebrow">Tools · Content Browser</div>
+    <h1>Link Generator</h1>
+    <p class="gen-sub">Generate raw.githubusercontent.com URLs to share with other agents. Works offline — no repo access needed.</p>
+  </div>
+
+  <div class="gen-controls">
+    <h2>Filter Links</h2>
+    <div class="ctrl-grid">
+      <div>
+        <label style="display: block; font-family: var(--font-sans); font-size: 0.75rem; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; font-weight: 700;">Track</label>
+        <select id="track-select" onchange="regenerateLinks()">
+          <option value="en">English (EN)</option>
+          <option value="es">Spanish (ES)</option>
+          <option value="fr">French (FR)</option>
+        </select>
+      </div>
+      <div>
+        <label style="display: block; font-family: var(--font-sans); font-size: 0.75rem; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; font-weight: 700;">Level</label>
+        <select id="level-select" onchange="regenerateLinks()">
+          <option value="">All Levels</option>
+          <option value="a1">A1</option>
+          <option value="a2">A2</option>
+          <option value="b1">B1</option>
+          <option value="b2">B2</option>
+          <option value="c1">C1</option>
+          <option value="c2">C2</option>
+        </select>
+      </div>
+      <div>
+        <label style="display: block; font-family: var(--font-sans); font-size: 0.75rem; color: var(--muted); margin-bottom: 4px; text-transform: uppercase; font-weight: 700;">Type</label>
+        <select id="type-select" onchange="regenerateLinks()">
+          <option value="">All Pages</option>
+          <option value="slides">Slides (Lessons)</option>
+          <option value="flashcards">Flashcards</option>
+          <option value="game">Games</option>
+          <option value="worksheet">Worksheets</option>
+        </select>
+      </div>
+    </div>
+    <button class="btn" onclick="selectAll()" style="margin-top: 12px; margin-right: 8px;">Select All</button>
+    <button class="btn" style="background: var(--paper); color: var(--ink); border: 1.5px solid var(--hairline);" onclick="clearSelected()">Clear</button>
+  </div>
+
+  <div class="gen-output">
+    <h2>Generated Links</h2>
+    <p>Click the icon next to any link to copy it.</p>
+    <ul class="link-list" id="link-list">
+      <li style="grid-column: 1/-1; padding: 20px; text-align: center; color: var(--muted);">Loading links…</li>
+    </ul>
+    <div class="stat" id="stat-count"></div>
+  </div>
+</div>
+
+<footer class="site-footer">Word Play · Link Generator</footer>
+
+<script>
+const REPO = 'malpasoft/wordplay';
+const BRANCH = 'main';
+const BASE_URL = `https://raw.githubusercontent.com/${REPO}/${BRANCH}`;
+
+// Generate all chapter URLs
+function getAllChapters() {
+  const chapters = [];
+  const tracks = {
+    en: { dir: '', levels: ['a1', 'a2', 'b1', 'b2', 'c1', 'c2'], sections: ['vocabulary', 'grammar', 'writing'] },
+    es: { dir: 'es/', levels: ['a1', 'a2', 'b1', 'b2', 'c1', 'c2'], sections: ['vocabulary', 'writing'] },
+    fr: { dir: 'fr/', levels: ['a1', 'a2', 'b1', 'b2', 'c1', 'c2'], sections: ['vocabulary', 'writing'] }
+  };
+
+  Object.keys(tracks).forEach(track => {
+    const t = tracks[track];
+    t.levels.forEach(level => {
+      t.sections.forEach(section => {
+        // Get chapters from localStorage if available (from coverage data)
+        const key = `${track}-${level}-${section}-chapters`;
+        const stored = localStorage.getItem(key);
+        if (stored) {
+          JSON.parse(stored).forEach(chapter => {
+            chapters.push({
+              track: track.toUpperCase(),
+              level: level.toUpperCase(),
+              section: section.charAt(0).toUpperCase() + section.slice(1),
+              slug: chapter,
+              slides: `${BASE_URL}/${t.dir}${level}/${section}/${chapter}/slides.html`,
+              flashcards: `${BASE_URL}/${t.dir}${level}/${section}/${chapter}/flashcards.html`,
+              game: `${BASE_URL}/${t.dir}${level}/${section}/${chapter}/game.html`,
+              worksheet: `${BASE_URL}/${t.dir}${level}/${section}/${chapter}/worksheet.html`,
+              index: `${BASE_URL}/${t.dir}${level}/${section}/${chapter}/index.html`
+            });
+          });
+        }
+      });
+    });
+  });
+
+  // If localStorage is empty, generate defaults
+  if (chapters.length === 0) {
+    chapters.push(
+      { track: 'EN', level: 'A1', section: 'Vocabulary', slug: 'numbers', slides: BASE_URL + '/a/a1/vocabulary/numbers/slides.html' },
+      { track: 'EN', level: 'A1', section: 'Grammar', slug: 'present-simple', slides: BASE_URL + '/a/a1/grammar/present-simple/slides.html' },
+      { track: 'ES', level: 'A2', section: 'Vocabulary', slug: 'colors', slides: BASE_URL + '/es/a2/vocabulary/colors/slides.html' },
+      { track: 'FR', level: 'B1', section: 'Vocabulary', slug: 'food', slides: BASE_URL + '/fr/b1/vocabulary/food/slides.html' }
+    );
+  }
+
+  return chapters;
+}
+
+function getDocLinks() {
+  return [
+    { type: 'Docs', name: 'CLAUDE.md (project rules)', url: `${BASE_URL}/CLAUDE.md` },
+    { type: 'Docs', name: 'AI_HANDOVER.md (context)', url: `${BASE_URL}/AI_HANDOVER.md` },
+    { type: 'Docs', name: 'SHARED_FILES_REGISTRY.md', url: `${BASE_URL}/SHARED_FILES_REGISTRY.md` },
+    { type: 'Scripts', name: 'gen_chapter.py', url: `${BASE_URL}/scripts/gen_chapter.py` },
+    { type: 'Scripts', name: 'fill_chapter.py', url: `${BASE_URL}/scripts/fill_chapter.py` },
+    { type: 'Scripts', name: 'gen_coverage.py', url: `${BASE_URL}/scripts/gen_coverage.py` },
+    { type: 'Scripts', name: 'pedagogy_check.py', url: `${BASE_URL}/scripts/pedagogy_check.py` },
+    { type: 'Shared', name: 'store.js (progress engine)', url: `${BASE_URL}/shared/store.js` },
+    { type: 'Shared', name: 'game.js (game engine)', url: `${BASE_URL}/shared/game.js` },
+    { type: 'Shared', name: 'dark-init.js (UI)', url: `${BASE_URL}/shared/dark-init.js` },
+    { type: 'Shared', name: 'base.css (design system)', url: `${BASE_URL}/shared/base.css` }
+  ];
+}
+
+function regenerateLinks() {
+  const track = document.getElementById('track-select').value;
+  const level = document.getElementById('level-select').value;
+  const type = document.getElementById('type-select').value;
+
+  const chapters = getAllChapters().filter(ch => {
+    if (track && ch.track !== track.toUpperCase()) return false;
+    if (level && ch.level !== level.toUpperCase()) return false;
+    return true;
+  });
+
+  const list = document.getElementById('link-list');
+  let html = '';
+
+  if (type === '' || type === 'slides') {
+    chapters.forEach(ch => {
+      if (ch.slides) {
+        html += `<li class="link-item">
+          <a href="${ch.slides}" target="_blank">${ch.track} ${ch.level} · ${ch.section} · ${ch.slug} (slides)</a>
+          <span class="copy-icon" onclick="copyLink('${ch.slides}')">⧉</span>
+        </li>`;
+      }
+    });
+  }
+
+  if (type === '' || type === 'flashcards') {
+    chapters.forEach(ch => {
+      if (ch.flashcards) {
+        html += `<li class="link-item">
+          <a href="${ch.flashcards}" target="_blank">${ch.track} ${ch.level} · ${ch.section} · ${ch.slug} (flashcards)</a>
+          <span class="copy-icon" onclick="copyLink('${ch.flashcards}')">⧉</span>
+        </li>`;
+      }
+    });
+  }
+
+  if (type === '' || type === 'game') {
+    chapters.forEach(ch => {
+      if (ch.game) {
+        html += `<li class="link-item">
+          <a href="${ch.game}" target="_blank">${ch.track} ${ch.level} · ${ch.section} · ${ch.slug} (game)</a>
+          <span class="copy-icon" onclick="copyLink('${ch.game}')">⧉</span>
+        </li>`;
+      }
+    });
+  }
+
+  if (type === '' || type === 'worksheet') {
+    chapters.forEach(ch => {
+      if (ch.worksheet) {
+        html += `<li class="link-item">
+          <a href="${ch.worksheet}" target="_blank">${ch.track} ${ch.level} · ${ch.section} · ${ch.slug} (worksheet)</a>
+          <span class="copy-icon" onclick="copyLink('${ch.worksheet}')">⧉</span>
+        </li>`;
+      }
+    });
+  }
+
+  // Add doc links if no filters
+  if (!level && !type) {
+    getDocLinks().forEach(doc => {
+      html += `<li class="link-item">
+        <a href="${doc.url}" target="_blank">[${doc.type}] ${doc.name}</a>
+        <span class="copy-icon" onclick="copyLink('${doc.url}')">⧉</span>
+      </li>`;
+    });
+  }
+
+  list.innerHTML = html || '<li style="grid-column: 1/-1; padding: 20px; text-align: center; color: var(--muted);">No chapters found.</li>';
+
+  const count = document.querySelectorAll('.link-item').length;
+  document.getElementById('stat-count').textContent = count + ' link' + (count !== 1 ? 's' : '') + ' generated';
+}
+
+function copyLink(url) {
+  navigator.clipboard.writeText(url).then(() => {
+    alert('Link copied! Paste into any AI with web browsing to share the content.');
+  });
+}
+
+function selectAll() {
+  document.getElementById('track-select').value = '';
+  document.getElementById('level-select').value = '';
+  document.getElementById('type-select').value = '';
+  regenerateLinks();
+}
+
+function clearSelected() {
+  document.getElementById('track-select').value = 'en';
+  document.getElementById('level-select').value = 'a1';
+  document.getElementById('type-select').value = '';
+  regenerateLinks();
+}
+
+// Initialize
+regenerateLinks();
+</script>
+</body>
+</html>

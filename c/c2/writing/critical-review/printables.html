@@ -10,28 +10,28 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Georgia,"Times New Roman",serif;font-size:11pt;color:#000;line-height:1.5;background:var(--paper);padding:15mm 18mm 20mm}
 h1{font-size:18pt;margin-bottom:2pt}
-h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-bottom:3pt}
-.meta{font-family:Arial,Helvetica,sans-serif;font-size:8pt;color:#666;letter-spacing:1pt;text-transform:uppercase;margin-bottom:10pt}
+h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid var(--print-border-dark);padding-bottom:3pt}
+.meta{font-family:Arial,Helvetica,sans-serif;font-size:8pt;color:var(--print-text-muted);letter-spacing:1pt;text-transform:uppercase;margin-bottom:10pt}
 .rule{border:none;border-top:1pt solid #000;margin:10pt 0}
-.ref-row{display:flex;gap:12pt;padding:5pt 0;border-bottom:0.5pt solid #ddd;font-size:10pt}
-.ref-label{font-family:Arial,sans-serif;font-size:8pt;font-weight:bold;color:#555;min-width:100pt}
-.task-box{border:0.5pt solid #999;min-height:120pt;border-radius:2pt;padding:4pt;margin-top:6pt}
+.ref-row{display:flex;gap:12pt;padding:5pt 0;border-bottom:0.5pt solid var(--print-border);font-size:10pt}
+.ref-label{font-family:Arial,sans-serif;font-size:8pt;font-weight:bold;color:var(--print-text-tertiary);min-width:100pt}
+.task-box{border:0.5pt solid var(--print-border-dark);min-height:120pt;border-radius:2pt;padding:4pt;margin-top:6pt}
 .writing-lines{margin-top:8pt}
-.line{border-bottom:0.5pt solid #ccc;height:20pt;margin-bottom:0}
-.model-text{font-size:10pt;line-height:1.6;color:#333;border-left:2pt solid #ccc;padding-left:8pt;white-space:pre-line}
-.footer{margin-top:16pt;font-family:Arial,sans-serif;font-size:7pt;color:#999;text-align:center;letter-spacing:1pt;text-transform:uppercase}
-.nameline{font-size:9pt;color:#666;margin-bottom:8pt}
+.line{border-bottom:0.5pt solid var(--print-model-border);height:20pt;margin-bottom:0}
+.model-text{font-size:10pt;line-height:1.6;color:var(--print-text-secondary);border-left:2pt solid var(--print-model-border);padding-left:8pt;white-space:pre-line}
+.footer{margin-top:16pt;font-family:Arial,sans-serif;font-size:7pt;color:var(--print-border-dark);text-align:center;letter-spacing:1pt;text-transform:uppercase}
+.nameline{font-size:9pt;color:var(--print-text-muted);margin-bottom:8pt}
 .no-print{font-family:Arial,sans-serif;font-size:9pt;margin-bottom:10pt}
 
 /* Print hub web view */
-.print-hub-web{font-family:Arial,sans-serif;margin-bottom:12pt;padding-bottom:10pt;border-bottom:1pt solid #eee}
-.phw-back{display:inline-block;font-size:8.5pt;color:#555;text-decoration:none;margin-bottom:8pt}
+.print-hub-web{font-family:Arial,sans-serif;margin-bottom:12pt;padding-bottom:10pt;border-bottom:1pt solid var(--print-border-light)}
+.phw-back{display:inline-block;font-size:8.5pt;color:var(--print-text-tertiary);text-decoration:none;margin-bottom:8pt}
 .phw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8pt;margin-bottom:10pt}
-.phw-card{display:block;padding:10pt;border:1pt solid #ddd;border-radius:4pt;text-decoration:none;color:#1A1A1A;border-top:2.5pt solid #B8860B;transition:background .15s}
-.phw-card:hover{background:#fffbf0}
+.phw-card{display:block;padding:10pt;border:1pt solid var(--print-border);border-radius:4pt;text-decoration:none;color:var(--print-text-primary);border-top:2.5pt solid var(--print-accent);transition:background .15s}
+.phw-card:hover{background:var(--print-hover-bg)}
 .phw-title{font-weight:700;font-size:9pt;margin-bottom:3pt}
-.phw-desc{font-size:7.5pt;color:#777}
-.phw-print-btn{font-family:Arial,sans-serif;font-size:7.5pt;font-weight:700;letter-spacing:.5pt;text-transform:uppercase;background:#B8860B;color:#fff;padding:5pt 14pt;border-radius:3pt;cursor:pointer;border:none}
+.phw-desc{font-size:7.5pt;color:var(--print-text-light)}
+.phw-print-btn{font-family:Arial,sans-serif;font-size:7.5pt;font-weight:700;letter-spacing:.5pt;text-transform:uppercase;background:var(--print-accent);color:var(--print-text-white);padding:5pt 14pt;border-radius:3pt;cursor:pointer;border:none}
 @media(max-width:480px){.phw-grid{grid-template-columns:1fr}}
 @media print{.no-print{display:none!important}.print-hub{display:none!important}body{padding:10mm 15mm 15mm}}
 @page{size:A4;margin:12mm 15mm 15mm}
@@ -72,9 +72,9 @@ h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-botto
 </div>
 <div id="ph-lesson"></div>
 
-<a href="slides.html" style="color:var(--ink,#1a1a1a);text-decoration:none">&#8592; Back to chapter</a>
+<a href="slides.html" style="color:var(--ink,var(--print-text-primary));text-decoration:none">&#8592; Back to chapter</a>
   &nbsp;|&nbsp;
-  <a href="javascript:window.print()" style="color:var(--ink,#1a1a1a);text-decoration:none">Print this page</a>
+  <a href="javascript:window.print()" style="color:var(--ink,var(--print-text-primary));text-decoration:none">Print this page</a>
 </div>
 
 <div class="meta">C2 · Writing</div>
@@ -97,7 +97,7 @@ h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-botto
 <hr class="rule">
 <h2>Task</h2>
 <p style="font-size:10pt;margin-bottom:8pt">Write a critical review (160–220 words) of a book, film, article or academic text you have read recently. Provide analysis, evidence and a clear overall evaluation.</p>
-<p style="font-family:Arial,sans-serif;font-size:8pt;color:#666;margin-bottom:6pt">Write approximately 220 words.</p>
+<p style="font-family:Arial,sans-serif;font-size:8pt;color:var(--print-text-muted);margin-bottom:6pt">Write approximately 220 words.</p>
 <div class="writing-lines">
 <div class="line"></div>
 <div class="line"></div>

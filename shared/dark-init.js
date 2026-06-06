@@ -32,9 +32,10 @@ function toggleDark() {
 (function(){
   if (typeof document === 'undefined') return;
   var scrollHandler = null;  // Keep reference for cleanup
+  var btn = null;
   function setup() {
     if (document.getElementById('back-to-top')) return;
-    var btn = document.createElement('button');
+    btn = document.createElement('button');
     btn.id = 'back-to-top';
     btn.setAttribute('aria-label', 'Back to top');
     btn.innerHTML = '&#8593;';
@@ -45,6 +46,12 @@ function toggleDark() {
       else btn.classList.remove('visible');
     };
     window.addEventListener('scroll', scrollHandler, {passive:true});
+    // Clean up on page unload
+    window.addEventListener('pagehide', cleanup);
+  }
+  function cleanup() {
+    if (scrollHandler) window.removeEventListener('scroll', scrollHandler);
+    if (btn && btn.parentNode) btn.parentNode.removeChild(btn);
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', setup);
@@ -54,6 +61,7 @@ function toggleDark() {
 // QR code button — lets teachers share the current page with students
 (function(){
   var qrEscapeHandler = null;  // Keep reference for cleanup
+  var modal = null;
   function injectQR() {
     var inner = document.querySelector('.site-header-inner');
     if (!inner || inner.querySelector('.qr-toggle')) return;
@@ -64,8 +72,11 @@ function toggleDark() {
     btn.onclick = openQRModal;
     inner.appendChild(btn);
   }
+  function closeQRModal() {
+    if (modal) modal.style.display = 'none';
+    if (qrEscapeHandler) document.removeEventListener('keydown', qrEscapeHandler);
+  }
   function openQRModal() {
-    var modal = document.getElementById('wp-qr-modal');
     if (!modal) {
       modal = document.createElement('div');
       modal.id = 'wp-qr-modal';
@@ -75,10 +86,10 @@ function toggleDark() {
         '<p class="wp-qr-url"></p>' +
         '<button class="wp-qr-close">Close</button>' +
         '</div>';
-      modal.querySelector('.wp-qr-close').onclick = function(){ modal.style.display = 'none'; };
-      modal.onclick = function(e){ if (e.target === modal) modal.style.display = 'none'; };
+      modal.querySelector('.wp-qr-close').onclick = closeQRModal;
+      modal.onclick = function(e){ if (e.target === modal) closeQRModal(); };
       // Use a shared handler variable for proper cleanup
-      qrEscapeHandler = function(e){ if (e.key === 'Escape' && modal.style.display !== 'none') modal.style.display = 'none'; };
+      qrEscapeHandler = function(e){ if (e.key === 'Escape' && modal.style.display !== 'none') closeQRModal(); };
       document.addEventListener('keydown', qrEscapeHandler);
       document.body.appendChild(modal);
     }
@@ -269,6 +280,12 @@ function toggleDark() {
     if (_searchEscHandler && _input) _input.removeEventListener('keydown', _searchEscHandler);
   }
 
+  function cleanupSearch() {
+    // Final cleanup on page unload
+    if (_searchClickHandler) document.removeEventListener('click', _searchClickHandler, true);
+    if (_searchEscHandler && _input) _input.removeEventListener('keydown', _searchEscHandler);
+  }
+
   function loadSearch() {
     if (_loaded || !window.WPSearch) {
       if (!window.WPSearch) {
@@ -313,22 +330,71 @@ function toggleDark() {
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', injectSearch);
   } else { injectSearch(); }
+  // Clean up search listeners on page unload
+  window.addEventListener('pagehide', cleanupSearch);
 })();
 
 // Cross-device sync: pull cloud progress ONCE per session (deep-merge, no
-// data loss). Pushing back to the cloud is handled inside store.js right
-// after each save, so there's no per-page write here.
+// data loss). Show a notification if merging data from >1 day ago (new device).
 (function() {
+  function showMergeNotification() {
+    var toast = document.createElement('div');
+    toast.style.cssText = 'position:fixed;bottom:20px;right:20px;background:#27ae60;color:#fff;' +
+      'padding:12px 16px;border-radius:6px;font-size:0.9rem;z-index:9999;max-width:300px;' +
+      'font-family:var(--font-sans);box-shadow:0 2px 8px rgba(0,0,0,0.2)';
+    toast.textContent = '✓ Your progress synced from another device.';
+    document.body.appendChild(toast);
+    setTimeout(function() { toast.remove(); }, 4000);
+  }
+
   function pullOnce() {
     if (typeof FCEStore === 'undefined' || !FCEStore.mergeFromD1) return;
     try {
       if (sessionStorage.getItem('wp_synced') === '1') return;
     } catch (e) {}
-    FCEStore.mergeFromD1().then(function() {
+
+    var localProgress = {};
+    try { localProgress = JSON.parse(localStorage.getItem('wordplay_progress')) || {}; } catch (e) {}
+    var localUpdated = localProgress.updated_at || 0;
+    var dayAgo = Date.now() - 86400000;
+
+    // Add 5-second timeout to prevent page hang if API is slow
+    var timeoutId = setTimeout(function() {
+      console.warn('[WordPlay] Progress sync timeout after 5s; continuing with local data');
       try { sessionStorage.setItem('wp_synced', '1'); } catch (e) {}
-    }).catch(function() {});
+    }, 5000);
+
+    FCEStore.mergeFromD1().then(function(merged) {
+      clearTimeout(timeoutId);
+      try { sessionStorage.setItem('wp_synced', '1'); } catch (e) {}
+      // Show notification if local was >1 day old (multi-device scenario)
+      if (localUpdated > 0 && localUpdated < dayAgo) {
+        showMergeNotification();
+      }
+    }).catch(function(err) {
+      clearTimeout(timeoutId);
+      console.warn('[WordPlay] Progress sync failed:', err.message || err);
+    });
   }
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', pullOnce);
-  } else { pullOnce(); }
+
+  // CRITICAL FIX: Don't block page render on progress sync
+  // Use requestIdleCallback to defer sync until AFTER page is interactive
+  if (typeof requestIdleCallback !== 'undefined') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        requestIdleCallback(pullOnce);
+      });
+    } else {
+      requestIdleCallback(pullOnce);
+    }
+  } else {
+    // Fallback for older browsers: defer with setTimeout
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(pullOnce, 1000);
+      });
+    } else {
+      setTimeout(pullOnce, 1000);
+    }
+  }
 })();

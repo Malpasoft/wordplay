@@ -5,10 +5,10 @@
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
 <title>Vocabulario A1 · Comida y Bebida | Word Play</title>
-<link rel="stylesheet" href="../../../../shared/base.css?v=v123">
-<link rel="stylesheet" href="../../../../shared/game.css?v=v111">
-<script src="shared/auth.js?v=1"></script>
-<script src="../../../../shared/dark-init.js?v=v109"></script>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
 <style>
 .vocab-page{max-width:800px;margin:0 auto;padding:20px}
 .mode-tabs{display:flex;gap:8px;margin-bottom:24px}
@@ -62,7 +62,7 @@
   </div>
   <div id="modeFlash">
     <div class="flashcard-wrap">
-      <div class="flashcard" id="flashcard" onclick="flipCard()">
+      <button class="flashcard" id="flashcard" onclick="flipCard()">
         <div class="fc-face fc-front">
           <div class="fc-word" id="fcWord"></div>
           <div class="fc-ipa" id="fcIpa"></div>
@@ -72,7 +72,7 @@
         <div class="fc-face fc-back">
           <div class="fc-def" id="fcDef"></div>
           <div class="fc-ex" id="fcEx"></div>
-        </div>
+        </button>
       </div>
     </div>
     <div class="fc-nav">

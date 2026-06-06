@@ -420,6 +420,7 @@
   }
 
   // ── Auto-attach to all .sentence-grader textareas ───────────────
+  var sgHandlers = [];
   function autoAttach() {
     document.querySelectorAll('textarea.sentence-grader').forEach(function(ta) {
       var taskKey = ta.dataset.task;
@@ -433,19 +434,23 @@
       }
 
       var timeout;
-      ta.addEventListener('input', function() {
+      var inputHandler = function() {
         clearTimeout(timeout);
         timeout = setTimeout(function() {
           grade(ta, feedbackEl, taskKey);
         }, 700);
-      });
-
-      ta.addEventListener('blur', function() {
+      };
+      var blurHandler = function() {
         clearTimeout(timeout);
         if (ta.value.trim().length > 10) {
           grade(ta, feedbackEl, taskKey);
         }
-      });
+      };
+      ta.addEventListener('input', inputHandler);
+      ta.addEventListener('blur', blurHandler);
+
+      // Store handlers for cleanup
+      sgHandlers.push({ ta: ta, inputHandler: inputHandler, blurHandler: blurHandler, timeout: function() { return timeout; } });
     });
   }
 
@@ -477,5 +482,13 @@
   } else {
     autoAttach();
   }
+
+  // Clean up on page unload
+  window.addEventListener('pagehide', function() {
+    sgHandlers.forEach(function(item) {
+      item.ta.removeEventListener('input', item.inputHandler);
+      item.ta.removeEventListener('blur', item.blurHandler);
+    });
+  });
 
 })();

@@ -11,29 +11,29 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Georgia,"Times New Roman",serif;font-size:11pt;color:#000;line-height:1.5;background:var(--paper);padding:15mm 18mm 20mm}
 h1{font-size:18pt;margin-bottom:2pt}
-h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-bottom:3pt}
-.meta{font-family:Arial,Helvetica,sans-serif;font-size:8pt;color:#666;letter-spacing:1pt;text-transform:uppercase;margin-bottom:10pt}
+h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid var(--print-border-dark);padding-bottom:3pt}
+.meta{font-family:Arial,Helvetica,sans-serif;font-size:8pt;color:var(--print-text-muted);letter-spacing:1pt;text-transform:uppercase;margin-bottom:10pt}
 .rule{border:none;border-top:1pt solid #000;margin:12pt 0}
 .q{margin-bottom:8pt;page-break-inside:avoid}
-.q-num{font-family:Arial,sans-serif;font-size:8pt;font-weight:bold;color:#333;margin-right:4pt}
+.q-num{font-family:Arial,sans-serif;font-size:8pt;font-weight:bold;color:var(--print-text-secondary);margin-right:4pt}
 .q-text{display:inline}
 .blank{display:inline-block;min-width:80pt;border-bottom:0.75pt solid #000;margin:0 2pt}
-.writing-box{border:0.5pt solid #999;min-height:50pt;border-radius:2pt;padding:4pt;margin-top:4pt}
+.writing-box{border:0.5pt solid var(--print-border-dark);min-height:50pt;border-radius:2pt;padding:4pt;margin-top:4pt}
 .options{font-family:Arial,sans-serif;font-size:9pt;margin:3pt 0 0 18pt}
 .options span{margin-right:12pt}
 .answer{margin-bottom:3pt;font-size:10pt}
-.answer b{font-family:Arial,sans-serif;font-size:8pt;color:#333;margin-right:4pt}
-.footer{margin-top:16pt;font-family:Arial,sans-serif;font-size:7pt;color:#999;text-align:center;letter-spacing:1pt;text-transform:uppercase}
+.answer b{font-family:Arial,sans-serif;font-size:8pt;color:var(--print-text-secondary);margin-right:4pt}
+.footer{margin-top:16pt;font-family:Arial,sans-serif;font-size:7pt;color:var(--print-border-dark);text-align:center;letter-spacing:1pt;text-transform:uppercase}
 
 /* Print hub web view */
-.print-hub-web{font-family:Arial,sans-serif;margin-bottom:12pt;padding-bottom:10pt;border-bottom:1pt solid #eee}
-.phw-back{display:inline-block;font-size:8.5pt;color:#555;text-decoration:none;margin-bottom:8pt}
+.print-hub-web{font-family:Arial,sans-serif;margin-bottom:12pt;padding-bottom:10pt;border-bottom:1pt solid var(--print-border-light)}
+.phw-back{display:inline-block;font-size:8.5pt;color:var(--print-text-tertiary);text-decoration:none;margin-bottom:8pt}
 .phw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8pt;margin-bottom:10pt}
-.phw-card{display:block;padding:10pt;border:1pt solid #ddd;border-radius:4pt;text-decoration:none;color:#1A1A1A;border-top:2.5pt solid #B8860B;transition:background .15s}
-.phw-card:hover{background:#fffbf0}
+.phw-card{display:block;padding:10pt;border:1pt solid var(--print-border);border-radius:4pt;text-decoration:none;color:var(--print-text-primary);border-top:2.5pt solid var(--print-accent);transition:background .15s}
+.phw-card:hover{background:var(--print-hover-bg)}
 .phw-title{font-weight:700;font-size:9pt;margin-bottom:3pt}
-.phw-desc{font-size:7.5pt;color:#777}
-.phw-print-btn{font-family:Arial,sans-serif;font-size:7.5pt;font-weight:700;letter-spacing:.5pt;text-transform:uppercase;background:#B8860B;color:#fff;padding:5pt 14pt;border-radius:3pt;cursor:pointer;border:none}
+.phw-desc{font-size:7.5pt;color:var(--print-text-light)}
+.phw-print-btn{font-family:Arial,sans-serif;font-size:7.5pt;font-weight:700;letter-spacing:.5pt;text-transform:uppercase;background:var(--print-accent);color:var(--print-text-white);padding:5pt 14pt;border-radius:3pt;cursor:pointer;border:none}
 @media(max-width:480px){.phw-grid{grid-template-columns:1fr}}
 @media print{.no-print{display:none!important}.print-hub{display:none!important}body{padding:10mm 15mm 15mm}}
 @page{size:A4;margin:12mm 15mm 15mm}
@@ -79,7 +79,7 @@ h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-botto
 <div class="meta" style="margin-top:2pt">Lesson Handout</div>
 <hr class="rule">
 <h2>Phrasal verbs with PUT AND SET</h2>
-<p style="margin:6pt 0;padding:6pt 10pt;background:#f5f0e8;border-left:2pt solid var(--amber);font-size:10pt">These phrasal verbs are tested in FCE Use of English Parts 1 and 4. Learn each as a fixed phrase with its meaning.</p>
+<p style="margin:6pt 0;padding:6pt 10pt;background:var(--print-warm-bg);border-left:2pt solid var(--amber);font-size:10pt">These phrasal verbs are tested in FCE Use of English Parts 1 and 4. Learn each as a fixed phrase with its meaning.</p>
 <h2>More put and set phrasal verbs</h2>
 <h2>Examples in context</h2>
 <h2>Summary</h2>
@@ -88,9 +88,9 @@ h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-botto
 <div class="meta">B2 · Vocabulary</div>
 <h1>Phrasal Verbs — Put and Set</h1>
 <div class="meta" style="margin-top:2pt">Worksheet</div>
-<div style="font-size:9pt;color:#666;margin-bottom:8pt">Name: ___________________________ &nbsp;&nbsp; Date: _______________</div>
+<div style="font-size:9pt;color:var(--print-text-muted);margin-bottom:8pt">Name: ___________________________ &nbsp;&nbsp; Date: _______________</div>
 <hr class="rule">
-<h2>Match the phrasal verb <span style="font-weight:normal;font-size:9pt;color:#666">(8 points)</span></h2>
+<h2>Match the phrasal verb <span style="font-weight:normal;font-size:9pt;color:var(--print-text-muted)">(8 points)</span></h2>
 <div class="q"><span class="q-num">1.</span> <span class="q-text">Tolerate something unpleasant: ___________</span></div>
 <div class="q"><span class="q-num">2.</span> <span class="q-text">Establish or create something: ___________</span></div>
 <div class="q"><span class="q-num">3.</span> <span class="q-text">Postpone a meeting or appointment: ___________</span></div>
@@ -99,7 +99,7 @@ h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-botto
 <div class="q"><span class="q-num">6.</span> <span class="q-text">Reserve time or money for a purpose: ___________</span></div>
 <div class="q"><span class="q-num">7.</span> <span class="q-text">Begin a journey: ___________</span></div>
 <div class="q"><span class="q-num">8.</span> <span class="q-text">Save money or time for a specific purpose: ___________</span></div>
-<h2>Complete the sentences <span style="font-weight:normal;font-size:9pt;color:#666">(10 points)</span></h2>
+<h2>Complete the sentences <span style="font-weight:normal;font-size:9pt;color:var(--print-text-muted)">(10 points)</span></h2>
 <div class="q"><span class="q-num">9.</span> <span class="q-text">The company ___________ the launch of the new platform due to cybersecurity concerns.</span></div>
 <div class="q"><span class="q-num">10.</span> <span class="q-text">She ___________ a new sustainable packaging business last year.</span></div>
 <div class="q"><span class="q-num">11.</span> <span class="q-text">I simply cannot ___________ the noise in this open-plan office.</span></div>
@@ -110,7 +110,7 @@ h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-botto
 <div class="q"><span class="q-num">16.</span> <span class="q-text">The report clearly ___________ the steps needed to achieve net zero.</span></div>
 <div class="q"><span class="q-num">17.</span> <span class="q-text">The fire brigade quickly ___________ the blaze before it could spread further.</span></div>
 <div class="q"><span class="q-num">18.</span> <span class="q-text">She was ___________ a very difficult situation during the company restructuring.</span></div>
-<h2>Put or set? <span style="font-weight:normal;font-size:9pt;color:#666">(6 points)</span></h2>
+<h2>Put or set? <span style="font-weight:normal;font-size:9pt;color:var(--print-text-muted)">(6 points)</span></h2>
 <div class="q"><span class="q-num">19.</span> <span class="q-text">The meeting was ______ off until the following week.</span><div class="options"><span>☐ put</span><span>☐ set</span></div></div>
 <div class="q"><span class="q-num">20.</span> <span class="q-text">She ______ out her arguments clearly in the report.</span><div class="options"><span>☐ set</span><span>☐ put</span></div></div>
 <div class="q"><span class="q-num">21.</span> <span class="q-text">He ______ forward several ideas at the strategy meeting.</span><div class="options"><span>☐ put</span><span>☐ set</span></div></div>
@@ -123,24 +123,24 @@ h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-botto
 <h1>Phrasal Verbs — Put and Set</h1>
 <div class="meta" style="margin-top:2pt">Answer Key</div>
 <hr class="rule">
-<div class="answer"><b>1.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>2.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>3.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>4.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>5.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>6.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>7.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>8.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>9.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>10.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>11.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>12.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>13.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>14.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>15.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>16.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>17.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>18.</b> <i style="color:#999">Open task — assess individually</i></div>
+<div class="answer"><b>1.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>2.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>3.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>4.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>5.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>6.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>7.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>8.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>9.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>10.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>11.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>12.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>13.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>14.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>15.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>16.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>17.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>18.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
 <div class="answer"><b>19.</b> put</div>
 <div class="answer"><b>20.</b> set</div>
 <div class="answer"><b>21.</b> put</div>

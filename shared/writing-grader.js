@@ -572,12 +572,19 @@ function initWritingGrader(textareaId, feedbackId, config) {
   var container = document.getElementById(feedbackId);
 
   var timeout;
-  ta.addEventListener('input', function() {
+  var inputHandler = function() {
     clearTimeout(timeout);
     timeout = setTimeout(function() {
         var result = analyseText(ta.value, cfg);
       renderFeedback(result, feedbackId, cfg, ta.value);
     }, 700);
+  };
+  ta.addEventListener('input', inputHandler);
+
+  // Clean up on page unload
+  window.addEventListener('pagehide', function() {
+    ta.removeEventListener('input', inputHandler);
+    if (timeout) clearTimeout(timeout);
   });
 
   // Initial render

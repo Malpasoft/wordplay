@@ -11,29 +11,29 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Georgia,"Times New Roman",serif;font-size:11pt;color:#000;line-height:1.5;background:var(--paper);padding:15mm 18mm 20mm}
 h1{font-size:18pt;margin-bottom:2pt}
-h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-bottom:3pt}
-.meta{font-family:Arial,Helvetica,sans-serif;font-size:8pt;color:#666;letter-spacing:1pt;text-transform:uppercase;margin-bottom:10pt}
+h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid var(--print-border-dark);padding-bottom:3pt}
+.meta{font-family:Arial,Helvetica,sans-serif;font-size:8pt;color:var(--print-text-muted);letter-spacing:1pt;text-transform:uppercase;margin-bottom:10pt}
 .rule{border:none;border-top:1pt solid #000;margin:12pt 0}
 .q{margin-bottom:8pt;page-break-inside:avoid}
-.q-num{font-family:Arial,sans-serif;font-size:8pt;font-weight:bold;color:#333;margin-right:4pt}
+.q-num{font-family:Arial,sans-serif;font-size:8pt;font-weight:bold;color:var(--print-text-secondary);margin-right:4pt}
 .q-text{display:inline}
 .blank{display:inline-block;min-width:80pt;border-bottom:0.75pt solid #000;margin:0 2pt}
-.writing-box{border:0.5pt solid #999;min-height:50pt;border-radius:2pt;padding:4pt;margin-top:4pt}
+.writing-box{border:0.5pt solid var(--print-border-dark);min-height:50pt;border-radius:2pt;padding:4pt;margin-top:4pt}
 .options{font-family:Arial,sans-serif;font-size:9pt;margin:3pt 0 0 18pt}
 .options span{margin-right:12pt}
 .answer{margin-bottom:3pt;font-size:10pt}
-.answer b{font-family:Arial,sans-serif;font-size:8pt;color:#333;margin-right:4pt}
-.footer{margin-top:16pt;font-family:Arial,sans-serif;font-size:7pt;color:#999;text-align:center;letter-spacing:1pt;text-transform:uppercase}
+.answer b{font-family:Arial,sans-serif;font-size:8pt;color:var(--print-text-secondary);margin-right:4pt}
+.footer{margin-top:16pt;font-family:Arial,sans-serif;font-size:7pt;color:var(--print-border-dark);text-align:center;letter-spacing:1pt;text-transform:uppercase}
 
 /* Print hub web view */
-.print-hub-web{font-family:Arial,sans-serif;margin-bottom:12pt;padding-bottom:10pt;border-bottom:1pt solid #eee}
-.phw-back{display:inline-block;font-size:8.5pt;color:#555;text-decoration:none;margin-bottom:8pt}
+.print-hub-web{font-family:Arial,sans-serif;margin-bottom:12pt;padding-bottom:10pt;border-bottom:1pt solid var(--print-border-light)}
+.phw-back{display:inline-block;font-size:8.5pt;color:var(--print-text-tertiary);text-decoration:none;margin-bottom:8pt}
 .phw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8pt;margin-bottom:10pt}
-.phw-card{display:block;padding:10pt;border:1pt solid #ddd;border-radius:4pt;text-decoration:none;color:#1A1A1A;border-top:2.5pt solid #B8860B;transition:background .15s}
-.phw-card:hover{background:#fffbf0}
+.phw-card{display:block;padding:10pt;border:1pt solid var(--print-border);border-radius:4pt;text-decoration:none;color:var(--print-text-primary);border-top:2.5pt solid var(--print-accent);transition:background .15s}
+.phw-card:hover{background:var(--print-hover-bg)}
 .phw-title{font-weight:700;font-size:9pt;margin-bottom:3pt}
-.phw-desc{font-size:7.5pt;color:#777}
-.phw-print-btn{font-family:Arial,sans-serif;font-size:7.5pt;font-weight:700;letter-spacing:.5pt;text-transform:uppercase;background:#B8860B;color:#fff;padding:5pt 14pt;border-radius:3pt;cursor:pointer;border:none}
+.phw-desc{font-size:7.5pt;color:var(--print-text-light)}
+.phw-print-btn{font-family:Arial,sans-serif;font-size:7.5pt;font-weight:700;letter-spacing:.5pt;text-transform:uppercase;background:var(--print-accent);color:var(--print-text-white);padding:5pt 14pt;border-radius:3pt;cursor:pointer;border:none}
 @media(max-width:480px){.phw-grid{grid-template-columns:1fr}}
 @media print{.no-print{display:none!important}.print-hub{display:none!important}body{padding:10mm 15mm 15mm}}
 @page{size:A4;margin:12mm 15mm 15mm}
@@ -88,9 +88,9 @@ h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-botto
 <div class="meta">B1 · Vocabulary</div>
 <h1>Technology and Media</h1>
 <div class="meta" style="margin-top:2pt">Worksheet</div>
-<div style="font-size:9pt;color:#666;margin-bottom:8pt">Name: ___________________________ &nbsp;&nbsp; Date: _______________</div>
+<div style="font-size:9pt;color:var(--print-text-muted);margin-bottom:8pt">Name: ___________________________ &nbsp;&nbsp; Date: _______________</div>
 <hr class="rule">
-<h2>Match the definition <span style="font-weight:normal;font-size:9pt;color:#666">(7 points)</span></h2>
+<h2>Match the definition <span style="font-weight:normal;font-size:9pt;color:var(--print-text-muted)">(7 points)</span></h2>
 <div class="q"><span class="q-num">1.</span> <span class="q-text">Transfer a file from the internet to your device: ___________</span></div>
 <div class="q"><span class="q-num">2.</span> <span class="q-text">A programme that searches the internet: ___________</span></div>
 <div class="q"><span class="q-num">3.</span> <span class="q-text">Spread rapidly and be shared by many people: ___________</span></div>
@@ -98,13 +98,13 @@ h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-botto
 <div class="q"><span class="q-num">5.</span> <span class="q-text">Someone who produces content online: ___________</span></div>
 <div class="q"><span class="q-num">6.</span> <span class="q-text">A set of rules that determines what you see online: ___________</span></div>
 <div class="q"><span class="q-num">7.</span> <span class="q-text">Watch or listen to content live over the internet: ___________</span></div>
-<h2>Download, upload or stream? <span style="font-weight:normal;font-size:9pt;color:#666">(5 points)</span></h2>
+<h2>Download, upload or stream? <span style="font-weight:normal;font-size:9pt;color:var(--print-text-muted)">(5 points)</span></h2>
 <div class="q"><span class="q-num">8.</span> <span class="q-text">She ______ the new podcast episode directly to her phone before the flight.</span><div class="options"><span>☐ downloaded</span><span>☐ uploaded</span><span>☐ streamed</span></div></div>
 <div class="q"><span class="q-num">9.</span> <span class="q-text">He ______ the video from his phone to the social media platform.</span><div class="options"><span>☐ uploaded</span><span>☐ downloaded</span><span>☐ streamed</span></div></div>
 <div class="q"><span class="q-num">10.</span> <span class="q-text">We don't own any of the films — we just ______ them online.</span><div class="options"><span>☐ stream</span><span>☐ upload</span><span>☐ download</span></div></div>
 <div class="q"><span class="q-num">11.</span> <span class="q-text">The video went viral after it was ______ by over a million people in one day.</span><div class="options"><span>☐ shared</span><span>☐ downloaded</span><span>☐ logged in</span></div></div>
 <div class="q"><span class="q-num">12.</span> <span class="q-text">He ______ to his account and updated his profile picture.</span><div class="options"><span>☐ logged in</span><span>☐ uploaded</span><span>☐ streamed</span></div></div>
-<h2>Complete the sentences <span style="font-weight:normal;font-size:9pt;color:#666">(8 points)</span></h2>
+<h2>Complete the sentences <span style="font-weight:normal;font-size:9pt;color:var(--print-text-muted)">(8 points)</span></h2>
 <div class="q"><span class="q-num">13.</span> <span class="q-text">The ___________ suggested the content based on what I had watched before.</span></div>
 <div class="q"><span class="q-num">14.</span> <span class="q-text">Parents are worried about the amount of ___________ children are getting every day.</span></div>
 <div class="q"><span class="q-num">15.</span> <span class="q-text">She is a popular ___________ with over two million followers on her channel.</span></div>
@@ -113,7 +113,7 @@ h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-botto
 <div class="q"><span class="q-num">18.</span> <span class="q-text">Without ___________, I couldn't access any of my work files remotely.</span></div>
 <div class="q"><span class="q-num">19.</span> <span class="q-text">She uses an ___________ to sell handmade jewellery to customers around the world.</span></div>
 <div class="q"><span class="q-num">20.</span> <span class="q-text">He uses a ___________ to find information — he doesn't rely on just one website.</span></div>
-<h2>Open writing <span style="font-weight:normal;font-size:9pt;color:#666">(8 points)</span></h2>
+<h2>Open writing <span style="font-weight:normal;font-size:9pt;color:var(--print-text-muted)">(8 points)</span></h2>
 <div class="q"><span class="q-num">21.</span> <span class="q-text">Write about technology in your daily life. Use at least six words from this chapter.<br></span><div class="writing-box"></div></div>
 <div class="footer">Word Play · Cambridge English</div>
 <div id="ph-key" style="page-break-before:always"></div>
@@ -121,27 +121,27 @@ h2{font-size:13pt;margin:14pt 0 6pt;border-bottom:0.5pt solid #999;padding-botto
 <h1>Technology and Media</h1>
 <div class="meta" style="margin-top:2pt">Answer Key</div>
 <hr class="rule">
-<div class="answer"><b>1.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>2.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>3.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>4.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>5.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>6.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>7.</b> <i style="color:#999">Open task — assess individually</i></div>
+<div class="answer"><b>1.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>2.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>3.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>4.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>5.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>6.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>7.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
 <div class="answer"><b>8.</b> downloaded</div>
 <div class="answer"><b>9.</b> uploaded</div>
 <div class="answer"><b>10.</b> stream</div>
 <div class="answer"><b>11.</b> shared</div>
 <div class="answer"><b>12.</b> logged in</div>
-<div class="answer"><b>13.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>14.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>15.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>16.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>17.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>18.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>19.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>20.</b> <i style="color:#999">Open task — assess individually</i></div>
-<div class="answer"><b>21.</b> <i style="color:#999">Open task — assess individually</i></div>
+<div class="answer"><b>13.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>14.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>15.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>16.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>17.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>18.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>19.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>20.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
+<div class="answer"><b>21.</b> <i style="color:var(--print-border-dark)">Open task — assess individually</i></div>
 <div class="footer">Word Play · Cambridge English</div>
 </body>
 </html>

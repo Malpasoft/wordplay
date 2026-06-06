@@ -113,7 +113,22 @@
   if (!questions.length) {
     var msgEl = document.createElement('div');
     msgEl.style.cssText = 'padding:20px;background:var(--paper);border:1px solid var(--muted);border-radius:8px;color:var(--ink);font-family:var(--font-sans);line-height:1.5;margin:40px 20px;max-width:500px';
-    msgEl.innerHTML = '<strong>Worksheet Error:</strong> No questions found on this page. The worksheet may not be configured correctly.<br><br><a href="index.html" style="color:var(--amber);text-decoration:none">← Back to chapter</a>';
+
+    var strong = document.createElement('strong');
+    strong.textContent = 'Worksheet Error: ';
+    msgEl.appendChild(strong);
+
+    msgEl.appendChild(document.createTextNode('No questions found on this page. The worksheet may not be configured correctly.'));
+
+    msgEl.appendChild(document.createElement('br'));
+    msgEl.appendChild(document.createElement('br'));
+
+    var link = document.createElement('a');
+    link.href = 'index.html';
+    link.style.cssText = 'color:var(--amber);text-decoration:none';
+    link.textContent = '← Back to chapter';
+    msgEl.appendChild(link);
+
     var container = document.querySelector('.container') || document.body;
     container.insertBefore(msgEl, container.firstChild);
     return;
@@ -259,7 +274,17 @@
     for (var i = 0; i < MAX_LIVES; i++) {
       var h = document.createElement('span');
       h.className = 'wsq-heart' + (i >= lives ? ' lost' : '');
-      h.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
+      // Use appendChild to create SVG safely (static SVG path, no user content)
+      var svg = document.createElement('svg');
+      svg.setAttribute('viewBox', '0 0 24 24');
+      svg.setAttribute('width', '20');
+      svg.setAttribute('height', '20');
+      svg.setAttribute('aria-hidden', 'true');
+      var path = document.createElement('path');
+      path.setAttribute('fill', 'currentColor');
+      path.setAttribute('d', 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z');
+      svg.appendChild(path);
+      h.appendChild(svg);
       elLives.appendChild(h);
     }
   }
@@ -339,13 +364,20 @@
 
     elCard.className = correct ? 'ok' : 'bad';
     elFb.className   = 'wsq-fb ' + (correct ? 'ok' : 'bad');
-    elFb.innerHTML   = correct
-      ? ('✓ ' + L.correct)
-      : (L.wrong + '. ' + L.correctAns + ' <strong>' + esc(q.correct) + '</strong>');
+    elFb.innerHTML   = '';
+
+    if (correct) {
+      elFb.appendChild(document.createTextNode('✓ ' + L.correct));
+    } else {
+      elFb.appendChild(document.createTextNode(L.wrong + '. ' + L.correctAns + ' '));
+      var strong = document.createElement('strong');
+      strong.textContent = q.correct;
+      elFb.appendChild(strong);
+    }
     elFb.style.display = 'block';
 
     if (q.explanation) {
-      elExpl.innerHTML     = q.explanation;
+      elExpl.textContent = q.explanation;
       elExpl.style.display = 'block';
     }
 
@@ -401,33 +433,60 @@
 
     var pctColor = pct >= 80 ? 'var(--green)' : pct >= 50 ? 'var(--amber)' : 'var(--red)';
 
-    var gameCTA = success
-      ? '<a href="game.html" style="display:inline-block;padding:13px 32px;background:var(--amber);color:#1A1A1A;font-family:var(--font-sans);font-size:.8rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;border-radius:5px">' + L.gameBtn + ' &#8594;</a><br>'
-      : '';
-    var retryBtn = '<button id="wsq-retry-btn" style="display:inline-block;margin-top:12px;padding:11px 26px;background:transparent;color:var(--ink);font-family:var(--font-sans);font-size:.76rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:1.5px solid var(--hairline);border-radius:4px;cursor:pointer">' + L.tryAgain + '</button>';
-
     var done = document.createElement('div');
     done.id = 'wsq-done';
-    done.innerHTML = [
-      '<div id="wsq-done-card">',
-        '<div style="font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:8px">' + (success ? L.completed : L.noLives) + '</div>',
-        '<h2 style="font-family:Georgia,serif;font-size:2rem;font-weight:700;color:var(--ink);margin:0 0 10px">' + (success ? L.wellDone : L.keepGoing) + '</h2>',
-        '<p style="font-family:var(--font-sans);font-size:.88rem;color:var(--muted);margin:0 0 24px">' + L.firstPass + ' <strong style="color:' + pctColor + '">' + firstPassOK + ' / ' + totalQ + ' (' + pct + '%)</strong></p>',
-        gameCTA,
-        retryBtn,
-        '<br><a href="index.html" style="display:inline-block;margin-top:16px;font-family:var(--font-sans);font-size:.78rem;color:var(--muted);text-decoration:none">' + L.back + '</a>',
-      '</div>',
-    ].join('');
+
+    var doneCard = document.createElement('div');
+    doneCard.id = 'wsq-done-card';
+
+    var statusDiv = document.createElement('div');
+    statusDiv.style.cssText = 'font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:8px';
+    statusDiv.textContent = success ? L.completed : L.noLives;
+    doneCard.appendChild(statusDiv);
+
+    var h2 = document.createElement('h2');
+    h2.style.cssText = 'font-family:Georgia,serif;font-size:2rem;font-weight:700;color:var(--ink);margin:0 0 10px';
+    h2.textContent = success ? L.wellDone : L.keepGoing;
+    doneCard.appendChild(h2);
+
+    var pctP = document.createElement('p');
+    pctP.style.cssText = 'font-family:var(--font-sans);font-size:.88rem;color:var(--muted);margin:0 0 24px';
+    pctP.appendChild(document.createTextNode(L.firstPass + ' '));
+    var pctStrong = document.createElement('strong');
+    pctStrong.style.cssText = 'color:' + pctColor;
+    pctStrong.textContent = firstPassOK + ' / ' + totalQ + ' (' + pct + '%)';
+    pctP.appendChild(pctStrong);
+    doneCard.appendChild(pctP);
+
+    if (success) {
+      var gameLink = document.createElement('a');
+      gameLink.href = 'game.html';
+      gameLink.style.cssText = 'display:inline-block;padding:13px 32px;background:var(--amber);color:#1A1A1A;font-family:var(--font-sans);font-size:.8rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;border-radius:5px';
+      gameLink.textContent = L.gameBtn + ' →';
+      doneCard.appendChild(gameLink);
+      doneCard.appendChild(document.createElement('br'));
+    }
+
+    var retryBtn = document.createElement('button');
+    retryBtn.id = 'wsq-retry-btn';
+    retryBtn.style.cssText = 'display:inline-block;margin-top:12px;padding:11px 26px;background:transparent;color:var(--ink);font-family:var(--font-sans);font-size:.76rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:1.5px solid var(--hairline);border-radius:4px;cursor:pointer';
+    retryBtn.textContent = L.tryAgain;
+    retryBtn.addEventListener('click', function() { location.reload(); });
+    doneCard.appendChild(retryBtn);
+
+    doneCard.appendChild(document.createElement('br'));
+
+    var backLink = document.createElement('a');
+    backLink.href = 'index.html';
+    backLink.style.cssText = 'display:inline-block;margin-top:16px;font-family:var(--font-sans);font-size:.78rem;color:var(--muted);text-decoration:none';
+    backLink.textContent = L.back;
+    doneCard.appendChild(backLink);
+
+    done.appendChild(doneCard);
 
     var footer = document.querySelector('.site-footer');
     if (footer) footer.before(done);
     else document.body.appendChild(done);
-
-    // Wire retry button (replace inline onclick with addEventListener)
-    var retryBtn = done.querySelector('#wsq-retry-btn');
-    if (retryBtn) {
-      retryBtn.addEventListener('click', function() { location.reload(); });
-    }
   }
 
   // ── Wire events ──────────────────────────────────────────────────

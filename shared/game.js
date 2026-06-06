@@ -47,7 +47,24 @@ window.GAME_CONFIG = {
     var msgEl = document.createElement('div');
     msgEl.className = 'game-error-message';
     msgEl.style.cssText = 'padding:20px;background:var(--paper);border:1px solid var(--muted);border-radius:8px;color:var(--ink);font-family:var(--font-sans);line-height:1.5;margin:20px 0';
-    msgEl.innerHTML = '<strong>Game Error:</strong> ' + msg + '<br><br><a href="index.html" style="color:var(--amber);text-decoration:none">← Back to chapter</a>';
+
+    var strong = document.createElement('strong');
+    strong.textContent = 'Game Error: ';
+    msgEl.appendChild(strong);
+
+    var msgSpan = document.createElement('span');
+    msgSpan.textContent = msg;
+    msgEl.appendChild(msgSpan);
+
+    msgEl.appendChild(document.createElement('br'));
+    msgEl.appendChild(document.createElement('br'));
+
+    var link = document.createElement('a');
+    link.href = 'index.html';
+    link.style.cssText = 'color:var(--amber);text-decoration:none';
+    link.textContent = '← Back to chapter';
+    msgEl.appendChild(link);
+
     gameStart.innerHTML = '';
     gameStart.appendChild(msgEl);
   }
@@ -407,9 +424,22 @@ window.GAME_CONFIG = {
         // Show gapped sentence → pick/type answer
         if (el.term) {
           var sent = item.completion || item.example || '';
-          el.term.innerHTML = sent
-            ? esc(sent).replace('_____', '<span class="game-gap">_____</span>')
-            : esc(item.term);
+          if (sent) {
+            var parts = esc(sent).split('_____');
+            el.term.innerHTML = '';
+            for (var p = 0; p < parts.length; p++) {
+              if (p > 0) {
+                var gap = document.createElement('span');
+                gap.className = 'game-gap';
+                gap.textContent = '_____';
+                el.term.appendChild(gap);
+              }
+              var txt = document.createTextNode(parts[p]);
+              el.term.appendChild(txt);
+            }
+          } else {
+            el.term.textContent = item.term;
+          }
         }
         if (el.prompt) el.prompt.textContent = L.ctxSub;
         if (el.options)   el.options.style.display   = '';
@@ -544,12 +574,29 @@ window.GAME_CONFIG = {
       // ── Feedback ──────────────────────────────────────────────
       if (el.feedback) {
         el.feedback.className = 'game-feedback ' + (isCorrect ? 'correct' : 'wrong');
-        el.feedback.innerHTML = isCorrect
-          ? ('✓ ' + L.correct + (bonusMsg ? '  <em>' + bonusMsg + '</em>' : ''))
-          : (L.wrong + '. ' + L.answer + ' <strong>' + esc(correct) + '</strong>');
+        el.feedback.innerHTML = '';
+
+        if (isCorrect) {
+          var checkMark = document.createTextNode('✓ ' + L.correct);
+          el.feedback.appendChild(checkMark);
+
+          if (bonusMsg) {
+            el.feedback.appendChild(document.createTextNode('  '));
+            var em = document.createElement('em');
+            em.textContent = bonusMsg;
+            el.feedback.appendChild(em);
+          }
+        } else {
+          var errorMsg = document.createTextNode(L.wrong + '. ' + L.answer + ' ');
+          el.feedback.appendChild(errorMsg);
+
+          var strong = document.createElement('strong');
+          strong.textContent = correct;
+          el.feedback.appendChild(strong);
+        }
       }
       if (item.example && el.example) {
-        el.example.innerHTML  = item.example;
+        el.example.textContent = item.example;
         el.example.style.display = 'block';
       }
 
@@ -603,28 +650,70 @@ window.GAME_CONFIG = {
     // ── Reference panel ───────────────────────────────────────────
     function renderReference() {
       if (!el.refList) return;
-      el.refList.innerHTML = ITEMS.map(function(item) {
+      el.refList.innerHTML = '';
+      ITEMS.forEach(function(item) {
         var done = state && state.itemCorrect && state.itemCorrect[item.id];
-        return '<div class="game-ref-item">' +
-          '<span class="ref-term">' + esc(item.term) + (done ? ' ✓' : '') + '</span>' +
-          '<div class="ref-def">' + esc(item.meaning) + '</div>' +
-          '<div class="ref-ex">' + (item.example || '') + '</div>' +
-        '</div>';
-      }).join('');
+
+        var itemDiv = document.createElement('div');
+        itemDiv.className = 'game-ref-item';
+
+        var termSpan = document.createElement('span');
+        termSpan.className = 'ref-term';
+        termSpan.textContent = item.term + (done ? ' ✓' : '');
+        itemDiv.appendChild(termSpan);
+
+        var defDiv = document.createElement('div');
+        defDiv.className = 'ref-def';
+        defDiv.textContent = item.meaning;
+        itemDiv.appendChild(defDiv);
+
+        var exDiv = document.createElement('div');
+        exDiv.className = 'ref-ex';
+        exDiv.textContent = item.example || '';
+        itemDiv.appendChild(exDiv);
+
+        el.refList.appendChild(itemDiv);
+      });
     }
 
     // ── Completion screen ─────────────────────────────────────────
     function renderCompletion() {
       var comp = document.querySelector('#gameCompletion .game-complete');
       if (comp) {
-        comp.innerHTML = [
-          '<div style="font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:8px">' + esc(DATA.title || (DATA.chapterId || '')) + '</div>',
-          '<h2 style="font-family:Georgia,serif;font-size:2rem;font-weight:700;color:var(--ink);margin:0 0 10px">' + L.dominio + '</h2>',
-          '<p style="font-family:var(--font-sans);font-size:.88rem;color:var(--muted);margin:0 0 24px">' + L.finalScore + ' <strong>' + state.score + '</strong></p>',
-          '<a href="printables.html" style="display:inline-block;padding:14px 36px;background:var(--amber);color:#1A1A1A;font-family:var(--font-sans);font-size:.82rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;border-radius:5px">' + L.printBtn + '</a>',
-          '<br><br>',
-          '<a href="index.html" style="font-family:var(--font-sans);font-size:.78rem;color:var(--muted);text-decoration:none">' + L.backBtn + '</a>',
-        ].join('');
+        comp.innerHTML = '';
+
+        var titleDiv = document.createElement('div');
+        titleDiv.style.cssText = 'font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:8px';
+        titleDiv.textContent = DATA.title || (DATA.chapterId || '');
+        comp.appendChild(titleDiv);
+
+        var h2 = document.createElement('h2');
+        h2.style.cssText = 'font-family:Georgia,serif;font-size:2rem;font-weight:700;color:var(--ink);margin:0 0 10px';
+        h2.textContent = L.dominio;
+        comp.appendChild(h2);
+
+        var scoreP = document.createElement('p');
+        scoreP.style.cssText = 'font-family:var(--font-sans);font-size:.88rem;color:var(--muted);margin:0 0 24px';
+        scoreP.appendChild(document.createTextNode(L.finalScore + ' '));
+        var scoreStrong = document.createElement('strong');
+        scoreStrong.textContent = state.score;
+        scoreP.appendChild(scoreStrong);
+        comp.appendChild(scoreP);
+
+        var printLink = document.createElement('a');
+        printLink.href = 'printables.html';
+        printLink.style.cssText = 'display:inline-block;padding:14px 36px;background:var(--amber);color:#1A1A1A;font-family:var(--font-sans);font-size:.82rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;border-radius:5px';
+        printLink.textContent = L.printBtn;
+        comp.appendChild(printLink);
+
+        comp.appendChild(document.createElement('br'));
+        comp.appendChild(document.createElement('br'));
+
+        var backLink = document.createElement('a');
+        backLink.href = 'index.html';
+        backLink.style.cssText = 'font-family:var(--font-sans);font-size:.78rem;color:var(--muted);text-decoration:none';
+        backLink.textContent = L.backBtn;
+        comp.appendChild(backLink);
       }
       showScreen('completion');
       setTimeout(triggerConfetti, 300);
@@ -686,7 +775,7 @@ window.GAME_CONFIG = {
     }
 
     // Keyboard shortcuts
-    document.addEventListener('keydown', function(e) {
+    var gameKeyHandler = function(e) {
       if (!screens.play || !screens.play.classList.contains('active')) return;
       if (!currentQItem) return;
       var type = currentQItem.qtype;
@@ -698,11 +787,12 @@ window.GAME_CONFIG = {
       if ((e.key === 'Enter' || e.key === ' ') && el.btnNext && el.btnNext.style.display !== 'none') {
         e.preventDefault(); el.btnNext.click();
       }
-    });
+    };
+    document.addEventListener('keydown', gameKeyHandler);
 
     // ── Touch swipe to advance (after answering) ──────────────────
     var swX=0, swY=0, swActive=false, swDelta=0, swCard=null;
-    document.addEventListener('touchstart', function(e) {
+    var gameTouchStartHandler = function(e) {
       if (!currentQItem || e.touches.length > 1) return;
       if (!el.btnNext || el.btnNext.style.display === 'none') return;
       var card = document.querySelector('.game-play');
@@ -710,8 +800,10 @@ window.GAME_CONFIG = {
       swX = e.touches[0].clientX; swY = e.touches[0].clientY;
       swActive = false; swDelta = 0; swCard = card;
       swCard.style.transition = 'none';
-    }, { passive: true });
-    document.addEventListener('touchmove', function(e) {
+    };
+    document.addEventListener('touchstart', gameTouchStartHandler, { passive: true });
+
+    var gameTouchMoveHandler = function(e) {
       if (!swCard) return;
       var dx = e.touches[0].clientX - swX, dy = e.touches[0].clientY - swY;
       if (!swActive) {
@@ -723,8 +815,10 @@ window.GAME_CONFIG = {
       swDelta = dx;
       swCard.style.transform = 'translateX(' + dx + 'px)';
       swCard.style.opacity   = String(Math.max(0.25, 1 - Math.abs(dx) / (window.innerWidth * 0.55)));
-    }, { passive: false });
-    document.addEventListener('touchend', function() {
+    };
+    document.addEventListener('touchmove', gameTouchMoveHandler, { passive: false });
+
+    var gameTouchEndHandler = function() {
       if (!swCard) return;
       var card = swCard; swCard = null;
       if (!swActive || Math.abs(swDelta) < 30) {
@@ -743,7 +837,17 @@ window.GAME_CONFIG = {
         card.style.transform = ''; card.style.opacity = '';
         setTimeout(function() { card.style.transition = ''; }, 230);
       }
-    }, { passive: true });
+    };
+    document.addEventListener('touchend', gameTouchEndHandler, { passive: true });
+
+    // ── Cleanup on page unload ───────────────────────────────────────
+    function cleanupGameListeners() {
+      document.removeEventListener('keydown', gameKeyHandler);
+      document.removeEventListener('touchstart', gameTouchStartHandler);
+      document.removeEventListener('touchmove', gameTouchMoveHandler);
+      document.removeEventListener('touchend', gameTouchEndHandler);
+    }
+    window.addEventListener('pagehide', cleanupGameListeners);
 
     // ── Boot ──────────────────────────────────────────────────────
     var hasSaved = loadState();

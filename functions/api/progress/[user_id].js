@@ -75,19 +75,41 @@ export async function onRequestGet(context) {
       return json({ error: 'Cannot access another user\'s progress' }, 403);
     }
 
-    const progress = await context.env.DB.prepare(
-      'SELECT progress_data, updated_at FROM student_progress WHERE user_id = ?'
+    // Fetch from normalized schema: chapters + XP
+    const chapters = await context.env.DB.prepare(
+      'SELECT level, chapter_slug, score, total, pct, date FROM chapter_results WHERE user_id = ? ORDER BY level, chapter_slug'
+    )
+      .bind(parseInt(user_id))
+      .all();
+
+    const xpRow = await context.env.DB.prepare(
+      'SELECT xp, streak, last_day, updated_at FROM user_xp WHERE user_id = ?'
     )
       .bind(parseInt(user_id))
       .first();
 
-    if (!progress) {
-      return json({ progress: {}, updated_at: Date.now() });
+    // Reconstruct blob shape for compatibility with client's mergeProgress()
+    const progress = {};
+    for (const ch of chapters.results || []) {
+      if (!progress[ch.level]) progress[ch.level] = {};
+      progress[ch.level][ch.chapter_slug] = {
+        score: ch.score,
+        total: ch.total,
+        pct: ch.pct,
+        date: ch.date
+      };
+    }
+
+    if (xpRow) {
+      progress.xp = xpRow.xp;
+      progress.streak = xpRow.streak;
+      progress.lastDay = xpRow.last_day;
+      progress.updated_at = xpRow.updated_at;
     }
 
     return json({
-      progress: JSON.parse(progress.progress_data),
-      updated_at: progress.updated_at
+      progress: progress,
+      updated_at: progress.updated_at || Date.now()
     });
   } catch (error) {
     console.error('Progress fetch error:', error);
@@ -111,7 +133,6 @@ export async function onRequestPost(context) {
       return json({ error: 'Invalid or expired token' }, 401);
     }
 
-    // Users can only save their own progress, or admins can save any
     const user = await context.env.DB.prepare('SELECT role FROM users WHERE id = ?')
       .bind(tokenUserId)
       .first();
@@ -120,47 +141,54 @@ export async function onRequestPost(context) {
       return json({ error: 'Cannot save another user\'s progress' }, 403);
     }
 
-    const clientData = await context.request.json();
-
-    // Fetch existing progress from D1
-    const existing = await context.env.DB.prepare(
-      'SELECT progress_data, updated_at FROM student_progress WHERE user_id = ?'
-    )
-      .bind(parseInt(user_id))
-      .first();
-
-    // Deep-merge incoming progress with what's already in the cloud so no
-    // chapter, XP, or streak is ever discarded — even with concurrent devices.
-    let mergedData = clientData;
-    if (existing) {
-      mergedData = mergeProgress(JSON.parse(existing.progress_data), clientData);
-    }
-
+    const payload = await context.request.json();
+    const studentId = parseInt(user_id);
     const now = Date.now();
-    mergedData.updated_at = now;
 
-    // Upsert progress record
-    if (existing) {
+    // Handle normalized format (new): { chapters: [...], xp, streak, lastDay }
+    if (Array.isArray(payload.chapters)) {
+      // Insert/update each chapter
+      for (const ch of payload.chapters) {
+        await context.env.DB.prepare(
+          `INSERT INTO chapter_results (user_id, level, chapter_slug, score, total, pct, date, updated_at)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+           ON CONFLICT(user_id, level, chapter_slug) DO UPDATE SET
+             score=excluded.score, total=excluded.total, pct=excluded.pct,
+             date=excluded.date, updated_at=excluded.updated_at`
+        )
+          .bind(studentId, ch.level, ch.slug, ch.score, ch.total, ch.pct, ch.date, now)
+          .run();
+      }
+
+      // Upsert XP/streak (one row per student, take max on conflict)
       await context.env.DB.prepare(
-        'UPDATE student_progress SET progress_data = ?, updated_at = ? WHERE user_id = ?'
+        `INSERT INTO user_xp (user_id, xp, streak, last_day, updated_at)
+         VALUES (?, ?, ?, ?, ?)
+         ON CONFLICT(user_id) DO UPDATE SET
+           xp=MAX(xp, excluded.xp),
+           streak=MAX(streak, excluded.streak),
+           last_day=MAX(last_day, excluded.last_day),
+           updated_at=excluded.updated_at`
       )
-        .bind(JSON.stringify(mergedData), now, parseInt(user_id))
+        .bind(studentId, payload.xp || 0, payload.streak || 0, payload.lastDay || null, now)
         .run();
-    } else {
-      await context.env.DB.prepare(
-        'INSERT INTO student_progress (user_id, progress_data, updated_at) VALUES (?, ?, ?)'
-      )
-        .bind(parseInt(user_id), JSON.stringify(mergedData), now)
-        .run();
+
+      // Log success (sample every 10th write to reduce noise)
+      if (Math.random() < 0.1) {
+        console.log(`PROGRESS_WRITE: user_id=${studentId}, chapters=${payload.chapters.length}, xp=${payload.xp}`);
+      }
+
+      return json({
+        ok: true,
+        message: 'Progress saved'
+      }, 200);
     }
 
-    return json({
-      ok: true,
-      progress: mergedData,
-      updated_at: now
-    });
+    // Only normalized format supported; old blob format rejected
+    return json({ error: 'Invalid payload format. Expected {chapters, xp, streak, lastDay}' }, 400);
   } catch (error) {
-    console.error('Progress save error:', error);
+    // CRITICAL: Log all write failures — these are data loss events
+    console.error(`PROGRESS_WRITE_FAIL: user_id=${user_id}, error=${error.message}, stack=${error.stack}`);
     return json({ error: 'Failed to save progress' }, 500);
   }
 }

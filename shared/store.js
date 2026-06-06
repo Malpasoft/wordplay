@@ -173,16 +173,22 @@
         .sort(function(a,b) { return results[a.slug].pct - results[b.slug].pct; });
     },
 
-    // Push local progress to D1 (reliable: keepalive survives navigation).
-    pushToD1: function() { return doPush(); },
+    // (Deprecated) syncToD1 — replaced by pushToD1 which uses normalized schema
+    // Kept for backward compat, but no-op now.
+    syncToD1: function() { return Promise.resolve(null); },
 
-    // Pull cloud progress and DEEP-MERGE into local — never loses a chapter.
+    // Push local progress to D1 using normalized schema (chapters + XP separately).
+    // Only called on session-end (pagehide), not on every keystroke.
+    pushToD1: function() { return doPushNormalized(); },
+
+    // Pull cloud progress (normalized) and merge into local (once per session).
     mergeFromD1: function() {
       var token = getAuthToken ? getAuthToken() : null;
       var user  = getCurrentUser ? getCurrentUser() : null;
       if (!token || !user) return Promise.resolve(null);
 
-      return fetch('/api/progress/' + user.user_id, {
+      // Wrap fetch with 5-second timeout to prevent page hang
+      var promise = fetch('/api/progress/' + user.user_id, {
         headers: { 'Authorization': 'Bearer ' + token }
       })
         .then(function(res) {
@@ -192,23 +198,94 @@
         .then(function(data) {
           var merged = mergeProgress(load(), data.progress || {});
           save(merged);
-          // Push merged back once so the cloud converges with anything
-          // that existed only on this device. No data is discarded either way.
-          doPush();
           return merged;
         })
         .catch(function(err) {
           console.warn('[WordPlay] D1 merge failed, using local progress:', err.message);
           return load();
         });
+
+      // Add 5-second timeout wrapper
+      return Promise.race([
+        promise,
+        new Promise(function(resolve) {
+          setTimeout(function() {
+            console.warn('[WordPlay] Progress fetch timeout (5s); using local data');
+            resolve(load());
+          }, 5000);
+        })
+      ]);
     }
   };
 
-  // ── Cloud sync internals ─────────────────────────────────────────
-  // Deep-merge two progress objects without losing data:
-  //  · level maps → union of chapters, keep the later-dated (then higher-pct) entry
-  //  · xp / streak → keep the maximum
-  //  · lastDay     → keep the later date
+  // ── Normalized schema sync (Option 2 + Option 3) ─────────────────────────
+  // Instead of blob writes, use surgical per-chapter updates + batch XP/streak.
+  // Only called on session-end (pagehide), not per keystroke.
+
+  function doPushNormalized() {
+    var token = getAuthToken ? getAuthToken() : null;
+    var user  = getCurrentUser ? getCurrentUser() : null;
+    if (!token || !user) return Promise.resolve(null);
+
+    var data = load();
+    var payload = {
+      chapters: [],  // Array of { level, slug, score, total, pct, date }
+      xp: data.xp || 0,
+      streak: data.streak || 0,
+      lastDay: data.lastDay || null
+    };
+
+    // Flatten chapters from nested object into array
+    for (var level in data) {
+      if (!level || ['xp', 'streak', 'updated_at', 'lastDay'].includes(level)) continue;
+      var levelData = data[level];
+      if (typeof levelData !== 'object') continue;
+
+      for (var slug in levelData) {
+        var entry = levelData[slug];
+        if (!entry || typeof entry !== 'object' || entry.pct === undefined) continue;
+
+        payload.chapters.push({
+          level: level,
+          slug: slug,
+          score: entry.score || null,
+          total: entry.total || null,
+          pct: entry.pct,
+          date: entry.date || new Date().toISOString()
+        });
+      }
+    }
+
+    return fetch('/api/progress/' + user.user_id, {
+      method: 'POST',
+      keepalive: true,
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    }).catch(function(err) {
+      console.warn('[WordPlay] D1 push failed, will retry on next session:', err.message);
+      return null;
+    });
+  }
+
+  // Flush on pagehide (more reliable than beforeunload, with keepalive).
+  var _pushTimer = null;
+  function schedulePush() {
+    if (!getCurrentUser || !getCurrentUser()) return;
+    if (_pushTimer) clearTimeout(_pushTimer);
+    _pushTimer = setTimeout(function(){ _pushTimer = null; doPushNormalized(); }, 1500);
+  }
+
+  if (typeof window !== 'undefined') {
+    window.addEventListener('pagehide', function(){
+      if (_pushTimer) clearTimeout(_pushTimer);
+      doPushNormalized();
+    });
+  }
+
+  // ── Deep merge (same as before) ──────────────────────────────────────────
   function pickEntry(x, y) {
     if (!x) return y;
     if (!y) return x;
@@ -227,12 +304,10 @@
 
     Object.keys(keys).forEach(function(k) {
       var av = a[k], bv = b[k];
-      if (k === 'updated_at') return;                 // recomputed below
+      if (k === 'updated_at') return;
       if (k === 'xp')      { out.xp = Math.max(av || 0, bv || 0); return; }
       if (k === 'streak')  { out.streak = Math.max(av || 0, bv || 0); return; }
       if (k === 'lastDay') { out.lastDay = (av || '') > (bv || '') ? av : bv; return; }
-
-      // Level maps (objects of chapter entries)
       if (av && bv && typeof av === 'object' && typeof bv === 'object') {
         var level = {};
         var chs = {};
@@ -247,46 +322,6 @@
 
     out.updated_at = Date.now();
     return out;
-  }
-
-  // Reliable push: keepalive lets the request finish even if the page is
-  // navigating away, so we don't need an (unreliable) beforeunload fetch.
-  function doPush() {
-    var token = getAuthToken ? getAuthToken() : null;
-    var user  = getCurrentUser ? getCurrentUser() : null;
-    if (!token || !user) return Promise.resolve(null);
-
-    var data = load();
-    data.updated_at = Date.now();
-
-    return fetch('/api/progress/' + user.user_id, {
-      method: 'POST',
-      keepalive: true,
-      headers: {
-        'Authorization': 'Bearer ' + token,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    }).catch(function(err) {
-      console.warn('[WordPlay] D1 push failed, will retry on next save:', err.message);
-      return null;
-    });
-  }
-
-  // Debounced push — called after every local write so progress reaches the
-  // cloud a couple of seconds after a student finishes, while still on-page.
-  var _pushTimer = null;
-  function schedulePush() {
-    if (!getCurrentUser || !getCurrentUser()) return;
-    if (_pushTimer) clearTimeout(_pushTimer);
-    _pushTimer = setTimeout(function(){ _pushTimer = null; doPush(); }, 1500);
-  }
-
-  // Final best-effort flush when the page is hidden/closed (keepalive fetch).
-  if (typeof window !== 'undefined') {
-    window.addEventListener('pagehide', function(){
-      if (_pushTimer) { clearTimeout(_pushTimer); _pushTimer = null; doPush(); }
-    });
   }
 
   // ── Flat slug index for O(1) chapter lookup ──────────────────────

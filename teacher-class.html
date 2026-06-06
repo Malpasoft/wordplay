@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>Class Roster | Word Play</title>
+<link rel="stylesheet" href="shared/base.css?v=v124">
+<script src="/shared/auth.js?v=1"></script>
+<script src="shared/dark-init.js?v=v112"></script>
+<style>
+body { background: var(--paper); }
+
+.page-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 16px 60px;
+}
+
+.page-head {
+  margin-bottom: 32px;
+}
+
+.page-head h1 {
+  font-size: 1.8rem;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+
+.page-head p {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  display: inline-block;
+  background: var(--amber);
+  color: #1A1A1A;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(184, 134, 11, 0.2);
+}
+
+.btn-secondary {
+  display: inline-block;
+  background: var(--cream);
+  color: var(--ink);
+  border: 1.5px solid var(--hairline);
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-secondary:hover {
+  border-color: var(--amber);
+  background: var(--paper);
+}
+
+.btn-small {
+  padding: 6px 12px;
+  font-size: 0.8rem;
+}
+
+.btn-danger {
+  background: #dc2626;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #b91c1c;
+  box-shadow: 0 4px 12px rgba(220, 38, 38, 0.2);
+}
+
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.active {
+  display: flex;
+}
+
+.modal-content {
+  background: var(--cream);
+  border-radius: 12px;
+  padding: 32px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.modal-head {
+  margin-bottom: 20px;
+}
+
+.modal-head h2 {
+  font-size: 1.4rem;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+
+.modal-head p {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-label {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.form-input,
+.form-select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid var(--hairline);
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: var(--paper);
+  transition: border-color 0.15s;
+  box-sizing: border-box;
+}
+
+.form-input:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--amber);
+  box-shadow: 0 0 0 3px rgba(184, 134, 11, 0.1);
+}
+
+.form-input::placeholder {
+  color: var(--muted);
+}
+
+.modal-footer {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.modal-close {
+  display: flex;
+  gap: 12px;
+}
+
+/* Students Table */
+.students-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--cream);
+  border: 1.5px solid var(--hairline);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.students-table thead {
+  background: var(--paper);
+  border-bottom: 1.5px solid var(--hairline);
+}
+
+.students-table th {
+  padding: 14px 16px;
+  text-align: left;
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--muted);
+}
+
+.students-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--hairline);
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.students-table tr:last-child td {
+  border-bottom: none;
+}
+
+.student-email {
+  font-weight: 600;
+}
+
+.student-date {
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.student-actions {
+  text-align: right;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--muted);
+}
+
+.empty-state h3 {
+  font-size: 1.1rem;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+
+.empty-state p {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* Alerts */
+.alert {
+  display: none;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+}
+
+.alert.show {
+  display: block;
+}
+
+.alert-success {
+  background: #d1fae5;
+  color: #065f46;
+  border: 1px solid #6ee7b7;
+}
+
+.alert-error {
+  background: #fee2e2;
+  color: #991b1b;
+  border: 1px solid #fca5a5;
+}
+
+/* CSV Upload */
+.csv-dropzone {
+  border: 2px dashed var(--hairline);
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+  transition: all 0.15s;
+  cursor: pointer;
+  background: var(--paper);
+}
+
+.csv-dropzone.hover {
+  border-color: var(--amber);
+  background: rgba(184, 134, 11, 0.05);
+}
+
+.csv-dropzone p {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0;
+}
+
+.csv-dropzone strong {
+  color: var(--ink);
+  display: block;
+  margin-bottom: 4px;
+}
+
+#csv-file-input {
+  display: none;
+}
+
+.csv-preview {
+  margin-top: 20px;
+  padding: 16px;
+  background: var(--paper);
+  border-radius: 6px;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.8rem;
+  max-height: 200px;
+  overflow-y: auto;
+  color: var(--ink);
+}
+
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: var(--hairline);
+  border-radius: 2px;
+  margin-top: 12px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: var(--amber);
+  width: 0%;
+  transition: width 0.3s;
+}
+
+@media (max-width: 768px) {
+  .students-table {
+    font-size: 0.85rem;
+  }
+
+  .students-table th,
+  .students-table td {
+    padding: 12px 10px;
+  }
+
+  .controls {
+    flex-direction: column;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    text-align: center;
+  }
+
+  .modal-content {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .students-table {
+    display: block;
+    border: none;
+    font-size: 0.8rem;
+  }
+
+  .students-table thead {
+    display: none;
+  }
+
+  .students-table tbody {
+    display: block;
+  }
+
+  .students-table tr {
+    display: block;
+    border: 1.5px solid var(--hairline);
+    border-radius: 8px;
+    margin-bottom: 12px;
+    padding: 12px;
+    background: var(--cream);
+  }
+
+  .students-table td {
+    display: block;
+    text-align: left;
+    padding: 6px 0;
+    border: none;
+  }
+
+  .students-table td::before {
+    content: attr(data-label);
+    font-weight: 700;
+    display: inline-block;
+    width: 60px;
+    color: var(--muted);
+  }
+
+  .controls {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+    padding: 12px;
+    font-size: 0.9rem;
+  }
+
+  .page-wrap {
+    padding: 16px 12px 60px;
+  }
+
+  .page-head h1 {
+    font-size: 1.4rem;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .modal {
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  .modal-content {
+    background: var(--cream);
+  }
+
+  .form-input,
+  .form-select {
+    background: var(--paper);
+  }
+
+  .students-table {
+    background: var(--cream);
+  }
+
+  .csv-dropzone {
+    background: var(--paper);
+  }
+
+  .csv-preview {
+    background: var(--paper);
+  }
+}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="teacher.html" class="back back-link" aria-label="Back"></a>
+  <a href="/" class="brand">Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">◐ Dark</button>
+</div></header>
+
+<div class="page-wrap">
+  <div class="page-head">
+    <h1>Class Roster</h1>
+    <p>Create students, bulk-import from CSV, and manage your class</p>
+  </div>
+
+  <div id="alert" class="alert"></div>
+
+  <div class="controls">
+    <button class="btn-primary" onclick="openCreateStudentModal()">+ New Student</button>
+    <button class="btn-secondary" onclick="openBulkImportModal()">Bulk Import CSV</button>
+  </div>
+
+  <div id="students-container"></div>
+</div>
+
+<!-- Create Student Modal -->
+<div id="createModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-head">
+      <h2>Create Student</h2>
+      <p>Add a new student to your class</p>
+    </div>
+    <form onsubmit="submitCreateStudent(event)">
+      <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <input type="email" class="form-input" id="createEmail" placeholder="student@example.com" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-input" id="createPassword" placeholder="8+ characters" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Name (optional)</label>
+        <input type="text" class="form-input" id="createName" placeholder="Student Name">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Level (optional)</label>
+        <select class="form-select" id="createLevel">
+          <option value="a1">A1 Beginner</option>
+          <option value="a2">A2 Elementary</option>
+          <option value="b1">B1 Intermediate</option>
+          <option value="b2">B2 Upper Intermediate</option>
+          <option value="c1">C1 Advanced</option>
+          <option value="c2">C2 Mastery</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-secondary" onclick="closeCreateStudentModal()">Cancel</button>
+        <button type="submit" class="btn-primary">Create Student</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Bulk Import Modal -->
+<div id="bulkModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-head">
+      <h2>Bulk Import Students</h2>
+      <p>Upload a CSV file with email, name, and optional level</p>
+    </div>
+    <div class="csv-dropzone" id="csvDropzone" ondrop="handleCSVDrop(event)" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" onclick="document.getElementById('csv-file-input').click()">
+      <strong>Drop CSV here or click to browse</strong>
+      <p>Format: email, name, level (optional)</p>
+      <p style="font-size: 0.8rem; margin-top: 8px;">Example:</p>
+      <p style="font-size: 0.75rem; color: var(--muted); margin: 4px 0;">alice@example.com, Alice, a1</p>
+      <p style="font-size: 0.75rem; color: var(--muted); margin: 4px 0;">bob@example.com, Bob</p>
+    </div>
+    <input type="file" id="csv-file-input" accept=".csv,text/csv" onchange="handleCSVFile(event)">
+    <div id="csv-preview" class="csv-preview" style="display: none;"></div>
+    <div class="modal-footer">
+      <button class="btn-secondary" onclick="closeBulkImportModal()">Cancel</button>
+      <button class="btn-primary" id="bulkSubmitBtn" onclick="submitBulkImport()" style="display: none;">Import Students</button>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">Word Play · Private · Teacher tools</footer>
+
+<script>
+requireTeacher();
+
+const currentUser = getCurrentUser();
+const authToken = getAuthToken();
+let csvData = null;
+
+function showAlert(message, type = 'success') {
+  const alert = document.getElementById('alert');
+  alert.textContent = message;
+  alert.className = `alert show alert-${type}`;
+  setTimeout(() => {
+    alert.className = 'alert';
+  }, 4000);
+}
+
+function openCreateStudentModal() {
+  document.getElementById('createModal').classList.add('active');
+  document.getElementById('createEmail').focus();
+}
+
+function closeCreateStudentModal() {
+  document.getElementById('createModal').classList.remove('active');
+  document.getElementById('createEmail').value = '';
+  document.getElementById('createPassword').value = '';
+  document.getElementById('createName').value = '';
+  document.getElementById('createLevel').value = 'a1';
+}
+
+function openBulkImportModal() {
+  document.getElementById('bulkModal').classList.add('active');
+}
+
+function closeBulkImportModal() {
+  document.getElementById('bulkModal').classList.remove('active');
+  document.getElementById('csv-file-input').value = '';
+  document.getElementById('csv-preview').style.display = 'none';
+  document.getElementById('bulkSubmitBtn').style.display = 'none';
+  csvData = null;
+}
+
+async function submitCreateStudent(event) {
+  event.preventDefault();
+
+  const email = document.getElementById('createEmail').value.trim();
+  const password = document.getElementById('createPassword').value;
+  const name = document.getElementById('createName').value.trim();
+  const level = document.getElementById('createLevel').value;
+
+  if (password.length < 8) {
+    showAlert('Password must be at least 8 characters', 'error');
+    return;
+  }
+
+  const btn = event.target.querySelector('button[type="submit"]');
+  btn.disabled = true;
+  btn.textContent = 'Creating...';
+
+  try {
+    const response = await authenticatedFetch('/api/teacher/students', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password, name: name || email.split('@')[0], level })
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || 'Failed to create student');
+    }
+
+    showAlert(`Student ${email} created successfully!`, 'success');
+    closeCreateStudentModal();
+    loadStudents();
+  } catch (error) {
+    showAlert(error.message || 'Error creating student', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Create Student';
+  }
+}
+
+function handleDragOver(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  document.getElementById('csvDropzone').classList.add('hover');
+}
+
+function handleDragLeave(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  document.getElementById('csvDropzone').classList.remove('hover');
+}
+
+function handleCSVDrop(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  document.getElementById('csvDropzone').classList.remove('hover');
+
+  const files = event.dataTransfer.files;
+  if (files.length > 0) {
+    handleCSVFileContent(files[0]);
+  }
+}
+
+function handleCSVFile(event) {
+  const file = event.target.files[0];
+  if (file) {
+    handleCSVFileContent(file);
+  }
+}
+
+function handleCSVFileContent(file) {
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const csv = e.target.result;
+    const lines = csv.trim().split('\n').map(line => line.trim()).filter(line => line);
+
+    if (lines.length === 0) {
+      showAlert('CSV file is empty', 'error');
+      return;
+    }
+
+    // Parse CSV (naive; assumes no commas in values)
+    const parsed = [];
+    for (const line of lines) {
+      const parts = line.split(',').map(p => p.trim());
+      const email = parts[0];
+      const name = parts[1] || '';
+      const level = parts[2] || 'a1';
+
+      if (!email || !email.includes('@')) {
+        showAlert(`Invalid email: ${email}`, 'error');
+        return;
+      }
+
+      parsed.push({ email, name: name || email.split('@')[0], level });
+    }
+
+    csvData = parsed;
+
+    // Show preview
+    const preview = document.getElementById('csv-preview');
+    preview.innerHTML = parsed.slice(0, 10).map(s =>
+      `<div>${s.email} · ${s.name} · ${s.level}</div>`
+    ).join('');
+    preview.style.display = 'block';
+
+    if (parsed.length > 10) {
+      preview.innerHTML += `<div style="margin-top: 12px; color: var(--muted);">... and ${parsed.length - 10} more</div>`;
+    }
+
+    document.getElementById('bulkSubmitBtn').style.display = 'block';
+  };
+  reader.readAsText(file);
+}
+
+async function submitBulkImport() {
+  if (!csvData || csvData.length === 0) {
+    showAlert('No students to import', 'error');
+    return;
+  }
+
+  const btn = document.getElementById('bulkSubmitBtn');
+  btn.disabled = true;
+
+  let imported = 0;
+  let failed = 0;
+
+  // Add progress bar
+  const progressBar = document.createElement('div');
+  progressBar.className = 'progress-bar';
+  progressBar.innerHTML = '<div class="progress-bar-fill"></div>';
+  const preview = document.getElementById('csv-preview');
+  preview.parentNode.insertBefore(progressBar, preview.nextSibling);
+
+  for (let i = 0; i < csvData.length; i++) {
+    const student = csvData[i];
+    const progressPercent = ((i + 1) / csvData.length) * 100;
+    progressBar.querySelector('.progress-bar-fill').style.width = progressPercent + '%';
+
+    try {
+      const response = await authenticatedFetch('/api/teacher/students', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: student.email,
+          password: Math.random().toString(36).slice(-12), // Random password
+          name: student.name,
+          level: student.level
+        })
+      });
+
+      if (response.ok) {
+        imported++;
+      } else {
+        failed++;
+      }
+
+      // Small delay to prevent rate limiting
+      await new Promise(resolve => setTimeout(resolve, 100));
+    } catch (error) {
+      failed++;
+    }
+  }
+
+  btn.disabled = false;
+
+  showAlert(`Imported ${imported} student${imported !== 1 ? 's' : ''} ${failed > 0 ? `(${failed} failed)` : ''}`, imported > 0 ? 'success' : 'error');
+
+  if (imported > 0) {
+    closeBulkImportModal();
+    loadStudents();
+  }
+}
+
+async function removeStudent(studentId) {
+  if (!confirm('Are you sure you want to remove this student from your class?')) {
+    return;
+  }
+
+  try {
+    const response = await authenticatedFetch(`/api/teacher/students/${studentId}`, {
+      method: 'DELETE'
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || 'Failed to remove student');
+    }
+
+    showAlert('Student removed from class', 'success');
+    loadStudents();
+  } catch (error) {
+    showAlert(error.message || 'Error removing student', 'error');
+  }
+}
+
+async function loadStudents() {
+  try {
+    const response = await authenticatedFetch('/api/teacher/students');
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || 'Failed to load students');
+    }
+
+    const students = data.students || [];
+    const container = document.getElementById('students-container');
+
+    if (students.length === 0) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <h3>No students yet</h3>
+          <p>Create your first student or bulk-import from CSV to get started</p>
+        </div>
+      `;
+      return;
+    }
+
+    const html = `
+      <table class="students-table">
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Created</th>
+            <th style="text-align: right;">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${students.map(s => `
+            <tr>
+              <td class="student-email" data-label="Email">${s.email}</td>
+              <td class="student-date" data-label="Created">${new Date(s.created_at).toLocaleDateString()}</td>
+              <td class="student-actions" data-label="Actions">
+                <button class="btn-secondary btn-small btn-danger" onclick="removeStudent(${s.id})">Remove</button>
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    `;
+
+    container.innerHTML = html;
+  } catch (error) {
+    console.error('Load error:', error);
+    showAlert(error.message || 'Failed to load students', 'error');
+  }
+}
+
+// Close modals on escape key
+var tcEscapeHandler = function(e) {
+  if (e.key === 'Escape') {
+    closeCreateStudentModal();
+    closeBulkImportModal();
+  }
+};
+document.addEventListener('keydown', tcEscapeHandler);
+
+// Close modals on background click
+var tcModalClickHandlers = [];
+document.querySelectorAll('.modal').forEach(modal => {
+  var clickHandler = function(e) {
+    if (e.target === modal) {
+      modal.classList.remove('active');
+    }
+  };
+  modal.addEventListener('click', clickHandler);
+  tcModalClickHandlers.push({ modal: modal, handler: clickHandler });
+});
+
+// Clean up on page unload
+window.addEventListener('pagehide', function() {
+  document.removeEventListener('keydown', tcEscapeHandler);
+  tcModalClickHandlers.forEach(function(item) {
+    item.modal.removeEventListener('click', item.handler);
+  });
+});
+
+// Load students on page load
+loadStudents();
+</script>
+</body>
+</html>

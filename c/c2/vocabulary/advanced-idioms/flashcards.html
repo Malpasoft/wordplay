@@ -3,10 +3,10 @@
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
 <title>C2 Vocab · Advanced Idioms & Fixed Phrases | Word Play</title>
-<link rel="stylesheet" href="../../../../shared/base.css?v=v123">
-<link rel="stylesheet" href="../../../../shared/game.css?v=v111">
-<script src="shared/auth.js?v=1"></script>
-<script src="../../../../shared/dark-init.js?v=v109"></script>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
 <style>
 .vocab-page{max-width:800px;margin:0 auto;padding:20px 0}
 .mode-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
@@ -57,10 +57,10 @@
     </div>
     <div id="modeFlash">
       <div class="flashcard-wrap">
-        <div class="flashcard" id="flashcard" onclick="flipCard()">
+        <button class="flashcard" id="flashcard" onclick="flipCard()">
           <div class="fc-face fc-front"><div class="fc-word" id="fcWord"></div><div class="fc-hint">tap to reveal</div>
           <button class="fc-audio-btn" onclick="speakWord(event)">&#9654; Pronounce</button></div>
-          <div class="fc-face fc-back"><div class="fc-def" id="fcDef"></div><div class="fc-ex" id="fcEx"></div></div>
+          <div class="fc-face fc-back"><div class="fc-def" id="fcDef"></div><div class="fc-ex" id="fcEx"></div></button>
         </div>
       </div>
       <div class="fc-nav">
@@ -73,7 +73,7 @@
   </div>
 </div>
 <footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
-<script src="../../../../shared/store.js?v=v105"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
 <script>
 var WORDS=[{"id": "cut_corners", "word": "Cut corners", "def": "to do something the easy way, sacrificing quality or thoroughness", "ipa": "take shortcuts / compromise quality", "ex": "The contractor cut corners to finish ahead of schedule, and the building was unsafe."}, {"id": "move_goalposts", "word": "Move the goalposts", "def": "to change the rules or criteria during a process, making it harder to succeed", "ipa": "shift the criteria / change the terms", "ex": "Every time we met their demands, they moved the goalposts."}, {"id": "paradigm_shift", "word": "Paradigm shift", "def": "a fundamental change in approach or underlying assumptions in a field", "ipa": "revolutionary change / fundamental shift", "ex": "The internet caused a complete paradigm shift in how information is distributed."}, {"id": "double_edged", "word": "Double-edged sword", "def": "something that has both advantages and disadvantages", "ipa": "two-sided issue / mixed blessing", "ex": "Social media is a double-edged sword: it connects but also isolates."}, {"id": "vicious_circle", "word": "Vicious circle", "def": "a sequence of problems where each one makes the others worse", "ipa": "downward spiral / self-reinforcing problem", "ex": "Poverty leads to poor education, which leads to more poverty — a vicious circle."}, {"id": "watershed", "word": "Watershed moment", "def": "a turning point that marks a fundamental change", "ipa": "turning point / pivotal moment", "ex": "The moon landing was a watershed moment in human history."}, {"id": "straw_man", "word": "Straw man argument", "def": "misrepresenting someone’s position to make it easier to attack", "ipa": "false representation / distortion of argument", "ex": "Claiming your opponent wants to abolish all law is a straw man argument."}, {"id": "red_herring", "word": "Red herring", "def": "something introduced to divert attention from the real issue", "ipa": "distraction / misleading clue", "ex": "The politician’s personal life is a red herring in the policy debate."}, {"id": "foregone", "word": "Foregone conclusion", "def": "a result that is certain or was decided before it began", "ipa": "inevitable outcome / predetermined result", "ex": "Given the evidence, the verdict was a foregone conclusion."}, {"id": "carte_blanche", "word": "Carte blanche", "def": "complete freedom to act however one wishes", "ipa": "free rein / unlimited authority", "ex": "The board gave the new CEO carte blanche to restructure the company."}, {"id": "sine_qua_non", "word": "Sine qua non", "def": "something absolutely essential; an indispensable condition", "ipa": "essential requirement / prerequisite", "ex": "Trust is the sine qua non of any effective working relationship."}, {"id": "zeitgeist", "word": "Zeitgeist", "def": "the defining spirit or mood of a particular period of history", "ipa": "spirit of the age / cultural moment", "ex": "The film perfectly captured the zeitgeist of the 1960s counterculture."}];
 var fcIdx=0,flipped=false;
