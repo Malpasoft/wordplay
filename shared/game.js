@@ -680,14 +680,40 @@ window.GAME_CONFIG = {
     function renderCompletion() {
       var comp = document.querySelector('#gameCompletion .game-complete');
       if (comp) {
-        comp.innerHTML = [
-          '<div style="font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:8px">' + esc(DATA.title || (DATA.chapterId || '')) + '</div>',
-          '<h2 style="font-family:Georgia,serif;font-size:2rem;font-weight:700;color:var(--ink);margin:0 0 10px">' + L.dominio + '</h2>',
-          '<p style="font-family:var(--font-sans);font-size:.88rem;color:var(--muted);margin:0 0 24px">' + L.finalScore + ' <strong>' + state.score + '</strong></p>',
-          '<a href="printables.html" style="display:inline-block;padding:14px 36px;background:var(--amber);color:#1A1A1A;font-family:var(--font-sans);font-size:.82rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;border-radius:5px">' + L.printBtn + '</a>',
-          '<br><br>',
-          '<a href="index.html" style="font-family:var(--font-sans);font-size:.78rem;color:var(--muted);text-decoration:none">' + L.backBtn + '</a>',
-        ].join('');
+        comp.innerHTML = '';
+
+        var titleDiv = document.createElement('div');
+        titleDiv.style.cssText = 'font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:8px';
+        titleDiv.textContent = DATA.title || (DATA.chapterId || '');
+        comp.appendChild(titleDiv);
+
+        var h2 = document.createElement('h2');
+        h2.style.cssText = 'font-family:Georgia,serif;font-size:2rem;font-weight:700;color:var(--ink);margin:0 0 10px';
+        h2.textContent = L.dominio;
+        comp.appendChild(h2);
+
+        var scoreP = document.createElement('p');
+        scoreP.style.cssText = 'font-family:var(--font-sans);font-size:.88rem;color:var(--muted);margin:0 0 24px';
+        scoreP.appendChild(document.createTextNode(L.finalScore + ' '));
+        var scoreStrong = document.createElement('strong');
+        scoreStrong.textContent = state.score;
+        scoreP.appendChild(scoreStrong);
+        comp.appendChild(scoreP);
+
+        var printLink = document.createElement('a');
+        printLink.href = 'printables.html';
+        printLink.style.cssText = 'display:inline-block;padding:14px 36px;background:var(--amber);color:#1A1A1A;font-family:var(--font-sans);font-size:.82rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;border-radius:5px';
+        printLink.textContent = L.printBtn;
+        comp.appendChild(printLink);
+
+        comp.appendChild(document.createElement('br'));
+        comp.appendChild(document.createElement('br'));
+
+        var backLink = document.createElement('a');
+        backLink.href = 'index.html';
+        backLink.style.cssText = 'font-family:var(--font-sans);font-size:.78rem;color:var(--muted);text-decoration:none';
+        backLink.textContent = L.backBtn;
+        comp.appendChild(backLink);
       }
       showScreen('completion');
       setTimeout(triggerConfetti, 300);

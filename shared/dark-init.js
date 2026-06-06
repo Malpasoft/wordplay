@@ -32,9 +32,10 @@ function toggleDark() {
 (function(){
   if (typeof document === 'undefined') return;
   var scrollHandler = null;  // Keep reference for cleanup
+  var btn = null;
   function setup() {
     if (document.getElementById('back-to-top')) return;
-    var btn = document.createElement('button');
+    btn = document.createElement('button');
     btn.id = 'back-to-top';
     btn.setAttribute('aria-label', 'Back to top');
     btn.innerHTML = '&#8593;';
@@ -45,6 +46,12 @@ function toggleDark() {
       else btn.classList.remove('visible');
     };
     window.addEventListener('scroll', scrollHandler, {passive:true});
+    // Clean up on page unload
+    window.addEventListener('pagehide', cleanup);
+  }
+  function cleanup() {
+    if (scrollHandler) window.removeEventListener('scroll', scrollHandler);
+    if (btn && btn.parentNode) btn.parentNode.removeChild(btn);
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', setup);

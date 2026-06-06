@@ -98,6 +98,19 @@ body {
   --color-overlay-light:    rgba(26,26,26,0.22);      /* soft overlay             */
   --color-text-muted:       rgba(255,255,255,.6);     /* over dark backgrounds    */
   --color-text-subtle:      rgba(255,255,255,.5);     /* subtle text              */
+
+  /* ─── Print-specific colors (printables.html) — light mode ── */
+  --print-accent:           #B8860B;                   /* amber accent / buttons   */
+  --print-border:           #ddd;                      /* card borders             */
+  --print-border-dark:      #999;                      /* darker borders / rules   */
+  --print-border-light:     #eee;                      /* soft borders             */
+  --print-text-primary:     #1A1A1A;                   /* main text                */
+  --print-text-secondary:   #333;                      /* secondary text           */
+  --print-text-tertiary:    #555;                      /* meta / labels            */
+  --print-text-muted:       #666;                      /* muted text               */
+  --print-text-light:       #777;                      /* lighter muted            */
+  --print-text-white:       #fff;                      /* white on dark buttons    */
+  --print-hover-bg:         #fffbf0;                   /* card hover background    */
 }
 
 body.dark {
@@ -145,6 +158,19 @@ body.dark {
   --color-overlay-light:    rgba(255,255,255,.08);    /* soft overlay             */
   --color-text-muted:       rgba(255,255,255,.4);     /* muted text               */
   --color-text-subtle:      rgba(255,255,255,.38);    /* subtle text              */
+
+  /* ─── Print-specific colors (printables.html) — dark mode ── */
+  --print-accent:           #C9A050;                   /* amber accent / buttons   */
+  --print-border:           #444;                      /* card borders             */
+  --print-border-dark:      #555;                      /* darker borders / rules   */
+  --print-border-light:      #222;                      /* soft borders             */
+  --print-text-primary:     #F0F0F0;                   /* main text                */
+  --print-text-secondary:   #D0D0D0;                   /* secondary text           */
+  --print-text-tertiary:    #B0B0B0;                   /* meta / labels            */
+  --print-text-muted:       #999;                      /* muted text               */
+  --print-text-light:       #888;                      /* lighter muted            */
+  --print-text-white:       #000;                      /* black on light buttons   */
+  --print-hover-bg:         #1A1A1A;                   /* card hover background    */
 }
 
 button { font-family: inherit; -webkit-tap-highlight-color: transparent; border: none; background: none; cursor: pointer; }

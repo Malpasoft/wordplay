@@ -113,7 +113,22 @@
   if (!questions.length) {
     var msgEl = document.createElement('div');
     msgEl.style.cssText = 'padding:20px;background:var(--paper);border:1px solid var(--muted);border-radius:8px;color:var(--ink);font-family:var(--font-sans);line-height:1.5;margin:40px 20px;max-width:500px';
-    msgEl.innerHTML = '<strong>Worksheet Error:</strong> No questions found on this page. The worksheet may not be configured correctly.<br><br><a href="index.html" style="color:var(--amber);text-decoration:none">← Back to chapter</a>';
+
+    var strong = document.createElement('strong');
+    strong.textContent = 'Worksheet Error: ';
+    msgEl.appendChild(strong);
+
+    msgEl.appendChild(document.createTextNode('No questions found on this page. The worksheet may not be configured correctly.'));
+
+    msgEl.appendChild(document.createElement('br'));
+    msgEl.appendChild(document.createElement('br'));
+
+    var link = document.createElement('a');
+    link.href = 'index.html';
+    link.style.cssText = 'color:var(--amber);text-decoration:none';
+    link.textContent = '← Back to chapter';
+    msgEl.appendChild(link);
+
     var container = document.querySelector('.container') || document.body;
     container.insertBefore(msgEl, container.firstChild);
     return;
@@ -259,7 +274,17 @@
     for (var i = 0; i < MAX_LIVES; i++) {
       var h = document.createElement('span');
       h.className = 'wsq-heart' + (i >= lives ? ' lost' : '');
-      h.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
+      // Use appendChild to create SVG safely (static SVG path, no user content)
+      var svg = document.createElement('svg');
+      svg.setAttribute('viewBox', '0 0 24 24');
+      svg.setAttribute('width', '20');
+      svg.setAttribute('height', '20');
+      svg.setAttribute('aria-hidden', 'true');
+      var path = document.createElement('path');
+      path.setAttribute('fill', 'currentColor');
+      path.setAttribute('d', 'M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z');
+      svg.appendChild(path);
+      h.appendChild(svg);
       elLives.appendChild(h);
     }
   }
