@@ -88,10 +88,11 @@ function triggerConfetti() {
   if (nextBtn && !nextBtn.getAttribute('onclick')) nextBtn.addEventListener('click', window.nextSlide);
 
   // ── Keyboard nav ─────────────────────────────────────────────────
-  document.addEventListener('keydown', function(e) {
+  var deckKeyHandler = function(e) {
     if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); window.nextSlide(); }
     else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); window.prevSlide(); }
-  });
+  };
+  document.addEventListener('keydown', deckKeyHandler);
 
   // ── Touch swipe ──────────────────────────────────────────────────
   var swipeStartX = 0, swipeStartY = 0;
@@ -102,7 +103,7 @@ function triggerConfetti() {
     return slides[current] && slides[current].querySelector('.slide-card');
   }
 
-  document.addEventListener('touchstart', function(e) {
+  var deckTouchStartHandler = function(e) {
     if (e.touches.length > 1) return;
     swipeStartX = e.touches[0].clientX;
     swipeStartY = e.touches[0].clientY;
@@ -110,9 +111,10 @@ function triggerConfetti() {
     swipeDelta = 0;
     swipeCard = getActiveCard();
     if (swipeCard) swipeCard.style.transition = 'none';
-  }, { passive: true });
+  };
+  document.addEventListener('touchstart', deckTouchStartHandler, { passive: true });
 
-  document.addEventListener('touchmove', function(e) {
+  var deckTouchMoveHandler = function(e) {
     if (!swipeCard) return;
     var dx = e.touches[0].clientX - swipeStartX;
     var dy = e.touches[0].clientY - swipeStartY;
@@ -126,9 +128,10 @@ function triggerConfetti() {
     var fade = 1 - Math.min(1, Math.abs(dx) / (window.innerWidth * 0.55));
     swipeCard.style.transform = 'translateX(' + dx + 'px)';
     swipeCard.style.opacity = Math.max(0.25, fade);
-  }, { passive: false });
+  };
+  document.addEventListener('touchmove', deckTouchMoveHandler, { passive: false });
 
-  document.addEventListener('touchend', function() {
+  var deckTouchEndHandler = function() {
     if (!swipeCard) return;
     var card = swipeCard;
     swipeCard = null;
@@ -152,7 +155,17 @@ function triggerConfetti() {
       if (dir < 0) window.nextSlide();
       else window.prevSlide();
     }, 270);
-  }, { passive: true });
+  };
+  document.addEventListener('touchend', deckTouchEndHandler, { passive: true });
+
+  // ── Cleanup on page unload ───────────────────────────────────────
+  function cleanupDeckListeners() {
+    document.removeEventListener('keydown', deckKeyHandler);
+    document.removeEventListener('touchstart', deckTouchStartHandler);
+    document.removeEventListener('touchmove', deckTouchMoveHandler);
+    document.removeEventListener('touchend', deckTouchEndHandler);
+  }
+  window.addEventListener('pagehide', cleanupDeckListeners);
 
   // ── Mark lesson complete ─────────────────────────────────────────
   function markComplete() {

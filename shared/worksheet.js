@@ -433,33 +433,60 @@
 
     var pctColor = pct >= 80 ? 'var(--green)' : pct >= 50 ? 'var(--amber)' : 'var(--red)';
 
-    var gameCTA = success
-      ? '<a href="game.html" style="display:inline-block;padding:13px 32px;background:var(--amber);color:#1A1A1A;font-family:var(--font-sans);font-size:.8rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;border-radius:5px">' + L.gameBtn + ' &#8594;</a><br>'
-      : '';
-    var retryBtn = '<button id="wsq-retry-btn" style="display:inline-block;margin-top:12px;padding:11px 26px;background:transparent;color:var(--ink);font-family:var(--font-sans);font-size:.76rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:1.5px solid var(--hairline);border-radius:4px;cursor:pointer">' + L.tryAgain + '</button>';
-
     var done = document.createElement('div');
     done.id = 'wsq-done';
-    done.innerHTML = [
-      '<div id="wsq-done-card">',
-        '<div style="font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:8px">' + (success ? L.completed : L.noLives) + '</div>',
-        '<h2 style="font-family:Georgia,serif;font-size:2rem;font-weight:700;color:var(--ink);margin:0 0 10px">' + (success ? L.wellDone : L.keepGoing) + '</h2>',
-        '<p style="font-family:var(--font-sans);font-size:.88rem;color:var(--muted);margin:0 0 24px">' + L.firstPass + ' <strong style="color:' + pctColor + '">' + firstPassOK + ' / ' + totalQ + ' (' + pct + '%)</strong></p>',
-        gameCTA,
-        retryBtn,
-        '<br><a href="index.html" style="display:inline-block;margin-top:16px;font-family:var(--font-sans);font-size:.78rem;color:var(--muted);text-decoration:none">' + L.back + '</a>',
-      '</div>',
-    ].join('');
+
+    var doneCard = document.createElement('div');
+    doneCard.id = 'wsq-done-card';
+
+    var statusDiv = document.createElement('div');
+    statusDiv.style.cssText = 'font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:8px';
+    statusDiv.textContent = success ? L.completed : L.noLives;
+    doneCard.appendChild(statusDiv);
+
+    var h2 = document.createElement('h2');
+    h2.style.cssText = 'font-family:Georgia,serif;font-size:2rem;font-weight:700;color:var(--ink);margin:0 0 10px';
+    h2.textContent = success ? L.wellDone : L.keepGoing;
+    doneCard.appendChild(h2);
+
+    var pctP = document.createElement('p');
+    pctP.style.cssText = 'font-family:var(--font-sans);font-size:.88rem;color:var(--muted);margin:0 0 24px';
+    pctP.appendChild(document.createTextNode(L.firstPass + ' '));
+    var pctStrong = document.createElement('strong');
+    pctStrong.style.cssText = 'color:' + pctColor;
+    pctStrong.textContent = firstPassOK + ' / ' + totalQ + ' (' + pct + '%)';
+    pctP.appendChild(pctStrong);
+    doneCard.appendChild(pctP);
+
+    if (success) {
+      var gameLink = document.createElement('a');
+      gameLink.href = 'game.html';
+      gameLink.style.cssText = 'display:inline-block;padding:13px 32px;background:var(--amber);color:#1A1A1A;font-family:var(--font-sans);font-size:.8rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;border-radius:5px';
+      gameLink.textContent = L.gameBtn + ' →';
+      doneCard.appendChild(gameLink);
+      doneCard.appendChild(document.createElement('br'));
+    }
+
+    var retryBtn = document.createElement('button');
+    retryBtn.id = 'wsq-retry-btn';
+    retryBtn.style.cssText = 'display:inline-block;margin-top:12px;padding:11px 26px;background:transparent;color:var(--ink);font-family:var(--font-sans);font-size:.76rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:1.5px solid var(--hairline);border-radius:4px;cursor:pointer';
+    retryBtn.textContent = L.tryAgain;
+    retryBtn.addEventListener('click', function() { location.reload(); });
+    doneCard.appendChild(retryBtn);
+
+    doneCard.appendChild(document.createElement('br'));
+
+    var backLink = document.createElement('a');
+    backLink.href = 'index.html';
+    backLink.style.cssText = 'display:inline-block;margin-top:16px;font-family:var(--font-sans);font-size:.78rem;color:var(--muted);text-decoration:none';
+    backLink.textContent = L.back;
+    doneCard.appendChild(backLink);
+
+    done.appendChild(doneCard);
 
     var footer = document.querySelector('.site-footer');
     if (footer) footer.before(done);
     else document.body.appendChild(done);
-
-    // Wire retry button (replace inline onclick with addEventListener)
-    var retryBtn = done.querySelector('#wsq-retry-btn');
-    if (retryBtn) {
-      retryBtn.addEventListener('click', function() { location.reload(); });
-    }
   }
 
   // ── Wire events ──────────────────────────────────────────────────
