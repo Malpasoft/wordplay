@@ -55,23 +55,57 @@ localStorage. Teacher tools (calendar, profiles, dev-hub, builder, coverage) at 
 
 ---
 
-## Cache-Busting (shared assets)
+## Cache-Busting (shared assets) — CRITICAL
 
-Each file in `shared/` carries its own independent `?v=vNN` suffix in the pages that load
-it — the versions are **not** in lockstep (e.g. `base.css` and `slides.css` are on
-different numbers). When you change a shared file:
+**WHY THIS MATTERS:** Cloudflare Pages caches all `shared/` files for 1 year
+(`max-age=31536000, immutable`). Without a version bump, **every deployment will serve
+stale code forever** — users won't see any fixes or updates. This has caused
+production outages (blank pages, hanging loads). The version parameter (`?v=vNN`) is
+the ONLY way to force a cache refresh.
 
-1. `grep` for the current `?v=` value of that one file across the HTML.
-2. Bump only that file's consumers to the next number.
-3. The `/ship` skill automates this safely.
+**When a shared file changes:**
 
-`version.json` is a coarse project-state marker only — not a per-asset version.
+1. **Identify the file** — e.g., `shared/store.js`, `shared/base.css`
+2. **Bump its version** — increment `?v=vNN` to the next number across ALL 2,372 HTML files
+   - Use: `python3 bump-versions.py` (automates all HTML updates)
+   - OR use `/ship` skill (safer, but slower)
+   - Manual edits: prone to missing files — avoid
+3. **Commit the version bumps** together with the code change
+4. **The pre-commit hook enforces this** — commits are blocked if shared files are modified
+   without version bumps
+
+**Current versions (kept in sync by hook):**
+- `base.css`: v124
+- `dark-init.js`: v110
+- `store.js`: v106
+- `game.js`: v111
+- `worksheet.js`: v108
+- `deck.js`: v114
+- `game.css`: v112
+- `writing-grader.js`: v105
+- `sentence-grader.js`: v104
+- `mascot.js`: v3
+- `slides.css`: v115
+- `worksheet.css`: v106
+- `print.css`: v102
+- `i18n.js`: v123
+- `print.js`: v102
 
 **Mascot assets** (added Q2 2026):
 - `shared/mascot.css` — sprite animation rules (versions with `index.html`)
 - `shared/mascot.js` — state manager & click handler (versions with `index.html`)
 - `shared/mascot-bee.png` — sprite sheet image (versions with `index.html`)
 - All cached 1 year; PNG also matches `/shared/*.png` rule in `_headers`
+
+**Example commit:**
+```
+fix: sanitize innerHTML in game.js to prevent XSS
+
+Bump game.js version from v110 to v111 across all 2,372 HTML files.
+Updated via bump-versions.py to ensure Cloudflare cache refresh.
+```
+
+`version.json` is a coarse project-state marker only — not a per-asset version.
 
 ---
 
