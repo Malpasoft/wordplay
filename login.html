@@ -5,7 +5,208 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Word Play — Sign In</title>
   <link rel="stylesheet" href="shared/base.css?v=123" />
+  <script src="shared/auth.js"></script>
+  <script src="shared/dark-init.js?v=109"></script>
   <style>
+    .login-container {
+      max-width: 420px;
+      margin: 60px auto;
+      padding: 2rem;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--paper);
+    }
+
+    .login-container h1 {
+      font-size: var(--fs-h2);
+      margin-bottom: 1.5rem;
+      text-align: center;
+      color: var(--ink);
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-size: var(--fs-body);
+      font-weight: var(--fw-medium);
+      color: var(--ink);
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: var(--fs-body);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: var(--paper);
+      color: var(--ink);
+      box-sizing: border-box;
+    }
+
+    .form-group input:focus {
+      outline: 2px solid var(--amber);
+      outline-offset: 2px;
+      border-color: var(--amber);
+    }
+
+    .form-group input::placeholder {
+      color: var(--muted);
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: var(--fs-body);
+      font-weight: var(--fw-medium);
+      background: var(--amber);
+      color: var(--paper);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+
+    .login-btn:hover {
+      opacity: 0.85;
+    }
+
+    .login-btn:active {
+      opacity: 0.7;
+    }
+
+    .login-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .login-error {
+      color: #d32f2f;
+      font-size: var(--fs-small);
+      margin-top: 0.5rem;
+      display: none;
+    }
+
+    .login-status {
+      text-align: center;
+      font-size: var(--fs-small);
+      color: var(--muted);
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 480px) {
+      .login-container {
+        margin: 30px auto;
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="/" class="brand">Word Play</a>
+      <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+    </div>
+  </header>
+
+  <div class="login-container">
+    <h1>Sign In</h1>
+    <form id="login-form">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="you@example.com"
+          required
+          autofocus
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          name="password"
+          placeholder="••••••••"
+          required
+        />
+        <div class="login-error" id="error"></div>
+      </div>
+
+      <button type="submit" class="login-btn" id="login-btn">Sign In</button>
+      <div class="login-status" id="status"></div>
+    </form>
+  </div>
+
+  <script>
+    // If already logged in, redirect to home
+    if (isLoggedIn()) {
+      location.href = '/';
+    }
+
+    var form = document.getElementById('login-form');
+    var btn = document.getElementById('login-btn');
+    var error = document.getElementById('error');
+    var status = document.getElementById('status');
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      var email = document.getElementById('email').value.trim();
+      var password = document.getElementById('password').value;
+
+      if (!email || !password) {
+        error.textContent = 'Email and password are required.';
+        error.style.display = 'block';
+        return;
+      }
+
+      error.style.display = 'none';
+      btn.disabled = true;
+      status.textContent = 'Signing in…';
+
+      try {
+        var res = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email, password: password })
+        });
+
+        if (!res.ok) {
+          var err = await res.json();
+          error.textContent = err.error || 'Sign in failed.';
+          error.style.display = 'block';
+          btn.disabled = false;
+          status.textContent = '';
+          return;
+        }
+
+        var data = await res.json();
+        setAuthState(data.token, {
+          user_id: data.user_id,
+          email: data.email,
+          role: data.role
+        });
+
+        // Redirect to home for all roles
+        location.href = '/';
+      } catch (e) {
+        error.textContent = 'Network error. Please try again.';
+        error.style.display = 'block';
+        btn.disabled = false;
+        status.textContent = '';
+      }
+    });
+  </script>
+</body>
+</html>
     .login-container {
       max-width: 420px;
       margin: 60px auto;
