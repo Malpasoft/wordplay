@@ -9,7 +9,7 @@
 <title>A1 Vocabulary · Jobs | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v123">
 <link rel="stylesheet" href="../../../../shared/game.css?v=v111">
-<script src="shared/auth.js?v=1"></script>
+<script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v109"></script>
 <style>
 .vocab-page { max-width: 800px; margin: 0 auto; padding: 20px; }
@@ -95,7 +95,7 @@
   <!-- FLASHCARD MODE -->
   <div id="modeFlash">
     <div class="flashcard-wrap">
-      <div class="flashcard" id="flashcard" onclick="flipCard()">
+      <button class="flashcard" id="flashcard" onclick="flipCard()">
         <div class="fc-face fc-front">
           <div class="fc-word" id="fcWord"></div>
           <div class="fc-ipa" id="fcIpa"></div>
@@ -105,7 +105,7 @@
         <div class="fc-face fc-back">
           <div class="fc-def" id="fcDef"></div>
           <div class="fc-ex" id="fcEx"></div>
-        </div>
+        </button>
       </div>
     </div>
     <div class="fc-nav">

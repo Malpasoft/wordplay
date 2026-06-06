@@ -47,7 +47,24 @@ window.GAME_CONFIG = {
     var msgEl = document.createElement('div');
     msgEl.className = 'game-error-message';
     msgEl.style.cssText = 'padding:20px;background:var(--paper);border:1px solid var(--muted);border-radius:8px;color:var(--ink);font-family:var(--font-sans);line-height:1.5;margin:20px 0';
-    msgEl.innerHTML = '<strong>Game Error:</strong> ' + msg + '<br><br><a href="index.html" style="color:var(--amber);text-decoration:none">← Back to chapter</a>';
+
+    var strong = document.createElement('strong');
+    strong.textContent = 'Game Error: ';
+    msgEl.appendChild(strong);
+
+    var msgSpan = document.createElement('span');
+    msgSpan.textContent = msg;
+    msgEl.appendChild(msgSpan);
+
+    msgEl.appendChild(document.createElement('br'));
+    msgEl.appendChild(document.createElement('br'));
+
+    var link = document.createElement('a');
+    link.href = 'index.html';
+    link.style.cssText = 'color:var(--amber);text-decoration:none';
+    link.textContent = '← Back to chapter';
+    msgEl.appendChild(link);
+
     gameStart.innerHTML = '';
     gameStart.appendChild(msgEl);
   }
@@ -407,9 +424,22 @@ window.GAME_CONFIG = {
         // Show gapped sentence → pick/type answer
         if (el.term) {
           var sent = item.completion || item.example || '';
-          el.term.innerHTML = sent
-            ? esc(sent).replace('_____', '<span class="game-gap">_____</span>')
-            : esc(item.term);
+          if (sent) {
+            var parts = esc(sent).split('_____');
+            el.term.innerHTML = '';
+            for (var p = 0; p < parts.length; p++) {
+              if (p > 0) {
+                var gap = document.createElement('span');
+                gap.className = 'game-gap';
+                gap.textContent = '_____';
+                el.term.appendChild(gap);
+              }
+              var txt = document.createTextNode(parts[p]);
+              el.term.appendChild(txt);
+            }
+          } else {
+            el.term.textContent = item.term;
+          }
         }
         if (el.prompt) el.prompt.textContent = L.ctxSub;
         if (el.options)   el.options.style.display   = '';
