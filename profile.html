@@ -316,16 +316,54 @@ var syncCode = null;
 var syncBusy = false;
 
 /* ─────────────────────────── persistence ─────────────────────── */
-function loadStudents() {
+async function loadStudents() {
+  var token = getAuthToken();
+
+  if (token) {
+    // Load from D1 API
+    try {
+      var res = await fetch('/api/students', {
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+      if (res.ok) {
+        var data = await res.json();
+        students = data || [];
+        return;
+      }
+    } catch (err) {
+      console.warn('Failed to load students from D1, falling back to localStorage:', err);
+    }
+  }
+
+  // Fall back to localStorage (local-only mode)
   try { students = JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch(e) { students = []; }
 }
+
 function saveStudentsLocal() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(students));
 }
-function saveStudents() {
+
+async function saveStudents() {
+  var token = getAuthToken();
+
+  // Always save to localStorage as hot cache
   saveStudentsLocal();
-  syncPush();
+
+  // If authenticated, sync to D1
+  if (token) {
+    try {
+      // POST each student to D1 (or bulk endpoint if we add one later)
+      // For now, just mark as synced locally
+      syncPush();
+    } catch (err) {
+      console.warn('Failed to sync students to D1:', err);
+    }
+  } else {
+    // Local-only mode
+    syncPush();
+  }
 }
+
 function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
 
 /* ─────────────────────────── coverage data ─────────────────────── */
@@ -1020,12 +1058,21 @@ function esc(s) {
 }
 
 /* ─────────────────────────── init ─────────────────────── */
-loadStudents();
-loadSyncCode();
-updateSyncStatusText();
-if (syncCode) syncNow();
-loadCoverage();
-renderOverview();
+async function initProfile() {
+  await loadStudents();
+  loadSyncCode();
+  updateSyncStatusText();
+  if (syncCode) syncNow();
+  loadCoverage();
+  renderOverview();
+}
+
+initProfile().catch(function(err) {
+  console.error('Profile init failed:', err);
+  // Fall back to localStorage
+  loadStudents();
+  renderOverview();
+});
 </script>
 </body>
 </html>

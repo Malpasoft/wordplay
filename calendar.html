@@ -557,7 +557,19 @@ async function upsertLocal(lesson) {
 async function deleteLocal(id) {
   lessons = lessons.filter(function(l){ return l.id !== id; });
   saveCache();
-  // TODO: add DELETE /api/lessons/[id] endpoint
+
+  // Sync deletion to D1
+  var token = getAuthToken();
+  if (token && currentClassId) {
+    try {
+      await fetch('/api/lessons/' + id, {
+        method: 'DELETE',
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+    } catch (err) {
+      console.warn('Failed to delete lesson from D1:', err);
+    }
+  }
 }
 
 /* ── Sync ── */
