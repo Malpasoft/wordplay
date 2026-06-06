@@ -61,6 +61,7 @@ function toggleDark() {
 // QR code button — lets teachers share the current page with students
 (function(){
   var qrEscapeHandler = null;  // Keep reference for cleanup
+  var modal = null;
   function injectQR() {
     var inner = document.querySelector('.site-header-inner');
     if (!inner || inner.querySelector('.qr-toggle')) return;
@@ -71,8 +72,11 @@ function toggleDark() {
     btn.onclick = openQRModal;
     inner.appendChild(btn);
   }
+  function closeQRModal() {
+    if (modal) modal.style.display = 'none';
+    if (qrEscapeHandler) document.removeEventListener('keydown', qrEscapeHandler);
+  }
   function openQRModal() {
-    var modal = document.getElementById('wp-qr-modal');
     if (!modal) {
       modal = document.createElement('div');
       modal.id = 'wp-qr-modal';
@@ -82,10 +86,10 @@ function toggleDark() {
         '<p class="wp-qr-url"></p>' +
         '<button class="wp-qr-close">Close</button>' +
         '</div>';
-      modal.querySelector('.wp-qr-close').onclick = function(){ modal.style.display = 'none'; };
-      modal.onclick = function(e){ if (e.target === modal) modal.style.display = 'none'; };
+      modal.querySelector('.wp-qr-close').onclick = closeQRModal;
+      modal.onclick = function(e){ if (e.target === modal) closeQRModal(); };
       // Use a shared handler variable for proper cleanup
-      qrEscapeHandler = function(e){ if (e.key === 'Escape' && modal.style.display !== 'none') modal.style.display = 'none'; };
+      qrEscapeHandler = function(e){ if (e.key === 'Escape' && modal.style.display !== 'none') closeQRModal(); };
       document.addEventListener('keydown', qrEscapeHandler);
       document.body.appendChild(modal);
     }
@@ -276,6 +280,12 @@ function toggleDark() {
     if (_searchEscHandler && _input) _input.removeEventListener('keydown', _searchEscHandler);
   }
 
+  function cleanupSearch() {
+    // Final cleanup on page unload
+    if (_searchClickHandler) document.removeEventListener('click', _searchClickHandler, true);
+    if (_searchEscHandler && _input) _input.removeEventListener('keydown', _searchEscHandler);
+  }
+
   function loadSearch() {
     if (_loaded || !window.WPSearch) {
       if (!window.WPSearch) {
@@ -320,6 +330,8 @@ function toggleDark() {
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', injectSearch);
   } else { injectSearch(); }
+  // Clean up search listeners on page unload
+  window.addEventListener('pagehide', cleanupSearch);
 })();
 
 // Cross-device sync: pull cloud progress ONCE per session (deep-merge, no

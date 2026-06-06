@@ -364,13 +364,20 @@
 
     elCard.className = correct ? 'ok' : 'bad';
     elFb.className   = 'wsq-fb ' + (correct ? 'ok' : 'bad');
-    elFb.innerHTML   = correct
-      ? ('✓ ' + L.correct)
-      : (L.wrong + '. ' + L.correctAns + ' <strong>' + esc(q.correct) + '</strong>');
+    elFb.innerHTML   = '';
+
+    if (correct) {
+      elFb.appendChild(document.createTextNode('✓ ' + L.correct));
+    } else {
+      elFb.appendChild(document.createTextNode(L.wrong + '. ' + L.correctAns + ' '));
+      var strong = document.createElement('strong');
+      strong.textContent = q.correct;
+      elFb.appendChild(strong);
+    }
     elFb.style.display = 'block';
 
     if (q.explanation) {
-      elExpl.innerHTML     = q.explanation;
+      elExpl.textContent = q.explanation;
       elExpl.style.display = 'block';
     }
 
