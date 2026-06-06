@@ -205,6 +205,9 @@ body.dark .lm-input[type="date"],body.dark .lm-input[type="time"]{color-scheme:d
     <button class="cal-nav-btn" onclick="navNext()">&rarr;</button>
     <span class="cal-title" id="calTitle"></span>
     <span id="calSummary" style="font-family:var(--font-sans);font-size:.65rem;color:var(--muted)"></span>
+    <select class="cal-nav-btn" id="classSelector" style="background:transparent;color:var(--ink);font-size:.78rem;padding:6px 8px;width:auto;display:none" onchange="switchClass(this.value)">
+      <!-- Options populated by initCalendar() -->
+    </select>
     <div class="cal-view-toggle">
       <button class="cal-view-btn active" id="btnWeek" onclick="switchView('week')">Week</button>
       <button class="cal-view-btn" id="btnDay" onclick="switchView('day')">Day</button>
@@ -389,13 +392,15 @@ var PX_PER_MIN    = 1.3;
 var GRID_H        = (GRID_END - GRID_START) * PX_PER_MIN;  // 624px
 
 /* ── State ── */
-var syncCode    = null;
-var lessons     = [];
-var currentView = 'week';
-var currentDate = new Date();
-var editingId   = null;
-var selIds      = [];
-var allStudents = [];
+var syncCode      = null;
+var lessons       = [];
+var classes       = [];
+var currentView   = 'week';
+var currentDate   = new Date();
+var editingId     = null;
+var selIds        = [];
+var allStudents   = [];
+var currentClassId = null;
 
 /* ── Utilities ── */
 function esc(s) {
@@ -475,38 +480,38 @@ function loadStudents() {
   try { allStudents = JSON.parse(localStorage.getItem('wordplay_student_profiles')) || []; } catch(e) {}
 }
 
-var currentClassId = null;
-
-async function loadCache() {
+async function loadClasses() {
   var token = getAuthToken();
   if (!token) {
-    // Fall back to localStorage if not logged in
+    classes = [];
+    return;
+  }
+
+  try {
+    var res = await fetch('/api/classes', {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
+    if (!res.ok) throw new Error('Failed to load classes');
+    classes = await res.json();
+  } catch (err) {
+    console.warn('Failed to load classes from D1:', err);
+    classes = [];
+  }
+}
+
+async function loadLessonsForClass(classId) {
+  var token = getAuthToken();
+  if (!token) {
     try { lessons = JSON.parse(localStorage.getItem(LESSONS_KEY)) || []; } catch(e) { lessons = []; }
     return;
   }
 
   try {
-    // Get all classes for this teacher
-    var classRes = await fetch('/api/classes', {
+    var res = await fetch('/api/lessons?class_id=' + classId, {
       headers: { 'Authorization': 'Bearer ' + token }
     });
-    if (!classRes.ok) throw new Error('Failed to load classes');
-    var classes = await classRes.json();
-
-    if (classes.length === 0) {
-      lessons = [];
-      return;
-    }
-
-    // For now, load lessons from the first class
-    // TODO: later allow switching between classes
-    currentClassId = classes[0].id;
-
-    var lessonRes = await fetch('/api/lessons?class_id=' + currentClassId, {
-      headers: { 'Authorization': 'Bearer ' + token }
-    });
-    if (!lessonRes.ok) throw new Error('Failed to load lessons');
-    var dbLessons = await lessonRes.json();
+    if (!res.ok) throw new Error('Failed to load lessons');
+    var dbLessons = await res.json();
 
     // Convert D1 lessons to calendar format
     lessons = (dbLessons || []).map(function(l) {
@@ -528,9 +533,20 @@ async function loadCache() {
       };
     });
   } catch (err) {
-    console.warn('Failed to load from D1, falling back to localStorage:', err);
+    console.warn('Failed to load lessons from D1, falling back to localStorage:', err);
     try { lessons = JSON.parse(localStorage.getItem(LESSONS_KEY)) || []; } catch(e) { lessons = []; }
   }
+}
+
+async function loadCache() {
+  await loadClasses();
+  if (classes.length === 0) {
+    lessons = [];
+    return;
+  }
+  // Load lessons from first class by default
+  currentClassId = classes[0].id;
+  await loadLessonsForClass(currentClassId);
 }
 
 function saveCache() {
@@ -637,6 +653,23 @@ function apiDelete(id) {
   // Async, but non-blocking
   deleteLocal(id);
   renderCurrentView();
+}
+
+/* ── Class switching ── */
+async function switchClass(classId) {
+  currentClassId = classId;
+  await loadLessonsForClass(classId);
+  renderCurrentView();
+
+  // Update invite button visibility
+  var inviteBtn = document.getElementById('inviteBtn');
+  var token = getAuthToken();
+  var user = getCurrentUser();
+  if (token && user && (user.role === 'teacher' || user.role === 'admin') && currentClassId) {
+    inviteBtn.removeAttribute('hidden');
+  } else {
+    inviteBtn.setAttribute('hidden', '');
+  }
 }
 
 /* ── Navigation ── */
@@ -1216,6 +1249,17 @@ async function initCalendar() {
   loadSyncCode();
   loadStudents();
   await loadCache();
+
+  // Populate class selector if multiple classes exist
+  var selector = document.getElementById('classSelector');
+  if (classes.length > 1) {
+    selector.style.display = 'block';
+    selector.innerHTML = classes.map(function(c) {
+      return '<option value="' + c.id + '"' + (c.id === currentClassId ? ' selected' : '') + '>' + c.name + '</option>';
+    }).join('');
+  } else {
+    selector.style.display = 'none';
+  }
 
   // Show invite button only if teacher/admin is logged in and has a class
   var inviteBtn = document.getElementById('inviteBtn');
