@@ -46,21 +46,24 @@ export async function onRequestGet(context) {
       return json({ error: 'Cannot view another teacher\'s analytics' }, 403);
     }
 
-    // ONE QUERY: fetch all students + their XP
+    // ONE QUERY: fetch teacher's students + their XP (via student_teachers join)
     const allStudents = await context.env.DB.prepare(
       `SELECT u.id, u.email, COALESCE(x.xp, 0) as xp, COALESCE(x.streak, 0) as streak
        FROM users u
+       INNER JOIN student_teachers st ON u.id = st.student_id
        LEFT JOIN user_xp x ON u.id = x.user_id
-       WHERE u.role = 'student'
+       WHERE st.teacher_id = ? AND u.role = 'student'
        ORDER BY u.email`
-    ).all();
+    ).bind(teacherId).all();
 
-    // ONE QUERY: fetch all chapter results for all students
+    // ONE QUERY: fetch chapter results only for teacher's students
     const allResults = await context.env.DB.prepare(
-      `SELECT user_id, level, chapter_slug, pct
-       FROM chapter_results
-       ORDER BY user_id, pct ASC`
-    ).all();
+      `SELECT cr.user_id, cr.level, cr.chapter_slug, cr.pct
+       FROM chapter_results cr
+       INNER JOIN student_teachers st ON cr.user_id = st.student_id
+       WHERE st.teacher_id = ?
+       ORDER BY cr.user_id, cr.pct ASC`
+    ).bind(teacherId).all();
 
     // Aggregate in memory: group chapters by student, calculate averages
     const studentMap = {};
