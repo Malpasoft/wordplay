@@ -29,12 +29,25 @@
 
 ### BUG-001 · CRITICAL · Import Path Mismatch
 
-**Location:** All 2,431 HTML pages that reference `shared/auth.js`
+**Location:** 2,431 HTML pages across all curriculum levels
+
+**Scope breakdown by level:**
+- English A1: 174 pages
+- English A2: 177 pages
+- English B1: 195 pages
+- English B2: 216 pages
+- English C1: 211 pages
+- English C2: 167 pages
+- Spanish (es/a1): 988 pages
+- French (fr/*): 81 pages
+- Other Spanish paths (espanol-en): 173 pages
+- Root-level teacher tools (15 pages): index.html, dashboard.html, teacher.html, login.html, signup.html, profile.html, placement-test.html, placement-test-v2.html, dev-hub.html, coverage.html, calendar.html, builder.html, ai-prompts.html, 404.html
 
 **Pages Affected:** Sample of confirmed files:
 - `a/a1/grammar/to-be/index.html` (and 400+ grammar pages)
 - `a/a1/vocabulary/animals/flashcards.html` (and 300+ vocab pages)
-- `a/a1/certificate.html`
+- `index.html` (home page)
+- `teacher.html` and other teacher tools
 - All Spanish (es/a1) pages
 - All grammar/vocab/writing pages across A1–C2 levels
 
@@ -50,11 +63,16 @@ Pages use relative import path `src="shared/auth.js?v=1"` instead of correct rel
 - Link check result: 2,638 broken links all pointing to `shared/auth.js?v=1`
 
 **Steps to reproduce:**
-1. Open any grammar/vocab page in a browser (e.g., `a/a1/grammar/to-be/index.html`)
-2. Open browser DevTools → Console
-3. Observe 404 error: `GET /a/a1/grammar/shared/auth.js?v=1 404`
-4. Result: Auth utility functions (`getAuthToken()`, `isLoggedIn()`, `isAdmin()`) are undefined
-5. Any page that calls these functions will fail silently or throw errors
+1. Open any page on the site in a browser (e.g., `a/a1/grammar/to-be/index.html`)
+2. Open browser DevTools → Network tab
+3. Observe 404 error: `GET /a/a1/grammar/shared/auth.js?v=1 404 (Not Found)`
+4. Check Console tab: Auth utility functions (`getAuthToken()`, `isLoggedIn()`, `isAdmin()`) are undefined
+5. Any code that calls these functions will fail silently or throw `ReferenceError`
+
+**Live impact:**
+- Home page (`/index.html`) also affected — requests `/index.html/shared/auth.js` (expects `/shared/auth.js`)
+- Teacher dashboard, placement test, login/signup all broken
+- Auth system non-functional across entire site
 
 **Root cause:**  
 Inconsistent path references. Other shared files in the same pages use correct relative paths:
@@ -159,16 +177,38 @@ When `auth.js` is fixed (see BUG-001), the version number should also be standar
 
 ## Appendix: Broken Links Summary
 
-`python3 scripts/check_links.py` output (first 50 of 2,638):
+**Total broken links:** 2,638  
+**Unique broken reference:** 1 (only `shared/auth.js?v=1`)
+
+This indicates a single root cause with widespread impact across the entire site.
+
+### Link Check Output
+```
+Links checked: 38,825
+Broken links: 2,638
+
+All 2,638 broken links point to: shared/auth.js?v=1
+```
+
+### Representative Sample
 ```
 BROKEN  a/a1/certificate.html -> shared/auth.js?v=1
 BROKEN  a/a1/grammar/adjectives-basic/game.html -> shared/auth.js?v=1
 BROKEN  a/a1/grammar/adjectives-basic/index.html -> shared/auth.js?v=1
-BROKEN  a/a1/grammar/adjectives-basic/printables.html -> shared/auth.js?v=1
-BROKEN  a/a1/grammar/adjectives-basic/slides.html -> shared/auth.js?v=1
-BROKEN  a/a1/grammar/adjectives-basic/worksheet.html -> shared/auth.js?v=1
-... (2,633 more)
+BROKEN  a/a1/vocabulary/animals/flashcards.html -> shared/auth.js?v=1
+BROKEN  es/a1/vocabulario/jobs/index.html -> shared/auth.js?v=1
+BROKEN  index.html -> shared/auth.js?v=1
+BROKEN  teacher.html -> shared/auth.js?v=1
+BROKEN  login.html -> shared/auth.js?v=1
+... (2,630 more)
 ```
 
-All broken links point to `shared/auth.js?v=1` — indicating a single root cause with widespread impact.
+**All other shared file references are correct:**
+- `../../shared/base.css?v=v123` ✅
+- `../../../../shared/dark-init.js?v=v109` ✅
+- `../../../../shared/store.js?v=v105` ✅
+- `../../../../shared/game.js?v=v110` ✅
+- etc.
+
+Only `auth.js` is broken.
 
