@@ -80,6 +80,31 @@ hr{border:none;border-top:1px solid var(--hairline);margin:28px 0}
 
   <hr>
 
+  <!-- ── MANAGE USERS ── -->
+  <div class="section">
+    <div class="label">Admin</div>
+    <h2>Create accounts</h2>
+    <p style="font-family:var(--font-sans);font-size:.85rem;color:var(--muted);margin-bottom:12px">Create teacher and student accounts.</p>
+
+    <form id="create-user-form" style="margin-bottom:16px">
+      <input type="email" id="new-email" placeholder="Email (e.g. teacher@example.com)" required style="margin-bottom:8px">
+      <input type="password" id="new-password" placeholder="Password (min 8 chars)" required style="margin-bottom:8px">
+      <select id="new-role" style="margin-bottom:8px">
+        <option value="student">Student</option>
+        <option value="teacher">Teacher</option>
+      </select>
+      <button type="submit" class="btn btn-primary" style="width:100%">Create Account</button>
+      <div id="create-error" style="color:#d32f2f;font-size:.85rem;margin-top:8px;display:none"></div>
+      <div id="create-status" style="color:var(--muted);font-size:.85rem;margin-top:8px;display:none"></div>
+    </form>
+
+    <h2 style="margin-top:24px">Users</h2>
+    <p style="font-family:var(--font-sans);font-size:.85rem;color:var(--muted);margin-bottom:12px">All accounts in the system.</p>
+    <div id="users-list" style="font-family:var(--font-sans);font-size:.85rem">Loading users…</div>
+  </div>
+
+  <hr>
+
   <!-- ── RAW LINKS ── -->
   <div class="section">
     <div class="label">Quick links</div>
@@ -208,6 +233,91 @@ window.addEventListener('load', function(){
   var ta = document.getElementById('classContext');
   if (ta) ta.value = buildClassContext();
 });
+
+/* ── User management ── */
+function loadUsers() {
+  var token = getAuthToken();
+  if (!token) return;
+
+  var list = document.getElementById('users-list');
+  fetch('/api/admin/users', {
+    headers: { 'Authorization': 'Bearer ' + token }
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(data) {
+    if (!data.users || data.users.length === 0) {
+      list.textContent = 'No users yet.';
+      return;
+    }
+    var html = '<div style="max-height:300px;overflow-y:auto">';
+    data.users.forEach(function(user) {
+      html += '<div style="padding:8px;border-bottom:1px solid var(--hairline);display:flex;justify-content:space-between">';
+      html += '<span><strong>' + user.email + '</strong> <span style="color:var(--amber)">' + user.role + '</span></span>';
+      html += '<span style="color:var(--muted);font-size:.8rem">' + new Date(user.created_at).toLocaleDateString() + '</span>';
+      html += '</div>';
+    });
+    html += '</div>';
+    list.innerHTML = html;
+  })
+  .catch(function(err) {
+    list.textContent = 'Error loading users.';
+  });
+}
+
+var form = document.getElementById('create-user-form');
+if (form) {
+  form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    var email = document.getElementById('new-email').value.trim();
+    var password = document.getElementById('new-password').value;
+    var role = document.getElementById('new-role').value;
+    var errorDiv = document.getElementById('create-error');
+    var statusDiv = document.getElementById('create-status');
+
+    if (!email || !password) {
+      errorDiv.textContent = 'Email and password required.';
+      errorDiv.style.display = 'block';
+      return;
+    }
+
+    if (password.length < 8) {
+      errorDiv.textContent = 'Password must be at least 8 characters.';
+      errorDiv.style.display = 'block';
+      return;
+    }
+
+    errorDiv.style.display = 'none';
+    statusDiv.textContent = 'Creating account…';
+    statusDiv.style.display = 'block';
+
+    var token = getAuthToken();
+    fetch('/api/admin/users', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ email: email, password: password, role: role })
+    })
+    .then(function(res) {
+      if (!res.ok) return res.json().then(function(err) { throw err; });
+      return res.json();
+    })
+    .then(function(data) {
+      statusDiv.textContent = 'Account created! (' + data.user_id + ')';
+      form.reset();
+      loadUsers();
+      setTimeout(function() { statusDiv.style.display = 'none'; }, 3000);
+    })
+    .catch(function(err) {
+      errorDiv.textContent = err.error || 'Failed to create account.';
+      errorDiv.style.display = 'block';
+      statusDiv.style.display = 'none';
+    });
+  });
+}
+
+loadUsers();
 
 </script>
 </body>
