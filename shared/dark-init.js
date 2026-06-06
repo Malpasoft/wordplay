@@ -116,7 +116,7 @@ function toggleDark() {
 (function(){
   function injectSignIn() {
     var inner = document.querySelector('.site-header-inner');
-    if (!inner || inner.querySelector('.header-signin-btn')) return;
+    if (!inner || inner.querySelector('.header-signin-btn') || inner.querySelector('.header-xp')) return;
 
     // Only show sign-in if user is NOT logged in
     if (typeof getCurrentUser === 'function' && getCurrentUser()) return;
@@ -126,7 +126,7 @@ function toggleDark() {
     btn.href = '/login.html';
     btn.textContent = 'Sign In';
     btn.title = 'Sign in to your account';
-    btn.style.cssText = 'display:inline-block; padding:7px 14px; background:var(--amber); color:var(--paper); border-radius:4px; font-size:.85rem; font-weight:600; text-decoration:none; margin-left:auto;';
+    btn.style.cssText = 'font-size:.8rem; color:var(--amber); text-decoration:none; margin-left:auto;';
     inner.appendChild(btn);
   }
   if (document.readyState === 'loading') {
@@ -134,33 +134,49 @@ function toggleDark() {
   } else { injectSignIn(); }
 })();
 
-// XP badge — shows level name + mini progress bar
+// XP badge — shows level name + mini progress bar (or user name for logged-in non-students)
 (function(){
   function injectXP() {
     var inner = document.querySelector('.site-header-inner');
-    if (!inner || inner.querySelector('.header-xp') || !window.FCEStore) return;
+    if (!inner || inner.querySelector('.header-xp')) return;
 
-    // Don't show XP badge if user is not logged in (sign-in button takes priority)
-    if (typeof getCurrentUser === 'function' && !getCurrentUser()) return;
+    var user = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
+    var hasProgress = typeof window !== 'undefined' && window.FCEStore;
 
-    var lv   = FCEStore.getXPLevel();
-    var pct  = lv.pct;
-    var next = lv.max ? lv.xp + ' / ' + lv.max : lv.xp + ' XP';
-    // The level badge doubles as the dashboard link (top-right "account" spot)
-    var badge = document.createElement('a');
-    badge.className = 'header-xp';
-    badge.title = lv.label + ' · ' + next + ' XP · Open your dashboard';
-    var onDash = window.location.pathname.indexOf('dashboard') !== -1;
-    if (!onDash) {
-      var brand = inner.querySelector('.brand');
-      var href  = (brand && brand.getAttribute('href')) || 'index.html';
-      badge.href = href.replace('index.html', 'dashboard.html');
+    // If logged in but no progress (teacher/admin), show user name + XP placeholder
+    if (user && !hasProgress) {
+      var badge = document.createElement('div');
+      badge.className = 'header-xp';
+      badge.style.cssText = 'display:flex; align-items:center; gap:6px; margin-left:auto; font-size:.85rem; color:var(--ink);';
+      var nameSpan = document.createElement('span');
+      nameSpan.textContent = (user.email || 'User').split('@')[0].split('.')[0].charAt(0).toUpperCase() + (user.email || 'User').split('@')[0].split('.')[0].slice(1);
+      nameSpan.style.cssText = 'font-weight:600;';
+      badge.appendChild(nameSpan);
+      inner.appendChild(badge);
+      return;
     }
-    badge.innerHTML =
-      '<span class="header-xp-label">' + lv.label + '</span>' +
-      '<div class="header-xp-bar"><div class="header-xp-fill" style="width:' + pct + '%"></div></div>' +
-      '<span class="header-xp-go" aria-hidden="true">&#8250;</span>';
-    inner.appendChild(badge);   // last element → far-right account corner
+
+    // If has progress (student), show XP badge
+    if (hasProgress) {
+      var lv   = FCEStore.getXPLevel();
+      if (!lv) return;
+      var pct  = lv.pct;
+      var next = lv.max ? lv.xp + ' / ' + lv.max : lv.xp + ' XP';
+      var badge = document.createElement('a');
+      badge.className = 'header-xp';
+      badge.title = lv.label + ' · ' + next + ' XP · Open your dashboard';
+      var onDash = window.location.pathname.indexOf('dashboard') !== -1;
+      if (!onDash) {
+        var brand = inner.querySelector('.brand');
+        var href  = (brand && brand.getAttribute('href')) || 'index.html';
+        badge.href = href.replace('index.html', 'dashboard.html');
+      }
+      badge.innerHTML =
+        '<span class="header-xp-label">' + lv.label + '</span>' +
+        '<div class="header-xp-bar"><div class="header-xp-fill" style="width:' + pct + '%"></div></div>' +
+        '<span class="header-xp-go" aria-hidden="true">&#8250;</span>';
+      inner.appendChild(badge);
+    }
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', injectXP);
