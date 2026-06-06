@@ -314,3 +314,21 @@ function toggleDark() {
     document.addEventListener('DOMContentLoaded', injectSearch);
   } else { injectSearch(); }
 })();
+
+// Sync progress across devices (if user is logged in)
+(function() {
+  function syncOnLoad() {
+    if (typeof FCEStore !== 'undefined' && FCEStore.mergeFromD1) {
+      FCEStore.mergeFromD1().catch(function() {});
+    }
+  }
+  function syncOnUnload() {
+    if (typeof FCEStore !== 'undefined' && FCEStore.syncToD1) {
+      FCEStore.syncToD1().catch(function() {});
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', syncOnLoad);
+  } else { syncOnLoad(); }
+  window.addEventListener('beforeunload', syncOnUnload);
+})();

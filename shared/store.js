@@ -167,6 +167,64 @@
       return chs
         .filter(function(ch) { return results[ch.slug]; })
         .sort(function(a,b) { return results[a.slug].pct - results[b.slug].pct; });
+    },
+
+    // Sync progress to D1 cloud backup
+    syncToD1: function() {
+      var token = getAuthToken ? getAuthToken() : null;
+      var user = getCurrentUser ? getCurrentUser() : null;
+      if (!token || !user) return Promise.resolve(null);
+
+      var data = load();
+      data.updated_at = Date.now();
+
+      return fetch('/api/progress/' + user.user_id, {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then(function(res) {
+          if (!res.ok) throw new Error('Sync failed: ' + res.status);
+          return res.json();
+        })
+        .catch(function(err) {
+          console.warn('[WordPlay] D1 sync failed, will retry later:', err.message);
+          return null;
+        });
+    },
+
+    // Merge progress from D1 cloud on login (last-write-wins)
+    mergeFromD1: function() {
+      var token = getAuthToken ? getAuthToken() : null;
+      var user = getCurrentUser ? getCurrentUser() : null;
+      if (!token || !user) return Promise.resolve(null);
+
+      return fetch('/api/progress/' + user.user_id, {
+        headers: { 'Authorization': 'Bearer ' + token }
+      })
+        .then(function(res) {
+          if (!res.ok) throw new Error('Fetch failed: ' + res.status);
+          return res.json();
+        })
+        .then(function(data) {
+          var local = load();
+          var cloud = data.progress || {};
+          var cloudUpdated = data.updated_at || 0;
+          var localUpdated = local.updated_at || 0;
+
+          // Last-write-wins: use whichever is newer
+          var merged = cloudUpdated > localUpdated ? cloud : local;
+          merged.updated_at = Math.max(cloudUpdated, localUpdated);
+          save(merged);
+          return merged;
+        })
+        .catch(function(err) {
+          console.warn('[WordPlay] D1 merge failed, using local progress:', err.message);
+          return load();
+        });
     }
   };
 
