@@ -126,7 +126,6 @@ function toggleDark() {
     btn.href = '/login.html';
     btn.textContent = 'Sign In';
     btn.title = 'Sign in to your account';
-    btn.style.cssText = 'font-size:.8rem; color:var(--amber); text-decoration:none; margin-left:auto;';
     inner.appendChild(btn);
   }
   if (document.readyState === 'loading') {
@@ -134,24 +133,32 @@ function toggleDark() {
   } else { injectSignIn(); }
 })();
 
-// XP badge — shows level name + mini progress bar (or user name for logged-in non-students)
+// XP badge — shows level name + mini progress bar (or user name + role for logged-in non-students)
 (function(){
   function injectXP() {
     var inner = document.querySelector('.site-header-inner');
-    if (!inner || inner.querySelector('.header-xp')) return;
+    if (!inner || inner.querySelector('.header-xp') || inner.querySelector('.header-user-name')) return;
 
     var user = typeof getCurrentUser === 'function' ? getCurrentUser() : null;
     var hasProgress = typeof window !== 'undefined' && window.FCEStore;
 
-    // If logged in but no progress (teacher/admin), show user name + XP placeholder
+    // If logged in but no progress (teacher/admin), show user name + role badge
     if (user && !hasProgress) {
       var badge = document.createElement('div');
-      badge.className = 'header-xp';
-      badge.style.cssText = 'display:flex; align-items:center; gap:6px; margin-left:auto; font-size:.85rem; color:var(--ink);';
+      badge.className = 'header-user-name';
+
       var nameSpan = document.createElement('span');
-      nameSpan.textContent = (user.email || 'User').split('@')[0].split('.')[0].charAt(0).toUpperCase() + (user.email || 'User').split('@')[0].split('.')[0].slice(1);
-      nameSpan.style.cssText = 'font-weight:600;';
+      var firstName = (user.email || 'User').split('@')[0].split('.')[0];
+      nameSpan.textContent = firstName.charAt(0).toUpperCase() + firstName.slice(1);
       badge.appendChild(nameSpan);
+
+      if (user.role && user.role !== 'student') {
+        var roleSpan = document.createElement('span');
+        roleSpan.className = 'header-user-role';
+        roleSpan.textContent = user.role;
+        badge.appendChild(roleSpan);
+      }
+
       inner.appendChild(badge);
       return;
     }
@@ -168,8 +175,8 @@ function toggleDark() {
       var onDash = window.location.pathname.indexOf('dashboard') !== -1;
       if (!onDash) {
         var brand = inner.querySelector('.brand');
-        var href  = (brand && brand.getAttribute('href')) || 'index.html';
-        badge.href = href.replace('index.html', 'dashboard.html');
+        var href  = (brand && brand.getAttribute('href')) || '/';
+        badge.href = href.replace('index.html', 'dashboard.html').replace(/\/$/, '/dashboard.html');
       }
       badge.innerHTML =
         '<span class="header-xp-label">' + lv.label + '</span>' +
