@@ -8,7 +8,12 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <title>Dev Hub | Word Play</title>
 <link rel="stylesheet" href="shared/base.css?v=v123">
+<script src="shared/auth.js"></script>
 <script src="shared/dark-init.js?v=v109"></script>
+<script>
+  // Require admin auth to access dev hub
+  requireAdmin();
+</script>
 <style>
 .dh-wrap{max-width:680px;margin:0 auto;padding:24px 16px 70px}
 .dh-eyebrow{font-family:var(--font-sans);font-size:.62rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
@@ -43,8 +48,20 @@ hr{border:none;border-top:1px solid var(--hairline);margin:28px 0}
 <header class="site-header"><div class="site-header-inner">
   <a href="teacher.html" class="back back-link" aria-label="Back"></a>
   <a href="index.html" class="brand">Word Play</a>
-  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  <div style="display:flex; gap:12px; align-items:center;">
+    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+    <span id="user-email" style="font-size:.85rem; color:var(--muted)"></span>
+    <button onclick="logout()" style="padding:6px 12px; font-size:.82rem; background:var(--paper); border:1px solid var(--line); border-radius:4px; cursor:pointer;">Sign Out</button>
+  </div>
 </div></header>
+
+<script>
+  // Show logged-in user's email
+  var user = getCurrentUser();
+  if (user && user.email) {
+    document.getElementById('user-email').textContent = user.email;
+  }
+</script>
 
 <div class="dh-wrap">
   <div class="dh-eyebrow">Hub &middot; Dev Utilities</div>
