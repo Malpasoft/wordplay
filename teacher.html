@@ -140,15 +140,22 @@
 
   <!-- ── ADMIN TOOLS ── -->
   <div class="hub-section-label"><div></div><span>Admin (Logged In)</span><div></div></div>
+
   <div class="tool-section">
-    <h2>Create Accounts</h2>
-    <p>Create teacher and student accounts for your school or private class.</p>
+    <h2>Students in Your Classes</h2>
+    <p>All students added to your classes (from calendar). Click a student to see details, progress, and assign a password if needed.</p>
+    <div id="students-list" style="font-family: var(--font-sans); font-size: 0.85rem; max-height: 400px; overflow-y: auto;">Loading students…</div>
+  </div>
+
+  <div class="tool-section">
+    <h2>Create Teacher Account</h2>
+    <p>Invite other teachers or admins to the system.</p>
     <form id="create-user-form">
       <input type="email" id="new-email" placeholder="Email (e.g. teacher@example.com)" required style="margin-bottom: 8px;">
       <input type="password" id="new-password" placeholder="Password (min 8 chars)" required style="margin-bottom: 8px;">
       <select id="new-role" style="margin-bottom: 8px;">
-        <option value="student">Student</option>
         <option value="teacher">Teacher</option>
+        <option value="admin">Admin</option>
       </select>
       <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
       <div id="create-error" style="color: #d32f2f; font-size: 0.85rem; margin-top: 8px; display: none;"></div>
@@ -157,9 +164,9 @@
   </div>
 
   <div class="tool-section">
-    <h2>Users</h2>
-    <p>All accounts in the system.</p>
-    <div id="users-list" style="font-family: var(--font-sans); font-size: 0.85rem;">Loading users…</div>
+    <h2>All Accounts</h2>
+    <p>All teacher and admin accounts in the system.</p>
+    <div id="users-list" style="font-family: var(--font-sans); font-size: 0.85rem; max-height: 300px; overflow-y: auto;">Loading…</div>
   </div>
 
   <!-- ── QUICK LINKS ── -->
@@ -250,6 +257,36 @@ fetch('shared/coverage-data.json?v=' + Date.now())
 })();
 
 // User management
+function loadStudents() {
+  var token = getAuthToken();
+  if (!token) return;
+
+  var list = document.getElementById('students-list');
+  fetch('/api/students', {
+    headers: { 'Authorization': 'Bearer ' + token }
+  })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (!data || data.length === 0) {
+        list.textContent = 'No students yet. Add students from your calendar.';
+        return;
+      }
+      var html = '';
+      data.forEach(function(student) {
+        html += '<div style="padding: 10px; border-bottom: 1px solid var(--hairline); display: flex; justify-content: space-between; align-items: center;">';
+        html += '<span><strong>' + (student.name || student.email || 'Unnamed') + '</strong>';
+        if (student.class_name) html += ' <span style="color: var(--muted); font-size: 0.8rem;">— ' + student.class_name + '</span>';
+        html += '</span>';
+        html += '<span style="color: var(--muted); font-size: 0.75rem;">' + (student.email ? student.email.split('@')[0] : '(no account)') + '</span>';
+        html += '</div>';
+      });
+      list.innerHTML = html;
+    })
+    .catch(function(err) {
+      list.textContent = 'Error loading students: ' + (err.message || 'Network error');
+    });
+}
+
 function loadUsers() {
   var token = getAuthToken();
   if (!token) return;
@@ -261,17 +298,16 @@ function loadUsers() {
     .then(function(res) { return res.json(); })
     .then(function(data) {
       if (!data.users || data.users.length === 0) {
-        list.textContent = 'No users yet.';
+        list.textContent = 'No accounts yet.';
         return;
       }
-      var html = '<div style="max-height: 300px; overflow-y: auto;">';
+      var html = '';
       data.users.forEach(function(user) {
         html += '<div style="padding: 8px; border-bottom: 1px solid var(--hairline); display: flex; justify-content: space-between;">';
         html += '<span><strong>' + user.email + '</strong> <span style="color: var(--amber);">' + user.role + '</span></span>';
         html += '<span style="color: var(--muted); font-size: 0.8rem;">' + new Date(user.created_at).toLocaleDateString() + '</span>';
         html += '</div>';
       });
-      html += '</div>';
       list.innerHTML = html;
     })
     .catch(function(err) {
@@ -331,6 +367,7 @@ if (form) {
   });
 }
 
+loadStudents();
 loadUsers();
 </script>
 </body>
