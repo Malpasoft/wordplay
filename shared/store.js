@@ -64,6 +64,7 @@
     var data = load();
     updateStreak(data);
     save(data);
+    schedulePush();
   }
 
   var XP_LEVELS = [
@@ -100,6 +101,7 @@
       };
       updateStreak(data);
       save(data);
+      schedulePush();
     },
 
     // Save a game result
@@ -123,6 +125,7 @@
       };
       updateStreak(data);
       save(data);
+      schedulePush();
     },
 
     // XP system
@@ -130,6 +133,7 @@
       var data = load();
       data.xp = (data.xp || 0) + Math.max(0, n || 0);
       save(data);
+      schedulePush();
       return data.xp;
     },
     getXP: function() {
@@ -169,37 +173,13 @@
         .sort(function(a,b) { return results[a.slug].pct - results[b.slug].pct; });
     },
 
-    // Sync progress to D1 cloud backup
-    syncToD1: function() {
-      var token = getAuthToken ? getAuthToken() : null;
-      var user = getCurrentUser ? getCurrentUser() : null;
-      if (!token || !user) return Promise.resolve(null);
+    // Push local progress to D1 (reliable: keepalive survives navigation).
+    pushToD1: function() { return doPush(); },
 
-      var data = load();
-      data.updated_at = Date.now();
-
-      return fetch('/api/progress/' + user.user_id, {
-        method: 'POST',
-        headers: {
-          'Authorization': 'Bearer ' + token,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      })
-        .then(function(res) {
-          if (!res.ok) throw new Error('Sync failed: ' + res.status);
-          return res.json();
-        })
-        .catch(function(err) {
-          console.warn('[WordPlay] D1 sync failed, will retry later:', err.message);
-          return null;
-        });
-    },
-
-    // Merge progress from D1 cloud on login (last-write-wins)
+    // Pull cloud progress and DEEP-MERGE into local — never loses a chapter.
     mergeFromD1: function() {
       var token = getAuthToken ? getAuthToken() : null;
-      var user = getCurrentUser ? getCurrentUser() : null;
+      var user  = getCurrentUser ? getCurrentUser() : null;
       if (!token || !user) return Promise.resolve(null);
 
       return fetch('/api/progress/' + user.user_id, {
@@ -210,15 +190,11 @@
           return res.json();
         })
         .then(function(data) {
-          var local = load();
-          var cloud = data.progress || {};
-          var cloudUpdated = data.updated_at || 0;
-          var localUpdated = local.updated_at || 0;
-
-          // Last-write-wins: use whichever is newer
-          var merged = cloudUpdated > localUpdated ? cloud : local;
-          merged.updated_at = Math.max(cloudUpdated, localUpdated);
+          var merged = mergeProgress(load(), data.progress || {});
           save(merged);
+          // Push merged back once so the cloud converges with anything
+          // that existed only on this device. No data is discarded either way.
+          doPush();
           return merged;
         })
         .catch(function(err) {
@@ -227,6 +203,91 @@
         });
     }
   };
+
+  // ── Cloud sync internals ─────────────────────────────────────────
+  // Deep-merge two progress objects without losing data:
+  //  · level maps → union of chapters, keep the later-dated (then higher-pct) entry
+  //  · xp / streak → keep the maximum
+  //  · lastDay     → keep the later date
+  function pickEntry(x, y) {
+    if (!x) return y;
+    if (!y) return x;
+    var dx = Date.parse(x.lastDate || x.date || 0) || 0;
+    var dy = Date.parse(y.lastDate || y.date || 0) || 0;
+    if (dx !== dy) return dx > dy ? x : y;
+    return (y.pct || 0) > (x.pct || 0) ? y : x;
+  }
+
+  function mergeProgress(a, b) {
+    a = a || {}; b = b || {};
+    var out = {};
+    var keys = {};
+    Object.keys(a).forEach(function(k){ keys[k] = 1; });
+    Object.keys(b).forEach(function(k){ keys[k] = 1; });
+
+    Object.keys(keys).forEach(function(k) {
+      var av = a[k], bv = b[k];
+      if (k === 'updated_at') return;                 // recomputed below
+      if (k === 'xp')      { out.xp = Math.max(av || 0, bv || 0); return; }
+      if (k === 'streak')  { out.streak = Math.max(av || 0, bv || 0); return; }
+      if (k === 'lastDay') { out.lastDay = (av || '') > (bv || '') ? av : bv; return; }
+
+      // Level maps (objects of chapter entries)
+      if (av && bv && typeof av === 'object' && typeof bv === 'object') {
+        var level = {};
+        var chs = {};
+        Object.keys(av).forEach(function(c){ chs[c] = 1; });
+        Object.keys(bv).forEach(function(c){ chs[c] = 1; });
+        Object.keys(chs).forEach(function(c){ level[c] = pickEntry(av[c], bv[c]); });
+        out[k] = level;
+        return;
+      }
+      out[k] = (bv !== undefined ? bv : av);
+    });
+
+    out.updated_at = Date.now();
+    return out;
+  }
+
+  // Reliable push: keepalive lets the request finish even if the page is
+  // navigating away, so we don't need an (unreliable) beforeunload fetch.
+  function doPush() {
+    var token = getAuthToken ? getAuthToken() : null;
+    var user  = getCurrentUser ? getCurrentUser() : null;
+    if (!token || !user) return Promise.resolve(null);
+
+    var data = load();
+    data.updated_at = Date.now();
+
+    return fetch('/api/progress/' + user.user_id, {
+      method: 'POST',
+      keepalive: true,
+      headers: {
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).catch(function(err) {
+      console.warn('[WordPlay] D1 push failed, will retry on next save:', err.message);
+      return null;
+    });
+  }
+
+  // Debounced push — called after every local write so progress reaches the
+  // cloud a couple of seconds after a student finishes, while still on-page.
+  var _pushTimer = null;
+  function schedulePush() {
+    if (!getCurrentUser || !getCurrentUser()) return;
+    if (_pushTimer) clearTimeout(_pushTimer);
+    _pushTimer = setTimeout(function(){ _pushTimer = null; doPush(); }, 1500);
+  }
+
+  // Final best-effort flush when the page is hidden/closed (keepalive fetch).
+  if (typeof window !== 'undefined') {
+    window.addEventListener('pagehide', function(){
+      if (_pushTimer) { clearTimeout(_pushTimer); _pushTimer = null; doPush(); }
+    });
+  }
 
   // ── Flat slug index for O(1) chapter lookup ──────────────────────
   // Built once at load time from CHAPTERS; replaces O(n·m) scan.

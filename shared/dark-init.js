@@ -315,20 +315,20 @@ function toggleDark() {
   } else { injectSearch(); }
 })();
 
-// Sync progress across devices (if user is logged in)
+// Cross-device sync: pull cloud progress ONCE per session (deep-merge, no
+// data loss). Pushing back to the cloud is handled inside store.js right
+// after each save, so there's no per-page write here.
 (function() {
-  function syncOnLoad() {
-    if (typeof FCEStore !== 'undefined' && FCEStore.mergeFromD1) {
-      FCEStore.mergeFromD1().catch(function() {});
-    }
-  }
-  function syncOnUnload() {
-    if (typeof FCEStore !== 'undefined' && FCEStore.syncToD1) {
-      FCEStore.syncToD1().catch(function() {});
-    }
+  function pullOnce() {
+    if (typeof FCEStore === 'undefined' || !FCEStore.mergeFromD1) return;
+    try {
+      if (sessionStorage.getItem('wp_synced') === '1') return;
+    } catch (e) {}
+    FCEStore.mergeFromD1().then(function() {
+      try { sessionStorage.setItem('wp_synced', '1'); } catch (e) {}
+    }).catch(function() {});
   }
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', syncOnLoad);
-  } else { syncOnLoad(); }
-  window.addEventListener('beforeunload', syncOnUnload);
+    document.addEventListener('DOMContentLoaded', pullOnce);
+  } else { pullOnce(); }
 })();

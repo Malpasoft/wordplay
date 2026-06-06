@@ -16,6 +16,40 @@ function json(data, status = 200) {
   });
 }
 
+// Deep-merge two progress objects without losing data (mirrors store.js):
+//  · level maps → union of chapters, keep later-dated (then higher-pct) entry
+//  · xp / streak → keep the maximum;  lastDay → keep the later date
+function pickEntry(x, y) {
+  if (!x) return y;
+  if (!y) return x;
+  const dx = Date.parse(x.lastDate || x.date || 0) || 0;
+  const dy = Date.parse(y.lastDate || y.date || 0) || 0;
+  if (dx !== dy) return dx > dy ? x : y;
+  return (y.pct || 0) > (x.pct || 0) ? y : x;
+}
+
+function mergeProgress(a, b) {
+  a = a || {}; b = b || {};
+  const out = {};
+  const keys = new Set([...Object.keys(a), ...Object.keys(b)]);
+  for (const k of keys) {
+    const av = a[k], bv = b[k];
+    if (k === 'updated_at') continue;
+    if (k === 'xp')      { out.xp = Math.max(av || 0, bv || 0); continue; }
+    if (k === 'streak')  { out.streak = Math.max(av || 0, bv || 0); continue; }
+    if (k === 'lastDay') { out.lastDay = (av || '') > (bv || '') ? av : bv; continue; }
+    if (av && bv && typeof av === 'object' && typeof bv === 'object') {
+      const level = {};
+      const chs = new Set([...Object.keys(av), ...Object.keys(bv)]);
+      for (const c of chs) level[c] = pickEntry(av[c], bv[c]);
+      out[k] = level;
+      continue;
+    }
+    out[k] = (bv !== undefined ? bv : av);
+  }
+  return out;
+}
+
 export async function onRequestGet(context) {
   try {
     const { user_id } = context.params;
@@ -86,9 +120,7 @@ export async function onRequestPost(context) {
       return json({ error: 'Cannot save another user\'s progress' }, 403);
     }
 
-    const body = await context.request.json();
-    const clientData = body;
-    const clientUpdatedAt = body.updated_at || Date.now();
+    const clientData = await context.request.json();
 
     // Fetch existing progress from D1
     const existing = await context.env.DB.prepare(
@@ -97,13 +129,11 @@ export async function onRequestPost(context) {
       .bind(parseInt(user_id))
       .first();
 
+    // Deep-merge incoming progress with what's already in the cloud so no
+    // chapter, XP, or streak is ever discarded — even with concurrent devices.
     let mergedData = clientData;
-
     if (existing) {
-      // Last-write-wins: use whichever has the later updated_at
-      if (existing.updated_at > clientUpdatedAt) {
-        mergedData = JSON.parse(existing.progress_data);
-      }
+      mergedData = mergeProgress(JSON.parse(existing.progress_data), clientData);
     }
 
     const now = Date.now();
