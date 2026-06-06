@@ -377,7 +377,24 @@ function toggleDark() {
     });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', pullOnce);
-  } else { pullOnce(); }
+  // CRITICAL FIX: Don't block page render on progress sync
+  // Use requestIdleCallback to defer sync until AFTER page is interactive
+  if (typeof requestIdleCallback !== 'undefined') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        requestIdleCallback(pullOnce);
+      });
+    } else {
+      requestIdleCallback(pullOnce);
+    }
+  } else {
+    // Fallback for older browsers: defer with setTimeout
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(pullOnce, 1000);
+      });
+    } else {
+      setTimeout(pullOnce, 1000);
+    }
+  }
 })();

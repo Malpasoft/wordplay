@@ -12,7 +12,7 @@
 |------|-----------------|-----|--------|
 | `shared/auth.js` | v1 | Authentication helpers (login, role checks) | Core — loaded on all pages |
 | `shared/base.css` | v124 | Design system, semantic tokens, dark mode | Core — loaded on all pages |
-| `shared/dark-init.js` | v111 | Dark mode toggle, QR scan, search, XP badge | Core — loaded on all pages |
+| `shared/dark-init.js` | v112 | Dark mode toggle, QR scan, search, XP badge | Core — loaded on all pages |
 | `shared/store.js` | v107 | Progress storage, localStorage ↔ D1 sync | Core — loaded on game/worksheet/slides |
 | `shared/game.js` | v111 | Dominio Mastery Game engine (4 stages) | Game-specific |
 | `shared/worksheet.js` | v108 | Auto-grading for review exercises | Worksheet-specific |
