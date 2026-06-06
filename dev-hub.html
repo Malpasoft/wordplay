@@ -8,7 +8,12 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <title>Dev Hub | Word Play</title>
 <link rel="stylesheet" href="shared/base.css?v=v123">
+<script src="shared/auth.js"></script>
 <script src="shared/dark-init.js?v=v109"></script>
+<script>
+  // Require admin auth to access dev hub
+  requireAdmin();
+</script>
 <style>
 .dh-wrap{max-width:680px;margin:0 auto;padding:24px 16px 70px}
 .dh-eyebrow{font-family:var(--font-sans);font-size:.62rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
