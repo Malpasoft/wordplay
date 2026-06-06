@@ -48,8 +48,20 @@ hr{border:none;border-top:1px solid var(--hairline);margin:28px 0}
 <header class="site-header"><div class="site-header-inner">
   <a href="teacher.html" class="back back-link" aria-label="Back"></a>
   <a href="index.html" class="brand">Word Play</a>
-  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  <div style="display:flex; gap:12px; align-items:center;">
+    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+    <span id="user-email" style="font-size:.85rem; color:var(--muted)"></span>
+    <button onclick="logout()" style="padding:6px 12px; font-size:.82rem; background:var(--paper); border:1px solid var(--line); border-radius:4px; cursor:pointer;">Sign Out</button>
+  </div>
 </div></header>
+
+<script>
+  // Show logged-in user's email
+  var user = getCurrentUser();
+  if (user && user.email) {
+    document.getElementById('user-email').textContent = user.email;
+  }
+</script>
 
 <div class="dh-wrap">
   <div class="dh-eyebrow">Hub &middot; Dev Utilities</div>

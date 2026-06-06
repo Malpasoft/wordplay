@@ -94,3 +94,16 @@ function authenticatedFetch(url, options) {
   options.headers['Authorization'] = 'Bearer ' + token;
   return fetch(url, options);
 }
+
+// Logout: clear auth state and call logout API
+function logout() {
+  var token = getAuthToken();
+  if (token) {
+    fetch('/api/auth/logout', {
+      method: 'POST',
+      headers: { 'Authorization': 'Bearer ' + token }
+    }).catch(function() {});
+  }
+  clearAuthState();
+  location.href = '/login.html';
+}
