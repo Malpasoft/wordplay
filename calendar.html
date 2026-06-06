@@ -450,7 +450,7 @@ function lessonTop(s)    { return (timeToMin(s) - GRID_START) * PX_PER_MIN; }
 function lessonHeight(s, e) { return Math.max((timeToMin(e) - timeToMin(s)) * PX_PER_MIN, 24); }
 
 /* ── Storage: D1-backed via API ── */
-function loadSyncCode() { syncCode = localStorage.getItem(SYNC_CODE_KEY) || null; }
+function loadSyncCode() { syncCode = null; /* Legacy sync deprecated */ }
 function loadStudents() {
   // For now, load from localStorage (backward compat)
   // In Phase 2, fetch from /api/students
@@ -607,42 +607,18 @@ function apiUpsert(lesson) {
   // Async, but don't await here to keep UI responsive
   upsertLocal(lesson);
   renderCurrentView();
-  if (!syncCode) return;
-  // Legacy passphrase sync (still supported)
-  fetch('/api/lessons/' + encodeURIComponent(syncCode), {
-    method: 'POST', headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({ action: 'upsert', lesson: lesson })
-  }).catch(function(){});
 }
 
 function apiBulk(list) {
   // Async, but non-blocking
   list.forEach(function(lesson) { upsertLocal(lesson); });
   renderCurrentView();
-  if (!syncCode) return;
-  /* Send in chunks of 100 so large initial loads don't hit the server limit */
-  var CHUNK = 100;
-  function sendChunk(i) {
-    if (i >= list.length) return;
-    var chunk = list.slice(i, i + CHUNK);
-    fetch('/api/lessons/' + encodeURIComponent(syncCode), {
-      method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ action: 'bulk', lessons: chunk })
-    }).then(function(){ sendChunk(i + CHUNK); }).catch(function(){});
-  }
-  sendChunk(0);
 }
 
 function apiDelete(id) {
   // Async, but non-blocking
   deleteLocal(id);
   renderCurrentView();
-  if (!syncCode) return;
-  // Legacy passphrase sync (still supported)
-  fetch('/api/lessons/' + encodeURIComponent(syncCode), {
-    method: 'POST', headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({ action: 'delete', id: id })
-  }).catch(function(){});
 }
 
 /* ── Navigation ── */
@@ -1180,16 +1156,9 @@ async function initCalendar() {
   await loadCache();
   renderCurrentView();
 
-  if (syncCode) fetchAndMerge();
-
   // Show empty state on first visit
   if (!lessons.length) {
     document.getElementById('calEmpty').style.display = 'block';
-  }
-
-  // Show info strip when not synced (legacy passphrase sync)
-  if (!syncCode && !token) {
-    document.getElementById('calInfoStrip').style.display = 'block';
   }
 }
 
