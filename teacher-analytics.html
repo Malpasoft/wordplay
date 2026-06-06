@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<meta name="robots" content="noindex">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>Class Analytics | Word Play</title>
+<link rel="stylesheet" href="shared/base.css?v=v123">
+<script src="shared/auth.js"></script>
+<script src="shared/dark-init.js?v=v109"></script>
+<script>
+  if (!isLoggedIn() || !['teacher', 'admin'].includes(getCurrentUser().role)) {
+    location.href = '/login.html';
+  }
+</script>
+<style>
+.ta-wrap{max-width:900px;margin:0 auto;padding:24px 16px 70px}
+.ta-header{margin-bottom:28px}
+.ta-title{font-size:1.8rem;color:var(--ink);margin:0 0 8px;font-weight:700}
+.ta-sub{font-family:var(--font-sans);font-size:.9rem;color:var(--muted);margin:0}
+.ta-section{margin-bottom:32px}
+.ta-label{font-family:var(--font-sans);font-size:.7rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:12px;display:block}
+.ta-section h2{font-size:1.2rem;color:var(--ink);margin:0 0 16px}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:24px}
+.stat-card{background:var(--cream);border:1.5px solid var(--hairline);border-radius:10px;padding:16px;text-align:center}
+.stat-label{font-family:var(--font-sans);font-size:.8rem;color:var(--muted);margin-bottom:8px}
+.stat-value{font-size:2rem;font-weight:700;color:var(--ink)}
+.stat-unit{font-size:.85rem;color:var(--muted);margin-left:4px}
+.student-list{max-height:600px;overflow-y:auto}
+.student-item{background:var(--cream);border:1.5px solid var(--hairline);border-radius:8px;padding:16px;margin-bottom:12px}
+.student-name{font-weight:700;color:var(--ink);margin-bottom:8px}
+.student-level{display:inline-block;background:var(--paper);padding:4px 10px;border-radius:4px;font-family:var(--font-sans);font-size:.8rem;color:var(--amber);margin-right:8px}
+.weakest-chapters{font-family:var(--font-sans);font-size:.85rem;color:var(--muted);margin-top:8px;line-height:1.6}
+.export-btn{display:inline-block;padding:9px 18px;background:var(--amber);color:#fff;border:none;border-radius:7px;font-size:.9rem;font-weight:700;cursor:pointer;font-family:var(--font-sans)}
+.export-btn:hover{opacity:.85}
+.loading{text-align:center;color:var(--muted);padding:40px 20px}
+hr{border:none;border-top:1px solid var(--hairline);margin:28px 0}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="/" class="back back-link" aria-label="Back to home"></a>
+  <a href="/" class="brand">Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">◐ Dark</button>
+</div></header>
+
+<div class="ta-wrap">
+  <div class="ta-header">
+    <h1 class="ta-title">Class Analytics</h1>
+    <p class="ta-sub">Performance trends, student insights, and progress tracking</p>
+  </div>
+
+  <!-- Class Overview -->
+  <div class="ta-section">
+    <span class="ta-label">Overview</span>
+    <h2>Class Statistics</h2>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Students</div>
+        <div class="stat-value"><span id="stat-total">0</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Avg Level</div>
+        <div class="stat-value" id="stat-avg-level">—</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Avg Score</div>
+        <div class="stat-value"><span id="stat-avg-score">0</span><span class="stat-unit">%</span></div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Avg XP</div>
+        <div class="stat-value"><span id="stat-avg-xp">0</span></div>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <!-- Student Breakdown -->
+  <div class="ta-section">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <span class="ta-label">Students</span>
+      <button class="export-btn" onclick="exportCSV()">Export CSV</button>
+    </div>
+    <h2>Individual Student Progress</h2>
+    <div id="students-container" class="student-list">
+      <div class="loading">Loading student data…</div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="site-footer">Word Play · Teacher analytics · progress trends</footer>
+
+<script>
+var LEVEL_ORDER = {a1:1, a2:2, b1:3, b2:4, c1:5, c2:6};
+var LEVEL_NAMES = {a1:'A1', a2:'A2', b1:'B1', b2:'B2', c1:'C1', c2:'C2'};
+
+function levelToNum(level) {
+  return LEVEL_ORDER[level] || 0;
+}
+
+function loadAnalytics() {
+  var user = getCurrentUser();
+  var token = getAuthToken();
+  if (!user || !token) return;
+
+  fetch('/api/analytics/class/' + user.user_id, {
+    headers: { 'Authorization': 'Bearer ' + token }
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(data) {
+    if (!data.students) {
+      document.getElementById('students-container').innerHTML = '<div class="loading">No student data found.</div>';
+      return;
+    }
+
+    // Calculate class stats
+    var total = data.students.length;
+    var avgScore = 0, avgXP = 0;
+    var levelCounts = {};
+
+    data.students.forEach(function(student) {
+      if (student.avgScore) avgScore += student.avgScore;
+      if (student.xp) avgXP += student.xp;
+      var level = student.level || 'unknown';
+      levelCounts[level] = (levelCounts[level] || 0) + 1;
+    });
+
+    avgScore = total > 0 ? Math.round(avgScore / total) : 0;
+    avgXP = total > 0 ? Math.round(avgXP / total) : 0;
+
+    // Find most common level
+    var mostCommonLevel = '—';
+    var maxCount = 0;
+    for (var level in levelCounts) {
+      if (levelCounts[level] > maxCount) {
+        maxCount = levelCounts[level];
+        mostCommonLevel = LEVEL_NAMES[level] || level;
+      }
+    }
+
+    // Update class stats
+    document.getElementById('stat-total').textContent = total;
+    document.getElementById('stat-avg-level').textContent = mostCommonLevel;
+    document.getElementById('stat-avg-score').textContent = avgScore;
+    document.getElementById('stat-avg-xp').textContent = avgXP;
+
+    // Render student list
+    var html = '';
+    data.students
+      .sort(function(a, b) { return (a.name || '').localeCompare(b.name || ''); })
+      .forEach(function(student) {
+        var levelBadge = LEVEL_NAMES[student.level] || student.level || 'TBD';
+        var weakest = (student.weakestChapters || [])
+          .slice(0, 3)
+          .map(function(ch) { return '<strong>' + ch.label + '</strong> (' + ch.pct + '%)'; })
+          .join(', ');
+
+        html += '<div class="student-item">';
+        html += '<div class="student-name">' + (student.name || 'Unknown') + '</div>';
+        html += '<span class="student-level">' + levelBadge + '</span>';
+        html += '<span style="font-family:var(--font-sans);font-size:.85rem;color:var(--muted)">';
+        html += 'Score: ' + (student.avgScore || 0) + '% · XP: ' + (student.xp || 0);
+        html += '</span>';
+        if (weakest) {
+          html += '<div class="weakest-chapters">📈 Needs work: ' + weakest + '</div>';
+        }
+        html += '</div>';
+      });
+
+    document.getElementById('students-container').innerHTML = html || '<div class="loading">No students yet.</div>';
+  })
+  .catch(function(err) {
+    document.getElementById('students-container').innerHTML = '<div class="loading" style="color:#d32f2f">Error loading analytics.</div>';
+  });
+}
+
+function exportCSV() {
+  var user = getCurrentUser();
+  var token = getAuthToken();
+  if (!user || !token) return;
+
+  fetch('/api/analytics/class/' + user.user_id, {
+    headers: { 'Authorization': 'Bearer ' + token }
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(data) {
+    if (!data.students) return;
+
+    var csv = 'Name,Level,Avg Score,XP,Weakest Chapters\n';
+    data.students.forEach(function(s) {
+      var weakest = (s.weakestChapters || [])
+        .map(function(ch) { return ch.label + '(' + ch.pct + '%)'; })
+        .join('; ');
+      csv += '"' + (s.name || 'Unknown').replace(/"/g, '""') + '",';
+      csv += (LEVEL_NAMES[s.level] || s.level || 'TBD') + ',';
+      csv += (s.avgScore || 0) + ',';
+      csv += (s.xp || 0) + ',';
+      csv += '"' + weakest.replace(/"/g, '""') + '"\n';
+    });
+
+    var blob = new Blob([csv], {type: 'text/csv'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'class-analytics-' + new Date().toISOString().split('T')[0] + '.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+}
+
+loadAnalytics();
+</script>
+</body>
+</html>
