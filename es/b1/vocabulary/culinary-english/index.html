@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Culinary English — B1 Vocabulario | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Back"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">◐ Oscuro</button>
+</div></header>
+<div class="section-page">
+  <div class="breadcrumb"><a href="../../../../index.html">Inicio</a><span>›</span><a href="../../../../es/b1/index.html">B1</a><span>›</span><a href="../index.html">Vocabulario</a><span>›</span><strong>Culinary English</strong></div>
+  <div class="chapter-num">Cap. 12</div>
+  <h1 class="chapter-h1">Culinary English</h1>
+  <p class="chapter-subtitle">knife techniques · cooking methods · brigade roles · menu terminology</p>
+  <div class="activity-grid">
+  <a href="slides.html" class="activity-card" data-activity="lesson" style="--ac-color:var(--amber)">
+    <span class="ac-icon">📖</span>
+    <span class="ac-title">Lección</span>
+    <p class="ac-desc">Lee la explicación con ejemplos y notas</p>
+    <span class="ac-arrow">→</span>
+  </a>
+  <a href="flashcards.html" class="activity-card" data-activity="practice" style="--ac-color:var(--amber)">
+    <span class="ac-icon">✏️</span>
+    <span class="ac-title">Tarjetas &amp; Emparejamiento</span>
+    <p class="ac-desc">Estudia las tarjetas y luego empareja palabras con definiciones</p>
+    <span class="ac-arrow">→</span>
+  </a>
+  <a href="game.html" class="activity-card" data-activity="game" style="--ac-color:#2E7D52">
+    <span class="ac-icon">⚡</span>
+    <span class="ac-title">Juego</span>
+    <p class="ac-desc">Pon a prueba tu dominio con el juego</p>
+    <span class="ac-arrow">→</span>
+  </a>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Cambridge Inglés A1→C2 · Para hispanohablantes</footer>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+(function(){
+  try {
+    var prog=JSON.parse(localStorage.getItem('wordplay_progress')||'{}');
+    var lvl=prog['es-b1']||{};
+    var defs=[
+      ['slides.html', lvl['slides_culinary-english']&&lvl['slides_culinary-english'].done],
+      ['flashcards.html', !!localStorage.getItem('wordplay_vocab_es-b1_culinary-english_mastered')],
+      ['game.html', lvl['wordplay_game_es-b1_culinary-english']&&lvl['wordplay_game_es-b1_culinary-english'].pct>=70]
+    ];
+    defs.forEach(function(d){
+      if(!d[1]) return;
+      var card=document.querySelector('.activity-card[href="'+d[0]+'"]');
+      if(card) card.setAttribute('data-done','1');
+    });
+  }catch(e){}
+})();
+</script>
+</body>
+</html>
