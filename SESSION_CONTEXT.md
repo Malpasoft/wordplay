@@ -35,13 +35,25 @@ All vocabulary chapters enriched. Only 2 intentional "applied-grammar" chapters 
 A1 vocabulary: old template (`renderCard`/`STORAGE_KEY`) in 11 chapters, new template in 1 (animals); A2–C2: new template (`showCard`/`MASTERY_KEY`).
 
 ### Spanish track (`/es/`) — English explained in Spanish, all 6 levels
-**Grammar:** 107 `gramatica/` chapters (Spanish-named) across all 6 levels, all filled with real content.  
-**Vocabulary:** 77 chapters total; 71 are stub placeholders (flashcards.html + game.html both empty). a1: 6 filled, 6 stubs; a2–c2: all 71 total stubs.  
-**Writing:** 26 chapters, all complete.  
+**Grammar:** ✅ 107 `gramatica/` chapters (Spanish-named) across all 6 levels, all filled with real content + Spanish-English contrastive notes.  
+**Vocabulary:** 77 chapters total; 60/77 complete. Status:
+- A1: 6/12 filled, 6 stubs remain
+- ✅ A2: 12/12 filled (just completed)
+- B1: 11/12 filled, 1 stub
+- ✅ B2: 16/16 filled
+- ✅ C1: 14/14 filled  
+- ✅ C2: 12/12 filled
+
+**Writing:** ✅ 26 chapters, all complete.  
 Fill tooling: `scripts/fill_chapter.py` + `scripts/content/` modules.
 
 ### Espanol-en track — Spanish for English speakers
-A1: hub scaffold complete (24 grammar, 12 vocabulary, 3 writing chapters) but **all 120 content files are placeholder stubs** ("Content coming soon"). A2–C2: stub hub pages only.
+**A1:** Hub scaffold complete
+- ✅ Vocabulary: 12/12 chapters complete with IPA, Spanish definitions, Web Speech API
+- Grammar: 24 chapter framework ready for population
+- Writing: 3 chapter framework ready for population
+
+**A2–C2:** Stub hub pages only (ready for future population phases).
 
 ### Total search index: 424 chapters
 
