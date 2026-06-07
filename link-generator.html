@@ -156,7 +156,7 @@ function getRootFiles() {
 
 // All chapters (hardcoded from known structure)
 function getAllChapters() {
-  const chapters = [];
+  const allChapters = [];
   const structure = {
     en: { dir: 'a', levels: ['a1', 'a2', 'b1', 'b2', 'c1', 'c2'], sections: ['vocabulary', 'grammar', 'writing'] },
     es: { dir: 'es', levels: ['a1', 'a2', 'b1', 'b2', 'c1', 'c2'], sections: ['vocabulary', 'grammar', 'writing'] },
@@ -179,16 +179,16 @@ function getAllChapters() {
     const s = structure[track];
     s.levels.forEach(level => {
       s.sections.forEach(section => {
-        const chapters = section === 'vocabulary' ? (vocabularyChapters[track] || []) :
-                         section === 'grammar' ? (grammarChapters[track] || []) :
-                         ['writing'];
+        const chapterSlugs = section === 'vocabulary' ? (vocabularyChapters[track] || []) :
+                             section === 'grammar' ? (grammarChapters[track] || []) :
+                             ['writing'];
 
-        chapters.forEach(slug => {
+        chapterSlugs.forEach(slug => {
           const types = section === 'writing' ? ['slides', 'printables'] : ['slides', 'flashcards', 'game', 'worksheet'];
 
           types.forEach(type => {
             const filename = type === 'printables' ? 'printables.html' : `${type}.html`;
-            chapters.push({
+            allChapters.push({
               track: track.toUpperCase(),
               level: level.toUpperCase(),
               section: section.charAt(0).toUpperCase() + section.slice(1),
@@ -203,7 +203,7 @@ function getAllChapters() {
     });
   });
 
-  return chapters;
+  return allChapters;
 }
 
 function regenerateLinks() {
