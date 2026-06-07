@@ -215,6 +215,54 @@
           }, 5000);
         })
       ]);
+    },
+
+    // NEW: syncProgress() — POST to /api/student/progress when authenticated
+    // Used by scheduled sync (every 1.5s) and page unload
+    syncProgress: function() {
+      return doPushNormalized();
+    },
+
+    // NEW: pullProgress() — GET from /api/student/progress when authenticated
+    // Fetches server state and merges with local via last-write-wins
+    pullProgress: function() {
+      var token = getAuthToken ? getAuthToken() : null;
+      var user  = getCurrentUser ? getCurrentUser() : null;
+      if (!token || !user) return Promise.resolve(null);
+
+      var promise = fetch('/api/student/progress', {
+        method: 'GET',
+        headers: { 'Authorization': 'Bearer ' + token }
+      })
+        .then(function(res) {
+          if (!res.ok) throw new Error('Fetch failed: ' + res.status);
+          return res.json();
+        })
+        .then(function(data) {
+          var merged = mergeProgress(load(), data.chapters || {});
+          save(merged);
+          return {
+            status: 'merged',
+            chapters: merged,
+            updated_at: data.updated_at,
+            server_updated_at: data.server_updated_at
+          };
+        })
+        .catch(function(err) {
+          console.warn('[WordPlay] Pull progress failed, using local:', err.message);
+          return load();
+        });
+
+      // 5-second timeout to prevent page hang
+      return Promise.race([
+        promise,
+        new Promise(function(resolve) {
+          setTimeout(function() {
+            console.warn('[WordPlay] Pull progress timeout (5s); using local data');
+            resolve(load());
+          }, 5000);
+        })
+      ]);
     }
   };
 
@@ -571,4 +619,25 @@
   buildSlugIndex(CHAPTERS);
 
   window.FCEStore.CHAPTERS = CHAPTERS;
+
+  // ── Auto-sync on page load (pull) and unload (push) ──────────────────────
+  // Pull server progress once at page load (if logged in) and merge with local
+  if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+    // Pull on page load (DOMContentLoaded or immediately if already loaded)
+    function doPullOnLoad() {
+      var token = getAuthToken ? getAuthToken() : null;
+      if (token) {
+        FCEStore.pullProgress().catch(function(err) {
+          console.warn('[WordPlay] Auto-pull on load failed:', err.message);
+        });
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', doPullOnLoad);
+    } else {
+      // Page already loaded, pull immediately
+      doPullOnLoad();
+    }
+  }
 })();
