@@ -10,6 +10,30 @@
 <script src="/shared/auth.js?v=1"></script>
 <script src="shared/dark-init.js?v=v112"></script>
 <style>
+/* ── Header logout button ── */
+.logout-btn {
+  background: transparent;
+  border: 1.5px solid var(--hairline);
+  color: var(--muted);
+  font-family: var(--font-sans);
+  font-size: .68rem;
+  font-weight: 600;
+  letter-spacing: .5px;
+  padding: 5px 12px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background .15s, color .15s;
+  white-space: nowrap;
+  margin-left: 8px;
+}
+.logout-btn:hover {
+  background: rgba(0,0,0,0.06);
+  color: var(--ink);
+}
+body.dark .logout-btn:hover {
+  background: rgba(255,255,255,0.1);
+}
+
 .dash-page { max-width: 980px; margin: 0 auto; padding: 24px 20px 60px; }
 .dash-page h1 {
   font-family: var(--font-serif);
@@ -300,7 +324,9 @@ body.dark .reset-btn:hover { border-color: var(--amber); color: var(--amber); }
 <header class="site-header">
   <div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a>
     <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+    <span style="margin-left: auto; font-family: var(--font-sans); font-size: .85rem; color: var(--muted);" id="userGreeting"></span>
     <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+    <button class="logout-btn" onclick="logout()" aria-label="Logout">Logout</button>
   </div>
 </header>
 
@@ -313,7 +339,7 @@ body.dark .reset-btn:hover { border-color: var(--amber); color: var(--amber); }
     <div class="xp-row">
       <div class="xp-badge" id="levelBadge">1</div>
       <div class="xp-info">
-        <div class="xp-title">Total XP</div>
+        <div class="xp-title" id="studentNameLabel">Total XP</div>
         <div class="xp-name" id="levelName">Beginner</div>
         <div class="xp-bar-wrap"><div class="xp-bar-fill" id="xpBarFill" style="width:0%"></div></div>
         <div class="xp-meta">
@@ -392,6 +418,23 @@ body.dark .reset-btn:hover { border-color: var(--amber); color: var(--amber); }
 
 <script src="shared/store.js?v=v107"></script>
 <script>
+// ── Authentication requirement ────────────────────────────────────
+// Redirect to login if not authenticated
+requireAuth();
+
+// Display logged-in student name in greeting and header
+function initAuth() {
+  var user = getCurrentUser();
+  if (user && user.email) {
+    var studentName = user.email.split('@')[0]; // Use email prefix as display name
+    document.getElementById('userGreeting').textContent = 'Hello, ' + studentName;
+    document.getElementById('studentNameLabel').textContent = studentName.charAt(0).toUpperCase() + studentName.slice(1) + ' XP';
+  }
+}
+
+// Call auth initialization
+initAuth();
+
 var ACTIVE_LEVELS = ['a1','a2','b1','b2','c1','c2']; // All levels live
 var ALL_LEVELS = ['a1','a2','b1','b2','c1','c2'];
 var currentLevel = 'a1';

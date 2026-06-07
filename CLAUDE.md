@@ -77,7 +77,7 @@ the ONLY way to force a cache refresh.
 **Current versions (kept in sync by hook):**
 - `base.css`: v124
 - `dark-init.js`: v110
-- `store.js`: v106
+- `store.js`: v107
 - `game.js`: v111
 - `worksheet.js`: v108
 - `deck.js`: v114
