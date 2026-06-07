@@ -1,32 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#1A1A1A">
-<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Clothes — Flashcards | Word Play</title>
+<meta charset="UTF-8">
+<title>Flashcards</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
 </head>
 <body>
-<header class="site-header"><div class="site-header-inner">
-  <a href="index.html" class="back back-link" aria-label="Back"></a>
-  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
-</div></header>
-<div class="section-page">
-  <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>&#8250;</span>
-    <a href="../../../../espanol-en/a1/index.html">A1</a><span>&#8250;</span>
-    <a href="../index.html">Vocabulary</a><span>&#8250;</span>
-    <a href="index.html">Clothes</a><span>&#8250;</span>
-    <strong>Flashcards</strong>
-  </div>
-  <!-- PLACEHOLDER -->
-  <h1>Clothes &mdash; Flashcards</h1>
-  <p style="color:var(--muted)">Flashcard content coming soon.</p>
+<div style="padding:20px">
+<h1>Clothes</h1>
+<div id="vocab-list"></div>
 </div>
-<footer class="site-footer">Word Play &middot; Spanish A1 &middot; Vocabulary</footer>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+var WORDS = [{"word": "shirt", "ipa": "\u0283\u025c\u02d0rt", "def": "camisa", "ex": "He wears a blue shirt."}, {"word": "pants", "ipa": "p\u00e6nts", "def": "pantalones", "ex": "These pants fit well."}, {"word": "dress", "ipa": "dr\u025bs", "def": "vestido", "ex": "She wore a red dress."}, {"word": "shoes", "ipa": "\u0283uz", "def": "zapatos", "ex": "My shoes are black."}, {"word": "hat", "ipa": "h\u00e6t", "def": "sombrero", "ex": "He wears a hat."}, {"word": "jacket", "ipa": "\u02c8d\u0292\u00e6k\u026at", "def": "chaqueta", "ex": "I need a jacket."}, {"word": "socks", "ipa": "s\u0251\u02d0ks", "def": "calcetines", "ex": "Where are my socks?"}, {"word": "skirt", "ipa": "sk\u025c\u02d0rt", "def": "falda", "ex": "She wears a short skirt."}, {"word": "coat", "ipa": "ko\u028at", "def": "abrigo", "ex": "Wear a coat."}, {"word": "sweater", "ipa": "\u02c8sw\u025bt\u0259r", "def": "su\u00e9ter", "ex": "This sweater is warm."}];
+var SLUG = 'clothes';
+var LEVEL = 'a1';
+var MASTERY_KEY = 'wordplay_vocab_a1_' + SLUG + '_mastered';
+document.getElementById('vocab-list').innerHTML = WORDS.map((w, i) => 
+  '<div style="padding:10px; border-bottom:1px solid #ddd">' +
+  '<strong>' + w.word + '</strong> - ' + w.def + '<br>' +
+  '<em>' + w.ipa + '</em><br>' +
+  w.ex + '</div>'
+).join('');
+</script>
 </body>
 </html>

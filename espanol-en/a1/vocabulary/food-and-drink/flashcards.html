@@ -1,32 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#1A1A1A">
-<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Food & Drink — Flashcards | Word Play</title>
+<meta charset="UTF-8">
+<title>Flashcards</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
 </head>
 <body>
-<header class="site-header"><div class="site-header-inner">
-  <a href="index.html" class="back back-link" aria-label="Back"></a>
-  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
-</div></header>
-<div class="section-page">
-  <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>&#8250;</span>
-    <a href="../../../../espanol-en/a1/index.html">A1</a><span>&#8250;</span>
-    <a href="../index.html">Vocabulary</a><span>&#8250;</span>
-    <a href="index.html">Food & Drink</a><span>&#8250;</span>
-    <strong>Flashcards</strong>
-  </div>
-  <!-- PLACEHOLDER -->
-  <h1>Food & Drink &mdash; Flashcards</h1>
-  <p style="color:var(--muted)">Flashcard content coming soon.</p>
+<div style="padding:20px">
+<h1>Food And Drink</h1>
+<div id="vocab-list"></div>
 </div>
-<footer class="site-footer">Word Play &middot; Spanish A1 &middot; Vocabulary</footer>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+var WORDS = [{"word": "apple", "ipa": "\u02c8\u00e6p\u0259l", "def": "manzana", "ex": "I like red apples."}, {"word": "bread", "ipa": "br\u025bd", "def": "pan", "ex": "I eat bread for breakfast."}, {"word": "milk", "ipa": "m\u026alk", "def": "leche", "ex": "I drink milk."}, {"word": "water", "ipa": "\u02c8w\u0254\u02d0t\u0259r", "def": "agua", "ex": "Drink water."}, {"word": "coffee", "ipa": "\u02c8k\u0254\u02d0fi", "def": "caf\u00e9", "ex": "I drink coffee."}, {"word": "rice", "ipa": "ra\u026as", "def": "arroz", "ex": "She cooks rice."}, {"word": "chicken", "ipa": "\u02c8t\u0283\u026ak\u0259n", "def": "pollo", "ex": "I eat chicken."}, {"word": "fish", "ipa": "f\u026a\u0283", "def": "pescado", "ex": "Fish is healthy."}, {"word": "vegetables", "ipa": "\u02c8v\u025bd\u0292t\u0259b\u0259lz", "def": "verduras", "ex": "Eat your vegetables."}, {"word": "fruit", "ipa": "frut", "def": "fruta", "ex": "I like fruit."}];
+var SLUG = 'food-and-drink';
+var LEVEL = 'a1';
+var MASTERY_KEY = 'wordplay_vocab_a1_' + SLUG + '_mastered';
+document.getElementById('vocab-list').innerHTML = WORDS.map((w, i) => 
+  '<div style="padding:10px; border-bottom:1px solid #ddd">' +
+  '<strong>' + w.word + '</strong> - ' + w.def + '<br>' +
+  '<em>' + w.ipa + '</em><br>' +
+  w.ex + '</div>'
+).join('');
+</script>
 </body>
 </html>

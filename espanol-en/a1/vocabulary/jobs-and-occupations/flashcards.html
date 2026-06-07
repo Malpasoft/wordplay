@@ -1,32 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#1A1A1A">
-<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Jobs & Occupations — Flashcards | Word Play</title>
+<meta charset="UTF-8">
+<title>Flashcards</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
 </head>
 <body>
-<header class="site-header"><div class="site-header-inner">
-  <a href="index.html" class="back back-link" aria-label="Back"></a>
-  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
-</div></header>
-<div class="section-page">
-  <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>&#8250;</span>
-    <a href="../../../../espanol-en/a1/index.html">A1</a><span>&#8250;</span>
-    <a href="../index.html">Vocabulary</a><span>&#8250;</span>
-    <a href="index.html">Jobs & Occupations</a><span>&#8250;</span>
-    <strong>Flashcards</strong>
-  </div>
-  <!-- PLACEHOLDER -->
-  <h1>Jobs & Occupations &mdash; Flashcards</h1>
-  <p style="color:var(--muted)">Flashcard content coming soon.</p>
+<div style="padding:20px">
+<h1>Jobs And Occupations</h1>
+<div id="vocab-list"></div>
 </div>
-<footer class="site-footer">Word Play &middot; Spanish A1 &middot; Vocabulary</footer>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+var WORDS = [{"word": "teacher", "ipa": "\u02c8tit\u0283\u0259r", "def": "profesor", "ex": "She is a teacher."}, {"word": "doctor", "ipa": "\u02c8d\u0251\u02d0kt\u0259r", "def": "m\u00e9dico", "ex": "He is a doctor."}, {"word": "nurse", "ipa": "n\u025c\u02d0rs", "def": "enfermera", "ex": "She works as a nurse."}, {"word": "farmer", "ipa": "\u02c8f\u0251\u02d0rm\u0259r", "def": "granjero", "ex": "He is a farmer."}, {"word": "baker", "ipa": "\u02c8be\u026ak\u0259r", "def": "panadero", "ex": "She is a baker."}, {"word": "chef", "ipa": "\u0283\u025bf", "def": "chef", "ex": "He is a chef."}, {"word": "police officer", "ipa": "p\u0259\u02c8lis \u02c8\u0254\u02d0f\u026as\u0259r", "def": "polic\u00eda", "ex": "She is a police officer."}, {"word": "firefighter", "ipa": "\u02c8fa\u026arfa\u026at\u0259r", "def": "bombero", "ex": "He is a firefighter."}, {"word": "engineer", "ipa": "\u02cc\u025bnd\u0292\u026a\u02c8n\u026ar", "def": "ingeniero", "ex": "She is an engineer."}, {"word": "artist", "ipa": "\u02c8\u0251\u02d0rt\u026ast", "def": "artista", "ex": "He is an artist."}];
+var SLUG = 'jobs-and-occupations';
+var LEVEL = 'a1';
+var MASTERY_KEY = 'wordplay_vocab_a1_' + SLUG + '_mastered';
+document.getElementById('vocab-list').innerHTML = WORDS.map((w, i) => 
+  '<div style="padding:10px; border-bottom:1px solid #ddd">' +
+  '<strong>' + w.word + '</strong> - ' + w.def + '<br>' +
+  '<em>' + w.ipa + '</em><br>' +
+  w.ex + '</div>'
+).join('');
+</script>
 </body>
 </html>

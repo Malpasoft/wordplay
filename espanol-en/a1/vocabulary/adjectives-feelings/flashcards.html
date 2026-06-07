@@ -1,32 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#1A1A1A">
-<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Adjectives & Feelings — Flashcards | Word Play</title>
+<meta charset="UTF-8">
+<title>Flashcards</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
 </head>
 <body>
-<header class="site-header"><div class="site-header-inner">
-  <a href="index.html" class="back back-link" aria-label="Back"></a>
-  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
-</div></header>
-<div class="section-page">
-  <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>&#8250;</span>
-    <a href="../../../../espanol-en/a1/index.html">A1</a><span>&#8250;</span>
-    <a href="../index.html">Vocabulary</a><span>&#8250;</span>
-    <a href="index.html">Adjectives & Feelings</a><span>&#8250;</span>
-    <strong>Flashcards</strong>
-  </div>
-  <!-- PLACEHOLDER -->
-  <h1>Adjectives & Feelings &mdash; Flashcards</h1>
-  <p style="color:var(--muted)">Flashcard content coming soon.</p>
+<div style="padding:20px">
+<h1>Adjectives Feelings</h1>
+<div id="vocab-list"></div>
 </div>
-<footer class="site-footer">Word Play &middot; Spanish A1 &middot; Vocabulary</footer>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+var WORDS = [{"word": "happy", "ipa": "\u02c8h\u00e6pi", "def": "contento/alegre", "ex": "I am happy today."}, {"word": "sad", "ipa": "s\u00e6d", "def": "triste", "ex": "He feels sad."}, {"word": "angry", "ipa": "\u02c8\u00e6\u014b\u0261ri", "def": "enfadado", "ex": "She is angry."}, {"word": "tired", "ipa": "\u02c8ta\u026a\u0259rd", "def": "cansado", "ex": "I am tired."}, {"word": "excited", "ipa": "\u026ak\u02c8sa\u026at\u026ad", "def": "emocionado", "ex": "He is excited."}, {"word": "scared", "ipa": "sk\u025brd", "def": "asustado", "ex": "The dog is scared."}, {"word": "nervous", "ipa": "\u02c8n\u025c\u02d0rv\u0259s", "def": "nervioso", "ex": "I am nervous."}, {"word": "confused", "ipa": "k\u0259n\u02c8fjuzd", "def": "confundido", "ex": "She looks confused."}, {"word": "bored", "ipa": "b\u0254\u02d0rd", "def": "aburrido", "ex": "I am bored."}, {"word": "proud", "ipa": "pra\u028ad", "def": "orgulloso", "ex": "He is proud."}];
+var SLUG = 'adjectives-feelings';
+var LEVEL = 'a1';
+var MASTERY_KEY = 'wordplay_vocab_a1_' + SLUG + '_mastered';
+document.getElementById('vocab-list').innerHTML = WORDS.map((w, i) => 
+  '<div style="padding:10px; border-bottom:1px solid #ddd">' +
+  '<strong>' + w.word + '</strong> - ' + w.def + '<br>' +
+  '<em>' + w.ipa + '</em><br>' +
+  w.ex + '</div>'
+).join('');
+</script>
 </body>
 </html>

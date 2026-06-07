@@ -1,32 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#1A1A1A">
-<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>The Body — Flashcards | Word Play</title>
+<meta charset="UTF-8">
+<title>Flashcards</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
 </head>
 <body>
-<header class="site-header"><div class="site-header-inner">
-  <a href="index.html" class="back back-link" aria-label="Back"></a>
-  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
-</div></header>
-<div class="section-page">
-  <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>&#8250;</span>
-    <a href="../../../../espanol-en/a1/index.html">A1</a><span>&#8250;</span>
-    <a href="../index.html">Vocabulary</a><span>&#8250;</span>
-    <a href="index.html">The Body</a><span>&#8250;</span>
-    <strong>Flashcards</strong>
-  </div>
-  <!-- PLACEHOLDER -->
-  <h1>The Body &mdash; Flashcards</h1>
-  <p style="color:var(--muted)">Flashcard content coming soon.</p>
+<div style="padding:20px">
+<h1>Body</h1>
+<div id="vocab-list"></div>
 </div>
-<footer class="site-footer">Word Play &middot; Spanish A1 &middot; Vocabulary</footer>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+var WORDS = [{"word": "head", "ipa": "h\u025bd", "def": "cabeza", "ex": "I have a headache."}, {"word": "arm", "ipa": "\u0251\u02d0rm", "def": "brazo", "ex": "My arm hurts."}, {"word": "leg", "ipa": "l\u025b\u0261", "def": "pierna", "ex": "I have long legs."}, {"word": "hand", "ipa": "h\u00e6nd", "def": "mano", "ex": "Wash your hands."}, {"word": "foot", "ipa": "f\u028at", "def": "pie", "ex": "My foot is cold."}, {"word": "eye", "ipa": "a\u026a", "def": "ojo", "ex": "She has blue eyes."}, {"word": "ear", "ipa": "\u026a\u0259r", "def": "o\u00eddo", "ex": "My ear hurts."}, {"word": "nose", "ipa": "no\u028az", "def": "nariz", "ex": "Your nose is red."}, {"word": "mouth", "ipa": "ma\u028a\u03b8", "def": "boca", "ex": "Open your mouth."}, {"word": "stomach", "ipa": "\u02c8st\u028cm\u0259k", "def": "est\u00f3mago", "ex": "I have a stomachache."}];
+var SLUG = 'body';
+var LEVEL = 'a1';
+var MASTERY_KEY = 'wordplay_vocab_a1_' + SLUG + '_mastered';
+document.getElementById('vocab-list').innerHTML = WORDS.map((w, i) => 
+  '<div style="padding:10px; border-bottom:1px solid #ddd">' +
+  '<strong>' + w.word + '</strong> - ' + w.def + '<br>' +
+  '<em>' + w.ipa + '</em><br>' +
+  w.ex + '</div>'
+).join('');
+</script>
 </body>
 </html>

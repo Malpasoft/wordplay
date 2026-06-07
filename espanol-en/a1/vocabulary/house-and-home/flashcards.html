@@ -1,32 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="theme-color" content="#1A1A1A">
-<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>House & Home — Flashcards | Word Play</title>
+<meta charset="UTF-8">
+<title>Flashcards</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
 </head>
 <body>
-<header class="site-header"><div class="site-header-inner">
-  <a href="index.html" class="back back-link" aria-label="Back"></a>
-  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
-</div></header>
-<div class="section-page">
-  <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>&#8250;</span>
-    <a href="../../../../espanol-en/a1/index.html">A1</a><span>&#8250;</span>
-    <a href="../index.html">Vocabulary</a><span>&#8250;</span>
-    <a href="index.html">House & Home</a><span>&#8250;</span>
-    <strong>Flashcards</strong>
-  </div>
-  <!-- PLACEHOLDER -->
-  <h1>House & Home &mdash; Flashcards</h1>
-  <p style="color:var(--muted)">Flashcard content coming soon.</p>
+<div style="padding:20px">
+<h1>House And Home</h1>
+<div id="vocab-list"></div>
 </div>
-<footer class="site-footer">Word Play &middot; Spanish A1 &middot; Vocabulary</footer>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+var WORDS = [{"word": "bedroom", "ipa": "\u02c8b\u025bdrum", "def": "dormitorio", "ex": "My bedroom is upstairs."}, {"word": "kitchen", "ipa": "\u02c8k\u026at\u0283\u0259n", "def": "cocina", "ex": "We cook in the kitchen."}, {"word": "bathroom", "ipa": "\u02c8b\u00e6\u03b8rum", "def": "ba\u00f1o", "ex": "The bathroom is clean."}, {"word": "living room", "ipa": "\u02c8l\u026av\u026a\u014b rum", "def": "sala de estar", "ex": "We sit in the living room."}, {"word": "door", "ipa": "d\u0254\u02d0r", "def": "puerta", "ex": "Close the door."}, {"word": "window", "ipa": "\u02c8w\u026ando\u028a", "def": "ventana", "ex": "Open the window."}, {"word": "table", "ipa": "\u02c8te\u026ab\u0259l", "def": "mesa", "ex": "Sit at the table."}, {"word": "chair", "ipa": "t\u0283\u025br", "def": "silla", "ex": "This chair is comfortable."}, {"word": "bed", "ipa": "b\u025bd", "def": "cama", "ex": "My bed is soft."}, {"word": "sofa", "ipa": "\u02c8so\u028af\u0259", "def": "sof\u00e1", "ex": "Sit on the sofa."}];
+var SLUG = 'house-and-home';
+var LEVEL = 'a1';
+var MASTERY_KEY = 'wordplay_vocab_a1_' + SLUG + '_mastered';
+document.getElementById('vocab-list').innerHTML = WORDS.map((w, i) => 
+  '<div style="padding:10px; border-bottom:1px solid #ddd">' +
+  '<strong>' + w.word + '</strong> - ' + w.def + '<br>' +
+  '<em>' + w.ipa + '</em><br>' +
+  w.ex + '</div>'
+).join('');
+</script>
 </body>
 </html>
