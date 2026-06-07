@@ -130,6 +130,12 @@
       <div class="hc-desc">Student trends, average scores, XP levels, weakest chapters. Export CSV for deeper analysis.</div>
       <div class="hc-stat">Class insights</div>
     </a>
+    <a href="teacher-classes.html" class="hub-card">
+      <div class="hc-icon">◆</div>
+      <div class="hc-title">Classes</div>
+      <div class="hc-desc">Create and manage classes. Organize students and lessons by class.</div>
+      <div class="hc-stat" id="stat-classes">Manage classes</div>
+    </a>
     <a href="teacher-class.html" class="hub-card">
       <div class="hc-icon">♥</div>
       <div class="hc-title">Class Roster</div>
@@ -254,6 +260,29 @@ fetch('shared/coverage-data.json?v=' + Date.now())
     return;
   }
   el.textContent = 'No lessons today';
+})();
+
+// Class count
+(function() {
+  var token = getAuthToken();
+  if (!token) return;
+
+  fetch('/api/classes', {
+    headers: { 'Authorization': 'Bearer ' + token }
+  })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      var el = document.getElementById('stat-classes');
+      var classes = data || [];
+      if (classes.length) {
+        el.innerHTML = '<span class="num">' + classes.length + '</span> class' + (classes.length !== 1 ? 'es' : '');
+      } else {
+        el.textContent = 'Create your first class';
+      }
+    })
+    .catch(function() {
+      document.getElementById('stat-classes').textContent = 'View classes';
+    });
 })();
 
 // User management
