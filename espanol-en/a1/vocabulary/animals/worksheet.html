@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Animals — Worksheet | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">◐ Dark</button></div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">A1</a><span>›</span><a href="../index.html">Vocabulary</a><span>›</span><strong>Animals</strong></div>
+  <div class="chapter-num">V3</div>
+  <h1>Animals — Worksheet</h1>
+  <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Flashcards</a><a href="slides.html" class="chapter-nav-btn">Lesson</a><a href="worksheet.html" class="chapter-nav-btn active">Review</a><a href="game.html" class="chapter-nav-btn">Game</a></nav>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <form id="quizForm" onsubmit="showAns(event)">
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">1. Translate: "father"</div>
+        <input type="text" name="q1" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e1" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> padre</div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">2. What color is the sky?</div>
+        <select name="q2" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="azul">azul (blue)</option><option value="rojo">rojo (red)</option><option value="verde">verde (green)</option></select>
+        <div id="e2" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> azul</div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">3. Complete: El ___ es el rey de la selva.</div>
+        <input type="text" name="q3" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e3" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> león</div>
+      </div>
+      <div style="text-align:center"><button type="submit" class="fc-btn primary" style="padding:12px 32px">Check Answers</button></div>
+    </form>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Spanish A1 · Vocabulary</footer>
+<script>function showAns(e) {e.preventDefault(); document.getElementById('e1').style.display='block'; document.getElementById('e2').style.display='block'; document.getElementById('e3').style.display='block';}</script>
+</body>
+</html>
