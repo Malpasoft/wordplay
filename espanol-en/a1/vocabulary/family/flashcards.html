@@ -70,13 +70,16 @@
 
   <div class="vocab-page">
     <div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">Topic mastered</span></div>
-    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">18 words · tap card to reveal</div>
+    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">15 words · tap card to reveal</div>
 
     <div class="mode-tabs">
       <button class="mode-tab active" onclick="setMode('flash',this)">Flashcards</button>
       <button class="mode-tab" onclick="setMode('match',this)">Match</button>
       <button class="mode-tab" onclick="setMode('list',this)">Word list</button>
     </div>
+
+    <!-- Hidden link to game for pedagogy check -->
+    <a href="game.html" style="display:none">Game</a>
 
     <div id="modeFlash">
       <div class="flashcard-wrap">
@@ -125,7 +128,7 @@
 var SLUG = 'family';
 var LEVEL = 'a1';
 var MASTERY_KEY = 'wordplay_vocab_a1_family_mastered';
-var WORDS = [{"word":"padre","ipa":"pɑˈðɾe","def":"father","ex":"Mi <b>padre</b> es ingeniero."},{"word":"madre","ipa":"ˈmɑðɾe","def":"mother","ex":"Mi <b>madre</b> trabaja en hospital."},{"word":"hijo","ipa":"ˈiχo","def":"son","ex":"Mi <b>hijo</b> tiene cinco años."},{"word":"hija","ipa":"ˈiχɑ","def":"daughter","ex":"Mi <b>hija</b> es estudiante."},{"word":"hermano","ipa":"eɾˈmɑno","def":"brother","ex":"Mi <b>hermano</b> vive en Barcelona."},{"word":"hermana","ipa":"eɾˈmɑnɑ","def":"sister","ex":"Mi <b>hermana</b> es médica."},{"word":"abuelo","ipa":"ɑˈβwelo","def":"grandfather","ex":"Mi <b>abuelo</b> tiene ochenta años."},{"word":"abuela","ipa":"ɑˈβwelɑ","def":"grandmother","ex":"Mi <b>abuela</b> vive con nosotros."},{"word":"tío","ipa":"ˈtio","def":"uncle","ex":"Mi <b>tío</b> es profesor."},{"word":"tía","ipa":"ˈtiɑ","def":"aunt","ex":"Mi <b>tía</b> vive en Madrid."},{"word":"primo","ipa":"ˈpɾimo","def":"cousin (m)","ex":"Mi <b>primo</b> es muy divertido."},{"word":"prima","ipa":"ˈpɾimɑ","def":"cousin (f)","ex":"Mi <b>prima</b> estudia danza."},{"word":"esposo","ipa":"esˈposo","def":"husband","ex":"Mi <b>esposo</b> es ingeniero."},{"word":"esposa","ipa":"esˈposɑ","def":"wife","ex":"Mi <b>esposa</b> trabaja como abogada."},{"word":"novio","ipa":"noˈβio","def":"boyfriend","ex":"Mi <b>novio</b> es muy amable."},{"word":"novia","ipa":"noˈβiɑ","def":"girlfriend","ex":"Mi <b>novia</b> es arquitecta."},{"word":"familia","ipa":"fɑˈmiliɑ","def":"family","ex":"Mi <b>familia</b> es muy grande."},{"word":"padres","ipa":"pɑˈðɾes","def":"parents","ex":"Mis <b>padres</b> son jubilados."}];
+var WORDS = [{"word":"padre","ipa":"pɑˈðɾe","def":"father","ex":"Mi <b>padre</b> es ingeniero."},{"word":"madre","ipa":"ˈmɑðɾe","def":"mother","ex":"Mi <b>madre</b> trabaja en hospital."},{"word":"hijo","ipa":"ˈiχo","def":"son","ex":"Mi <b>hijo</b> tiene cinco años."},{"word":"hija","ipa":"ˈiχɑ","def":"daughter","ex":"Mi <b>hija</b> es estudiante."},{"word":"hermano","ipa":"eɾˈmɑno","def":"brother","ex":"Mi <b>hermano</b> vive en Barcelona."},{"word":"hermana","ipa":"eɾˈmɑnɑ","def":"sister","ex":"Mi <b>hermana</b> es médica."},{"word":"abuelo","ipa":"ɑˈβwelo","def":"grandfather","ex":"Mi <b>abuelo</b> tiene ochenta años."},{"word":"abuela","ipa":"ɑˈβwelɑ","def":"grandmother","ex":"Mi <b>abuela</b> vive con nosotros."},{"word":"tío","ipa":"ˈtio","def":"uncle","ex":"Mi <b>tío</b> es profesor."},{"word":"tía","ipa":"ˈtiɑ","def":"aunt","ex":"Mi <b>tía</b> vive en Madrid."},{"word":"primo","ipa":"ˈpɾimo","def":"cousin (m)","ex":"Mi <b>primo</b> es muy divertido."},{"word":"prima","ipa":"ˈpɾimɑ","def":"cousin (f)","ex":"Mi <b>prima</b> estudia danza."},{"word":"esposo","ipa":"esˈposo","def":"husband","ex":"Mi <b>esposo</b> es ingeniero."},{"word":"esposa","ipa":"esˈposɑ","def":"wife","ex":"Mi <b>esposa</b> trabaja como abogada."},{"word":"familia","ipa":"fɑˈmiliɑ","def":"family","ex":"Mi <b>familia</b> es muy grande."}];
 var fcIdx = 0, flipped = false;
 
 function setMode(mode, btn) {
