@@ -73,7 +73,8 @@
         <select id="track-select" onchange="regenerateLinks()">
           <option value="">All Tracks</option>
           <option value="en">English (EN)</option>
-          <option value="es">Spanish (ES)</option>
+          <option value="es">Spanish Natives (ES)</option>
+          <option value="espanol-en">Spanish Learners (ESPAÑOL-EN)</option>
           <option value="fr">French (FR)</option>
         </select>
       </div>
@@ -160,18 +161,21 @@ function getAllChapters() {
   const structure = {
     en: { dir: 'a', levels: ['a1', 'a2', 'b1', 'b2', 'c1', 'c2'], sections: ['vocabulary', 'grammar', 'writing'] },
     es: { dir: 'es', levels: ['a1', 'a2', 'b1', 'b2', 'c1', 'c2'], sections: ['vocabulary', 'grammar', 'writing'] },
+    'espanol-en': { dir: 'espanol-en', levels: ['a1', 'a2', 'b1', 'b2', 'c1', 'c2'], sections: ['vocabulary', 'grammar', 'writing'] },
     fr: { dir: 'fr', levels: ['a1', 'a2', 'b1', 'b2', 'c1', 'c2'], sections: ['vocabulary', 'writing'] }
   };
 
   const vocabularyChapters = {
     en: ['numbers', 'colors', 'family', 'animals', 'food', 'jobs', 'sports', 'school', 'travel-holidays', 'clothes', 'body-parts', 'house'],
     es: ['numeros', 'colores', 'familia', 'animales', 'comida', 'trabajos', 'deportes', 'escuela', 'viajes', 'ropa', 'cuerpo', 'casa'],
+    'espanol-en': ['adjectives-feelings', 'animals', 'colors', 'countries', 'family', 'foods', 'greetings', 'hobbies', 'house', 'jobs', 'numbers', 'time'],
     fr: ['nombres', 'couleurs', 'famille', 'animaux', 'nourriture', 'metiers', 'sports', 'ecole', 'voyages', 'vetements', 'corps', 'maison']
   };
 
   const grammarChapters = {
     en: ['present-simple', 'present-continuous', 'past-simple', 'future-will', 'modals', 'passive', 'conditionals', 'reported-speech'],
     es: ['presente-simple', 'presente-continuo', 'pasado-simple', 'futuro', 'modales', 'pasiva', 'condicionales'],
+    'espanol-en': ['adjective-agreement', 'articles', 'basic-commands', 'demonstratives', 'gustar', 'hay', 'imperatives', 'negation', 'noun-gender', 'numbers', 'present-progressive', 'present-tense', 'prepositions', 'pronouns', 'question-words', 'reflexive-verbs', 'ser-estar'],
     fr: ['present', 'passe-compose', 'imparfait', 'futur', 'conditionnel', 'subjonctif']
   };
 
