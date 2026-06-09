@@ -13,7 +13,7 @@
 <header class="site-header"><div class="site-header-inner">
   <a href="index.html" class="back back-link" aria-label="Back"></a>
   <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">◐ Dark</button>
 </div></header>
 <div class="section-page">
   <div class="breadcrumb">
@@ -23,11 +23,118 @@
     <a href="index.html">Regular -ar Verbs</a><span>&#8250;</span>
     <strong>Mastery Game</strong>
   </div>
-  <!-- PLACEHOLDER -->
-  <h1>Regular -ar Verbs &mdash; Mastery Game</h1>
-  <p style="color:var(--muted)">Game content coming soon.</p>
+  <h1>Regular -ar Verbs — Mastery Game</h1>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <div id="gameStart" class="game-start" style="text-align:center">
+      <p style="color:var(--muted);margin-bottom:16px">8 -ar verbs × 3 question types = reach 100 points to win</p>
+      <p style="color:var(--muted);font-size:.85rem;margin-bottom:24px">Master present tense conjugation of regular -ar verbs.</p>
+      <div id="gStartMastered" style="margin-bottom:16px"></div>
+      <button id="gBtnStart" class="fc-btn primary" style="padding:12px 32px" onclick="startGame()">Start Game</button>
+    </div>
+    <div id="gamePlay" style="display:none">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" style="display:none;text-align:center">
+      <div style="font-size:2rem;margin-bottom:20px;color:var(--amber)">&#9670;</div>
+      <div style="font-size:1.4rem;font-weight:700;margin-bottom:10px">Mastery Achieved!</div>
+      <div id="gFinalScore" style="font-size:1.1rem;color:var(--muted);margin-bottom:24px">Score: 100</div>
+      <button id="gBtnBackChapter" class="fc-btn primary" style="padding:12px 32px" onclick="backToChapter()">← Back to Chapter</button>
+    </div>
+  </div>
 </div>
 <footer class="site-footer">Word Play &middot; Spanish A1 &middot; Game</footer>
-<script src="../../../../shared/game.js?v=v111"></script>
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+window.GAME_DATA = {
+  level: 'a1',
+  chapterId: 'regular-verbs-ar',
+  storageKey: 'game_a1_regular_verbs_ar',
+  items: [
+    {id: 'hablar', verb: 'hablar', meaning: 'to speak', example: 'Yo hablo español', context: 'I speak Spanish', correct: 'hablo'},
+    {id: 'cantar', verb: 'cantar', meaning: 'to sing', example: 'Ella canta', context: 'She sings', correct: 'canta'},
+    {id: 'bailar', verb: 'bailar', meaning: 'to dance', example: 'Nosotros bailamos', context: 'We dance', correct: 'bailamos'},
+    {id: 'caminar', verb: 'caminar', meaning: 'to walk', example: 'Ellos caminan', context: 'They walk', correct: 'caminan'},
+    {id: 'trabajar', verb: 'trabajar', meaning: 'to work', example: 'Tú trabajas', context: 'You work', correct: 'trabajas'},
+    {id: 'estudiar', verb: 'estudiar', meaning: 'to study', example: 'Yo estudio', context: 'I study', correct: 'estudio'},
+    {id: 'escuchar', verb: 'escuchar', meaning: 'to listen', example: 'Ustedes escuchan', context: 'You (pl.) listen', correct: 'escuchan'},
+    {id: 'cocinar', verb: 'cocinar', meaning: 'to cook', example: 'Mi hermana cocina', context: 'My sister cooks', correct: 'cocina'}
+  ]
+};
+
+function startGame() { document.getElementById('gameStart').style.display = 'none'; document.getElementById('gamePlay').style.display = 'block'; }
+function backToChapter() { window.location.href = 'index.html'; }
+
+document.addEventListener('DOMContentLoaded', function() {
+  var DATA = window.GAME_DATA;
+  var play = document.querySelector('#gamePlay .game-play');
+  if (!play) return;
+
+  var score = 0, widx = 0, tidx = 0;
+  var ct = {};
+  DATA.items.forEach(function(w){ct[w.id] = 0;});
+  var types = ['significado', 'contexto', 'produccion'];
+
+  function getQ() {
+    var item = DATA.items[widx];
+    var t = types[tidx];
+    var q = {itemId: item.id, type: t};
+    if (t === 'significado') {
+      q.question = 'What does "<b>' + item.verb + '</b>" mean?';
+      q.correct = item.meaning;
+      q.options = [item.meaning, 'to study', 'to cook'].sort(() => Math.random() - 0.5);
+    } else if (t === 'contexto') {
+      q.question = 'Which conjugation? Context: "' + item.context + '"';
+      q.correct = item.correct;
+      var alts = DATA.items.filter(x => x.id !== item.id).slice(0, 2);
+      q.options = [item.correct, alts[0].correct, alts[1].correct].sort(() => Math.random() - 0.5);
+    } else {
+      q.question = 'Complete: "' + item.example.substring(0, item.example.lastIndexOf(' ')) + ' ___"';
+      q.correct = item.correct;
+      var alt1 = item.correct.replace(/o$/, 'as');
+      var alt2 = item.correct.replace(/o$/, 'an');
+      q.options = [item.correct, alt1, alt2].sort(() => Math.random() - 0.5);
+    }
+    return q;
+  }
+
+  function renderQ(q) {
+    play.innerHTML = '<div style="padding:20px"><div style="font-size:.9rem;color:var(--muted);margin-bottom:20px">Q' + (widx + 1) + '/24</div><div style="font-size:1.1rem;margin-bottom:24px">' + q.question + '</div>';
+    q.options.forEach(function(opt) {
+      play.innerHTML += '<button style="display:block;width:100%;padding:12px;margin-bottom:8px;background:var(--paper);border:1px solid var(--hairline);border-radius:6px;cursor:pointer;font-size:.95rem" onclick="ansQ(this)">' + opt + '</button>';
+    });
+    play.innerHTML += '</div>';
+  }
+
+  function ansQ(btn) {
+    var ans = btn.textContent.trim().toLowerCase();
+    var correct = getQ().correct.toLowerCase();
+    if (ans === correct || correct.includes(ans)) {
+      score += 10 + (ct[DATA.items[widx].id] * 2);
+      ct[DATA.items[widx].id]++;
+      tidx++;
+      if (tidx >= 3) { tidx = 0; widx++; }
+      if (widx >= DATA.items.length) { endGame(); return; }
+    } else {
+      score = Math.max(0, score - 3);
+      tidx = (tidx + 1) % 3;
+    }
+    renderQ(getQ());
+  }
+
+  function endGame() {
+    document.getElementById('gamePlay').style.display = 'none';
+    document.getElementById('gameCompletion').style.display = 'block';
+    document.getElementById('gFinalScore').textContent = 'Score: ' + Math.min(score, 100);
+    var lv = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+    if (!lv.a1) lv.a1 = {};
+    lv.a1['wordplay_game_regular_verbs_ar'] = {pct: Math.min(score, 100), date: new Date().toISOString()};
+    localStorage.setItem('wordplay_progress', JSON.stringify(lv));
+  }
+
+  window.ansQ = ansQ;
+  renderQ(getQ());
+});
+</script>
 </body>
 </html>

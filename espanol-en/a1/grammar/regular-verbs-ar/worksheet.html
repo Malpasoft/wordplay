@@ -23,9 +23,60 @@
     <a href="index.html">Regular -ar Verbs</a><span>&#8250;</span>
     <strong>Practice</strong>
   </div>
-  <!-- PLACEHOLDER -->
   <h1>Regular -ar Verbs &mdash; Practice</h1>
-  <p style="color:var(--muted)">Worksheet content coming soon.</p>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <form id="quizForm" onsubmit="showAns(event)">
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">1. "Yo _____ español." (I speak Spanish.)</div>
+        <select name="q1" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">hablo</option><option value="b">hablas</option><option value="c">hablan</option></select>
+        <div id="e1" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> hablo
+        <p style="margin-top:8px"><b>Explanation:</b> Regular -ar verbs use "-o" for "yo" (I). Hablar: hablo, hablas, habla, hablamos, habláis, hablan.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">2. "Ella _____ en la escuela." (She works in school.)</div>
+        <input type="text" name="q2" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e2" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> trabaja
+        <p style="margin-top:8px"><b>Explanation:</b> Regular -ar verbs use "-a" for third person singular (ella, él, usted). Trabajar: trabajo, trabajas, trabaja, trabajamos, trabajáis, trabajan.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">3. "Nosotros _____ en el parque." (We walk in the park.)</div>
+        <input type="text" name="q3" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e3" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> caminamos
+        <p style="margin-top:8px"><b>Explanation:</b> The nosotros form of -ar verbs ends in "-amos". Caminar: camino, caminas, camina, caminamos, camináis, caminan.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">4. "¿Ustedes _____ música?" (Do you (pl.) like music?)</div>
+        <select name="q4" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">gustan</option><option value="b">gusta</option><option value="c">gustáis</option></select>
+        <div id="e4" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> gustan
+        <p style="margin-top:8px"><b>Explanation:</b> With plural subjects (ustedes), -ar verbs use the "-an" ending. Note: "gustar" behaves specially (the thing being liked is the subject), but follows the same conjugation pattern.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">5. "Ellos no _____ francés." (They don't speak French.)</div>
+        <input type="text" name="q5" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e5" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> hablan
+        <p style="margin-top:8px"><b>Explanation:</b> Regular -ar verbs use "-an" for ellos/ellas/ustedes. The "no" goes before the verb for negation.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">6. Complete the conjugation: Tú _____ muy bien. (You dance very well.)</div>
+        <select name="q6" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">bailas</option><option value="b">baila</option><option value="c">bailamos</option></select>
+        <div id="e6" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> bailas
+        <p style="margin-top:8px"><b>Explanation:</b> The "tú" form of -ar verbs ends in "-as". Bailar: bailo, bailas, baila, bailamos, bailáis, bailan.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">7. What is the infinitive of "canto"? (I sing.)</div>
+        <input type="text" name="q7" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e7" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> cantar
+        <p style="margin-top:8px"><b>Explanation:</b> Remove the conjugated ending "-o" and add "-ar" to find the infinitive. The infinitive is the base form of the verb.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">8. Which sentence is correct?</div>
+        <select name="q8" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">Ellos estudian matemáticas</option><option value="b">Ellos estudias matemáticas</option><option value="c">Ellos estudia matemáticas</option></select>
+        <div id="e8" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Ellos estudian matemáticas
+        <p style="margin-top:8px"><b>Explanation:</b> Subject-verb agreement is required. "Ellos" (they, plural) goes with "-an" ending. Estudiar: estudio, estudias, estudia, estudiamos, estudiáis, estudian.</p></div>
+      </div>
+      <div style="text-align:center"><button type="submit" class="fc-btn primary" style="padding:12px 32px">Check Answers</button></div>
+    </form>
+  </div>
 </div>
 <footer class="site-footer">Word Play &middot; Spanish A1 &middot; Practice</footer>
 <script src="../../../../shared/worksheet.js?v=v108"></script>
