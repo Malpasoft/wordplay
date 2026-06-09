@@ -13,21 +13,72 @@
 <header class="site-header"><div class="site-header-inner">
   <a href="index.html" class="back back-link" aria-label="Back"></a>
   <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">◐ Dark</button>
 </div></header>
 <div class="section-page">
   <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>&#8250;</span>
-    <a href="../../../../espanol-en/a1/index.html">A1</a><span>&#8250;</span>
-    <a href="../index.html">Grammar</a><span>&#8250;</span>
-    <a href="index.html">Hay</a><span>&#8250;</span>
+    <a href="../../../../index.html">Home</a><span>◆</span>
+    <a href="../../../../espanol-en/a1/index.html">A1</a><span>◆</span>
+    <a href="../index.html">Grammar</a><span>◆</span>
+    <a href="index.html">Hay</a><span>◆</span>
     <strong>Practice</strong>
   </div>
-  <!-- PLACEHOLDER -->
-  <h1>Hay &mdash; Practice</h1>
-  <p style="color:var(--muted)">Worksheet content coming soon.</p>
+  <h1>Hay — Practice</h1>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <form id="quizForm" onsubmit="showAns(event)">
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">1. Complete: "_______ una gato en la casa."</div>
+        <input type="text" name="q1" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e1" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Hay
+        <p style="margin-top:8px"><b>Explanation:</b> "Hay" means "there is." Use it to indicate existence. This sentence means "There is a cat in the house."</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">2. Which answer completes the question: "¿Hay _______ en el refrigerador?"</div>
+        <select name="q2" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="leche">leche</option><option value="estudiantes">estudiantes</option><option value="gatos">gatos</option></select>
+        <div id="e2" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> leche
+        <p style="margin-top:8px"><b>Explanation:</b> The question asks "Is there milk in the refrigerator?" "Leche" (milk) is the logical answer. Food items go in refrigerators, not students or cats.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">3. Complete: "No _______ tiempo para jugar."</div>
+        <input type="text" name="q3" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e3" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> hay
+        <p style="margin-top:8px"><b>Explanation:</b> To make a negative statement with hay, use "no hay." This means "There is no time to play."</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">4. What is correct: Which uses "hay" properly?</div>
+        <select name="q4" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">Hay una mesa bonita en la sala.</option><option value="b">Hay son inteligentes.</option><option value="c">Hay yo estoy cansado.</option></select>
+        <div id="e4" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Hay una mesa bonita en la sala.
+        <p style="margin-top:8px"><b>Explanation:</b> "Hay" is used to indicate existence. This sentence correctly means "There is a pretty table in the living room." The other options use hay incorrectly with verbs and adjectives.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">5. Complete: "¿Cuántos estudiantes _______ en la clase?"</div>
+        <input type="text" name="q5" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e5" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> hay
+        <p style="margin-top:8px"><b>Explanation:</b> In a question, hay means "are there?" This question asks "How many students are there in the class?"</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">6. Complete: "_______ muchos libros en la biblioteca."</div>
+        <input type="text" name="q6" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e6" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Hay
+        <p style="margin-top:8px"><b>Explanation:</b> "Hay" works with plural nouns just like singular nouns. This means "There are many books in the library."</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">7. Which is correct? Compare hay vs. ser/estar:</div>
+        <select name="q7" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">Hay un gato. El gato es blanco.</option><option value="b">Hay un gato es blanco.</option><option value="c">El gato hay blanco.</option></select>
+        <div id="e7" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Hay un gato. El gato es blanco.
+        <p style="margin-top:8px"><b>Explanation:</b> Use "hay" for existence ("There is a cat") and "ser" for description ("The cat is white"). Never mix them.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">8. Complete: "¿ _______ flores en el jardín?"</div>
+        <input type="text" name="q8" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e8" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Hay
+        <p style="margin-top:8px"><b>Explanation:</b> In a question asking about the existence of something, use "¿Hay...?" This means "Are there flowers in the garden?"</p></div>
+      </div>
+      <div style="text-align:center"><button type="submit" class="fc-btn primary" style="padding:12px 32px">Check Answers</button></div>
+    </form>
+  </div>
 </div>
-<footer class="site-footer">Word Play &middot; Spanish A1 &middot; Practice</footer>
+<footer class="site-footer">Word Play — Spanish A1 — Practice</footer>
 <script src="../../../../shared/worksheet.js?v=v108"></script>
 </body>
 </html>
