@@ -23,9 +23,60 @@
     <a href="index.html">Subject Pronouns</a><span>&#8250;</span>
     <strong>Practice</strong>
   </div>
-  <!-- PLACEHOLDER -->
   <h1>Subject Pronouns &mdash; Practice</h1>
-  <p style="color:var(--muted)">Worksheet content coming soon.</p>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <form id="quizForm" onsubmit="showAns(event)">
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">1. Which pronoun means "you" (informal, to a friend)?</div>
+        <select name="q1" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">yo</option><option value="b">tú</option><option value="c">usted</option></select>
+        <div id="e1" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> tú
+        <p style="margin-top:8px"><b>Explanation:</b> "Tú" is the informal second person singular. You use it with friends, family, and peers. "Usted" is formal (for teachers, strangers).</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">2. Complete: "_____ hablamos español." (We speak Spanish.)</div>
+        <input type="text" name="q2" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e2" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Nosotros
+        <p style="margin-top:8px"><b>Explanation:</b> "Nosotros" means "we". The verb "hablamos" is the first person plural form for -AR verbs. The pronoun is optional but shown here for clarity.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">3. Which is the plural form of "tú"?</div>
+        <select name="q3" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">vosotros (Spain) / ustedes (Latin America)</option><option value="b">ellos</option><option value="c">nosotros</option></select>
+        <div id="e3" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> vosotros (Spain) / ustedes (Latin America)
+        <p style="margin-top:8px"><b>Explanation:</b> When addressing multiple people informally, you use "vosotros" in Spain or "ustedes" in Latin America. "Ellos" means "they", not plural "you".</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">4. Which pronoun is formal "you" (to a teacher)?</div>
+        <select name="q4" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">tú</option><option value="b">usted</option><option value="c">nosotros</option></select>
+        <div id="e4" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> usted
+        <p style="margin-top:8px"><b>Explanation:</b> "Usted" is the formal second person singular. You use it with teachers, strangers, older people, and anyone you want to show respect to. It uses third-person singular verb forms.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">5. What pronoun describes a mixed-gender group?</div>
+        <select name="q5" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">ellas</option><option value="b">ellos</option><option value="c">ustedes</option></select>
+        <div id="e5" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> ellos
+        <p style="margin-top:8px"><b>Explanation:</b> When a group includes both males and females, use the masculine form "ellos" (they). "Ellas" is for all-female groups only.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">6. Complete: "_____ trabajo en un hospital." (I work in a hospital.)</div>
+        <input type="text" name="q6" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e6" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Yo
+        <p style="margin-top:8px"><b>Explanation:</b> "Yo" means "I". Although the verb "trabajo" already shows first person singular, "yo" is included here for clarity or emphasis.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">7. Which sentence correctly uses pronouns to show contrast?</div>
+        <select name="q7" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">Habla español muy bien.</option><option value="b">Él habla español; ella habla inglés.</option></select>
+        <div id="e7" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Él habla español; ella habla inglés.
+        <p style="margin-top:8px"><b>Explanation:</b> When you want to contrast or clarify who is doing what, you include the pronouns "él" and "ella". The first sentence is ambiguous without pronouns.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">8. In Latin America, which pronoun is used for "you all" (informal)?</div>
+        <select name="q8" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">vosotros</option><option value="b">ustedes</option><option value="c">ellos</option></select>
+        <div id="e8" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> ustedes
+        <p style="margin-top:8px"><b>Explanation:</b> In Latin America, "ustedes" is used for all "you all" situations (formal and informal). "Vosotros" is only used in Spain for informal groups.</p></div>
+      </div>
+      <div style="text-align:center"><button type="submit" class="fc-btn primary" style="padding:12px 32px">Check Answers</button></div>
+    </form>
+  </div>
 </div>
 <footer class="site-footer">Word Play &middot; Spanish A1 &middot; Practice</footer>
 <script src="../../../../shared/worksheet.js?v=v108"></script>
