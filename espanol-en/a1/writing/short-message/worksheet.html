@@ -4,7 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Short Message — Practice | Word Play</title>
+<title>Short Messages &mdash; Practice | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
@@ -20,14 +20,73 @@
     <a href="../../../../index.html">Home</a><span>&#8250;</span>
     <a href="../../../../espanol-en/a1/index.html">A1</a><span>&#8250;</span>
     <a href="../index.html">Writing</a><span>&#8250;</span>
-    <a href="index.html">Short Message</a><span>&#8250;</span>
+    <a href="index.html">Short Messages</a><span>&#8250;</span>
     <strong>Practice</strong>
   </div>
-  <!-- PLACEHOLDER -->
-  <h1>Short Message &mdash; Practice</h1>
-  <p style="color:var(--muted)">Worksheet content coming soon.</p>
+  <h1>Short Messages &mdash; Practice</h1>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <form id="quizForm" onsubmit="showAns(event)">
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">1. Which is a correct friendly greeting line?</div>
+        <select name="q1" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="&iexcl;Hola, Marta!">&iexcl;Hola, Marta!</option><option value="Hola Marta!">Hola Marta!</option><option value="!Hola, Marta!">!Hola, Marta!</option></select>
+        <div id="e1" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> &iexcl;Hola, Marta!
+        <p style="margin-top:8px"><b>Explanation:</b> Spanish exclamations need the inverted opening mark &iexcl; at the start, and a comma before the name: &iexcl;Hola, Marta!</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">2. Complete the sign-off: "Un _______, Ana" (a hug)</div>
+        <input type="text" name="q2" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e2" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> abrazo
+        <p style="margin-top:8px"><b>Explanation:</b> UN ABRAZO (a hug) is the safe, friendly sign-off. Un beso/besos is for closer friends and family.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">3. "&iquest;Quedamos ma&ntilde;ana?" means:</div>
+        <select name="q3" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="Shall we meet tomorrow?">Shall we meet tomorrow?</option><option value="Are you staying tomorrow?">Are you staying tomorrow?</option><option value="Is it open tomorrow?">Is it open tomorrow?</option></select>
+        <div id="e3" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Shall we meet tomorrow?
+        <p style="margin-top:8px"><b>Explanation:</b> QUEDAR (here) = to arrange to meet: &iquest;Quedamos? = Shall we meet up? A key WhatsApp verb.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">4. Translate: "See you later" (common sign-off)</div>
+        <input type="text" name="q4" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e4" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> hasta luego
+        <p style="margin-top:8px"><b>Explanation:</b> HASTA LUEGO = see you later. Variants: hasta ma&ntilde;ana (see you tomorrow), hasta pronto (see you soon).</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">5. In chat Spanish, "tb" means:</div>
+        <select name="q5" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="tambi&eacute;n">tambi&eacute;n</option><option value="te beso">te beso</option><option value="tu bolso">tu bolso</option></select>
+        <div id="e5" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> tambi&eacute;n
+        <p style="margin-top:8px"><b>Explanation:</b> TB = tambi&eacute;n (also/too). Other classics: q = que, xq = porque, mñn = ma&ntilde;ana.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">6. Complete the note: "Estoy en la biblioteca. _______ a las siete." (I'll be back)</div>
+        <input type="text" name="q6" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e6" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> vuelvo
+        <p style="margin-top:8px"><b>Explanation:</b> Spanish uses the simple present for the near future: VUELVO a las siete = I'll be back at seven.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">7. How does Spanish write laughter in texts?</div>
+        <select name="q7" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="jajaja">jajaja</option><option value="hahaha">hahaha</option><option value="lol&iacute;">lol&iacute;</option></select>
+        <div id="e7" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> jajaja
+        <p style="margin-top:8px"><b>Explanation:</b> Spanish laughs with J: jajaja. The letter j in Spanish sounds like English h.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">8. Which sign-off is most NEUTRAL/formal?</div>
+        <select name="q8" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="Saludos">Saludos</option><option value="Un beso">Un beso</option><option value="Bss">Bss</option></select>
+        <div id="e8" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Saludos
+        <p style="margin-top:8px"><b>Explanation:</b> SALUDOS (regards) is neutral and works with people you don't know well. Un beso and bss are affectionate.</p></div>
+      </div>
+      <div style="text-align:center"><button type="submit" class="fc-btn primary" style="padding:12px 32px">Check Answers</button></div>
+    </form>
+  </div>
 </div>
 <footer class="site-footer">Word Play &middot; Spanish A1 &middot; Practice</footer>
-<script src="../../../../shared/worksheet.js?v=v108"></script>
+<script>
+function showAns(e) {
+  e.preventDefault();
+  var i = 1, el;
+  while ((el = document.getElementById('e' + i))) { el.style.display = 'block'; i++; }
+  var btn = document.querySelector('#quizForm button[type="submit"]');
+  if (btn) { btn.textContent = 'Answers shown below'; btn.disabled = true; }
+}
+</script>
 </body>
 </html>

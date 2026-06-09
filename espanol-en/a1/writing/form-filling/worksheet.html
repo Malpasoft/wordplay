@@ -4,7 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Form Filling — Practice | Word Play</title>
+<title>Form Filling &mdash; Practice | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
@@ -23,11 +23,70 @@
     <a href="index.html">Form Filling</a><span>&#8250;</span>
     <strong>Practice</strong>
   </div>
-  <!-- PLACEHOLDER -->
   <h1>Form Filling &mdash; Practice</h1>
-  <p style="color:var(--muted)">Worksheet content coming soon.</p>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <form id="quizForm" onsubmit="showAns(event)">
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">1. Which field asks for your surname?</div>
+        <select name="q1" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="apellidos">apellidos</option><option value="nombre">nombre</option><option value="direcci&oacute;n">direcci&oacute;n</option></select>
+        <div id="e1" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> apellidos
+        <p style="margin-top:8px"><b>Explanation:</b> APELLIDOS = surname(s). It is plural because Spaniards have two surnames. Nombre = first name; direcci&oacute;n = address.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">2. Translate the form field: "date of birth"</div>
+        <input type="text" name="q2" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e2" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> fecha de nacimiento
+        <p style="margin-top:8px"><b>Explanation:</b> "Date of birth" = FECHA DE NACIMIENTO. Remember Spanish dates are written day/month/year.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">3. "14/03/1996" on a Spanish form means:</div>
+        <select name="q3" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="14 March 1996">14 March 1996</option><option value="3 February 1996">3 February 1996</option><option value="March 14, 2096">March 14, 2096</option></select>
+        <div id="e3" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> 14 March 1996
+        <p style="margin-top:8px"><b>Explanation:</b> Spanish forms use DD/MM/YYYY: 14/03/1996 = day 14, month 03 (marzo), year 1996.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">4. Translate the form field: "email"</div>
+        <input type="text" name="q4" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e4" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> correo electr&oacute;nico
+        <p style="margin-top:8px"><b>Explanation:</b> "Email" = CORREO ELECTR&Oacute;NICO (often shortened to correo, or simply email in informal Spanish).</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">5. "Rellene con may&uacute;sculas" means:</div>
+        <select name="q5" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="Fill in using capital letters">Fill in using capital letters</option><option value="Sign at the bottom">Sign at the bottom</option><option value="Attach a photo">Attach a photo</option></select>
+        <div id="e5" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Fill in using capital letters
+        <p style="margin-top:8px"><b>Explanation:</b> RELLENAR = to fill in; MAY&Uacute;SCULAS = capital letters. Forms use formal usted commands: rellene.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">6. Which field asks for your postcode? "c&oacute;digo _______"</div>
+        <input type="text" name="q6" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e6" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> postal
+        <p style="margin-top:8px"><b>Explanation:</b> Postcode = C&Oacute;DIGO POSTAL. Spanish postcodes have five digits (08001 = Barcelona centre).</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">7. How are nationalities written in Spanish?</div>
+        <select name="q7" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="lower case: irlandesa">lower case: irlandesa</option><option value="Capitalised: Irlandesa">Capitalised: Irlandesa</option><option value="ALL CAPS only">ALL CAPS only</option></select>
+        <div id="e7" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> lower case: irlandesa
+        <p style="margin-top:8px"><b>Explanation:</b> Unlike English, Spanish nationality adjectives take lower case: irlandesa, espa&ntilde;ol, francesa.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">8. "Firme aqu&iacute;" asks you to:</div>
+        <select name="q8" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="sign here">sign here</option><option value="write your name in capitals">write your name in capitals</option><option value="date the form">date the form</option></select>
+        <div id="e8" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> sign here
+        <p style="margin-top:8px"><b>Explanation:</b> FIRMAR = to sign; la firma = signature. Firme aqu&iacute; = Sign here (formal command).</p></div>
+      </div>
+      <div style="text-align:center"><button type="submit" class="fc-btn primary" style="padding:12px 32px">Check Answers</button></div>
+    </form>
+  </div>
 </div>
 <footer class="site-footer">Word Play &middot; Spanish A1 &middot; Practice</footer>
-<script src="../../../../shared/worksheet.js?v=v108"></script>
+<script>
+function showAns(e) {
+  e.preventDefault();
+  var i = 1, el;
+  while ((el = document.getElementById('e' + i))) { el.style.display = 'block'; i++; }
+  var btn = document.querySelector('#quizForm button[type="submit"]');
+  if (btn) { btn.textContent = 'Answers shown below'; btn.disabled = true; }
+}
+</script>
 </body>
 </html>
