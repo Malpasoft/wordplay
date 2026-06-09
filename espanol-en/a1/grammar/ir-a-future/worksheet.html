@@ -4,7 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Ir a + Infinitive — Practice | Word Play</title>
+<title>Ir + A (Future) — Practice | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
@@ -13,21 +13,72 @@
 <header class="site-header"><div class="site-header-inner">
   <a href="index.html" class="back back-link" aria-label="Back"></a>
   <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">◐ Dark</button>
 </div></header>
 <div class="section-page">
   <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>&#8250;</span>
-    <a href="../../../../espanol-en/a1/index.html">A1</a><span>&#8250;</span>
-    <a href="../index.html">Grammar</a><span>&#8250;</span>
-    <a href="index.html">Ir a + Infinitive</a><span>&#8250;</span>
+    <a href="../../../../index.html">Home</a><span>◆</span>
+    <a href="../../../../espanol-en/a1/index.html">A1</a><span>◆</span>
+    <a href="../index.html">Grammar</a><span>◆</span>
+    <a href="index.html">Ir + A (Future)</a><span>◆</span>
     <strong>Practice</strong>
   </div>
-  <!-- PLACEHOLDER -->
-  <h1>Ir a + Infinitive &mdash; Practice</h1>
-  <p style="color:var(--muted)">Worksheet content coming soon.</p>
+  <h1>Ir + A (Future) — Practice</h1>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <form id="quizForm" onsubmit="showAns(event)">
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">1. Complete: "Voy _______ estudiar mañana."</div>
+        <input type="text" name="q1" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e1" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> a
+        <p style="margin-top:8px"><b>Explanation:</b> The structure is "ir + a + infinitive." The preposition "a" is required. "Voy a estudiar" = I'm going to study.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">2. What form of "ir" goes with "nosotros"?</div>
+        <select name="q2" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="vamos">vamos</option><option value="van">van</option><option value="voy">voy</option></select>
+        <div id="e2" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> vamos
+        <p style="margin-top:8px"><b>Explanation:</b> "Nosotros" uses "vamos." Example: "Vamos a comer pizza" (We're going to eat pizza).</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">3. Complete: "¿Vas _______ viajar el próximo mes?"</div>
+        <input type="text" name="q3" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e3" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> a
+        <p style="margin-top:8px"><b>Explanation:</b> Like all ir + a constructions, you need "a" before the infinitive. This question asks "Are you going to travel next month?"</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">4. Which is correct for "ellos"?</div>
+        <select name="q4" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">Va a jugar</option><option value="b">Van a jugar</option><option value="c">Vamos a jugar</option></select>
+        <div id="e4" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Van a jugar
+        <p style="margin-top:8px"><b>Explanation:</b> For "ellos" (they), use "van." This means "They are going to play."</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">5. Complete: "No _______ a trabajar mañana."</div>
+        <input type="text" name="q5" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e5" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> voy
+        <p style="margin-top:8px"><b>Explanation:</b> To make ir + a negative, put "no" before the conjugated form of ir. "No voy a trabajar" = I'm not going to work.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">6. Which time marker fits best: "Ella _______ este fin de semana."</div>
+        <select name="q6" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">va a descansar</option><option value="b">descansar va a</option><option value="c">a va descansar</option></select>
+        <div id="e6" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> va a descansar
+        <p style="margin-top:8px"><b>Explanation:</b> The pattern is always "conjugated ir + a + infinitive." This means "She is going to rest this weekend."</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">7. Complete: "Vamos _______ a comer pizza."</div>
+        <input type="text" name="q7" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e7" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> a (or "no" if negative)
+        <p style="margin-top:8px"><b>Explanation:</b> "Vamos a" is the nosotros form of ir + a. This sentence means "We're going to eat pizza." (Note: The sentence already has "a", so this tests understanding of the structure.)</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">8. What is the ir form for "yo"?</div>
+        <input type="text" name="q8" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e8" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> voy
+        <p style="margin-top:8px"><b>Explanation:</b> For "yo," the form is "voy." Example: "Voy a aprender inglés" (I'm going to learn English).</p></div>
+      </div>
+      <div style="text-align:center"><button type="submit" class="fc-btn primary" style="padding:12px 32px">Check Answers</button></div>
+    </form>
+  </div>
 </div>
-<footer class="site-footer">Word Play &middot; Spanish A1 &middot; Practice</footer>
+<footer class="site-footer">Word Play — Spanish A1 — Practice</footer>
 <script src="../../../../shared/worksheet.js?v=v108"></script>
 </body>
 </html>
