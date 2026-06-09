@@ -23,9 +23,60 @@
     <a href="index.html">Gustar</a><span>&#8250;</span>
     <strong>Practice</strong>
   </div>
-  <!-- PLACEHOLDER -->
   <h1>Gustar &mdash; Practice</h1>
-  <p style="color:var(--muted)">Worksheet content coming soon.</p>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <form id="quizForm" onsubmit="showAns(event)">
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">1. Fill in: "Me _____ la pizza."</div>
+        <input type="text" name="q1" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e1" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> gusta
+        <p style="margin-top:8px"><b>Explanation:</b> "Pizza" is singular, so we use gusta (not gustan). "Me gusta la pizza" = I like pizza (pizza is pleasing to me).</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">2. Which is correct: "Te gustan las frutas"?</div>
+        <select name="q2" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">Yes, it's correct</option><option value="b">No, should be "Te gusta las frutas"</option></select>
+        <div id="e2" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Yes, it's correct
+        <p style="margin-top:8px"><b>Explanation:</b> "Frutas" is plural, so gustan is correct. "Te gustan las frutas" = You like fruits (fruits are pleasing to you).</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">3. Fill in: "A Juan le _____ el fútbol."</div>
+        <input type="text" name="q3" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e3" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> gusta
+        <p style="margin-top:8px"><b>Explanation:</b> "Fútbol" (soccer) is singular. The prepositional phrase "A Juan" clarifies who we're talking about. "A Juan le gusta el fútbol" = Juan likes soccer.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">4. Fill in: "Nos _____ viajar." (We like to travel.)</div>
+        <input type="text" name="q4" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e4" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> gusta
+        <p style="margin-top:8px"><b>Explanation:</b> With infinitives (viajar), always use gusta (singular), even with nosotros. "Nos gusta viajar" = We like to travel.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">5. Which pronoun is correct? "_____ gusta la música." (She likes music.)</div>
+        <select name="q5" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">Me</option><option value="b">Te</option><option value="c">Le</option></select>
+        <div id="e5" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Le
+        <p style="margin-top:8px"><b>Explanation:</b> For "she" (ella), we use le. "Le gusta la música" = She likes music. Me = I, Te = you, Le = he/she/you formal.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">6. Fill in: "Me gustan _____ películas."</div>
+        <input type="text" name="q6" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e6" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> las
+        <p style="margin-top:8px"><b>Explanation:</b> "Películas" (movies) is plural feminine. You need the definite article "las" to make the sentence complete. "Me gustan las películas" = I like movies.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">7. Which sentence is correct?</div>
+        <select name="q7" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">Nos gusta cantando</option><option value="b">Nos gusta cantar</option></select>
+        <div id="e7" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Nos gusta cantar
+        <p style="margin-top:8px"><b>Explanation:</b> With gustar, you use the infinitive (cantar), not the gerund (cantando). "Nos gusta cantar" = We like to sing.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">8. Fill in: "Les _____ los libros." (They like books.)</div>
+        <input type="text" name="q8" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e8" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> gustan
+        <p style="margin-top:8px"><b>Explanation:</b> "Libros" (books) is plural, so we use gustan. "Les gustan los libros" = They like books.</p></div>
+      </div>
+      <div style="text-align:center"><button type="submit" class="fc-btn primary" style="padding:12px 32px">Check Answers</button></div>
+    </form>
+  </div>
 </div>
 <footer class="site-footer">Word Play &middot; Spanish A1 &middot; Practice</footer>
 <script src="../../../../shared/worksheet.js?v=v108"></script>
