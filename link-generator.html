@@ -155,40 +155,123 @@ function getRootFiles() {
   ];
 }
 
-// All chapters (hardcoded from known structure)
+// All chapters (derived from the real directory tree)
 function getAllChapters() {
   const allChapters = [];
+
+  // English content is split across a/ (a1,a2), b/ (b1,b2), c/ (c1,c2).
+  // Other tracks live under a single directory matching the track key.
+  const dirFor = (track, level) => {
+    if (track === 'en') {
+      if (level === 'a1' || level === 'a2') return 'a';
+      if (level === 'b1' || level === 'b2') return 'b';
+      return 'c';
+    }
+    return track;
+  };
+  // es/ uses Spanish-named "gramatica/"; all other tracks use "grammar/".
+  const grammarDir = (track) => (track === 'es' ? 'gramatica' : 'grammar');
+
   const structure = {
-    en: { dir: 'a', levels: ['a1', 'a2', 'b1', 'b2', 'c1', 'c2'], sections: ['vocabulary', 'grammar', 'writing'] },
-    es: { dir: 'es', levels: ['a1', 'a2', 'b1', 'b2', 'c1', 'c2'], sections: ['vocabulary', 'grammar', 'writing'] },
-    'espanol-en': { dir: 'espanol-en', levels: ['a1', 'a2', 'b1', 'b2', 'c1', 'c2'], sections: ['vocabulary', 'grammar', 'writing'] },
-    fr: { dir: 'fr', levels: ['a1', 'a2', 'b1', 'b2', 'c1', 'c2'], sections: ['vocabulary', 'writing'] }
+    en: { levels: ['a1', 'a2', 'b1', 'b2', 'c1', 'c2'], sections: ['vocabulary', 'grammar', 'writing'] },
+    es: { levels: ['a1', 'a2', 'b1', 'b2', 'c1', 'c2'], sections: ['vocabulary', 'grammar', 'writing'] },
+    'espanol-en': { levels: ['a1', 'a2', 'b1', 'b2', 'c1', 'c2'], sections: ['vocabulary', 'grammar', 'writing'] },
+    fr: { levels: ['a1', 'a2', 'b1', 'b2', 'c1', 'c2'], sections: ['vocabulary', 'grammar', 'writing'] }
   };
 
   const vocabularyChapters = {
-    en: ['numbers', 'colors', 'family', 'animals', 'food', 'jobs', 'sports', 'school', 'travel-holidays', 'clothes', 'body-parts', 'house'],
-    es: ['numeros', 'colores', 'familia', 'animales', 'comida', 'trabajos', 'deportes', 'escuela', 'viajes', 'ropa', 'cuerpo', 'casa'],
-    'espanol-en': ['adjectives-feelings', 'animals', 'colors', 'countries', 'family', 'foods', 'greetings', 'hobbies', 'house', 'jobs', 'numbers', 'time'],
-    fr: ['nombres', 'couleurs', 'famille', 'animaux', 'nourriture', 'metiers', 'sports', 'ecole', 'voyages', 'vetements', 'corps', 'maison']
+    en: {
+      a1: ['animals', 'clothes', 'colours', 'daily-routine', 'family', 'food', 'hobbies', 'house-and-rooms', 'jobs', 'numbers-and-time', 'places-in-town', 'weather'],
+      a2: ['cooking', 'feelings-emotions', 'health-and-body', 'music', 'problems-solutions', 'school-subjects', 'shopping-and-money', 'sports', 'technology-and-media', 'transport-and-travel', 'weather-detail', 'work-and-jobs'],
+      b1: ['adjective-preposition', 'applied-grammar-verbs', 'collocations-make-do', 'education-school', 'environment-nature', 'phrasal-verbs-get-take', 'phrasal-verbs-go-come', 'sport-leisure', 'technology-media', 'travel-holidays', 'word-families-basic'],
+      b2: ['applied-grammar-prepositions', 'collocations-adj-noun', 'collocations-verbs', 'environment-climate', 'expressions-idioms', 'false-friends', 'health-lifestyle', 'phrasal-verbs-look-bring', 'phrasal-verbs-put-set', 'phrasal-verbs-turn-run', 'society-culture', 'technology-innovation', 'word-formation-adjectives', 'word-formation-nouns', 'word-formation-prefixes', 'work-careers'],
+      c1: ['abstract-nouns', 'academic-verbs', 'academic-vocabulary', 'applied-grammar-register', 'attitudes-opinions', 'cause-effect', 'collocations-advanced', 'contrast-concession', 'formal-synonyms', 'idioms-fixed-expressions', 'paraphrasing-synonyms', 'register-style', 'topic-vocabulary-arts', 'word-formation-advanced'],
+      c2: ['academic-collocations', 'advanced-idioms', 'applied-grammar-collocation', 'connotation-register', 'corpus-vocabulary', 'discourse-vocabulary', 'lexical-sophistication', 'literary-devices', 'nuanced-synonyms', 'persuasive-language', 'precision-vocabulary', 'spoken-written-modes']
+    },
+    es: {
+      a1: ['animals', 'clothes', 'colours', 'daily-routines', 'family', 'food-and-drink', 'hobbies', 'house-and-rooms', 'jobs', 'numbers-and-time', 'places-in-town', 'weather'],
+      a2: ['cooking', 'feelings-emotions', 'health-and-body', 'music', 'problems-solutions', 'school-subjects', 'shopping-and-money', 'sports', 'technology-and-media', 'transport-and-travel', 'weather-detail', 'work-and-jobs'],
+      b1: ['adjective-preposition', 'applied-grammar-verbs', 'collocations-make-do', 'culinary-english', 'education-school', 'environment-nature', 'phrasal-verbs-get-take', 'phrasal-verbs-go-come', 'sport-leisure', 'technology-media', 'travel-holidays', 'word-families-basic'],
+      b2: ['applied-grammar-prepositions', 'collocations-adj-noun', 'collocations-verbs', 'environment-climate', 'expressions-idioms', 'false-friends', 'health-lifestyle', 'phrasal-verbs-look-bring', 'phrasal-verbs-put-set', 'phrasal-verbs-turn-run', 'society-culture', 'technology-innovation', 'word-formation-adjectives', 'word-formation-nouns', 'word-formation-prefixes', 'work-careers'],
+      c1: ['abstract-nouns', 'academic-verbs', 'academic-vocabulary', 'applied-grammar-register', 'attitudes-opinions', 'cause-effect', 'collocations-advanced', 'contrast-concession', 'formal-synonyms', 'idioms-fixed-expressions', 'paraphrasing-synonyms', 'register-style', 'topic-vocabulary-arts', 'word-formation-advanced'],
+      c2: ['academic-collocations', 'advanced-idioms', 'applied-grammar-collocation', 'connotation-register', 'corpus-vocabulary', 'discourse-vocabulary', 'lexical-sophistication', 'literary-devices', 'nuanced-synonyms', 'persuasive-language', 'precision-vocabulary', 'spoken-written-modes']
+    },
+    'espanol-en': {
+      a1: ['adjectives-feelings', 'animals', 'body', 'clothes', 'colours', 'daily-routines', 'family', 'food-and-drink', 'house-and-home', 'jobs-and-occupations', 'numbers-and-time', 'places-in-town']
+    },
+    fr: {}
   };
 
   const grammarChapters = {
-    en: ['present-simple', 'present-continuous', 'past-simple', 'future-will', 'modals', 'passive', 'conditionals', 'reported-speech'],
-    es: ['presente-simple', 'presente-continuo', 'pasado-simple', 'futuro', 'modales', 'pasiva', 'condicionales'],
-    'espanol-en': ['adjective-agreement', 'articles', 'basic-commands', 'demonstratives', 'gustar', 'hay', 'imperatives', 'negation', 'noun-gender', 'numbers', 'present-progressive', 'present-tense', 'prepositions', 'pronouns', 'question-words', 'reflexive-verbs', 'ser-estar'],
-    fr: ['present', 'passe-compose', 'imparfait', 'futur', 'conditionnel', 'subjonctif']
+    en: {
+      a1: ['adjectives-basic', 'adverbs-frequency', 'articles-basic', 'can-basic', 'can-cant', 'demonstratives', 'going-to-future', 'have-got', 'imperatives', 'nouns-plural', 'possessive-adjectives', 'possessives', 'prepositions-of-place', 'prepositions-place', 'prepositions-time', 'present-continuous', 'present-simple', 'pronouns', 'question-words', 'simple-past-irregular', 'simple-past-regular', 'some-any', 'there-is-there-are', 'to-be'],
+      a2: ['adverbs-manner', 'comparatives-basic', 'conjunctions', 'countable-uncountable-basic', 'future-going-to', 'future-will', 'indirect-questions', 'modal-could-might', 'modal-must-should', 'object-pronouns', 'past-continuous', 'past-simple', 'prepositions-movement', 'present-perfect-intro', 'quantifiers-basic', 'relative-clauses-basic', 'short-answers', 'too-enough-basic', 'word-order'],
+      b1: ['comparatives-superlatives', 'future-forms', 'ing-form', 'modal-deduction', 'modals-advice', 'modals-obligation', 'passive-simple', 'passive-variations', 'past-perfect', 'past-simple-continuous', 'present-perfect', 'present-perfect-continuous', 'question-tags', 'relative-clauses', 'reported-speech-basic', 'second-conditional', 'so-neither', 'too-enough', 'verb-infinitive-patterns', 'wish-if-only', 'zero-first-conditional'],
+      b2: ['articles', 'causative', 'comparisons', 'conditionals', 'countable-uncountable', 'future-forms', 'gerunds-infinitives', 'hypothetical-meaning', 'inversion', 'linking-discourse', 'mixed-conditionals', 'modals-past', 'narrative-tenses', 'passive', 'relative-clauses', 'reported-speech', 'used-to', 'verb-patterns'],
+      c1: ['advanced-tenses', 'articles-advanced', 'causative-advanced', 'cleft-sentences', 'conditionals-advanced', 'discourse-connectors', 'ellipsis-substitution', 'gerunds-infinitives-advanced', 'hedging-language', 'inversion-advanced', 'modal-verbs-advanced', 'nominalisation', 'passive-advanced', 'quantifiers-advanced', 'relative-clauses-advanced', 'reported-speech-advanced', 'subjunctive'],
+      c2: ['academic-grammar', 'advanced-clauses', 'advanced-modality', 'complex-passives', 'conditionals-mastery', 'discourse-grammar', 'error-analysis', 'grammar-in-text', 'grammar-review-tenses', 'register-grammar', 'stylistic-inversion']
+    },
+    es: {
+      a1: ['adjectives-basic', 'adverbs-frequency', 'articulos', 'can', 'can-cant', 'demostrativos', 'going-to-future', 'have-got', 'imperatives', 'plurales', 'possessive-adjectives', 'possessives', 'preposiciones', 'prepositions-place', 'prepositions-time', 'present-continuous', 'present-simple', 'pronombres', 'question-words', 'simple-past-irregular', 'simple-past-regular', 'some-any', 'there-is-there-are', 'to-be'],
+      a2: ['adverbs-manner', 'comparatives-basic', 'conjunctions', 'countable-uncountable-basic', 'future-going-to', 'future-will', 'modal-could-might', 'modal-must-should', 'object-pronouns', 'past-continuous', 'past-simple', 'prepositions-movement', 'present-perfect-intro', 'quantifiers-basic', 'relative-clauses-basic', 'short-answers', 'too-enough-basic', 'word-order'],
+      b1: ['comparatives-superlatives', 'future-forms', 'ing-form', 'modal-deduction', 'modals-advice', 'modals-obligation', 'passive-simple', 'past-perfect', 'past-simple-continuous', 'present-perfect', 'present-perfect-continuous', 'question-tags', 'relative-clauses', 'reported-speech-basic', 'second-conditional', 'so-neither', 'too-enough', 'verb-infinitive-patterns', 'zero-first-conditional'],
+      b2: ['articles', 'causative', 'comparisons', 'conditionals', 'countable-uncountable', 'future-forms', 'gerunds-infinitives', 'hypothetical-meaning', 'inversion', 'linking-discourse', 'mixed-conditionals', 'modals-past', 'narrative-tenses', 'passive', 'relative-clauses', 'reported-speech', 'used-to', 'verb-patterns'],
+      c1: ['advanced-tenses', 'articles-advanced', 'causative-advanced', 'cleft-sentences', 'conditionals-advanced', 'discourse-connectors', 'ellipsis-substitution', 'gerunds-infinitives-advanced', 'hedging-language', 'inversion-advanced', 'modal-verbs-advanced', 'nominalisation', 'passive-advanced', 'quantifiers-advanced', 'relative-clauses-advanced', 'reported-speech-advanced', 'subjunctive'],
+      c2: ['academic-grammar', 'advanced-clauses', 'advanced-modality', 'complex-passives', 'conditionals-mastery', 'discourse-grammar', 'error-analysis', 'grammar-in-text', 'grammar-review-tenses', 'register-grammar', 'stylistic-inversion']
+    },
+    'espanol-en': {
+      a1: ['adjective-agreement', 'adverbs-frequency', 'articles', 'basic-commands', 'common-mistakes', 'demonstratives', 'gustar', 'hay', 'ir-a-future', 'negation', 'numbers-time', 'past-tense-irregular', 'past-tense-regular', 'prepositions-place', 'prepositions-time', 'present-progressive', 'present-tense', 'pronouns', 'question-words', 'reflexive-verbs', 'regular-verbs-ar', 'regular-verbs-er-ir', 'ser-estar', 'ser-estar-uses', 'tener']
+    },
+    fr: {}
+  };
+
+  const writingChapters = {
+    en: {
+      a1: ['form-filling', 'personal-profile', 'short-note'],
+      a2: ['description', 'informal-email', 'postcard'],
+      b1: ['article', 'informal-letter', 'story'],
+      b2: ['article', 'essay', 'formal-email', 'report', 'review'],
+      c1: ['article', 'essay', 'formal-letter', 'proposal', 'report', 'review'],
+      c2: ['academic-essay', 'critical-review', 'formal-letter', 'proposal', 'report', 'review']
+    },
+    es: {
+      a1: ['form-filling', 'personal-profile', 'short-note'],
+      a2: ['description', 'informal-email', 'postcard'],
+      b1: ['article', 'informal-letter', 'story'],
+      b2: ['article', 'essay', 'formal-email', 'report', 'review'],
+      c1: ['article', 'essay', 'formal-letter', 'proposal', 'report', 'review'],
+      c2: ['academic-essay', 'critical-review', 'formal-letter', 'proposal', 'report', 'review']
+    },
+    'espanol-en': {
+      a1: ['form-filling', 'personal-introduction', 'short-message']
+    },
+    fr: {}
   };
 
   Object.keys(structure).forEach(track => {
     const s = structure[track];
     s.levels.forEach(level => {
       s.sections.forEach(section => {
-        const chapterSlugs = section === 'vocabulary' ? (vocabularyChapters[track] || []) :
-                             section === 'grammar' ? (grammarChapters[track] || []) :
-                             ['writing'];
+        let chapterSlugs = [];
+        let sectionDir = section;
+
+        if (section === 'vocabulary') {
+          chapterSlugs = (vocabularyChapters[track] && vocabularyChapters[track][level]) || [];
+        } else if (section === 'grammar') {
+          sectionDir = grammarDir(track);
+          chapterSlugs = (grammarChapters[track] && grammarChapters[track][level]) || [];
+        } else if (section === 'writing') {
+          chapterSlugs = (writingChapters[track] && writingChapters[track][level]) || [];
+        }
+
+        const dir = dirFor(track, level);
 
         chapterSlugs.forEach(slug => {
-          const types = section === 'writing' ? ['slides', 'printables'] : ['slides', 'flashcards', 'game', 'worksheet'];
+          // File types differ by section: vocab has flashcards (no worksheet);
+          // grammar has worksheet (no flashcards); writing has printables.
+          const types = section === 'writing' ? ['slides', 'printables'] :
+                        section === 'vocabulary' ? ['slides', 'flashcards', 'game'] :
+                        ['slides', 'game', 'worksheet'];
 
           types.forEach(type => {
             const filename = type === 'printables' ? 'printables.html' : `${type}.html`;
@@ -198,7 +281,7 @@ function getAllChapters() {
               section: section.charAt(0).toUpperCase() + section.slice(1),
               slug,
               type,
-              url: `${BASE_URL}/${s.dir}/${level}/${section}/${slug}/${filename}`,
+              url: `${BASE_URL}/${dir}/${level}/${sectionDir}/${slug}/${filename}`,
               label: `${track.toUpperCase()} ${level.toUpperCase()} · ${section} · ${slug} (${type})`
             });
           });
