@@ -4,7 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Reflexive Verbs — Practice | Word Play</title>
+<title>Reflexive Verbs &mdash; Practice | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
@@ -23,11 +23,70 @@
     <a href="index.html">Reflexive Verbs</a><span>&#8250;</span>
     <strong>Practice</strong>
   </div>
-  <!-- PLACEHOLDER -->
   <h1>Reflexive Verbs &mdash; Practice</h1>
-  <p style="color:var(--muted)">Worksheet content coming soon.</p>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <form id="quizForm" onsubmit="showAns(event)">
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">1. Complete: "Yo _______ levanto a las ocho." (reflexive pronoun)</div>
+        <input type="text" name="q1" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e1" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> me
+        <p style="margin-top:8px"><b>Explanation:</b> The reflexive pronoun for "yo" is ME: Me levanto a las ocho. The pronoun always matches the subject.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">2. Complete: "Ella _______ ducha por la ma&ntilde;ana."</div>
+        <select name="q2" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="me">me</option><option value="te">te</option><option value="se">se</option></select>
+        <div id="e2" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> se
+        <p style="margin-top:8px"><b>Explanation:</b> "Ella" (she) uses the third-person reflexive pronoun SE: Ella se ducha.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">3. Complete: "Nosotros _______ cepillamos los dientes."</div>
+        <input type="text" name="q3" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e3" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> nos
+        <p style="margin-top:8px"><b>Explanation:</b> The reflexive pronoun for "nosotros" is NOS: Nos cepillamos los dientes. Note the article "los" with the body part.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">4. Which sentence means "My name is Carlos"?</div>
+        <select name="q4" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="Me llamo Carlos">Me llamo Carlos</option><option value="Llamo Carlos">Llamo Carlos</option><option value="Me llama Carlos">Me llama Carlos</option></select>
+        <div id="e4" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Me llamo Carlos
+        <p style="margin-top:8px"><b>Explanation:</b> Llamarse (to be called) is reflexive: ME (matching yo) + LLAMO (yo form) = Me llamo Carlos. "Me llama" mixes a yo pronoun with an ella verb form.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">5. Complete: "&iquest;A qu&eacute; hora _______ acuestas?" (you, informal)</div>
+        <input type="text" name="q5" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e5" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> te
+        <p style="margin-top:8px"><b>Explanation:</b> "T&uacute;" takes the reflexive pronoun TE: &iquest;A qu&eacute; hora te acuestas? (What time do you go to bed?)</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">6. How do you say "I wash my hands"?</div>
+        <select name="q6" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="Me lavo las manos">Me lavo las manos</option><option value="Lavo mis manos">Lavo mis manos</option><option value="Me lavo mis manos">Me lavo mis manos</option></select>
+        <div id="e6" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Me lavo las manos
+        <p style="margin-top:8px"><b>Explanation:</b> With reflexive verbs and body parts, Spanish uses the definite article (las), not the possessive: Me lavo LAS manos.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">7. Where does "no" go? "I don't get up early."</div>
+        <select name="q7" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="No me levanto temprano">No me levanto temprano</option><option value="Me no levanto temprano">Me no levanto temprano</option><option value="Me levanto no temprano">Me levanto no temprano</option></select>
+        <div id="e7" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> No me levanto temprano
+        <p style="margin-top:8px"><b>Explanation:</b> In negation, NO comes before the reflexive pronoun: No + me + levanto. The pronoun stays glued to the verb.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">8. Complete with one word: "Voy a duchar____." (attach the pronoun)</div>
+        <input type="text" name="q8" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e8" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> me
+        <p style="margin-top:8px"><b>Explanation:</b> With an infinitive, the reflexive pronoun can attach to the end: Voy a ducharME. (Me voy a duchar is equally correct.)</p></div>
+      </div>
+      <div style="text-align:center"><button type="submit" class="fc-btn primary" style="padding:12px 32px">Check Answers</button></div>
+    </form>
+  </div>
 </div>
 <footer class="site-footer">Word Play &middot; Spanish A1 &middot; Practice</footer>
-<script src="../../../../shared/worksheet.js?v=v108"></script>
+<script>
+function showAns(e) {
+  e.preventDefault();
+  var i = 1, el;
+  while ((el = document.getElementById('e' + i))) { el.style.display = 'block'; i++; }
+  var btn = document.querySelector('#quizForm button[type="submit"]');
+  if (btn) { btn.textContent = 'Answers shown below'; btn.disabled = true; }
+}
+</script>
 </body>
 </html>

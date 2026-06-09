@@ -4,7 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Present Progressive — Practice | Word Play</title>
+<title>Present Progressive &mdash; Practice | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
@@ -23,11 +23,70 @@
     <a href="index.html">Present Progressive</a><span>&#8250;</span>
     <strong>Practice</strong>
   </div>
-  <!-- PLACEHOLDER -->
   <h1>Present Progressive &mdash; Practice</h1>
-  <p style="color:var(--muted)">Worksheet content coming soon.</p>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <form id="quizForm" onsubmit="showAns(event)">
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">1. Form the gerund of "hablar" (to speak):</div>
+        <input type="text" name="q1" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e1" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> hablando
+        <p style="margin-top:8px"><b>Explanation:</b> -AR verbs form the gerund with -ando: habl + ando = hablando</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">2. Complete: "Yo _______ comiendo."</div>
+        <select name="q2" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="estoy">estoy</option><option value="soy">soy</option><option value="est&amp;aacute;">est&amp;aacute;</option></select>
+        <div id="e2" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> estoy
+        <p style="margin-top:8px"><b>Explanation:</b> The present progressive always uses ESTAR (not ser): yo estoy comiendo. "Est&aacute;" is the &eacute;l/ella form.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">3. Complete: "Ellos est&aacute;n _______ (vivir) una aventura."</div>
+        <input type="text" name="q3" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e3" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> viviendo
+        <p style="margin-top:8px"><b>Explanation:</b> -IR verbs form the gerund with -iendo: viv + iendo = viviendo. The gerund never changes for person.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">4. What is the gerund of "leer" (to read)?</div>
+        <select name="q4" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="leiendo">leiendo</option><option value="leyendo">leyendo</option><option value="lee">lee</option></select>
+        <div id="e4" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> leyendo
+        <p style="margin-top:8px"><b>Explanation:</b> When an -er/-ir stem ends in a vowel, -iendo becomes -yendo: le + yendo = leyendo.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">5. Complete: "Nosotros _______ (estar) estudiando."</div>
+        <input type="text" name="q5" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e5" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> estamos
+        <p style="margin-top:8px"><b>Explanation:</b> Only estar is conjugated in the progressive. For nosotros: estamos &#8594; Estamos estudiando.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">6. Which sentence correctly says "She is sleeping"?</div>
+        <select name="q6" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="Ella est&amp;aacute; durmiendo">Ella est&amp;aacute; durmiendo</option><option value="Ella es durmiendo">Ella es durmiendo</option><option value="Ella est&amp;aacute; dormiendo">Ella est&amp;aacute; dormiendo</option></select>
+        <div id="e6" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Ella est&aacute; durmiendo
+        <p style="margin-top:8px"><b>Explanation:</b> Dormir has an irregular gerund (o &#8594; u): durmiendo. And the progressive needs estar, never ser.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">7. Complete: "&iquest;Qu&eacute; est&aacute;s _______ (hacer)?"</div>
+        <input type="text" name="q7" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e7" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> haciendo
+        <p style="margin-top:8px"><b>Explanation:</b> Hacer is regular in the gerund: hac + iendo = haciendo. (What are you doing?)</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">8. "I work at a school" (a general fact). Which is correct in Spanish?</div>
+        <select name="q8" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="Trabajo en una escuela">Trabajo en una escuela</option><option value="Estoy trabajando en una escuela">Estoy trabajando en una escuela</option><option value="Estoy trabajo en una escuela">Estoy trabajo en una escuela</option></select>
+        <div id="e8" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Trabajo en una escuela
+        <p style="margin-top:8px"><b>Explanation:</b> Spanish uses the simple present for habits and general facts. The progressive is only for actions in progress right now.</p></div>
+      </div>
+      <div style="text-align:center"><button type="submit" class="fc-btn primary" style="padding:12px 32px">Check Answers</button></div>
+    </form>
+  </div>
 </div>
 <footer class="site-footer">Word Play &middot; Spanish A1 &middot; Practice</footer>
-<script src="../../../../shared/worksheet.js?v=v108"></script>
+<script>
+function showAns(e) {
+  e.preventDefault();
+  var i = 1, el;
+  while ((el = document.getElementById('e' + i))) { el.style.display = 'block'; i++; }
+  var btn = document.querySelector('#quizForm button[type="submit"]');
+  if (btn) { btn.textContent = 'Answers shown below'; btn.disabled = true; }
+}
+</script>
 </body>
 </html>

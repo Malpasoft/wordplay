@@ -4,7 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Regular -er / -ir Verbs — Practice | Word Play</title>
+<title>Regular -er &amp; -ir Verbs &mdash; Practice | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
@@ -20,14 +20,73 @@
     <a href="../../../../index.html">Home</a><span>&#8250;</span>
     <a href="../../../../espanol-en/a1/index.html">A1</a><span>&#8250;</span>
     <a href="../index.html">Grammar</a><span>&#8250;</span>
-    <a href="index.html">Regular -er / -ir Verbs</a><span>&#8250;</span>
+    <a href="index.html">Regular -er &amp; -ir Verbs</a><span>&#8250;</span>
     <strong>Practice</strong>
   </div>
-  <!-- PLACEHOLDER -->
-  <h1>Regular -er / -ir Verbs &mdash; Practice</h1>
-  <p style="color:var(--muted)">Worksheet content coming soon.</p>
+  <h1>Regular -er &amp; -ir Verbs &mdash; Practice</h1>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <form id="quizForm" onsubmit="showAns(event)">
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">1. Conjugate "comer" (to eat) for "yo":</div>
+        <input type="text" name="q1" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e1" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> como
+        <p style="margin-top:8px"><b>Explanation:</b> For -ER verbs with "yo" (I), remove -er and add -o. comer &#8594; com + o = como</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">2. What is the correct form: "nosotros / vivir"?</div>
+        <select name="q2" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="vivemos">vivemos</option><option value="vivimos">vivimos</option><option value="viven">viven</option></select>
+        <div id="e2" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> vivimos
+        <p style="margin-top:8px"><b>Explanation:</b> -IR verbs keep the i in the nosotros form: viv + imos = vivimos. "Vivemos" confuses the -er pattern; "viven" is the ellos form.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">3. Complete: "Ella _______ (beber) agua con la cena."</div>
+        <input type="text" name="q3" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e3" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> bebe
+        <p style="margin-top:8px"><b>Explanation:</b> "Ella" (she) uses the -e ending for -ER verbs. beber &#8594; beb + e = bebe</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">4. What is the correct form: "t&uacute; / escribir"?</div>
+        <select name="q4" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="escribo">escribo</option><option value="escribes">escribes</option><option value="escribimos">escribimos</option></select>
+        <div id="e4" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> escribes
+        <p style="margin-top:8px"><b>Explanation:</b> "T&uacute;" (informal you) takes -es with both -er and -ir verbs. escribir &#8594; escrib + es = escribes</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">5. Complete: "Nosotros _______ (aprender) espa&ntilde;ol."</div>
+        <input type="text" name="q5" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e5" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> aprendemos
+        <p style="margin-top:8px"><b>Explanation:</b> -ER verbs use -emos for nosotros: aprend + emos = aprendemos. Compare with -ir verbs, which use -imos.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">6. Which sentence is correct?</div>
+        <select name="q6" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="Ellos comen en casa">Ellos comen en casa</option><option value="Ellos come en casa">Ellos come en casa</option><option value="Ellos comemos en casa">Ellos comemos en casa</option></select>
+        <div id="e6" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Ellos comen en casa
+        <p style="margin-top:8px"><b>Explanation:</b> "Ellos" (they) requires the -en ending: comen. "Come" is the &eacute;l/ella form and "comemos" is the nosotros form.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">7. Complete: "Yo _______ (abrir) la puerta."</div>
+        <input type="text" name="q7" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e7" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> abro
+        <p style="margin-top:8px"><b>Explanation:</b> All three verb families use -o for "yo": abrir &#8594; abr + o = abro</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">8. Choose the correct nosotros form of "compartir" (to share):</div>
+        <select name="q8" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="compartemos">compartemos</option><option value="compartimos">compartimos</option><option value="comparten">comparten</option></select>
+        <div id="e8" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> compartimos
+        <p style="margin-top:8px"><b>Explanation:</b> -IR verbs use -imos for nosotros: compart + imos = compartimos. The -emos ending belongs to -er verbs only.</p></div>
+      </div>
+      <div style="text-align:center"><button type="submit" class="fc-btn primary" style="padding:12px 32px">Check Answers</button></div>
+    </form>
+  </div>
 </div>
 <footer class="site-footer">Word Play &middot; Spanish A1 &middot; Practice</footer>
-<script src="../../../../shared/worksheet.js?v=v108"></script>
+<script>
+function showAns(e) {
+  e.preventDefault();
+  var i = 1, el;
+  while ((el = document.getElementById('e' + i))) { el.style.display = 'block'; i++; }
+  var btn = document.querySelector('#quizForm button[type="submit"]');
+  if (btn) { btn.textContent = 'Answers shown below'; btn.disabled = true; }
+}
+</script>
 </body>
 </html>
