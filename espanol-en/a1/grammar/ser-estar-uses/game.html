@@ -23,11 +23,135 @@
     <a href="index.html">Ser vs Estar in Depth</a><span>&#8250;</span>
     <strong>Mastery Game</strong>
   </div>
-  <!-- PLACEHOLDER -->
   <h1>Ser vs Estar in Depth &mdash; Mastery Game</h1>
-  <p style="color:var(--muted)">Game content coming soon.</p>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <div id="gameStart" class="game-start" style="text-align:center">
+      <p style="color:var(--muted);margin-bottom:16px">10 ser/estar distinctions × 3 question types = reach 100 points to win</p>
+      <p style="color:var(--muted);font-size:.85rem;margin-bottom:24px">Master when to use ser (permanent) vs estar (temporary/location).</p>
+      <div id="gStartMastered" style="margin-bottom:16px"></div>
+      <button id="gBtnStart" class="fc-btn primary" style="padding:12px 32px" onclick="startGame()">Start Game</button>
+    </div>
+    <div id="gamePlay" style="display:none">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" style="display:none;text-align:center">
+      <div style="font-size:2rem;margin-bottom:20px">🎉</div>
+      <div style="font-size:1.4rem;font-weight:700;margin-bottom:10px">Mastery Achieved!</div>
+      <div id="gFinalScore" style="font-size:1.1rem;color:var(--muted);margin-bottom:24px">Score: 100</div>
+      <button id="gBtnBackChapter" class="fc-btn primary" style="padding:12px 32px" onclick="backToChapter()">← Back to Chapter</button>
+    </div>
+  </div>
 </div>
 <footer class="site-footer">Word Play &middot; Spanish A1 &middot; Game</footer>
-<script src="../../../../shared/game.js?v=v111"></script>
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+window.GAME_DATA = {
+  level: 'a1',
+  chapterId: 'ser-estar-uses',
+  storageKey: 'game_a1_ser_estar_uses',
+  items: [
+    {id: 'ser-profession', verb: 'Ser (profession)', example: 'Soy ingeniero', context: 'permanent identity / profession', correct: 'ser'},
+    {id: 'estar-location', verb: 'Estar (location)', example: 'Estoy en casa', context: 'location', correct: 'estar'},
+    {id: 'ser-nationality', verb: 'Ser (nationality)', example: 'Somos de México', context: 'origin / nationality', correct: 'ser'},
+    {id: 'estar-emotion', verb: 'Estar (emotion)', example: 'Está cansado', context: 'temporary feeling or condition', correct: 'estar'},
+    {id: 'ser-trait', verb: 'Ser (permanent trait)', example: 'Eres inteligente', context: 'personality trait', correct: 'ser'},
+    {id: 'estar-participle', verb: 'Estar (past participle)', example: 'Está cerrada', context: 'result of an action', correct: 'estar'},
+    {id: 'ser-time', verb: 'Ser (time)', example: 'Es las tres', context: 'telling time', correct: 'ser'},
+    {id: 'ser-material', verb: 'Ser (material)', example: 'Es de madera', context: 'what something is made of', correct: 'ser'},
+    {id: 'estar-temp-state', verb: 'Estar (temporary state)', example: 'El agua está caliente', context: 'temporary physical state', correct: 'estar'},
+    {id: 'ser-description', verb: 'Ser (permanent description)', example: 'La casa es grande', context: 'permanent physical description', correct: 'ser'}
+  ]
+};
+
+function startGame() {
+  document.getElementById('gameStart').style.display = 'none';
+  document.getElementById('gamePlay').style.display = 'block';
+}
+
+function backToChapter() {
+  window.location.href = 'index.html';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  var DATA = window.GAME_DATA;
+  var play = document.querySelector('#gamePlay .game-play');
+  if (!play) return;
+
+  var score = 0, widx = 0, tidx = 0, sel = null;
+  var ct = {};
+  DATA.items.forEach(function(w){ct[w.id] = 0;});
+  var types = ['significado', 'contexto', 'produccion'];
+
+  function getQ() {
+    var item = DATA.items[widx];
+    var t = types[tidx];
+    var q = {itemId: item.id, type: t};
+    if (t === 'significado') {
+      q.question = 'Which verb form is shown? "<b>' + item.example + '</b>"';
+      q.correct = item.verb;
+      var otherVerb = item.correct === 'ser' ? 'Estar' : 'Ser';
+      q.options = [item.verb, otherVerb + ' (' + (item.correct === 'ser' ? 'wrong' : 'wrong') + ')', 'Neither'];
+      q.options.sort(() => Math.random() - 0.5);
+    } else if (t === 'contexto') {
+      q.question = 'Context: "' + item.context + '" — which verb?';
+      q.correct = item.correct;
+      var alt = item.correct === 'ser' ? 'estar' : 'ser';
+      q.options = [item.correct, alt, 'Both equally'].sort(() => Math.random() - 0.5);
+    } else {
+      q.question = 'Complete: "Yo ' + item.context + '" — choose the correct form';
+      q.correct = item.correct;
+      var alt = item.correct === 'ser' ? 'estoy' : 'soy';
+      if (item.correct === 'ser') alt = item.correct === 'ser' ? 'estoy' : 'soy';
+      q.options = [item.correct === 'ser' ? 'soy' : 'estoy', item.correct === 'ser' ? 'estoy' : 'soy'].sort(() => Math.random() - 0.5);
+    }
+    return q;
+  }
+
+  function renderQ(q) {
+    play.innerHTML = '<div style="padding:20px;text-align:center"><div style="font-size:.9rem;color:var(--muted);margin-bottom:20px">Question ' + (widx + 1) + ' of ' + DATA.items.length + ' × 3</div><div style="font-size:1.1rem;margin-bottom:24px">' + q.question + '</div>';
+    q.options.forEach(function(opt) {
+      play.innerHTML += '<button style="display:block;width:100%;padding:12px;margin-bottom:8px;background:var(--paper);border:1px solid var(--hairline);border-radius:6px;cursor:pointer;font-size:.95rem" onclick="ansQ(this)">' + opt + '</button>';
+    });
+    play.innerHTML += '</div>';
+  }
+
+  function ansQ(btn) {
+    var ans = btn.textContent.trim();
+    var correct = getQ().correct;
+    if (ans.toLowerCase().includes(correct)) {
+      score += 10 + (ct[DATA.items[widx].id] * 2);
+      ct[DATA.items[widx].id]++;
+      tidx++;
+      if (tidx >= 3) {
+        tidx = 0;
+        widx++;
+      }
+      if (widx >= DATA.items.length) {
+        endGame();
+        return;
+      }
+    } else {
+      score = Math.max(0, score - 3);
+      tidx = (tidx + 1) % 3;
+    }
+    renderQ(getQ());
+  }
+
+  function endGame() {
+    document.getElementById('gamePlay').style.display = 'none';
+    document.getElementById('gameCompletion').style.display = 'block';
+    document.getElementById('gFinalScore').textContent = 'Score: ' + Math.min(score, 100);
+    var key = DATA.storageKey;
+    var lv = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+    if (!lv.a1) lv.a1 = {};
+    lv.a1['wordplay_game_' + DATA.chapterId] = {pct: Math.min(score, 100), date: new Date().toISOString()};
+    localStorage.setItem('wordplay_progress', JSON.stringify(lv));
+  }
+
+  window.ansQ = ansQ;
+  renderQ(getQ());
+});
+</script>
 </body>
 </html>
