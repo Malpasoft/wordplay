@@ -23,9 +23,60 @@
     <a href="index.html">Basic Commands</a><span>&#8250;</span>
     <strong>Practice</strong>
   </div>
-  <!-- PLACEHOLDER -->
   <h1>Basic Commands &mdash; Practice</h1>
-  <p style="color:var(--muted)">Worksheet content coming soon.</p>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <form id="quizForm" onsubmit="showAns(event)">
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">1. Convert to tú command: "hablar"</div>
+        <input type="text" name="q1" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e1" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> ¡Habla!
+        <p style="margin-top:8px"><b>Explanation:</b> For tú commands with -AR verbs, drop the -a from the él/ella form. él habla → ¡Habla!</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">2. What is the negative tú command for "comer"?</div>
+        <select name="q2" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">¡Come!</option><option value="b">¡No comas!</option><option value="c">¡No como!</option></select>
+        <div id="e2" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> ¡No comas!
+        <p style="margin-top:8px"><b>Explanation:</b> Negative tú commands use the subjunctive form (no + tú form). "No comas" is the subjunctive form of comer.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">3. What is the formal command for "ir" (to go)?</div>
+        <input type="text" name="q3" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e3" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> ¡Vaya!
+        <p style="margin-top:8px"><b>Explanation:</b> Formal commands use the subjunctive. For ir, the subjunctive is vaya. ¡Vaya! is the formal singular command.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">4. What is the irregular tú command for "hacer"?</div>
+        <select name="q4" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">¡Hace!</option><option value="b">¡Haz!</option><option value="c">¡Hagas!</option></select>
+        <div id="e4" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> ¡Haz!
+        <p style="margin-top:8px"><b>Explanation:</b> "Hacer" has an irregular tú command: haz. This is a common irregular that must be memorized.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">5. Convert to plural command (ustedes): "escribir"</div>
+        <input type="text" name="q5" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e5" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> ¡Escriban!
+        <p style="margin-top:8px"><b>Explanation:</b> For ustedes commands, use the subjunctive form. For -IR verbs, it ends in -an. escribir → escriban</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">6. Which is correct: "¡Sienta!" or "¡Siéntate!"?</div>
+        <select name="q6" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">¡Sienta! (formal)</option><option value="b">¡Siéntate! (informal with reflexive)</option><option value="c">Both are correct for different situations</option></select>
+        <div id="e6" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Both are correct for different situations
+        <p style="margin-top:8px"><b>Explanation:</b> ¡Siéntate! (sit down, informal tú) uses the reflexive pronoun. ¡Sienta! would be formal, but the more common command is ¡Siéntese!</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">7. What is the "let's" command for "hablar"?</div>
+        <input type="text" name="q7" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e7" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> ¡Hablemos!
+        <p style="margin-top:8px"><b>Explanation:</b> "Let's" commands use the nosotros form of the subjunctive. For -AR verbs, it ends in -emos. hablar → hablemos</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">8. Which is the negative usted command for "beber"?</div>
+        <select name="q8" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">¡Bebe!</option><option value="b">¡No bebas!</option><option value="c">¡No beba!</option></select>
+        <div id="e8" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> ¡No beba!
+        <p style="margin-top:8px"><b>Explanation:</b> Negative usted commands use no + subjunctive. For -ER verbs in usted, it's no + beba. ¡No beba! is correct.</p></div>
+      </div>
+      <div style="text-align:center"><button type="submit" class="fc-btn primary" style="padding:12px 32px">Check Answers</button></div>
+    </form>
+  </div>
 </div>
 <footer class="site-footer">Word Play &middot; Spanish A1 &middot; Practice</footer>
 <script src="../../../../shared/worksheet.js?v=v108"></script>
