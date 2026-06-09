@@ -90,8 +90,8 @@
           <div class="fc-face fc-back">
             <div class="fc-def" id="fcDef"></div>
             <div class="fc-ex" id="fcEx"></div>
-          </button>
-        </div>
+          </div>
+        </button>
       </div>
       <div class="fc-nav">
         <button class="fc-btn" onclick="fcPrev()">◀ Prev</button>
@@ -217,7 +217,7 @@ function handleMatch(e){
     }else{
       prev.classList.remove('selected');
       prev.classList.add('wrong'); el.classList.add('wrong');
-      setTimeout(function(){prev.classList.remove('wrong');el.classList.remove('wrong');}，600);
+      setTimeout(function(){prev.classList.remove('wrong');el.classList.remove('wrong');},600);
     }
   }
 }
