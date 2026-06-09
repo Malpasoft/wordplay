@@ -23,9 +23,60 @@
     <a href="index.html">Articles</a><span>&#8250;</span>
     <strong>Practice</strong>
   </div>
-  <!-- PLACEHOLDER -->
   <h1>Articles &mdash; Practice</h1>
-  <p style="color:var(--muted)">Worksheet content coming soon.</p>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <form id="quizForm" onsubmit="showAns(event)">
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">1. What is the definite article for "casa" (house)?</div>
+        <select name="q1" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">el casa</option><option value="b">la casa</option><option value="c">un casa</option></select>
+        <div id="e1" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> la casa
+        <p style="margin-top:8px"><b>Explanation:</b> "Casa" ends in -a, so it's feminine. The feminine definite article is "la".</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">2. Complete: "Voy _____ cine." (I go to the cinema.)</div>
+        <input type="text" name="q2" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e2" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> al
+        <p style="margin-top:8px"><b>Explanation:</b> "A + el" contracts to "al". "Voy al cine" = I go to the cinema.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">3. What is the indefinite article for "libro" (book)?</div>
+        <select name="q3" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">una libro</option><option value="b">un libro</option><option value="c">el libro</option></select>
+        <div id="e3" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> un libro
+        <p style="margin-top:8px"><b>Explanation:</b> "Libro" ends in -o, so it's masculine. The masculine indefinite article is "un".</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">4. Complete: "Los colores _____ coche son rojo y blanco." (The colors of the car are red and white.)</div>
+        <input type="text" name="q4" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e4" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> del
+        <p style="margin-top:8px"><b>Explanation:</b> "De + el" contracts to "del". It shows possession or relationship.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">5. Which is correct: "Los libros" or "Las libros"?</div>
+        <select name="q5" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">Los libros (correct — masculine)</option><option value="b">Las libros (correct — feminine)</option></select>
+        <div id="e5" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Los libros (correct — masculine)
+        <p style="margin-top:8px"><b>Explanation:</b> "Libro" ends in -o, so it's masculine. The plural masculine article is "los".</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">6. Complete: "Soy _____ doctora." (I am a doctor.)</div>
+        <input type="text" name="q6" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e6" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> una
+        <p style="margin-top:8px"><b>Explanation:</b> "Doctora" is feminine. Use the indefinite article "una" before professions.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">7. Which article should you use with "mano" (hand)?</div>
+        <select name="q7" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">el mano</option><option value="b">la mano (because it's feminine despite ending in -o)</option></select>
+        <div id="e7" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> la mano (because it's feminine despite ending in -o)
+        <p style="margin-top:8px"><b>Explanation:</b> "Mano" is an exception — it's feminine even though it ends in -o. Gender must be memorized with the noun!</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">8. Complete: "Necesito _____ sillas para la clase." (I need some chairs for class.)</div>
+        <input type="text" name="q8" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e8" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> unas
+        <p style="margin-top:8px"><b>Explanation:</b> "Sillas" is feminine plural. Use "unas" (some) before plural feminine nouns.</p></div>
+      </div>
+      <div style="text-align:center"><button type="submit" class="fc-btn primary" style="padding:12px 32px">Check Answers</button></div>
+    </form>
+  </div>
 </div>
 <footer class="site-footer">Word Play &middot; Spanish A1 &middot; Practice</footer>
 <script src="../../../../shared/worksheet.js?v=v108"></script>
