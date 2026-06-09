@@ -82,16 +82,16 @@ A **static** Cambridge English course (A1 to C2) on Cloudflare Pages. Vanilla HT
 **Vocabulary — 78 chapters** status:
 | Level | Status | Notes |
 |-------|--------|-------|
-| A1 | 8/12 filled | 4 stubs remain |
-| A2 | **11/12 filled** | feelings-emotions is a stub |
-| B1 | 1/12 filled | 11 stubs remain |
-| B2 | 1/16 filled | 15 stubs remain |
-| C1 | 0/14 filled | All stubs |
-| C2 | 0/12 filled | All stubs |
+| ✅ A1 | 12/12 filled | Completed 9 June |
+| ✅ A2 | 12/12 filled | Completed 9 June |
+| ✅ B1 | 12/12 filled | Completed 9 June |
+| B2 | 1/16 filled | 15 stubs need vocabulary data |
+| C1 | 0/14 filled | 14 stubs need vocabulary data |
+| C2 | 0/12 filled | 12 stubs need vocabulary data |
 
 **Writing — 26 chapters**, all complete across all levels.
 
-Fill tooling: `scripts/fill_chapter.py` + content modules in `scripts/content/`. Total HTML: 992 (largest track). **57 vocabulary stubs remain to fill.**
+Fill tooling: `scripts/fill_chapter.py` + content modules in `scripts/content/`. Total HTML: 992 (largest track). **36/78 complete. 41 stubs in B2-C2 created (need full vocabulary datasets).**
 
 ---
 
