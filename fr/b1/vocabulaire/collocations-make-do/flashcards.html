@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>B1 Vocab · Collocations MAKE & DO — Flashcards | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<style>
+.vocab-page{max-width:800px;margin:0 auto;padding:20px 0}
+.mode-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.mode-tab{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:8px 16px;border-radius:4px;cursor:pointer;border:1.5px solid var(--hairline);background:transparent;color:var(--ink);transition:all .15s}
+.mode-tab.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.flashcard-wrap{perspective:800px;margin:0 auto 20px;max-width:480px}
+.flashcard{width:100%;height:220px;position:relative;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;border-radius:10px}
+.flashcard.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;border:1px solid var(--hairline)}
+.fc-front{background:var(--paper)}
+.fc-back{background:var(--paper);transform:rotateY(180deg)}
+.fc-word{font-size:1.8rem;font-weight:700;color:var(--ink);margin-bottom:6px}
+.fc-def{font-size:.95rem;color:var(--ink);margin-bottom:8px}
+.fc-ex{font-size:.85rem;color:var(--muted);font-style:italic}
+.fc-hint{font-family:var(--font-sans);font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:12px}
+.fc-audio-btn{background:none;border:1px solid var(--hairline);border-radius:4px;
+  padding:5px 12px;font-family:var(--font-sans);font-size:.65rem;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;color:var(--muted);cursor:pointer;margin-top:10px}
+.fc-audio-btn:hover{border-color:var(--amber);color:var(--amber)}
+.fc-nav{display:flex;align-items:center;gap:16px;justify-content:center;margin-bottom:20px}
+.fc-btn{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 18px;border-radius:4px;cursor:pointer;border:1.5px solid var(--hairline);background:transparent;color:var(--ink)}
+.fc-btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.fc-counter{font-family:var(--font-sans);font-size:.75rem;color:var(--muted);font-weight:600}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../index.html" class="back back-link" aria-label="Back"></a>
+    <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  </div>
+</header>
+<div class="container">
+  <div class="breadcrumb">
+    <a href="../../../../index.html">Home</a><span>›</span>
+    <a href="../../index.html">B1</a><span>›</span>
+    <a href="../index.html">Vocabulary</a><span>›</span>
+    <strong>Collocations: MAKE & DO</strong>
+  </div>
+  <div class="chapter-num">V9</div>
+  <h1>Collocations: MAKE & DO</h1>
+  <nav class="chapter-nav">
+    <a href="flashcards.html" class="chapter-nav-btn active">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Review</a>
+    <a href="game.html" class="chapter-nav-btn">Game</a>
+  </nav>
+
+  <div class="vocab-page">
+    <div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">Topic mastered</span></div>
+    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 collocations &middot; tap card to reveal</div>
+
+    <div class="mode-tabs">
+      <button class="mode-tab active" onclick="setMode('flash',this)">Flashcards</button>
+      <button class="mode-tab" onclick="setMode('list',this)">Word list</button>
+    </div>
+
+    <div id="modeFlash">
+      <div class="flashcard-wrap">
+        <button class="flashcard" id="flashcard" onclick="flipCard()">
+          <div class="fc-face fc-front">
+            <div class="fc-word" id="fcWord"></div>
+            <div class="fc-hint">tap to reveal</div>
+          <button class="fc-audio-btn" onclick="speakWord(event)">&#9654; Pronounce</button>
+          </div>
+          <div class="fc-face fc-back">
+            <div class="fc-def" id="fcDef"></div>
+            <div class="fc-ex" id="fcEx"></div>
+          </button>
+        </div>
+      </div>
+      <div class="fc-nav">
+        <button class="fc-btn" onclick="fcPrev()">&#8592; Prev</button>
+        <span class="fc-counter" id="fcCounter"></span>
+        <button class="fc-btn" onclick="fcNext()">Next &#8594;</button>
+      </div>
+      <div style="text-align:center;">
+        <button class="fc-btn primary" onclick="toggleAllViewed()">Auto-complete</button>
+      </div>
+    </div>
+
+    <div id="modeList" style="display:none;">
+      <div id="wordList"></div>
+    </div>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script>
+window.VOCAB_DATA = {
+  slug: 'collocations-make-do',
+  level: 'b1',
+  title: 'Collocations: MAKE & DO',
+  MASTERY_KEY: 'vocab_mastered_collocations-make-do',
+  WORDS: [
+    { word: 'make a decision', ipa: '/meɪk ə dɪˈsɪʒən/', def: 'to choose something after thinking', ex: 'I made a difficult decision.' },
+    { word: 'make a mistake', ipa: '/meɪk ə mɪˈsteɪk/', def: 'to do something incorrectly', ex: 'Everyone makes mistakes sometimes.' },
+    { word: 'make progress', ipa: '/meɪk ˈprɑɡrɛs/', def: 'to move forward or improve', ex: 'She is making good progress in English.' },
+    { word: 'make a difference', ipa: '/meɪk ə ˈdɪfrəns/', def: 'to have a positive effect', ex: 'Your effort makes a difference.' },
+    { word: 'make money', ipa: '/meɪk ˈmʌni/', def: 'to earn income', ex: 'He makes good money from his job.' },
+    { word: 'make friends', ipa: '/meɪk frɛndz/', def: 'to form new friendships', ex: 'It is easy to make friends at university.' },
+    { word: 'do homework', ipa: '/duː ˈhoʊmˌwɜrk/', def: 'to complete schoolwork assigned', ex: 'I do my homework every evening.' },
+    { word: 'do exercise', ipa: '/duː ˈɛksərsaɪz/', def: 'to be physically active', ex: 'She does exercise every morning.' },
+    { word: 'do your best', ipa: '/duː jɔr bɛst/', def: 'to try as hard as possible', ex: 'Just do your best on the exam.' },
+    { word: 'do research', ipa: '/duː rɪˈsɜrtʃ/', def: 'to investigate and study', ex: 'The scientist does research on diseases.' },
+    { word: 'do a favour', ipa: '/duː ə ˈfeɪvər/', def: 'to help someone', ex: 'Can you do me a favour?' },
+    { word: 'do well', ipa: '/duː wɛl/', def: 'to succeed or perform at a high level', ex: 'She did well on her test.' }
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v123"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
