@@ -1,1 +1,52 @@
-<!-- Stub for applied-grammar-prepositions -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Test Vocab | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<div class="vocab-page">
+  <h1>Applied Grammar Prepositions</h1>
+  <div id="modeFlash">
+    <div class="flashcard-wrap">
+      <button class="flashcard" id="flashcard" onclick="flipCard()">
+        <div class="fc-face fc-front">
+          <div class="fc-word" id="fcWord"></div>
+          <div class="fc-ipa" id="fcIpa"></div>
+        </div>
+        <div class="fc-face fc-back">
+          <div class="fc-def" id="fcDef"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+var WORDS = [
+  {"word": "due to", "ipa": "/djuː tuː/", "definition": "a causa de", "example": "Due to rain, we cancelled."},
+  {"word": "with regard to", "ipa": "/wɪð rɪˈɡɑːd tuː/", "definition": "respecto a", "example": "Regarding your question."},
+  {"word": "in favour of", "ipa": "/ɪn ˈfeɪvər əv/", "definition": "a favor de", "example": "We voted in favour."},
+  {"word": "regardless of", "ipa": "/rɪˈɡɑːrdləs əv/", "definition": "a pesar de", "example": "Regardless of cost."},
+  {"word": "apart from", "ipa": "/əˈpɑːrt frəm/", "definition": "aparte de", "example": "Apart from English."},
+  {"word": "concerning", "ipa": "/kənˈsɜːrnɪŋ/", "definition": "sobre", "example": "Concerning the policy."},
+  {"word": "pursuant to", "ipa": "/pərˈsuːənt tuː/", "definition": "conforme a", "example": "Pursuant to contract."},
+  {"word": "in lieu of", "ipa": "/ɪn ˈljuː əv/", "definition": "en lugar de", "example": "In lieu of gift."},
+  {"word": "subject to", "ipa": "/ˈsʌbdʒɪkt tuː/", "definition": "sujeto a", "example": "Subject to approval."},
+  {"word": "by virtue of", "ipa": "/baɪ ˈvɜːrtʃuː əv/", "definition": "en virtud de", "example": "By virtue of skill."}
+];
+
+var fcIdx = 0;
+function renderCard() {
+  var w = WORDS[fcIdx];
+  document.getElementById('fcWord').textContent = w.word;
+  document.getElementById('fcIpa').textContent = w.ipa;
+  document.getElementById('fcDef').textContent = w.definition;
+}
+function flipCard() { document.getElementById('flashcard').classList.toggle('flipped'); }
+renderCard();
+</script>
+</body>
+</html>
