@@ -4,7 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Prepositions of Time — Practice | Word Play</title>
+<title>Prepositions of Time &mdash; Practice | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
@@ -23,11 +23,70 @@
     <a href="index.html">Prepositions of Time</a><span>&#8250;</span>
     <strong>Practice</strong>
   </div>
-  <!-- PLACEHOLDER -->
   <h1>Prepositions of Time &mdash; Practice</h1>
-  <p style="color:var(--muted)">Worksheet content coming soon.</p>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <form id="quizForm" onsubmit="showAns(event)">
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">1. "Class starts at nine": "La clase empieza _______ nueve."</div>
+        <select name="q1" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a las">a las</option><option value="en las">en las</option><option value="por las">por las</option></select>
+        <div id="e1" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> a las
+        <p style="margin-top:8px"><b>Explanation:</b> Clock times use A LAS (or a la for one o'clock): La clase empieza a las nueve.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">2. Complete: "Estudio _______ la ma&ntilde;ana." (in the morning, no exact hour)</div>
+        <input type="text" name="q2" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e2" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> por
+        <p style="margin-top:8px"><b>Explanation:</b> Parts of the day without a specific hour use POR: por la ma&ntilde;ana.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">3. "At ten in the morning":</div>
+        <select name="q3" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a las diez de la ma&amp;ntilde;ana">a las diez de la ma&amp;ntilde;ana</option><option value="a las diez por la ma&amp;ntilde;ana">a las diez por la ma&amp;ntilde;ana</option><option value="en las diez de la ma&amp;ntilde;ana">en las diez de la ma&amp;ntilde;ana</option></select>
+        <div id="e3" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> a las diez de la ma&ntilde;ana
+        <p style="margin-top:8px"><b>Explanation:</b> When a part of day is attached to a clock time, POR changes to DE: a las diez de la ma&ntilde;ana.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">4. Complete: "Mi cumplea&ntilde;os es _______ abril."</div>
+        <input type="text" name="q4" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e4" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> en
+        <p style="margin-top:8px"><b>Explanation:</b> Months take EN: en abril. The same goes for seasons (en verano) and years (en 2020).</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">5. "The exam is on Monday":</div>
+        <select name="q5" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="El examen es el lunes">El examen es el lunes</option><option value="El examen es en lunes">El examen es en lunes</option><option value="El examen es a lunes">El examen es a lunes</option></select>
+        <div id="e5" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> El examen es el lunes
+        <p style="margin-top:8px"><b>Explanation:</b> Days of the week take NO preposition in Spanish &mdash; just the article EL: el lunes.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">6. Complete: "Trabajo _______ las seis." (until)</div>
+        <input type="text" name="q6" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e6" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> hasta
+        <p style="margin-top:8px"><b>Explanation:</b> "Until" = HASTA: Trabajo hasta las seis. Its partner desde means "since/from".</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">7. "The shop opens from nine to two":</div>
+        <select name="q7" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="de nueve a dos">de nueve a dos</option><option value="desde nueve hasta a dos">desde nueve hasta a dos</option><option value="en nueve a dos">en nueve a dos</option></select>
+        <div id="e7" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> de nueve a dos
+        <p style="margin-top:8px"><b>Explanation:</b> Opening-hours ranges use DE&hellip;A: de nueve a dos. (Desde las nueve hasta las dos is also possible, but with articles.)</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">8. "Before leaving, I close the windows":</div>
+        <select name="q8" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="Antes de salir">Antes de salir</option><option value="Antes de salgo">Antes de salgo</option><option value="Antes salir">Antes salir</option></select>
+        <div id="e8" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Antes de salir
+        <p style="margin-top:8px"><b>Explanation:</b> Antes de + INFINITIVE: Antes de salir. A conjugated verb ("salgo") can never follow antes de directly.</p></div>
+      </div>
+      <div style="text-align:center"><button type="submit" class="fc-btn primary" style="padding:12px 32px">Check Answers</button></div>
+    </form>
+  </div>
 </div>
 <footer class="site-footer">Word Play &middot; Spanish A1 &middot; Practice</footer>
-<script src="../../../../shared/worksheet.js?v=v108"></script>
+<script>
+function showAns(e) {
+  e.preventDefault();
+  var i = 1, el;
+  while ((el = document.getElementById('e' + i))) { el.style.display = 'block'; i++; }
+  var btn = document.querySelector('#quizForm button[type="submit"]');
+  if (btn) { btn.textContent = 'Answers shown below'; btn.disabled = true; }
+}
+</script>
 </body>
 </html>

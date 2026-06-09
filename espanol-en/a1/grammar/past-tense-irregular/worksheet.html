@@ -4,7 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Past Tense — Irregular — Practice | Word Play</title>
+<title>Irregular Past Tense &mdash; Practice | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
@@ -20,14 +20,73 @@
     <a href="../../../../index.html">Home</a><span>&#8250;</span>
     <a href="../../../../espanol-en/a1/index.html">A1</a><span>&#8250;</span>
     <a href="../index.html">Grammar</a><span>&#8250;</span>
-    <a href="index.html">Past Tense — Irregular</a><span>&#8250;</span>
+    <a href="index.html">Irregular Past Tense</a><span>&#8250;</span>
     <strong>Practice</strong>
   </div>
-  <!-- PLACEHOLDER -->
-  <h1>Past Tense — Irregular &mdash; Practice</h1>
-  <p style="color:var(--muted)">Worksheet content coming soon.</p>
+  <h1>Irregular Past Tense &mdash; Practice</h1>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <form id="quizForm" onsubmit="showAns(event)">
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">1. Complete: "Ayer yo _______ (ir) al supermercado."</div>
+        <input type="text" name="q1" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e1" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> fui
+        <p style="margin-top:8px"><b>Explanation:</b> Ir is fully irregular in the preterite: yo FUI. Remember ir and ser share these forms.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">2. Complete: "Ella _______ (tener) un problema ayer."</div>
+        <select name="q2" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="tuvo">tuvo</option><option value="ten&amp;iacute;a">ten&amp;iacute;a</option><option value="tuve">tuve</option></select>
+        <div id="e2" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> tuvo
+        <p style="margin-top:8px"><b>Explanation:</b> Tener uses the u-stem TUV- with the -o ending for &eacute;l/ella: tuvo. "Tuve" is the yo form. (Ten&iacute;a is a different past tense you will meet later.)</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">3. Complete: "&iquest;Qu&eacute; _______ (hacer / t&uacute;) el s&aacute;bado?"</div>
+        <input type="text" name="q3" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e3" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> hiciste
+        <p style="margin-top:8px"><b>Explanation:</b> Hacer uses the i-stem HIC- + -iste for t&uacute;: hiciste. (What did you do on Saturday?)</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">4. "It was a great party": "_______ una fiesta genial."</div>
+        <select name="q4" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="Fue">Fue</option><option value="Fui">Fui</option><option value="Era">Era</option></select>
+        <div id="e4" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Fue
+        <p style="margin-top:8px"><b>Explanation:</b> Ser in the preterite, third person singular: FUE. "Fui" is the yo form &mdash; the party is "it", not "I".</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">5. Complete: "Anoche no _______ (poder / yo) dormir."</div>
+        <input type="text" name="q5" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e5" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> pude
+        <p style="margin-top:8px"><b>Explanation:</b> Poder takes the u-stem PUD- + -e for yo: pude. (Last night I couldn't sleep.)</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">6. Complete: "Mis amigos _______ (venir) a la cena."</div>
+        <select name="q6" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="vinieron">vinieron</option><option value="venieron">venieron</option><option value="vinimos">vinimos</option></select>
+        <div id="e6" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> vinieron
+        <p style="margin-top:8px"><b>Explanation:</b> Venir uses the i-stem VIN- + -ieron for ellos: vinieron. "Venieron" keeps the wrong stem; "vinimos" is the nosotros form.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">7. Complete: "Yo _______ (ver) esa pel&iacute;cula la semana pasada."</div>
+        <input type="text" name="q7" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e7" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> vi
+        <p style="margin-top:8px"><b>Explanation:</b> Ver has a short preterite with no accent: yo VI. (I saw that film last week.)</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">8. Complete: "Ellos me _______ (decir) la verdad."</div>
+        <select name="q8" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="dijeron">dijeron</option><option value="dijieron">dijieron</option><option value="dicieron">dicieron</option></select>
+        <div id="e8" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> dijeron
+        <p style="margin-top:8px"><b>Explanation:</b> Decir &#8594; dij- stem, and after j the ending drops the i: DIJERON (never "dijieron").</p></div>
+      </div>
+      <div style="text-align:center"><button type="submit" class="fc-btn primary" style="padding:12px 32px">Check Answers</button></div>
+    </form>
+  </div>
 </div>
 <footer class="site-footer">Word Play &middot; Spanish A1 &middot; Practice</footer>
-<script src="../../../../shared/worksheet.js?v=v108"></script>
+<script>
+function showAns(e) {
+  e.preventDefault();
+  var i = 1, el;
+  while ((el = document.getElementById('e' + i))) { el.style.display = 'block'; i++; }
+  var btn = document.querySelector('#quizForm button[type="submit"]');
+  if (btn) { btn.textContent = 'Answers shown below'; btn.disabled = true; }
+}
+</script>
 </body>
 </html>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Prepositions of Place — Practice | Word Play</title>
+<title>Prepositions of Place &mdash; Practice | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
@@ -23,11 +23,70 @@
     <a href="index.html">Prepositions of Place</a><span>&#8250;</span>
     <strong>Practice</strong>
   </div>
-  <!-- PLACEHOLDER -->
   <h1>Prepositions of Place &mdash; Practice</h1>
-  <p style="color:var(--muted)">Worksheet content coming soon.</p>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <form id="quizForm" onsubmit="showAns(event)">
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">1. "The book is on the table": "El libro est&aacute; _______ la mesa."</div>
+        <select name="q1" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="en">en</option><option value="entre">entre</option><option value="debajo de">debajo de</option></select>
+        <div id="e1" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> en
+        <p style="margin-top:8px"><b>Explanation:</b> EN covers English "on" for surfaces: El libro est&aacute; en la mesa. (Sobre/encima de are also possible, but en is the everyday choice.)</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">2. Complete: "El gato est&aacute; _______ de la cama." (under)</div>
+        <input type="text" name="q2" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e2" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> debajo
+        <p style="margin-top:8px"><b>Explanation:</b> "Under" = DEBAJO DE: El gato est&aacute; debajo de la cama.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">3. "Next to the supermarket": "al lado _______ supermercado"</div>
+        <select name="q3" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="del">del</option><option value="de el">de el</option><option value="de">de</option></select>
+        <div id="e3" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> del
+        <p style="margin-top:8px"><b>Explanation:</b> De + el contracts to DEL: al lado del supermercado. Writing "de el" is incorrect.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">4. Complete: "La farmacia est&aacute; _______ el banco y el cine." (between)</div>
+        <input type="text" name="q4" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e4" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> entre
+        <p style="margin-top:8px"><b>Explanation:</b> "Between" = ENTRE, used without "de": entre el banco y el cine.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">5. "Opposite the hospital":</div>
+        <select name="q5" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="enfrente del hospital">enfrente del hospital</option><option value="enfrente el hospital">enfrente el hospital</option><option value="enfrente de hospital">enfrente de hospital</option></select>
+        <div id="e5" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> enfrente del hospital
+        <p style="margin-top:8px"><b>Explanation:</b> Enfrente needs DE, and de + el = del: enfrente del hospital.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">6. Complete: "Vivo _______ de la estaci&oacute;n." (near)</div>
+        <input type="text" name="q6" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e6" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> cerca
+        <p style="margin-top:8px"><b>Explanation:</b> "Near" = CERCA DE: Vivo cerca de la estaci&oacute;n. Its opposite is lejos de (far from).</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">7. Which verb for location? "Las llaves _______ sobre la mesa."</div>
+        <select name="q7" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="est&amp;aacute;n">est&amp;aacute;n</option><option value="son">son</option><option value="hay">hay</option></select>
+        <div id="e7" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> est&aacute;n
+        <p style="margin-top:8px"><b>Explanation:</b> Location of a specific thing uses ESTAR: Las llaves est&aacute;n sobre la mesa. Ser is never used for location of objects; hay introduces unknown/new things.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">8. "Behind the door":</div>
+        <select name="q8" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="detr&amp;aacute;s de la puerta">detr&amp;aacute;s de la puerta</option><option value="detr&amp;aacute;s la puerta">detr&amp;aacute;s la puerta</option><option value="detr&amp;aacute;s en la puerta">detr&amp;aacute;s en la puerta</option></select>
+        <div id="e8" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> detr&aacute;s de la puerta
+        <p style="margin-top:8px"><b>Explanation:</b> Detr&aacute;s always needs DE before the noun: detr&aacute;s de la puerta. "De la" does not contract.</p></div>
+      </div>
+      <div style="text-align:center"><button type="submit" class="fc-btn primary" style="padding:12px 32px">Check Answers</button></div>
+    </form>
+  </div>
 </div>
 <footer class="site-footer">Word Play &middot; Spanish A1 &middot; Practice</footer>
-<script src="../../../../shared/worksheet.js?v=v108"></script>
+<script>
+function showAns(e) {
+  e.preventDefault();
+  var i = 1, el;
+  while ((el = document.getElementById('e' + i))) { el.style.display = 'block'; i++; }
+  var btn = document.querySelector('#quizForm button[type="submit"]');
+  if (btn) { btn.textContent = 'Answers shown below'; btn.disabled = true; }
+}
+</script>
 </body>
 </html>
