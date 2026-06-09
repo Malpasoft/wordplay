@@ -4,7 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Adjective Agreement — Practice | Word Play</title>
+<title>Adjective Agreement &mdash; Practice | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
@@ -23,11 +23,70 @@
     <a href="index.html">Adjective Agreement</a><span>&#8250;</span>
     <strong>Practice</strong>
   </div>
-  <!-- PLACEHOLDER -->
   <h1>Adjective Agreement &mdash; Practice</h1>
-  <p style="color:var(--muted)">Worksheet content coming soon.</p>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <form id="quizForm" onsubmit="showAns(event)">
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">1. Complete: "La casa es _______ (blanco)."</div>
+        <input type="text" name="q1" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e1" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> blanca
+        <p style="margin-top:8px"><b>Explanation:</b> "Casa" is feminine singular, so the -o adjective changes to -a: blanca.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">2. Choose the correct form: "los coches _______"</div>
+        <select name="q2" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="rojo">rojo</option><option value="rojos">rojos</option><option value="rojas">rojas</option></select>
+        <div id="e2" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> rojos
+        <p style="margin-top:8px"><b>Explanation:</b> "Coches" is masculine plural, so the adjective takes -os: los coches rojos.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">3. Complete: "Mis hermanas son muy _______ (alto)."</div>
+        <input type="text" name="q3" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e3" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> altas
+        <p style="margin-top:8px"><b>Explanation:</b> "Hermanas" is feminine plural: alt + as = altas. The adjective agrees in both gender and number.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">4. "Una pregunta _______" &mdash; which is correct?</div>
+        <select name="q4" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="f&amp;aacute;cil">f&amp;aacute;cil</option><option value="f&amp;aacute;cila">f&amp;aacute;cila</option><option value="f&amp;aacute;ciles">f&amp;aacute;ciles</option></select>
+        <div id="e4" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> f&aacute;cil
+        <p style="margin-top:8px"><b>Explanation:</b> Adjectives ending in a consonant (f&aacute;cil) do not change for gender. Singular noun &#8594; singular adjective: una pregunta f&aacute;cil.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">5. Make plural: "el examen dif&iacute;cil" &#8594; "los ex&aacute;menes _______"</div>
+        <input type="text" name="q5" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e5" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> dif&iacute;ciles
+        <p style="margin-top:8px"><b>Explanation:</b> Consonant-final adjectives add -es in the plural: dif&iacute;cil &#8594; dif&iacute;ciles.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">6. Juan y Mar&iacute;a son _______. (mixed group)</div>
+        <select name="q6" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="altos">altos</option><option value="altas">altas</option><option value="alto">alto</option></select>
+        <div id="e6" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> altos
+        <p style="margin-top:8px"><b>Explanation:</b> A mixed masculine + feminine group always takes the MASCULINE PLURAL: altos.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">7. Where does the adjective usually go? "an interesting book" =</div>
+        <select name="q7" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="un libro interesante">un libro interesante</option><option value="un interesante libro">un interesante libro</option><option value="interesante un libro">interesante un libro</option></select>
+        <div id="e7" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> un libro interesante
+        <p style="margin-top:8px"><b>Explanation:</b> Spanish adjectives normally FOLLOW the noun: un libro interesante. Putting it before sounds literary or changes emphasis.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">8. Complete: "Las películas son _______ (aburrido)."</div>
+        <input type="text" name="q8" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e8" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> aburridas
+        <p style="margin-top:8px"><b>Explanation:</b> "Pel&iacute;culas" is feminine plural: aburrid + as = aburridas. After ser, the adjective agrees with the subject.</p></div>
+      </div>
+      <div style="text-align:center"><button type="submit" class="fc-btn primary" style="padding:12px 32px">Check Answers</button></div>
+    </form>
+  </div>
 </div>
 <footer class="site-footer">Word Play &middot; Spanish A1 &middot; Practice</footer>
-<script src="../../../../shared/worksheet.js?v=v108"></script>
+<script>
+function showAns(e) {
+  e.preventDefault();
+  var i = 1, el;
+  while ((el = document.getElementById('e' + i))) { el.style.display = 'block'; i++; }
+  var btn = document.querySelector('#quizForm button[type="submit"]');
+  if (btn) { btn.textContent = 'Answers shown below'; btn.disabled = true; }
+}
+</script>
 </body>
 </html>

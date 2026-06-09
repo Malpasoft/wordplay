@@ -4,8 +4,9 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Adverbs of Frequency — Mastery Game | Word Play</title>
+<title>Adverbs of Frequency &mdash; Mastery Game | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
 </head>
@@ -23,11 +24,203 @@
     <a href="index.html">Adverbs of Frequency</a><span>&#8250;</span>
     <strong>Mastery Game</strong>
   </div>
-  <!-- PLACEHOLDER -->
   <h1>Adverbs of Frequency &mdash; Mastery Game</h1>
-  <p style="color:var(--muted)">Game content coming soon.</p>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <div id="gameStart" style="text-align:center">
+      <p style="color:var(--muted);margin-bottom:16px">10 questions &middot; reach 100 points to win</p>
+      <p style="color:var(--muted);font-size:.85rem;margin-bottom:24px">Say how often you do things: siempre, a veces, nunca &mdash; and where they go in the sentence.</p>
+      <button id="gBtnStart" class="fc-btn primary" style="padding:12px 32px" onclick="startGame()">Start Game</button>
+    </div>
+    <div id="gamePlay" style="display:none"></div>
+    <div id="gameCompletion" style="display:none;text-align:center">
+      <div style="font-size:2rem;margin-bottom:20px;color:var(--amber)">&#9670;</div>
+      <div style="font-size:1.4rem;font-weight:700;margin-bottom:10px">Mastery Achieved!</div>
+      <div id="gFinalScore" style="font-size:1.1rem;color:var(--muted);margin-bottom:24px"></div>
+      <button class="fc-btn primary" style="padding:12px 32px" onclick="location.href='index.html'">&#8592; Back to Chapter</button>
+    </div>
+  </div>
 </div>
 <footer class="site-footer">Word Play &middot; Spanish A1 &middot; Game</footer>
-<script src="../../../../shared/game.js?v=v111"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+window.GAME_DATA = {
+  level: 'a1',
+  chapterId: 'adverbs-frequency',
+  storageKey: 'game_a1_adverbs_frequency',
+  items: [
+  {
+    "id": "g1",
+    "question": "\"always\" in Spanish:",
+    "options": [
+      "siempre",
+      "nunca",
+      "a veces"
+    ],
+    "correct": "siempre"
+  },
+  {
+    "id": "g2",
+    "question": "\"sometimes\":",
+    "options": [
+      "a veces",
+      "a menudo",
+      "casi nunca"
+    ],
+    "correct": "a veces"
+  },
+  {
+    "id": "g3",
+    "question": "\"never\":",
+    "options": [
+      "nunca",
+      "normalmente",
+      "siempre"
+    ],
+    "correct": "nunca"
+  },
+  {
+    "id": "g4",
+    "question": "\"often\":",
+    "options": [
+      "a menudo",
+      "a veces",
+      "poco"
+    ],
+    "correct": "a menudo"
+  },
+  {
+    "id": "g5",
+    "question": "Correct double negative:",
+    "options": [
+      "No voy nunca al teatro",
+      "Voy nunca al teatro",
+      "No nunca voy al teatro"
+    ],
+    "correct": "No voy nunca al teatro"
+  },
+  {
+    "id": "g6",
+    "question": "\"every day\":",
+    "options": [
+      "todos los d&iacute;as",
+      "todos d&iacute;as",
+      "cada los d&iacute;as"
+    ],
+    "correct": "todos los d&iacute;as"
+  },
+  {
+    "id": "g7",
+    "question": "\"on Saturdays\":",
+    "options": [
+      "los s&aacute;bados",
+      "en los s&aacute;bados",
+      "a los s&aacute;bados"
+    ],
+    "correct": "los s&aacute;bados"
+  },
+  {
+    "id": "g8",
+    "question": "\"once a week\":",
+    "options": [
+      "una vez a la semana",
+      "una vez la semana",
+      "un tiempo a la semana"
+    ],
+    "correct": "una vez a la semana"
+  },
+  {
+    "id": "g9",
+    "question": "\"I travel a lot\":",
+    "options": [
+      "Viajo mucho",
+      "Mucho viajo",
+      "Viajo muy"
+    ],
+    "correct": "Viajo mucho"
+  },
+  {
+    "id": "g10",
+    "question": "\"hardly ever\":",
+    "options": [
+      "casi nunca",
+      "casi siempre",
+      "nunca casi"
+    ],
+    "correct": "casi nunca"
+  }
+]
+};
+
+var gQueue = [], gScore = 0, gStreak = 0, gAnswered = 0, gLock = false;
+
+function shuffle(a) {
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+function startGame() {
+  document.getElementById('gameStart').style.display = 'none';
+  document.getElementById('gamePlay').style.display = 'block';
+  gQueue = shuffle(window.GAME_DATA.items.slice());
+  gScore = 0; gStreak = 0; gAnswered = 0;
+  renderQ();
+}
+
+function renderQ() {
+  var q = gQueue[0];
+  var play = document.getElementById('gamePlay');
+  var opts = shuffle(q.options.slice());
+  var btns = opts.map(function(o) {
+    return '<button class="fc-btn" style="display:block;width:100%;padding:12px;margin-bottom:8px;text-align:left;text-transform:none;letter-spacing:0;font-size:.95rem" onclick="answerQ(this)">' + o + '</button>';
+  }).join('');
+  play.innerHTML = '<div style="padding:10px 0">'
+    + '<div style="font-family:var(--font-sans);font-size:.75rem;color:var(--muted);margin-bottom:6px">Score: ' + gScore + ' &middot; ' + gAnswered + ' / ' + window.GAME_DATA.items.length + ' answered</div>'
+    + '<div style="font-size:1.05rem;margin-bottom:18px">' + q.question + '</div>'
+    + btns
+    + '<div id="gFeedback" style="min-height:24px;font-size:.85rem;margin-top:8px"></div></div>';
+  gLock = false;
+}
+
+function answerQ(btn) {
+  if (gLock) return;
+  gLock = true;
+  var q = gQueue[0];
+  var ans = btn.textContent.trim();
+  var fb = document.getElementById('gFeedback');
+  if (ans === q.correct) {
+    gStreak++;
+    gScore += 10 + (gStreak >= 3 ? 3 : 0);
+    gAnswered++;
+    gQueue.shift();
+    fb.style.color = 'var(--amber)';
+    fb.textContent = 'Correct! +' + (gStreak >= 3 ? 13 : 10) + ' points';
+  } else {
+    gStreak = 0;
+    gScore = Math.max(0, gScore - 3);
+    gQueue.push(gQueue.shift());
+    fb.style.color = 'var(--muted)';
+    fb.textContent = 'Not quite. The answer was: ' + q.correct + ' (requeued, -3 points)';
+  }
+  setTimeout(function() {
+    if (gQueue.length === 0) { endGame(); } else { renderQ(); }
+  }, 1100);
+}
+
+function endGame() {
+  document.getElementById('gamePlay').style.display = 'none';
+  document.getElementById('gameCompletion').style.display = 'block';
+  var pct = Math.min(gScore, 100);
+  document.getElementById('gFinalScore').textContent = 'Score: ' + pct;
+  try {
+    var lv = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+    if (!lv.a1) lv.a1 = {};
+    lv.a1['wordplay_game_' + window.GAME_DATA.chapterId] = { pct: pct, date: new Date().toISOString() };
+    localStorage.setItem('wordplay_progress', JSON.stringify(lv));
+  } catch (e) {}
+}
+</script>
 </body>
 </html>

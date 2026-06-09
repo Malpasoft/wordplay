@@ -4,7 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Adverbs of Frequency — Practice | Word Play</title>
+<title>Adverbs of Frequency &mdash; Practice | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
@@ -23,11 +23,70 @@
     <a href="index.html">Adverbs of Frequency</a><span>&#8250;</span>
     <strong>Practice</strong>
   </div>
-  <!-- PLACEHOLDER -->
   <h1>Adverbs of Frequency &mdash; Practice</h1>
-  <p style="color:var(--muted)">Worksheet content coming soon.</p>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <form id="quizForm" onsubmit="showAns(event)">
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">1. "I always get up early": "_______ me levanto temprano."</div>
+        <select name="q1" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="Siempre">Siempre</option><option value="Nunca">Nunca</option><option value="A veces">A veces</option></select>
+        <div id="e1" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Siempre
+        <p style="margin-top:8px"><b>Explanation:</b> "Always" = SIEMPRE. It naturally goes at the start or before the verb phrase: Siempre me levanto temprano.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">2. Translate the adverb: "Sometimes I eat fish" = "_______ como pescado."</div>
+        <input type="text" name="q2" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e2" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> a veces
+        <p style="margin-top:8px"><b>Explanation:</b> "Sometimes" = A VECES. Like most frequency adverbs, it can start the sentence: A veces como pescado.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">3. Which sentence is correct?</div>
+        <select name="q3" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="No como carne nunca">No como carne nunca</option><option value="Como carne nunca">Como carne nunca</option><option value="No nunca como carne">No nunca como carne</option></select>
+        <div id="e3" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> No como carne nunca
+        <p style="margin-top:8px"><b>Explanation:</b> When nunca follows the verb, "no" must come before the verb &mdash; the double negative is required in Spanish: No como carne nunca. (Nunca como carne is also correct.)</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">4. Complete: "Estudio espa&ntilde;ol _______ los d&iacute;as." (every day)</div>
+        <input type="text" name="q4" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e4" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> todos
+        <p style="margin-top:8px"><b>Explanation:</b> "Every day" = TODOS los d&iacute;as (masculine plural agreeing with d&iacute;as).</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">5. "On Mondays I have class": "_______ tengo clase."</div>
+        <select name="q5" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="Los lunes">Los lunes</option><option value="En los lunes">En los lunes</option><option value="El lunes pasado">El lunes pasado</option></select>
+        <div id="e5" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Los lunes
+        <p style="margin-top:8px"><b>Explanation:</b> "Los + day" means every week on that day, with no preposition: Los lunes tengo clase. "En los lunes" is an anglicism.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">6. Complete: "Nado dos _______ a la semana." (twice a week)</div>
+        <input type="text" name="q6" placeholder="Answer&#8230;" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e6" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> veces
+        <p style="margin-top:8px"><b>Explanation:</b> "Times" in frequency expressions = VECES: dos veces a la semana (twice a week), una vez (once &mdash; singular).</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">7. "I hardly ever watch TV": "_______ veo la tele."</div>
+        <select name="q7" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="Casi nunca">Casi nunca</option><option value="Casi siempre">Casi siempre</option><option value="A menudo">A menudo</option></select>
+        <div id="e7" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Casi nunca
+        <p style="margin-top:8px"><b>Explanation:</b> "Hardly ever" = CASI NUNCA (literally "almost never"). Casi siempre = almost always; a menudo = often.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">8. Where does "mucho" go? "I travel a lot."</div>
+        <select name="q8" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="Viajo mucho">Viajo mucho</option><option value="Mucho viajo">Mucho viajo</option><option value="Yo mucho viajo">Yo mucho viajo</option></select>
+        <div id="e8" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Viajo mucho
+        <p style="margin-top:8px"><b>Explanation:</b> Unlike siempre/nunca, MUCHO goes AFTER the verb: Viajo mucho.</p></div>
+      </div>
+      <div style="text-align:center"><button type="submit" class="fc-btn primary" style="padding:12px 32px">Check Answers</button></div>
+    </form>
+  </div>
 </div>
 <footer class="site-footer">Word Play &middot; Spanish A1 &middot; Practice</footer>
-<script src="../../../../shared/worksheet.js?v=v108"></script>
+<script>
+function showAns(e) {
+  e.preventDefault();
+  var i = 1, el;
+  while ((el = document.getElementById('e' + i))) { el.style.display = 'block'; i++; }
+  var btn = document.querySelector('#quizForm button[type="submit"]');
+  if (btn) { btn.textContent = 'Answers shown below'; btn.disabled = true; }
+}
+</script>
 </body>
 </html>
