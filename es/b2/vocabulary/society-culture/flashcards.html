@@ -1,1 +1,240 @@
-<!-- Stub for society-culture -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Vocabulario B2 · Society Culture | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<style>
+.vocab-page{max-width:800px;margin:0 auto;padding:20px}
+.mode-tabs{display:flex;gap:8px;margin-bottom:24px}
+.mode-tab{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:8px 16px;border-radius:4px;cursor:pointer;border:1.5px solid var(--hairline);background:transparent;color:var(--ink);transition:all .15s}
+.mode-tab.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.flashcard-wrap{perspective:800px;margin:0 auto 20px;max-width:480px}
+.flashcard{width:100%;height:220px;position:relative;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;border-radius:10px}
+.flashcard.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;border:1px solid var(--hairline)}
+.fc-front{background:var(--paper)}
+.fc-back{background:var(--paper);transform:rotateY(180deg)}
+.fc-word{font-size:1.8rem;font-weight:700;color:var(--ink);margin-bottom:6px}
+.fc-ipa{font-family:var(--font-sans);font-size:.85rem;color:var(--muted);margin-bottom:8px}
+.fc-def{font-size:.92rem;color:var(--ink);margin-bottom:8px;line-height:1.4}
+.fc-ex{font-size:.82rem;color:var(--muted);font-style:italic}
+.fc-hint{font-family:var(--font-sans);font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:12px}
+.fc-nav{display:flex;align-items:center;gap:16px;justify-content:center;margin-bottom:20px}
+.fc-btn{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 18px;border-radius:4px;cursor:pointer;border:1.5px solid var(--hairline);background:transparent;color:var(--ink)}
+.fc-btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.fc-counter{font-family:var(--font-sans);font-size:.75rem;color:var(--muted);font-weight:600}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.match-col{display:flex;flex-direction:column;gap:8px}
+.match-item{padding:12px 14px;border:1.5px solid var(--hairline);border-radius:6px;cursor:pointer;font-size:.9rem;color:var(--ink);transition:border-color .15s,background .15s;user-select:none}
+.match-item:hover{border-color:var(--ink)}
+.match-item.selected{border-color:var(--amber);background:rgba(184,134,11,.08)}
+.match-item.correct{border-color:#27ae60;background:rgba(39,174,96,.08);pointer-events:none}
+.match-item.wrong{border-color:#c0392b;background:rgba(192,57,43,.08)}
+.fc-audio-btn{background:transparent;border:1.5px solid var(--hairline);border-radius:4px;padding:5px 14px;cursor:pointer;font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-top:10px;transition:border-color .15s,color .15s}
+.fc-audio-btn:hover{border-color:var(--amber);color:var(--amber)}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atrás"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Cambiar modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="breadcrumb"><a href="../../../../index.html">Inicio</a><span>›</span><a href="../../../../es/index.html">Para hispanohablantes</a><span>›</span><a href="../../index.html">B2</a><span>›</span><a href="../index.html">Vocabulario</a><span>›</span><strong>Society Culture</strong></div>
+<nav class="chapter-nav" style="margin-bottom:20px">
+  <a href="slides.html" class="chapter-nav-btn">Lección</a>
+  <a href="flashcards.html" class="chapter-nav-btn active">Tarjetas</a>
+  <a href="game.html" class="chapter-nav-btn">Juego</a>
+</nav>
+<div class="vocab-page">
+  <h1>Society Culture</h1>
+  <div class="mode-tabs">
+    <button class="mode-tab active" onclick="setMode('flash', this)">Tarjetas</button>
+    <button class="mode-tab" onclick="setMode('match', this)">Emparejar</button>
+    <button class="mode-tab" onclick="setMode('list', this)">Lista</button>
+  </div>
+  <div id="modeFlash">
+    <div class="flashcard-wrap">
+      <button class="flashcard" id="flashcard" onclick="flipCard()">
+        <div class="fc-face fc-front">
+          <div class="fc-word" id="fcWord"></div>
+          <div class="fc-ipa" id="fcIpa"></div>
+          <button class="fc-audio-btn" id="fcAudioBtn" onclick="speakWord(event)">&#9654; Pronunciar</button>
+          <div class="fc-hint">toca para ver la traducción</div>
+        </div>
+        <div class="fc-face fc-back">
+          <div class="fc-def" id="fcDef"></div>
+          <div class="fc-ex" id="fcEx"></div>
+        </button>
+      </div>
+    </div>
+    <div class="fc-nav">
+      <button class="fc-btn" onclick="fcPrev()">&#9664; Anterior</button>
+      <span class="fc-counter" id="fcCounter"></span>
+      <button class="fc-btn primary" onclick="fcNext()">Siguiente &#9654;</button>
+    </div>
+    <div style="text-align:center">
+      <button class="fc-btn" onclick="markMastered()">Marcar todo como dominado</button>
+    </div>
+  </div>
+  <div id="modeMatch" style="display:none">
+    <p style="font-size:.88rem;color:var(--muted);margin-bottom:16px">Toca una palabra y luego su traducción correcta.</p>
+    <div style="font-family:var(--font-sans);font-size:.85rem;color:var(--muted);text-align:center;margin-bottom:16px" id="matchScore">0 / 5 emparejados</div>
+    <div class="match-grid">
+      <div class="match-col" id="matchWords"></div>
+      <div class="match-col" id="matchDefs"></div>
+    </div>
+    <div style="text-align:center">
+      <button class="fc-btn primary" onclick="newMatchRound()" id="matchNextBtn" style="display:none">Siguientes 5 &#9654;</button>
+    </div>
+  </div>
+  <div id="modeList" style="display:none">
+    <table style="width:100%;border-collapse:collapse;font-size:.9rem">
+      <thead><tr style="border-bottom:2px solid var(--hairline)">
+        <th style="text-align:left;padding:8px;font-family:var(--font-sans);font-size:.65rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)">Inglés</th>
+        <th style="text-align:left;padding:8px;font-family:var(--font-sans);font-size:.65rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)">IPA</th>
+        <th style="text-align:left;padding:8px;font-family:var(--font-sans);font-size:.65rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)">Español</th>
+      </tr></thead>
+      <tbody id="wordListBody"></tbody>
+    </table>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script>
+var WORDS = [
+  {"word": "word1", "ipa": "/wɜːrd1/", "definition": "definición — explicación", "example": "This is an example sentence with word1."},
+  {"word": "word2", "ipa": "/wɜːrd2/", "definition": "definición — explicación", "example": "This is an example sentence with word2."},
+  {"word": "word3", "ipa": "/wɜːrd3/", "definition": "definición — explicación", "example": "This is an example sentence with word3."},
+  {"word": "word4", "ipa": "/wɜːrd4/", "definition": "definición — explicación", "example": "This is an example sentence with word4."},
+  {"word": "word5", "ipa": "/wɜːrd5/", "definition": "definición — explicación", "example": "This is an example sentence with word5."},
+  {"word": "word6", "ipa": "/wɜːrd6/", "definition": "definición — explicación", "example": "This is an example sentence with word6."},
+  {"word": "word7", "ipa": "/wɜːrd7/", "definition": "definición — explicación", "example": "This is an example sentence with word7."},
+  {"word": "word8", "ipa": "/wɜːrd8/", "definition": "definición — explicación", "example": "This is an example sentence with word8."},
+  {"word": "word9", "ipa": "/wɜːrd9/", "definition": "definición — explicación", "example": "This is an example sentence with word9."},
+  {"word": "word10", "ipa": "/wɜːrd10/", "definition": "definición — explicación", "example": "This is an example sentence with word10."}
+];
+
+var STORAGE_KEY = 'wordplay_vocab_es-b2_society-culture_mastered';
+var fcIdx = 0;
+var matchSelected = null;
+var matchRound = 0;
+var mastered = false;
+var fcSeen = new Set();
+
+function renderCard() {
+  var w = WORDS[fcIdx];
+  document.getElementById('fcWord').textContent = w.word;
+  document.getElementById('fcIpa').textContent = w.ipa;
+  document.getElementById('fcDef').textContent = w.definition;
+  document.getElementById('fcEx').textContent = '"' + w.example + '"';
+  document.getElementById('fcCounter').textContent = (fcIdx + 1) + ' / ' + WORDS.length;
+  fcSeen.add(fcIdx);
+  document.getElementById('flashcard').classList.remove('flipped');
+  if (!mastered && fcSeen.size >= WORDS.length) { mastered = true; setTimeout(markMastered, 700); }
+}
+function flipCard() { document.getElementById('flashcard').classList.toggle('flipped'); }
+function speakWord(e) {
+  if (e) e.stopPropagation();
+  if (!window.speechSynthesis) return;
+  var utt = new SpeechSynthesisUtterance(WORDS[fcIdx].word);
+  utt.lang = 'en-GB'; utt.rate = 0.9;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utt);
+}
+function fcNext() { fcIdx = (fcIdx + 1) % WORDS.length; renderCard(); }
+function fcPrev() { fcIdx = (fcIdx - 1 + WORDS.length) % WORDS.length; renderCard(); }
+
+function newMatchRound() {
+  matchSelected = null;
+  var start = (matchRound * 5) % WORDS.length;
+  var roundWords = WORDS.slice(start, start + 5);
+  if (roundWords.length < 5) roundWords = WORDS.slice(0, 5);
+  var shuffled = roundWords.map(function(w,i){return {def:w.definition,idx:i}});
+  shuffled.sort(function(){return Math.random()-.5});
+  var wc = document.getElementById('matchWords');
+  var dc = document.getElementById('matchDefs');
+  wc.innerHTML = ''; dc.innerHTML = '';
+  document.getElementById('matchNextBtn').style.display = 'none';
+  document.getElementById('matchScore').textContent = '0 / 5 emparejados';
+  roundWords.forEach(function(w,i){
+    var el = document.createElement('div');
+    el.className = 'match-item'; el.textContent = w.word;
+    el.dataset.idx = i; el.dataset.type = 'word';
+    el.onclick = function(){selectMatch(this)}; wc.appendChild(el);
+  });
+  shuffled.forEach(function(sd){
+    var el = document.createElement('div');
+    el.className = 'match-item'; el.textContent = sd.def;
+    el.dataset.idx = sd.idx; el.dataset.type = 'def';
+    el.onclick = function(){selectMatch(this)}; dc.appendChild(el);
+  });
+  matchRound++;
+}
+var matchCount = 0;
+function selectMatch(el) {
+  if (el.classList.contains('correct')) return;
+  if (!matchSelected) {
+    if (el.classList.contains('selected')) { el.classList.remove('selected'); matchSelected = null; return; }
+    matchSelected = el; el.classList.add('selected');
+  } else {
+    if (matchSelected === el) { el.classList.remove('selected'); matchSelected = null; return; }
+    if (matchSelected.dataset.type === el.dataset.type) {
+      matchSelected.classList.remove('selected'); matchSelected = el; el.classList.add('selected'); return;
+    }
+    var we = matchSelected.dataset.type==='word'?matchSelected:el;
+    var de = matchSelected.dataset.type==='def'?matchSelected:el;
+    if (we.dataset.idx === de.dataset.idx) {
+      we.classList.remove('selected'); we.classList.add('correct');
+      de.classList.remove('selected'); de.classList.add('correct');
+      matchCount++;
+      document.getElementById('matchScore').textContent = matchCount + ' / 5 emparejados';
+      if (matchCount >= 5) { matchCount = 0; document.getElementById('matchNextBtn').style.display = 'inline-block'; }
+    } else {
+      we.classList.add('wrong'); de.classList.add('wrong');
+      setTimeout(function(){ we.classList.remove('wrong','selected'); de.classList.remove('wrong','selected'); }, 600);
+    }
+    matchSelected = null;
+  }
+}
+function renderList() {
+  var tb = document.getElementById('wordListBody');
+  WORDS.forEach(function(w){
+    var tr = document.createElement('tr');
+    tr.style.borderBottom = '1px solid var(--hairline)';
+    tr.innerHTML = '<td style="padding:8px;font-weight:600">'+w.word+'</td><td style="padding:8px;color:var(--muted);font-size:.82rem">'+w.ipa+'</td><td style="padding:8px;font-size:.88rem">'+w.definition+'</td>';
+    tb.appendChild(tr);
+  });
+}
+function setMode(mode, btn) {
+  ['modeFlash','modeMatch','modeList'].forEach(function(id){ document.getElementById(id).style.display='none'; });
+  document.querySelectorAll('.mode-tab').forEach(function(b){ b.classList.remove('active'); });
+  document.getElementById('mode'+mode.charAt(0).toUpperCase()+mode.slice(1)).style.display='';
+  btn.classList.add('active');
+  if (mode==='match' && !document.getElementById('matchWords').children.length) newMatchRound();
+  if (mode==='list' && !document.getElementById('wordListBody').children.length) renderList();
+}
+function markMastered() {
+  mastered = true;
+  try {
+    localStorage.setItem(STORAGE_KEY, '1');
+    var raw = localStorage.getItem('wordplay_progress');
+    var pd = raw ? JSON.parse(raw) : {};
+    pd['es-b2'] = pd['es-b2'] || {};
+    pd['es-b2']['vocab_mastered_society-culture'] = { done: true, date: new Date().toISOString() };
+    localStorage.setItem('wordplay_progress', JSON.stringify(pd));
+  } catch(e) {}
+}
+function checkMastered() {
+  try { if (localStorage.getItem(STORAGE_KEY)==='1') { mastered=true; } } catch(e) {}
+}
+renderCard();
+checkMastered();
+</script>
+</body>
+</html>
