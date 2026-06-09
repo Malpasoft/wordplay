@@ -13,21 +13,72 @@
 <header class="site-header"><div class="site-header-inner">
   <a href="index.html" class="back back-link" aria-label="Back"></a>
   <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">◐ Dark</button>
 </div></header>
 <div class="section-page">
   <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>&#8250;</span>
-    <a href="../../../../espanol-en/a1/index.html">A1</a><span>&#8250;</span>
-    <a href="../index.html">Grammar</a><span>&#8250;</span>
-    <a href="index.html">Numbers & Time</a><span>&#8250;</span>
+    <a href="../../../../index.html">Home</a><span>◆</span>
+    <a href="../../../../espanol-en/a1/index.html">A1</a><span>◆</span>
+    <a href="../index.html">Grammar</a><span>◆</span>
+    <a href="index.html">Numbers & Time</a><span>◆</span>
     <strong>Practice</strong>
   </div>
-  <!-- PLACEHOLDER -->
-  <h1>Numbers & Time &mdash; Practice</h1>
-  <p style="color:var(--muted)">Worksheet content coming soon.</p>
+  <h1>Numbers & Time — Practice</h1>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <form id="quizForm" onsubmit="showAns(event)">
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">1. How do you say "17" in Spanish?</div>
+        <input type="text" name="q1" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e1" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> diecisiete
+        <p style="margin-top:8px"><b>Explanation:</b> Numbers 16-19 have special forms. Diecisiete = diez (10) + siete (7). Note it's written as one word, not "diez y siete."</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">2. How do you say "35" in Spanish?</div>
+        <select name="q2" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="treinta y cinco">treinta y cinco</option><option value="treintacinco">treintacinco</option><option value="tres y cinco">tres y cinco</option></select>
+        <div id="e2" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> treinta y cinco
+        <p style="margin-top:8px"><b>Explanation:</b> Numbers above 30 use "y" (and) between tens and ones. 35 = treinta (30) y (and) cinco (5).</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">3. What time is 3:00 in Spanish?</div>
+        <input type="text" name="q3" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e3" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Son las tres
+        <p style="margin-top:8px"><b>Explanation:</b> For times after 1:00, use "son las" + number. 3:00 = "Son las tres" (They are the three o'clock).</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">4. What time is 1:00 in Spanish?</div>
+        <select name="q4" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="Es la una">Es la una</option><option value="Son las una">Son las una</option><option value="Es las uno">Es las uno</option></select>
+        <div id="e4" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Es la una
+        <p style="margin-top:8px"><b>Explanation:</b> 1:00 is singular, so use "es la una" (it is the one o'clock). Only 1:00 is singular; all other times use "son las."</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">5. How do you say "91" in Spanish?</div>
+        <input type="text" name="q5" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e5" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> noventa y uno
+        <p style="margin-top:8px"><b>Explanation:</b> 91 = noventa (90) y (and) uno (1). Always use "y" between tens and ones.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">6. What time is 4:30 in Spanish?</div>
+        <select name="q6" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="Son las cuatro y media">Son las cuatro y media</option><option value="Son las cuatro y treinta">Son las cuatro y treinta</option><option value="Son cuatro y media">Son cuatro y media</option></select>
+        <div id="e6" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Son las cuatro y media
+        <p style="margin-top:8px"><b>Explanation:</b> For 30 minutes, use "y media" (and half), not "y treinta." 4:30 = "Son las cuatro y media."</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">7. What time is 5:15 in Spanish?</div>
+        <input type="text" name="q7" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e7" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Son las cinco y cuarto
+        <p style="margin-top:8px"><b>Explanation:</b> For 15 minutes, use "y cuarto" (and quarter). 5:15 = "Son las cinco y cuarto."</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">8. How do you say "100" in Spanish?</div>
+        <input type="text" name="q8" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e8" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> cien
+        <p style="margin-top:8px"><b>Explanation:</b> 100 is "cien." When followed by another number (like 101), it becomes "ciento," but 100 alone is "cien."</p></div>
+      </div>
+      <div style="text-align:center"><button type="submit" class="fc-btn primary" style="padding:12px 32px">Check Answers</button></div>
+    </form>
+  </div>
 </div>
-<footer class="site-footer">Word Play &middot; Spanish A1 &middot; Practice</footer>
+<footer class="site-footer">Word Play — Spanish A1 — Practice</footer>
 <script src="../../../../shared/worksheet.js?v=v108"></script>
 </body>
 </html>

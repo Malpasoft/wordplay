@@ -13,21 +13,193 @@
 <header class="site-header"><div class="site-header-inner">
   <a href="index.html" class="back back-link" aria-label="Back"></a>
   <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">◐ Dark</button>
 </div></header>
 <div class="section-page">
   <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>&#8250;</span>
-    <a href="../../../../espanol-en/a1/index.html">A1</a><span>&#8250;</span>
-    <a href="../index.html">Grammar</a><span>&#8250;</span>
-    <a href="index.html">Numbers & Time</a><span>&#8250;</span>
+    <a href="../../../../index.html">Home</a><span>◆</span>
+    <a href="../../../../espanol-en/a1/index.html">A1</a><span>◆</span>
+    <a href="../index.html">Grammar</a><span>◆</span>
+    <a href="index.html">Numbers & Time</a><span>◆</span>
     <strong>Mastery Game</strong>
   </div>
-  <!-- PLACEHOLDER -->
-  <h1>Numbers & Time &mdash; Mastery Game</h1>
-  <p style="color:var(--muted)">Game content coming soon.</p>
+  <h1>Numbers & Time — Mastery Game</h1>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <div id="gameStart" class="game-start" style="text-align:center">
+      <p style="color:var(--muted);margin-bottom:16px">10 numbers & times × 3 question types = reach 100 points to win</p>
+      <p style="color:var(--muted);font-size:.85rem;margin-bottom:24px">Master Spanish numbers and telling time.</p>
+      <div id="gStartMastered" style="margin-bottom:16px"></div>
+      <button id="gBtnStart" class="fc-btn primary" style="padding:12px 32px" onclick="startGame()">Start Game</button>
+    </div>
+    <div id="gamePlay" style="display:none">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" style="display:none;text-align:center">
+      <div style="font-size:2rem;margin-bottom:20px">🎉</div>
+      <div style="font-size:1.4rem;font-weight:700;margin-bottom:10px">Mastery Achieved!</div>
+      <div id="gFinalScore" style="font-size:1.1rem;color:var(--muted);margin-bottom:24px">Score: 100</div>
+      <button id="gBtnBackChapter" class="fc-btn primary" style="padding:12px 32px" onclick="backToChapter()">← Back to Chapter</button>
+    </div>
+  </div>
 </div>
-<footer class="site-footer">Word Play &middot; Spanish A1 &middot; Game</footer>
-<script src="../../../../shared/game.js?v=v111"></script>
+<footer class="site-footer">Word Play — Spanish A1 — Game</footer>
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+window.GAME_DATA = {
+  level: 'a1',
+  chapterId: 'numbers_time',
+  storageKey: 'game_a1_numbers_time',
+  items: [
+    {id: 'num_15', form: '15', meaning: 'quince', example: 'Tengo quince años.', accept: ['quince']},
+    {id: 'num_25', form: '25', meaning: 'veinticinco', example: 'Hay veinticinco estudiantes.', accept: ['veinticinco']},
+    {id: 'num_42', form: '42', meaning: 'cuarenta y dos', example: 'El número es cuarenta y dos.', accept: ['cuarenta y dos', 'cuarentaydos']},
+    {id: 'num_77', form: '77', meaning: 'setenta y siete', example: 'Hay setenta y siete libros.', accept: ['setenta y siete', 'setentaysiete']},
+    {id: 'num_100', form: '100', meaning: 'cien', example: 'Tengo cien pesos.', accept: ['cien']},
+    {id: 'time_3pm', form: '3:00 PM', meaning: 'Son las tres de la tarde', example: 'La clase es a las tres de la tarde.', accept: ['tres de la tarde', 'tres tarde', 'son las tres']},
+    {id: 'time_1am', form: '1:00 AM', meaning: 'Es la una de la mañana', example: 'Es la una de la mañana.', accept: ['una de la mañana', 'una mañana', 'es la una']},
+    {id: 'time_430', form: '4:30', meaning: 'Son las cuatro y media', example: 'La reunión es a las cuatro y media.', accept: ['cuatro y media', 'media', 'cuatromedia']},
+    {id: 'time_945', form: '9:45', meaning: 'Son las diez menos cuarto', example: 'La clase termina a las diez menos cuarto.', accept: ['diez menos cuarto', 'menos cuarto']},
+    {id: 'time_515', form: '5:15', meaning: 'Son las cinco y cuarto', example: 'Vamos a las cinco y cuarto.', accept: ['cinco y cuarto', 'cuarto', 'cincocuarto']}
+  ]
+};
+
+var game = null;
+
+function startGame() {
+  if (game) { game.newGame(); }
+  document.getElementById('gameStart').style.display = 'none';
+  document.getElementById('gamePlay').style.display = 'block';
+  document.getElementById('gameCompletion').style.display = 'none';
+}
+
+function backToChapter() {
+  window.location.href = 'index.html';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  var DATA = window.GAME_DATA;
+  var play = document.querySelector('#gamePlay .game-play');
+  if (!play) return;
+
+  var score = 0, answered = 0, won = false;
+  var widx = 0, tidx = 0, sel = null;
+  var ct = {};
+  DATA.items.forEach(function(w){ct[w.id] = 0;});
+  var types = ['significado', 'contexto', 'produccion'];
+
+  function getQ() {
+    var item = DATA.items[widx];
+    var t = types[tidx];
+    var q = {itemId: item.id, type: t};
+    if (t === 'significado') {
+      q.question = 'What is <b>' + item.form + '</b> in Spanish?';
+      q.correct = item.meaning;
+      var opts = [item.meaning, 'otro número', 'otro momento', 'mañana'].sort(() => Math.random() - 0.5);
+      q.options = opts;
+    } else if (t === 'contexto') {
+      q.question = '<i>"' + item.example + '"</i><br>Is this correct?';
+      q.correct = 'yes';
+      var opts = ['yes', 'no'].sort(() => Math.random() - 0.5);
+      q.options = opts;
+    } else {
+      q.question = 'Type: <b>' + item.form + '</b>';
+      q.correct = item.accept[0];
+    }
+    return q;
+  }
+
+  function display() {
+    var q = getQ();
+    var item = DATA.items[widx];
+    if (!document.getElementById('gTerm')) {
+      play.innerHTML = `
+        <div style="padding:20px;text-align:center">
+          <div style="font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">
+            <span id="gQTypeTag">significado</span> • Score: <span id="gScoreLabel">0</span>
+          </div>
+          <div id="gTerm" style="font-size:1.4rem;font-weight:700;margin-bottom:16px"></div>
+          <div id="gPrompt" style="margin-bottom:24px;font-size:1rem"></div>
+          <div id="gOptions" style="margin-bottom:24px"></div>
+          <div id="gInputWrap" style="margin-bottom:24px;display:none">
+            <input id="gInput" type="text" placeholder="Type answer…" style="width:100%;padding:10px;border:2px solid var(--amber);border-radius:4px;font-family:Georgia,serif;font-size:1rem">
+          </div>
+          <div id="gFeedback" style="margin-bottom:16px;min-height:24px"></div>
+          <button onclick="submitAnswer()" class="fc-btn primary" style="padding:10px 28px">Submit</button>
+        </div>
+      `;
+    }
+    document.getElementById('gTerm').innerHTML = item.form;
+    document.getElementById('gQTypeTag').textContent = tidx === 0 ? 'significado' : tidx === 1 ? 'contexto' : 'produccion';
+    document.getElementById('gPrompt').innerHTML = q.question;
+
+    if (tidx === 2) {
+      document.getElementById('gOptions').style.display = 'none';
+      document.getElementById('gInputWrap').style.display = 'block';
+      document.getElementById('gInput').value = '';
+      document.getElementById('gInput').focus();
+    } else {
+      document.getElementById('gOptions').style.display = 'block';
+      document.getElementById('gInputWrap').style.display = 'none';
+      var html = q.options.map(o => '<div style="margin-bottom:10px"><button class="match-item" onclick="selectAnswer(this, \'' + o + '\')">'+o+'</button></div>').join('');
+      document.getElementById('gOptions').innerHTML = html;
+      sel = null;
+    }
+  }
+
+  window.selectAnswer = function(btn, ans) {
+    document.querySelectorAll('.match-item').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    sel = ans;
+  };
+
+  window.submitAnswer = function() {
+    var q = getQ();
+    var userAns = tidx === 2 ? document.getElementById('gInput').value.toLowerCase().trim() : sel;
+    if (!userAns) return;
+
+    var correct = false;
+    if (tidx === 2) {
+      var normalized = userAns.replace(/[.!?,;:]/g, '').replace(/\s+/g, ' ');
+      var item = DATA.items[widx];
+      correct = item.accept.some(a => normalized.includes(a.toLowerCase()) || a.toLowerCase().includes(normalized));
+    } else {
+      correct = userAns === q.correct;
+    }
+
+    score += correct ? 10 : -3;
+    score = Math.max(0, score);
+    document.getElementById('gScoreLabel').textContent = score;
+
+    var msg = correct ? 'Correct! +10' : 'Wrong. -3';
+    document.getElementById('gFeedback').innerHTML = '<div style="color:' + (correct ? 'var(--green)' : 'var(--red)') + ';font-weight:700">' + msg + '</div>';
+
+    if (correct) ct[DATA.items[widx].id]++;
+
+    document.getElementById('gamePlay').querySelector('.game-play').style.opacity = '0.6';
+    setTimeout(function() {
+      document.getElementById('gamePlay').querySelector('.game-play').style.opacity = '1';
+      nextQuestion();
+    }, 800);
+  };
+
+  window.nextQuestion = function() {
+    if (score >= 100 && Object.values(ct).every(c => c > 0)) {
+      document.getElementById('gamePlay').style.display = 'none';
+      document.getElementById('gameCompletion').style.display = 'block';
+      document.getElementById('gFinalScore').textContent = 'Score: ' + score;
+      try {localStorage.setItem(DATA.storageKey + '_mastered', '1');} catch(e) {}
+      return;
+    }
+    tidx = (tidx + 1) % types.length;
+    if (tidx === 0) widx = (widx + 1) % DATA.items.length;
+    document.getElementById('gFeedback').innerHTML = '';
+    display();
+  };
+
+  window.game = { newGame: startGame };
+  display();
+});
+</script>
 </body>
 </html>
