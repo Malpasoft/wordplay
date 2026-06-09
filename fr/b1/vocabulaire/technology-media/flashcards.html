@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>B1 Vocab · Technology and Media — Flashcards | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<style>
+.vocab-page{max-width:800px;margin:0 auto;padding:20px 0}
+.mode-tabs{display:flex;gap:8px;margin-bottom:24px}
+.mode-tab{font-family:var(--font-sans);font-size:.72rem;font-weight:700;padding:8px 16px;border-radius:4px;cursor:pointer;border:1.5px solid var(--hairline);background:transparent;color:var(--ink)}
+.mode-tab.active{background:var(--ink);color:var(--paper)}
+.fc-btn{font-family:var(--font-sans);font-size:.72rem;font-weight:700;padding:9px 18px;border-radius:4px;cursor:pointer;border:1.5px solid var(--hairline);background:transparent;color:var(--ink)}
+.fc-btn.primary{background:var(--ink);color:var(--paper)}
+.mastery-badge{display:inline-block;padding:8px 18px;background:rgba(184,134,11,.12);color:var(--amber);font-size:.78rem;margin-bottom:16px}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../index.html" class="back back-link" aria-label="Back"></a>
+    <a href="/" class="brand">Word Play</a>
+    <button class="dark-toggle" onclick="toggleDark()">Dark</button>
+  </div>
+</header>
+<div class="container">
+  <div class="breadcrumb">
+    <a href="../../../../index.html">Home</a><span>›</span>
+    <a href="../../index.html">B1</a><span>›</span>
+    <a href="../index.html">Vocabulary</a><span>›</span>
+    <strong>Technology and Media</strong>
+  </div>
+  <div class="chapter-num">V4</div>
+  <h1>Technology and Media</h1>
+  <nav class="chapter-nav">
+    <a href="flashcards.html" class="chapter-nav-btn active">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Review</a>
+    <a href="game.html" class="chapter-nav-btn">Game</a>
+  </nav>
+  <div class="vocab-page">
+    <div id="masteryBadge" style="display:none"><span class="mastery-badge">Mastered</span></div>
+    <div style="text-align:center">
+      <button class="fc-btn primary" onclick="markMastered()" id="btnMastered">Mark mastered</button>
+    </div>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+var SLUG = 'technology-media';
+var LEVEL = 'b1';
+var MASTERY_KEY = 'wordplay_vocab_b1_technology-media_mastered';
+function markMastered(){try{localStorage.setItem(MASTERY_KEY,'1');}catch(e){}document.getElementById('masteryBadge').style.display='block';}
+</script>
+</body>
+</html>
