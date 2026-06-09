@@ -98,14 +98,14 @@ Fill tooling: `scripts/fill_chapter.py` + content modules in `scripts/content/`.
 
 ### Espanol-en track (`/espanol-en/`) — Spanish course for English speakers
 
-**A1 Status (60%+ complete):**
+**A1 Status: 100% complete (9 June, pedagogy_check 0 failures):**
 | Section | Status | Details |
 |---------|--------|---------|
-| **Vocabulary** | **12/12 filled ✅** | All chapters complete with IPA, Spanish definitions, Web Speech API (es-ES) |
+| **Vocabulary** | **12/12 filled ✅** | Spanish headwords + IPA + es-ES audio; topic worksheets with explanations; slides + Dominio games |
 | **Grammar** | **25/25 filled ✅** | All chapters populated with slides, worksheets, games (9 June autonomous) |
-| **Writing** | **3/3 filled ✅** | All chapters populated with slides, worksheets, games (9 June autonomous) |
+| **Writing** | **3/3 filled ✅** | Slides, worksheets, games and 3-page printables (reference/task/model) |
 
-A1 fully enriched with all three content types. Vocabulary pedagogically complete; grammar and writing frameworks populated with full content.
+A1 fully enriched and verified: pedagogy_check passes 0 failures; entity-rendering and dead-button bugs fixed in second pass.
 
 **A2–C2:** Stub hub pages + chapter directory frameworks created (9 June autonomous). All levels ready for future population phases.
 

@@ -49,10 +49,10 @@ A1 vocabulary: old template (`renderCard`/`STORAGE_KEY`) in 11 chapters, new tem
 All sections enriched with full pedagogical content (flashcards, worksheets with explanations, mastery games).
 
 ### Espanol-en track — Spanish for English speakers
-**A1:** Fully populated (60%+ complete pedagogical enrichment)
-- ✅ Vocabulary: 12/12 chapters complete with IPA, Spanish definitions, Web Speech API (es-ES, rate=0.9)
-- ✅ Grammar: 25/25 chapters populated with slides, worksheets, games
-- ✅ Writing: 3/3 chapters populated with slides, worksheets, games
+**A1: 100% complete (verified 9 June, pedagogy_check 0 failures)**
+- ✅ Vocabulary: 12/12 — flashcards (Spanish headwords, IPA, es-ES audio), intro slides, topic worksheets with explanations, Dominio games
+- ✅ Grammar: 25/25 — 7-slide decks, 8-question worksheets with explanations, 10-question mastery games
+- ✅ Writing: 3/3 — slides, worksheets, games AND 3-page printables (reference card / task / model answer)
 
 **A2–C2:** Stub hub pages + chapter directory frameworks created (ready for future population phases).
 

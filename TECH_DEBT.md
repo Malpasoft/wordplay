@@ -9,7 +9,7 @@ Three Spanish-related tracks are easy to confuse — kept distinct throughout:
 | Track | What it is | State |
 |-------|-----------|-------|
 | `es/` | English course **explained in Spanish** (Spanish speakers learning English) | 107 gramatica/ chapters ✅, 77/78 vocab complete (99% — A1 12/12, A2 12/12, B1 12/12, B2 16/16, C1 14/14, C2 12/12; 1 stub remains), 26 writing ✅ |
-| `espanol-en/` | Spanish course for English speakers | A1: vocab 12/12✅, grammar 25 chapters ✅, writing 3 chapters ✅ (60%+ complete); A2–C2: stub hub frameworks created |
+| `espanol-en/` | Spanish course for English speakers | A1: 100% ✅ (vocab 12/12, grammar 25/25, writing 3/3 + printables); A2–C2: scaffolded, awaiting content |
 | `espanol/` | Universal Spanish course | Index scaffolds only — Phase 6, out of scope |
 
 ---
@@ -50,13 +50,13 @@ All four docs updated to generic branch guidance (no hardcoded branch names).
 ### M3 — English C1/C2 vocabulary stubs · **status: CLOSED**
 ✅ All C1/C2 vocab chapters are fully populated. Only 2 chapters per level lack flashcards by design (applied-grammar pattern): `c/c1/vocabulary/applied-grammar-register/` and `c/c2/vocabulary/applied-grammar-collocation/`. English vocab track is complete.
 
-### M4 — `espanol-en/a1` content fill + A2–C2 framework · **status: A1 60%+, A2–C2 BLOCKED**
-**Progress (9 June):** 
-- ✅ A1 vocabulary: 12/12 complete with IPA, Spanish definitions, Web Speech API
-- ✅ A1 grammar: 25 chapters populated with content
-- ✅ A1 writing: 3 chapters populated with content
-- **A1 core ~60% enriched** (vocab full, grammar + writing populated but may need review)
-- A2–C2: Stub hub frameworks created (index.html + chapter directories); ready for population phase
+### M4 — `espanol-en/a1` content fill + A2–C2 framework · **status: A1 CLOSED, A2–C2 scaffolded**
+**Progress (9 June, second pass):**
+- ✅ A1 vocabulary: 12/12 — flashcards rebuilt with correct language direction (9 stubs had English headwords), topic worksheets with explanations (3 old ones were copy-paste mismatches), slides + Dominio games for all
+- ✅ A1 grammar: 25/25 with real content (final 9 chapters generated this session); dead Check Answers buttons fixed on 15 worksheets
+- ✅ A1 writing: 3/3 incl. printables (reference/task/model) for all three chapters
+- ✅ `pedagogy_check.py` at 0 failures site-wide (A2–C2 stub slides repaired: were empty decks with CHAPTER_ID="placeholder")
+- A2–C2: scaffolding complete; content population is the next phase
 
 ### M5 — `design-check.sh` hook gaps · **status: partial**
 - H1 hex drift now closed by batch fix — hook wasn't the root cause.
