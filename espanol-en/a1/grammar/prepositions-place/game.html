@@ -184,13 +184,19 @@ function renderQ() {
   gLock = false;
 }
 
+function decodeEnt(s) {
+  var d = document.createElement('div');
+  d.innerHTML = s;
+  return d.textContent;
+}
+
 function answerQ(btn) {
   if (gLock) return;
   gLock = true;
   var q = gQueue[0];
   var ans = btn.textContent.trim();
   var fb = document.getElementById('gFeedback');
-  if (ans === q.correct) {
+  if (ans === decodeEnt(q.correct).trim()) {
     gStreak++;
     gScore += 10 + (gStreak >= 3 ? 3 : 0);
     gAnswered++;
@@ -202,7 +208,7 @@ function answerQ(btn) {
     gScore = Math.max(0, gScore - 3);
     gQueue.push(gQueue.shift());
     fb.style.color = 'var(--muted)';
-    fb.textContent = 'Not quite. The answer was: ' + q.correct + ' (requeued, -3 points)';
+    fb.textContent = 'Not quite. The answer was: ' + decodeEnt(q.correct) + ' (requeued, -3 points)';
   }
   setTimeout(function() {
     if (gQueue.length === 0) { endGame(); } else { renderQ(); }
