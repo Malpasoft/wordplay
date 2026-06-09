@@ -23,11 +23,163 @@
     <a href="index.html">Ser & Estar</a><span>&#8250;</span>
     <strong>Mastery Game</strong>
   </div>
-  <!-- PLACEHOLDER -->
   <h1>Ser & Estar &mdash; Mastery Game</h1>
-  <p style="color:var(--muted)">Game content coming soon.</p>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <div id="gameStart" class="game-start" style="text-align:center">
+      <p style="color:var(--muted);margin-bottom:16px">8 contexts × 3 question types = reach 100 points to win</p>
+      <p style="color:var(--muted);font-size:.85rem;margin-bottom:24px">Master ser vs. estar by answering questions about meaning, context, and production.</p>
+      <div id="gStartMastered" style="margin-bottom:16px"></div>
+      <button id="gBtnStart" class="fc-btn primary" style="padding:12px 32px" onclick="startGame()">Start Game</button>
+    </div>
+    <div id="gamePlay" style="display:none">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" style="display:none;text-align:center">
+      <div style="font-size:2rem;margin-bottom:20px">🎉</div>
+      <div style="font-size:1.4rem;font-weight:700;margin-bottom:10px">Mastery Achieved!</div>
+      <div id="gFinalScore" style="font-size:1.1rem;color:var(--muted);margin-bottom:24px">Score: 100</div>
+      <button id="gBtnBackChapter" class="fc-btn primary" style="padding:12px 32px" onclick="backToChapter()">← Back to Chapter</button>
+    </div>
+  </div>
 </div>
 <footer class="site-footer">Word Play &middot; Spanish A1 &middot; Game</footer>
-<script src="../../../../shared/game.js?v=v111"></script>
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+window.GAME_DATA = {
+  level: 'a1',
+  chapterId: 'ser_estar',
+  storageKey: 'game_a1_ser_estar',
+  items: [
+    {id: 'nationality', context: 'Nationality', form: 'Juan es mexicano', example: 'Juan is Mexican', correct: 'ser', reason: 'Nationality is permanent identity'},
+    {id: 'location', context: 'Location (now)', form: 'María está en París', example: 'Maria is in Paris (right now)', correct: 'estar', reason: 'Current location uses estar'},
+    {id: 'profession', context: 'Profession', form: 'Nosotros somos ingenieros', example: 'We are engineers', correct: 'ser', reason: 'Profession is permanent identity'},
+    {id: 'condition', context: 'Current condition', form: 'La puerta está abierta', example: 'The door is open', correct: 'estar', reason: 'Temporary state uses estar'},
+    {id: 'feeling', context: 'Emotion/feeling', form: 'Yo estoy feliz hoy', example: 'I am happy today', correct: 'estar', reason: 'Emotions and feelings use estar'},
+    {id: 'characteristic', context: 'Personality trait', form: 'Ella es inteligente', example: 'She is intelligent', correct: 'ser', reason: 'Characteristics and traits use ser'},
+    {id: 'origin', context: 'Origin (from)', form: 'Mi familia es de España', example: 'My family is from Spain', correct: 'ser', reason: 'Origin (where you are FROM) uses ser'},
+    {id: 'health', context: 'Health', form: 'El niño está enfermo', example: 'The child is sick', correct: 'estar', reason: 'Health condition is temporary state'}
+  ]
+};
+
+var game = null;
+
+function startGame() {
+  if (game) { game.newGame(); }
+  document.getElementById('gameStart').style.display = 'none';
+  document.getElementById('gamePlay').style.display = 'block';
+  document.getElementById('gameCompletion').style.display = 'none';
+}
+
+function backToChapter() {
+  window.location.href = 'index.html';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  var DATA = window.GAME_DATA;
+  var play = document.querySelector('#gamePlay .game-play');
+  if (!play) return;
+
+  var score = 0, answered = 0, won = false;
+  var widx = 0, tidx = 0, sel = null;
+  var ct = {};
+  DATA.items.forEach(function(w){ct[w.id] = 0;});
+  var types = ['significado', 'contexto', 'produccion'];
+
+  function getQ() {
+    var item = DATA.items[widx];
+    var t = types[tidx];
+    var q = {itemId: item.id, type: t};
+    if (t === 'significado') {
+      q.question = '<b>' + item.context + '</b>: Which verb? ' + item.example;
+      q.correct = item.correct;
+      var opts = ['ser', 'estar'].sort(() => Math.random() - 0.5);
+      q.options = opts;
+    } else if (t === 'contexto') {
+      q.question = '<i>\"' + item.form + '\"</i><br>Is the verb correct?';
+      q.correct = 'yes';
+      var opts = ['yes', 'no'].sort(() => Math.random() - 0.5);
+      q.options = opts;
+    } else {
+      q.question = 'Complete: "' + item.context + ': _____ la mejor opción"';
+      q.correct = item.correct === 'ser' ? 'es' : 'está';
+    }
+    return q;
+  }
+
+  function display() {
+    var q = getQ();
+    var item = DATA.items[widx];
+    document.getElementById('gTerm').innerHTML = item.context + ' (' + item.correct.toUpperCase() + ')';
+    document.getElementById('gQTypeTag').textContent = tidx === 0 ? 'significado' : tidx === 1 ? 'contexto' : 'produccion';
+    document.getElementById('gPrompt').innerHTML = q.question;
+
+    if (tidx === 2) {
+      document.getElementById('gOptions').style.display = 'none';
+      document.getElementById('gInputWrap').style.display = 'block';
+      document.getElementById('gInput').value = '';
+      document.getElementById('gInput').focus();
+    } else {
+      document.getElementById('gOptions').style.display = 'block';
+      document.getElementById('gInputWrap').style.display = 'none';
+      var html = q.options.map(o => '<div style="margin-bottom:10px"><button class="match-item" onclick="selectAnswer(this, \'' + o + '\')">'+o+'</button></div>').join('');
+      document.getElementById('gOptions').innerHTML = html;
+      sel = null;
+    }
+  }
+
+  window.selectAnswer = function(btn, ans) {
+    document.querySelectorAll('.match-item').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    sel = ans;
+  };
+
+  window.submitAnswer = function() {
+    var q = getQ();
+    var userAns = tidx === 2 ? document.getElementById('gInput').value.toLowerCase().trim() : sel;
+    if (!userAns) return;
+
+    var correct = false;
+    if (tidx === 2) {
+      var forms = (q.correct === 'ser') ? ['es', 'soy', 'eres', 'somos', 'sois', 'son'] : ['está', 'estoy', 'estás', 'estamos', 'estáis', 'están'];
+      correct = forms.includes(userAns);
+    } else {
+      correct = userAns === q.correct;
+    }
+
+    score += correct ? 10 : -3;
+    score = Math.max(0, score);
+    document.getElementById('gScoreLabel').textContent = score;
+
+    var msg = correct ? 'Correct! +10' : 'Wrong. -3';
+    document.getElementById('gFeedback').innerHTML = '<div style="color:' + (correct ? 'var(--green)' : 'var(--red)') + ';font-weight:700">' + msg + '</div>';
+
+    if (correct) ct[DATA.items[widx].id]++;
+
+    document.getElementById('gamePlay').querySelector('.game-play').style.opacity = '0.6';
+    setTimeout(function() {
+      document.getElementById('gamePlay').querySelector('.game-play').style.opacity = '1';
+      nextQuestion();
+    }, 800);
+  };
+
+  window.nextQuestion = function() {
+    if (score >= 100 && Object.values(ct).every(c => c > 0)) {
+      document.getElementById('gamePlay').style.display = 'none';
+      document.getElementById('gameCompletion').style.display = 'block';
+      document.getElementById('gFinalScore').textContent = 'Score: ' + score;
+      try {localStorage.setItem(DATA.storageKey + '_mastered', '1');} catch(e) {}
+      return;
+    }
+    tidx = (tidx + 1) % types.length;
+    if (tidx === 0) widx = (widx + 1) % DATA.items.length;
+    document.getElementById('gFeedback').innerHTML = '';
+    display();
+  };
+
+  window.game = { newGame: startGame };
+  display();
+});
+</script>
 </body>
 </html>

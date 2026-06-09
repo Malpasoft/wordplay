@@ -23,9 +23,60 @@
     <a href="index.html">Ser & Estar</a><span>&#8250;</span>
     <strong>Practice</strong>
   </div>
-  <!-- PLACEHOLDER -->
   <h1>Ser & Estar &mdash; Practice</h1>
-  <p style="color:var(--muted)">Worksheet content coming soon.</p>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <form id="quizForm" onsubmit="showAns(event)">
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">1. Which is correct: "Ella ___ mexicana"?</div>
+        <select name="q1" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">es</option><option value="b">está</option></select>
+        <div id="e1" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> es
+        <p style="margin-top:8px"><b>Explanation:</b> Nationality is a permanent identity, so we use SER. "Ella es mexicana" = She is Mexican.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">2. Fill in: "El libro _____ en la mesa."</div>
+        <input type="text" name="q2" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e2" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> está
+        <p style="margin-top:8px"><b>Explanation:</b> Location requires ESTAR. "El libro está en la mesa" = The book is on the table.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">3. Which is correct: "Yo ____ profesor"?</div>
+        <select name="q3" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">soy</option><option value="b">estoy</option></select>
+        <div id="e3" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> soy
+        <p style="margin-top:8px"><b>Explanation:</b> Profession is a permanent identity, so we use SER. "Yo soy profesor" = I am a teacher.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">4. Fill in: "¿Cómo ______ hoy?" (How are you today?)</div>
+        <input type="text" name="q4" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e4" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> estás
+        <p style="margin-top:8px"><b>Explanation:</b> Asking about someone's condition/state uses ESTAR. "¿Cómo estás?" = How are you?</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">5. Which sentence is correct?</div>
+        <select name="q5" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">Nosotros estamos de España.</option><option value="b">Nosotros somos de España.</option></select>
+        <div id="e5" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Nosotros somos de España.
+        <p style="margin-top:8px"><b>Explanation:</b> Origin (where you are FROM) is permanent and uses SER. ESTAR is only for temporary location (where you ARE NOW).</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">6. Fill in: "La puerta _____ cerrada." (The door is closed.)</div>
+        <input type="text" name="q6" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e6" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> está
+        <p style="margin-top:8px"><b>Explanation:</b> A current condition or state uses ESTAR. The door is IN A CLOSED STATE now, so "está cerrada".</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">7. Which is correct: "Mi padre _____ inteligente"?</div>
+        <select name="q7" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">es</option><option value="b">está</option></select>
+        <div id="e7" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> es
+        <p style="margin-top:8px"><b>Explanation:</b> A personality trait or characteristic is permanent, so we use SER. "Mi padre es inteligente" = My father is intelligent.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">8. Fill in: "Yo _____ en Barcelona ahora." (I am in Barcelona now.)</div>
+        <input type="text" name="q8" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e8" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> estoy
+        <p style="margin-top:8px"><b>Explanation:</b> Current location uses ESTAR. "Yo estoy en Barcelona" = I am in Barcelona (right now, but I might leave).</p></div>
+      </div>
+      <div style="text-align:center"><button type="submit" class="fc-btn primary" style="padding:12px 32px">Check Answers</button></div>
+    </form>
+  </div>
 </div>
 <footer class="site-footer">Word Play &middot; Spanish A1 &middot; Practice</footer>
 <script src="../../../../shared/worksheet.js?v=v108"></script>
