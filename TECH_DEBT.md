@@ -8,7 +8,7 @@ Three Spanish-related tracks are easy to confuse — kept distinct throughout:
 
 | Track | What it is | State |
 |-------|-----------|-------|
-| `es/` | English course **explained in Spanish** (Spanish speakers learning English) | 107 gramatica/ chapters ✅, 60/77 vocab complete (A2✅, others mostly filled), 26 writing ✅ |
+| `es/` | English course **explained in Spanish** (Spanish speakers learning English) | 107 gramatica/ chapters ✅, 21/78 vocab complete (A1 8/12, A2 11/12, B1 1/12, B2 1/16, C1 0/14, C2 0/12), 26 writing ✅ |
 | `espanol-en/` | Spanish course for English speakers | A1: vocab 12/12✅, grammar framework ready, writing framework ready; A2–C2: stub hubs |
 | `espanol/` | Universal Spanish course | Index scaffolds only — Phase 6, out of scope |
 
@@ -21,8 +21,8 @@ Three Spanish-related tracks are easy to confuse — kept distinct throughout:
   old-schema artefacts remain. The only outstanding step is the one-time DB re-migration
   (see `CLOUDFLARE_SETUP.md`).
 - **Cache-bust versions** — every shared asset is pinned to a single `?v=` across all
-  consumers (base v123, slides v115, deck v113, game.css v111, game.js v110, store v105,
-  worksheet v107, print v102, dark-init v109). No drift.
+  consumers (base v124, slides v115, deck v114, game.css v112, game.js v111, store v107,
+  worksheet v108, print v102, dark-init v112). No drift.
 - **Teacher tools not redundant** — `ai-prompts.html` (prompt factory) → `builder.html`
   (output processor) → `dev-hub.html` (utilities) are sequential, not duplicative.
 
@@ -45,13 +45,13 @@ Three Spanish-related tracks are easy to confuse — kept distinct throughout:
 All four docs updated to generic branch guidance (no hardcoded branch names).
 
 ### M2 — `es/` vocabulary flashcard stubs *(roadmap priority #3)* · **status: PARTIAL**
-**Progress (7 June):** ✅ A2 fully completed (11/11 chapters). Remaining: 6 A1 stubs, 1 B1 stub. These are the only remaining `es/` vocabulary stubs (down from 71). Fix: `/fill-vocab es a1 <slug>` for remaining A1 chapters. B1 has 1 stub pending.
+**Progress (9 June):** 21/78 complete. A1: 8/12 (4 stubs). A2: 11/12 (1 stub). B1: 1/12 (11 stubs). B2: 1/16 (15 stubs). C1: 0/14 (14 stubs). C2: 0/12 (12 stubs). **57 stubs total remain.** Fix: `/fill-vocab es <level> <slug>` for each level in priority order (A1 → A2 → B1 → B2 → C1 → C2).
 
 ### M3 — English C1/C2 vocabulary stubs · **status: CLOSED**
 ✅ All C1/C2 vocab chapters are fully populated. Only 2 chapters per level lack flashcards by design (applied-grammar pattern): `c/c1/vocabulary/applied-grammar-register/` and `c/c2/vocabulary/applied-grammar-collocation/`. English vocab track is complete.
 
 ### M4 — `espanol-en/a1` common-mistakes slides + stubs *(roadmap priority #5)* · **status: PARTIAL**
-**Progress (7 June):** ✅ A1 vocabulary complete (12/12). Grammar and writing frameworks exist (24 grammar, 3 writing chapters). Remaining: populate content and add `.trap-row` common-mistakes slides to grammar chapters.
+**Progress (9 June):** ✅ A1 vocabulary complete (12/12). Grammar and writing frameworks exist (25 grammar, 3 writing chapters). All currently placeholder stubs. Remaining: populate content and `.trap-row` common-mistakes slides to grammar chapters.
 
 ### M5 — `design-check.sh` hook gaps · **status: partial**
 - H1 hex drift now closed by batch fix — hook wasn't the root cause.

@@ -12,7 +12,7 @@
 
 ## 1. Architecture notes
 
-- Static site: ~2,372 HTML files, vanilla HTML/CSS/JS, no build step
+- Static site: ~2,479 HTML files, vanilla HTML/CSS/JS, no build step
 - Shared engines in `shared/` loaded via `?v=vNN` cache-busting (versions are independent per file)
 - All student progress in browser localStorage; teacher calendar + profiles sync to Cloudflare D1 via passphrase code (DB `wordplay_db`, binding `DB`; functions in `functions/api/`; setup + verify steps in `CLOUDFLARE_SETUP.md`; graceful localStorage fallback if DB unbound)
 - `body class="deck-body"` required on every `slides.html`
@@ -36,13 +36,13 @@ A1 vocabulary: old template (`renderCard`/`STORAGE_KEY`) in 11 chapters, new tem
 
 ### Spanish track (`/es/`) — English explained in Spanish, all 6 levels
 **Grammar:** ✅ 107 `gramatica/` chapters (Spanish-named) across all 6 levels, all filled with real content + Spanish-English contrastive notes.  
-**Vocabulary:** 77 chapters total; 60/77 complete. Status:
-- A1: 6/12 filled, 6 stubs remain
-- ✅ A2: 12/12 filled (just completed)
-- B1: 11/12 filled, 1 stub
-- ✅ B2: 16/16 filled
-- ✅ C1: 14/14 filled  
-- ✅ C2: 12/12 filled
+**Vocabulary:** 78 chapters total; 21/78 complete. Status:
+- A1: 8/12 filled, 4 stubs remain
+- A2: 11/12 filled, 1 stub
+- B1: 1/12 filled, 11 stubs remain
+- B2: 1/16 filled, 15 stubs remain
+- C1: 0/14 filled, all stubs
+- C2: 0/12 filled, all stubs
 
 **Writing:** ✅ 26 chapters, all complete.  
 Fill tooling: `scripts/fill_chapter.py` + `scripts/content/` modules.
@@ -50,7 +50,7 @@ Fill tooling: `scripts/fill_chapter.py` + `scripts/content/` modules.
 ### Espanol-en track — Spanish for English speakers
 **A1:** Hub scaffold complete
 - ✅ Vocabulary: 12/12 chapters complete with IPA, Spanish definitions, Web Speech API
-- Grammar: 24 chapter framework ready for population
+- Grammar: 25 chapter framework ready for population
 - Writing: 3 chapter framework ready for population
 
 **A2–C2:** Stub hub pages only (ready for future population phases).
@@ -63,15 +63,15 @@ Fill tooling: `scripts/fill_chapter.py` + `scripts/content/` modules.
 
 | Asset | Version | Role |
 |-------|---------|------|
-| base.css | v123 | Global layout, design tokens, dark mode |
+| base.css | v124 | Global layout, design tokens, dark mode |
 | slides.css | v115 | Slide deck styles |
-| deck.js | v113 | Slide nav, confetti, Dashboard injection |
-| game.css | v110 | Mastery game styles |
-| game.js | v110 | 4-stage mastery engine |
-| store.js | v105 | localStorage wrapper, FCEStore, XP |
-| worksheet.js | v107 | Auto-grader with explanations |
+| deck.js | v114 | Slide nav, confetti, Dashboard injection |
+| game.css | v112 | Mastery game styles |
+| game.js | v111 | 4-stage mastery engine |
+| store.js | v107 | localStorage wrapper, FCEStore, XP |
+| worksheet.js | v108 | Auto-grader with explanations |
 | print.js | v102 | Print/PDF modal |
-| dark-init.js | v109 | Dark/light toggle, back-to-top |
+| dark-init.js | v112 | Dark/light toggle, back-to-top |
 
 ---
 
@@ -84,8 +84,8 @@ Fill tooling: `scripts/fill_chapter.py` + `scripts/content/` modules.
 window.LEVEL = "a1";
 window.CHAPTER_ID = "animals";
 </script>
-<script src="../../../../shared/store.js?v=v105"></script>
-<script src="../../../../shared/deck.js?v=v113"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/deck.js?v=v114"></script>
 ```
 
 ### Worksheet

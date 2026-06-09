@@ -1,6 +1,6 @@
 # Word Play — Project Root
 
-A complete Cambridge English course (A1–C2) as a static website on Cloudflare Pages. Vanilla HTML/CSS/JS, no build system, ~2,372 HTML pages. Tracks: English (main), Spanish-explained (`/es/`), Spanish-for-English-speakers (`/espanol-en/`), French support in builder (`/fr/`).
+A complete Cambridge English course (A1–C2) as a static website on Cloudflare Pages. Vanilla HTML/CSS/JS, no build system, ~2,479 HTML pages. Tracks: English (main), Spanish-explained (`/es/`), Spanish-for-English-speakers (`/espanol-en/`), French support in builder (`/fr/`).
 
 ## Top-level files and directories
 
@@ -16,9 +16,9 @@ A complete Cambridge English course (A1–C2) as a static website on Cloudflare 
 - **a/** — CEFR A1 and A2 (Beginner / Elementary).
 - **b/** — CEFR B1 and B2 (Pre-Intermediate / Upper-Intermediate, FCE exam prep).
 - **c/** — CEFR C1 and C2 (Advanced / Proficiency, CAE and CPE exam prep).
-- **es/** — Spanish-explained track. A1–C2: 107 grammar chapters (`gramatica/`) fully built with Spanish-English contrastive notes, 26 writing chapters complete, 77 vocab chapters (60/77 complete: A1=6/12, A2=12/12✅, B1=11/12, B2–C2 complete). Total 988 HTML files.
-- **espanol-en/** — Spanish course for English speakers. A1: vocabulary (12/12✅), grammar (24-chapter framework), writing (3-chapter framework); A2–C2: stub hubs ready for population.
-- **shared/** — CSS and JS engines shared across all ~2,372 pages.
+- **es/** — Spanish-explained track. A1–C2: 107 grammar chapters (`gramatica/`) fully built with Spanish-English contrastive notes, 26 writing chapters complete, 78 vocab chapters (21/78 complete: A1=8/12, A2=11/12, B1=1/12, B2=1/16, C1=0/14, C2=0/12). Total 992 HTML files.
+- **espanol-en/** — Spanish course for English speakers. A1: vocabulary (12/12✅), grammar (25-chapter framework), writing (3-chapter framework); A2–C2: stub hubs ready for population.
+- **shared/** — CSS and JS engines shared across all ~2,479 pages.
 - **teacher.html** — Teacher hub: calendar, profiles, dev-hub, builder, coverage, AI prompts.
 - **calendar.html** — Full lesson calendar with D1 cloud sync.
 - **profile.html** — Student profiles with D1 cloud sync.

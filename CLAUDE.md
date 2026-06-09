@@ -10,7 +10,7 @@
 ## Project
 
 Static Cambridge English course (A1–C2) on Cloudflare Pages. Vanilla HTML/CSS/JS, no
-build system, no backend. ~2,372 HTML pages. All student progress lives in browser
+build system, no backend. ~2,479 HTML pages. All student progress lives in browser
 localStorage. Teacher tools (calendar, profiles, dev-hub, builder, coverage) at root level.
 
 **Repo:** `malpasoft/wordplay`
@@ -66,7 +66,7 @@ the ONLY way to force a cache refresh.
 **When a shared file changes:**
 
 1. **Identify the file** — e.g., `shared/store.js`, `shared/base.css`
-2. **Bump its version** — increment `?v=vNN` to the next number across ALL 2,372 HTML files
+2. **Bump its version** — increment `?v=vNN` to the next number across all ~2,479 HTML files
    - Use: `python3 bump-versions.py` (automates all HTML updates)
    - OR use `/ship` skill (safer, but slower)
    - Manual edits: prone to missing files — avoid
@@ -76,7 +76,7 @@ the ONLY way to force a cache refresh.
 
 **Current versions (kept in sync by hook):**
 - `base.css`: v124
-- `dark-init.js`: v110
+- `dark-init.js`: v112
 - `store.js`: v107
 - `game.js`: v111
 - `worksheet.js`: v108
@@ -101,7 +101,7 @@ the ONLY way to force a cache refresh.
 ```
 fix: sanitize innerHTML in game.js to prevent XSS
 
-Bump game.js version from v110 to v111 across all 2,372 HTML files.
+Bump game.js version from v110 to v111 across all ~2,479 HTML files.
 Updated via bump-versions.py to ensure Cloudflare cache refresh.
 ```
 

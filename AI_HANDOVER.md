@@ -2,7 +2,7 @@
 
 **Read `CLAUDE.md` first (it holds all the rules), then this file for orientation.**
 
-**Total HTML pages:** ~2,372  
+**Total HTML pages:** ~2,479  
 **Live URL:** https://wordplay-38t.pages.dev (Cloudflare Pages project `wordplay-38t`)  
 **GitHub repo:** `malpasoft/wordplay` → Cloudflare Pages auto-deploys from `main`
 
@@ -79,19 +79,19 @@ A **static** Cambridge English course (A1 to C2) on Cloudflare Pages. Vanilla HT
 ### Spanish / ES track (`/es/`) — English course explained in Spanish, all 6 levels
 
 **Grammar — 107 chapters** (`gramatica/` folders, Spanish-named) across all levels. All filled with real content.  
-**Vocabulary — 77 chapters** status:
+**Vocabulary — 78 chapters** status:
 | Level | Status | Notes |
 |-------|--------|-------|
-| A1 | 6/12 filled | 6 stubs remain |
-| A2 | **12/12 filled ✅** | Just completed; all chapters have slides, worksheets, games |
-| B1 | 11/12 filled | 1 stub remains |
-| B2 | 16/16 filled | Complete |
-| C1 | 14/14 filled | Complete |
-| C2 | 12/12 filled | Complete |
+| A1 | 8/12 filled | 4 stubs remain |
+| A2 | **11/12 filled** | feelings-emotions is a stub |
+| B1 | 1/12 filled | 11 stubs remain |
+| B2 | 1/16 filled | 15 stubs remain |
+| C1 | 0/14 filled | All stubs |
+| C2 | 0/12 filled | All stubs |
 
 **Writing — 26 chapters**, all complete across all levels.
 
-Fill tooling: `scripts/fill_chapter.py` + content modules in `scripts/content/`. Total HTML: 988 (largest track).
+Fill tooling: `scripts/fill_chapter.py` + content modules in `scripts/content/`. Total HTML: 992 (largest track). **57 vocabulary stubs remain to fill.**
 
 ---
 
@@ -101,7 +101,7 @@ Fill tooling: `scripts/fill_chapter.py` + content modules in `scripts/content/`.
 | Section | Status | Details |
 |---------|--------|---------|
 | **Vocabulary** | **12/12 filled ✅** | All chapters complete with IPA, Spanish definitions, Web Speech API (es-ES) |
-| **Grammar** | Structure ready | 24 chapter directories exist; content ready for population |
+| **Grammar** | Structure ready | 25 chapter directories exist; content ready for population |
 | **Writing** | Structure ready | 3 chapter directories exist; content ready for population |
 
 A1 hub scaffold complete; vocabulary fully enriched with pedagogical content. Grammar and writing frameworks are scaffolded and ready for content generation.
@@ -149,15 +149,15 @@ No dependencies, no imports. Pages link with `?v=vNN` cache-busting. Versions ar
 
 | Asset | Version | Role |
 |-------|---------|------|
-| base.css | v123 | Global layout, design tokens, dark mode |
+| base.css | v124 | Global layout, design tokens, dark mode |
 | slides.css | v115 | Lesson deck styles (`body.deck-body` required) |
-| deck.js | v113 | Slide nav, progress, completion, confetti |
-| game.css | v110 | Mastery game styles |
-| game.js | v110 | 4-stage mastery engine (recognition → meaning → context → production) |
-| store.js | v105 | localStorage wrapper, FCEStore, XP, chapter registry |
-| worksheet.js | v107 | Auto-grader (MCQ + text, with explanations) |
+| deck.js | v114 | Slide nav, progress, completion, confetti |
+| game.css | v112 | Mastery game styles |
+| game.js | v111 | 4-stage mastery engine (recognition → meaning → context → production) |
+| store.js | v107 | localStorage wrapper, FCEStore, XP, chapter registry |
+| worksheet.js | v108 | Auto-grader (MCQ + text, with explanations) |
 | print.js | v102 | Print/PDF modal helper |
-| dark-init.js | v109 | Dark/light toggle, back-to-top injection |
+| dark-init.js | v112 | Dark/light toggle, back-to-top injection |
 
 **Key variables in `base.css`:**  
 `--amber: #B8860B / #C9A050 dark` (only accent — always `var(--amber)`), `--paper: #F7F3EE / #0E0E0E dark`, `--ink: #1A1A1A / #F0F0F0 dark`, `--cream: #F0EBE0`, `--hairline: #E0D8CC`, `--muted: #6B6560`.
@@ -248,18 +248,18 @@ Custom skills: `/insights` — generates a styled HTML project report (coverage,
 
 **✅ Completed (June 2026):**
 1. ✅ **ES A2 vocabulary** — All 11 chapters now fully populated with flashcards, games, worksheets
-2. ✅ **ES A2-B2 grammar** — All 55 chapters (A2: 19, B1: 19, B2: 18) fully populated with slides, worksheets, games, Spanish-English contrastive notes
+2. ✅ **ES A2-B2 grammar** — All 55 chapters (A2: 18, B1: 19, B2: 18) fully populated with slides, worksheets, games, Spanish-English contrastive notes
 3. ✅ **Espanol-en A1 vocabulary** — All 12 chapters fully populated with IPA, Spanish definitions, Web Speech API
 4. ✅ **Authentication system** — D1 integration, bearer tokens, role-based access (admin/teacher/student), class management UI
 5. ✅ **Unified student system** — Auto-create user accounts with passcodes, class enrollment, invite codes
 
 **Active (priority order):**
-1. ⚠️ **Clean up code: mascot debug statements + mobile sprite bug.** Shipped to production with 3 `console.log`s left in `shared/mascot.js` from the debug commits; mobile frames mis-crop ≤640px.
-2. ⚠️ **Fix doc/repo clutter:** Remove 11 root PNG screenshots, content-dump JSONs, `test em tool builder` file, stale TECH_DEBT items. Clean git tree for next session.
-3. **Fill remaining ES vocabulary stubs** — 6 A1 stubs remain; A2–C2 mostly complete. Use dev-hub + DeepSeek/Gemini, run `fill_chapter.py`.
-4. **Espanol-en A1 grammar & writing** — 24 grammar chapters + 3 writing chapters have framework; ready for content population.
-5. **Generate fr/ lesson content** — 81 hub pages exist with dead links. Builder supports `fr` but content never generated. ~72 chapter-files needed (lessons, worksheets, games).
-6. **Roll out match.html to all vocab chapters** — pattern proven in animals, builder generates the file. ~76 chapters remaining.
+1. ✅ **Mascot debug statements** — RESOLVED (0 console.log statements in shared/mascot.js).
+2. ⚠️ **Fix remaining docs drift** — ES vocab counts were stale in AI_HANDOVER, SESSION_CONTEXT, README, TECH_DEBT. Corrected to 21/78 (57 stubs remaining). Engine versions also corrected (dark-init v112, deck v114, etc.).
+3. **Fill remaining ES vocabulary stubs** — 57 stubs (A1×4, A2×1, B1×11, B2×15, C1×14, C2×12). Use dev-hub + DeepSeek/Gemini, run `fill_chapter.py`.
+4. **Espanol-en A1 grammar & writing** — 25 grammar chapters + 3 writing chapters have framework; ready for content population (currently placeholder stubs).
+5. **Megane: fr/ B1–B2 English for francophones** — 81 navigation hubs exist; zero content files. ~72 chapter-files needed (lessons, worksheets, games). Builder supports `fr` track.
+6. **Roll out match.html to all vocab chapters** — pattern proven (now on 4 chapters: animals + 3 grammar); builder generates the file. ~163 vocab chapters remaining.
 7. Espanol-en A2–C2 content fill
 
 **Parked / horizon:**
@@ -279,12 +279,11 @@ Custom skills: `/insights` — generates a styled HTML project report (coverage,
 - **ES grammar:** ✅ Fully complete — 107 `gramatica/` chapters across all 6 levels with slides, worksheets, games.
 - **Espanol-en A1:** ✅ Vocabulary complete (12/12); Grammar framework (24 chapters ready); Writing framework (3 chapters ready).
 - **Espanol-en A2–C2:** Stub hubs only, no chapter content.
-- **match.html:** Exists for 1 of ~165 vocab chapters (animals/A1). ~76 remaining to roll out via builder.
+- **match.html:** Exists for 4 chapters (animals/vocab + 3 grammar). ~163 vocab chapters remaining to roll out via builder.
 - **fr/ lessons:** 81 hub pages exist with dead links to non-existent slides/worksheets/games. ~72 content-files need generation.
 
 **Technical Debt:**
-- **Mascot debug:** 3 `console.log` statements shipped live in `shared/mascot.js`. Mobile sprite cropping bug ≤640px.
-- **Code clutter:** 11 PNG screenshots, 3 content-dump JSONs, `test em tool builder` file, ~19 stale scripts lingering.
+- **Code clutter:** 11 PNG screenshots, 3 content-dump JSONs, `test em tool builder` file, ~19 stale scripts lingering (tracked in TECH_DEBT.md L8).
 
 ---
 
