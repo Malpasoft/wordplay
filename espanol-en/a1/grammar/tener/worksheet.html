@@ -4,7 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Tener — to have — Practice | Word Play</title>
+<title>Tener — Practice | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
@@ -13,21 +13,72 @@
 <header class="site-header"><div class="site-header-inner">
   <a href="index.html" class="back back-link" aria-label="Back"></a>
   <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">◐ Dark</button>
 </div></header>
 <div class="section-page">
   <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>&#8250;</span>
-    <a href="../../../../espanol-en/a1/index.html">A1</a><span>&#8250;</span>
-    <a href="../index.html">Grammar</a><span>&#8250;</span>
-    <a href="index.html">Tener — to have</a><span>&#8250;</span>
+    <a href="../../../../index.html">Home</a><span>◆</span>
+    <a href="../../../../espanol-en/a1/index.html">A1</a><span>◆</span>
+    <a href="../index.html">Grammar</a><span>◆</span>
+    <a href="index.html">Tener</a><span>◆</span>
     <strong>Practice</strong>
   </div>
-  <!-- PLACEHOLDER -->
-  <h1>Tener — to have &mdash; Practice</h1>
-  <p style="color:var(--muted)">Worksheet content coming soon.</p>
+  <h1>Tener — Practice</h1>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <form id="quizForm" onsubmit="showAns(event)">
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">1. Conjugate "tener" for "yo":</div>
+        <input type="text" name="q1" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e1" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> tengo
+        <p style="margin-top:8px"><b>Explanation:</b> For "yo" (I), tener changes to "tengo." This is an irregular verb, not following standard -ER patterns.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">2. What is the correct form: "nosotros / tener"?</div>
+        <select name="q2" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="tenemos">tenemos</option><option value="tienen">tienen</option><option value="tienes">tienes</option></select>
+        <div id="e2" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> tenemos
+        <p style="margin-top:8px"><b>Explanation:</b> For "nosotros" (we), tener uses "tenemos"—notice it keeps the "ten-" stem, not "tien-".</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">3. Complete: "Ella _______ (tener) veinticinco años."</div>
+        <input type="text" name="q3" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e3" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> tiene
+        <p style="margin-top:8px"><b>Explanation:</b> For "ella" (she), tener changes to "tiene." Use "tener + años" to express age in Spanish.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">4. What is the correct form: "ellos / tener"?</div>
+        <select name="q4" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="tengo">tengo</option><option value="tienen">tienen</option><option value="tenemos">tenemos</option></select>
+        <div id="e4" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> tienen
+        <p style="margin-top:8px"><b>Explanation:</b> For "ellos" (they), tener uses "tienen." The stem changes to "tien-" for all forms except nosotros/vosotros.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">5. Complete: "Nosotros _______ (tener) una casa bonita."</div>
+        <input type="text" name="q5" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e5" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> tenemos
+        <p style="margin-top:8px"><b>Explanation:</b> For "nosotros," tener uses "tenemos." This is the only first-person plural form with the "ten-" stem.</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">6. Which sentence is correct?</div>
+        <select name="q6" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px"><option value="">-- Choose --</option><option value="a">Tú tienes frío</option><option value="b">Tú tengo frío</option><option value="c">Tú tienen frío</option></select>
+        <div id="e6" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> Tú tienes frío
+        <p style="margin-top:8px"><b>Explanation:</b> For "tú" (you), tener uses "tienes"—with the diphthong "ie". The phrase "tener frío" means "to be cold."</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">7. Complete: "¿Cuántos años _______ (tener)?"</div>
+        <input type="text" name="q7" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e7" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> tienes
+        <p style="margin-top:8px"><b>Explanation:</b> This question asks "How old are you?" With "tú," tener uses "tienes." In Spanish, age is expressed as "tener + años."</p></div>
+      </div>
+      <div style="margin-bottom:24px;padding:16px;border:1px solid var(--hairline);border-radius:6px">
+        <div style="font-weight:700;margin-bottom:8px">8. Complete: "Yo _______ (tener) hambre."</div>
+        <input type="text" name="q8" placeholder="Answer…" style="width:100%;padding:8px;border:1px solid var(--hairline);border-radius:4px;font-family:Georgia,serif">
+        <div id="e8" style="font-size:.85rem;color:var(--muted);display:none;margin-top:8px"><b>Answer:</b> tengo
+        <p style="margin-top:8px"><b>Explanation:</b> For "yo," tener uses "tengo." The expression "tener hambre" is the Spanish way to say "to be hungry"—literally, "to have hunger."</p></div>
+      </div>
+      <div style="text-align:center"><button type="submit" class="fc-btn primary" style="padding:12px 32px">Check Answers</button></div>
+    </form>
+  </div>
 </div>
-<footer class="site-footer">Word Play &middot; Spanish A1 &middot; Practice</footer>
+<footer class="site-footer">Word Play — Spanish A1 — Practice</footer>
 <script src="../../../../shared/worksheet.js?v=v108"></script>
 </body>
 </html>
