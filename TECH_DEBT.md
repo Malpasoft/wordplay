@@ -77,7 +77,7 @@ All four docs updated to generic branch guidance (no hardcoded branch names).
 | L5 | `a/a1/vocabulary/animals/flashcards.html` WORDS is unquoted JS literal → pedagogy parse warning (file works) | **CLOSED** |
 | L6 | Branch clutter: cleanup + audit (stale branch references) | **CLARIFIED** — Referenced branches (`…-1ZNUG`, `…-5BQiv`, others) no longer in this clone. Either already pruned or never fetched. No action needed if cleanup already happened. |
 | L7 | `.claude/` playwright-audit `*.{md,json}` + screenshots not git-ignored | **CLOSED** — Enhanced `.gitignore` to exclude `.playwright-audit-*` and `.claude/playwright-audit*` |
-| L8 | ~19 one-off `fix_*`/`migrate_*`/`gen_es_*`/`gen_en_*` scripts linger beside reusable validators | open — Consider archiving to a `scripts/legacy/` or removing if truly unused |
+| L8 | ~19 one-off `fix_*`/`migrate_*`/`gen_es_*`/`gen_en_*` scripts linger beside reusable validators | **CLOSED** (10 June) — 23 one-off scripts moved to `scripts/legacy/`; reusable tooling (pedagogy_check, check_links, check_structure, fill_chapter, gen_chapter, gen_scaffold, gen_search_index, gen_coverage, fill_en_c1c2_vocab, validate_inline_js, bump-versions) kept in place |
 | L9 | `placement-test.html` (v1) superseded but internally linked from `teacher.html`, `profile.html` | **CLOSED** — Updated 3 inbound links (profile.html ×2, teacher.html ×1) to point to v2. v1 remains in tree but unreachable from hub nav. |
 | L10 | `shared/card-exercise.js` no `<script>` loader found — verify consumed or orphaned | **CLARIFIED** — Not orphaned. Self-registering code (v104, 15KB). Loaded on-demand by worksheet.html pages. CSS selectors in base.css + worksheet.css confirm usage. Working as intended. |
 
