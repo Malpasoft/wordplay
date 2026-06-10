@@ -190,4 +190,4 @@ UI symbols only: `◐` / `◑` (dark toggle), `◆` (streak badge). No emoji any
 
 ---
 
-*Last verified 10 June 2026 — fr/ track complete (71 chapters), match.html rollout (98 chapters), es vocab 78/78 flashcards, 12 production inline-JS bugs fixed, scripts archived (L8). espanol-en A2 population in progress.*
+*Last verified 10 June 2026 — fr/ track complete (71 chapters), match.html rollout (98 chapters), es vocab 78/78 flashcards, espanol-en A2 complete (34 chapters via gen_esen_a2*.py data-driven renderers), 12 production inline-JS bugs fixed, scripts archived (L8).*

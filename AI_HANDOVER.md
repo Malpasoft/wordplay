@@ -263,7 +263,7 @@ Custom skills: `/insights` — generates a styled HTML project report (coverage,
 5. ✅ **Fill remaining ES vocab stub** — RESOLVED 10 June (es/a2 health-and-body had unresolved merge-conflict markers; kept the filled side — 78/78).
 6. ✅ **French track (fr/) content generation** — COMPLETE 10 June (all 71 chapters populated via gen_fr_from_en.py).
 7. ✅ **Roll out match.html** — DONE 10 June for a/, b/, c/, fr/ (98 chapters). es/ + espanol-en/ variant pending.
-8. **Espanol-en A2–C2 content population** — A2 in progress (grammar first); A3–C2 frameworks ready.
+8. ✅ **Espanol-en A2 population** — COMPLETE 10 June (19 grammar + 12 vocabulary + 3 writing, via gen_esen_a2*.py renderers). A3–C2 frameworks ready for the same pipeline.
 9. **es/ vocab game.html stubs** — all 78 es vocab game.html files are still placeholder items (flashcards are complete; games never filled).
 
 **Parked / horizon:**
@@ -282,7 +282,7 @@ Custom skills: `/insights` — generates a styled HTML project report (coverage,
 - **ES vocab:** ✅ 78/78 flashcards complete. (Caveat: all 78 es vocab game.html files are still placeholder stubs.)
 - **ES grammar:** ✅ Fully complete — 107 `gramatica/` chapters across all 6 levels with slides, worksheets, games.
 - **Espanol-en A1:** ✅ Vocabulary (12/12), grammar (25/25), writing (3/3) all complete and populated.
-- **Espanol-en A2–C2:** Stub hubs + chapter directory frameworks created; ready for population phase.
+- **Espanol-en A2:** ✅ Complete (10 June 2026) — 34 chapters. **A3–C2:** stub frameworks ready; reuse scripts/gen_esen_a2*.py + scripts/content/esen_a2_*.py pattern.
 - **match.html:** ✅ All eligible a/, b/, c/, fr/ vocab chapters (98). es/ + espanol-en/ Spanish-UI variant pending.
 - **fr/ lessons:** ✅ Complete — all 71 chapters populated (10 June 2026).
 
