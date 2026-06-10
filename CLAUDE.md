@@ -88,7 +88,7 @@ the ONLY way to force a cache refresh.
 - `slides.css`: v115
 - `worksheet.css`: v106
 - `print.css`: v102
-- `i18n.js`: v123
+- `i18n.js`: v124
 - `print.js`: v102
 
 **Mascot assets** (added Q2 2026):

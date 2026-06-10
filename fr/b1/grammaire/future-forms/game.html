@@ -1,128 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="description" content="Word Play — Cambridge English grammar, vocabulary and writing practice.">
-<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
-<title>Future Forms — B1 Grammar Game | Word Play</title>
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Future Forms — Jeu B1 | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
 </head>
 <body>
-<header class="site-header">
-  <div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a>
-    <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:white;font-family:var(--font-sans);font-size:0.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border-radius:4px;cursor:pointer;">&#9680; Dark</button>
-  </div>
-</header>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
 <div class="breadcrumb">
-  <a href="../../../../index.html">Home</a>
-  <span>›</span>
-  <a href="../../index.html">B1</a>
-  <span>›</span>
-  <a href="../index.html">Grammar</a>
-  <span>›</span>
-  <a href="index.html">Future Forms</a>
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../fr/index.html">Anglais pour francophones</a><span>&#8250;</span>
+  <a href="../../index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">Future Forms</a><span>&#8250;</span>
+  <strong>Jeu</strong>
 </div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+</nav>
 <div class="container">
-  
-  <h1>Future Forms</h1>
-  <nav class="chapter-nav">
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
-    <a href="worksheet.html" class="chapter-nav-btn">Review</a>
-    <a href="game.html" class="chapter-nav-btn active">Game</a>
-  </nav>
+  <h1>Future Forms — Jeu de Maîtrise</h1>
   <div class="game-wrap">
     <div id="gameStart" class="game-screen active">
       <div class="game-start">
-        <h2>4-Stage Mastery</h2>
-        <p>Each item passes through four stages: meaning, synonym, identification and sentence completion. Answer correctly to advance — a wrong answer drops you back one stage.</p>
+        <h2>Jeu de Maîtrise</h2>
+        <p>Chaque forme du futur passe par trois types de questions : sens, contexte et production. Atteins 100 points pour gagner.</p>
         <div class="game-stats-row">
-          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Maîtrisés</div></div>
           <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
         </div>
         <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
-          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved session.</p>
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tu as une partie sauvegardée.</p>
           <div class="game-btn-row">
-          <a href="../ing-form/slides.html" class="game-btn primary" style="text-decoration:none;text-align:center">Ch 3 Ing Form &#8594;</a>
-                    
-          
-            <button id="gBtnResume" class="game-btn primary">Resume</button>
-            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
           </div>
         </div>
-        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Commencer</button></div>
       </div>
       <div class="game-ref-panel" style="margin-top:20px;">
-        <div class="game-ref-head" id="gRefToggle">&#9660; All 6 items — reference</div>
+        <div class="game-ref-head" id="gRefToggle">&#9660; Tous les éléments — référence</div>
         <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
       </div>
     </div>
     <div id="gamePlay" class="game-screen">
-      <div class="game-play">
-        <div class="game-mode-tag" id="gModeTag"></div>
-        <div class="game-term" id="gTerm"></div>
-        <div class="game-prompt" id="gPrompt"></div>
-        <div class="game-options" id="gOptions"></div>
-        <div class="game-feedback" id="gFeedback"></div>
-        <div class="game-example" id="gExample" style="display:none;"></div>
-        <div style="text-align:center;margin:12px 0;">
-          <button id="gBtnNext" class="game-btn primary" style="display:none;">Next &#8594;</button>
-        </div>
-        <div class="game-helpers">
-          <button id="gBtnHint" class="game-btn ghost small">Hint</button>
-          <button id="gBtnReveal" class="game-btn ghost small">Show answer</button>
-          <button id="gBtnKnow" class="game-btn know small" style="display:none">I know this</button>
-        </div>
-        <div class="game-progress-strip">
-          <div class="game-progress-bar"><div class="game-progress-fill" id="gProgressBar" style="width:0%"></div></div>
-          <div class="game-progress-text" id="gProgressTxt">0 / 0 mastered</div>
-        </div>
-        <div class="game-score-streak">Score: <strong id="gScore">0</strong>&nbsp;&nbsp;Streak: <strong id="gStreak">0</strong></div>
-        <div style="text-align:center;margin-top:14px;">
-          <button id="gBtnSaveQuit" class="game-btn ghost small">Save &amp; quit</button>
-        </div>
-      </div>
+      <div class="game-play"></div>
     </div>
     <div id="gameCompletion" class="game-screen">
       <div class="game-completion">
-        <h2>Mastered!</h2>
-        <p>You have completed all items in this chapter.</p>
+        <h2>Maîtrisé !</h2>
+        <p>Tu as terminé tous les éléments de ce chapitre.</p>
         <div class="game-stats-row" style="margin:20px 0;">
           <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
-          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
-          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure série</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Maîtrisés</div></div>
         </div>
         <div id="gMasteryMap"></div>
         <div class="game-btn-row">
-          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
-          <a href="worksheet.html" class="game-btn secondary">Worksheet</a>
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
         </div>
       </div>
     </div>
   </div>
 </div>
 <div class="game-toast" id="gToast"></div>
-<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<footer class="site-footer">Word Play &middot; Anglais B1 &middot; Jeu</footer>
 <script>
 window.GAME_DATA = {
-  chapterId: 'future-forms',level:'b1',
-  title:'Future Forms',
+  chapterId: "future-forms",
+  level: "b1",
+  title: "Future Forms — Will, going to ou présent continu ?",
   storageKey: 'wordplay_game_b1_future-forms',
-  items:[
-    {id:"will_pred",term:"will (prediction)",meaning:"prediction — often with I think, probably, expect",synonym:"I think / I expect",example:"I think it <b>will</b> be warm tomorrow.",completion:"Experts say the project ______ six months. (take)",answer:"will take"},
-    {id:"going_to_plan",term:"going to (plan)",meaning:"intention decided before the moment of speaking",synonym:"I've already decided to",example:"I <b>am going to</b> call her later.",completion:"I ______ for a new job next month. (apply)",answer:"am going to apply"},
-    {id:"going_to_evid",term:"going to (evidence)",meaning:"prediction based on visible evidence right now",synonym:"clearly about to happen",example:"Look at those clouds — it <b>is going to</b> rain.",completion:"She's very pale — she ______ faint.",answer:"is going to"},
-    {id:"pres_cont_arr",term:"Present Continuous (arrangement)",meaning:"fixed arrangement or appointment — booked or agreed with others",synonym:"in the diary",example:"I <b>am meeting</b> her at 6pm — we booked the restaurant.",completion:"I ______ the dentist on Friday — I made the appointment last week.",answer:"am seeing"},
-    {id:"will_spont",term:"will (spontaneous decision)",meaning:"decision made right now, at the moment of speaking",synonym:"instant decision",example:"A: We need milk. B: I <b>'ll</b> get some.",completion:"A: The phone is ringing. B: I ______ answer it.",answer:"'ll"},
-    {id:"will_base",term:"will + base verb (no to)",meaning:"always use the bare infinitive after will — never 'to' or '-ing'",synonym:"bare infinitive rule",example:"She <b>will start</b> tomorrow. (NOT will to start)",completion:"They will ______ next week. (arrive)",answer:"arrive"}
-  ]};
+  items: [
+    {id:"will-spontaneous", term:"I'll + base verbale", meaning:"décision prise à l’instant même", synonym:"décision spontanée", example:"The phone's ringing — <b>I'll get</b> it!", completion:"The phone's ringing — I'll ______ it! (décrocher)", answer:"get"},
+    {id:"will-promise", term:"will (promesse)", meaning:"promesse ou engagement", synonym:"promesse", example:"I promise I <b>will help</b> you.", completion:"I promise I ______ help you.", answer:"will"},
+    {id:"going-to-plan", term:"be going to (projet)", meaning:"intention déjà décidée — notre futur proche", synonym:"intention", example:"We <b>are going to</b> visit Rome in May.", completion:"We are ______ to visit Rome in May.", answer:"going"},
+    {id:"going-to-sign", term:"be going to (signe)", meaning:"prédiction fondée sur ce qu’on voit", synonym:"signe visible", example:"Look at those clouds — it <b>is going to</b> rain.", completion:"Look at those clouds — it is ______ to rain.", answer:"going"},
+    {id:"present-cont", term:"présent continu (agenda)", meaning:"arrangement fixé : heure, lieu, réservation", synonym:"rendez-vous fixé", example:"I<b>'m seeing</b> the dentist tomorrow at 10.", completion:"I'm ______ the dentist tomorrow at 10. (je vois)", answer:"seeing"},
+    {id:"when-present", term:"when + présent", meaning:"pas de will après when — contrairement au français", synonym:"subordonnée de temps", example:"I'll call you when I <b>arrive</b>.", completion:"I'll call you when I ______ . (arriverai)", answer:"arrive"},
+    {id:"no-to", term:"will + base (sans to)", meaning:"will n’est jamais suivi de to", synonym:"modal sans to", example:"I will <b>call</b> you later.", completion:"I will ______ you later. (appeler)", answer:"call"},
+    {id:"wont", term:"won't", meaning:"forme négative de will — refus ou prédiction négative", synonym:"négation de will", example:"He <b>won’t</b> be happy about this.", completion:"He ______ be happy about this. (ne sera pas)", answer:"won't"}
+  ]
+};
 </script>
-<script src="../../../../shared/i18n.js?v=v123"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v111"></script>
 </body>

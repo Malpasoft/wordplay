@@ -1,118 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="description" content="Word Play — Cambridge English grammar, vocabulary and writing practice.">
-<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
-<title>Present Perfect — B1 Grammar Game | Word Play</title>
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Present Perfect — Jeu B1 | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
 </head>
 <body>
-<header class="site-header">
-  <div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a>
-    <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:white;font-family:var(--font-sans);font-size:0.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border-radius:4px;cursor:pointer;">&#9680; Dark</button>
-  </div>
-</header>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
 <div class="breadcrumb">
-  <a href="../../../../index.html">Home</a><span>›</span>
-  <a href="../../index.html">B1</a><span>›</span>
-  <a href="../index.html">Grammar</a><span>›</span>
-  <a href="index.html">Present Perfect</a>
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../fr/index.html">Anglais pour francophones</a><span>&#8250;</span>
+  <a href="../../index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">Present Perfect</a><span>&#8250;</span>
+  <strong>Jeu</strong>
 </div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+</nav>
 <div class="container">
-  <h1>Present Perfect</h1>
-  <nav class="chapter-nav"><a href="index.html" class="chapter-nav-btn">Theory</a>
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
-    <a href="worksheet.html" class="chapter-nav-btn">Worksheet</a>
-    <a href="game.html" class="chapter-nav-btn active">Game</a>
-  </nav>
+  <h1>Present Perfect — Jeu de Maîtrise</h1>
   <div class="game-wrap">
     <div id="gameStart" class="game-screen active">
       <div class="game-start">
-        <h2>4-Stage Mastery</h2>
-        <p>Each item passes through four stages: meaning, context, identification and sentence completion. Answer correctly to advance — a wrong answer drops you back one stage.</p>
+        <h2>Jeu de Maîtrise</h2>
+        <p>Chaque structure passe par trois types de questions : sens, contexte et production. Atteins 100 points pour gagner.</p>
         <div class="game-stats-row">
-          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Maîtrisés</div></div>
           <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
         </div>
         <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
-          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved session.</p>
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tu as une partie sauvegardée.</p>
           <div class="game-btn-row">
-            <button id="gBtnResume" class="game-btn primary">Resume</button>
-            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
           </div>
         </div>
-        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Commencer</button></div>
       </div>
       <div class="game-ref-panel" style="margin-top:20px;">
-        <div class="game-ref-head" id="gRefToggle">&#9660; All 8 items — reference</div>
+        <div class="game-ref-head" id="gRefToggle">&#9660; Tous les éléments — référence</div>
         <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
       </div>
     </div>
     <div id="gamePlay" class="game-screen">
-      <div class="game-play">
-        <div class="game-mode-tag" id="gModeTag"></div>
-        <div class="game-term" id="gTerm"></div>
-        <div class="game-prompt" id="gPrompt"></div>
-        <div class="game-options" id="gOptions"></div>
-        <div class="game-feedback" id="gFeedback"></div>
-        <div class="game-example" id="gExample" style="display:none;"></div>
-        <div style="text-align:center;margin:12px 0;">
-          <button id="gBtnNext" class="game-btn primary" style="display:none;">Next &#8594;</button>
-        </div>
-        <div class="game-helpers">
-          <button id="gBtnHint" class="game-btn ghost small">Hint</button>
-          <button id="gBtnReveal" class="game-btn ghost small">Show answer</button>
-        </div>
-        <div class="game-progress-strip">
-          <div class="game-progress-bar"><div class="game-progress-fill" id="gProgressBar" style="width:0%"></div></div>
-          <div class="game-progress-text" id="gProgressTxt">0 / 0 mastered</div>
-        </div>
-        <div class="game-score-streak">Score: <strong id="gScore">0</strong>&nbsp;&nbsp;Streak: <strong id="gStreak">0</strong></div>
-        <div style="text-align:center;margin-top:14px;">
-          <button id="gBtnSaveQuit" class="game-btn ghost small">Save &amp; quit</button>
-        </div>
-      </div>
+      <div class="game-play"></div>
     </div>
     <div id="gameCompletion" class="game-screen">
       <div class="game-completion">
-        <h2>Mastered!</h2>
-        <p>You have completed all items in this chapter.</p>
+        <h2>Maîtrisé !</h2>
+        <p>Tu as terminé tous les éléments de ce chapitre.</p>
         <div class="game-stats-row" style="margin:20px 0;">
           <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
-          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
-          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure série</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Maîtrisés</div></div>
         </div>
         <div id="gMasteryMap"></div>
         <div class="game-btn-row">
-    <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
-          <a href="worksheet.html" class="game-btn secondary">Worksheet</a>
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
         </div>
       </div>
     </div>
   </div>
 </div>
 <div class="game-toast" id="gToast"></div>
-<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<footer class="site-footer">Word Play &middot; Anglais B1 &middot; Jeu</footer>
 <script>
-window.GAME_DATA={chapterId:"present-perfect",level:"b1",title:"Present Perfect",storageKey:"wordplay_game_b1_present-perfect",items:[
-  {"id": "have-lived", "term": "have lived", "meaning": "present perfect: duration with 'for'", "synonym": "present perfect", "example": "I <b>have lived</b> here for three years.", "completion": "She <b>has lived</b> in London for _____.", "answer": "five years"},
-  {"id": "have-seen", "term": "have seen", "meaning": "present perfect: life experience", "synonym": "never/ever", "example": "I <b>have seen</b> this movie three times.", "completion": "<b>Have you seen</b> the new movie _____?", "answer": "yet"},
-  {"id": "has-finished", "term": "has finished", "meaning": "present perfect: recent action with just/already", "synonym": "completed", "example": "She <b>has just finished</b> her homework.", "completion": "He <b>has already finished</b> the _____.", "answer": "project"},
-  {"id": "have-been", "term": "have been", "meaning": "present perfect: continuous duration or visit", "synonym": "stay", "example": "We <b>have been</b> friends since 2010.", "completion": "They <b>have been</b> married for _____.", "answer": "ten years"},
-  {"id": "have-done", "term": "have done", "meaning": "present perfect: completed action", "synonym": "finished", "example": "I <b>have done</b> my homework.", "completion": "She <b>has done</b> her <b>___</b> work.", "answer": "best"},
-  {"id": "has-never", "term": "has never", "meaning": "present perfect negative: no experience", "synonym": "never been", "example": "He <b>has never been</b> to Japan.", "completion": "I <b>have never tried</b> _____.", "answer": "sushi"},
-  {"id": "have-eaten", "term": "have eaten", "meaning": "present perfect: already completed meal", "synonym": "had", "example": "I <b>have already eaten</b> lunch.", "completion": "<b>Have you eaten</b> _____?", "answer": "dinner"},
-  {"id": "has-worked", "term": "has worked", "meaning": "present perfect: duration with 'since'", "synonym": "employed", "example": "She <b>has worked</b> here since 2020.", "completion": "He <b>has worked</b> there since _____.", "answer": "last year"}
-]};
+window.GAME_DATA = {
+  chapterId: "present-perfect",
+  level: "b1",
+  title: "Present Perfect — Ce n’est pas le passé composé",
+  storageKey: 'wordplay_game_b1_present-perfect',
+  items: [
+    {id:"have-seen", term:"have seen", meaning:"bilan d’expérience sans date — « j’ai (déjà) vu »", synonym:"expérience de vie", example:"I <b>have seen</b> this film three times.", completion:"I ______ this film three times. (j’ai vu)", answer:"have seen"},
+    {id:"saw-yesterday", term:"saw (+ yesterday)", meaning:"moment précis du passé — le past simple remplace notre passé composé", synonym:"date précise = past simple", example:"I <b>saw</b> Paul yesterday.", completion:"I ______ Paul yesterday. (j’ai vu)", answer:"saw"},
+    {id:"for", term:"for + durée", meaning:"depuis + durée (for ten years = depuis dix ans)", synonym:"depuis (durée)", example:"She has lived here <b>for</b> ten years.", completion:"She has lived here ______ ten years. (depuis)", answer:"for"},
+    {id:"since", term:"since + point de départ", meaning:"depuis + date ou moment de départ", synonym:"depuis (point de départ)", example:"I have worked here <b>since</b> 2015.", completion:"I have worked here ______ 2015. (depuis)", answer:"since"},
+    {id:"have-just", term:"have just", meaning:"venir de faire quelque chose", synonym:"venir de", example:"I <b>have just</b> finished.", completion:"I ______ ______ finished. (je viens de)", answer:"have just"},
+    {id:"ever", term:"ever", meaning:"déjà — dans une question d’expérience", synonym:"déjà (question)", example:"Have you <b>ever</b> been to Scotland?", completion:"Have you ______ been to Scotland? (déjà)", answer:"ever"},
+    {id:"yet", term:"yet", meaning:"encore / déjà — en fin de question ou de négation", synonym:"pas encore", example:"Have you finished <b>yet</b>?", completion:"Have you finished ______ ? (déjà, à ce stade)", answer:"yet"},
+    {id:"have-been-to", term:"have been to", meaning:"être allé quelque part (expérience) — be, pas go", synonym:"être allé (expérience)", example:"I <b>have been to</b> Rome twice.", completion:"I have ______ to Rome twice. (suis allé)", answer:"been"}
+  ]
+};
 </script>
-<script src="../../../../shared/i18n.js?v=v123"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v111"></script>
 </body>
