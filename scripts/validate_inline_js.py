@@ -25,11 +25,15 @@ def check_file(path):
         js = m.group(1)
         if not js.strip():
             continue
-        # fullwidth / suspicious unicode punctuation inside code
-        for bad in ('，', '；', '（', '）', '“', '”'):
+        # fullwidth punctuation is never valid JS code punctuation
+        for bad in ('，', '；', '（', '）'):
             if bad in js:
-                print(f"  FAIL   {path} block {i}: fullwidth/curly punctuation {bad!r} in JS")
+                print(f"  FAIL   {path} block {i}: fullwidth punctuation {bad!r} in JS")
                 ok = False
+        # curly quotes parse fine inside string literals — warn only
+        for warn in ('“', '”'):
+            if warn in js:
+                print(f"  WARN   {path} block {i}: curly quote {warn!r} in JS (ok if inside a string)")
         with tempfile.NamedTemporaryFile('w', suffix='.js', delete=False, encoding='utf-8') as f:
             f.write(js)
             tmp = f.name
