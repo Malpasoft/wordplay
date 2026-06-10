@@ -1,17 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Game | Word Play</title>
+<title>Future: Going To (Ir a + Infinitivo) — A2 Grammar Game | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
 </head>
 <body>
-<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">◐ Dark</button></div></header>
-<div class="section-page"><p>Game coming soon.</p></div>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>&#8250;</span>
+  <a href="../../../../espanol-en/index.html">Spanish</a><span>&#8250;</span>
+  <a href="../../index.html">A2</a><span>&#8250;</span>
+  <a href="../index.html">Grammar</a><span>&#8250;</span>
+  <a href="index.html">Future: Going To</a><span>&#8250;</span>
+  <strong>Game</strong>
+</div>
+<div class="container">
+  <h1>Future: Going To — Mastery Game</h1>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Practice</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  </nav>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Dominio Mastery</h2>
+        <p>Each ir a + infinitive pattern passes through three question types: meaning, context and production. Reach 100 points to win.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved session.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You have completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Worksheet</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Spanish A2 &middot; Game</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: 'future-going-to',
+  level: 'a2',
+  title: 'Future: Going To — Ir a + Infinitivo',
+  storageKey: 'wordplay_game_es_a2_future-going-to',
+  items: [
+    {id:'voy_a_estudiar', term:'voy a estudiar', meaning:'I am going to study - voy plus a plus infinitive', synonym:'yo plan with estudiar', example:'Esta noche <b>voy a estudiar</b> para el examen.', completion:'Esta noche ______ para el examen.', answer:'voy a estudiar'},
+    {id:'vas_a_comer', term:'vas a comer', meaning:'you are going to eat - vas plus a plus infinitive', synonym:'tu plan with comer', example:'¿Qué <b>vas a comer</b> hoy?', completion:'¿Qué ______ hoy?', answer:'vas a comer'},
+    {id:'va_a_llover', term:'va a llover', meaning:'it is going to rain - something about to happen', synonym:'weather about to happen', example:'Mira el cielo: <b>va a llover</b>.', completion:'Mira el cielo: ______.', answer:'va a llover'},
+    {id:'vamos_a_viajar', term:'vamos a viajar', meaning:'we are going to travel - vamos plus a plus infinitive', synonym:'nosotros plan with viajar', example:'En agosto <b>vamos a viajar</b> a México.', completion:'En agosto ______ a México.', answer:'vamos a viajar'},
+    {id:'van_a_venir', term:'van a venir', meaning:'they are going to come - van plus a plus infinitive', synonym:'ellos plan with venir', example:'Mis primos <b>van a venir</b> mañana.', completion:'Mis primos ______ mañana.', answer:'van a venir'},
+    {id:'va_a_ser', term:'va a ser', meaning:'it or she or he is going to be - va plus a plus ser', synonym:'el and ella plan with ser', example:'La fiesta <b>va a ser</b> en mi casa.', completion:'La fiesta ______ en mi casa.', answer:'va a ser'},
+    {id:'voy_a_hacer', term:'voy a hacer', meaning:'I am going to do or make - voy plus a plus hacer', synonym:'yo plan with hacer', example:'Mañana <b>voy a hacer</b> una tarta.', completion:'Mañana ______ una tarta.', answer:'voy a hacer'},
+    {id:'vamos_a_ver', term:'vamos a ver', meaning:'we are going to watch or see - vamos plus a plus ver', synonym:'nosotros plan with ver', example:'Esta tarde <b>vamos a ver</b> una película.', completion:'Esta tarde ______ una película.', answer:'vamos a ver'}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v123"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
 </body>
 </html>
