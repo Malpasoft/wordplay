@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Word Play — Cambridge English grammar, vocabulary and writing practice.">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#1A1A1A">
+<title>So Neither — B1 Grammar Practice | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/worksheet.css?v=v106">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a>
+    <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+    <button class="dark-toggle" onclick="toggleDark()" aria-label="Toggle dark mode">&#9680; Dark</button>
+  </div>
+</header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a>
+  <span>›</span>
+  <a href="../../index.html">B1</a>
+  <span>›</span>
+  <a href="../index.html">Grammar</a>
+  <span>›</span>
+  <a href="index.html">So and Neither</a>
+</div>
+<div class="container">
+
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+  <a href="worksheet.html" class="chapter-nav-btn active">Review</a>
+  <a href="game.html" class="chapter-nav-btn">Game</a>
+</nav>
+
+<h1>So and Neither</h1>
+<div class="subtitle">Agreeing with positive and negative statements</div>
+<div class="intro">
+  <div class="intro-title">About this worksheet</div>
+  <div class="intro-body">Exercises from your Word Play B1 materials. Total: <strong>9 points</strong>.</div>
+  <div class="intro-meta">Type or select your answers, then submit at the bottom.</div>
+</div>
+<form id="worksheet">
+
+<section class="exercise" id="ex1">
+  <div class="ex-head">Exercise 1</div>
+  <div class="ex-title">So or Neither?</div>
+  <div class="ex-meta">9 points</div>
+  <div class="ex-instruct">What James says is also true for you. Write the correct response with the right auxiliary verb.</div>
+  <div class="q"><span class="q-num">1</span><div class="q-text">James: Catherine is French. <input type="text" data-q="e1q1" style="width:160px" aria-label="Answer for e1q1"></div></div>
+  <div class="q"><span class="q-num">2</span><div class="q-text">James: She is not coming to the cinema. <input type="text" data-q="e1q2" style="width:160px" aria-label="Answer for e1q2"></div></div>
+  <div class="q"><span class="q-num">3</span><div class="q-text">James: Lucy will come early tomorrow. <input type="text" data-q="e1q3" style="width:160px" aria-label="Answer for e1q3"></div></div>
+  <div class="q"><span class="q-num">4</span><div class="q-text">James: Dani lives in Barcelona. <input type="text" data-q="e1q4" style="width:160px" aria-label="Answer for e1q4"></div></div>
+  <div class="q"><span class="q-num">5</span><div class="q-text">James: She does not have any cousins. <input type="text" data-q="e1q5" style="width:160px" aria-label="Answer for e1q5"></div></div>
+  <div class="q"><span class="q-num">6</span><div class="q-text">James: I did not pass the exam. <input type="text" data-q="e1q6" style="width:160px" aria-label="Answer for e1q6"></div></div>
+  <div class="q"><span class="q-num">7</span><div class="q-text">James: David is living in Costa Rica. <input type="text" data-q="e1q7" style="width:160px" aria-label="Answer for e1q7"></div></div>
+  <div class="q"><span class="q-num">8</span><div class="q-text">James: I am not a nurse. <input type="text" data-q="e1q8" style="width:160px" aria-label="Answer for e1q8"></div></div>
+  <div class="q"><span class="q-num">9</span><div class="q-text">James: I will not have a cookie just now. <input type="text" data-q="e1q9" style="width:160px" aria-label="Answer for e1q9"></div></div>
+</section>
+</form>
+<div class="submit-wrap">
+  <button type="button" class="btn-submit" onclick="checkAnswers()">Check Answers</button>
+  <button type="button" class="btn-reset" onclick="resetAll()">Clear</button>
+</div>
+<div id="results" class="results-panel">
+  <div class="score-display">
+    <span class="score-got" id="score-got">0</span>
+    <span class="score-sep">/</span>
+    <span class="score-total" id="score-total">9</span>
+    <span class="score-pct" id="score-pct">0%</span>
+      <div id="pass-msg" class="pass-msg" style="margin-top:6px"></div>
+  </div>
+  <div id="breakdown" class="breakdown"></div>
+  <button class="btn-try-again" onclick="tryAgain()">Try again</button>
+</div>
+      <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--hairline)"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">By exercise</div><div id="exercise-breakdown"></div></div>
+</div>
+<script>
+window.CHAPTER_ID = 'so-neither';
+window.LEVEL = 'b1';
+window.TOTAL_POINTS = 9;
+window.ANSWERS = {e1q1:{answer:"So am I"},e1q2:{answer:"Neither am I"},e1q3:{answer:"So will I"},e1q4:{answer:"So do I"},e1q5:{answer:"Neither do I"},e1q6:{answer:"Neither did I"},e1q7:{answer:"So am I"},e1q8:{answer:"Neither am I"},e1q9:{answer:"Neither will I"}};
+window.EXERCISE_TITLES = {ex1:"Exercise 1 - So or Neither"};
+</script>
+<script>
+window.EXPLANATIONS = {"q1": "So + auxiliary + I (inverted).", "q2": "Neither + auxiliary + I (inverted).", "q3": "Match the auxiliary in the statement.", "q4": "Disagree → short answer only.", "e1q1": "Correct answer: <strong>So am I</strong>.", "e1q2": "Correct answer: <strong>Neither am I</strong>.", "e1q3": "Correct answer: <strong>So will I</strong>.", "e1q4": "Correct answer: <strong>So do I</strong>.", "e1q5": "Correct answer: <strong>Neither do I</strong>.", "e1q6": "Correct answer: <strong>Neither did I</strong>.", "e1q7": "Correct answer: <strong>So am I</strong>.", "e1q8": "Correct answer: <strong>Neither am I</strong>.", "e1q9": "Correct answer: <strong>Neither will I</strong>."};
+</script>
+<script src="../../../../shared/i18n.js?v=v123"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/worksheet.js?v=v108"></script>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+</body>
+</html>

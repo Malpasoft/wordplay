@@ -1,0 +1,69 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>B1 · Applied Grammar: Verb Patterns | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124"><link rel="stylesheet" href="../../../../shared/slides.css?v=v115">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head><body class="deck-body">
+<div class="deck-progress"><div class="deck-progress-fill" id="deck-progress-fill"></div></div>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">B1</a><span>›</span><a href="../index.html">Vocabulary</a><span>›</span><a href="index.html">Applied Grammar: Verb Patterns</a></div>
+  <div class="chapter-num">AG</div><h1>Applied Grammar: Verb Patterns</h1>
+  <p class="chapter-subtitle">Which verbs take gerunds? Which take infinitives? Which take both?</p>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn active">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Review</a>
+    <a href="game.html" class="chapter-nav-btn">Game</a>
+  </nav>
+  <div id="slide-deck"><div class="slide"><div class="slide-card"><div class="slide-header"><h2>Grammar–lexis connection</h2></div><p style="font-size:1rem;color:var(--ink);margin-bottom:14px">Which verbs take gerunds? Which take infinitives? Which take both?</p><div class="overview-row"><div class="overview-label">enjoy</div><div class="overview-desc">takes gerund ONLY: enjoy + -ing</div></div><div class="overview-row"><div class="overview-label">want</div><div class="overview-desc">takes infinitive ONLY: want + to + verb</div></div><div class="overview-row"><div class="overview-label">start</div><div class="overview-desc">takes BOTH gerund and infinitive with no meaning change</div></div><div class="overview-row"><div class="overview-label">stop</div><div class="overview-desc">GERUND = cease the action; INFINITIVE = pause in order to do something else</div></div><div class="overview-row"><div class="overview-label">remember</div><div class="overview-desc">GERUND = recall a past action; INFINITIVE = remember to do something future</div></div></div></div><div class="slide"><div class="slide-card"><div class="slide-header"><h2>Examples in use</h2></div><div class="overview-row"><div class="overview-label">enjoy</div><div class="overview-desc">I enjoy cooking at the weekend.</div></div><div class="overview-row"><div class="overview-label">want</div><div class="overview-desc">She wants to learn Spanish.</div></div><div class="overview-row"><div class="overview-label">start</div><div class="overview-desc">It started raining / It started to rain.</div></div><div class="overview-row"><div class="overview-label">stop</div><div class="overview-desc">He stopped smoking. / He stopped to smoke.</div></div><div class="overview-row"><div class="overview-label">remember</div><div class="overview-desc">I remember meeting her. / Remember to call him.</div></div></div></div></div>
+  <div class="deck-nav">
+    <button class="deck-btn" onclick="prevSlide()" id="deck-prev" disabled>← Prev</button>
+    <span class="deck-counter" id="slide-counter">1 / 2</span>
+    <button class="deck-btn primary" onclick="nextSlide()" id="deck-next">Next →</button>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>window.LEVEL="b1";window.CHAPTER_ID="applied-grammar-verbs";</script>
+<script src="../../../../shared/deck.js?v=v114"></script>
+
+// Scroll first slide into view on load
+(function() {
+  var dk = document.getElementById('slide-deck');
+  if (dk) setTimeout(function() { dk.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 150);
+})();
+
+// ✓ badges on Practice / Game nav tabs
+(function() {
+  try {
+    var p = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+    var lv = p['b1'] || {};
+    var ws = lv['applied-grammar-verbs'];
+    if (ws && ws.pct >= 70) {
+      var pt = document.querySelector('.chapter-nav-btn[href="index.html"]');
+      if (pt) pt.textContent = 'Practice';
+    }
+    var gm = lv['wordplay_game_applied-grammar-verbs'];
+    if (gm && gm.pct >= 70) {
+      var gt = document.querySelector('.chapter-nav-btn[href="game.html"]');
+      if (gt) gt.textContent = 'Game';
+    }
+  } catch(e) {}
+})();
+
+(function(){
+  try{
+    var mastered = localStorage.getItem('wordplay_vocab_b1_applied-grammar-verbs_mastered') === '1';
+    if(mastered){var ft=document.querySelector('.chapter-nav-btn[href="index.html"]');if(ft)ft.textContent='Flashcards';}
+    var p=JSON.parse(localStorage.getItem('wordplay_progress')||'{}');
+    var gm=(p['b1']||{})['wordplay_game_applied-grammar-verbs'];
+    if(gm&&gm.pct>=70){var gt=document.querySelector('.chapter-nav-btn[href="game.html"]');if(gt)gt.textContent='Game';}
+  }catch(e){}
+})();
+</body></html>

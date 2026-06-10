@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>B1 · Present Perfect Continuous — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a>
+<a href="/" class="brand">Word Play</a>
+<button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../../../b/b1/index.html">B1</a><span>›</span><a href="../index.html">Grammar</a><span>›</span><a href="index.html">Present Perfect Continuous</a></div>
+<nav class="chapter-nav">
+<a href="slides.html" class="chapter-nav-btn">Lesson</a>
+<a href="worksheet.html" class="chapter-nav-btn">Review</a>
+<a href="game.html" class="chapter-nav-btn active">Game</a>
+</nav>
+<div class="game-wrap">
+  <div id="gameStart" class="game-screen active">
+    <div class="game-start">
+      <h2>Present Perfect Continuous — Mastery</h2>
+      <p>4 stages each — meaning, recognition, in-context and production. A wrong answer drops you back one stage, never to zero.</p>
+      <div id="gStartMastered" style="font-family:var(--font-sans);font-size:.9rem;margin:12px 0;color:var(--muted)"></div>
+      <div id="gResumeSection" style="display:none;margin-bottom:12px">
+        <button id="gBtnResume" class="game-btn primary">Resume</button>
+        <button id="gBtnNewFromResume" class="game-btn">Start fresh</button>
+      </div>
+      <button id="gBtnStart" class="game-btn primary">Start</button>
+    </div>
+  </div>
+  <div id="gamePlay" class="game-screen"><div class="game-play"></div>
+    <div class="game-ref-panel" id="gRefPanel">
+      <button id="gRefToggle" class="game-ref-head">&#9660; Reference &mdash; all items</button>
+      <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div>
+    </div>
+  </div>
+  <div id="gameCompletion" class="game-screen">
+    <div class="game-complete" style="text-align:center">
+      <h2>All mastered!</h2>
+      <p style="color:var(--muted);font-size:.85rem">Score: <strong id="gFinalScore"></strong> &middot; Best streak: <strong id="gFinalStreak"></strong></p>
+      <div id="gFinalPct" style="font-family:var(--font-serif);font-size:1.4rem;font-weight:700;color:var(--accent);margin:8px 0"></div>
+      <div id="gMasteryMap" style="margin:16px 0;text-align:left"></div>
+      <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+      <a href="worksheet.html" class="game-btn" style="text-decoration:none;text-align:center;margin-top:8px">Redo practice worksheet</a>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<script>
+window.CHAPTER_ID="present-perfect-continuous";window.LEVEL="b1";window.SECTION="grammar";
+window.GAME_DATA = {
+  chapterId:"present-perfect-continuous",level:"b1",title:"Present Perfect Continuous",storageKey:"wordplay_game_b1_present-perfect-continuous",
+  items: [{"id": "duration", "term": "have been working", "meaning": "action started in past, still continuing", "synonym": "ongoing activity", "example": "I <b>have been working</b> here for 5 years.", "completion": "She ______ Spanish for 3 years. (study)", "answer": "has been studying"}, {"id": "recent", "term": "recent activity", "meaning": "action just stopped, result visible now", "synonym": "just-finished activity", "example": "You look tired. <b>Have you been running</b>?", "completion": "Her eyes are red — she ______ . (cry)", "answer": "has been crying"}, {"id": "for", "term": "for + period", "meaning": "duration: hours, years, ages", "synonym": "for a length of time", "example": "He has been studying <b>for</b> three hours.", "completion": "I've been here ______ two weeks.", "answer": "for"}, {"id": "since", "term": "since + starting point", "meaning": "from a specific time/date", "synonym": "from when it started", "example": "She has been working here <b>since</b> 2020.", "completion": "They've been married ______ 2015.", "answer": "since"}, {"id": "stative", "term": "stative verb exception", "meaning": "know, want, love → PP simple, not continuous", "synonym": "no continuous form", "example": "I <b>have known</b> her for years. (NOT been knowing)", "completion": "I ______ him since childhood. (know)", "answer": "have known"}, {"id": "vs_simple", "term": "vs PP simple", "meaning": "continuous = activity / simple = result", "synonym": "action vs completion", "example": "I have been writing emails (activity). I have written 5 emails (result).", "completion": "I ______ 10 pages today. (write)", "answer": "have written"}]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v123"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+</body>
+</html>

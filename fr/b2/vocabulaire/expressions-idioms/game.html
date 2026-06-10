@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Word Play — Cambridge English grammar, vocabulary and writing practice.">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<title>Expressions Idioms — B2 Vocabulary Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a>
+    <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:white;font-family:var(--font-sans);font-size:0.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border-radius:4px;cursor:pointer;">&#9680; Dark</button>
+  </div>
+</header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a>
+  <span>›</span>
+  <a href="../../index.html">B2</a>
+  <span>›</span>
+  <a href="../index.html">Vocabulary</a>
+  <span>›</span>
+  <a href="index.html">Expressions and Idioms</a>
+</div>
+<div class="container">
+  
+  <h1>Expressions and Idioms</h1>
+  <nav class="chapter-nav"><a href="index.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Review</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  </nav>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>4-Stage Mastery</h2>
+        <p>Each item passes through four stages: meaning, synonym, identification and sentence completion. Answer correctly to advance — a wrong answer drops you back one stage.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved session.</p>
+          <div class="game-btn-row">
+          <a href="../../../../b/b2/index.html" class="game-btn primary" style="text-decoration:none;text-align:center">B2 Complete &#10003;</a>
+          
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All 8 items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play">
+        <div class="game-mode-tag" id="gModeTag"></div>
+        <div class="game-term" id="gTerm"></div>
+        <div class="game-prompt" id="gPrompt"></div>
+        <div class="game-options" id="gOptions"></div>
+        <div class="game-feedback" id="gFeedback"></div>
+        <div class="game-example" id="gExample" style="display:none;"></div>
+        <div style="text-align:center;margin:12px 0;">
+          <button id="gBtnNext" class="game-btn primary" style="display:none;">Next &#8594;</button>
+        </div>
+        <div class="game-helpers">
+          <button id="gBtnHint" class="game-btn ghost small">Hint</button>
+          <button id="gBtnReveal" class="game-btn ghost small">Show answer</button>
+        </div>
+        <div class="game-progress-strip">
+          <div class="game-progress-bar"><div class="game-progress-fill" id="gProgressBar" style="width:0%"></div></div>
+          <div class="game-progress-text" id="gProgressTxt">0 / 0 mastered</div>
+        </div>
+        <div class="game-score-streak">Score: <strong id="gScore">0</strong>&nbsp;&nbsp;Streak: <strong id="gStreak">0</strong></div>
+        <div style="text-align:center;margin-top:14px;">
+          <button id="gBtnSaveQuit" class="game-btn ghost small">Save &amp; quit</button>
+        </div>
+      </div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You have completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <a href="../false-friends/index.html" class="game-btn primary" style="text-decoration:none;text-align:center;display:block;margin-bottom:8px">Next: False Friends &#8594;</a>
+    <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Worksheet</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script>
+window.GAME_DATA={chapterId:"expressions-idioms",level:"b2",title:"Expressions Idioms",storageKey:"wordplay_game_b2_expressions-idioms",items:[
+  {"id": "piececake", "term": "piece of cake", "meaning": "very easy", "synonym": "/piːs əv keɪk/", "example": "The test was a <b>piece of cake</b>.", "completion": "The test was a _____.", "answer": "piece of cake"},
+  {"id": "breakleg", "term": "break a leg", "meaning": "good luck", "synonym": "/breɪk ə leɡ/", "example": "<b>Break a leg</b> in your audition!", "completion": "_____ in your audition!", "answer": "Break a leg"},
+  {"id": "hitsack", "term": "hit the sack", "meaning": "go to bed", "synonym": "/hɪt ðə sæk/", "example": "I will <b>hit the sack</b>.", "completion": "I will _____.", "answer": "hit the sack"},
+  {"id": "undertheweather", "term": "under the weather", "meaning": "feeling ill", "synonym": "/ˈʌn.dər ðə ˈweð.ər/", "example": "She is <b>under the weather</b>.", "completion": "She is _____.", "answer": "under the weather"},
+  {"id": "spillbeans", "term": "spill the beans", "meaning": "reveal a secret", "synonym": "/spɪl ðə biːnz/", "example": "Do not <b>spill the beans</b>.", "completion": "Do not _____.", "answer": "spill the beans"},
+  {"id": "costsarm", "term": "cost an arm and a leg", "meaning": "very expensive", "synonym": "/kɒst ən ɑːm ənd ə leɡ/", "example": "That bag <b>costs an arm and a leg</b>.", "completion": "That bag _____.", "answer": "costs an arm and a leg"},
+  {"id": "onthefence", "term": "on the fence", "meaning": "undecided", "synonym": "/ɒn ðə fens/", "example": "I am <b>on the fence</b> about it.", "completion": "I am _____ about it.", "answer": "on the fence"},
+  {"id": "bitethebullet", "term": "bite the bullet", "meaning": "face a difficult situation", "synonym": "/baɪt ðə ˈbʊl.ɪt/", "example": "Just <b>bite the bullet</b>.", "completion": "Just _____.", "answer": "bite the bullet"},
+  {"id": "breaktheice", "term": "break the ice", "meaning": "start a conversation", "synonym": "/breɪk ði aɪs/", "example": "A joke can <b>break the ice</b>.", "completion": "A joke can _____.", "answer": "break the ice"},
+  {"id": "tippoficeberg", "term": "tip of the iceberg", "meaning": "small part of a problem", "synonym": "/tɪp əv ði ˈaɪs.bɜːɡ/", "example": "This is just the <b>tip of the iceberg</b>.", "completion": "This is just the _____.", "answer": "tip of the iceberg"}
+]};
+</script>
+<script src="../../../../shared/i18n.js?v=v123"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
