@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Writing an Informal Email — Un Correo Informal — A2 Grammar Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>&#8250;</span>
+  <a href="../../../../espanol-en/index.html">Spanish</a><span>&#8250;</span>
+  <a href="../../index.html">A2</a><span>&#8250;</span>
+  <a href="../index.html">Writing</a><span>&#8250;</span>
+  <a href="index.html">An Informal Email</a><span>&#8250;</span>
+  <strong>Game</strong>
+</div>
+<div class="container">
+  <h1>An Informal Email — Mastery Game</h1>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Practice</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  </nav>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Dominio Mastery</h2>
+        <p>Each email phrase passes through three question types: meaning, context and production. Reach 100 points to win.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved session.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You have completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Worksheet</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Spanish A2 &middot; Game</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: 'informal-email',
+  level: 'a2',
+  title: "Writing an Informal Email — Un Correo Informal",
+  storageKey: 'wordplay_game_es_a2_informal-email',
+  items: [
+    {id:"que-tal", term:"¿Qué tal?", meaning:"how are things - the universal informal greeting", synonym:"informal greeting", example:"¡Hola, Leo! ¿<b>Qué tal</b>?", completion:"¡Hola, Leo! ¿______ tal?", answer:"que"},
+    {id:"gracias-por", term:"gracias por", meaning:"thanks for - always por, never para", synonym:"thanking", example:"<b>Gracias por</b> tu correo.", completion:"______ ______ tu correo. (thanks for)", answer:"gracias por"},
+    {id:"perdona-por", term:"perdona por tardar", meaning:"sorry for taking so long - apology opener", synonym:"apologising", example:"<b>Perdona por tardar</b> en contestar.", completion:"______ por tardar en contestar. (sorry)", answer:"perdona"},
+    {id:"enhorabuena", term:"¡Enhorabuena!", meaning:"congratulations - reacting to good news", synonym:"congratulating", example:"¡<b>Enhorabuena</b> por el trabajo nuevo!", completion:"¡______ por el trabajo nuevo!", answer:"enhorabuena"},
+    {id:"que-pena", term:"¡Qué pena!", meaning:"what a shame - reacting to bad news", synonym:"commiserating", example:"¡<b>Qué pena</b> lo de tu viaje!", completion:"¡Qué ______ lo de tu viaje!", answer:"pena"},
+    {id:"quedamos", term:"¿Por qué no quedamos?", meaning:"why do we not meet up - making plans with quedar", synonym:"arranging to meet", example:"¿Por qué no <b>quedamos</b> el sábado?", completion:"¿Por qué no ______ el sábado?", answer:"quedamos"},
+    {id:"te-apetece", term:"¿Te apetece...?", meaning:"do you fancy - suggesting, works like gustar", synonym:"suggesting", example:"¿<b>Te apetece</b> ir al cine?", completion:"¿Te ______ ir al cine?", answer:"apetece"},
+    {id:"escribeme", term:"¡Escríbeme pronto!", meaning:"write to me soon - classic closing", synonym:"closing line", example:"¡<b>Escríbeme pronto</b>! Un abrazo.", completion:"¡______ pronto! Un abrazo. (write to me)", answer:"escribeme"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v123"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
