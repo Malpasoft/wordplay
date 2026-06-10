@@ -1,17 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Game | Word Play</title>
+<title>Prepositions of Movement — A, De, Hacia, Hasta — A2 Grammar Game | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
 </head>
 <body>
-<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">◐ Dark</button></div></header>
-<div class="section-page"><p>Game coming soon.</p></div>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>&#8250;</span>
+  <a href="../../../../espanol-en/index.html">Spanish</a><span>&#8250;</span>
+  <a href="../../index.html">A2</a><span>&#8250;</span>
+  <a href="../index.html">Grammar</a><span>&#8250;</span>
+  <a href="index.html">Prepositions of Movement</a><span>&#8250;</span>
+  <strong>Game</strong>
+</div>
+<div class="container">
+  <h1>Prepositions of Movement — Mastery Game</h1>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Practice</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  </nav>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Dominio Mastery</h2>
+        <p>Each preposition passes through three question types: meaning, context and production. Reach 100 points to win.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved session.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You have completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Worksheet</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Spanish A2 &middot; Game</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: 'prepositions-movement',
+  level: 'a2',
+  title: "Prepositions of Movement — A, De, Hacia, Hasta",
+  storageKey: 'wordplay_game_es_a2_prepositions-movement',
+  items: [
+    {id:"al", term:"al", meaning:"to the - compulsory contraction of a + el", synonym:"a + el", example:"Vamos <b>al</b> cine esta tarde.", completion:"Vamos ______ cine esta tarde.", answer:"al"},
+    {id:"del", term:"del", meaning:"from the - compulsory contraction of de + el", synonym:"de + el", example:"Vengo <b>del</b> trabajo.", completion:"Vengo ______ trabajo.", answer:"del"},
+    {id:"a", term:"a", meaning:"to - marks the destination", synonym:"destination marker", example:"Voy <b>a</b> Madrid mañana.", completion:"Voy ______ Madrid mañana.", answer:"a"},
+    {id:"desde", term:"desde", meaning:"from - emphasises the starting point", synonym:"starting point", example:"<b>Desde</b> mi casa hasta la estación hay un kilómetro.", completion:"______ mi casa hasta la estación hay un kilómetro.", answer:"desde"},
+    {id:"hacia", term:"hacia", meaning:"towards - direction without necessarily arriving", synonym:"direction only", example:"Caminamos <b>hacia</b> el centro.", completion:"Caminamos ______ el centro.", answer:"hacia"},
+    {id:"hasta", term:"hasta", meaning:"up to or as far as - the limit of the movement", synonym:"end point", example:"Este autobús va <b>hasta</b> la playa.", completion:"Este autobús va ______ la playa.", answer:"hasta"},
+    {id:"por", term:"por", meaning:"through or along a place", synonym:"through/along", example:"Paseamos <b>por</b> el parque.", completion:"Paseamos ______ el parque.", answer:"por"},
+    {id:"en-tren", term:"en tren", meaning:"by train - transport takes en", synonym:"transport preposition", example:"Viajamos <b>en tren</b> a Sevilla.", completion:"Viajamos ______ ______ a Sevilla.", answer:"en tren"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v123"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
 </body>
 </html>
