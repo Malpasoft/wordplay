@@ -4,7 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Modals of Advice — Jeu B1 | Word Play</title>
+<title>Wish & If Only — Jeu B1 | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
@@ -17,7 +17,7 @@
   <a href="../../../../fr/index.html">Anglais pour francophones</a><span>&#8250;</span>
   <a href="../../index.html">B1</a><span>&#8250;</span>
   <a href="../index.html">Grammaire</a><span>&#8250;</span>
-  <a href="index.html">Modals of Advice</a><span>&#8250;</span>
+  <a href="index.html">Wish & If Only</a><span>&#8250;</span>
   <strong>Jeu</strong>
 </div>
 <nav class="chapter-nav">
@@ -26,12 +26,12 @@
   <a href="game.html" class="chapter-nav-btn active">Jeu</a>
 </nav>
 <div class="container">
-  <h1>Modals of Advice — Jeu de Maîtrise</h1>
+  <h1>Wish & If Only — Jeu de Maîtrise</h1>
   <div class="game-wrap">
     <div id="gameStart" class="game-screen active">
       <div class="game-start">
         <h2>Jeu de Maîtrise</h2>
-        <p>Chaque structure de conseil passe par trois types de questions : sens, contexte et production. Atteins 100 points pour gagner.</p>
+        <p>Chaque structure de regret passe par trois types de questions : sens, contexte et production. Atteins 100 points pour gagner.</p>
         <div class="game-stats-row">
           <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Maîtrisés</div></div>
           <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
@@ -75,19 +75,19 @@
 <footer class="site-footer">Word Play &middot; Anglais B1 &middot; Jeu</footer>
 <script>
 window.GAME_DATA = {
-  chapterId: "modals-advice",
+  chapterId: "wish-if-only",
   level: "b1",
-  title: "Modals of Advice — Should, ought to, had better",
-  storageKey: 'wordplay_game_b1_modals-advice',
+  title: "Wish & If Only — Les regrets",
+  storageKey: 'wordplay_game_b1_wish-if-only',
   items: [
-    {id:"should", term:"should", meaning:"devrait — le conseil standard", synonym:"conseil neutre", example:"You <b>should</b> drink more water.", completion:"You ______ drink more water. (devrais)", answer:"should"},
-    {id:"shouldnt", term:"shouldn't", meaning:"ne devrait pas", synonym:"conseil négatif", example:"You <b>shouldn’t</b> eat so much sugar.", completion:"You ______ eat so much sugar. (ne devrais pas)", answer:"shouldn't"},
-    {id:"ought-to", term:"ought to", meaning:"devrait — formel, le seul avec to", synonym:"conseil formel", example:"You <b>ought to</b> apologise.", completion:"You ______ to apologise. (devrais)", answer:"ought"},
-    {id:"had-better", term:"'d better", meaning:"ferais mieux de — urgent, menace implicite", synonym:"avertissement", example:"You<b>’d better</b> hurry!", completion:"You'd ______ hurry! (ferais mieux)", answer:"better"},
-    {id:"better-not", term:"'d better not", meaning:"ferais mieux de ne pas", synonym:"avertissement négatif", example:"You’d better <b>not</b> be late.", completion:"You'd better ______ be late.", answer:"not"},
-    {id:"should-i", term:"Should I...?", meaning:"devrais-je — demander un conseil", synonym:"demander conseil", example:"<b>Should I</b> call her?", completion:"______ I call her? (devrais-je)", answer:"should"},
-    {id:"why-dont", term:"Why don't you...?", meaning:"et si tu... — suggestion amicale", synonym:"suggestion", example:"<b>Why don’t you</b> take a break?", completion:"Why ______ you take a break? (et si)", answer:"don't"},
-    {id:"maybe-should", term:"maybe you should", meaning:"tu devrais peut-être — conseil adouci", synonym:"conseil diplomate", example:"<b>Maybe you should</b> talk to him first.", completion:"______ you should talk to him first. (peut-être)", answer:"maybe"}
+    {id:"wish-past", term:"wish + prétérit", meaning:"souhait sur le présent — « si seulement j’avais »", synonym:"souhait présent", example:"I <b>wish I had</b> more time.", completion:"I wish I ______ more time. (avais)", answer:"had"},
+    {id:"wish-were", term:"wish + were", meaning:"avec be : were à toutes les personnes", synonym:"wish avec be", example:"I wish I <b>were</b> taller.", completion:"I wish I ______ taller. (étais)", answer:"were"},
+    {id:"wish-had-done", term:"wish + had + participe", meaning:"regret du passé — « si seulement j’avais fait »", synonym:"regret passé", example:"I wish I <b>had studied</b> harder.", completion:"I wish I ______ studied harder. (avais)", answer:"had"},
+    {id:"wish-would", term:"wish + would", meaning:"agacement contre le comportement de quelqu’un", synonym:"agacement", example:"I wish you <b>would stop</b> talking.", completion:"I wish you ______ stop talking.", answer:"would"},
+    {id:"if-only", term:"if only", meaning:"si seulement — plus émotif que wish", synonym:"si seulement", example:"<b>If only</b> I knew the answer!", completion:"______ ______ I knew the answer! (si seulement)", answer:"if only"},
+    {id:"wish-could", term:"wish + could", meaning:"aimerait pouvoir", synonym:"capacité souhaitée", example:"I wish I <b>could</b> speak Japanese.", completion:"I wish I ______ speak Japanese. (pouvais)", answer:"could"},
+    {id:"hadnt", term:"wish + hadn't", meaning:"regrette d’avoir fait — négation du regret passé", synonym:"regret négatif", example:"She wishes she <b>hadn’t</b> said that.", completion:"She wishes she ______ said that. (n’avait pas)", answer:"hadn't"},
+    {id:"wish-to", term:"wish to + infinitif", meaning:"vouloir (très formel) — pas un regret", synonym:"volonté formelle", example:"I <b>wish to</b> make a complaint.", completion:"I ______ to make a complaint. (souhaite)", answer:"wish"}
   ]
 };
 </script>

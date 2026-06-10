@@ -1,138 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="description" content="Word Play — Cambridge English grammar, vocabulary and writing practice.">
-<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
-<title>Second Conditional — B1 Grammar Game | Word Play</title>
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Second Conditional — Jeu B1 | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
 </head>
 <body>
-<header class="site-header">
-  <div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a>
-    <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:white;font-family:var(--font-sans);font-size:0.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border-radius:4px;cursor:pointer;">&#9680; Dark</button>
-  </div>
-</header>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
 <div class="breadcrumb">
-  <a href="../../../../index.html">Home</a>
-  <span>›</span>
-  <a href="../../index.html">B1</a>
-  <span>›</span>
-  <a href="../index.html">Grammar</a>
-  <span>›</span>
-  <a href="index.html">Second Conditional</a>
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../fr/index.html">Anglais pour francophones</a><span>&#8250;</span>
+  <a href="../../index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">Second Conditional</a><span>&#8250;</span>
+  <strong>Jeu</strong>
 </div>
-<div class="container">
-  
-  <h1>Second Conditional</h1>
-  <nav class="chapter-nav">
-<a href="slides.html" class="chapter-nav-btn">Lesson</a>
-<a href="worksheet.html" class="chapter-nav-btn">Review</a>
-<a href="game.html" class="chapter-nav-btn active">Game</a>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
 </nav>
+<div class="container">
+  <h1>Second Conditional — Jeu de Maîtrise</h1>
   <div class="game-wrap">
-
-    <!-- START SCREEN -->
     <div id="gameStart" class="game-screen active">
       <div class="game-start">
-        <h2>4-Stage Mastery</h2>
-        <p>Each item passes through four stages: meaning, synonym, identification, and sentence completion. Answer correctly to advance. A wrong answer sends you back one stage.</p>
+        <h2>Jeu de Maîtrise</h2>
+        <p>Chaque structure passe par trois types de questions : sens, contexte et production. Atteins 100 points pour gagner.</p>
         <div class="game-stats-row">
-          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Maîtrisés</div></div>
           <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
         </div>
         <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
-          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved session.</p>
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tu as une partie sauvegardée.</p>
           <div class="game-btn-row">
-          <a href="../so-neither/slides.html" class="game-btn primary" style="text-decoration:none;text-align:center">Ch 14 So Neither &#8594;</a>
-                    
-          
-            <button id="gBtnResume" class="game-btn primary">Resume</button>
-            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
           </div>
         </div>
-        <div class="game-btn-row">
-          <button id="gBtnStart" class="game-btn primary">Start</button>
-        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Commencer</button></div>
       </div>
-      <!-- Reference always visible on start -->
       <div class="game-ref-panel" style="margin-top:20px;">
-        <div class="game-ref-head" id="gRefToggle">&#9660; Reference — all 5 items</div>
-        <div class="game-ref-body" id="gRefBody">
-          <div id="gRefList"></div>
-        </div>
+        <div class="game-ref-head" id="gRefToggle">&#9660; Tous les éléments — référence</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
       </div>
     </div>
-
-    <!-- PLAY SCREEN -->
     <div id="gamePlay" class="game-screen">
-      <div class="game-play">
-        <div class="game-mode-tag" id="gModeTag"></div>
-        <div class="game-term" id="gTerm"></div>
-        <div class="game-prompt" id="gPrompt"></div>
-        <div class="game-options" id="gOptions"></div>
-        <div class="game-feedback" id="gFeedback"></div>
-        <div class="game-example" id="gExample" style="display:none;"></div>
-        <div style="text-align:center;margin:12px 0;">
-          <button id="gBtnNext" class="game-btn primary" style="display:none;">Next &#8594;</button>
-        </div>
-        <div class="game-helpers">
-          <button id="gBtnHint" class="game-btn ghost small">Hint</button>
-          <button id="gBtnReveal" class="game-btn ghost small">Show answer</button>
-          <button id="gBtnKnow" class="game-btn know small" style="display:none">I know this</button>
-        </div>
-        <div class="game-progress-strip">
-          <div class="game-progress-bar"><div class="game-progress-fill" id="gProgressBar" style="width:0%"></div></div>
-          <div class="game-progress-text" id="gProgressTxt">0 / 0 mastered</div>
-        </div>
-        <div class="game-score-streak">
-          Score: <strong id="gScore">0</strong> &nbsp;&nbsp; Streak: <strong id="gStreak">0</strong>
-        </div>
-        <div style="text-align:center;margin-top:14px;">
-          <button id="gBtnSaveQuit" class="game-btn ghost small">Save &amp; quit</button>
-        </div>
-      </div>
+      <div class="game-play"></div>
     </div>
-
-    <!-- COMPLETION SCREEN -->
     <div id="gameCompletion" class="game-screen">
       <div class="game-completion">
-        <h2>Mastered!</h2>
-        <p>You have completed all items in this chapter.</p>
+        <h2>Maîtrisé !</h2>
+        <p>Tu as terminé tous les éléments de ce chapitre.</p>
         <div class="game-stats-row" style="margin:20px 0;">
           <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
-          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
-          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure série</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Maîtrisés</div></div>
         </div>
         <div id="gMasteryMap"></div>
         <div class="game-btn-row">
-          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
-          <a href="worksheet.html" class="game-btn secondary">Worksheet</a>
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
         </div>
       </div>
     </div>
-
   </div>
 </div>
 <div class="game-toast" id="gToast"></div>
-<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<footer class="site-footer">Word Play &middot; Anglais B1 &middot; Jeu</footer>
 <script>
 window.GAME_DATA = {
-  chapterId: 'second-conditional', level: 'b1',
-  title: 'Second Conditional',
+  chapterId: "second-conditional",
+  level: "b1",
+  title: "Second Conditional — L’irréel du présent",
   storageKey: 'wordplay_game_b1_second-conditional',
   items: [
-    {id:'second',term:'Second conditional',meaning:'unlikely or imaginary present/future situation',synonym:'unreal conditional',example:'If I <b>had</b> more money, I <b>would travel</b> the world.',completion:'If I had more money, I ______ the world.',answer:'would travel'},
-    {id:'were',term:'Were (not was)',meaning:'use were for all subjects in formal/exam second conditionals',synonym:'subjunctive were',example:'If I <b>were</b> you, I would apologise.',completion:'If I ______ you, I would apologise.',answer:'were'},
-    {id:'would',term:'Would + infinitive',meaning:'the result clause in second conditional',synonym:'conditional result',example:'She <b>would buy</b> a car if she could drive.',completion:'She ______ a car if she could drive.',answer:'would buy'},
-    {id:'could_second',term:'Could in second conditional',meaning:'could can replace would to express ability in the result clause',synonym:'ability in unreal conditional',example:'If I had more time, I <b>could help</b> you.',completion:'If I had more time, I ______ you.',answer:'could help'},
-    {id:'past_simple',term:'Past simple in if-clause',meaning:'use past simple in the if-clause — not will or would',synonym:'past form for present unreal',example:'If she <b>knew</b> the answer, she would tell us.',completion:'If she ______ the answer, she would tell us.',answer:'knew'},
+    {id:"if-had", term:"if + prétérit", meaning:"la condition irréelle — notre « si + imparfait »", synonym:"condition irréelle", example:"<b>If I had</b> money, I would buy a house.", completion:"If I ______ money, I would buy a house. (avais)", answer:"had"},
+    {id:"would", term:"would + base", meaning:"le conditionnel français « je ferais »", synonym:"conditionnel", example:"I <b>would buy</b> a house.", completion:"I ______ buy a house. (achèterais)", answer:"would"},
+    {id:"if-i-were-you", term:"If I were you", meaning:"à ta place — formule de conseil", synonym:"conseil", example:"<b>If I were you</b>, I would accept.", completion:"If I ______ you, I would accept. (étais)", answer:"were"},
+    {id:"wouldnt", term:"wouldn't", meaning:"ne ferait pas — négation de would", synonym:"négation", example:"She <b>wouldn’t</b> like it.", completion:"She ______ like it. (n’aimerait pas)", answer:"wouldn't"},
+    {id:"what-would", term:"What would you do?", meaning:"que ferais-tu — la question type", synonym:"question", example:"<b>What would you do</b> if you won?", completion:"What ______ you do if you won?", answer:"would"},
+    {id:"might-cond", term:"might (principale)", meaning:"dirait peut-être — possibilité dans l’irréel", synonym:"peut-être", example:"If you asked him, he <b>might</b> say yes.", completion:"If you asked him, he ______ say yes. (peut-être)", answer:"might"},
+    {id:"could-cond", term:"could (principale)", meaning:"pourrait — capacité dans l’irréel", synonym:"pourrait", example:"If we left now, we <b>could</b> catch the train.", completion:"If we left now, we ______ catch the train. (pourrions)", answer:"could"},
+    {id:"no-would-if", term:"pas de would après if", meaning:"l’équivalent de l’interdit « si j’aurais »", synonym:"règle d’or", example:"If I <b>had</b> (jamais « if I would have ») time...", completion:"If I ______ time, I would help. (avais)", answer:"had"}
   ]
 };
 </script>
