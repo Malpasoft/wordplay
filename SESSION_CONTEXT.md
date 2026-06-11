@@ -190,4 +190,23 @@ UI symbols only: `◐` / `◑` (dark toggle), `◆` (streak badge). No emoji any
 
 ---
 
+## fr/ track rebuild status (11 June 2026)
+
+The fr/ track is being rebuilt as a true French-mediated course (French UI +
+French pedagogy via scripts/gen_fr.py + scripts/content/fr_*.py; engines speak
+French through shared/i18n.js v124 on <html lang="fr"> pages).
+
+Done: all 21 B1 grammaire (incl. new wish-if-only + passive-variations, hub
+cards added) · B2 grammaire 13/18 (articles, causative, comparisons,
+conditionals, countable-uncountable, future-forms, gerunds-infinitives,
+hypothetical-meaning, inversion, linking-discourse, mixed-conditionals,
+modals-past, narrative-tenses).
+
+Remaining (same pipeline, content modules only):
+1. B2 grammaire ×5: passive, relative-clauses, reported-speech, used-to, verb-patterns
+2. redaction ×8 (b1: article, informal-letter, story · b2: article, essay, formal-email, report, review) — gen_fr.py works, section='redaction'
+3. vocabulaire ×25: French defs in flashcards + French chrome (worksheet/game can reuse gen_fr.py patterns)
+4. fr match.html pages (17) still have English UI strings
+5. fr level/section hub index pages: spot-check remaining English strings
+
 *Last verified 10 June 2026 — fr/ track complete (71 chapters), match.html rollout (98 chapters), es vocab 78/78 flashcards, espanol-en A2 complete (34 chapters via gen_esen_a2*.py data-driven renderers), 12 production inline-JS bugs fixed, scripts archived (L8).*
