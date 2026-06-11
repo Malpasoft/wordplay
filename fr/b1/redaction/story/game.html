@@ -1,116 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="description" content="Word Play — Cambridge English grammar, vocabulary and writing practice.">
-<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
-<title>Story — B1 Writing Game | Word Play</title>
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Story — Jeu B1 | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
 </head>
 <body>
-<header class="site-header">
-  <div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a>
-    <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:white;font-family:var(--font-sans);font-size:0.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border-radius:4px;cursor:pointer;">&#9680; Dark</button>
-  </div>
-</header>
-<div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">B1</a><span>›</span><a href="../index.html">Writing</a><span>›</span><a href="index.html">Story</a></div>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../fr/index.html">Anglais pour francophones</a><span>&#8250;</span>
+  <a href="../../index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Rédaction</a><span>&#8250;</span>
+  <a href="index.html">Story</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+</nav>
 <div class="container">
-  
-  <h1>Story</h1>
-  <nav class="chapter-nav">
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
-    <a href="worksheet.html" class="chapter-nav-btn">Review</a>
-    <a href="game.html" class="chapter-nav-btn active">Game</a></nav>
+  <h1>Story — Jeu de Maîtrise</h1>
   <div class="game-wrap">
     <div id="gameStart" class="game-screen active">
       <div class="game-start">
-        <h2>4-Stage Mastery</h2>
-        <p>Each item passes through four stages: meaning, synonym, identification and sentence completion. Answer correctly to advance — a wrong answer drops you back one stage.</p>
+        <h2>Jeu de Maîtrise</h2>
+        <p>Chaque outil du récit passe par trois types de questions : sens, contexte et production. Atteins 100 points pour gagner.</p>
         <div class="game-stats-row">
-          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Maîtrisés</div></div>
           <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
         </div>
         <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
-          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved session.</p>
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tu as une partie sauvegardée.</p>
           <div class="game-btn-row">
-          <a href="../index.html" class="game-btn primary" style="text-decoration:none;text-align:center">B1 Writing &#10003;</a>
-                    <a href="../../../../b/b1/index.html" class="game-btn primary" style="text-decoration:none;text-align:center">B1 Complete &#10003;</a>
-          
-            <button id="gBtnResume" class="game-btn primary">Resume</button>
-            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
           </div>
         </div>
-        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Commencer</button></div>
       </div>
       <div class="game-ref-panel" style="margin-top:20px;">
-        <div class="game-ref-head" id="gRefToggle">&#9660; All 8 items — reference</div>
+        <div class="game-ref-head" id="gRefToggle">&#9660; Tous les éléments — référence</div>
         <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
       </div>
     </div>
     <div id="gamePlay" class="game-screen">
-      <div class="game-play">
-        <div class="game-mode-tag" id="gModeTag"></div>
-        <div class="game-term" id="gTerm"></div>
-        <div class="game-prompt" id="gPrompt"></div>
-        <div class="game-options" id="gOptions"></div>
-        <div class="game-feedback" id="gFeedback"></div>
-        <div class="game-example" id="gExample" style="display:none;"></div>
-        <div style="text-align:center;margin:12px 0;">
-          <button id="gBtnNext" class="game-btn primary" style="display:none;">Next &#8594;</button>
-        </div>
-        <div class="game-helpers">
-          <button id="gBtnHint" class="game-btn ghost small">Hint</button>
-          <button id="gBtnReveal" class="game-btn ghost small">Show answer</button>
-        </div>
-        <div class="game-progress-strip">
-          <div class="game-progress-bar"><div class="game-progress-fill" id="gProgressBar" style="width:0%"></div></div>
-          <div class="game-progress-text" id="gProgressTxt">0 / 0 mastered</div>
-        </div>
-        <div class="game-score-streak">Score: <strong id="gScore">0</strong>&nbsp;&nbsp;Streak: <strong id="gStreak">0</strong></div>
-        <div style="text-align:center;margin-top:14px;">
-          <button id="gBtnSaveQuit" class="game-btn ghost small">Save &amp; quit</button>
-        </div>
-      </div>
+      <div class="game-play"></div>
     </div>
     <div id="gameCompletion" class="game-screen">
       <div class="game-completion">
-        <h2>Mastered!</h2>
-        <p>You have completed all items in this chapter.</p>
+        <h2>Maîtrisé !</h2>
+        <p>Tu as terminé tous les éléments de ce chapitre.</p>
         <div class="game-stats-row" style="margin:20px 0;">
           <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
-          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
-          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure série</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Maîtrisés</div></div>
         </div>
         <div id="gMasteryMap"></div>
         <div class="game-btn-row">
-          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
-          <a href="worksheet.html" class="game-btn secondary">Worksheet</a>
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
         </div>
       </div>
     </div>
   </div>
 </div>
 <div class="game-toast" id="gToast"></div>
-<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<footer class="site-footer">Word Play &middot; Anglais B1 &middot; Jeu</footer>
 <script>
 window.GAME_DATA = {
-  chapterId: 'story', level: 'b1',
-  title: 'Story', storageKey: 'wordplay_game_b1_story',
+  chapterId: "story",
+  level: "b1",
+  title: "Story — Raconter une histoire",
+  storageKey: 'wordplay_game_b1_story',
   items: [
-    {id:'ps_main',  term:'Past simple — main events',       meaning:'used for the key actions that move the story forward',  synonym:'what happened next',     example:'She <b>opened</b> the door and <b>froze</b>. (completed action)',                    completion:"'She ______ the door and froze.' (main event)",       answer:'opened'},
-    {id:'pc_bg',    term:'Past continuous — background',    meaning:'sets the scene — what was happening around the events', synonym:'ongoing background',     example:'The rain <b>was falling</b> heavily when she arrived. (background)',              completion:'The rain ______ heavily when she arrived.',             answer:'was falling'},
-    {id:'pp_early', term:'Past perfect — earlier events',   meaning:'something that had already happened before the story',  synonym:'had done — earlier',     example:'She realised she <b>had forgotten</b> her phone at home. (earlier event)',         completion:'She realised she ______ her phone at home.',            answer:'had forgotten'},
-    {id:'suddenly', term:'Suddenly / All at once',          meaning:'signals a dramatic or unexpected event in the story',   synonym:'unexpectedly / out of nowhere', example:'<b>Suddenly,</b> the lights went out and everything was silent.',              completion:'______  , the lights went out.',                        answer:'Suddenly'},
-    {id:'finally',  term:'Finally / In the end',            meaning:'signals the resolution — how the story ends',           synonym:'at last / eventually',   example:'<b>Finally,</b> she found the letter she had been looking for.',                  completion:'______ , she found what she was looking for.',          answer:'Finally'},
-    {id:'while',    term:'While + past continuous',         meaning:'background action interrupted by the main event',       synonym:'during the time that',   example:'<b>While</b> she <b>was walking</b> home, she heard a noise behind her.',        completion:'______ she was walking home, she heard a noise.',       answer:'While'},
-    {id:'one_day',  term:'One day / Last summer',           meaning:'opening time expressions that set the story in the past', synonym:'story opening phrase',  example:'<b>One day,</b> a mysterious package arrived at her door.',                     completion:'______ , a mysterious package arrived.',               answer:'One day'},
-    {id:'short_sent', term:'Short sentences = tension',     meaning:'short sentences create pace and suspense in a story',   synonym:'pacing technique',       example:'She stopped. She listened. Silence.',                                            completion:"Short sentences like 'She stopped. She listened.' create ______.",  answer:'tension'},
+    {id:"past-continuous", term:"past continuous (décor)", meaning:"l’action en cours du récit", synonym:"décor", example:"The sun <b>was setting</b> when we arrived.", completion:"The sun ______ setting when we arrived. (be au passé)", answer:"was"},
+    {id:"past-perfect", term:"past perfect (l’avant)", meaning:"l’action antérieure", synonym:"antériorité", example:"The train <b>had left</b> when we arrived.", completion:"The train ______ left when we arrived. (auxiliaire)", answer:"had"},
+    {id:"as-soon-as", term:"as soon as", meaning:"dès que", synonym:"enchaînement", example:"<b>As soon as</b> she opened the box, the lights went out.", completion:"As ______ as she opened the box... (dès que)", answer:"soon"},
+    {id:"suddenly", term:"suddenly", meaning:"soudain", synonym:"rebondissement", example:"<b>Suddenly</b>, a dog started barking.", completion:"______, a dog started barking. (soudain)", answer:"suddenly"},
+    {id:"in-the-end", term:"in the end", meaning:"finalement (≠ at the end)", synonym:"chute", example:"<b>In the end</b>, everything turned out fine.", completion:"______ the end, everything turned out fine. (préposition)", answer:"in"},
+    {id:"at-first", term:"at first", meaning:"au début", synonym:"contraste", example:"<b>At first</b>, I thought it was a joke.", completion:"At ______, I thought it was a joke.", answer:"first"},
+    {id:"whisper", term:"whisper", meaning:"murmurer (verbe de parole)", synonym:"dialogue", example:"“Don’t move,” she <b>whispered</b>.", completion:"“Don’t move,” she ______. (murmurer — prétérit)", answer:"whispered"},
+    {id:"terrified", term:"terrified", meaning:"terrifié (mieux que very scared)", synonym:"adjectif fort", example:"She was <b>terrified</b>.", completion:"She was ______. (bien plus que scared)", answer:"terrified"}
   ]
 };
 </script>
