@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>B2 Vocab · Word Formation — Adjectives — Flashcards | Word Play</title>
+<title>B2 Vocabulaire · Word Formation — Adjectives — Flashcards | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
@@ -49,16 +49,16 @@
 <body>
 <header class="site-header">
   <div class="site-header-inner">
-    <a href="../index.html" class="back back-link" aria-label="Back"></a>
+    <a href="../index.html" class="back back-link" aria-label="Retour"></a>
     <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+    <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Dark</button>
   </div>
 </header>
 <div class="container">
   <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>›</span>
+    <a href="../../../../index.html">Accueil</a><span>›</span>
     <a href="../../index.html">B2</a><span>›</span>
-    <a href="../index.html">Vocabulary</a><span>›</span>
+    <a href="../index.html">Vocabulaire</a><span>›</span>
     <strong>Word Formation — Adjectives</strong>
   </div>
   <div class="chapter-num">V12</div>
@@ -66,14 +66,14 @@
   <nav class="chapter-nav">
     <a href="flashcards.html" class="chapter-nav-btn active">Flashcards</a>
     <a href="match.html" class="chapter-nav-btn">Match</a>
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
     <a href="worksheet.html" class="chapter-nav-btn">Review</a>
-    <a href="game.html" class="chapter-nav-btn">Game</a>
+    <a href="game.html" class="chapter-nav-btn">Jeu</a>
   </nav>
 
   <div class="vocab-page">
     <div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">Topic mastered</span></div>
-    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; tap card to reveal</div>
+    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; touche la carte pour révéler</div>
 
     <div class="mode-tabs">
       <button class="mode-tab active" onclick="setMode('flash',this)">Flashcards</button>
@@ -107,7 +107,7 @@
     </div>
 
     <div id="modeMatch" style="display:none">
-      <div class="match-score" id="matchScore">Match each word to its definition</div>
+      <div class="match-score" id="matchScore">Associe chaque mot à sa définition</div>
       <div class="match-grid">
         <div class="match-col" id="matchWords"></div>
         <div class="match-col" id="matchDefs"></div>
@@ -128,11 +128,7 @@
 var SLUG = 'word-formation-adjectives';
 var LEVEL = 'b2';
 var MASTERY_KEY = 'wordplay_vocab_b2_word-formation-adjectives_mastered';
-var WORDS = [{"id": "sust", "word": "Sustainable", "def": "adjective from sustain — able to be maintained without damage", "ipa": "", "ex": "We need <b>sustainable</b> solutions to the climate crisis."}, {"id": "innov", "word": "Innovative", "def": "adjective from innovate — introducing new ideas or methods", "ipa": "", "ex": "The company uses <b>innovative</b> technology."}, {"id": "env", "word": "Environmental", "def": "adjective from environment — relating to the natural world", "ipa": "", "ex": "The <b>environmental</b> impact of fossil fuels is severe."}, {"id": "unrel", "word": "Unreliable", "def": "negative adjective — not able to be trusted or depended on", "ipa": "", "ex": "The connection is <b>unreliable</b> in rural areas."}, {"id": "irresp", "word": "Irresponsible", "def": "negative adjective — lacking care or responsibility", "ipa": "", "ex": "Their data practices were completely <b>irresponsible</b>."}, {"id": "ineff", "word": "Ineffective", "def": "negative adjective — not producing the desired result", "ipa": "", "ex": "The policy proved <b>ineffective</b> at reducing emissions."}, {"id": "access", "word": "Accessible", "def": "adjective from access — easy to use or approach", "ipa": "", "ex": "The app is fully <b>accessible</b> to all users."}, {"id": "afford", "word": "Unaffordable", "def": "negative adjective — too expensive to be purchased", "ipa": "", "ex": "Housing has become <b>unaffordable</b> for young workers."},
-  {"word":"Relentless","def":"never stopping or getting less intense","ipa":"","ex":"The team faced relentless pressure from the competition."},
-  {"word":"Meticulous","def":"extremely careful and precise, paying close attention to detail","ipa":"","ex":"He is meticulous in his preparation."},
-  {"word":"Indispensable","def":"absolutely necessary and impossible to do without","ipa":"","ex":"She quickly became indispensable to the team."},
-  {"word":"Compelling","def":"very convincing or interesting; impossible to ignore","ipa":"","ex":"The documentary made a compelling case for change."}];
+var WORDS = [{"id":"sust","word":"Sustainable","def":"durable — l’adjectif de sustain : qui peut se maintenir sans dommage","ipa":"","ex":"We need <b>sustainable</b> solutions to the climate crisis."},{"id":"innov","word":"Innovative","def":"innovant — l’adjectif de innovate : qui introduit des idées nouvelles","ipa":"","ex":"The company uses <b>innovative</b> technology."},{"id":"env","word":"Environmental","def":"environnemental — l’adjectif de environment","ipa":"","ex":"The <b>environmental</b> impact of fossil fuels is severe."},{"id":"unrel","word":"Unreliable","def":"peu fiable — adjectif négatif : sur qui on ne peut pas compter","ipa":"","ex":"The connection is <b>unreliable</b> in rural areas."},{"id":"irresp","word":"Irresponsible","def":"irresponsable — adjectif négatif : qui manque de sérieux","ipa":"","ex":"Their data practices were completely <b>irresponsible</b>."},{"id":"ineff","word":"Ineffective","def":"inefficace — adjectif négatif : qui ne produit pas le résultat voulu","ipa":"","ex":"The policy proved <b>ineffective</b> at reducing emissions."},{"id":"access","word":"Accessible","def":"accessible — l’adjectif de access : facile d’accès ou d’usage","ipa":"","ex":"The app is fully <b>accessible</b> to all users."},{"id":"afford","word":"Unaffordable","def":"inabordable — adjectif négatif : trop cher pour être acheté","ipa":"","ex":"Housing has become <b>unaffordable</b> for young workers."},{"word":"Relentless","def":"implacable, incessant — qui ne faiblit jamais","ipa":"","ex":"The team faced relentless pressure from the competition."},{"word":"Meticulous","def":"méticuleux — extrêmement soigneux et précis","ipa":"","ex":"He is meticulous in his preparation."},{"word":"Indispensable","def":"indispensable — dont on ne peut absolument pas se passer","ipa":"","ex":"She quickly became indispensable to the team."},{"word":"Compelling","def":"captivant, convaincant — impossible à ignorer","ipa":"","ex":"The documentary made a compelling case for change."}];
 var fcIdx = 0, flipped = false;
 
 function setMode(mode, btn) {

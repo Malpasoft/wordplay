@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>B2 Vocab · Word Formation — Nouns — Flashcards | Word Play</title>
+<title>B2 Vocabulaire · Word Formation — Nouns — Flashcards | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
@@ -49,16 +49,16 @@
 <body>
 <header class="site-header">
   <div class="site-header-inner">
-    <a href="../index.html" class="back back-link" aria-label="Back"></a>
+    <a href="../index.html" class="back back-link" aria-label="Retour"></a>
     <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+    <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Dark</button>
   </div>
 </header>
 <div class="container">
   <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>›</span>
+    <a href="../../../../index.html">Accueil</a><span>›</span>
     <a href="../../index.html">B2</a><span>›</span>
-    <a href="../index.html">Vocabulary</a><span>›</span>
+    <a href="../index.html">Vocabulaire</a><span>›</span>
     <strong>Word Formation — Nouns</strong>
   </div>
   <div class="chapter-num">V13</div>
@@ -66,14 +66,14 @@
   <nav class="chapter-nav">
     <a href="flashcards.html" class="chapter-nav-btn active">Flashcards</a>
     <a href="match.html" class="chapter-nav-btn">Match</a>
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
     <a href="worksheet.html" class="chapter-nav-btn">Review</a>
-    <a href="game.html" class="chapter-nav-btn">Game</a>
+    <a href="game.html" class="chapter-nav-btn">Jeu</a>
   </nav>
 
   <div class="vocab-page">
     <div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">Topic mastered</span></div>
-    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; tap card to reveal</div>
+    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; touche la carte pour révéler</div>
 
     <div class="mode-tabs">
       <button class="mode-tab active" onclick="setMode('flash',this)">Flashcards</button>
@@ -107,7 +107,7 @@
     </div>
 
     <div id="modeMatch" style="display:none">
-      <div class="match-score" id="matchScore">Match each word to its definition</div>
+      <div class="match-score" id="matchScore">Associe chaque mot à sa définition</div>
       <div class="match-grid">
         <div class="match-col" id="matchWords"></div>
         <div class="match-col" id="matchDefs"></div>
@@ -128,11 +128,7 @@
 var SLUG = 'word-formation-nouns';
 var LEVEL = 'b2';
 var MASTERY_KEY = 'wordplay_vocab_b2_word-formation-nouns_mastered';
-var WORDS = [{"id": "aw", "word": "Awareness", "def": "noun from aware — knowledge or consciousness of something", "ipa": "", "ex": "There is growing <b>awareness</b> of climate change."}, {"id": "ineq2", "word": "Inequality", "def": "noun from equal with negative prefix in-", "ipa": "", "ex": "<b>Inequality</b> remains one of the biggest social challenges."}, {"id": "auto", "word": "Automation", "def": "noun from automate — the process of making automatic", "ipa": "", "ex": "<b>Automation</b> is transforming the workforce."}, {"id": "div", "word": "Diversity", "def": "noun from diverse — the state of being varied", "ipa": "", "ex": "Workplace <b>diversity</b> improves creativity and performance."}, {"id": "sust", "word": "Sustainability", "def": "noun from sustain — the quality of being sustainable", "ipa": "", "ex": "<b>Sustainability</b> is at the heart of the new policy."}, {"id": "commit", "word": "Commitment", "def": "noun from commit — a promise or dedicated effort", "ipa": "", "ex": "The company showed a strong <b>commitment</b> to net zero."}, {"id": "innov", "word": "Innovation", "def": "noun from innovate — introducing new ideas or methods", "ipa": "", "ex": "Technological <b>innovation</b> drives economic growth."}, {"id": "discrim", "word": "Discrimination", "def": "noun from discriminate — unfair treatment based on a characteristic", "ipa": "", "ex": "Racial <b>discrimination</b> is illegal in the workplace."},
-  {"word":"Breakthrough","def":"an important discovery or development that solves a major problem","ipa":"","ex":"Scientists announced a major breakthrough in cancer research."},
-  {"word":"Backlash","def":"a strong negative reaction from the public to something","ipa":"","ex":"The new policy attracted a huge backlash online."},
-  {"word":"Pitfall","def":"a hidden danger or difficulty that is easy to encounter unexpectedly","ipa":"","ex":"The guide explains the common pitfalls of starting a business."},
-  {"word":"Threshold","def":"the level at which something begins to take effect; a boundary","ipa":"","ex":"The budget crossed the threshold for mandatory review."}];
+var WORDS = [{"id":"aw","word":"Awareness","def":"la conscience, la sensibilisation — le nom formé sur aware","ipa":"","ex":"There is growing <b>awareness</b> of climate change."},{"id":"ineq2","word":"Inequality","def":"l’inégalité — equal + préfixe négatif in- + suffixe -ity","ipa":"","ex":"<b>Inequality</b> remains one of the biggest social challenges."},{"id":"auto","word":"Automation","def":"l’automatisation — le nom formé sur automate","ipa":"","ex":"<b>Automation</b> is transforming the workforce."},{"id":"div","word":"Diversity","def":"la diversité — le nom formé sur diverse","ipa":"","ex":"Workplace <b>diversity</b> improves creativity and performance."},{"id":"sust","word":"Sustainability","def":"la durabilité — le nom formé sur sustain","ipa":"","ex":"<b>Sustainability</b> is at the heart of the new policy."},{"id":"commit","word":"Commitment","def":"l’engagement — le nom formé sur commit","ipa":"","ex":"The company showed a strong <b>commitment</b> to net zero."},{"id":"innov","word":"Innovation","def":"l’innovation — le nom formé sur innovate","ipa":"","ex":"Technological <b>innovation</b> drives economic growth."},{"id":"discrim","word":"Discrimination","def":"la discrimination — le nom formé sur discriminate","ipa":"","ex":"Racial <b>discrimination</b> is illegal in the workplace."},{"word":"Breakthrough","def":"la percée, l’avancée décisive — la découverte qui change tout","ipa":"","ex":"Scientists announced a major breakthrough in cancer research."},{"word":"Backlash","def":"le retour de bâton — une vive réaction négative du public","ipa":"","ex":"The new policy attracted a huge backlash online."},{"word":"Pitfall","def":"le piège, l’écueil — une difficulté cachée","ipa":"","ex":"The guide explains the common pitfalls of starting a business."},{"word":"Threshold","def":"le seuil — le niveau à partir duquel quelque chose se déclenche","ipa":"","ex":"The budget crossed the threshold for mandatory review."}];
 var fcIdx = 0, flipped = false;
 
 function setMode(mode, btn) {

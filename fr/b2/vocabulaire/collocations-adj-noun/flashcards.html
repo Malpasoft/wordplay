@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>B2 Vocab · Collocations — Adjective + Noun — Flashcards | Word Play</title>
+<title>B2 Vocabulaire · Collocations — Adjective + Noun — Flashcards | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
@@ -49,16 +49,16 @@
 <body>
 <header class="site-header">
   <div class="site-header-inner">
-    <a href="../index.html" class="back back-link" aria-label="Back"></a>
+    <a href="../index.html" class="back back-link" aria-label="Retour"></a>
     <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+    <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Dark</button>
   </div>
 </header>
 <div class="container">
   <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>›</span>
+    <a href="../../../../index.html">Accueil</a><span>›</span>
     <a href="../../index.html">B2</a><span>›</span>
-    <a href="../index.html">Vocabulary</a><span>›</span>
+    <a href="../index.html">Vocabulaire</a><span>›</span>
     <strong>Collocations — Adjective + Noun</strong>
   </div>
   <div class="chapter-num">V1</div>
@@ -66,14 +66,14 @@
   <nav class="chapter-nav">
     <a href="flashcards.html" class="chapter-nav-btn active">Flashcards</a>
     <a href="match.html" class="chapter-nav-btn">Match</a>
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
     <a href="worksheet.html" class="chapter-nav-btn">Review</a>
-    <a href="game.html" class="chapter-nav-btn">Game</a>
+    <a href="game.html" class="chapter-nav-btn">Jeu</a>
   </nav>
 
   <div class="vocab-page">
     <div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">Topic mastered</span></div>
-    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; tap card to reveal</div>
+    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; touche la carte pour révéler</div>
 
     <div class="mode-tabs">
       <button class="mode-tab active" onclick="setMode('flash',this)">Flashcards</button>
@@ -107,7 +107,7 @@
     </div>
 
     <div id="modeMatch" style="display:none">
-      <div class="match-score" id="matchScore">Match each word to its definition</div>
+      <div class="match-score" id="matchScore">Associe chaque mot à sa définition</div>
       <div class="match-grid">
         <div class="match-col" id="matchWords"></div>
         <div class="match-col" id="matchDefs"></div>
@@ -128,19 +128,7 @@
 var SLUG = 'collocations-adj-noun';
 var LEVEL = 'b2';
 var MASTERY_KEY = 'wordplay_vocab_b2_collocations-adj-noun_mastered';
-var WORDS = [
-  {"id": "se", "word": "Strong evidence", "def": "convincing proof — not powerful or heavy", "ipa": "", "ex": "There is <b>strong evidence</b> that automation causes redundancy."},
-  {"id": "si", "word": "Sharp increase", "def": "a sudden, steep rise — not quick or fast", "ipa": "", "ex": "There has been a <b>sharp increase</b> in carbon emissions."},
-  {"id": "dc", "word": "Deep concern", "def": "serious worry — not big concern", "ipa": "", "ex": "Politicians expressed <b>deep concern</b> about inequality."},
-  {"id": "hi2", "word": "High unemployment", "def": "a large number of people without jobs — not big unemployment", "ipa": "", "ex": "Automation has caused <b>high unemployment</b> in manufacturing regions."},
-  {"id": "cr", "word": "Crucial role", "def": "an extremely important function", "ipa": "", "ex": "Education plays a <b>crucial role</b> in social mobility."},
-  {"id": "br", "word": "Broad range", "def": "a wide variety — not big or large range", "ipa": "", "ex": "The initiative covers a <b>broad range</b> of issues."},
-  {"id": "wi", "word": "Widespread inequality", "def": "inequality affecting many areas or groups", "ipa": "", "ex": "<b>Widespread inequality</b> remains a serious problem."},
-  {"id": "mb", "word": "Major breakthrough", "def": "a very significant discovery or development", "ipa": "", "ex": "Scientists made a <b>major breakthrough</b> in renewable energy."},
-  {"word": "Sharp rise", "def": "a sudden and significant increase", "ipa": "", "ex": "There has been a sharp rise in demand for electric vehicles."},
-  {"word": "Wide variety", "def": "many different types of something", "ipa": "", "ex": "The menu offers a wide variety of vegetarian dishes."},
-  {"word": "High demand", "def": "a situation where many people want to buy or use something", "ipa": "", "ex": "There is high demand for engineers in the tech sector."}
-];
+var WORDS = [{"id":"se","word":"Strong evidence","def":"des preuves solides — strong evidence (jamais powerful)","ipa":"","ex":"There is <b>strong evidence</b> that automation causes redundancy."},{"id":"si","word":"Sharp increase","def":"une forte hausse — sharp increase : brutale et marquée","ipa":"","ex":"There has been a <b>sharp increase</b> in carbon emissions."},{"id":"dc","word":"Deep concern","def":"une vive inquiétude — deep concern (jamais big)","ipa":"","ex":"Politicians expressed <b>deep concern</b> about inequality."},{"id":"hi2","word":"High unemployment","def":"un chômage élevé — high unemployment (jamais big)","ipa":"","ex":"Automation has caused <b>high unemployment</b> in manufacturing regions."},{"id":"cr","word":"Crucial role","def":"un rôle crucial — une fonction extrêmement importante","ipa":"","ex":"Education plays a <b>crucial role</b> in social mobility."},{"id":"br","word":"Broad range","def":"un large éventail — broad range (jamais big)","ipa":"","ex":"The initiative covers a <b>broad range</b> of issues."},{"id":"wi","word":"Widespread inequality","def":"des inégalités généralisées — qui touchent de nombreux domaines","ipa":"","ex":"<b>Widespread inequality</b> remains a serious problem."},{"id":"mb","word":"Major breakthrough","def":"une avancée majeure — une découverte très importante","ipa":"","ex":"Scientists made a <b>major breakthrough</b> in renewable energy."},{"word":"Sharp rise","def":"une hausse brutale — une augmentation soudaine et marquée","ipa":"","ex":"There has been a sharp rise in demand for electric vehicles."},{"word":"Wide variety","def":"une grande variété — de nombreux types différents","ipa":"","ex":"The menu offers a wide variety of vegetarian dishes."},{"word":"High demand","def":"une forte demande — très recherché (in high demand)","ipa":"","ex":"There is high demand for engineers in the tech sector."}];
 var fcIdx = 0, flipped = false;
 
 function setMode(mode, btn) {

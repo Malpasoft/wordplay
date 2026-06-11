@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>B2 Vocab · Word Formation — Prefixes — Flashcards | Word Play</title>
+<title>B2 Vocabulaire · Word Formation — Prefixes — Flashcards | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
@@ -49,16 +49,16 @@
 <body>
 <header class="site-header">
   <div class="site-header-inner">
-    <a href="../index.html" class="back back-link" aria-label="Back"></a>
+    <a href="../index.html" class="back back-link" aria-label="Retour"></a>
     <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+    <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Dark</button>
   </div>
 </header>
 <div class="container">
   <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>›</span>
+    <a href="../../../../index.html">Accueil</a><span>›</span>
     <a href="../../index.html">B2</a><span>›</span>
-    <a href="../index.html">Vocabulary</a><span>›</span>
+    <a href="../index.html">Vocabulaire</a><span>›</span>
     <strong>Word Formation — Prefixes</strong>
   </div>
   <div class="chapter-num">V14</div>
@@ -66,14 +66,14 @@
   <nav class="chapter-nav">
     <a href="flashcards.html" class="chapter-nav-btn active">Flashcards</a>
     <a href="match.html" class="chapter-nav-btn">Match</a>
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
     <a href="worksheet.html" class="chapter-nav-btn">Review</a>
-    <a href="game.html" class="chapter-nav-btn">Game</a>
+    <a href="game.html" class="chapter-nav-btn">Jeu</a>
   </nav>
 
   <div class="vocab-page">
     <div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">Topic mastered</span></div>
-    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; tap card to reveal</div>
+    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; touche la carte pour révéler</div>
 
     <div class="mode-tabs">
       <button class="mode-tab active" onclick="setMode('flash',this)">Flashcards</button>
@@ -107,7 +107,7 @@
     </div>
 
     <div id="modeMatch" style="display:none">
-      <div class="match-score" id="matchScore">Match each word to its definition</div>
+      <div class="match-score" id="matchScore">Associe chaque mot à sa définition</div>
       <div class="match-grid">
         <div class="match-col" id="matchWords"></div>
         <div class="match-col" id="matchDefs"></div>
@@ -128,11 +128,7 @@
 var SLUG = 'word-formation-prefixes';
 var LEVEL = 'b2';
 var MASTERY_KEY = 'wordplay_vocab_b2_word-formation-prefixes_mastered';
-var WORDS = [{"id": "under", "word": "Under-", "def": "not enough — used when something is insufficient", "ipa": "", "ex": "The sector is chronically <b>underfunded</b>."}, {"id": "over", "word": "Over-", "def": "too much — used when something exceeds the right level", "ipa": "", "ex": "She completely <b>overworked</b> herself before the deadline."}, {"id": "mis", "word": "Mis-", "def": "wrongly or incorrectly — doing something the wrong way", "ipa": "", "ex": "The public was <b>misled</b> about emissions data."}, {"id": "re", "word": "Re-", "def": "again — doing something a second time", "ipa": "", "ex": "Workers must be <b>retrained</b> as automation advances."}, {"id": "pre", "word": "Pre-", "def": "before — in advance or prior to", "ipa": "", "ex": "A <b>preventive</b> approach is better than a reactive one."}, {"id": "out", "word": "Out-", "def": "more or better than — exceeding others", "ipa": "", "ex": "The green economy <b>outperformed</b> all expectations."}, {"id": "inter", "word": "Inter-", "def": "between — connecting or acting between things", "ipa": "", "ex": "Digital tools allow communities to <b>interact</b> across borders."}, {"id": "dis", "word": "Dis-", "def": "opposite or reversal of — negative", "ipa": "", "ex": "There is a clear <b>disadvantage</b> to relying on fossil fuels."},
-  {"word":"Mismanage","def":"to manage something badly or inefficiently","ipa":"","ex":"The funds were clearly mismanaged."},
-  {"word":"Overrated","def":"given more praise or importance than it deserves","ipa":"","ex":"Many critics say the film is overrated."},
-  {"word":"Underestimate","def":"to think something is smaller, less important, or less difficult than it is","ipa":"","ex":"Don't underestimate how long the project will take."},
-  {"word":"Counteract","def":"to reduce or prevent the harmful effects of something by acting against it","ipa":"","ex":"The drug is used to counteract the effects of the venom."}];
+var WORDS = [{"id":"under","word":"Under-","def":"sous- (insuffisant) — underpaid = sous-payé","ipa":"","ex":"The sector is chronically <b>underfunded</b>."},{"id":"over","word":"Over-","def":"sur- (excessif) — overworked = surmené","ipa":"","ex":"She completely <b>overworked</b> herself before the deadline."},{"id":"mis","word":"Mis-","def":"mal- (incorrectement) — misunderstand = mal comprendre","ipa":"","ex":"The public was <b>misled</b> about emissions data."},{"id":"re","word":"Re-","def":"re- (à nouveau) — rebuild = reconstruire","ipa":"","ex":"Workers must be <b>retrained</b> as automation advances."},{"id":"pre","word":"Pre-","def":"pré- (avant) — prepay = payer d’avance","ipa":"","ex":"A <b>preventive</b> approach is better than a reactive one."},{"id":"out","word":"Out-","def":"sur- (dépasser les autres) — outperform = surpasser","ipa":"","ex":"The green economy <b>outperformed</b> all expectations."},{"id":"inter","word":"Inter-","def":"inter- (entre) — international = entre les nations","ipa":"","ex":"Digital tools allow communities to <b>interact</b> across borders."},{"id":"dis","word":"Dis-","def":"dé-/dis- (contraire) — disagree = ne pas être d’accord","ipa":"","ex":"There is a clear <b>disadvantage</b> to relying on fossil fuels."},{"word":"Mismanage","def":"mal gérer — gérer de façon incompétente","ipa":"","ex":"The funds were clearly mismanaged."},{"word":"Overrated","def":"surestimé, surcoté — qui ne mérite pas sa réputation","ipa":"","ex":"Many critics say the film is overrated."},{"word":"Underestimate","def":"sous-estimer — croire moindre que la réalité","ipa":"","ex":"Don't underestimate how long the project will take."},{"word":"Counteract","def":"contrer, neutraliser — agir contre des effets nocifs","ipa":"","ex":"The drug is used to counteract the effects of the venom."}];
 var fcIdx = 0, flipped = false;
 
 function setMode(mode, btn) {

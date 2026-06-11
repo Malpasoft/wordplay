@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>B2 Vocab · Collocations — Adjective + Noun — Match Game | Word Play</title>
+<title>B2 Vocabulaire · Collocations — Adjective + Noun — Jeu d’association | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
@@ -66,26 +66,26 @@ body.dark .match-screen-box{background:#1A1A1A}
 </head>
 <body>
 <header class="site-header"><div class="site-header-inner">
-  <a href="index.html" class="back back-link" aria-label="Back"></a>
+  <a href="index.html" class="back back-link" aria-label="Retour"></a>
   <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Dark</button>
 </div></header>
 
 <div class="container">
   <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>›</span>
+    <a href="../../../../index.html">Accueil</a><span>›</span>
     <a href="../../index.html">B2</a><span>›</span>
-    <a href="../index.html">Vocabulary</a><span>›</span>
+    <a href="../index.html">Vocabulaire</a><span>›</span>
     <a href="index.html">Collocations — Adjective + Noun</a><span>›</span>
-    <strong>Match game</strong>
+    <strong>Jeu d&rsquo;association</strong>
   </div>
   <h1>Collocations — Adjective + Noun — Match</h1>
   <nav class="chapter-nav">
     <a href="flashcards.html" class="chapter-nav-btn">Flashcards</a>
     <a href="match.html" class="chapter-nav-btn active">Match</a>
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
     <a href="worksheet.html" class="chapter-nav-btn">Review</a>
-    <a href="game.html" class="chapter-nav-btn">Game</a>
+    <a href="game.html" class="chapter-nav-btn">Jeu</a>
   </nav>
 
   <div class="match-page">
@@ -104,7 +104,7 @@ body.dark .match-screen-box{background:#1A1A1A}
     </div>
 
     <!-- Game grid -->
-    <div class="match-col-head" style="grid-column:1">Words</div>
+    <div class="match-col-head" style="grid-column:1">Mots</div>
     <div class="match-grid">
       <div class="match-col" id="leftCol"></div>
       <div class="match-col" id="rightCol"></div>
@@ -117,11 +117,11 @@ body.dark .match-screen-box{background:#1A1A1A}
 <!-- Win screen -->
 <div class="match-screen" id="winScreen" style="display:none">
   <div class="match-screen-box">
-    <div class="msb-title">Match Master!</div>
+    <div class="msb-title">Association parfaite !</div>
     <div class="msb-lives" id="winLives"></div>
     <div class="msb-sub">You matched every word twice. Collocations — Adjective + Noun vocabulary mastered!</div>
     <div class="msb-stat" id="winStat"></div>
-    <button class="msb-btn" onclick="resetGame()">Play again</button>
+    <button class="msb-btn" onclick="resetGame()">Rejouer</button>
     <a href="flashcards.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Flashcards</a>
     <a href="game.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Mastery game</a>
   </div>
@@ -133,26 +133,14 @@ body.dark .match-screen-box{background:#1A1A1A}
     <div class="msb-title">Out of lives!</div>
     <div class="msb-sub">Keep practising — you need to match each word twice without 3 mistakes.</div>
     <div class="msb-stat" id="loseStat"></div>
-    <button class="msb-btn" onclick="resetGame()">Try again</button>
+    <button class="msb-btn" onclick="resetGame()">Réessayer</button>
     <a href="flashcards.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Review cards first</a>
   </div>
 </div>
 
 <script src="../../../../shared/store.js?v=v107"></script>
 <script>
-var WORDS = [
-  {"word": "Strong evidence", "def": "convincing proof — not powerful or heavy"},
-  {"word": "Sharp increase", "def": "a sudden, steep rise — not quick or fast"},
-  {"word": "Deep concern", "def": "serious worry — not big concern"},
-  {"word": "High unemployment", "def": "a large number of people without jobs — not big unemployment"},
-  {"word": "Crucial role", "def": "an extremely important function"},
-  {"word": "Broad range", "def": "a wide variety — not big or large range"},
-  {"word": "Widespread inequality", "def": "inequality affecting many areas or groups"},
-  {"word": "Major breakthrough", "def": "a very significant discovery or development"},
-  {"word": "Sharp rise", "def": "a sudden and significant increase"},
-  {"word": "Wide variety", "def": "many different types of something"},
-  {"word": "High demand", "def": "a situation where many people want to buy or use something"}
-];
+var WORDS = [{"word":"Strong evidence","def":"des preuves solides — strong evidence (jamais powerful)"},{"word":"Sharp increase","def":"une forte hausse — sharp increase : brutale et marquée"},{"word":"Deep concern","def":"une vive inquiétude — deep concern (jamais big)"},{"word":"High unemployment","def":"un chômage élevé — high unemployment (jamais big)"},{"word":"Crucial role","def":"un rôle crucial — une fonction extrêmement importante"},{"word":"Broad range","def":"un large éventail — broad range (jamais big)"},{"word":"Widespread inequality","def":"des inégalités généralisées — qui touchent de nombreux domaines"},{"word":"Major breakthrough","def":"une avancée majeure — une découverte très importante"},{"word":"Sharp rise","def":"une hausse brutale — une augmentation soudaine et marquée"},{"word":"Wide variety","def":"une grande variété — de nombreux types différents"},{"word":"High demand","def":"une forte demande — très recherché (in high demand)"}];
 var MASTERY_KEY = 'wordplay_vocab_b2_collocations-adj-noun_mastered';
 var PROG_KEY    = 'b2';
 var SLUG        = 'collocations-adj-noun';

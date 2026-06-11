@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>B1 Vocab · Technology and Media — Match Game | Word Play</title>
+<title>B1 Vocabulaire · Technology and Media — Jeu d’association | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
@@ -66,27 +66,27 @@ body.dark .match-screen-box{background:#1A1A1A}
 </head>
 <body>
 <header class="site-header"><div class="site-header-inner">
-  <a href="index.html" class="back back-link" aria-label="Back"></a>
+  <a href="index.html" class="back back-link" aria-label="Retour"></a>
   <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Dark</button>
 </div></header>
 
 <div class="container">
   <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>›</span>
+    <a href="../../../../index.html">Accueil</a><span>›</span>
     <a href="../../index.html">B1</a><span>›</span>
-    <a href="../index.html">Vocabulary</a><span>›</span>
+    <a href="../index.html">Vocabulaire</a><span>›</span>
     <a href="index.html">Technology and Media</a><span>›</span>
-    <strong>Match game</strong>
+    <strong>Jeu d&rsquo;association</strong>
   </div>
   <h1>Technology and Media — Match</h1>
   <nav class="chapter-nav">
     <a href="flashcards.html" class="chapter-nav-btn">Flashcards</a>
     <a href="match.html" class="chapter-nav-btn active">Match</a>
     <a href="match.html" class="chapter-nav-btn">Match</a>
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
     <a href="worksheet.html" class="chapter-nav-btn">Review</a>
-    <a href="game.html" class="chapter-nav-btn">Game</a>
+    <a href="game.html" class="chapter-nav-btn">Jeu</a>
   </nav>
 
   <div class="match-page">
@@ -105,7 +105,7 @@ body.dark .match-screen-box{background:#1A1A1A}
     </div>
 
     <!-- Game grid -->
-    <div class="match-col-head" style="grid-column:1">Words</div>
+    <div class="match-col-head" style="grid-column:1">Mots</div>
     <div class="match-grid">
       <div class="match-col" id="leftCol"></div>
       <div class="match-col" id="rightCol"></div>
@@ -118,11 +118,11 @@ body.dark .match-screen-box{background:#1A1A1A}
 <!-- Win screen -->
 <div class="match-screen" id="winScreen" style="display:none">
   <div class="match-screen-box">
-    <div class="msb-title">Match Master!</div>
+    <div class="msb-title">Association parfaite !</div>
     <div class="msb-lives" id="winLives"></div>
     <div class="msb-sub">You matched every word twice. Technology and Media vocabulary mastered!</div>
     <div class="msb-stat" id="winStat"></div>
-    <button class="msb-btn" onclick="resetGame()">Play again</button>
+    <button class="msb-btn" onclick="resetGame()">Rejouer</button>
     <a href="flashcards.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Flashcards</a>
     <a href="game.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Mastery game</a>
   </div>
@@ -134,25 +134,14 @@ body.dark .match-screen-box{background:#1A1A1A}
     <div class="msb-title">Out of lives!</div>
     <div class="msb-sub">Keep practising — you need to match each word twice without 3 mistakes.</div>
     <div class="msb-stat" id="loseStat"></div>
-    <button class="msb-btn" onclick="resetGame()">Try again</button>
+    <button class="msb-btn" onclick="resetGame()">Réessayer</button>
     <a href="flashcards.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Review cards first</a>
   </div>
 </div>
 
 <script src="../../../../shared/store.js?v=v107"></script>
 <script>
-var WORDS = [
-  {"word": "Download", "def": "transfer a file from the internet to your device"},
-  {"word": "Upload", "def": "transfer a file from your device to the internet"},
-  {"word": "Stream", "def": "watch or listen to content live over the internet"},
-  {"word": "Go viral", "def": "spread rapidly and be shared by millions online"},
-  {"word": "Algorithm", "def": "a set of rules used to determine what content you see online"},
-  {"word": "Screen time", "def": "the amount of time spent looking at a screen"},
-  {"word": "Content creator", "def": "someone who produces videos, posts or podcasts online"},
-  {"word": "Search engine", "def": "a programme that searches the internet for information"},
-  {"word": "Hack", "def": "to gain unauthorised access to a computer system"},
-  {"word": "Notification", "def": "an automated alert from an app or website informing you of something new"}
-];
+var WORDS = [{"word":"Download","def":"télécharger (depuis internet vers son appareil)"},{"word":"Upload","def":"mettre en ligne, téléverser (vers internet)"},{"word":"Stream","def":"regarder/écouter en streaming — en direct sur internet"},{"word":"Go viral","def":"devenir viral — se diffuser massivement en ligne"},{"word":"Algorithm","def":"l’algorithme — les règles qui choisissent ce que vous voyez en ligne"},{"word":"Screen time","def":"le temps d’écran — le temps passé devant les écrans"},{"word":"Content creator","def":"le créateur de contenu — il produit vidéos, posts ou podcasts"},{"word":"Search engine","def":"le moteur de recherche — le programme qui explore internet"},{"word":"Hack","def":"pirater — s’introduire illégalement dans un système informatique"},{"word":"Notification","def":"la notification — l’alerte automatique d’une application"}];
 var MASTERY_KEY = 'wordplay_vocab_b1_technology-media_mastered';
 var PROG_KEY    = 'b1';
 var SLUG        = 'technology-media';

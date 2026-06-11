@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>B2 Vocab · Expressions and Idioms — Flashcards | Word Play</title>
+<title>B2 Vocabulaire · Expressions and Idioms — Flashcards | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
@@ -49,16 +49,16 @@
 <body>
 <header class="site-header">
   <div class="site-header-inner">
-    <a href="../index.html" class="back back-link" aria-label="Back"></a>
+    <a href="../index.html" class="back back-link" aria-label="Retour"></a>
     <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+    <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Dark</button>
   </div>
 </header>
 <div class="container">
   <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>›</span>
+    <a href="../../../../index.html">Accueil</a><span>›</span>
     <a href="../../index.html">B2</a><span>›</span>
-    <a href="../index.html">Vocabulary</a><span>›</span>
+    <a href="../index.html">Vocabulaire</a><span>›</span>
     <strong>Expressions and Idioms</strong>
   </div>
   <div class="chapter-num">V4</div>
@@ -66,14 +66,14 @@
   <nav class="chapter-nav">
     <a href="flashcards.html" class="chapter-nav-btn active">Flashcards</a>
     <a href="match.html" class="chapter-nav-btn">Match</a>
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
     <a href="worksheet.html" class="chapter-nav-btn">Review</a>
-    <a href="game.html" class="chapter-nav-btn">Game</a>
+    <a href="game.html" class="chapter-nav-btn">Jeu</a>
   </nav>
 
   <div class="vocab-page">
     <div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">Topic mastered</span></div>
-    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; tap card to reveal</div>
+    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; touche la carte pour révéler</div>
 
     <div class="mode-tabs">
       <button class="mode-tab active" onclick="setMode('flash',this)">Flashcards</button>
@@ -107,7 +107,7 @@
     </div>
 
     <div id="modeMatch" style="display:none">
-      <div class="match-score" id="matchScore">Match each word to its definition</div>
+      <div class="match-score" id="matchScore">Associe chaque mot à sa définition</div>
       <div class="match-grid">
         <div class="match-col" id="matchWords"></div>
         <div class="match-col" id="matchDefs"></div>
@@ -128,11 +128,7 @@
 var SLUG = 'expressions-idioms';
 var LEVEL = 'b2';
 var MASTERY_KEY = 'wordplay_vocab_b2_expressions-idioms_mastered';
-var WORDS = [{"id": "lr", "word": "In the long run", "def": "over a long period of time; eventually", "ipa": "", "ex": "Switching to renewables is cheaper <b>in the long run</b>."}, {"id": "mot", "word": "A matter of time", "def": "something that will certainly happen eventually", "ipa": "", "ex": "It is only <b>a matter of time</b> before AI replaces many jobs."}, {"id": "tia", "word": "Take into account", "def": "consider a factor when making a decision", "ipa": "", "ex": "We must <b>take into account</b> the impact on biodiversity."}, {"id": "ghih", "word": "Go hand in hand", "def": "be closely associated or occur together", "ipa": "", "ex": "Poverty and poor health tend to <b>go hand in hand</b>."}, {"id": "mem", "word": "Make ends meet", "def": "earn just enough money to pay for necessary expenses", "ipa": "", "ex": "Many families struggle to <b>make ends meet</b>."}, {"id": "fsof", "word": "Fall short of", "def": "fail to reach a target or expectation", "ipa": "", "ex": "The policy <b>fell short of</b> its emissions targets."}, {"id": "cttw", "word": "Come to terms with", "def": "accept a difficult or unpleasant situation", "ipa": "", "ex": "She had to <b>come to terms with</b> the restructuring."}, {"id": "ovo", "word": "On the verge of", "def": "very close to something happening", "ipa": "", "ex": "The species is <b>on the verge of</b> extinction."},
-  {"word":"Bite off more than you can chew","def":"to take on more work or responsibility than you can handle","ipa":"","ex":"He bit off more than he could chew by managing three projects alone."},
-  {"word":"In the same ballpark","def":"approximately the same; in a similar range","ipa":"","ex":"The two estimates were at least in the same ballpark."},
-  {"word":"Cut corners","def":"to do something quickly and cheaply by ignoring important steps","ipa":"","ex":"The contractor was accused of cutting corners on safety."},
-  {"word":"See the big picture","def":"to understand the whole situation rather than focusing on details","ipa":"","ex":"A good manager needs to see the big picture."}];
+var WORDS = [{"id":"lr","word":"In the long run","def":"à long terme, à la longue — in the long run","ipa":"","ex":"Switching to renewables is cheaper <b>in the long run</b>."},{"id":"mot","word":"A matter of time","def":"une question de temps — ce qui finira forcément par arriver","ipa":"","ex":"It is only <b>a matter of time</b> before AI replaces many jobs."},{"id":"tia","word":"Take into account","def":"prendre en compte — take into account : considérer un facteur","ipa":"","ex":"We must <b>take into account</b> the impact on biodiversity."},{"id":"ghih","word":"Go hand in hand","def":"aller de pair — être étroitement liés","ipa":"","ex":"Poverty and poor health tend to <b>go hand in hand</b>."},{"id":"mem","word":"Make ends meet","def":"joindre les deux bouts — gagner juste assez pour vivre","ipa":"","ex":"Many families struggle to <b>make ends meet</b>."},{"id":"fsof","word":"Fall short of","def":"ne pas être à la hauteur de — rester en deçà d’un objectif","ipa":"","ex":"The policy <b>fell short of</b> its emissions targets."},{"id":"cttw","word":"Come to terms with","def":"se faire une raison, accepter — come to terms with","ipa":"","ex":"She had to <b>come to terms with</b> the restructuring."},{"id":"ovo","word":"On the verge of","def":"au bord de, sur le point de — on the verge of","ipa":"","ex":"The species is <b>on the verge of</b> extinction."},{"word":"Bite off more than you can chew","def":"avoir les yeux plus gros que le ventre — accepter plus qu’on ne peut gérer","ipa":"","ex":"He bit off more than he could chew by managing three projects alone."},{"word":"In the same ballpark","def":"du même ordre de grandeur — à peu près comparable","ipa":"","ex":"The two estimates were at least in the same ballpark."},{"word":"Cut corners","def":"rogner sur la qualité — bâcler pour aller vite ou économiser","ipa":"","ex":"The contractor was accused of cutting corners on safety."},{"word":"See the big picture","def":"avoir une vue d’ensemble — voir au-delà des détails","ipa":"","ex":"A good manager needs to see the big picture."}];
 var fcIdx = 0, flipped = false;
 
 function setMode(mode, btn) {

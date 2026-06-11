@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>B1 Vocab · Phrasal Verbs — Go and Come — Match Game | Word Play</title>
+<title>B1 Vocabulaire · Phrasal Verbs — Go and Come — Jeu d’association | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
@@ -66,26 +66,26 @@ body.dark .match-screen-box{background:#1A1A1A}
 </head>
 <body>
 <header class="site-header"><div class="site-header-inner">
-  <a href="index.html" class="back back-link" aria-label="Back"></a>
+  <a href="index.html" class="back back-link" aria-label="Retour"></a>
   <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Dark</button>
 </div></header>
 
 <div class="container">
   <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>›</span>
+    <a href="../../../../index.html">Accueil</a><span>›</span>
     <a href="../../index.html">B1</a><span>›</span>
-    <a href="../index.html">Vocabulary</a><span>›</span>
+    <a href="../index.html">Vocabulaire</a><span>›</span>
     <a href="index.html">Phrasal Verbs — Go and Come</a><span>›</span>
-    <strong>Match game</strong>
+    <strong>Jeu d&rsquo;association</strong>
   </div>
   <h1>Phrasal Verbs — Go and Come — Match</h1>
   <nav class="chapter-nav">
     <a href="flashcards.html" class="chapter-nav-btn">Flashcards</a>
     <a href="match.html" class="chapter-nav-btn active">Match</a>
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
     <a href="worksheet.html" class="chapter-nav-btn">Review</a>
-    <a href="game.html" class="chapter-nav-btn">Game</a>
+    <a href="game.html" class="chapter-nav-btn">Jeu</a>
   </nav>
 
   <div class="match-page">
@@ -104,7 +104,7 @@ body.dark .match-screen-box{background:#1A1A1A}
     </div>
 
     <!-- Game grid -->
-    <div class="match-col-head" style="grid-column:1">Words</div>
+    <div class="match-col-head" style="grid-column:1">Mots</div>
     <div class="match-grid">
       <div class="match-col" id="leftCol"></div>
       <div class="match-col" id="rightCol"></div>
@@ -117,11 +117,11 @@ body.dark .match-screen-box{background:#1A1A1A}
 <!-- Win screen -->
 <div class="match-screen" id="winScreen" style="display:none">
   <div class="match-screen-box">
-    <div class="msb-title">Match Master!</div>
+    <div class="msb-title">Association parfaite !</div>
     <div class="msb-lives" id="winLives"></div>
     <div class="msb-sub">You matched every word twice. Phrasal Verbs — Go and Come vocabulary mastered!</div>
     <div class="msb-stat" id="winStat"></div>
-    <button class="msb-btn" onclick="resetGame()">Play again</button>
+    <button class="msb-btn" onclick="resetGame()">Rejouer</button>
     <a href="flashcards.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Flashcards</a>
     <a href="game.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Mastery game</a>
   </div>
@@ -133,25 +133,14 @@ body.dark .match-screen-box{background:#1A1A1A}
     <div class="msb-title">Out of lives!</div>
     <div class="msb-sub">Keep practising — you need to match each word twice without 3 mistakes.</div>
     <div class="msb-stat" id="loseStat"></div>
-    <button class="msb-btn" onclick="resetGame()">Try again</button>
+    <button class="msb-btn" onclick="resetGame()">Réessayer</button>
     <a href="flashcards.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Review cards first</a>
   </div>
 </div>
 
 <script src="../../../../shared/store.js?v=v107"></script>
 <script>
-var WORDS = [
-  {"word": "Go on", "def": "continue or happen"},
-  {"word": "Go through", "def": "experience something difficult or check something carefully"},
-  {"word": "Go off", "def": "an alarm sounds or food goes bad"},
-  {"word": "Go ahead", "def": "proceed with a plan"},
-  {"word": "Come across", "def": "find or meet by chance"},
-  {"word": "Come up", "def": "arise or be mentioned"},
-  {"word": "Come up with", "def": "think of an idea or solution"},
-  {"word": "Come round", "def": "visit someone at home or change your opinion"},
-  {"word": "Come back", "def": "to return to a place or activity"},
-  {"word": "Go without", "def": "to not have something that you need or usually have"}
-];
+var WORDS = [{"word":"Go on","def":"continuer ; se passer (What’s going on ? = Que se passe-t-il ?)"},{"word":"Go through","def":"traverser (une épreuve) ; vérifier soigneusement"},{"word":"Go off","def":"sonner (alarme) ; tourner (nourriture)"},{"word":"Go ahead","def":"aller de l’avant — poursuivre un projet"},{"word":"Come across","def":"tomber sur — trouver ou rencontrer par hasard"},{"word":"Come up","def":"survenir, être mentionné"},{"word":"Come up with","def":"trouver, inventer (une idée, une solution)"},{"word":"Come round","def":"passer (chez quelqu’un) ; changer d’avis"},{"word":"Come back","def":"revenir — retourner à un endroit ou une activité"},{"word":"Go without","def":"se passer de — vivre sans quelque chose"}];
 var MASTERY_KEY = 'wordplay_vocab_b1_phrasal-verbs-go-come_mastered';
 var PROG_KEY    = 'b1';
 var SLUG        = 'phrasal-verbs-go-come';

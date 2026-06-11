@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>B1 Vocab · Word Families — basic — Flashcards | Word Play</title>
+<title>B1 Vocabulaire · Word Families — basic — Flashcards | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
@@ -49,16 +49,16 @@
 <body>
 <header class="site-header">
   <div class="site-header-inner">
-    <a href="../index.html" class="back back-link" aria-label="Back"></a>
+    <a href="../index.html" class="back back-link" aria-label="Retour"></a>
     <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+    <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Dark</button>
   </div>
 </header>
 <div class="container">
   <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>›</span>
+    <a href="../../../../index.html">Accueil</a><span>›</span>
     <a href="../../index.html">B1</a><span>›</span>
-    <a href="../index.html">Vocabulary</a><span>›</span>
+    <a href="../index.html">Vocabulaire</a><span>›</span>
     <strong>Word Families — basic</strong>
   </div>
   <div class="chapter-num">V10</div>
@@ -66,14 +66,14 @@
   <nav class="chapter-nav">
     <a href="flashcards.html" class="chapter-nav-btn active">Flashcards</a>
     <a href="match.html" class="chapter-nav-btn">Match</a>
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
     <a href="worksheet.html" class="chapter-nav-btn">Review</a>
-    <a href="game.html" class="chapter-nav-btn">Game</a>
+    <a href="game.html" class="chapter-nav-btn">Jeu</a>
   </nav>
 
   <div class="vocab-page">
     <div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">Topic mastered</span></div>
-    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; tap card to reveal</div>
+    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; touche la carte pour révéler</div>
 
     <div class="mode-tabs">
       <button class="mode-tab active" onclick="setMode('flash',this)">Flashcards</button>
@@ -107,7 +107,7 @@
     </div>
 
     <div id="modeMatch" style="display:none">
-      <div class="match-score" id="matchScore">Match each word to its definition</div>
+      <div class="match-score" id="matchScore">Associe chaque mot à sa définition</div>
       <div class="match-grid">
         <div class="match-col" id="matchWords"></div>
         <div class="match-col" id="matchDefs"></div>
@@ -128,11 +128,7 @@
 var SLUG = 'word-families-basic';
 var LEVEL = 'b1';
 var MASTERY_KEY = 'wordplay_vocab_b1_word-families-basic_mastered';
-var WORDS = [{"id": "decide", "word": "Decision", "def": "noun form of decide — a choice made after consideration", "ipa": "", "ex": "Making a career <b>decision</b> is not easy."}, {"id": "happy", "word": "Happiness", "def": "noun form of happy", "ipa": "", "ex": "<b>Happiness</b> comes from doing what you love."}, {"id": "create", "word": "Creative", "def": "adjective form of create — having original ideas", "ipa": "", "ex": "She is a very <b>creative</b> content creator."}, {"id": "compete", "word": "Competition", "def": "noun form of compete — a contest to decide a winner", "ipa": "", "ex": "She won the national <b>competition</b> last year."}, {"id": "achieve", "word": "Achievement", "def": "noun form of achieve — something accomplished successfully", "ipa": "", "ex": "Getting a scholarship is a major <b>achievement</b>."}, {"id": "pollute", "word": "Pollution", "def": "noun form of pollute — harmful substances in the environment", "ipa": "", "ex": "Air <b>pollution</b> is a serious health risk."}, {"id": "succeed", "word": "Success", "def": "noun form of succeed — achieving a goal", "ipa": "", "ex": "Her <b>success</b> in the championship inspired others."}, {"id": "develop", "word": "Development", "def": "noun form of develop — growth or progress", "ipa": "", "ex": "The <b>development</b> of renewable energy is accelerating."},
-  {"word":"Act / action / active","def":"the verb, noun, and adjective forms of the same root","ipa":"","ex":"The quick action of the firefighters saved the building."},
-  {"word":"Create / creative / creativity","def":"verb, adjective and noun forms from the same root","ipa":"","ex":"She shows real creativity in her designs."},
-  {"word":"Educate / education / educated","def":"the word family built on the root meaning to teach or train","ipa":"","ex":"Access to education is a basic right."},
-  {"word":"Help / helpful / helpfulness","def":"the verb, adjective and noun forms of the same root","ipa":"","ex":"The staff were incredibly helpful."}];
+var WORDS = [{"id":"decide","word":"Decision","def":"la décision — le nom formé sur decide","ipa":"","ex":"Making a career <b>decision</b> is not easy."},{"id":"happy","word":"Happiness","def":"le bonheur — le nom formé sur happy (-ness)","ipa":"","ex":"<b>Happiness</b> comes from doing what you love."},{"id":"create","word":"Creative","def":"créatif — l’adjectif formé sur create","ipa":"","ex":"She is a very <b>creative</b> content creator."},{"id":"compete","word":"Competition","def":"la compétition — le nom formé sur compete","ipa":"","ex":"She won the national <b>competition</b> last year."},{"id":"achieve","word":"Achievement","def":"la réussite, l’accomplissement — le nom formé sur achieve","ipa":"","ex":"Getting a scholarship is a major <b>achievement</b>."},{"id":"pollute","word":"Pollution","def":"la pollution — le nom formé sur pollute","ipa":"","ex":"Air <b>pollution</b> is a serious health risk."},{"id":"succeed","word":"Success","def":"le succès, la réussite — le nom formé sur succeed","ipa":"","ex":"Her <b>success</b> in the championship inspired others."},{"id":"develop","word":"Development","def":"le développement — le nom formé sur develop","ipa":"","ex":"The <b>development</b> of renewable energy is accelerating."},{"word":"Act / action / active","def":"agir / l’action / actif — le verbe, le nom et l’adjectif d’une même racine","ipa":"","ex":"The quick action of the firefighters saved the building."},{"word":"Create / creative / creativity","def":"créer / créatif / la créativité — la famille du mot create","ipa":"","ex":"She shows real creativity in her designs."},{"word":"Educate / education / educated","def":"éduquer / l’éducation / instruit — la famille du mot educate","ipa":"","ex":"Access to education is a basic right."},{"word":"Help / helpful / helpfulness","def":"aider / serviable / la serviabilité — la famille du mot help","ipa":"","ex":"The staff were incredibly helpful."}];
 var fcIdx = 0, flipped = false;
 
 function setMode(mode, btn) {

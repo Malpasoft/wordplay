@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>B1 Vocab · Travel and Holidays — Flashcards | Word Play</title>
+<title>B1 Vocabulaire · Travel and Holidays — Flashcards | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
@@ -49,16 +49,16 @@
 <body>
 <header class="site-header">
   <div class="site-header-inner">
-    <a href="../index.html" class="back back-link" aria-label="Back"></a>
+    <a href="../index.html" class="back back-link" aria-label="Retour"></a>
     <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+    <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Dark</button>
   </div>
 </header>
 <div class="container">
   <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>›</span>
+    <a href="../../../../index.html">Accueil</a><span>›</span>
     <a href="../../index.html">B1</a><span>›</span>
-    <a href="../index.html">Vocabulary</a><span>›</span>
+    <a href="../index.html">Vocabulaire</a><span>›</span>
     <strong>Travel and Holidays</strong>
   </div>
   <div class="chapter-num">V2</div>
@@ -66,14 +66,14 @@
   <nav class="chapter-nav">
     <a href="flashcards.html" class="chapter-nav-btn active">Flashcards</a>
     <a href="match.html" class="chapter-nav-btn">Match</a>
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
     <a href="worksheet.html" class="chapter-nav-btn">Review</a>
-    <a href="game.html" class="chapter-nav-btn">Game</a>
+    <a href="game.html" class="chapter-nav-btn">Jeu</a>
   </nav>
 
   <div class="vocab-page">
     <div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">Topic mastered</span></div>
-    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; tap card to reveal</div>
+    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; touche la carte pour révéler</div>
 
     <div class="mode-tabs">
       <button class="mode-tab active" onclick="setMode('flash',this)">Flashcards</button>
@@ -106,7 +106,7 @@
     </div>
 
     <div id="modeMatch" style="display:none">
-      <div class="match-score" id="matchScore">Match each word to its definition</div>
+      <div class="match-score" id="matchScore">Associe chaque mot à sa définition</div>
       <div class="match-grid">
         <div class="match-col" id="matchWords"></div>
         <div class="match-col" id="matchDefs"></div>
@@ -127,7 +127,7 @@
 var SLUG = 'travel-holidays';
 var LEVEL = 'b1';
 var MASTERY_KEY = 'wordplay_vocab_b1_travel-holidays_mastered';
-var WORDS = [{"word": "Accommodation", "ipa": "/əˌkɒm.əˈdeɪ.ʃən/", "def": "a place to stay, such as a hotel or hostel", "ex": "I booked <b>accommodation</b> near the beach."}, {"word": "Itinerary", "ipa": "/aɪˈtɪn.ər.ər.i/", "def": "a detailed plan of a journey including dates and places", "ex": "The travel agent sent us a full <b>itinerary</b>."}, {"word": "Jet lag", "ipa": "/ˈdʒet læɡ/", "def": "extreme tiredness after flying across time zones", "ex": "I suffered from <b>jet lag</b> for two days."}, {"word": "Currency", "ipa": "/ˈkʌr.ən.si/", "def": "the money used in a particular country", "ex": "Always exchange <b>currency</b> at a bank."}, {"word": "Departure", "ipa": "/dɪˈpɑː.tʃər/", "def": "the act of leaving or the time when you leave", "ex": "Our <b>departure</b> is scheduled for 6 am."}, {"word": "Destination", "ipa": "/ˌdes.tɪˈneɪ.ʃən/", "def": "the place where someone is going", "ex": "What's your final <b>destination</b>?"}, {"word": "Souvenir", "ipa": "/ˌsuː.vəˈnɪər/", "def": "an object kept as a reminder of a place or event", "ex": "I bought a <b>souvenir</b> from the local market."}, {"word": "Round trip", "ipa": "/ˈraʊnd trɪp/", "def": "a journey to a place and back again", "ex": "The <b>round trip</b> costs less than two singles."}, {"word": "Sightseeing", "ipa": "/ˈsaɪtˌsiː.ɪŋ/", "def": "visiting famous places as a tourist", "ex": "We spent the day <b>sightseeing</b> in Rome."}, {"word": "Cruise", "ipa": "/kruːz/", "def": "a holiday on a large ship visiting different ports", "ex": "They went on a <b>cruise</b> in the Mediterranean."}, {"word": "Booking", "ipa": "/ˈbʊk.ɪŋ/", "def": "a reservation for accommodation, transport, or an event", "ex": "I made a <b>booking</b> for three nights at the hotel."}, {"word": "Guide", "ipa": "/ɡaɪd/", "def": "a person who shows visitors around a place", "ex": "Our <b>guide</b> knew lots of interesting facts."}];
+var WORDS = [{"word":"Accommodation","ipa":"/əˌkɒm.əˈdeɪ.ʃən/","def":"l’hébergement, le logement — toujours singulier en anglais !","ex":"I booked <b>accommodation</b> near the beach."},{"word":"Itinerary","ipa":"/aɪˈtɪn.ər.ər.i/","def":"l’itinéraire — le programme détaillé d’un voyage","ex":"The travel agent sent us a full <b>itinerary</b>."},{"word":"Jet lag","ipa":"/ˈdʒet læɡ/","def":"le décalage horaire — la fatigue après un long vol","ex":"I suffered from <b>jet lag</b> for two days."},{"word":"Currency","ipa":"/ˈkʌr.ən.si/","def":"la devise, la monnaie — l’argent d’un pays","ex":"Always exchange <b>currency</b> at a bank."},{"word":"Departure","ipa":"/dɪˈpɑː.tʃər/","def":"le départ — le moment où l’on part","ex":"Our <b>departure</b> is scheduled for 6 am."},{"word":"Destination","ipa":"/ˌdes.tɪˈneɪ.ʃən/","def":"la destination — l’endroit où l’on va","ex":"What's your final <b>destination</b>?"},{"word":"Souvenir","ipa":"/ˌsuː.vəˈnɪər/","def":"le souvenir (objet rapporté) — pas le souvenir-mémoire (memory) !","ex":"I bought a <b>souvenir</b> from the local market."},{"word":"Round trip","ipa":"/ˈraʊnd trɪp/","def":"l’aller-retour — un voyage avec retour au point de départ","ex":"The <b>round trip</b> costs less than two singles."},{"word":"Sightseeing","ipa":"/ˈsaɪtˌsiː.ɪŋ/","def":"le tourisme, la visite — go sightseeing = visiter les sites","ex":"We spent the day <b>sightseeing</b> in Rome."},{"word":"Cruise","ipa":"/kruːz/","def":"la croisière — des vacances en bateau d’escale en escale","ex":"They went on a <b>cruise</b> in the Mediterranean."},{"word":"Booking","ipa":"/ˈbʊk.ɪŋ/","def":"la réservation — d’un hôtel, d’un transport, d’un spectacle","ex":"I made a <b>booking</b> for three nights at the hotel."},{"word":"Guide","ipa":"/ɡaɪd/","def":"le/la guide — la personne qui fait visiter","ex":"Our <b>guide</b> knew lots of interesting facts."}];
 var fcIdx = 0, flipped = false;
 
 function setMode(mode, btn) {

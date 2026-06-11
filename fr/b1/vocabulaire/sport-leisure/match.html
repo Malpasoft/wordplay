@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>B1 Vocab · Sport and Leisure — Match Game | Word Play</title>
+<title>B1 Vocabulaire · Sport and Leisure — Jeu d’association | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
@@ -66,27 +66,27 @@ body.dark .match-screen-box{background:#1A1A1A}
 </head>
 <body>
 <header class="site-header"><div class="site-header-inner">
-  <a href="index.html" class="back back-link" aria-label="Back"></a>
+  <a href="index.html" class="back back-link" aria-label="Retour"></a>
   <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Dark</button>
 </div></header>
 
 <div class="container">
   <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>›</span>
+    <a href="../../../../index.html">Accueil</a><span>›</span>
     <a href="../../index.html">B1</a><span>›</span>
-    <a href="../index.html">Vocabulary</a><span>›</span>
+    <a href="../index.html">Vocabulaire</a><span>›</span>
     <a href="index.html">Sport and Leisure</a><span>›</span>
-    <strong>Match game</strong>
+    <strong>Jeu d&rsquo;association</strong>
   </div>
   <h1>Sport and Leisure — Match</h1>
   <nav class="chapter-nav">
     <a href="flashcards.html" class="chapter-nav-btn">Flashcards</a>
     <a href="match.html" class="chapter-nav-btn active">Match</a>
     <a href="match.html" class="chapter-nav-btn">Match</a>
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
     <a href="worksheet.html" class="chapter-nav-btn">Review</a>
-    <a href="game.html" class="chapter-nav-btn">Game</a>
+    <a href="game.html" class="chapter-nav-btn">Jeu</a>
   </nav>
 
   <div class="match-page">
@@ -105,7 +105,7 @@ body.dark .match-screen-box{background:#1A1A1A}
     </div>
 
     <!-- Game grid -->
-    <div class="match-col-head" style="grid-column:1">Words</div>
+    <div class="match-col-head" style="grid-column:1">Mots</div>
     <div class="match-grid">
       <div class="match-col" id="leftCol"></div>
       <div class="match-col" id="rightCol"></div>
@@ -118,11 +118,11 @@ body.dark .match-screen-box{background:#1A1A1A}
 <!-- Win screen -->
 <div class="match-screen" id="winScreen" style="display:none">
   <div class="match-screen-box">
-    <div class="msb-title">Match Master!</div>
+    <div class="msb-title">Association parfaite !</div>
     <div class="msb-lives" id="winLives"></div>
     <div class="msb-sub">You matched every word twice. Sport and Leisure vocabulary mastered!</div>
     <div class="msb-stat" id="winStat"></div>
-    <button class="msb-btn" onclick="resetGame()">Play again</button>
+    <button class="msb-btn" onclick="resetGame()">Rejouer</button>
     <a href="flashcards.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Flashcards</a>
     <a href="game.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Mastery game</a>
   </div>
@@ -134,27 +134,14 @@ body.dark .match-screen-box{background:#1A1A1A}
     <div class="msb-title">Out of lives!</div>
     <div class="msb-sub">Keep practising — you need to match each word twice without 3 mistakes.</div>
     <div class="msb-stat" id="loseStat"></div>
-    <button class="msb-btn" onclick="resetGame()">Try again</button>
+    <button class="msb-btn" onclick="resetGame()">Réessayer</button>
     <a href="flashcards.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Review cards first</a>
   </div>
 </div>
 
 <script src="../../../../shared/store.js?v=v107"></script>
 <script>
-var WORDS = [
-  {"word": "Championship", "def": "a competition to decide who is the best"},
-  {"word": "Referee", "def": "the official who enforces the rules during a match"},
-  {"word": "Spectator", "def": "someone who watches a sporting event"},
-  {"word": "Personal best", "def": "your best ever performance in a sport"},
-  {"word": "Take up", "def": "start a new sport or hobby"},
-  {"word": "Team spirit", "def": "the feeling of loyalty and cooperation within a team"},
-  {"word": "Draw", "def": "a match ending with equal scores"},
-  {"word": "Compete", "def": "take part in a competition"},
-  {"word": "Personal trainer", "def": "a fitness professional who designs and supervises exercise programmes"},
-  {"word": "Warm up", "def": "to do gentle exercise to prepare your body before sport"},
-  {"word": "Defend", "def": "to protect your goal or prevent the other team from scoring"},
-  {"word": "Division", "def": "a group of teams at the same level who compete against each other"}
-];
+var WORDS = [{"word":"Championship","def":"le championnat — la compétition qui désigne le meilleur"},{"word":"Referee","def":"l’arbitre — l’officiel qui fait respecter les règles"},{"word":"Spectator","def":"le spectateur — celui qui regarde l’épreuve"},{"word":"Personal best","def":"le record personnel — sa meilleure performance"},{"word":"Take up","def":"se mettre à — commencer un nouveau sport ou loisir"},{"word":"Team spirit","def":"l’esprit d’équipe — la solidarité au sein d’un groupe"},{"word":"Draw","def":"le match nul — une rencontre à égalité"},{"word":"Compete","def":"concourir, être en compétition"},{"word":"Personal trainer","def":"le coach sportif — le professionnel qui encadre l’entraînement"},{"word":"Warm up","def":"s’échauffer — préparer son corps avant l’effort"},{"word":"Defend","def":"défendre — protéger son but, empêcher l’adversaire de marquer"},{"word":"Division","def":"la division — un groupe d’équipes de même niveau"}];
 var MASTERY_KEY = 'wordplay_vocab_b1_sport-leisure_mastered';
 var PROG_KEY    = 'b1';
 var SLUG        = 'sport-leisure';

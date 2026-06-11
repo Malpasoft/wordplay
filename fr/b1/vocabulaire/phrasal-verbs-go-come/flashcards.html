@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>B1 Vocab · Phrasal Verbs — Go and Come — Flashcards | Word Play</title>
+<title>B1 Vocabulaire · Phrasal Verbs — Go and Come — Flashcards | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
@@ -49,16 +49,16 @@
 <body>
 <header class="site-header">
   <div class="site-header-inner">
-    <a href="../index.html" class="back back-link" aria-label="Back"></a>
+    <a href="../index.html" class="back back-link" aria-label="Retour"></a>
     <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+    <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Dark</button>
   </div>
 </header>
 <div class="container">
   <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>›</span>
+    <a href="../../../../index.html">Accueil</a><span>›</span>
     <a href="../../index.html">B1</a><span>›</span>
-    <a href="../index.html">Vocabulary</a><span>›</span>
+    <a href="../index.html">Vocabulaire</a><span>›</span>
     <strong>Phrasal Verbs — Go and Come</strong>
   </div>
   <div class="chapter-num">V6</div>
@@ -66,14 +66,14 @@
   <nav class="chapter-nav">
     <a href="flashcards.html" class="chapter-nav-btn active">Flashcards</a>
     <a href="match.html" class="chapter-nav-btn">Match</a>
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
     <a href="worksheet.html" class="chapter-nav-btn">Review</a>
-    <a href="game.html" class="chapter-nav-btn">Game</a>
+    <a href="game.html" class="chapter-nav-btn">Jeu</a>
   </nav>
 
   <div class="vocab-page">
     <div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">Topic mastered</span></div>
-    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; tap card to reveal</div>
+    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; touche la carte pour révéler</div>
 
     <div class="mode-tabs">
       <button class="mode-tab active" onclick="setMode('flash',this)">Flashcards</button>
@@ -107,7 +107,7 @@
     </div>
 
     <div id="modeMatch" style="display:none">
-      <div class="match-score" id="matchScore">Match each word to its definition</div>
+      <div class="match-score" id="matchScore">Associe chaque mot à sa définition</div>
       <div class="match-grid">
         <div class="match-col" id="matchWords"></div>
         <div class="match-col" id="matchDefs"></div>
@@ -128,18 +128,7 @@
 var SLUG = 'phrasal-verbs-go-come';
 var LEVEL = 'b1';
 var MASTERY_KEY = 'wordplay_vocab_b1_phrasal-verbs-go-come_mastered';
-var WORDS = [
-  {"id": "go_on", "word": "Go on", "def": "continue or happen", "ipa": "", "ex": "What is <b>going on</b>? Everyone looks upset."},
-  {"id": "go_through", "word": "Go through", "def": "experience something difficult or check something carefully", "ipa": "", "ex": "She <b>went through</b> a difficult period after the redundancy."},
-  {"id": "go_off", "word": "Go off", "def": "an alarm sounds or food goes bad", "ipa": "", "ex": "The fire alarm <b>went off</b> during the training session."},
-  {"id": "go_ahead", "word": "Go ahead", "def": "proceed with a plan", "ipa": "", "ex": "The project <b>went ahead</b> despite the bad weather."},
-  {"id": "come_across", "word": "Come across", "def": "find or meet by chance", "ipa": "", "ex": "She <b>came across</b> a fascinating article while revising."},
-  {"id": "come_up", "word": "Come up", "def": "arise or be mentioned", "ipa": "", "ex": "The topic of climate change <b>came up</b> in the discussion."},
-  {"id": "come_up_with", "word": "Come up with", "def": "think of an idea or solution", "ipa": "", "ex": "She <b>came up with</b> a brilliant solution."},
-  {"id": "come_round", "word": "Come round", "def": "visit someone at home or change your opinion", "ipa": "", "ex": "He <b>came round</b> to the idea of switching to renewables."},
-  {"word": "Come back", "def": "to return to a place or activity", "ipa": "", "ex": "He promised to come back before dinner."},
-  {"word": "Go without", "def": "to not have something that you need or usually have", "ipa": "", "ex": "During the strike, workers had to go without pay."}
-];
+var WORDS = [{"id":"go_on","word":"Go on","def":"continuer ; se passer (What’s going on ? = Que se passe-t-il ?)","ipa":"","ex":"What is <b>going on</b>? Everyone looks upset."},{"id":"go_through","word":"Go through","def":"traverser (une épreuve) ; vérifier soigneusement","ipa":"","ex":"She <b>went through</b> a difficult period after the redundancy."},{"id":"go_off","word":"Go off","def":"sonner (alarme) ; tourner (nourriture)","ipa":"","ex":"The fire alarm <b>went off</b> during the training session."},{"id":"go_ahead","word":"Go ahead","def":"aller de l’avant — poursuivre un projet","ipa":"","ex":"The project <b>went ahead</b> despite the bad weather."},{"id":"come_across","word":"Come across","def":"tomber sur — trouver ou rencontrer par hasard","ipa":"","ex":"She <b>came across</b> a fascinating article while revising."},{"id":"come_up","word":"Come up","def":"survenir, être mentionné","ipa":"","ex":"The topic of climate change <b>came up</b> in the discussion."},{"id":"come_up_with","word":"Come up with","def":"trouver, inventer (une idée, une solution)","ipa":"","ex":"She <b>came up with</b> a brilliant solution."},{"id":"come_round","word":"Come round","def":"passer (chez quelqu’un) ; changer d’avis","ipa":"","ex":"He <b>came round</b> to the idea of switching to renewables."},{"word":"Come back","def":"revenir — retourner à un endroit ou une activité","ipa":"","ex":"He promised to come back before dinner."},{"word":"Go without","def":"se passer de — vivre sans quelque chose","ipa":"","ex":"During the strike, workers had to go without pay."}];
 var fcIdx = 0, flipped = false;
 
 function setMode(mode, btn) {

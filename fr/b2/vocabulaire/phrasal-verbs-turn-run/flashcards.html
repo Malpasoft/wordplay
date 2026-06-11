@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>B2 Vocab · Phrasal Verbs — Turn and Run — Flashcards | Word Play</title>
+<title>B2 Vocabulaire · Phrasal Verbs — Turn and Run — Flashcards | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
@@ -49,16 +49,16 @@
 <body>
 <header class="site-header">
   <div class="site-header-inner">
-    <a href="../index.html" class="back back-link" aria-label="Back"></a>
+    <a href="../index.html" class="back back-link" aria-label="Retour"></a>
     <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+    <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Dark</button>
   </div>
 </header>
 <div class="container">
   <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>›</span>
+    <a href="../../../../index.html">Accueil</a><span>›</span>
     <a href="../../index.html">B2</a><span>›</span>
-    <a href="../index.html">Vocabulary</a><span>›</span>
+    <a href="../index.html">Vocabulaire</a><span>›</span>
     <strong>Phrasal Verbs — Turn and Run</strong>
   </div>
   <div class="chapter-num">V9</div>
@@ -66,14 +66,14 @@
   <nav class="chapter-nav">
     <a href="flashcards.html" class="chapter-nav-btn active">Flashcards</a>
     <a href="match.html" class="chapter-nav-btn">Match</a>
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
     <a href="worksheet.html" class="chapter-nav-btn">Review</a>
-    <a href="game.html" class="chapter-nav-btn">Game</a>
+    <a href="game.html" class="chapter-nav-btn">Jeu</a>
   </nav>
 
   <div class="vocab-page">
     <div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">Topic mastered</span></div>
-    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; tap card to reveal</div>
+    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; touche la carte pour révéler</div>
 
     <div class="mode-tabs">
       <button class="mode-tab active" onclick="setMode('flash',this)">Flashcards</button>
@@ -107,7 +107,7 @@
     </div>
 
     <div id="modeMatch" style="display:none">
-      <div class="match-score" id="matchScore">Match each word to its definition</div>
+      <div class="match-score" id="matchScore">Associe chaque mot à sa définition</div>
       <div class="match-grid">
         <div class="match-col" id="matchWords"></div>
         <div class="match-col" id="matchDefs"></div>
@@ -128,16 +128,7 @@
 var SLUG = 'phrasal-verbs-turn-run';
 var LEVEL = 'b2';
 var MASTERY_KEY = 'wordplay_vocab_b2_phrasal-verbs-turn-run_mastered';
-var WORDS = [
-  {"id": "td", "word": "Turn down", "def": "refuse an offer or request", "ipa": "", "ex": "She <b>turned down</b> the promotion to keep work-life balance."},
-  {"id": "tu", "word": "Turn up", "def": "arrive or appear, often unexpectedly", "ipa": "", "ex": "He finally <b>turned up</b> an hour late."},
-  {"id": "to", "word": "Turn out", "def": "prove to be the case or result in a particular way", "ipa": "", "ex": "The project <b>turned out</b> to be more complex than expected."},
-  {"id": "ti", "word": "Turn into", "def": "become or transform into something different", "ipa": "", "ex": "The start-up <b>turned into</b> a major corporation."},
-  {"id": "roo", "word": "Run out of", "def": "have no more of something", "ipa": "", "ex": "We are <b>running out of</b> renewable energy capacity."},
-  {"id": "ri", "word": "Run into", "def": "meet someone by chance or encounter a problem", "ipa": "", "ex": "She <b>ran into</b> her old colleague at the conference."},
-  {"id": "rth", "word": "Run through", "def": "practise or explain something quickly", "ipa": "", "ex": "Let me <b>run through</b> the key points of the proposal."},
-  {"id": "ru", "word": "Run up", "def": "accumulate a debt or large bill", "ipa": "", "ex": "The company <b>ran up</b> a significant debt during the recession."}
-];
+var WORDS = [{"id":"td","word":"Turn down","def":"refuser, décliner — turn down an offer ; baisser (le volume)","ipa":"","ex":"She <b>turned down</b> the promotion to keep work-life balance."},{"id":"tu","word":"Turn up","def":"arriver, se pointer — souvent à l’improviste","ipa":"","ex":"He finally <b>turned up</b> an hour late."},{"id":"to","word":"Turn out","def":"s’avérer — it turned out that... = il s’est avéré que...","ipa":"","ex":"The project <b>turned out</b> to be more complex than expected."},{"id":"ti","word":"Turn into","def":"se transformer en, devenir","ipa":"","ex":"The start-up <b>turned into</b> a major corporation."},{"id":"roo","word":"Run out of","def":"être à court de — ne plus avoir de","ipa":"","ex":"We are <b>running out of</b> renewable energy capacity."},{"id":"ri","word":"Run into","def":"croiser (par hasard) ; rencontrer (un problème)","ipa":"","ex":"She <b>ran into</b> her old colleague at the conference."},{"id":"rth","word":"Run through","def":"passer en revue, répéter rapidement","ipa":"","ex":"Let me <b>run through</b> the key points of the proposal."},{"id":"ru","word":"Run up","def":"accumuler (une dette, une grosse facture)","ipa":"","ex":"The company <b>ran up</b> a significant debt during the recession."}];
 var fcIdx = 0, flipped = false;
 
 function setMode(mode, btn) {

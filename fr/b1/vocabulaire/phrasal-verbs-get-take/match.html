@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>B1 Vocab · Phrasal Verbs: GET & TAKE — Match Game | Word Play</title>
+<title>B1 Vocabulaire · Phrasal Verbs: GET & TAKE — Jeu d’association | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
@@ -66,26 +66,26 @@ body.dark .match-screen-box{background:#1A1A1A}
 </head>
 <body>
 <header class="site-header"><div class="site-header-inner">
-  <a href="index.html" class="back back-link" aria-label="Back"></a>
+  <a href="index.html" class="back back-link" aria-label="Retour"></a>
   <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Dark</button>
 </div></header>
 
 <div class="container">
   <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>›</span>
+    <a href="../../../../index.html">Accueil</a><span>›</span>
     <a href="../../index.html">B1</a><span>›</span>
-    <a href="../index.html">Vocabulary</a><span>›</span>
+    <a href="../index.html">Vocabulaire</a><span>›</span>
     <a href="index.html">Phrasal Verbs: GET & TAKE</a><span>›</span>
-    <strong>Match game</strong>
+    <strong>Jeu d&rsquo;association</strong>
   </div>
   <h1>Phrasal Verbs: GET & TAKE — Match</h1>
   <nav class="chapter-nav">
     <a href="flashcards.html" class="chapter-nav-btn">Flashcards</a>
     <a href="match.html" class="chapter-nav-btn active">Match</a>
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
     <a href="worksheet.html" class="chapter-nav-btn">Review</a>
-    <a href="game.html" class="chapter-nav-btn">Game</a>
+    <a href="game.html" class="chapter-nav-btn">Jeu</a>
   </nav>
 
   <div class="match-page">
@@ -104,7 +104,7 @@ body.dark .match-screen-box{background:#1A1A1A}
     </div>
 
     <!-- Game grid -->
-    <div class="match-col-head" style="grid-column:1">Words</div>
+    <div class="match-col-head" style="grid-column:1">Mots</div>
     <div class="match-grid">
       <div class="match-col" id="leftCol"></div>
       <div class="match-col" id="rightCol"></div>
@@ -117,11 +117,11 @@ body.dark .match-screen-box{background:#1A1A1A}
 <!-- Win screen -->
 <div class="match-screen" id="winScreen" style="display:none">
   <div class="match-screen-box">
-    <div class="msb-title">Match Master!</div>
+    <div class="msb-title">Association parfaite !</div>
     <div class="msb-lives" id="winLives"></div>
     <div class="msb-sub">You matched every word twice. Phrasal Verbs: GET & TAKE vocabulary mastered!</div>
     <div class="msb-stat" id="winStat"></div>
-    <button class="msb-btn" onclick="resetGame()">Play again</button>
+    <button class="msb-btn" onclick="resetGame()">Rejouer</button>
     <a href="flashcards.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Flashcards</a>
     <a href="game.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Mastery game</a>
   </div>
@@ -133,25 +133,14 @@ body.dark .match-screen-box{background:#1A1A1A}
     <div class="msb-title">Out of lives!</div>
     <div class="msb-sub">Keep practising — you need to match each word twice without 3 mistakes.</div>
     <div class="msb-stat" id="loseStat"></div>
-    <button class="msb-btn" onclick="resetGame()">Try again</button>
+    <button class="msb-btn" onclick="resetGame()">Réessayer</button>
     <a href="flashcards.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Review cards first</a>
   </div>
 </div>
 
 <script src="../../../../shared/store.js?v=v107"></script>
 <script>
-var WORDS = [
-  {"word": "get up", "def": "to wake and get out of bed"},
-  {"word": "get on", "def": "to have a good relationship; to board a vehicle"},
-  {"word": "get away", "def": "to escape or take a holiday"},
-  {"word": "get back", "def": "to return home"},
-  {"word": "get off", "def": "to leave a vehicle"},
-  {"word": "take off", "def": "to remove clothing; to depart (plane)"},
-  {"word": "take on", "def": "to accept responsibility"},
-  {"word": "take over", "def": "to gain control"},
-  {"word": "take part", "def": "to participate"},
-  {"word": "take out", "def": "to remove; to go on a date"}
-];
+var WORDS = [{"word":"get up","def":"se lever — sortir du lit"},{"word":"get on","def":"bien s’entendre (avec qqn) ; monter (dans un véhicule)"},{"word":"get away","def":"s’échapper ; partir en vacances"},{"word":"get back","def":"rentrer, revenir"},{"word":"get off","def":"descendre (d’un véhicule)"},{"word":"take off","def":"enlever (un vêtement) ; décoller (avion)"},{"word":"take on","def":"accepter, assumer (une responsabilité)"},{"word":"take over","def":"prendre le contrôle, reprendre"},{"word":"take part","def":"participer — take part in = participer à"},{"word":"take out","def":"sortir, retirer ; inviter quelqu’un (à sortir)"}];
 var MASTERY_KEY = 'vocab_mastered_phrasal-verbs-get-take';
 var PROG_KEY    = 'b1';
 var SLUG        = 'phrasal-verbs-get-take';

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>B2 Vocab · Technology and Innovation — Flashcards | Word Play</title>
+<title>B2 Vocabulaire · Technology and Innovation — Flashcards | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
@@ -49,16 +49,16 @@
 <body>
 <header class="site-header">
   <div class="site-header-inner">
-    <a href="../index.html" class="back back-link" aria-label="Back"></a>
+    <a href="../index.html" class="back back-link" aria-label="Retour"></a>
     <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+    <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Dark</button>
   </div>
 </header>
 <div class="container">
   <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>›</span>
+    <a href="../../../../index.html">Accueil</a><span>›</span>
     <a href="../../index.html">B2</a><span>›</span>
-    <a href="../index.html">Vocabulary</a><span>›</span>
+    <a href="../index.html">Vocabulaire</a><span>›</span>
     <strong>Technology and Innovation</strong>
   </div>
   <div class="chapter-num">V11</div>
@@ -66,14 +66,14 @@
   <nav class="chapter-nav">
     <a href="flashcards.html" class="chapter-nav-btn active">Flashcards</a>
     <a href="match.html" class="chapter-nav-btn">Match</a>
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
     <a href="worksheet.html" class="chapter-nav-btn">Review</a>
-    <a href="game.html" class="chapter-nav-btn">Game</a>
+    <a href="game.html" class="chapter-nav-btn">Jeu</a>
   </nav>
 
   <div class="vocab-page">
     <div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">Topic mastered</span></div>
-    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; tap card to reveal</div>
+    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; touche la carte pour révéler</div>
 
     <div class="mode-tabs">
       <button class="mode-tab active" onclick="setMode('flash',this)">Flashcards</button>
@@ -107,7 +107,7 @@
     </div>
 
     <div id="modeMatch" style="display:none">
-      <div class="match-score" id="matchScore">Match each word to its definition</div>
+      <div class="match-score" id="matchScore">Associe chaque mot à sa définition</div>
       <div class="match-grid">
         <div class="match-col" id="matchWords"></div>
         <div class="match-col" id="matchDefs"></div>
@@ -128,19 +128,7 @@
 var SLUG = 'technology-innovation';
 var LEVEL = 'b2';
 var MASTERY_KEY = 'wordplay_vocab_b2_technology-innovation_mastered';
-var WORDS = [
-  {"id": "ai", "word": "Artificial intelligence", "def": "machines that perform tasks requiring human intelligence", "ipa": "", "ex": "<b>Artificial intelligence</b> is transforming healthcare."},
-  {"id": "auto", "word": "Automation", "def": "using technology to do tasks without human involvement", "ipa": "", "ex": "<b>Automation</b> is causing redundancy in manufacturing."},
-  {"id": "cyber", "word": "Cybersecurity", "def": "protecting computer systems and data from digital attacks", "ipa": "", "ex": "Companies must invest in <b>cybersecurity</b>."},
-  {"id": "dp", "word": "Data privacy", "def": "the right to control how your personal information is used", "ipa": "", "ex": "<b>Data privacy</b> laws protect users from misuse of their information."},
-  {"id": "df", "word": "Digital footprint", "def": "the trail of data left by someone using the internet", "ipa": "", "ex": "Be aware of your <b>digital footprint</b> — it is permanent."},
-  {"id": "disrupt", "word": "Disruptive technology", "def": "technology that fundamentally changes an existing industry", "ipa": "", "ex": "The smartphone was a truly <b>disruptive technology</b>."},
-  {"id": "algo", "word": "Algorithm", "def": "a set of rules a computer uses to process information or solve problems", "ipa": "", "ex": "The <b>algorithm</b> determines what content you see."},
-  {"id": "redund", "word": "Redundancy", "def": "job loss caused by automation or company restructuring", "ipa": "", "ex": "Many workers fear <b>redundancy</b> as automation spreads."},
-  {"word": "Scale up", "def": "to increase the size, scope or capacity of something", "ipa": "", "ex": "The company plans to scale up production next year."},
-  {"word": "User experience", "def": "how a person feels when using a product, especially a digital one", "ipa": "", "ex": "Good user experience is central to the app's success."},
-  {"word": "Seamless", "def": "smooth and continuous, with no problems or interruptions", "ipa": "", "ex": "The transition between devices was completely seamless."}
-];
+var WORDS = [{"id":"ai","word":"Artificial intelligence","def":"l’intelligence artificielle — des machines qui accomplissent des tâches humaines","ipa":"","ex":"<b>Artificial intelligence</b> is transforming healthcare."},{"id":"auto","word":"Automation","def":"l’automatisation — faire faire les tâches par la technologie","ipa":"","ex":"<b>Automation</b> is causing redundancy in manufacturing."},{"id":"cyber","word":"Cybersecurity","def":"la cybersécurité — protéger les systèmes des attaques numériques","ipa":"","ex":"Companies must invest in <b>cybersecurity</b>."},{"id":"dp","word":"Data privacy","def":"la confidentialité des données — contrôler l’usage de ses informations","ipa":"","ex":"<b>Data privacy</b> laws protect users from misuse of their information."},{"id":"df","word":"Digital footprint","def":"l’empreinte numérique — les traces laissées en ligne","ipa":"","ex":"Be aware of your <b>digital footprint</b> — it is permanent."},{"id":"disrupt","word":"Disruptive technology","def":"une technologie de rupture — elle bouleverse un secteur entier","ipa":"","ex":"The smartphone was a truly <b>disruptive technology</b>."},{"id":"algo","word":"Algorithm","def":"l’algorithme — les règles de traitement d’un programme","ipa":"","ex":"The <b>algorithm</b> determines what content you see."},{"id":"redund","word":"Redundancy","def":"le licenciement économique — la suppression d’un poste","ipa":"","ex":"Many workers fear <b>redundancy</b> as automation spreads."},{"word":"Scale up","def":"passer à l’échelle supérieure — augmenter la taille ou la capacité","ipa":"","ex":"The company plans to scale up production next year."},{"word":"User experience","def":"l’expérience utilisateur — le ressenti à l’usage d’un produit","ipa":"","ex":"Good user experience is central to the app's success."},{"word":"Seamless","def":"fluide, sans accroc — sans interruption ni problème","ipa":"","ex":"The transition between devices was completely seamless."}];
 var fcIdx = 0, flipped = false;
 
 function setMode(mode, btn) {

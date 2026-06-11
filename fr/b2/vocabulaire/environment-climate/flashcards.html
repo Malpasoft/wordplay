@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>B2 Vocab · Environment and Climate — Flashcards | Word Play</title>
+<title>B2 Vocabulaire · Environment and Climate — Flashcards | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
@@ -49,16 +49,16 @@
 <body>
 <header class="site-header">
   <div class="site-header-inner">
-    <a href="../index.html" class="back back-link" aria-label="Back"></a>
+    <a href="../index.html" class="back back-link" aria-label="Retour"></a>
     <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+    <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Dark</button>
   </div>
 </header>
 <div class="container">
   <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>›</span>
+    <a href="../../../../index.html">Accueil</a><span>›</span>
     <a href="../../index.html">B2</a><span>›</span>
-    <a href="../index.html">Vocabulary</a><span>›</span>
+    <a href="../index.html">Vocabulaire</a><span>›</span>
     <strong>Environment and Climate</strong>
   </div>
   <div class="chapter-num">V3</div>
@@ -66,14 +66,14 @@
   <nav class="chapter-nav">
     <a href="flashcards.html" class="chapter-nav-btn active">Flashcards</a>
     <a href="match.html" class="chapter-nav-btn">Match</a>
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
     <a href="worksheet.html" class="chapter-nav-btn">Review</a>
-    <a href="game.html" class="chapter-nav-btn">Game</a>
+    <a href="game.html" class="chapter-nav-btn">Jeu</a>
   </nav>
 
   <div class="vocab-page">
     <div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">Topic mastered</span></div>
-    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; tap card to reveal</div>
+    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; touche la carte pour révéler</div>
 
     <div class="mode-tabs">
       <button class="mode-tab active" onclick="setMode('flash',this)">Flashcards</button>
@@ -107,7 +107,7 @@
     </div>
 
     <div id="modeMatch" style="display:none">
-      <div class="match-score" id="matchScore">Match each word to its definition</div>
+      <div class="match-score" id="matchScore">Associe chaque mot à sa définition</div>
       <div class="match-grid">
         <div class="match-col" id="matchWords"></div>
         <div class="match-col" id="matchDefs"></div>
@@ -128,11 +128,7 @@
 var SLUG = 'environment-climate';
 var LEVEL = 'b2';
 var MASTERY_KEY = 'wordplay_vocab_b2_environment-climate_mastered';
-var WORDS = [{"id": "ce", "word": "Carbon emissions", "def": "CO2 released into the atmosphere by burning fossil fuels", "ipa": "", "ex": "We must reduce <b>carbon emissions</b> urgently."}, {"id": "biod", "word": "Biodiversity", "def": "the variety of plant and animal life in a particular area", "ipa": "", "ex": "Deforestation threatens <b>biodiversity</b> on a massive scale."}, {"id": "renew", "word": "Renewable energy", "def": "energy from sources naturally replenished, such as sun or wind", "ipa": "", "ex": "Solar power is the fastest-growing <b>renewable energy</b> source."}, {"id": "ff", "word": "Fossil fuels", "def": "coal, oil and gas formed from ancient organic matter", "ipa": "", "ex": "We must phase out <b>fossil fuels</b> to tackle climate change."}, {"id": "nz", "word": "Net zero", "def": "achieving a balance between emitting and removing carbon", "ipa": "", "ex": "The company aims to reach <b>net zero</b> by 2040."}, {"id": "gg", "word": "Greenhouse gases", "def": "gases that trap heat in the Earth", "ipa": "", "ex": "<b>Greenhouse gases</b> are the main driver of global warming."}, {"id": "cc", "word": "Climate crisis", "def": "the urgent and serious threat posed by climate change", "ipa": "", "ex": "Young people are most vocal about the <b>climate crisis</b>."}, {"id": "sd", "word": "Sustainable development", "def": "growth that meets today", "ipa": "", "ex": "<b>Sustainable development</b> requires balancing growth with conservation."},
-  {"word":"Carbon footprint","def":"the total greenhouse gas emissions caused by an individual or organisation","ipa":"","ex":"Flying significantly increases your carbon footprint."},
-  {"word":"Sea level rise","def":"the increase in ocean levels caused by melting ice and warmer water","ipa":"","ex":"Low-lying cities are threatened by sea level rise."},
-  {"word":"Climate sceptic","def":"a person who questions the scientific consensus on climate change","ipa":"","ex":"The policy was criticised by both environmentalists and climate sceptics."},
-  {"word":"Ecosystem","def":"a community of living things interacting with their environment","ipa":"","ex":"Pollution is damaging the ocean ecosystem."}];
+var WORDS = [{"id":"ce","word":"Carbon emissions","def":"les émissions de carbone — le CO2 rejeté dans l’atmosphère","ipa":"","ex":"We must reduce <b>carbon emissions</b> urgently."},{"id":"biod","word":"Biodiversity","def":"la biodiversité — la variété du vivant dans un milieu","ipa":"","ex":"Deforestation threatens <b>biodiversity</b> on a massive scale."},{"id":"renew","word":"Renewable energy","def":"les énergies renouvelables — soleil, vent, sources inépuisables","ipa":"","ex":"Solar power is the fastest-growing <b>renewable energy</b> source."},{"id":"ff","word":"Fossil fuels","def":"les énergies fossiles — charbon, pétrole et gaz","ipa":"","ex":"We must phase out <b>fossil fuels</b> to tackle climate change."},{"id":"nz","word":"Net zero","def":"la neutralité carbone — équilibre entre émissions et absorption","ipa":"","ex":"The company aims to reach <b>net zero</b> by 2040."},{"id":"gg","word":"Greenhouse gases","def":"les gaz à effet de serre — ils retiennent la chaleur terrestre","ipa":"","ex":"<b>Greenhouse gases</b> are the main driver of global warming."},{"id":"cc","word":"Climate crisis","def":"la crise climatique — la menace urgente du changement climatique","ipa":"","ex":"Young people are most vocal about the <b>climate crisis</b>."},{"id":"sd","word":"Sustainable development","def":"le développement durable — répondre aux besoins d’aujourd’hui sans compromettre demain","ipa":"","ex":"<b>Sustainable development</b> requires balancing growth with conservation."},{"word":"Carbon footprint","def":"l’empreinte carbone — le total des émissions d’une personne ou organisation","ipa":"","ex":"Flying significantly increases your carbon footprint."},{"word":"Sea level rise","def":"la montée des eaux — l’élévation du niveau des océans","ipa":"","ex":"Low-lying cities are threatened by sea level rise."},{"word":"Climate sceptic","def":"le climatosceptique — il met en doute le consensus scientifique","ipa":"","ex":"The policy was criticised by both environmentalists and climate sceptics."},{"word":"Ecosystem","def":"l’écosystème — une communauté d’êtres vivants et leur milieu","ipa":"","ex":"Pollution is damaging the ocean ecosystem."}];
 var fcIdx = 0, flipped = false;
 
 function setMode(mode, btn) {

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>B1 Vocab · Technology and Media — Flashcards | Word Play</title>
+<title>B1 Vocabulaire · Technology and Media — Flashcards | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
@@ -49,16 +49,16 @@
 <body>
 <header class="site-header">
   <div class="site-header-inner">
-    <a href="../index.html" class="back back-link" aria-label="Back"></a>
+    <a href="../index.html" class="back back-link" aria-label="Retour"></a>
     <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+    <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Dark</button>
   </div>
 </header>
 <div class="container">
   <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>›</span>
+    <a href="../../../../index.html">Accueil</a><span>›</span>
     <a href="../../index.html">B1</a><span>›</span>
-    <a href="../index.html">Vocabulary</a><span>›</span>
+    <a href="../index.html">Vocabulaire</a><span>›</span>
     <strong>Technology and Media</strong>
   </div>
   <div class="chapter-num">V8</div>
@@ -66,14 +66,14 @@
   <nav class="chapter-nav">
     <a href="flashcards.html" class="chapter-nav-btn active">Flashcards</a>
     <a href="match.html" class="chapter-nav-btn">Match</a>
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
     <a href="worksheet.html" class="chapter-nav-btn">Review</a>
-    <a href="game.html" class="chapter-nav-btn">Game</a>
+    <a href="game.html" class="chapter-nav-btn">Jeu</a>
   </nav>
 
   <div class="vocab-page">
     <div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">Topic mastered</span></div>
-    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; tap card to reveal</div>
+    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; touche la carte pour révéler</div>
 
     <div class="mode-tabs">
       <button class="mode-tab active" onclick="setMode('flash',this)">Flashcards</button>
@@ -107,7 +107,7 @@
     </div>
 
     <div id="modeMatch" style="display:none">
-      <div class="match-score" id="matchScore">Match each word to its definition</div>
+      <div class="match-score" id="matchScore">Associe chaque mot à sa définition</div>
       <div class="match-grid">
         <div class="match-col" id="matchWords"></div>
         <div class="match-col" id="matchDefs"></div>
@@ -128,18 +128,7 @@
 var SLUG = 'technology-media';
 var LEVEL = 'b1';
 var MASTERY_KEY = 'wordplay_vocab_b1_technology-media_mastered';
-var WORDS = [
-  {"id": "dl", "word": "Download", "def": "transfer a file from the internet to your device", "ipa": "", "ex": "She <b>downloaded</b> the app before the flight."},
-  {"id": "ul", "word": "Upload", "def": "transfer a file from your device to the internet", "ipa": "", "ex": "He <b>uploaded</b> the video to his channel."},
-  {"id": "stream", "word": "Stream", "def": "watch or listen to content live over the internet", "ipa": "", "ex": "We <b>stream</b> all our films — we don"},
-  {"id": "viral", "word": "Go viral", "def": "spread rapidly and be shared by millions online", "ipa": "", "ex": "The video <b>went viral</b> overnight."},
-  {"id": "algo", "word": "Algorithm", "def": "a set of rules used to determine what content you see online", "ipa": "", "ex": "The <b>algorithm</b> decides which posts appear in your feed."},
-  {"id": "st", "word": "Screen time", "def": "the amount of time spent looking at a screen", "ipa": "", "ex": "Parents are concerned about children"},
-  {"id": "cc", "word": "Content creator", "def": "someone who produces videos, posts or podcasts online", "ipa": "", "ex": "She is a <b>content creator</b> with two million followers."},
-  {"id": "se", "word": "Search engine", "def": "a programme that searches the internet for information", "ipa": "", "ex": "Use a <b>search engine</b> to find reliable information."},
-  {"word": "Hack", "def": "to gain unauthorised access to a computer system", "ipa": "", "ex": "The company’s database was hacked by criminals."},
-  {"word": "Notification", "def": "an automated alert from an app or website informing you of something new", "ipa": "", "ex": "She turned off all notifications to focus on her work."}
-];
+var WORDS = [{"id":"dl","word":"Download","def":"télécharger (depuis internet vers son appareil)","ipa":"","ex":"She <b>downloaded</b> the app before the flight."},{"id":"ul","word":"Upload","def":"mettre en ligne, téléverser (vers internet)","ipa":"","ex":"He <b>uploaded</b> the video to his channel."},{"id":"stream","word":"Stream","def":"regarder/écouter en streaming — en direct sur internet","ipa":"","ex":"We <b>stream</b> all our films — we don"},{"id":"viral","word":"Go viral","def":"devenir viral — se diffuser massivement en ligne","ipa":"","ex":"The video <b>went viral</b> overnight."},{"id":"algo","word":"Algorithm","def":"l’algorithme — les règles qui choisissent ce que vous voyez en ligne","ipa":"","ex":"The <b>algorithm</b> decides which posts appear in your feed."},{"id":"st","word":"Screen time","def":"le temps d’écran — le temps passé devant les écrans","ipa":"","ex":"Parents are concerned about children"},{"id":"cc","word":"Content creator","def":"le créateur de contenu — il produit vidéos, posts ou podcasts","ipa":"","ex":"She is a <b>content creator</b> with two million followers."},{"id":"se","word":"Search engine","def":"le moteur de recherche — le programme qui explore internet","ipa":"","ex":"Use a <b>search engine</b> to find reliable information."},{"word":"Hack","def":"pirater — s’introduire illégalement dans un système informatique","ipa":"","ex":"The company’s database was hacked by criminals."},{"word":"Notification","def":"la notification — l’alerte automatique d’une application","ipa":"","ex":"She turned off all notifications to focus on her work."}];
 var fcIdx = 0, flipped = false;
 
 function setMode(mode, btn) {

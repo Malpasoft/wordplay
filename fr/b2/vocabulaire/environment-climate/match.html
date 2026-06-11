@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>B2 Vocab · Environment and Climate — Match Game | Word Play</title>
+<title>B2 Vocabulaire · Environment and Climate — Jeu d’association | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
@@ -66,26 +66,26 @@ body.dark .match-screen-box{background:#1A1A1A}
 </head>
 <body>
 <header class="site-header"><div class="site-header-inner">
-  <a href="index.html" class="back back-link" aria-label="Back"></a>
+  <a href="index.html" class="back back-link" aria-label="Retour"></a>
   <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Dark</button>
 </div></header>
 
 <div class="container">
   <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>›</span>
+    <a href="../../../../index.html">Accueil</a><span>›</span>
     <a href="../../index.html">B2</a><span>›</span>
-    <a href="../index.html">Vocabulary</a><span>›</span>
+    <a href="../index.html">Vocabulaire</a><span>›</span>
     <a href="index.html">Environment and Climate</a><span>›</span>
-    <strong>Match game</strong>
+    <strong>Jeu d&rsquo;association</strong>
   </div>
   <h1>Environment and Climate — Match</h1>
   <nav class="chapter-nav">
     <a href="flashcards.html" class="chapter-nav-btn">Flashcards</a>
     <a href="match.html" class="chapter-nav-btn active">Match</a>
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
     <a href="worksheet.html" class="chapter-nav-btn">Review</a>
-    <a href="game.html" class="chapter-nav-btn">Game</a>
+    <a href="game.html" class="chapter-nav-btn">Jeu</a>
   </nav>
 
   <div class="match-page">
@@ -104,7 +104,7 @@ body.dark .match-screen-box{background:#1A1A1A}
     </div>
 
     <!-- Game grid -->
-    <div class="match-col-head" style="grid-column:1">Words</div>
+    <div class="match-col-head" style="grid-column:1">Mots</div>
     <div class="match-grid">
       <div class="match-col" id="leftCol"></div>
       <div class="match-col" id="rightCol"></div>
@@ -117,11 +117,11 @@ body.dark .match-screen-box{background:#1A1A1A}
 <!-- Win screen -->
 <div class="match-screen" id="winScreen" style="display:none">
   <div class="match-screen-box">
-    <div class="msb-title">Match Master!</div>
+    <div class="msb-title">Association parfaite !</div>
     <div class="msb-lives" id="winLives"></div>
     <div class="msb-sub">You matched every word twice. Environment and Climate vocabulary mastered!</div>
     <div class="msb-stat" id="winStat"></div>
-    <button class="msb-btn" onclick="resetGame()">Play again</button>
+    <button class="msb-btn" onclick="resetGame()">Rejouer</button>
     <a href="flashcards.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Flashcards</a>
     <a href="game.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Mastery game</a>
   </div>
@@ -133,27 +133,14 @@ body.dark .match-screen-box{background:#1A1A1A}
     <div class="msb-title">Out of lives!</div>
     <div class="msb-sub">Keep practising — you need to match each word twice without 3 mistakes.</div>
     <div class="msb-stat" id="loseStat"></div>
-    <button class="msb-btn" onclick="resetGame()">Try again</button>
+    <button class="msb-btn" onclick="resetGame()">Réessayer</button>
     <a href="flashcards.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Review cards first</a>
   </div>
 </div>
 
 <script src="../../../../shared/store.js?v=v107"></script>
 <script>
-var WORDS = [
-  {"word": "Carbon emissions", "def": "CO2 released into the atmosphere by burning fossil fuels"},
-  {"word": "Biodiversity", "def": "the variety of plant and animal life in a particular area"},
-  {"word": "Renewable energy", "def": "energy from sources naturally replenished, such as sun or wind"},
-  {"word": "Fossil fuels", "def": "coal, oil and gas formed from ancient organic matter"},
-  {"word": "Net zero", "def": "achieving a balance between emitting and removing carbon"},
-  {"word": "Greenhouse gases", "def": "gases that trap heat in the Earth"},
-  {"word": "Climate crisis", "def": "the urgent and serious threat posed by climate change"},
-  {"word": "Sustainable development", "def": "growth that meets today"},
-  {"word": "Carbon footprint", "def": "the total greenhouse gas emissions caused by an individual or organisation"},
-  {"word": "Sea level rise", "def": "the increase in ocean levels caused by melting ice and warmer water"},
-  {"word": "Climate sceptic", "def": "a person who questions the scientific consensus on climate change"},
-  {"word": "Ecosystem", "def": "a community of living things interacting with their environment"}
-];
+var WORDS = [{"word":"Carbon emissions","def":"les émissions de carbone — le CO2 rejeté dans l’atmosphère"},{"word":"Biodiversity","def":"la biodiversité — la variété du vivant dans un milieu"},{"word":"Renewable energy","def":"les énergies renouvelables — soleil, vent, sources inépuisables"},{"word":"Fossil fuels","def":"les énergies fossiles — charbon, pétrole et gaz"},{"word":"Net zero","def":"la neutralité carbone — équilibre entre émissions et absorption"},{"word":"Greenhouse gases","def":"les gaz à effet de serre — ils retiennent la chaleur terrestre"},{"word":"Climate crisis","def":"la crise climatique — la menace urgente du changement climatique"},{"word":"Sustainable development","def":"le développement durable — répondre aux besoins d’aujourd’hui sans compromettre demain"},{"word":"Carbon footprint","def":"l’empreinte carbone — le total des émissions d’une personne ou organisation"},{"word":"Sea level rise","def":"la montée des eaux — l’élévation du niveau des océans"},{"word":"Climate sceptic","def":"le climatosceptique — il met en doute le consensus scientifique"},{"word":"Ecosystem","def":"l’écosystème — une communauté d’êtres vivants et leur milieu"}];
 var MASTERY_KEY = 'wordplay_vocab_b2_environment-climate_mastered';
 var PROG_KEY    = 'b2';
 var SLUG        = 'environment-climate';

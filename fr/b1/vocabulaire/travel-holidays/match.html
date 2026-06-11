@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>B1 Vocab · Travel and Holidays — Match Game | Word Play</title>
+<title>B1 Vocabulaire · Travel and Holidays — Jeu d’association | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
@@ -66,26 +66,26 @@ body.dark .match-screen-box{background:#1A1A1A}
 </head>
 <body>
 <header class="site-header"><div class="site-header-inner">
-  <a href="index.html" class="back back-link" aria-label="Back"></a>
+  <a href="index.html" class="back back-link" aria-label="Retour"></a>
   <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Dark</button>
 </div></header>
 
 <div class="container">
   <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>›</span>
+    <a href="../../../../index.html">Accueil</a><span>›</span>
     <a href="../../index.html">B1</a><span>›</span>
-    <a href="../index.html">Vocabulary</a><span>›</span>
+    <a href="../index.html">Vocabulaire</a><span>›</span>
     <a href="index.html">Travel and Holidays</a><span>›</span>
-    <strong>Match game</strong>
+    <strong>Jeu d&rsquo;association</strong>
   </div>
   <h1>Travel and Holidays — Match</h1>
   <nav class="chapter-nav">
     <a href="flashcards.html" class="chapter-nav-btn">Flashcards</a>
     <a href="match.html" class="chapter-nav-btn active">Match</a>
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
     <a href="worksheet.html" class="chapter-nav-btn">Review</a>
-    <a href="game.html" class="chapter-nav-btn">Game</a>
+    <a href="game.html" class="chapter-nav-btn">Jeu</a>
   </nav>
 
   <div class="match-page">
@@ -104,7 +104,7 @@ body.dark .match-screen-box{background:#1A1A1A}
     </div>
 
     <!-- Game grid -->
-    <div class="match-col-head" style="grid-column:1">Words</div>
+    <div class="match-col-head" style="grid-column:1">Mots</div>
     <div class="match-grid">
       <div class="match-col" id="leftCol"></div>
       <div class="match-col" id="rightCol"></div>
@@ -117,11 +117,11 @@ body.dark .match-screen-box{background:#1A1A1A}
 <!-- Win screen -->
 <div class="match-screen" id="winScreen" style="display:none">
   <div class="match-screen-box">
-    <div class="msb-title">Match Master!</div>
+    <div class="msb-title">Association parfaite !</div>
     <div class="msb-lives" id="winLives"></div>
     <div class="msb-sub">You matched every word twice. Travel and Holidays vocabulary mastered!</div>
     <div class="msb-stat" id="winStat"></div>
-    <button class="msb-btn" onclick="resetGame()">Play again</button>
+    <button class="msb-btn" onclick="resetGame()">Rejouer</button>
     <a href="flashcards.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Flashcards</a>
     <a href="game.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Mastery game</a>
   </div>
@@ -133,27 +133,14 @@ body.dark .match-screen-box{background:#1A1A1A}
     <div class="msb-title">Out of lives!</div>
     <div class="msb-sub">Keep practising — you need to match each word twice without 3 mistakes.</div>
     <div class="msb-stat" id="loseStat"></div>
-    <button class="msb-btn" onclick="resetGame()">Try again</button>
+    <button class="msb-btn" onclick="resetGame()">Réessayer</button>
     <a href="flashcards.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Review cards first</a>
   </div>
 </div>
 
 <script src="../../../../shared/store.js?v=v107"></script>
 <script>
-var WORDS = [
-  {"word": "Accommodation", "def": "a place to stay, such as a hotel or hostel"},
-  {"word": "Itinerary", "def": "a detailed plan of a journey including dates and places"},
-  {"word": "Jet lag", "def": "extreme tiredness after flying across time zones"},
-  {"word": "Currency", "def": "the money used in a particular country"},
-  {"word": "Departure", "def": "the act of leaving or the time when you leave"},
-  {"word": "Destination", "def": "the place where someone is going"},
-  {"word": "Souvenir", "def": "an object kept as a reminder of a place or event"},
-  {"word": "Round trip", "def": "a journey to a place and back again"},
-  {"word": "Sightseeing", "def": "visiting famous places as a tourist"},
-  {"word": "Cruise", "def": "a holiday on a large ship visiting different ports"},
-  {"word": "Booking", "def": "a reservation for accommodation, transport, or an event"},
-  {"word": "Guide", "def": "a person who shows visitors around a place"}
-];
+var WORDS = [{"word":"Accommodation","def":"l’hébergement, le logement — toujours singulier en anglais !"},{"word":"Itinerary","def":"l’itinéraire — le programme détaillé d’un voyage"},{"word":"Jet lag","def":"le décalage horaire — la fatigue après un long vol"},{"word":"Currency","def":"la devise, la monnaie — l’argent d’un pays"},{"word":"Departure","def":"le départ — le moment où l’on part"},{"word":"Destination","def":"la destination — l’endroit où l’on va"},{"word":"Souvenir","def":"le souvenir (objet rapporté) — pas le souvenir-mémoire (memory) !"},{"word":"Round trip","def":"l’aller-retour — un voyage avec retour au point de départ"},{"word":"Sightseeing","def":"le tourisme, la visite — go sightseeing = visiter les sites"},{"word":"Cruise","def":"la croisière — des vacances en bateau d’escale en escale"},{"word":"Booking","def":"la réservation — d’un hôtel, d’un transport, d’un spectacle"},{"word":"Guide","def":"le/la guide — la personne qui fait visiter"}];
 var MASTERY_KEY = 'wordplay_vocab_b1_travel-holidays_mastered';
 var PROG_KEY    = 'b1';
 var SLUG        = 'travel-holidays';
