@@ -1,67 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>B1 · Present Perfect Continuous — Game | Word Play</title>
+<title>Present Perfect Continuous — Jeu B1 | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
 </head>
 <body>
-<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a>
-<a href="/" class="brand">Word Play</a>
-<button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
-</div></header>
-<div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../../../b/b1/index.html">B1</a><span>›</span><a href="../index.html">Grammar</a><span>›</span><a href="index.html">Present Perfect Continuous</a></div>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../fr/index.html">Anglais pour francophones</a><span>&#8250;</span>
+  <a href="../../index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">Present Perfect Continuous</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
 <nav class="chapter-nav">
-<a href="slides.html" class="chapter-nav-btn">Lesson</a>
-<a href="worksheet.html" class="chapter-nav-btn">Review</a>
-<a href="game.html" class="chapter-nav-btn active">Game</a>
+  <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
 </nav>
-<div class="game-wrap">
-  <div id="gameStart" class="game-screen active">
-    <div class="game-start">
-      <h2>Present Perfect Continuous — Mastery</h2>
-      <p>4 stages each — meaning, recognition, in-context and production. A wrong answer drops you back one stage, never to zero.</p>
-      <div id="gStartMastered" style="font-family:var(--font-sans);font-size:.9rem;margin:12px 0;color:var(--muted)"></div>
-      <div id="gResumeSection" style="display:none;margin-bottom:12px">
-        <button id="gBtnResume" class="game-btn primary">Resume</button>
-        <button id="gBtnNewFromResume" class="game-btn">Start fresh</button>
+<div class="container">
+  <h1>Present Perfect Continuous — Jeu de Maîtrise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Maîtrise</h2>
+        <p>Chaque emploi passe par trois types de questions : sens, contexte et production. Atteins 100 points pour gagner.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Maîtrisés</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tu as une partie sauvegardée.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Commencer</button></div>
       </div>
-      <button id="gBtnStart" class="game-btn primary">Start</button>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Tous les éléments — référence</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
     </div>
-  </div>
-  <div id="gamePlay" class="game-screen"><div class="game-play"></div>
-    <div class="game-ref-panel" id="gRefPanel">
-      <button id="gRefToggle" class="game-ref-head">&#9660; Reference &mdash; all items</button>
-      <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
     </div>
-  </div>
-  <div id="gameCompletion" class="game-screen">
-    <div class="game-complete" style="text-align:center">
-      <h2>All mastered!</h2>
-      <p style="color:var(--muted);font-size:.85rem">Score: <strong id="gFinalScore"></strong> &middot; Best streak: <strong id="gFinalStreak"></strong></p>
-      <div id="gFinalPct" style="font-family:var(--font-serif);font-size:1.4rem;font-weight:700;color:var(--accent);margin:8px 0"></div>
-      <div id="gMasteryMap" style="margin:16px 0;text-align:left"></div>
-      <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
-      <a href="worksheet.html" class="game-btn" style="text-decoration:none;text-align:center;margin-top:8px">Redo practice worksheet</a>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Maîtrisé !</h2>
+        <p>Tu as terminé tous les éléments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure série</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Maîtrisés</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 <div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Anglais B1 &middot; Jeu</footer>
 <script>
-window.CHAPTER_ID="present-perfect-continuous";window.LEVEL="b1";window.SECTION="grammar";
 window.GAME_DATA = {
-  chapterId:"present-perfect-continuous",level:"b1",title:"Present Perfect Continuous",storageKey:"wordplay_game_b1_present-perfect-continuous",
-  items: [{"id": "duration", "term": "have been working", "meaning": "action started in past, still continuing", "synonym": "ongoing activity", "example": "I <b>have been working</b> here for 5 years.", "completion": "She ______ Spanish for 3 years. (study)", "answer": "has been studying"}, {"id": "recent", "term": "recent activity", "meaning": "action just stopped, result visible now", "synonym": "just-finished activity", "example": "You look tired. <b>Have you been running</b>?", "completion": "Her eyes are red — she ______ . (cry)", "answer": "has been crying"}, {"id": "for", "term": "for + period", "meaning": "duration: hours, years, ages", "synonym": "for a length of time", "example": "He has been studying <b>for</b> three hours.", "completion": "I've been here ______ two weeks.", "answer": "for"}, {"id": "since", "term": "since + starting point", "meaning": "from a specific time/date", "synonym": "from when it started", "example": "She has been working here <b>since</b> 2020.", "completion": "They've been married ______ 2015.", "answer": "since"}, {"id": "stative", "term": "stative verb exception", "meaning": "know, want, love → PP simple, not continuous", "synonym": "no continuous form", "example": "I <b>have known</b> her for years. (NOT been knowing)", "completion": "I ______ him since childhood. (know)", "answer": "have known"}, {"id": "vs_simple", "term": "vs PP simple", "meaning": "continuous = activity / simple = result", "synonym": "action vs completion", "example": "I have been writing emails (activity). I have written 5 emails (result).", "completion": "I ______ 10 pages today. (write)", "answer": "have written"}]
+  chapterId: "present-perfect-continuous",
+  level: "b1",
+  title: "Present Perfect Continuous — Ça dure encore",
+  storageKey: 'wordplay_game_b1_present-perfect-continuous',
+  items: [
+    {id:"been-waiting", term:"have been waiting", meaning:"ça fait X temps que j’attends", synonym:"durée en cours", example:"I<b>'ve been waiting</b> for two hours!", completion:"I've been ______ for two hours! (attendre)", answer:"waiting"},
+    {id:"been-raining", term:"has been raining", meaning:"il pleut depuis...", synonym:"météo qui dure", example:"It <b>has been raining</b> all day.", completion:"It has been ______ all day. (pleuvoir)", answer:"raining"},
+    {id:"how-long", term:"How long have you been...?", meaning:"depuis combien de temps...", synonym:"question de durée", example:"<b>How long</b> have you been learning English?", completion:"______ ______ have you been learning English? (depuis combien de temps)", answer:"how long"},
+    {id:"been-running", term:"have you been running?", meaning:"résultat visible d’une activité récente", synonym:"résultat visible", example:"You’re out of breath — <b>have you been running</b>?", completion:"You're out of breath — have you been ______ ? (courir)", answer:"running"},
+    {id:"have-read", term:"I've read three (bilan)", meaning:"le bilan chiffré reste au perfect simple", synonym:"bilan chiffré", example:"I<b>'ve read</b> three books this month.", completion:"I've ______ three books this month. (ai lu)", answer:"read"},
+    {id:"have-known", term:"I've known (état)", meaning:"les verbes d’état refusent le -ing", synonym:"verbe d’état", example:"I<b>'ve known</b> her for ten years.", completion:"I've ______ her for ten years. (connais)", answer:"known"},
+    {id:"for-duration", term:"for + durée", meaning:"for two hours = depuis deux heures", synonym:"for", example:"I've been waiting <b>for</b> two hours.", completion:"I've been waiting ______ two hours.", answer:"for"},
+    {id:"since-point", term:"since + repère", meaning:"since six = depuis six heures", synonym:"since", example:"He's been working <b>since</b> six.", completion:"He's been working ______ six.", answer:"since"}
+  ]
 };
 </script>
 <script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v111"></script>
-<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
 </body>
 </html>
