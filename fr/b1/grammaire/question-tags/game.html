@@ -1,126 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="description" content="Word Play — Cambridge English grammar, vocabulary and writing practice.">
-<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
-<title>Question Tags — B1 Grammar Game | Word Play</title>
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Question Tags — Jeu B1 | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
 </head>
 <body>
-<header class="site-header">
-  <div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a>
-    <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:white;font-family:var(--font-sans);font-size:0.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border-radius:4px;cursor:pointer;">&#9680; Dark</button>
-  </div>
-</header>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
 <div class="breadcrumb">
-  <a href="../../../../index.html">Home</a>
-  <span>›</span>
-  <a href="../../index.html">B1</a>
-  <span>›</span>
-  <a href="../index.html">Grammar</a>
-  <span>›</span>
-  <a href="index.html">Question Tags</a>
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../fr/index.html">Anglais pour francophones</a><span>&#8250;</span>
+  <a href="../../index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">Question Tags</a><span>&#8250;</span>
+  <strong>Jeu</strong>
 </div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+</nav>
 <div class="container">
-  
-  <h1>Question Tags</h1>
-  <nav class="chapter-nav">
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
-    <a href="worksheet.html" class="chapter-nav-btn">Review</a>
-    <a href="game.html" class="chapter-nav-btn active">Game</a>
-  </nav>
+  <h1>Question Tags — Jeu de Maîtrise</h1>
   <div class="game-wrap">
     <div id="gameStart" class="game-screen active">
       <div class="game-start">
-        <h2>4-Stage Mastery</h2>
-        <p>Each item passes through four stages: meaning, synonym, identification and sentence completion. Answer correctly to advance — a wrong answer drops you back one stage.</p>
+        <h2>Jeu de Maîtrise</h2>
+        <p>Chaque mécanisme des question tags passe par trois types de questions : sens, contexte et production. Atteins 100 points pour gagner.</p>
         <div class="game-stats-row">
-          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Maîtrisés</div></div>
           <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
         </div>
         <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
-          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved session.</p>
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tu as une partie sauvegardée.</p>
           <div class="game-btn-row">
-          <a href="../relative-clauses/slides.html" class="game-btn primary" style="text-decoration:none;text-align:center">Ch 11 Relative Clauses &#8594;</a>
-                    
-          
-            <button id="gBtnResume" class="game-btn primary">Resume</button>
-            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
           </div>
         </div>
-        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Commencer</button></div>
       </div>
       <div class="game-ref-panel" style="margin-top:20px;">
-        <div class="game-ref-head" id="gRefToggle">&#9660; All 6 items — reference</div>
+        <div class="game-ref-head" id="gRefToggle">&#9660; Tous les éléments — référence</div>
         <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
       </div>
     </div>
     <div id="gamePlay" class="game-screen">
-      <div class="game-play">
-        <div class="game-mode-tag" id="gModeTag"></div>
-        <div class="game-term" id="gTerm"></div>
-        <div class="game-prompt" id="gPrompt"></div>
-        <div class="game-options" id="gOptions"></div>
-        <div class="game-feedback" id="gFeedback"></div>
-        <div class="game-example" id="gExample" style="display:none;"></div>
-        <div style="text-align:center;margin:12px 0;">
-          <button id="gBtnNext" class="game-btn primary" style="display:none;">Next &#8594;</button>
-        </div>
-        <div class="game-helpers">
-          <button id="gBtnHint" class="game-btn ghost small">Hint</button>
-          <button id="gBtnReveal" class="game-btn ghost small">Show answer</button>
-          <button id="gBtnKnow" class="game-btn know small" style="display:none">I know this</button>
-        </div>
-        <div class="game-progress-strip">
-          <div class="game-progress-bar"><div class="game-progress-fill" id="gProgressBar" style="width:0%"></div></div>
-          <div class="game-progress-text" id="gProgressTxt">0 / 0 mastered</div>
-        </div>
-        <div class="game-score-streak">Score: <strong id="gScore">0</strong>&nbsp;&nbsp;Streak: <strong id="gStreak">0</strong></div>
-        <div style="text-align:center;margin-top:14px;">
-          <button id="gBtnSaveQuit" class="game-btn ghost small">Save &amp; quit</button>
-        </div>
-      </div>
+      <div class="game-play"></div>
     </div>
     <div id="gameCompletion" class="game-screen">
       <div class="game-completion">
-        <h2>Mastered!</h2>
-        <p>You have completed all items in this chapter.</p>
+        <h2>Maîtrisé !</h2>
+        <p>Tu as terminé tous les éléments de ce chapitre.</p>
         <div class="game-stats-row" style="margin:20px 0;">
           <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
-          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
-          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure série</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Maîtrisés</div></div>
         </div>
         <div id="gMasteryMap"></div>
         <div class="game-btn-row">
-          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
-          <a href="worksheet.html" class="game-btn secondary">Worksheet</a>
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
         </div>
       </div>
     </div>
   </div>
 </div>
 <div class="game-toast" id="gToast"></div>
-<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<footer class="site-footer">Word Play &middot; Anglais B1 &middot; Jeu</footer>
 <script>
 window.GAME_DATA = {
-  chapterId: 'question-tags',level:'b1',
-  title:'Question Tags',
+  chapterId: "question-tags",
+  level: "b1",
+  title: "Question Tags — N’est-ce pas ?",
   storageKey: 'wordplay_game_b1_question-tags',
-  items:[
-    {id:"pos_reg",term:"aren't they?",meaning:"positive statement → negative tag",synonym:"right? (informal)",example:"They work hard, <b>aren't they?</b>",completion:"They are students, ______?",answer:"aren't they"},
-    {id:"neg_reg",term:"are they?",meaning:"negative statement → positive tag",synonym:"do they?",example:"They <b>aren't</b> ready, <b>are they?</b>",completion:"She isn't coming, ______?",answer:"is she"},
-    {id:"will_pos",term:"won't they?",meaning:"will statement → won't tag",synonym:"future tag",example:"She will help, <b>won't she?</b>",completion:"He will be late, ______?",answer:"won't he"},
-    {id:"have_pos",term:"haven't they?",meaning:"have + PP → haven't tag",synonym:"present perfect tag",example:"They have arrived, <b>haven't they?</b>",completion:"She has finished, ______?",answer:"hasn't she"},
-    {id:"did_pos",term:"didn't they?",meaning:"past simple → didn't tag",synonym:"past tag",example:"He called, <b>didn't he?</b>",completion:"You went there, ______?",answer:"didn't you"},
-    {id:"imperative",term:"will you?",meaning:"imperative → will you? tag",synonym:"won't you? (softer)",example:"Open the window, <b>will you?</b>",completion:"Close the door, ______?",answer:"will you"}
-  ]};
+  items: [
+    {id:"arent-you", term:"aren't you?", meaning:"n’est-ce pas — après be affirmatif avec you", synonym:"tag de be", example:"You're French, <b>aren't you</b>?", completion:"You're French, ______ you?", answer:"aren't"},
+    {id:"dont-you", term:"don't you?", meaning:"tag du présent simple sans auxiliaire", synonym:"tag avec do", example:"You like jazz, <b>don’t you</b>?", completion:"You like jazz, ______ you?", answer:"don't"},
+    {id:"didnt-she", term:"didn't she?", meaning:"tag du prétérit", synonym:"tag avec did", example:"She left early, <b>didn’t she</b>?", completion:"She left early, ______ she?", answer:"didn't"},
+    {id:"did-they", term:"did they?", meaning:"tag affirmatif après une phrase négative", synonym:"polarité inversée", example:"They didn't call, <b>did they</b>?", completion:"They didn't call, ______ they?", answer:"did"},
+    {id:"arent-i", term:"aren't I?", meaning:"l’exception de I am", synonym:"exception", example:"I'm late, <b>aren't I</b>?", completion:"I'm late, ______ I?", answer:"aren't"},
+    {id:"shall-we", term:"shall we?", meaning:"le tag de let’s", synonym:"tag de let’s", example:"Let's go, <b>shall we</b>?", completion:"Let's go, ______ we?", answer:"shall"},
+    {id:"will-you", term:"will you?", meaning:"le tag de l’impératif", synonym:"tag de l’impératif", example:"Open the door, <b>will you</b>?", completion:"Open the door, ______ you?", answer:"will"},
+    {id:"yes-i-do", term:"Yes, I do.", meaning:"le « si » français — yes + auxiliaire", synonym:"répondre si", example:"— You don't like it? — <b>Yes, I do!</b>", completion:"— You don't like it? — Yes, I ______ ! (si !)", answer:"do"}
+  ]
+};
 </script>
 <script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>

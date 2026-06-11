@@ -1,126 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="description" content="Word Play — Cambridge English grammar, vocabulary and writing practice.">
-<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
-<title>Verb Infinitive Patterns — B1 Grammar Game | Word Play</title>
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Verb Patterns — Jeu B1 | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
 </head>
 <body>
-<header class="site-header">
-  <div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a>
-    <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:white;font-family:var(--font-sans);font-size:0.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border-radius:4px;cursor:pointer;">&#9680; Dark</button>
-  </div>
-</header>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
 <div class="breadcrumb">
-  <a href="../../../../index.html">Home</a>
-  <span>›</span>
-  <a href="../../index.html">B1</a>
-  <span>›</span>
-  <a href="../index.html">Grammar</a>
-  <span>›</span>
-  <a href="index.html">Verb + Infinitive Patterns</a>
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../fr/index.html">Anglais pour francophones</a><span>&#8250;</span>
+  <a href="../../index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">Verb Patterns</a><span>&#8250;</span>
+  <strong>Jeu</strong>
 </div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+</nav>
 <div class="container">
-  
-  <h1>Verb + Infinitive Patterns</h1>
-  <nav class="chapter-nav">
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
-    <a href="worksheet.html" class="chapter-nav-btn">Review</a>
-    <a href="game.html" class="chapter-nav-btn active">Game</a>
-  </nav>
+  <h1>Verb Patterns — Jeu de Maîtrise</h1>
   <div class="game-wrap">
     <div id="gameStart" class="game-screen active">
       <div class="game-start">
-        <h2>4-Stage Mastery</h2>
-        <p>Each item passes through four stages: meaning, synonym, identification and sentence completion. Answer correctly to advance — a wrong answer drops you back one stage.</p>
+        <h2>Jeu de Maîtrise</h2>
+        <p>Chaque construction passe par trois types de questions : sens, contexte et production. Atteins 100 points pour gagner.</p>
         <div class="game-stats-row">
-          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Maîtrisés</div></div>
           <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
         </div>
         <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
-          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved session.</p>
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tu as une partie sauvegardée.</p>
           <div class="game-btn-row">
-          <a href="../zero-first-conditional/slides.html" class="game-btn primary" style="text-decoration:none;text-align:center">Ch 17 Zero First Conditional &#8594;</a>
-                    
-          
-            <button id="gBtnResume" class="game-btn primary">Resume</button>
-            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
           </div>
         </div>
-        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Commencer</button></div>
       </div>
       <div class="game-ref-panel" style="margin-top:20px;">
-        <div class="game-ref-head" id="gRefToggle">&#9660; All 6 items — reference</div>
+        <div class="game-ref-head" id="gRefToggle">&#9660; Tous les éléments — référence</div>
         <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
       </div>
     </div>
     <div id="gamePlay" class="game-screen">
-      <div class="game-play">
-        <div class="game-mode-tag" id="gModeTag"></div>
-        <div class="game-term" id="gTerm"></div>
-        <div class="game-prompt" id="gPrompt"></div>
-        <div class="game-options" id="gOptions"></div>
-        <div class="game-feedback" id="gFeedback"></div>
-        <div class="game-example" id="gExample" style="display:none;"></div>
-        <div style="text-align:center;margin:12px 0;">
-          <button id="gBtnNext" class="game-btn primary" style="display:none;">Next &#8594;</button>
-        </div>
-        <div class="game-helpers">
-          <button id="gBtnHint" class="game-btn ghost small">Hint</button>
-          <button id="gBtnReveal" class="game-btn ghost small">Show answer</button>
-          <button id="gBtnKnow" class="game-btn know small" style="display:none">I know this</button>
-        </div>
-        <div class="game-progress-strip">
-          <div class="game-progress-bar"><div class="game-progress-fill" id="gProgressBar" style="width:0%"></div></div>
-          <div class="game-progress-text" id="gProgressTxt">0 / 0 mastered</div>
-        </div>
-        <div class="game-score-streak">Score: <strong id="gScore">0</strong>&nbsp;&nbsp;Streak: <strong id="gStreak">0</strong></div>
-        <div style="text-align:center;margin-top:14px;">
-          <button id="gBtnSaveQuit" class="game-btn ghost small">Save &amp; quit</button>
-        </div>
-      </div>
+      <div class="game-play"></div>
     </div>
     <div id="gameCompletion" class="game-screen">
       <div class="game-completion">
-        <h2>Mastered!</h2>
-        <p>You have completed all items in this chapter.</p>
+        <h2>Maîtrisé !</h2>
+        <p>Tu as terminé tous les éléments de ce chapitre.</p>
         <div class="game-stats-row" style="margin:20px 0;">
           <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
-          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
-          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure série</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Maîtrisés</div></div>
         </div>
         <div id="gMasteryMap"></div>
         <div class="game-btn-row">
-          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
-          <a href="worksheet.html" class="game-btn secondary">Worksheet</a>
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
         </div>
       </div>
     </div>
   </div>
 </div>
 <div class="game-toast" id="gToast"></div>
-<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<footer class="site-footer">Word Play &middot; Anglais B1 &middot; Jeu</footer>
 <script>
 window.GAME_DATA = {
-  chapterId: 'verb-infinitive-patterns',level:'b1',
-  title:'Verb + Infinitive Patterns',
+  chapterId: "verb-infinitive-patterns",
+  level: "b1",
+  title: "Verb Patterns — Infinitif ou -ing ?",
   storageKey: 'wordplay_game_b1_verb-infinitive-patterns',
-  items:[
-    {id:"want_to",term:"want + to + infinitive",meaning:"want always takes to + infinitive",synonym:"would like to",example:"She wants <b>to</b> study medicine.",completion:"He wants ______ abroad. (study)",answer:"to study"},
-    {id:"decide_to",term:"decide + to + infinitive",meaning:"decide takes to + infinitive",synonym:"choose to",example:"He decided <b>to</b> quit.",completion:"She decided ______ a new career. (start)",answer:"to start"},
-    {id:"manage_to",term:"manage + to + infinitive",meaning:"manage takes to + infinitive — suggests it was difficult",synonym:"succeed in doing",example:"She managed <b>to</b> get a scholarship.",completion:"He finally managed ______ the problem. (solve)",answer:"to solve"},
-    {id:"make_bare",term:"make + person + bare infinitive",meaning:"make (force) takes the bare infinitive — no 'to'",synonym:"force to do",example:"The coach made us <b>run</b>. (NOT made us to run)",completion:"She made him ______. (apologise)",answer:"apologise"},
-    {id:"let_bare",term:"let + person + bare infinitive",meaning:"let (allow) takes the bare infinitive — no 'to'",synonym:"allow to do (without to)",example:"She let us <b>use</b> our phones. (NOT let us to use)",completion:"Can you let me ______? (leave early)",answer:"leave"},
-    {id:"expect_to",term:"expect + to + infinitive",meaning:"expect takes to + infinitive",synonym:"anticipate doing",example:"I expect <b>to</b> hear back by Friday.",completion:"They expect ______ before midnight. (arrive)",answer:"to arrive"}
-  ]};
+  items: [
+    {id:"want-to", term:"want to", meaning:"vouloir faire — famille to + infinitif", synonym:"famille to", example:"I <b>want to</b> leave early.", completion:"I ______ to leave early. (veux)", answer:"want"},
+    {id:"want-you-to", term:"want someone to", meaning:"vouloir QUE quelqu’un fasse — pas de that", synonym:"vouloir que", example:"I want <b>you to</b> come.", completion:"I want you ______ come. (que tu viennes)", answer:"to"},
+    {id:"decide-to", term:"decide to", meaning:"décider de faire", synonym:"décider de", example:"We <b>decided to</b> move.", completion:"We decided ______ move.", answer:"to"},
+    {id:"enjoy-doing", term:"enjoy + -ing", meaning:"aimer faire — famille -ing", synonym:"famille -ing", example:"I enjoy <b>cooking</b>.", completion:"I enjoy ______ . (cuisiner)", answer:"cooking"},
+    {id:"suggest-ing", term:"suggest + -ing", meaning:"suggérer de faire", synonym:"suggérer de", example:"I suggest <b>taking</b> the train.", completion:"I suggest ______ the train. (prendre)", answer:"taking"},
+    {id:"would-like-to", term:"'d like to", meaning:"aimerais faire — toujours to après would like", synonym:"would like", example:"I'd like <b>to book</b> a table.", completion:"I'd like ______ book a table.", answer:"to"},
+    {id:"stop-smoking", term:"stop + -ing", meaning:"arrêter de faire (≠ stop to = s’arrêter pour)", synonym:"arrêter de", example:"He <b>stopped smoking</b> last year.", completion:"He stopped ______ last year. (de fumer)", answer:"smoking"},
+    {id:"remember-to", term:"remember to", meaning:"penser à faire (action à venir)", synonym:"penser à", example:"<b>Remember to</b> lock the door!", completion:"______ to lock the door! (pense à)", answer:"remember"}
+  ]
+};
 </script>
 <script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
