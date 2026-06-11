@@ -123,9 +123,17 @@ def main():
     js.close()
     fails = 0
 
-    # Find all es/ grammar and writing game.html with placeholder items
-    games = sorted(glob.glob(os.path.join(ROOT, 'es', '*', 'gramatica', '*', 'game.html')) +
-                   glob.glob(os.path.join(ROOT, 'es', '*', 'writing', '*', 'game.html')))
+    # Find all grammar/writing game.html with placeholder items across all tracks
+    games = sorted(
+        glob.glob(os.path.join(ROOT, 'es', '*', 'gramatica', '*', 'game.html')) +
+        glob.glob(os.path.join(ROOT, 'es', '*', 'writing', '*', 'game.html')) +
+        glob.glob(os.path.join(ROOT, 'a', '*', 'grammar', '*', 'game.html')) +
+        glob.glob(os.path.join(ROOT, 'b', '*', 'grammar', '*', 'game.html')) +
+        glob.glob(os.path.join(ROOT, 'c', '*', 'grammar', '*', 'game.html')) +
+        glob.glob(os.path.join(ROOT, 'a', '*', 'writing', '*', 'game.html')) +
+        glob.glob(os.path.join(ROOT, 'b', '*', 'writing', '*', 'game.html')) +
+        glob.glob(os.path.join(ROOT, 'c', '*', 'writing', '*', 'game.html'))
+    )
 
     for g in games:
         with open(g, encoding='utf-8') as f:
