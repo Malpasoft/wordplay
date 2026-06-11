@@ -1,138 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="description" content="Word Play — Cambridge English grammar, vocabulary and writing practice.">
-<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
-<title>Used To — B2 Grammar Game | Word Play</title>
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Used To and Would — Jeu B2 | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
 </head>
 <body>
-<header class="site-header">
-  <div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a>
-    <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:white;font-family:var(--font-sans);font-size:0.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border-radius:4px;cursor:pointer;">&#9680; Dark</button>
-  </div>
-</header>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
 <div class="breadcrumb">
-  <a href="../../../../index.html">Home</a>
-  <span>›</span>
-  <a href="../../index.html">B2</a>
-  <span>›</span>
-  <a href="../index.html">Grammar</a>
-  <span>›</span>
-  <a href="index.html">Used To</a>
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../fr/index.html">Anglais pour francophones</a><span>&#8250;</span>
+  <a href="../../index.html">B2</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">Used To and Would</a><span>&#8250;</span>
+  <strong>Jeu</strong>
 </div>
-<div class="container">
-  
-  <h1>Be / Get / Become Used To</h1>
-  <nav class="chapter-nav">
-<a href="slides.html" class="chapter-nav-btn">Lesson</a>
-<a href="worksheet.html" class="chapter-nav-btn">Review</a>
-<a href="game.html" class="chapter-nav-btn active">Game</a>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
 </nav>
+<div class="container">
+  <h1>Used To and Would — Jeu de Maîtrise</h1>
   <div class="game-wrap">
-
-    <!-- START SCREEN -->
     <div id="gameStart" class="game-screen active">
       <div class="game-start">
-        <h2>4-Stage Mastery</h2>
-        <p>Each item passes through four stages: meaning, synonym, identification, and sentence completion. Answer correctly to advance. A wrong answer sends you back one stage.</p>
+        <h2>Jeu de Maîtrise</h2>
+        <p>Chaque structure d’habitude passe par trois types de questions : sens, contexte et production. Atteins 100 points pour gagner.</p>
         <div class="game-stats-row">
-          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Maîtrisés</div></div>
           <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
         </div>
         <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
-          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved session.</p>
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tu as une partie sauvegardée.</p>
           <div class="game-btn-row">
-          <a href="../verb-patterns/slides.html" class="game-btn primary" style="text-decoration:none;text-align:center">Ch 18 Verb Patterns &#8594;</a>
-                    
-          
-            <button id="gBtnResume" class="game-btn primary">Resume</button>
-            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
           </div>
         </div>
-        <div class="game-btn-row">
-          <button id="gBtnStart" class="game-btn primary">Start</button>
-        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Commencer</button></div>
       </div>
-      <!-- Reference always visible on start -->
       <div class="game-ref-panel" style="margin-top:20px;">
-        <div class="game-ref-head" id="gRefToggle">&#9660; Reference — all 5 items</div>
-        <div class="game-ref-body" id="gRefBody">
-          <div id="gRefList"></div>
-        </div>
+        <div class="game-ref-head" id="gRefToggle">&#9660; Tous les éléments — référence</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
       </div>
     </div>
-
-    <!-- PLAY SCREEN -->
     <div id="gamePlay" class="game-screen">
-      <div class="game-play">
-        <div class="game-mode-tag" id="gModeTag"></div>
-        <div class="game-term" id="gTerm"></div>
-        <div class="game-prompt" id="gPrompt"></div>
-        <div class="game-options" id="gOptions"></div>
-        <div class="game-feedback" id="gFeedback"></div>
-        <div class="game-example" id="gExample" style="display:none;"></div>
-        <div style="text-align:center;margin:12px 0;">
-          <button id="gBtnNext" class="game-btn primary" style="display:none;">Next &#8594;</button>
-        </div>
-        <div class="game-helpers">
-          <button id="gBtnHint" class="game-btn ghost small">Hint</button>
-          <button id="gBtnReveal" class="game-btn ghost small">Show answer</button>
-          <button id="gBtnKnow" class="game-btn know small" style="display:none">I know this</button>
-        </div>
-        <div class="game-progress-strip">
-          <div class="game-progress-bar"><div class="game-progress-fill" id="gProgressBar" style="width:0%"></div></div>
-          <div class="game-progress-text" id="gProgressTxt">0 / 0 mastered</div>
-        </div>
-        <div class="game-score-streak">
-          Score: <strong id="gScore">0</strong> &nbsp;&nbsp; Streak: <strong id="gStreak">0</strong>
-        </div>
-        <div style="text-align:center;margin-top:14px;">
-          <button id="gBtnSaveQuit" class="game-btn ghost small">Save &amp; quit</button>
-        </div>
-      </div>
+      <div class="game-play"></div>
     </div>
-
-    <!-- COMPLETION SCREEN -->
     <div id="gameCompletion" class="game-screen">
       <div class="game-completion">
-        <h2>Mastered!</h2>
-        <p>You have completed all items in this chapter.</p>
+        <h2>Maîtrisé !</h2>
+        <p>Tu as terminé tous les éléments de ce chapitre.</p>
         <div class="game-stats-row" style="margin:20px 0;">
           <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
-          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
-          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure série</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Maîtrisés</div></div>
         </div>
         <div id="gMasteryMap"></div>
         <div class="game-btn-row">
-          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
-          <a href="worksheet.html" class="game-btn secondary">Worksheet</a>
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
         </div>
       </div>
     </div>
-
   </div>
 </div>
 <div class="game-toast" id="gToast"></div>
-<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<footer class="site-footer">Word Play &middot; Anglais B2 &middot; Jeu</footer>
 <script>
 window.GAME_DATA = {
-  chapterId: 'used-to', level: 'b2',
-  title: 'Be / Get / Become Used To',
+  chapterId: "used-to",
+  level: "b2",
+  title: "Used To and Would — Les habitudes du passé",
   storageKey: 'wordplay_game_b2_used-to',
   items: [
-    {id:'used_to_do',term:'Used to + infinitive',meaning:'past habit or state that no longer exists',synonym:'past habit',example:'I <b>used to walk</b> to school every day.',completion:'I ______ to school every day.',answer:'used to walk'},
-    {id:'would_habit',term:'Would + infinitive (habit)',meaning:'past habit — repeated action in the past (not states)',synonym:'past repeated action',example:'She <b>would always bring</b> flowers on Sundays.',completion:'She ______ flowers on Sundays.',answer:'would always bring'},
-    {id:'be_used_to',term:'Be used to + gerund',meaning:'be accustomed to something — it is familiar',synonym:'be accustomed to',example:'She <b>is used to working</b> long hours.',completion:'She ______ long hours.',answer:'is used to working'},
-    {id:'get_used_to',term:'Get used to + gerund',meaning:'become accustomed to something — the process',synonym:'become accustomed to',example:'It took a while to <b>get used to driving</b> on the left.',completion:'It took a while to ______ on the left.',answer:'get used to driving'},
-    {id:'become_used_to',term:'Become used to + gerund',meaning:'gradually get used to — more formal variation',synonym:'grow accustomed to',example:'He slowly <b>became used to living</b> alone.',completion:'He slowly ______ alone.',answer:'became used to living'},
+    {id:"used-to", term:"used to + infinitif", meaning:"habitude/état passé révolu", synonym:"imparfait", example:"I <b>used to</b> smoke.", completion:"I ______ to smoke, but I quit. (us...)", answer:"used"},
+    {id:"didnt-use-to", term:"didn’t use to", meaning:"la négation (sans d)", synonym:"négation", example:"He <b>didn’t use to</b> like coffee.", completion:"He didn’t ______ to like coffee. (sans d)", answer:"use"},
+    {id:"would-habit", term:"would + action", meaning:"action répétée du passé", synonym:"répétition", example:"We <b>would swim</b> in the lake every summer.", completion:"Every summer we ______ swim in the lake. (modal)", answer:"would"},
+    {id:"be-used-to", term:"be used to + -ing", meaning:"être habitué à", synonym:"habitude actuelle", example:"I’m <b>used to getting</b> up early.", completion:"I’m used to ______ up early. (get en -ing)", answer:"getting"},
+    {id:"get-used-to", term:"get used to", meaning:"s’habituer à", synonym:"processus", example:"You’ll <b>get used to</b> the noise.", completion:"You’ll ______ used to the noise. (get)", answer:"get"},
+    {id:"there-used-to", term:"There used to be", meaning:"il y avait (avant)", synonym:"état passé", example:"<b>There used to be</b> a cinema here.", completion:"______ used to be a cinema here. (mot d’existence)", answer:"there"},
+    {id:"states-rule", term:"états → used to seulement", meaning:"live, have, be : jamais would", synonym:"règle des états", example:"We <b>used to have</b> a big garden.", completion:"We ______ to have a big garden. (pas would !)", answer:"used"},
+    {id:"did-use-to", term:"Did you use to...?", meaning:"la question d’habitude", synonym:"question", example:"<b>Did</b> you <b>use to</b> wear glasses?", completion:"______ you use to wear glasses? (auxiliaire)", answer:"did"}
   ]
 };
 </script>
