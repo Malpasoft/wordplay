@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="description" content="Word Play — Cambridge English grammar, vocabulary and writing practice.">
+<meta name="description" content="Word Play — language courses: English, Spanish and French. Grammar, vocabulary, writing and exam preparation.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
-<title>Word Play — English A1 to C2</title>
+<title>Word Play — Learn English, Spanish &amp; French</title>
 <link rel="stylesheet" href="shared/base.css?v=v124">
 <link rel="stylesheet" href="shared/mascot.css?v=v2">
 <script src="/shared/auth.js?v=1"></script>
@@ -16,24 +16,22 @@
 .root-hero { padding: 52px 20px 32px; text-align: center; max-width: 640px; margin: 0 auto; }
 .root-hero h1 { font-size: var(--fs-h1); line-height: 1; margin-bottom: 14px; }
 .root-hero p  { color: var(--muted-deep,#8A96A8); font-size: var(--fs-lead); line-height: 1.6; }
-.level-grid {
+.lang-grid {
   display: grid; grid-template-columns: repeat(3,1fr);
-  gap: 16px; max-width: 740px; margin: 40px auto 0; padding: 0 20px 60px;
+  gap: 18px; max-width: 860px; margin: 36px auto 0; padding: 0 20px 60px;
 }
-@media (max-width: 640px) { .level-grid { grid-template-columns: repeat(2,1fr); } }
-@media (max-width: 520px) { .level-grid { grid-template-columns: 1fr; } .root-hero h1 { font-size: var(--fs-display); } }
-.level-card {
+@media (max-width: 720px) { .lang-grid { grid-template-columns: 1fr; max-width: 420px; } .root-hero h1 { font-size: var(--fs-display); } }
+.lang-card {
   background: var(--surface-2); border: 1.5px solid var(--line);
-  border-radius: 12px; padding: 28px 20px 24px; text-align: center;
+  border-radius: 12px; padding: 36px 24px 30px; text-align: center;
   text-decoration: none; transition: box-shadow .18s, border-color .18s, transform .14s;
   display: block;
 }
-.level-card:not(.locked):hover { box-shadow: 0 6px 20px rgba(184,134,11,.12); border-color: var(--amber); transform: translateY(-2px); }
-.level-card.locked { opacity: .55; cursor: default; }
-.lc-band { font-family: var(--font-sans); font-size: .6rem; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
-.lc-code { font-family: var(--font-serif,Georgia,serif); font-size: 2.4rem; font-weight: 700; color: var(--text-1); line-height: 1; margin-bottom: 8px; }
-.lc-desc { font-size: .8rem; color: var(--text-2); line-height: 1.5; margin-bottom: 14px; }
-.lc-stat { font-family: var(--font-sans); font-size: .68rem; font-weight: 700; letter-spacing: 1px; color: var(--text-3); }
+.lang-card:hover { box-shadow: 0 6px 20px rgba(184,134,11,.12); border-color: var(--amber); transform: translateY(-2px); }
+.lg-band { font-family: var(--font-sans); font-size: .6rem; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: var(--amber); margin-bottom: 10px; }
+.lg-name { font-family: var(--font-serif,Georgia,serif); font-size: 2rem; font-weight: 700; color: var(--text-1); line-height: 1.1; margin-bottom: 10px; }
+.lg-desc { font-size: .82rem; color: var(--text-2); line-height: 1.55; margin-bottom: 16px; }
+.lg-stat { font-family: var(--font-sans); font-size: .68rem; font-weight: 700; letter-spacing: 1px; color: var(--text-3); }
 .ob-close:hover { color: var(--ink) !important; background: rgba(0,0,0,.05) !important; }
 .ob-explore:hover { text-decoration: underline !important; }
 </style>
@@ -47,90 +45,34 @@
 </header>
 
 <div class="root-hero">
-  <div class="eyebrow">CEFR English · A1 to C2</div>
+  <div class="eyebrow">Three languages · CEFR A1 to C2</div>
   <h1>Word Play</h1>
-  <p>Grammar · Vocabulary · Writing · Exam preparation<br>Structured practice from complete beginner to advanced.</p>
+  <p>Grammar · Vocabulary · Writing · Exam preparation<br>Choose your language to begin.</p>
 </div>
 
-<div style="text-align:center;margin-bottom:20px"><a href="placement-test-v2.html" style="display:inline-block;padding:9px 22px;background:transparent;border:1.5px solid var(--amber);color:var(--amber);font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;border-radius:4px">Not sure where to start? Take the placement test &#8594;</a></div>
-<div class="level-grid">
+<div class="lang-grid">
 
-  <a href="a/a1/index.html" class="level-card" data-level="a1">
-    <div class="lc-band">Beginner</div>
-    <div class="lc-code">A1</div>
-    <div class="lc-desc">Build your first sentences. People, places, daily routines, and basic questions.</div>
-    <div class="lc-stat">25 grammar · 6 vocab · 3 writing</div>
+  <a href="english/index.html" class="lang-card">
+    <div class="lg-band">Cambridge · KET to CPE</div>
+    <div class="lg-name">English</div>
+    <div class="lg-desc">The complete Cambridge English course, A1 to C2 — also taught in Spanish and French up to B2.</div>
+    <div class="lg-stat">A1 · A2 · B1 · B2 · C1 · C2</div>
   </a>
 
-  <a href="a/a2/index.html" class="level-card" data-level="a2">
-    <div class="lc-band">Elementary</div>
-    <div class="lc-code">A2</div>
-    <div class="lc-desc">Talk about the past and future. Describe experiences, plans, and opinions.</div>
-    <div class="lc-stat" id="a2-stat">18 grammar · 6 vocab · 3 writing</div>
+  <a href="espanol/index.html" class="lang-card">
+    <div class="lg-band">Instituto Cervantes · DELE</div>
+    <div class="lg-name">Español</div>
+    <div class="lg-desc">Curso de español A1 a C2 con preparación DELE — also taught in English up to B2.</div>
+    <div class="lg-stat">A1 · A2 · B1 · B2 · C1 · C2</div>
   </a>
 
-  <a href="b/b1/index.html" class="level-card" data-level="b1" id="b1-card">
-    <div class="lc-band">Pre-intermediate</div>
-    <div class="lc-code">B1</div>
-    <div class="lc-desc">Handle most everyday situations. Discuss problems, give advice, and express possibility.</div>
-    <div class="lc-stat" id="b1-stat">17 grammar · 10 vocab · 3 writing</div>
+  <a href="francais/index.html" class="lang-card">
+    <div class="lg-band">DELF · DALF</div>
+    <div class="lg-name">Français</div>
+    <div class="lg-desc">Cours de français A1 à C2 avec préparation DELF/DALF — en construction.</div>
+    <div class="lg-stat">Bientôt disponible</div>
   </a>
 
-  <a href="b/b2/index.html" class="level-card" data-level="b2" id="b2-card">
-    <div class="lc-band">Upper-intermediate</div>
-    <div class="lc-code">B2</div>
-    <div class="lc-desc">Mixed conditionals, narrative tenses, inversion. With full FCE exam prep.</div>
-    <div class="lc-stat" id="b2-stat">18 grammar · 15 vocab · 5 writing · FCE prep</div>
-  </a>
-
-  <a href="c/c1/index.html" class="level-card" data-level="c1" id="c1-card">
-    <div class="lc-band">Advanced</div>
-    <div class="lc-code">C1</div>
-    <div class="lc-desc">Master advanced grammar and academic style. Hedging, cleft sentences, nominalisation, and more.</div>
-    <div class="lc-stat">17 grammar · 6 vocab · 5 writing</div>
-  </a>
-
-  <a href="c/c2/index.html" class="level-card" data-level="c2">
-    <div class="lc-band">Proficiency</div>
-    <div class="lc-code">C2</div>
-    <div class="lc-desc">Register, discourse grammar, error analysis. Complex passives, conditionals mastery, and lexical sophistication.</div>
-    <div class="lc-stat">11 grammar · 7 vocab · 2 writing</div>
-  </a>
-
-</div>
-
-<div style="max-width:740px;margin:20px auto 0;padding:0 20px">
-  <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
-    <div style="flex:1;height:1px;background:var(--hairline)"></div>
-    <span style="font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted)">More</span>
-    <div style="flex:1;height:1px;background:var(--hairline)"></div>
-  </div>
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;padding-bottom:60px">
-    <a href="es/index.html" class="level-card">
-      <div class="lc-band">Para hispanohablantes</div>
-      <div class="lc-code" style="font-size:1.6rem">ES</div>
-      <div class="lc-desc">Inglés Cambridge A1&rarr;C2 explicado en espa&ntilde;ol. Gram&aacute;tica, vocabulario y escritura.</div>
-      <div class="lc-stat">A1 &middot; A2 &middot; B1 &middot; B2 &middot; C1 &middot; C2</div>
-    </a>
-    <a href="fr/index.html" class="level-card">
-      <div class="lc-band">Pour les francophones</div>
-      <div class="lc-code" style="font-size:1.6rem">FR</div>
-      <div class="lc-desc">Anglais Cambridge B1&rarr;B2 expliqu&eacute; en fran&ccedil;ais. Grammaire, vocabulaire et r&eacute;daction.</div>
-      <div class="lc-stat">B1 &middot; B2</div>
-    </a>
-    <a href="espanol-en/index.html" class="level-card">
-      <div class="lc-band">For English speakers</div>
-      <div class="lc-code" style="font-size:1.6rem">ES&rarr;EN</div>
-      <div class="lc-desc">Learn Spanish A1&rarr;C2, explained in English. Grammar, vocabulary, writing and DELE exam prep.</div>
-      <div class="lc-stat">A1 &middot; A2 &middot; B1 &middot; B2 &middot; C1 &middot; C2</div>
-    </a>
-    <a href="espanol/index.html" class="level-card">
-      <div class="lc-band">Curso universal</div>
-      <div class="lc-code" style="font-size:1.6rem">ESP</div>
-      <div class="lc-desc">Espa&ntilde;ol CEFR A1&rarr;C2 para cualquier estudiante, con preparaci&oacute;n para los ex&aacute;menes DELE.</div>
-      <div class="lc-stat">A1 &middot; A2 &middot; B1 &middot; B2 &middot; C1 &middot; C2</div>
-    </a>
-  </div>
 </div>
 
 <div style="text-align:center;padding:40px 20px 20px;background:var(--paper)">
@@ -138,10 +80,11 @@
   <p style="font-size:.75rem;color:var(--muted);margin:12px 0 0">Click the bee!</p>
 </div>
 
-<footer class="site-footer">Word Play · Cambridge English A1→C2 · <a href="teacher.html" style="color:inherit;opacity:.5;text-decoration:none">Teacher hub</a></footer>
+<footer class="site-footer">Word Play · English · Español · Français · <a href="teacher.html" style="color:inherit;opacity:.5;text-decoration:none">Teacher hub</a></footer>
 <script src="shared/store.js?v=v107"></script>
 
 <script>
+/* Continue banner — English-course progress lives in wordplay_progress */
 (function() {
   try {
     var raw = localStorage.getItem('wordplay_progress');
@@ -149,7 +92,6 @@
     var prog = JSON.parse(raw);
     var lvlMap = { a1:'A1 Beginner', a2:'A2 Elementary', b1:'B1 Pre-intermediate', b2:'B2 Upper-intermediate', c1:'C1 Advanced', c2:'C2 Proficiency' };
     var hrefMap = { a1:'a/a1/', a2:'a/a2/', b1:'b/b1/', b2:'b/b2/', c1:'c/c1/', c2:'c/c2/' };
-    // Find highest level with any progress
     var levels = ['c2','c1','b2','b1','a2','a1'];
     var bestLvl = null;
     for (var i = 0; i < levels.length; i++) {
@@ -161,7 +103,7 @@
     banner.style.cssText = 'max-width:680px;margin:0 auto 24px;padding:14px 20px;background:rgba(184,134,11,0.08);border:1.5px solid rgba(184,134,11,0.25);border-radius:6px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap';
     banner.innerHTML = '<span style="font-family:var(--font-sans);font-size:.8rem;color:var(--ink)">Welcome back! You were working on <strong>' + lvlMap[bestLvl] + '</strong></span>'
       + '<a href="' + hrefMap[bestLvl] + 'index.html" style="display:inline-block;padding:7px 16px;background:var(--ink);color:var(--paper);font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none;border-radius:3px;white-space:nowrap">Continue →</a>';
-    var grid = document.querySelector('.level-grid');
+    var grid = document.querySelector('.lang-grid');
     if (grid) grid.parentNode.insertBefore(banner, grid);
   } catch(e) {}
 })();
@@ -185,49 +127,6 @@
 })();
 </script>
 
-<script>
-/* per-level progress bars — reads localStorage after store.js loads */
-(function() {
-  try {
-    var raw = localStorage.getItem('wordplay_progress');
-    if (!raw) return;
-    var prog = JSON.parse(raw);
-    var cards = document.querySelectorAll('.level-card[data-level]');
-    cards.forEach(function(card) {
-      var lv = card.dataset.level;
-      var lvData = prog[lv];
-      if (!lvData) return;
-      // Count chapters with at least one completed activity
-      var chs = FCEStore.CHAPTERS[lv] || {};
-      var allChs = (chs.grammar||[]).concat(chs.writing||[]);
-      var total = allChs.length * 3; // lesson + worksheet + game per chapter
-      if (total === 0) return;
-      var done = 0;
-      allChs.forEach(function(ch) {
-        if (lvData['slides_' + ch.slug]) done++;
-        if (lvData[ch.slug] && lvData[ch.slug].pct >= 70) done++;
-        var gk = 'wordplay_game_' + ch.slug;
-        if (lvData[gk] && lvData[gk].pct >= 70) done++;
-      });
-      var pct = Math.min(100, Math.round((done / total) * 100));
-      if (pct === 0) return;
-      // Insert bar at bottom of card
-      var bar = document.createElement('div');
-      bar.style.cssText = 'position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--hairline);border-radius:0 0 8px 8px;overflow:hidden';
-      bar.innerHTML = '<div style="height:100%;width:' + pct + '%;background:var(--amber);transition:width .4s ease"></div>';
-      card.style.position = 'relative';
-      card.style.overflow = 'hidden';
-      card.appendChild(bar);
-      // Update stat line with pct if meaningful
-      var stat = card.querySelector('.lc-stat');
-      if (stat && pct > 0) {
-        stat.insertAdjacentHTML('beforeend', ' <span style="color:var(--amber);font-size:.62rem">' + pct + '%</span>');
-      }
-    });
-  } catch(e) {}
-})();
-</script>
-
 <div id="onboardingModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1000;align-items:center;justify-content:center;padding:20px">
   <div style="background:var(--paper);border-radius:12px;max-width:460px;width:100%;padding:32px 28px;position:relative">
     <button onclick="wpOnboardClose()" aria-label="Close" class="ob-close" style="position:absolute;top:14px;right:14px;width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:transparent;border:none;border-radius:50%;font-size:1.3rem;line-height:1;color:var(--muted);cursor:pointer;transition:color .15s,background .15s">&times;</button>
@@ -236,18 +135,18 @@
     <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:24px">
       <div style="display:flex;gap:14px;align-items:flex-start">
         <div style="min-width:32px;height:32px;background:var(--amber);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-sans);font-weight:800;font-size:.85rem;color:var(--ink)">1</div>
-        <div><div style="font-family:var(--font-sans);font-size:.85rem;font-weight:700;color:var(--ink);margin-bottom:3px">Take the placement test</div><div style="font-size:.8rem;color:var(--muted)">Finds your level · about 5 minutes</div></div>
+        <div><div style="font-family:var(--font-sans);font-size:.85rem;font-weight:700;color:var(--ink);margin-bottom:3px">Choose your language</div><div style="font-size:.8rem;color:var(--muted)">English, Español or Français — each with its own courses</div></div>
       </div>
       <div style="display:flex;gap:14px;align-items:flex-start">
         <div style="min-width:32px;height:32px;background:var(--amber);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-sans);font-weight:800;font-size:.85rem;color:var(--ink)">2</div>
-        <div><div style="font-family:var(--font-sans);font-size:.85rem;font-weight:700;color:var(--ink);margin-bottom:3px">Choose a level &amp; skill</div><div style="font-size:.8rem;color:var(--muted)">CEFR A1–C2 · Grammar, Vocabulary or Writing</div></div>
+        <div><div style="font-family:var(--font-sans);font-size:.85rem;font-weight:700;color:var(--ink);margin-bottom:3px">Find your level</div><div style="font-size:.8rem;color:var(--muted)">CEFR A1–C2 · placement test available for English</div></div>
       </div>
       <div style="display:flex;gap:14px;align-items:flex-start">
         <div style="min-width:32px;height:32px;background:var(--amber);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-sans);font-weight:800;font-size:.85rem;color:var(--ink)">3</div>
         <div><div style="font-family:var(--font-sans);font-size:.85rem;font-weight:700;color:var(--ink);margin-bottom:3px">Lesson → Review → Mastery</div><div style="font-size:.8rem;color:var(--muted)">Learn it, test yourself, master the game — then print a worksheet</div></div>
       </div>
     </div>
-    <button onclick="wpOnboardClose(); location.href='placement-test-v2.html'" style="width:100%;padding:13px;background:var(--ink);color:var(--paper);font-family:var(--font-sans);font-size:.78rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;border:none;border-radius:5px;cursor:pointer">Take the placement test →</button>
+    <button onclick="wpOnboardClose(); location.href='placement-test-v2.html'" style="width:100%;padding:13px;background:var(--ink);color:var(--paper);font-family:var(--font-sans);font-size:.78rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;border:none;border-radius:5px;cursor:pointer">Take the English placement test →</button>
     <div style="text-align:center;margin-top:14px"><a href="#" onclick="event.preventDefault(); wpOnboardClose()" class="ob-explore" style="font-family:var(--font-sans);font-size:.78rem;color:var(--muted);text-decoration:none">or explore on your own</a></div>
   </div>
 </div>
@@ -263,14 +162,11 @@ function wpOnboardClose() {
   try { onboarded = !!(localStorage.getItem('wp_onboarded') || sessionStorage.getItem('wp_onboarded') || localStorage.getItem('wordplay_progress')); } catch(e) {}
   var m = document.getElementById('onboardingModal');
   if (m) {
-    // Click on the dark backdrop (but not the card) closes the modal.
     var onboardClickHandler = function(e) { if (e.target === m) wpOnboardClose(); };
     m.addEventListener('click', onboardClickHandler);
     if (!onboarded) { m.style.display = 'flex'; }
-    // Escape key closes the modal
     var onboardKeyHandler = function(e) { if (e.key === 'Escape' && m.style.display !== 'none') wpOnboardClose(); };
     document.addEventListener('keydown', onboardKeyHandler);
-    // Clean up on page unload
     window.addEventListener('pagehide', function() {
       m.removeEventListener('click', onboardClickHandler);
       document.removeEventListener('keydown', onboardKeyHandler);

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Word Play — Cours de français CECRL avec préparation DELF/DALF.">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<title>Français — Word Play</title>
+<link rel="stylesheet" href="../shared/base.css?v=v124">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../shared/dark-init.js?v=v112"></script>
+<style>
+.root-hero { padding: 44px 20px 28px; text-align: center; max-width: 640px; margin: 0 auto; }
+.root-hero h1 { font-size: var(--fs-h1); line-height: 1; margin-bottom: 14px; }
+.root-hero p  { color: var(--muted-deep,#8A96A8); font-size: var(--fs-lead); line-height: 1.6; }
+.level-card {
+  background: var(--surface-2); border: 1.5px solid var(--line);
+  border-radius: 12px; padding: 28px 20px 24px; text-align: center;
+  text-decoration: none; transition: box-shadow .18s, border-color .18s, transform .14s;
+  display: block;
+}
+.level-card:not(.locked):hover { box-shadow: 0 6px 20px rgba(184,134,11,.12); border-color: var(--amber); transform: translateY(-2px); }
+.level-card.locked { opacity: .55; cursor: default; }
+.lc-band { font-family: var(--font-sans); font-size: .6rem; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.lc-code { font-family: var(--font-serif,Georgia,serif); font-size: 1.6rem; font-weight: 700; color: var(--text-1); line-height: 1.2; margin-bottom: 8px; }
+.lc-desc { font-size: .8rem; color: var(--text-2); line-height: 1.5; margin-bottom: 14px; }
+.lc-stat { font-family: var(--font-sans); font-size: .68rem; font-weight: 700; letter-spacing: 1px; color: var(--text-3); }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../index.html" class="back back-link" aria-label="Retour"></a>
+    <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+    <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button>
+  </div>
+</header>
+
+<div class="root-hero">
+  <div class="breadcrumb" style="justify-content:center">
+    <a href="../index.html">Accueil</a><span>›</span>
+    <strong>Français</strong>
+  </div>
+  <div class="eyebrow">Français CECRL · A1 à C2</div>
+  <h1>Français</h1>
+  <p>Grammaire · Vocabulaire · Rédaction · Préparation DELF/DALF<br>Les cours de français arrivent bientôt.</p>
+</div>
+
+<div style="max-width:740px;margin:24px auto 0;padding:0 20px 60px">
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px">
+    <div class="level-card locked">
+      <div class="lc-band">Cours principal</div>
+      <div class="lc-code">Français A1→C2</div>
+      <div class="lc-desc">Le français enseigné en français, avec préparation DELF (A1–B2) et DALF (C1–C2).</div>
+      <div class="lc-stat">En construction</div>
+    </div>
+    <div class="level-card locked">
+      <div class="lc-band">For English speakers</div>
+      <div class="lc-code">FR for EN</div>
+      <div class="lc-desc">French A1–B2 explained in English — interference notes, faux amis, pronunciation contrasts.</div>
+      <div class="lc-stat">Coming soon</div>
+    </div>
+    <div class="level-card locked">
+      <div class="lc-band">Para hispanohablantes</div>
+      <div class="lc-code">FR para ES</div>
+      <div class="lc-desc">Francés A1–B2 explicado en español — comparaciones entre los dos idiomas.</div>
+      <div class="lc-stat">Próximamente</div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">Word Play · Français CECRL · DELF/DALF</footer>
+</body>
+</html>

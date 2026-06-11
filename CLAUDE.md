@@ -9,12 +9,38 @@
 
 ## Project
 
-Static Cambridge English course (A1–C2) on Cloudflare Pages. Vanilla HTML/CSS/JS, no
-build system, no backend. ~2,479 HTML pages. All student progress lives in browser
+Static multi-language course site (English, Spanish, French) on Cloudflare Pages.
+Vanilla HTML/CSS/JS, no build system, no backend. All student progress lives in browser
 localStorage. Teacher tools (calendar, profiles, dev-hub, builder, coverage) at root level.
 
 **Repo:** `malpasoft/wordplay`
 **Orientation:** read `AI_HANDOVER.md` after this file for who the project is for and its current state.
+
+### Course architecture (June 2026)
+
+Homepage = 3 language cards → language hub → courses for that language.
+
+| Hub | Course | Dir | UI lang | Levels | Exams |
+|---|---|---|---|---|---|
+| `/english/` | Main English | `a/ b/ c/` | en | A1–C2 | KET PET FCE CAE CPE |
+| `/english/` | English for Spanish speakers | `es/` | es | A1–B2 | — |
+| `/english/` | English for French speakers | `fr/` | fr | A1–B2 | — |
+| `/espanol/` | Main Spanish | `espanol/` | es | A1–C2 (building) | DELE |
+| `/espanol/` | Spanish for English speakers | `espanol-en/` | en | A1–B2 | — |
+| `/francais/` | Main French | `francais/` | fr | A1–C2 (planned) | DELF/DALF |
+| `/francais/` | French for EN / ES speakers | `francais-en/ francais-es/` | en / es | A1–B2 (planned) | — |
+
+**Rule: L1-mediated courses run A1–B2 only.** At C1+, learners continue in the main
+course taught in the target language (each L1 landing page has a handoff card).
+es/ and espanol-en/ C1+C2 were deleted June 2026; `_redirects` covers old URLs.
+
+### Per-chapter standard
+
+- **Grammar**: index · slides (Lesson) · worksheet (Review) · game (Mastery) · printables
+- **Vocab**: index · flashcards · slides (word list) · game (Mastery) · match
+- **Writing**: index · slides · worksheet · game · printables
+- Exam prep follows the FCE model (`b/b2/fce/`): about · strategy · writing-overview ·
+  part-N (index + graded practice) · mock-1..3 (timed).
 
 ---
 
