@@ -1,391 +1,120 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="description" content="Word Play — Cambridge English grammar, vocabulary and writing practice.">
-<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
-<title>The Essay — B2 Writing Practice | Word Play</title>
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Essay — Exercices B2 | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/worksheet.css?v=v106">
-<style>
-  .linker-bank { background: var(--cream-deep); border-radius: 6px; padding: 14px 16px; margin-bottom: 16px; font-style: italic; color: var(--navy); text-align: center; font-size: 0.9rem; }
-  .linker-bank strong { color: var(--accent); }
-  .essay-prompt { background:: FFF4E8; border: 1px solid var(--amber); border-radius: 6px; padding: 16px; margin-bottom: 16px; }
-  .essay-prompt .eyebrow { margin: 0; color: var(--amber); font-size: 0.72rem; }
-  .essay-prompt h4 { margin: 4px 0 6px; font-size: 1rem; font-weight: 700; color: var(--navy); }
-  .essay-prompt .notes { font-size: 0.88rem; color: var(--muted-deep); font-style: italic; }
-  .plan-section { margin-top: 16px; }
-  .plan-section h4 { font-size: 0.8rem; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 8px; font-family: var(--font-sans); font-weight: 700; }
-  .plan-section textarea { min-height: 60px; }
-  .word-counter { display: inline-block; padding: 4px 10px; background: var(--navy); color: white; border-radius: 3px; font-family: var(--font-sans); font-size: 0.78rem; font-weight: 700; letter-spacing: 1px; }
-  .word-counter.good { background: var(--green); }
-  .word-counter.warn { background: var(--amber); }
-  .word-counter.bad { background: var(--red); }
-  .prompt-radio-group { display: grid; gap: 8px; margin-bottom: 14px; }
-  .prompt-radio-label { display: flex; gap: 10px; padding: 12px 14px; background: var(--paper); border: 1.5px solid var(--border); border-radius: 6px; cursor: pointer; align-items: flex-start; }
-  .prompt-radio-label input[type="radio"] { margin-top: 2px; flex-shrink: 0; }
-  .prompt-radio-label.selected { border-color: var(--accent); background:: FFF4E8; }
-  .prompt-radio-label .title { font-weight: 700; color: var(--navy); font-size: 0.92rem; margin-bottom: 2px; }
-  .prompt-radio-label .sub { font-size: 0.82rem; color: var(--muted-deep); font-style: italic; }
-</style>
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
-<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 </head>
 <body>
-
-<header class="site-header">
-  <div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a>
-    <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-    <button class="dark-toggle" onclick="toggleDark()" aria-label="Toggle dark mode">&#9680; Dark</button>
-  </div>
-</header>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
 <div class="breadcrumb">
-  <a href="../../../../index.html">Home</a>
-  <span>›</span>
-  <a href="../../index.html">B2</a>
-  <span>›</span>
-  <a href="../index.html">Writing</a>
-  <span>›</span>
-  <a href="index.html">Essay</a>
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../fr/index.html">Anglais pour francophones</a><span>&#8250;</span>
+  <a href="../../index.html">B2</a><span>&#8250;</span>
+  <a href="../index.html">Rédaction</a><span>&#8250;</span>
+  <a href="index.html">Essay</a><span>&#8250;</span>
+  <strong>Exercices</strong>
 </div>
-
-<div class="container">
-
 <nav class="chapter-nav">
-  <a href="slides.html" class="chapter-nav-btn">Lesson</a>
-  <a href="worksheet.html" class="chapter-nav-btn active">Review</a>
-  <a href="game.html" class="chapter-nav-btn">Game</a>
+  <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+  <a href="worksheet.html" class="chapter-nav-btn active">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn">Jeu</a>
 </nav>
-
-
-<h1>The Essay</h1>
-<div class="subtitle">Opinion essays · 140–190 words · FCE Part 1</div>
-
-<div class="intro">
-  <div class="intro-title">About this worksheet</div>
-  <div class="intro-body">Five tasks that build up to a full essay. Total: <strong>44 points</strong>.</div>
-  <div class="intro-meta">Language tasks are auto-checked. Writing tasks show a model answer on submission.</div>
-</div>
-
+<h1>Essay — L’essai du B2 First</h1>
+<p class="intro-meta">Complète les exercices puis vérifie tes réponses. Total : 16 points.</p>
 <form id="worksheet">
 
 <section class="exercise" id="ex1">
-  <div class="ex-head">Exercise 1</div>
-  <div class="ex-title">Identify paragraph function</div>
-  <div class="ex-meta">≈ 5 min  ·  4 points</div>
-  <div class="ex-instruct">Read each paragraph from a model essay. Choose its function.</div>
-
-  <div class="q"><span class="q-num">1</span><div class="q-text"><em>"In my opinion, schools should find a balance. Including one practical module each year would prepare students for real life without replacing essential subjects."</em></div>
-    <div class="choice-group" data-q="e1q1" data-answer="Conclusion">
-      <button type="button" class="choice-btn" data-value="Introduction">Introduction</button>
-      <button type="button" class="choice-btn" data-value="First point">First point</button>
-      <button type="button" class="choice-btn" data-value="Contrast">Contrast</button>
-      <button type="button" class="choice-btn" data-value="Conclusion">Conclusion</button>
-    </div></div>
-
-  <div class="q"><span class="q-num">2</span><div class="q-text"><em>"Firstly, there is a strong argument for including these skills in the curriculum. Many students leave school unable to cook a simple meal."</em></div>
-    <div class="choice-group" data-q="e1q2" data-answer="First point">
-      <button type="button" class="choice-btn" data-value="Introduction">Introduction</button>
-      <button type="button" class="choice-btn" data-value="First point">First point</button>
-      <button type="button" class="choice-btn" data-value="Contrast">Contrast</button>
-      <button type="button" class="choice-btn" data-value="Conclusion">Conclusion</button>
-    </div></div>
-
-  <div class="q"><span class="q-num">3</span><div class="q-text"><em>"Nowadays, many educators argue that traditional school subjects like maths and history are no longer enough. Should schools also teach practical life skills?"</em></div>
-    <div class="choice-group" data-q="e1q3" data-answer="Introduction">
-      <button type="button" class="choice-btn" data-value="Introduction">Introduction</button>
-      <button type="button" class="choice-btn" data-value="First point">First point</button>
-      <button type="button" class="choice-btn" data-value="Contrast">Contrast</button>
-      <button type="button" class="choice-btn" data-value="Conclusion">Conclusion</button>
-    </div></div>
-
-  <div class="q"><span class="q-num">4</span><div class="q-text"><em>"However, on balance, academic subjects remain the foundation of a good education. They develop critical thinking and open doors to higher education."</em></div>
-    <div class="choice-group" data-q="e1q4" data-answer="Contrast">
-      <button type="button" class="choice-btn" data-value="Introduction">Introduction</button>
-      <button type="button" class="choice-btn" data-value="First point">First point</button>
-      <button type="button" class="choice-btn" data-value="Contrast">Contrast</button>
-      <button type="button" class="choice-btn" data-value="Conclusion">Conclusion</button>
-    </div></div>
+<div class="ex-head">Exercice 1</div>
+<div class="ex-title">Choisis la bonne option</div>
+<div class="ex-meta">6 points</div>
+<div class="ex-instruct">La mécanique de l’essay.</div>
+<div class="q"><span class="q-num">1</span><div class="q-text">La bonne ouverture d’essay :</div>
+  <div class="choice-group" data-q="e1q1" data-answer="It is often said that homework is essential."><button type="button" class="choice-btn" data-value="It is often said that homework is essential.">It is often said that homework is essential.</button><button type="button" class="choice-btn" data-value="Hi! Let’s talk about homework!">Hi! Let’s talk about homework!</button><button type="button" class="choice-btn" data-value="Homework: I will give my opinion below.">Homework: I will give my opinion below.</button></div></div>
+<div class="q"><span class="q-num">2</span><div class="q-text">Le connecteur d’ajout formel :</div>
+  <div class="choice-group" data-q="e1q2" data-answer="Furthermore"><button type="button" class="choice-btn" data-value="Furthermore">Furthermore</button><button type="button" class="choice-btn" data-value="What’s more">What’s more</button><button type="button" class="choice-btn" data-value="Plus">Plus</button></div></div>
+<div class="q"><span class="q-num">3</span><div class="q-text">« En revanche » :</div>
+  <div class="choice-group" data-q="e1q3" data-answer="On the other hand"><button type="button" class="choice-btn" data-value="On the other hand">On the other hand</button><button type="button" class="choice-btn" data-value="On another hand">On another hand</button><button type="button" class="choice-btn" data-value="In the other hand">In the other hand</button></div></div>
+<div class="q"><span class="q-num">4</span><div class="q-text">La formule d’opinion variée :</div>
+  <div class="choice-group" data-q="e1q4" data-answer="I would argue that..."><button type="button" class="choice-btn" data-value="I would argue that...">I would argue that...</button><button type="button" class="choice-btn" data-value="I think that... again">I think that... again</button><button type="button" class="choice-btn" data-value="For me it is like that">For me it is like that</button></div></div>
+<div class="q"><span class="q-num">5</span><div class="q-text">Le registre de l’essay :</div>
+  <div class="choice-group" data-q="e1q5" data-answer="formel, sans contractions"><button type="button" class="choice-btn" data-value="formel, sans contractions">formel, sans contractions</button><button type="button" class="choice-btn" data-value="semi-informel avec contractions">semi-informel avec contractions</button><button type="button" class="choice-btn" data-value="familier et direct">familier et direct</button></div></div>
+<div class="q"><span class="q-num">6</span><div class="q-text">La bonne conclusion :</div>
+  <div class="choice-group" data-q="e1q6" data-answer="On balance, I firmly believe parks are essential."><button type="button" class="choice-btn" data-value="On balance, I firmly believe parks are essential.">On balance, I firmly believe parks are essential.</button><button type="button" class="choice-btn" data-value="To finish, everyone has a different opinion.">To finish, everyone has a different opinion.</button><button type="button" class="choice-btn" data-value="So yeah, parks are cool.">So yeah, parks are cool.</button></div></div>
 </section>
 
 <section class="exercise" id="ex2">
-  <div class="ex-head">Exercise 2</div>
-  <div class="ex-title">Fix the register</div>
-  <div class="ex-meta">≈ 8 min  ·  6 points (self-checked)</div>
-  <div class="ex-instruct">Each sentence is too informal. Rewrite it in semi-formal style.</div>
-
-  <div class="q"><span class="q-num">1</span><div class="q-text"><em style="color: var(--red);">I think it's totally crazy that some people still don't recycle.</em></div>
-    <textarea data-q="e2q1" data-answer-sample="It is surprising that some people still fail to recycle." placeholder="Rewrite formally..." aria-label="Answer for e2q1"></textarea></div>
-  <div class="q"><span class="q-num">2</span><div class="q-text"><em style="color: var(--red);">Lots of kids these days are glued to their phones 24/7.</em></div>
-    <textarea data-q="e2q2" data-answer-sample="Many young people today spend excessive time on their phones." placeholder="Rewrite formally..." aria-label="Answer for e2q2"></textarea></div>
-  <div class="q"><span class="q-num">3</span><div class="q-text"><em style="color: var(--red);">Don't even get me started on how bad traffic is nowadays.</em></div>
-    <textarea data-q="e2q3" data-answer-sample="Traffic has become a serious problem nowadays." placeholder="Rewrite formally..." aria-label="Answer for e2q3"></textarea></div>
-  <div class="q"><span class="q-num">4</span><div class="q-text"><em style="color: var(--red);">If you ask me, we've gotta do something about climate change ASAP.</em></div>
-    <textarea data-q="e2q4" data-answer-sample="In my opinion, we must take immediate action on climate change." placeholder="Rewrite formally..." aria-label="Answer for e2q4"></textarea></div>
-  <div class="q"><span class="q-num">5</span><div class="q-text"><em style="color: var(--red);">Schools should teach stuff that's actually useful in real life.</em></div>
-    <textarea data-q="e2q5" data-answer-sample="Schools should teach practical subjects that are useful in everyday life." placeholder="Rewrite formally..." aria-label="Answer for e2q5"></textarea></div>
-  <div class="q"><span class="q-num">6</span><div class="q-text"><em style="color: var(--red);">It's obvious that tons of people aren't happy with the new law.</em></div>
-    <textarea data-q="e2q6" data-answer-sample="It is clear that many people are dissatisfied with the new law." placeholder="Rewrite formally..." aria-label="Answer for e2q6"></textarea></div>
+<div class="ex-head">Exercice 2</div>
+<div class="ex-title">Complète l’essay</div>
+<div class="ex-meta">5 points</div>
+<div class="ex-instruct">Écris le mot manquant.</div>
+<div class="q"><span class="q-num">1</span><div class="q-text">To begin ______, exercise improves concentration. (la particule)<br><input type="text" data-q="e2q1" style="width:220px" aria-label="Réponse e2q1"></div></div>
+<div class="q"><span class="q-num">2</span><div class="q-text">It could be ______ that the cost is too high. (argue au participe)<br><input type="text" data-q="e2q2" style="width:220px" aria-label="Réponse e2q2"></div></div>
+<div class="q"><span class="q-num">3</span><div class="q-text">On the other ______, public transport is cheaper. (en revanche)<br><input type="text" data-q="e2q3" style="width:220px" aria-label="Réponse e2q3"></div></div>
+<div class="q"><span class="q-num">4</span><div class="q-text">In ______, I believe the advantages outweigh the drawbacks. (pour conclure)<br><input type="text" data-q="e2q4" style="width:220px" aria-label="Réponse e2q4"></div></div>
+<div class="q"><span class="q-num">5</span><div class="q-text">The benefits far ______ the costs. (l’emporter sur)<br><input type="text" data-q="e2q5" style="width:220px" aria-label="Réponse e2q5"></div></div>
 </section>
 
 <section class="exercise" id="ex3">
-  <div class="ex-head">Exercise 3</div>
-  <div class="ex-title">Complete with linkers</div>
-  <div class="ex-meta">≈ 6 min  ·  6 points</div>
-  <div class="ex-instruct">Fill each gap with one linker from the box. Each linker is used once.</div>
-
-  <div class="linker-bank">
-    <strong>Firstly</strong>  ·  <strong>Furthermore</strong>  ·  <strong>However</strong>  ·  <strong>In conclusion</strong>  ·  <strong>On the other hand</strong>  ·  <strong>In my opinion</strong>
-  </div>
-
-  <div class="q">
-    <p style="margin-bottom: 10px; font-weight: 700;">Are social media platforms harmful to young people?</p>
-    <p style="margin-bottom: 14px;">Social media has become a central part of teenagers' lives. Some argue it has serious negative effects; others claim it brings real benefits.</p>
-
-    <p style="margin-bottom: 10px;"><strong>(1)</strong>&nbsp;
-      <input type="text" data-q="e3q1" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="linker" style="width: 180px; display: inline-block;" aria-label="Answer for e3q1">
-      , there is a strong argument that constant use of social media affects mental health.
-      <strong>(2)</strong>&nbsp;
-      <input type="text" data-q="e3q2" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="linker" style="width: 180px; display: inline-block;" aria-label="Answer for e3q2">
-      , it can lead to isolation from real friends.
-    </p>
-
-    <p style="margin-bottom: 10px;"><strong>(3)</strong>&nbsp;
-      <input type="text" data-q="e3q3" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="linker" style="width: 180px; display: inline-block;" aria-label="Answer for e3q3">
-      , social media also allows young people to stay connected with distant friends.
-      <strong>(4)</strong>&nbsp;
-      <input type="text" data-q="e3q4" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="linker" style="width: 180px; display: inline-block;" aria-label="Answer for e3q4">
-      , many use it as a learning tool.
-    </p>
-
-    <p><strong>(5)</strong>&nbsp;
-      <input type="text" data-q="e3q5" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="linker" style="width: 180px; display: inline-block;" aria-label="Answer for e3q5">
-      , parents and schools should teach responsible use rather than banning it outright.
-      <strong>(6)</strong>&nbsp;
-      <input type="text" data-q="e3q6" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="linker" style="width: 180px; display: inline-block;" aria-label="Answer for e3q6">
-      , this is the most balanced approach.
-    </p>
-  </div>
+<div class="ex-head">Exercice 3</div>
+<div class="ex-title">Choisis la version anglaise naturelle</div>
+<div class="ex-meta">5 points</div>
+<div class="ex-instruct">Registre et gallicismes.</div>
+<div class="q"><span class="q-num">1</span><div class="q-text">« On peut dire que les villes sont saturées. »</div>
+  <div class="choice-group" data-q="e3q1" data-answer="It could be argued that cities are overcrowded."><button type="button" class="choice-btn" data-value="It could be argued that cities are overcrowded.">It could be argued that cities are overcrowded.</button><button type="button" class="choice-btn" data-value="We can say that cities are saturated.">We can say that cities are saturated.</button><button type="button" class="choice-btn" data-value="One can say cities are full up.">One can say cities are full up.</button></div></div>
+<div class="q"><span class="q-num">2</span><div class="q-text">« Au contraire, cela crée des emplois. »</div>
+  <div class="choice-group" data-q="e3q2" data-answer="On the contrary, it creates jobs."><button type="button" class="choice-btn" data-value="On the contrary, it creates jobs.">On the contrary, it creates jobs.</button><button type="button" class="choice-btn" data-value="At the contrary, it creates jobs.">At the contrary, it creates jobs.</button><button type="button" class="choice-btn" data-value="To the contrary, it creates the jobs.">To the contrary, it creates the jobs.</button></div></div>
+<div class="q"><span class="q-num">3</span><div class="q-text">« Il ne faut pas oublier le coût. »</div>
+  <div class="choice-group" data-q="e3q3" data-answer="The cost should not be overlooked."><button type="button" class="choice-btn" data-value="The cost should not be overlooked.">The cost should not be overlooked.</button><button type="button" class="choice-btn" data-value="It must not forget the cost.">It must not forget the cost.</button><button type="button" class="choice-btn" data-value="We don’t have to forget the cost.">We don’t have to forget the cost.</button></div></div>
+<div class="q"><span class="q-num">4</span><div class="q-text">« À mon avis, c’est une erreur. »</div>
+  <div class="choice-group" data-q="e3q4" data-answer="In my view, this is a mistake."><button type="button" class="choice-btn" data-value="In my view, this is a mistake.">In my view, this is a mistake.</button><button type="button" class="choice-btn" data-value="According to me, it is an error.">According to me, it is an error.</button><button type="button" class="choice-btn" data-value="For my opinion, it is a mistake.">For my opinion, it is a mistake.</button></div></div>
+<div class="q"><span class="q-num">5</span><div class="q-text">« Tout bien pesé, je suis pour. »</div>
+  <div class="choice-group" data-q="e3q5" data-answer="On balance, I am in favour."><button type="button" class="choice-btn" data-value="On balance, I am in favour.">On balance, I am in favour.</button><button type="button" class="choice-btn" data-value="All well weighed, I am for.">All well weighed, I am for.</button><button type="button" class="choice-btn" data-value="Everything well thought, I am pro.">Everything well thought, I am pro.</button></div></div>
+<div class="submit-wrap"><button type="submit" class="submit-btn">Vérifier les réponses</button></div>
 </section>
-
-<section class="exercise" id="ex4">
-  <div class="ex-head">Exercise 4</div>
-  <div class="ex-title">Plan an essay</div>
-  <div class="ex-meta">≈ 10 min  ·  8 points (self-checked)</div>
-  <div class="ex-instruct">Use the prompt below. Write brief notes for each paragraph.</div>
-
-  <div class="essay-prompt">
-    
-    <h4>Do people depend too much on technology nowadays?</h4>
-    <div class="notes">Write about: communication · education · your own idea</div>
-  </div>
-
-  <div class="plan-section">
-    <h4 style="color: var(--amber);">¶ 1 — Introduction</h4>
-    <textarea data-q="e4q1" data-answer-sample="Technology is everywhere in modern life. Paraphrase topic + rhetorical question to hook reader." placeholder="Paraphrase the topic and plan your hook..." aria-label="Answer for e4q1"></textarea>
-  </div>
-
-  <div class="plan-section">
-    <h4 style="color: var(--green);">¶ 2 — First point: communication</h4>
-    <textarea data-q="e4q2" data-answer-sample="Claim: people rely on phones instead of face-to-face contact. Support: families text at dinner; weaker relationships." placeholder="Your claim + supporting details..." aria-label="Answer for e4q2"></textarea>
-  </div>
-
-  <div class="plan-section">
-    <h4 style="color: var(--amber);">¶ 3 — Second point: education OR your own idea</h4>
-    <textarea data-q="e4q3" data-answer-sample="Claim: students rely on Google instead of thinking. Support: less critical thinking. But: access to worldwide knowledge." placeholder="Your claim + supporting details..." aria-label="Answer for e4q3"></textarea>
-  </div>
-
-  <div class="plan-section">
-    <h4 style="color: var(--red);">¶ 4 — Conclusion</h4>
-    <textarea data-q="e4q4" data-answer-sample="My opinion: technology is a tool — the problem is how we use it, not the technology itself." placeholder="Summary + your clear opinion..." aria-label="Answer for e4q4"></textarea>
-  </div>
-</section>
-
-<section class="exercise" id="ex5">
-  <div class="ex-head">Exercise 5</div>
-  <div class="ex-title">Write a full essay</div>
-  <div class="ex-meta">≈ 30 min  ·  20 points (self-checked)</div>
-  <div class="ex-instruct">Choose ONE prompt and write 140–190 words. Check register, linkers, paragraphs, and your opinion.</div>
-
-  <div class="prompt-radio-group">
-    <label class="prompt-radio-label">
-      <input type="radio" name="prompt-choice" value="1">
-      <div><div class="title">1. Libraries are no longer needed, as people can learn all they need online. Do you agree?</div>
-        <div class="sub">Write about: college & public libraries · services libraries can offer · your own idea</div></div>
-    </label>
-    <label class="prompt-radio-label">
-      <input type="radio" name="prompt-choice" value="2">
-      <div><div class="title">2. Do people depend too much on technology nowadays?</div>
-        <div class="sub">Write about: communication · education · your own idea</div></div>
-    </label>
-    <label class="prompt-radio-label">
-      <input type="radio" name="prompt-choice" value="3">
-      <div><div class="title">3. Nowadays there is a great deal of advertising everywhere. Do you think it should be restricted?</div>
-        <div class="sub">Write about: health · information · your own idea</div></div>
-    </label>
-  </div>
-
-  <label for="essay-text" style="display: block; font-weight: 700; color: var(--navy); margin-bottom: 8px;">Your essay</label>
-  <textarea id="essay-text" data-q="e5q1" data-answer-sample="(See model essay in submission feedback)" placeholder="Write your essay here. Aim for 140–190 words." style="min-height: 280px; font-size: 0.95rem; line-height: 1.6;" aria-label="Answer for e5q1"></textarea>
-
-  <div style="margin-top: 10px; text-align: right;">
-    <span class="word-counter" id="word-counter">0 words</span>
-  </div>
-</section>
-
-<div class="submit-wrap">
-  <p>When you submit, language exercises are checked and a model essay is shown for comparison.</p>
-  <button type="submit" class="submit">Submit & See Feedback</button>
-  <button type="button" class="reset" onclick="resetAll()">Reset all answers</button>
-</div>
-
 </form>
-
-<div class="results-panel" id="results">
-  <div class="score-display">
-    <div class="big"><span id="score-got">0</span> / <span id="score-total">44</span></div>
-    <div class="label">Score</div>
-    <div class="pct" id="score-pct">—</div>
-      <div id="pass-msg" class="pass-msg" style="margin-top:6px"></div>
-  </div>
-  <div class="breakdown" id="breakdown"></div>
-
-  <div style="margin-top: 24px; padding: 20px; background: var(--offwhite); border-radius: 6px; border-left: 4px solid var(--accent);">
-    <h3 style="margin-bottom: 10px;">Model essay — Option 2: dependence on technology</h3>
-    <p style="font-style: italic; color: var(--muted-deep); font-size: 0.85rem; margin-bottom: 12px;">~170 words. Compare this to your own essay and check that you've covered each paragraph function.</p>
-    <div style="background: var(--paper); padding: 16px; border-radius: 4px;">
-      <p style="font-weight: 700; color: var(--navy); margin-bottom: 10px;">Are we too dependent on technology?</p>
-      <p style="margin-bottom: 10px;">In recent decades, technology has transformed almost every aspect of daily life. But have we become too dependent on it?</p>
-      <p style="margin-bottom: 10px;">Firstly, there is a strong argument that technology has damaged the way we communicate. Many people today send messages instead of meeting in person, which can weaken relationships and leave us feeling isolated despite being constantly connected.</p>
-      <p style="margin-bottom: 10px;">On the other hand, technology has made education far more accessible than ever before. Students can now attend online courses from the best universities in the world, and research that once required days in a library can be completed in minutes.</p>
-      <p>In my opinion, the problem is not technology itself but how we use it. If we remember to balance screen time with real conversations and independent thinking, technology remains a valuable tool rather than a dangerous dependency.</p>
-    </div>
-  </div>
-
-  <button type="button" class="submit" style="background: var(--navy); margin-top: 16px;" onclick="tryAgain()">Try again</button>
-</div>
-      <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--hairline)"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">By exercise</div><div id="exercise-breakdown"></div></div>
-
-</div>
-
-<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
-
+<div id="results" class="results-panel" style="display:none"></div>
 <script>
-window.TOTAL_POINTS = 21;
+window.CHAPTER_ID = "essay";
+window.LEVEL = "b2";
+window.SECTION = "writing";
+window.TOTAL_POINTS = 16;
 window.ANSWERS = {
-  e3q1: { answer: "firstly" },
-  e3q2: { answer: "furthermore", accept: ["in addition", "moreover"] },
-  e3q3: { answer: "however", accept: ["on the other hand"] },
-  e3q4: { answer: "furthermore", accept: ["in addition", "moreover"] },
-  e3q5: { answer: "in my opinion" },
-  e3q6: { answer: "in conclusion" },
+  e2q1:{answer:"with"},
+  e2q2:{answer:"argued"},
+  e2q3:{answer:"hand"},
+  e2q4:{answer:"conclusion"},
+  e2q5:{answer:"outweigh"}
 };
-window.EXERCISE_TITLES = {
-  ex1: "Task 1 — Identify paragraph function",
-  ex2: "Task 2 — Fix the register",
-  ex3: "Task 3 — Complete with linkers",
-  ex4: "Task 4 — Plan an essay",
-  ex5: "Task 5 — Full essay",
+window.EXPLANATIONS = {
+  "e1q1": "Reformulation impersonnelle et formelle — pas de ton article ni d’annonce sèche.",
+  "e1q2": "Furthermore/Moreover pour l’essay ; what’s more est pour l’article.",
+  "e1q3": "On the other hand — jamais in/another.",
+  "e1q4": "I would argue that : l’opinion argumentée du B2.",
+  "e1q5": "Essay = registre formel : do not, it is, cannot.",
+  "e1q6": "On balance + position tranchée — le First exige une opinion nette.",
+  "e2q1": "To begin WITH = pour commencer.",
+  "e2q2": "It could be argued that — l’impersonnel académique.",
+  "e2q3": "On the other HAND.",
+  "e2q4": "In conclusion — le signal de la fin.",
+  "e2q5": "Outweigh = peser plus lourd que — le verbe de la balance argumentative.",
+  "e3q1": "La tournure impersonnelle académique remplace « on peut dire ».",
+  "e3q2": "ON the contrary.",
+  "e3q3": "Passif impersonnel formel ; don’t have to = ne pas être obligé.",
+  "e3q4": "In my view / in my opinion — jamais according to me.",
+  "e3q5": "On balance + in favour (of) : la conclusion mesurée."
 };
-
-// Word counter
-const essayEl = document.getElementById('essay-text');
-const counterEl = document.getElementById('word-counter');
-if (essayEl) {
-  essayEl.addEventListener('input', () => {
-    const text = essayEl.value.trim();
-    const words = text ? text.split(/\s+/).length : 0;
-    counterEl.textContent = words + ' words';
-    counterEl.className = 'word-counter';
-    if (words >= 140 && words <= 190) counterEl.classList.add('good');
-    else if (words > 0 && (words < 140 || words > 190)) counterEl.classList.add(words > 210 || words < 100 ? 'bad' : 'warn');
-  });
-}
-
-// Radio select highlighting
-document.querySelectorAll('.prompt-radio-label').forEach(label => {
-  label.addEventListener('click', () => {
-    document.querySelectorAll('.prompt-radio-label').forEach(l => l.classList.remove('selected'));
-    label.classList.add('selected');
-  });
-});
+window.EXERCISE_TITLES = {ex1:"Exercice 1 - Choisis la bonne option",ex2:"Exercice 2 - Complète l’essay",ex3:"Exercice 3 - Choisis la version anglaise naturelle"};
 </script>
-<script>window.CHAPTER_ID = 'essay'; window.LEVEL = 'b2';</script>
 <script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/worksheet.js?v=v108"></script>
-
-<div class="check-bar" style="max-width:800px;margin:24px auto;padding:0 20px;display:flex;gap:10px">
-  <button type="submit" style="flex:1;padding:12px;background:var(--amber);color:white;font-family:var(--font-sans);font-size:0.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:4px;cursor:pointer">Check Answers</button>
-  <button onclick="resetAll()" style="padding:12px 20px;background:var(--paper);color:var(--navy);font-family:var(--font-sans);font-size:0.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:1.5px solid rgba(26,26,26,.2);border-radius:4px;cursor:pointer">Reset</button>
-</div>
-
-<div style="margin-top:16px">
-  <div class="wg-header" style="background:var(--cream-deep);padding:10px 14px;font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);border:1px solid var(--hairline);border-radius:6px 6px 0 0;border-bottom:0">Live feedback &amp; rubric</div>
-  <div id="writingFeedback" class="writing-feedback"></div>
-</div>
-<script src="../../../../shared/writing-grader.js?v=v105"></script>
-<script>
-window.WRITING_CONFIG = {"taskType": "essay", "register": "formal", "minWords": 140, "maxWords": 195, "level": "b2"};
-if (document.getElementById('essay-text')) {
-  WritingGrader.init('essay-text', 'writingFeedback', window.WRITING_CONFIG);
-}
-</script>
-
-<script>
-/* model-answer-reveal */
-(function() {
-  document.querySelectorAll('textarea[data-answer-sample]').forEach(function(ta, idx) {
-    var sample = ta.getAttribute('data-answer-sample');
-    if (!sample || sample.length < 10) return;
-    var btn = document.createElement('button');
-    btn.type = 'button';
-    btn.textContent = 'Show model answer';
-    btn.style.cssText = 'display:inline-block;margin-top:8px;padding:7px 16px;font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:transparent;color:var(--muted);border:1.5px solid var(--hairline);border-radius:3px;cursor:pointer';
-    var panel = document.createElement('div');
-    panel.style.cssText = 'display:none;background:rgba(184,134,11,0.06);border:1.5px solid rgba(184,134,11,0.25);border-radius:6px;padding:14px 16px;margin-top:8px;font-size:.9rem;line-height:1.7;color:var(--ink)';
-    var label = document.createElement('div');
-    label.style.cssText = 'font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:8px';
-    label.textContent = 'Model answer';
-    var text = document.createElement('div');
-    text.style.whiteSpace = 'pre-line';
-    text.textContent = sample;
-    panel.appendChild(label); panel.appendChild(text);
-    btn.addEventListener('click', function() {
-      var vis = panel.style.display !== 'none';
-      panel.style.display = vis ? 'none' : 'block';
-      btn.textContent = vis ? 'Show model answer' : 'Hide model answer';
-    });
-    var parent = ta.closest('.q') || ta.parentElement;
-    parent.appendChild(btn); parent.appendChild(panel);
-  });
-})();
-</script>
-window.EXPLANATIONS = {
-  "e3q1": "<strong>firstly</strong> is the correct choice here. Consider register, linking words, and the text type when answering.",
-  "e3q2": "<strong>furthermore</strong> is the correct choice here. Consider register, linking words, and the text type when answering.",
-  "e3q3": "<strong>however</strong> is the correct choice here. Consider register, linking words, and the text type when answering.",
-  "e3q4": "<strong>furthermore</strong> is the correct choice here. Consider register, linking words, and the text type when answering.",
-  "e3q5": "<strong>in my opinion</strong> is the correct choice here. Consider register, linking words, and the text type when answering.",
-  "e3q6": "<strong>in conclusion</strong> is the correct choice here. Consider register, linking words, and the text type when answering.",
-  "e1q1": "The conclusion summarises and gives the final opinion/recommendation.",
-  "e1q2": "The first body paragraph presents the main argument or advantage.",
-  "e1q3": "A review/essay introduction sets the context and states the writer&#39;s position.",
-  "e1q4": "A contrast paragraph introduces the opposing argument or disadvantage.",
-  "e2q1": "Free writing task — structure your essay with clear paragraphs, topic sentences, and a conclusion.",
-  "e2q2": "Free writing task — structure your essay with clear paragraphs, topic sentences, and a conclusion.",
-  "e2q3": "Free writing task — structure your essay with clear paragraphs, topic sentences, and a conclusion.",
-  "e2q4": "Free writing task — structure your essay with clear paragraphs, topic sentences, and a conclusion.",
-  "e2q5": "Free writing task — structure your essay with clear paragraphs, topic sentences, and a conclusion.",
-  "e2q6": "Free writing task — structure your essay with clear paragraphs, topic sentences, and a conclusion.",
-  "e4q1": "Free writing task — structure your essay with clear paragraphs, topic sentences, and a conclusion.",
-  "e4q2": "Free writing task — structure your essay with clear paragraphs, topic sentences, and a conclusion.",
-  "e4q3": "Free writing task — structure your essay with clear paragraphs, topic sentences, and a conclusion.",
-  "e4q4": "Free writing task — structure your essay with clear paragraphs, topic sentences, and a conclusion.",
-  "e5q1": "Free writing task — structure your essay with clear paragraphs, topic sentences, and a conclusion."
-};
+<footer class="site-footer">Word Play &middot; Anglais B2 &middot; Exercices</footer>
 </body>
 </html>

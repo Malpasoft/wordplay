@@ -1,226 +1,120 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="description" content="Word Play — Cambridge English grammar, vocabulary and writing practice.">
-<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
-<title>The Report — B2 Writing Practice | Word Play</title>
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Report — Exercices B2 | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/worksheet.css?v=v106">
-<style>
-  .wc {display:inline-block;padding:4px 10px;background:var(--navy);color:white;border-radius:3px;font-family:var(--font-sans);font-size:0.78rem;font-weight:700;}
-  .wc.good {background:var(--green);} .wc.warn {background:var(--amber);} .wc.bad {background:var(--red);}
-  .prompt-card {background:var(--paper);border:1px solid var(--accent);border-left:4px solid var(--accent);border-radius:4px;padding:14px;margin-bottom:10px;}
-  .prompt-card .pt {font-weight:700;color:var(--navy);margin-bottom:3px;}
-  .prompt-card .ps {font-size:0.88rem;color:var(--muted-deep);font-style:italic;}
-  .model-block {margin-top:20px;background:var(--offwhite);border-radius:6px;padding:18px;border-left:4px solid var(--accent);}
-  .model-block h3 {margin-bottom:10px;}
-  .model-block p {margin-bottom:10px;line-height:1.7;}
-</style>
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
-<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 </head>
 <body>
-<header class="site-header">
-  <div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a>
-    <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-    <button class="dark-toggle" onclick="toggleDark()" aria-label="Toggle dark mode">&#9680; Dark</button>
-  </div>
-</header>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
 <div class="breadcrumb">
-  <a href="../../../../index.html">Home</a>
-  <span>›</span>
-  <a href="../../index.html">B2</a>
-  <span>›</span>
-  <a href="../index.html">Writing</a>
-  <span>›</span>
-  <a href="index.html">Report</a>
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../fr/index.html">Anglais pour francophones</a><span>&#8250;</span>
+  <a href="../../index.html">B2</a><span>&#8250;</span>
+  <a href="../index.html">Rédaction</a><span>&#8250;</span>
+  <a href="index.html">Report</a><span>&#8250;</span>
+  <strong>Exercices</strong>
 </div>
-<div class="container">
-
 <nav class="chapter-nav">
-  <a href="slides.html" class="chapter-nav-btn">Lesson</a>
-  <a href="worksheet.html" class="chapter-nav-btn active">Review</a>
-  <a href="game.html" class="chapter-nav-btn">Game</a>
+  <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+  <a href="worksheet.html" class="chapter-nav-btn active">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn">Jeu</a>
 </nav>
-
-<h1>The Report</h1>
-<div class="subtitle">Reports · 140–190 words · Headings · Impersonal language</div>
-<div class="intro">
-  <div class="intro-title">About this worksheet</div>
-  <div class="intro-body">Progressive writing tasks. Language tasks are auto-checked. Writing tasks show a model answer on submission.</div>
-</div>
+<h1>Report — Le rapport structuré</h1>
+<p class="intro-meta">Complète les exercices puis vérifie tes réponses. Total : 16 points.</p>
 <form id="worksheet">
-<section class="exercise" id="ex1">
-  <div class="ex-head">Exercise 1</div>
-  <div class="ex-title">Match headings to paragraphs</div>
-  <div class="ex-meta">≈ 5 min · 4 points</div>
-  <div class="ex-instruct">Write the correct heading: Introduction / Current situation / Problems identified / Recommendations</div>
-<div class="q"><span class="q-num">1</span>
-  <div class="q-text">'The aim of this report is to describe the transport situation and suggest improvements.'</div>
-  <textarea data-q="e1q1" data-answer-sample="Introduction" placeholder="Your answer..." aria-label="Answer for e1q1"></textarea>
-</div>
-<div class="q"><span class="q-num">2</span>
-  <div class="q-text">'Several people complained that buses were unreliable. Residents also mentioned poor lighting.'</div>
-  <textarea data-q="e1q2" data-answer-sample="Problems identified" placeholder="Your answer..." aria-label="Answer for e1q2"></textarea>
-</div>
-<div class="q"><span class="q-num">3</span>
-  <div class="q-text">'Most commuters rely on buses. The train service only runs twice a day.'</div>
-  <textarea data-q="e1q3" data-answer-sample="Current situation" placeholder="Your answer..." aria-label="Answer for e1q3"></textarea>
-</div>
-<div class="q"><span class="q-num">4</span>
-  <div class="q-text">'It would therefore seem that improving bus frequency would be the most effective solution.'</div>
-  <textarea data-q="e1q4" data-answer-sample="Recommendations" placeholder="Your answer..." aria-label="Answer for e1q4"></textarea>
-</div>
-</section><section class="exercise" id="ex2">
-  <div class="ex-head">Exercise 2</div>
-  <div class="ex-title">Complete report language</div>
-  <div class="ex-meta">≈ 6 min · 6 points</div>
-  <div class="ex-instruct">Fill each gap: aim / carried out / majority / therefore recommend / seems / would be</div>
-<div class="q"><span class="q-num">1</span>
-  <div class="q-text">The ____ of this report is to describe transport facilities in our area.</div>
-  <input type="text" data-q="e2q1" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Answer for e2q1">
-</div>
-<div class="q"><span class="q-num">2</span>
-  <div class="q-text">Information was ____ by means of a survey of 50 local residents.</div>
-  <input type="text" data-q="e2q2" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Answer for e2q2">
-</div>
-<div class="q"><span class="q-num">3</span>
-  <div class="q-text">The ____ of residents feel that improvements are needed.</div>
-  <input type="text" data-q="e2q3" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Answer for e2q3">
-</div>
-<div class="q"><span class="q-num">4</span>
-  <div class="q-text">I would ____ investing in better bus frequency.</div>
-  <input type="text" data-q="e2q4" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Answer for e2q4">
-</div>
-<div class="q"><span class="q-num">5</span>
-  <div class="q-text">It ____ that this ____ the most cost-effective solution.</div>
-  <input type="text" data-q="e2q5" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-label="Answer for e2q5">
-</div>
-</section><section class="exercise" id="ex3">
-  <div class="ex-head">Exercise 3</div>
-  <div class="ex-title">Formal rewriting</div>
-  <div class="ex-meta">≈ 8 min · 5 points (self-checked)</div>
-  <div class="ex-instruct">Rewrite each informal sentence in formal, impersonal report language.</div>
-<div class="q"><span class="q-num">1</span>
-  <div class="q-text">Lots of people said the buses are really bad.</div>
-  <textarea data-q="e3q1" data-answer-sample="Several respondents mentioned that the bus service was unreliable." placeholder="Your answer..." aria-label="Answer for e3q1"></textarea>
-</div>
-<div class="q"><span class="q-num">2</span>
-  <div class="q-text">I think the library is way better than buying new computers.</div>
-  <textarea data-q="e3q2" data-answer-sample="It would seem that the library offers more significant benefits than new computers." placeholder="Your answer..." aria-label="Answer for e3q2"></textarea>
-</div>
-<div class="q"><span class="q-num">3</span>
-  <div class="q-text">Everyone is saying the town centre is a mess.</div>
-  <textarea data-q="e3q3" data-answer-sample="Many residents feel that the town centre requires significant improvement." placeholder="Your answer..." aria-label="Answer for e3q3"></textarea>
-</div>
-</section><section class="exercise" id="ex4">
-  <div class="ex-head">Exercise 4</div>
-  <div class="ex-title">Write a full report</div>
-  <div class="ex-meta">≈ 30 min · 15 points (self-checked)</div>
-  <div class="ex-instruct">Choose ONE prompt. Write 140–190 words. Use clear headings and impersonal language. Put recommendations ONLY in the conclusion.</div>
-<div class="prompt-card"><div class="pt">Option 1: Computers vs library</div></div>
-<div class="prompt-card"><div class="pt">Option 2: Town centre improvements</div></div>
-<div class="prompt-card"><div class="pt">Option 3: Transport facilities</div></div>
-<label for="report-text" style="display:block;font-weight:700;color:var(--navy);margin-bottom:8px;">Your report (remember to use headings!)</label>
-<textarea id="report-text" data-q="e4q1" data-answer-sample="(See model report in feedback)" placeholder="Write your report here. Aim for 140–190 words." style="min-height:280px;font-size:0.95rem;line-height:1.6;" aria-label="Answer for e4q1"></textarea>
-<div style="margin-top:8px;text-align:right;"><span id="wc-counter" class="wc">0 words</span></div>
-</section>
-<div class="submit-wrap">
-  <p>Complete all tasks, then submit to see feedback and a model answer.</p>
-  <button type="submit" class="submit">Submit &amp; See Feedback</button>
-  <button type="button" class="reset" onclick="resetAll()">Reset all answers</button>
-</div>
-</form>
-<div class="results-panel" id="results">
-  <div class="score-display">
-    <div class="big"><span id="score-got">0</span> / <span id="score-total">30</span></div>
-    <div class="label">Score</div>
-    <div class="pct" id="score-pct">—</div>
-      <div id="pass-msg" class="pass-msg" style="margin-top:6px"></div>
-  </div>
-  <div class="breakdown" id="breakdown"></div>
-  <div class="model-block">
-<h3>Model report — Transport facilities (~170 words)</h3>
-<p><strong>Introduction</strong><br>The aim of this report is to describe the transport facilities available in our area and suggest how they could be improved. Information was gathered by means of a short survey of thirty local residents.</p>
-<p><strong>Current situation</strong><br>The main form of public transport is the bus service, which runs every thirty minutes. There is also a train station, although trains only stop here twice a day. Most residents use their own cars for daily travel.</p>
-<p><strong>Problems identified</strong><br>Several respondents complained that buses are frequently late and overcrowded during rush hours. A number of residents also mentioned that there are no cycle lanes, making cycling unsafe.</p>
-<p><strong>Recommendations</strong><br>It is recommended that the local authority increase the bus frequency and introduce dedicated cycle lanes on the main roads. This would reduce car use and improve the daily experience of residents significantly.</p>
-</div>
-  <button type="button" class="submit" style="background:var(--navy);margin-top:16px;" onclick="tryAgain()">Try again</button>
-</div>
-      <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--hairline)"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">By exercise</div><div id="exercise-breakdown"></div></div>
-</div>
-<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
-<script>
-window.TOTAL_POINTS = 13;
-window.ANSWERS = {e2q1:{answer:"aim"},e2q2:{answer:"carried out"},e2q3:{answer:"majority"},e2q4:{answer:"therefore recommend"},e2q5:{answer:"seems"}};
-window.EXPLANATIONS = {
-  "e1q1": "Model answer: <em>Introduction</em>",
-  "e1q2": "Model answer: <em>Problems identified</em>",
-  "e1q3": "Model answer: <em>Current situation</em>",
-  "e1q4": "Model answer: <em>Recommendations</em>",
-  "e3q1": "Model answer: <em>Several respondents mentioned that the bus service was unreliable.</em>",
-  "e3q2": "Model answer: <em>It would seem that the library offers more significant benefits than new computers.</em>",
-  "e3q3": "Model answer: <em>Many residents feel that the town centre requires significant improvement.</em>",
-  "e4q1": "Model answer: <em>(See model report in feedback)</em>",
-  "e2q1": "Self-checked: <strong>aim</strong>.", "e2q2": "Self-checked: <strong>carried out</strong>.", "e2q3": "Self-checked: <strong>majority</strong>.", "e2q4": "Self-checked: <strong>therefore recommend</strong>.", "e2q5": "Self-checked: <strong>seems</strong>."};
 
-window.EXERCISE_TITLES = {ex1:"Task 1",ex2:"Task 2",ex3:"Task 3",ex4:"Task 4 (self-check)",ex5:"Task 5 (essay)"};
+<section class="exercise" id="ex1">
+<div class="ex-head">Exercice 1</div>
+<div class="ex-title">Choisis la bonne option</div>
+<div class="ex-meta">6 points</div>
+<div class="ex-instruct">Les codes du report.</div>
+<div class="q"><span class="q-num">1</span><div class="q-text">La bonne première phrase d’un report :</div>
+  <div class="choice-group" data-q="e1q1" data-answer="The aim of this report is to assess the new library."><button type="button" class="choice-btn" data-value="The aim of this report is to assess the new library.">The aim of this report is to assess the new library.</button><button type="button" class="choice-btn" data-value="Hi everyone, let me tell you about the library!">Hi everyone, let me tell you about the library!</button><button type="button" class="choice-btn" data-value="I am writing to complain about the library.">I am writing to complain about the library.</button></div></div>
+<div class="q"><span class="q-num">2</span><div class="q-text">« On a constaté que... » :</div>
+  <div class="choice-group" data-q="e1q2" data-answer="It was found that..."><button type="button" class="choice-btn" data-value="It was found that...">It was found that...</button><button type="button" class="choice-btn" data-value="We have constated that...">We have constated that...</button><button type="button" class="choice-btn" data-value="One found that...">One found that...</button></div></div>
+<div class="q"><span class="q-num">3</span><div class="q-text">« Réaliser un sondage » :</div>
+  <div class="choice-group" data-q="e1q3" data-answer="carry out a survey"><button type="button" class="choice-btn" data-value="carry out a survey">carry out a survey</button><button type="button" class="choice-btn" data-value="make a survey">make a survey</button><button type="button" class="choice-btn" data-value="realise a survey">realise a survey</button></div></div>
+<div class="q"><span class="q-num">4</span><div class="q-text">« La plupart des élèves » :</div>
+  <div class="choice-group" data-q="e1q4" data-answer="most students"><button type="button" class="choice-btn" data-value="most students">most students</button><button type="button" class="choice-btn" data-value="the most of students">the most of students</button><button type="button" class="choice-btn" data-value="the most students">the most students</button></div></div>
+<div class="q"><span class="q-num">5</span><div class="q-text">La section finale d’un report :</div>
+  <div class="choice-group" data-q="e1q5" data-answer="Recommendations"><button type="button" class="choice-btn" data-value="Recommendations">Recommendations</button><button type="button" class="choice-btn" data-value="Conclusion of my opinions">Conclusion of my opinions</button><button type="button" class="choice-btn" data-value="The end">The end</button></div></div>
+<div class="q"><span class="q-num">6</span><div class="q-text">« Il serait souhaitable de... » :</div>
+  <div class="choice-group" data-q="e1q6" data-answer="It would be advisable to..."><button type="button" class="choice-btn" data-value="It would be advisable to...">It would be advisable to...</button><button type="button" class="choice-btn" data-value="It would be wishable to...">It would be wishable to...</button><button type="button" class="choice-btn" data-value="It should be souhaitable to...">It should be souhaitable to...</button></div></div>
+</section>
+
+<section class="exercise" id="ex2">
+<div class="ex-head">Exercice 2</div>
+<div class="ex-title">Complète le report</div>
+<div class="ex-meta">5 points</div>
+<div class="ex-instruct">Écris le mot manquant.</div>
+<div class="q"><span class="q-num">1</span><div class="q-text">The ______ of this report is to evaluate the sports facilities. (le but)<br><input type="text" data-q="e2q1" style="width:220px" aria-label="Réponse e2q1"></div></div>
+<div class="q"><span class="q-num">2</span><div class="q-text">A survey was carried ______ among 80 members. (la particule)<br><input type="text" data-q="e2q2" style="width:220px" aria-label="Réponse e2q2"></div></div>
+<div class="q"><span class="q-num">3</span><div class="q-text">It was ______ that queues were the main complaint. (find au participe)<br><input type="text" data-q="e2q3" style="width:220px" aria-label="Réponse e2q3"></div></div>
+<div class="q"><span class="q-num">4</span><div class="q-text">It is recommended that the café ______ open until 8 pm. (be au subjonctif)<br><input type="text" data-q="e2q4" style="width:220px" aria-label="Réponse e2q4"></div></div>
+<div class="q"><span class="q-num">5</span><div class="q-text">The ______ of users were satisfied with the staff. (la majorité)<br><input type="text" data-q="e2q5" style="width:220px" aria-label="Réponse e2q5"></div></div>
+</section>
+
+<section class="exercise" id="ex3">
+<div class="ex-head">Exercice 3</div>
+<div class="ex-title">Choisis la version anglaise naturelle</div>
+<div class="ex-meta">5 points</div>
+<div class="ex-instruct">Le ton impersonnel.</div>
+<div class="q"><span class="q-num">1</span><div class="q-text">« On a interrogé cinquante étudiants. »</div>
+  <div class="choice-group" data-q="e3q1" data-answer="Fifty students were interviewed."><button type="button" class="choice-btn" data-value="Fifty students were interviewed.">Fifty students were interviewed.</button><button type="button" class="choice-btn" data-value="One interrogated fifty students.">One interrogated fifty students.</button><button type="button" class="choice-btn" data-value="We made interviews to fifty students.">We made interviews to fifty students.</button></div></div>
+<div class="q"><span class="q-num">2</span><div class="q-text">« Presque la moitié des sondés sont mécontents. »</div>
+  <div class="choice-group" data-q="e3q2" data-answer="Almost half of those surveyed are dissatisfied."><button type="button" class="choice-btn" data-value="Almost half of those surveyed are dissatisfied.">Almost half of those surveyed are dissatisfied.</button><button type="button" class="choice-btn" data-value="Almost the half of sounded people are unhappy.">Almost the half of sounded people are unhappy.</button><button type="button" class="choice-btn" data-value="Nearly the half of the survey is angry.">Nearly the half of the survey is angry.</button></div></div>
+<div class="q"><span class="q-num">3</span><div class="q-text">« Il est recommandé d’agrandir le parking. »</div>
+  <div class="choice-group" data-q="e3q3" data-answer="It is recommended that the car park be extended."><button type="button" class="choice-btn" data-value="It is recommended that the car park be extended.">It is recommended that the car park be extended.</button><button type="button" class="choice-btn" data-value="It is recommended to agrandise the parking.">It is recommended to agrandise the parking.</button><button type="button" class="choice-btn" data-value="We recommend you must extend the parking.">We recommend you must extend the parking.</button></div></div>
+<div class="q"><span class="q-num">4</span><div class="q-text">« L’école devrait envisager d’embaucher un deuxième cuisinier. »</div>
+  <div class="choice-group" data-q="e3q4" data-answer="The school should consider hiring a second cook."><button type="button" class="choice-btn" data-value="The school should consider hiring a second cook.">The school should consider hiring a second cook.</button><button type="button" class="choice-btn" data-value="The school should consider to hire a second cook.">The school should consider to hire a second cook.</button><button type="button" class="choice-btn" data-value="The school should envisage to engage a second cook.">The school should envisage to engage a second cook.</button></div></div>
+<div class="q"><span class="q-num">5</span><div class="q-text">Quelle phrase appartient à un report (et non à une lettre) ?</div>
+  <div class="choice-group" data-q="e3q5" data-answer="It was felt that prices were too high."><button type="button" class="choice-btn" data-value="It was felt that prices were too high.">It was felt that prices were too high.</button><button type="button" class="choice-btn" data-value="I really hate the prices here!">I really hate the prices here!</button><button type="button" class="choice-btn" data-value="You should lower your prices, please.">You should lower your prices, please.</button></div></div>
+<div class="submit-wrap"><button type="submit" class="submit-btn">Vérifier les réponses</button></div>
+</section>
+</form>
+<div id="results" class="results-panel" style="display:none"></div>
+<script>
+window.CHAPTER_ID = "report";
+window.LEVEL = "b2";
+window.SECTION = "writing";
+window.TOTAL_POINTS = 16;
+window.ANSWERS = {
+  e2q1:{answer:"aim"},
+  e2q2:{answer:"out"},
+  e2q3:{answer:"found"},
+  e2q4:{answer:"be"},
+  e2q5:{answer:"majority"}
+};
+window.EXPLANATIONS = {
+  "e1q1": "The aim of this report is to... — la formule d’ouverture consacrée.",
+  "e1q2": "Le passif impersonnel : it was found that.",
+  "e1q3": "Carry out / conduct a survey — make a survey est un calque.",
+  "e1q4": "Most + nom directement, sans the.",
+  "e1q5": "Le report se termine par des recommandations actionnables.",
+  "e1q6": "Advisable = souhaitable/judicieux — la recommandation mesurée.",
+  "e2q1": "The AIM of this report is to...",
+  "e2q2": "Carry OUT a survey.",
+  "e2q3": "It was FOUND that — le constat passif.",
+  "e2q4": "Recommend that + subjonctif : that the café BE open.",
+  "e2q5": "The MAJORITY of users.",
+  "e3q1": "Le passif remplace le « on » : were interviewed.",
+  "e3q2": "Almost half of those surveyed — la quantification du report.",
+  "e3q3": "It is recommended that + subjonctif passif. (Et car park, pas parking seul.)",
+  "e3q4": "Consider + -ing : should consider hiring.",
+  "e3q5": "L’impersonnel passif est la voix du report."
+};
+window.EXERCISE_TITLES = {ex1:"Exercice 1 - Choisis la bonne option",ex2:"Exercice 2 - Complète le report",ex3:"Exercice 3 - Choisis la version anglaise naturelle"};
 </script>
-<script>window.CHAPTER_ID = 'report'; window.LEVEL = 'b2';</script>
 <script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/worksheet.js?v=v108"></script>
-
-<div class="check-bar" style="max-width:800px;margin:24px auto;padding:0 20px;display:flex;gap:10px">
-  <button type="submit" style="flex:1;padding:12px;background:var(--amber);color:white;font-family:var(--font-sans);font-size:0.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:4px;cursor:pointer">Check Answers</button>
-  <button onclick="resetAll()" style="padding:12px 20px;background:var(--paper);color:var(--navy);font-family:var(--font-sans);font-size:0.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border:1.5px solid rgba(26,26,26,.2);border-radius:4px;cursor:pointer">Reset</button>
-</div>
-
-<div style="margin-top:16px">
-  <div style="background:var(--cream-deep);padding:10px 14px;font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);border:1px solid var(--hairline);border-radius:6px 6px 0 0;border-bottom:0">Live feedback &amp; rubric</div>
-  <div id="writingFeedback_report" class="writing-feedback"></div>
-</div>
-<script src="../../../../shared/writing-grader.js?v=v105"></script>
-<script>
-window.WRITING_CONFIG_report = {"taskType": "report", "register": "formal", "minWords": 140, "maxWords": 195};
-if (document.getElementById('report-text')) {
-  WritingGrader.init('report-text', 'writingFeedback_report', window.WRITING_CONFIG_report);
-}
-</script>
-
-<script>
-/* model-answer-reveal */
-(function() {
-  document.querySelectorAll('textarea[data-answer-sample]').forEach(function(ta, idx) {
-    var sample = ta.getAttribute('data-answer-sample');
-    if (!sample || sample.length < 10) return;
-    var btn = document.createElement('button');
-    btn.type = 'button';
-    btn.textContent = 'Show model answer';
-    btn.style.cssText = 'display:inline-block;margin-top:8px;padding:7px 16px;font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:transparent;color:var(--muted);border:1.5px solid var(--hairline);border-radius:3px;cursor:pointer';
-    var panel = document.createElement('div');
-    panel.style.cssText = 'display:none;background:rgba(184,134,11,0.06);border:1.5px solid rgba(184,134,11,0.25);border-radius:6px;padding:14px 16px;margin-top:8px;font-size:.9rem;line-height:1.7;color:var(--ink)';
-    var label = document.createElement('div');
-    label.style.cssText = 'font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:8px';
-    label.textContent = 'Model answer';
-    var text = document.createElement('div');
-    text.style.whiteSpace = 'pre-line';
-    text.textContent = sample;
-    panel.appendChild(label); panel.appendChild(text);
-    btn.addEventListener('click', function() {
-      var vis = panel.style.display !== 'none';
-      panel.style.display = vis ? 'none' : 'block';
-      btn.textContent = vis ? 'Show model answer' : 'Hide model answer';
-    });
-    var parent = ta.closest('.q') || ta.parentElement;
-    parent.appendChild(btn); parent.appendChild(panel);
-  });
-})();
-</script>
+<footer class="site-footer">Word Play &middot; Anglais B2 &middot; Exercices</footer>
 </body>
 </html>
