@@ -1,126 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="description" content="Word Play — Cambridge English grammar, vocabulary and writing practice.">
-<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
-<title>Passive Simple — B1 Grammar Game | Word Play</title>
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Passive (Simple) — Jeu B1 | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
 </head>
 <body>
-<header class="site-header">
-  <div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a>
-    <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:white;font-family:var(--font-sans);font-size:0.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border-radius:4px;cursor:pointer;">&#9680; Dark</button>
-  </div>
-</header>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
 <div class="breadcrumb">
-  <a href="../../../../index.html">Home</a>
-  <span>›</span>
-  <a href="../../index.html">B1</a>
-  <span>›</span>
-  <a href="../index.html">Grammar</a>
-  <span>›</span>
-  <a href="index.html">Passive Voice</a>
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../fr/index.html">Anglais pour francophones</a><span>&#8250;</span>
+  <a href="../../index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">Passive (Simple)</a><span>&#8250;</span>
+  <strong>Jeu</strong>
 </div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+</nav>
 <div class="container">
-  
-  <h1>Passive Voice</h1>
-  <nav class="chapter-nav">
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
-    <a href="worksheet.html" class="chapter-nav-btn">Review</a>
-    <a href="game.html" class="chapter-nav-btn active">Game</a>
-  </nav>
+  <h1>Passive (Simple) — Jeu de Maîtrise</h1>
   <div class="game-wrap">
     <div id="gameStart" class="game-screen active">
       <div class="game-start">
-        <h2>4-Stage Mastery</h2>
-        <p>Each item passes through four stages: meaning, synonym, identification and sentence completion. Answer correctly to advance — a wrong answer drops you back one stage.</p>
+        <h2>Jeu de Maîtrise</h2>
+        <p>Chaque forme passive passe par trois types de questions : sens, contexte et production. Atteins 100 points pour gagner.</p>
         <div class="game-stats-row">
-          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Maîtrisés</div></div>
           <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
         </div>
         <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
-          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved session.</p>
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tu as une partie sauvegardée.</p>
           <div class="game-btn-row">
-          <a href="../past-simple-continuous/slides.html" class="game-btn primary" style="text-decoration:none;text-align:center">Ch 8 Past Simple Continuous &#8594;</a>
-                    
-          
-            <button id="gBtnResume" class="game-btn primary">Resume</button>
-            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
           </div>
         </div>
-        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Commencer</button></div>
       </div>
       <div class="game-ref-panel" style="margin-top:20px;">
-        <div class="game-ref-head" id="gRefToggle">&#9660; All 6 items — reference</div>
+        <div class="game-ref-head" id="gRefToggle">&#9660; Tous les éléments — référence</div>
         <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
       </div>
     </div>
     <div id="gamePlay" class="game-screen">
-      <div class="game-play">
-        <div class="game-mode-tag" id="gModeTag"></div>
-        <div class="game-term" id="gTerm"></div>
-        <div class="game-prompt" id="gPrompt"></div>
-        <div class="game-options" id="gOptions"></div>
-        <div class="game-feedback" id="gFeedback"></div>
-        <div class="game-example" id="gExample" style="display:none;"></div>
-        <div style="text-align:center;margin:12px 0;">
-          <button id="gBtnNext" class="game-btn primary" style="display:none;">Next &#8594;</button>
-        </div>
-        <div class="game-helpers">
-          <button id="gBtnHint" class="game-btn ghost small">Hint</button>
-          <button id="gBtnReveal" class="game-btn ghost small">Show answer</button>
-          <button id="gBtnKnow" class="game-btn know small" style="display:none">I know this</button>
-        </div>
-        <div class="game-progress-strip">
-          <div class="game-progress-bar"><div class="game-progress-fill" id="gProgressBar" style="width:0%"></div></div>
-          <div class="game-progress-text" id="gProgressTxt">0 / 0 mastered</div>
-        </div>
-        <div class="game-score-streak">Score: <strong id="gScore">0</strong>&nbsp;&nbsp;Streak: <strong id="gStreak">0</strong></div>
-        <div style="text-align:center;margin-top:14px;">
-          <button id="gBtnSaveQuit" class="game-btn ghost small">Save &amp; quit</button>
-        </div>
-      </div>
+      <div class="game-play"></div>
     </div>
     <div id="gameCompletion" class="game-screen">
       <div class="game-completion">
-        <h2>Mastered!</h2>
-        <p>You have completed all items in this chapter.</p>
+        <h2>Maîtrisé !</h2>
+        <p>Tu as terminé tous les éléments de ce chapitre.</p>
         <div class="game-stats-row" style="margin:20px 0;">
           <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
-          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
-          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure série</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Maîtrisés</div></div>
         </div>
         <div id="gMasteryMap"></div>
         <div class="game-btn-row">
-          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
-          <a href="worksheet.html" class="game-btn secondary">Worksheet</a>
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
         </div>
       </div>
     </div>
   </div>
 </div>
 <div class="game-toast" id="gToast"></div>
-<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<footer class="site-footer">Word Play &middot; Anglais B1 &middot; Jeu</footer>
 <script>
 window.GAME_DATA = {
-  chapterId: 'passive-simple',level:'b1',
-  title:'Passive Voice',
+  chapterId: "passive-simple",
+  level: "b1",
+  title: "Passive — Le passif au présent et au prétérit",
   storageKey: 'wordplay_game_b1_passive-simple',
-  items:[
-    {id:'pres_pass',term:'Present simple passive',meaning:'is/are + past participle — ongoing facts or habits',synonym:'is/are done',example:'The curriculum <b>is reviewed</b> every year.',completion:'The curriculum ______ every year.',answer:'is reviewed'},
-    {id:'past_pass',term:'Past simple passive',meaning:'was/were + past participle — completed past action',synonym:'was/were done',example:'The championship <b>was won</b> by the home team.',completion:'The championship ______ by the home team.',answer:'was won'},
-    {id:'pres_cont_pass',term:'Present continuous passive',meaning:'is/are being + past participle — happening now',synonym:'is being done',example:'New apps <b>are being developed</b> all the time.',completion:'New apps ______ all the time.',answer:'are being developed'},
-    {id:'pres_perf_pass',term:'Present perfect passive',meaning:'has/have been + past participle — completed with present relevance',synonym:'has/have been done',example:'A new species <b>has been discovered</b>.',completion:'A new species ______.',answer:'has been discovered'},
-    {id:'by_agent',term:'By + agent',meaning:'used to mention who performed the action',synonym:'performed by',example:'The report <b>was written by</b> a team of scientists.',completion:'The report ______ a team of scientists.',answer:'was written by'},
-    {id:'no_agent',term:'Omitting the agent',meaning:'leave out by + agent when doer is unknown or obvious',synonym:'agentless passive',example:'The results <b>have been announced</b>.',completion:'The results ______.',answer:'have been announced'},
-  ]};
+  items: [
+    {id:"is-made", term:"is made", meaning:"est fabriqué — présent passif singulier", synonym:"présent passif", example:"This cheese <b>is made</b> in France.", completion:"This cheese ______ ______ in France.", answer:"is made"},
+    {id:"are-made", term:"are made", meaning:"sont fabriqués — présent passif pluriel", synonym:"présent passif pluriel", example:"These cars <b>are made</b> in Japan.", completion:"These cars ______ made in Japan.", answer:"are"},
+    {id:"was-built", term:"was built", meaning:"a été construit — prétérit passif", synonym:"prétérit passif", example:"The bridge <b>was built</b> in 1890.", completion:"The bridge ______ ______ in 1890.", answer:"was built"},
+    {id:"were-sent", term:"were sent", meaning:"ont été envoyés — prétérit passif pluriel", synonym:"pluriel passé", example:"The letters <b>were sent</b> on Monday.", completion:"The letters ______ sent on Monday.", answer:"were"},
+    {id:"by", term:"by + auteur", meaning:"par — introduit l’auteur de l’action", synonym:"complément d’agent", example:"Hamlet was written <b>by</b> Shakespeare.", completion:"Hamlet was written ______ Shakespeare. (par)", answer:"by"},
+    {id:"is-spoken", term:"is spoken", meaning:"se parle / on parle — le « on » français au passif", synonym:"traduire « on »", example:"English <b>is spoken</b> here.", completion:"English ______ ______ here. (on parle)", answer:"is spoken"},
+    {id:"was-stolen", term:"was stolen", meaning:"a été volé — participe irrégulier stolen", synonym:"participe irrégulier", example:"My bike <b>was stolen</b> yesterday.", completion:"My bike was ______ yesterday. (volé)", answer:"stolen"},
+    {id:"wasnt-sent", term:"wasn't sent", meaning:"n’a pas été envoyé — négation du passif", synonym:"négation", example:"The email <b>wasn’t sent</b>.", completion:"The email ______ sent. (n’a pas été)", answer:"wasn't"}
+  ]
+};
 </script>
 <script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>

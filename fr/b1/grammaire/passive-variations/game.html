@@ -4,7 +4,7 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Modals of Deduction — Jeu B1 | Word Play</title>
+<title>Passive (Variations) — Jeu B1 | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
@@ -17,7 +17,7 @@
   <a href="../../../../fr/index.html">Anglais pour francophones</a><span>&#8250;</span>
   <a href="../../index.html">B1</a><span>&#8250;</span>
   <a href="../index.html">Grammaire</a><span>&#8250;</span>
-  <a href="index.html">Modals of Deduction</a><span>&#8250;</span>
+  <a href="index.html">Passive (Variations)</a><span>&#8250;</span>
   <strong>Jeu</strong>
 </div>
 <nav class="chapter-nav">
@@ -26,12 +26,12 @@
   <a href="game.html" class="chapter-nav-btn active">Jeu</a>
 </nav>
 <div class="container">
-  <h1>Modals of Deduction — Jeu de Maîtrise</h1>
+  <h1>Passive (Variations) — Jeu de Maîtrise</h1>
   <div class="game-wrap">
     <div id="gameStart" class="game-screen active">
       <div class="game-start">
         <h2>Jeu de Maîtrise</h2>
-        <p>Chaque modal de déduction passe par trois types de questions : sens, contexte et production. Atteins 100 points pour gagner.</p>
+        <p>Chaque variation du passif passe par trois types de questions : sens, contexte et production. Atteins 100 points pour gagner.</p>
         <div class="game-stats-row">
           <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Maîtrisés</div></div>
           <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
@@ -75,19 +75,19 @@
 <footer class="site-footer">Word Play &middot; Anglais B1 &middot; Jeu</footer>
 <script>
 window.GAME_DATA = {
-  chapterId: "modal-deduction",
+  chapterId: "passive-variations",
   level: "b1",
-  title: "Modals of Deduction — Must, might, can’t",
-  storageKey: 'wordplay_game_b1_modal-deduction',
+  title: "Passive Variations — Autres temps du passif",
+  storageKey: 'wordplay_game_b1_passive-variations',
   items: [
-    {id:"must-be", term:"must be", meaning:"doit être — déduction quasi certaine", synonym:"quasi certain (vrai)", example:"She has a perfect score. She <b>must be</b> very talented.", completion:"She has a perfect score. She ______ ______ very talented.", answer:"must be"},
-    {id:"cant-be", term:"can't be", meaning:"ne peut pas être — déduction négative (jamais mustn’t)", synonym:"quasi certain (faux)", example:"He ran a marathon. He <b>can't be</b> unfit.", completion:"He ran a marathon. He ______ be unfit.", answer:"can't"},
-    {id:"might-be", term:"might be", meaning:"est peut-être", synonym:"possible", example:"She <b>might be</b> at the gym.", completion:"She ______ be at the gym. (peut-être)", answer:"might"},
-    {id:"may-be", term:"may be", meaning:"est peut-être — synonyme de might", synonym:"possible (synonyme)", example:"He <b>may be</b> ill.", completion:"He ______ be ill. (peut-être)", answer:"may"},
-    {id:"could-be", term:"could be", meaning:"pourrait être — une possibilité parmi d’autres", synonym:"autre possibilité", example:"It <b>could be</b> a mistake.", completion:"It ______ be a mistake. (pourrait)", answer:"could"},
-    {id:"must-be-ing", term:"must be + -ing", meaning:"doit être en train de", synonym:"action en cours", example:"She <b>must be driving</b>.", completion:"She must be ______ . (en train de conduire)", answer:"driving"},
-    {id:"might-not", term:"might not be", meaning:"n’est peut-être pas", synonym:"possibilité négative", example:"It <b>might not be</b> true.", completion:"It might ______ be true. (peut-être pas)", answer:"not"},
-    {id:"no-to-ded", term:"modal + be (sans to)", meaning:"jamais de to après le modal", synonym:"règle de forme", example:"She must <b>be</b> tired (jamais « must to be »).", completion:"She must ______ tired.", answer:"be"}
+    {id:"has-been", term:"has been + participe", meaning:"a été — present perfect passif", synonym:"perfect passif", example:"The road <b>has been closed</b>.", completion:"The road has ______ closed.", answer:"been"},
+    {id:"will-be", term:"will be + participe", meaning:"sera — futur passif", synonym:"futur passif", example:"The results <b>will be published</b> tomorrow.", completion:"The results will ______ published tomorrow.", answer:"be"},
+    {id:"must-be-pp", term:"must be + participe", meaning:"doit être — modal passif", synonym:"modal passif", example:"This form <b>must be signed</b>.", completion:"This form must be ______ . (signé)", answer:"signed"},
+    {id:"is-being", term:"is being + participe", meaning:"est en train d’être — passif continu", synonym:"passif continu", example:"The bridge <b>is being repaired</b>.", completion:"The bridge is ______ repaired.", answer:"being"},
+    {id:"can-be", term:"can be + participe", meaning:"peut être fait", synonym:"possibilité passive", example:"It <b>can be done</b> in an hour.", completion:"It can ______ done in an hour.", answer:"be"},
+    {id:"have-been-pl", term:"have been + participe", meaning:"ont été — perfect passif pluriel", synonym:"pluriel", example:"Three people <b>have been arrested</b>.", completion:"Three people ______ been arrested.", answer:"have"},
+    {id:"worn", term:"worn", meaning:"porté — participe irrégulier de wear", synonym:"participe irrégulier", example:"Helmets must be <b>worn</b> on site.", completion:"Helmets must be ______ on site. (portés)", answer:"worn"},
+    {id:"active-choice", term:"actif préféré", meaning:"si l’acteur est connu, l’anglais préfère l’actif", synonym:"actif vs passif", example:"<b>My sister took</b> this photo.", completion:"My sister ______ this photo. (a pris)", answer:"took"}
   ]
 };
 </script>
