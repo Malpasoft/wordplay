@@ -1,121 +1,95 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="description" content="Word Play — Cambridge English grammar, vocabulary and writing practice.">
-<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
-<title>Causative — B2 Grammar Game | Word Play</title>
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Causative — Jeu B2 | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
 </head>
 <body>
-<header class="site-header">
-  <div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a>
-    <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);color:white;font-family:var(--font-sans);font-size:0.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:6px 12px;border-radius:4px;cursor:pointer;">&#9680; Dark</button>
-  </div>
-</header>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
 <div class="breadcrumb">
-  <a href="../../../../index.html">Home</a>
-  <span>›</span>
-  <a href="../../index.html">B2</a>
-  <span>›</span>
-  <a href="../index.html">Grammar</a>
-  <span>›</span>
-  <a href="index.html">Causative</a>
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../fr/index.html">Anglais pour francophones</a><span>&#8250;</span>
+  <a href="../../index.html">B2</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">Causative</a><span>&#8250;</span>
+  <strong>Jeu</strong>
 </div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+</nav>
 <div class="container">
-  
-  <h1>Causative Have and Get</h1>
-  <nav class="chapter-nav">
-    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
-    <a href="worksheet.html" class="chapter-nav-btn">Review</a>
-    <a href="game.html" class="chapter-nav-btn active">Game</a>
-  </nav>
+  <h1>Causative — Jeu de Maîtrise</h1>
   <div class="game-wrap">
     <div id="gameStart" class="game-screen active">
       <div class="game-start">
-        <h2>4-Stage Mastery</h2>
-        <p>Each item passes through four stages: meaning, synonym, identification and sentence completion. Answer correctly to advance — a wrong answer drops you back one stage.</p>
+        <h2>Jeu de Maîtrise</h2>
+        <p>Chaque structure causative passe par trois types de questions : sens, contexte et production. Atteins 100 points pour gagner.</p>
         <div class="game-stats-row">
-          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Maîtrisés</div></div>
           <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
         </div>
         <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
-          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved session.</p>
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tu as une partie sauvegardée.</p>
           <div class="game-btn-row">
-          <a href="../comparisons/slides.html" class="game-btn primary" style="text-decoration:none;text-align:center">Ch 3 Comparisons &#8594;</a>
-                    
-          
-            <button id="gBtnResume" class="game-btn primary">Resume</button>
-            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
           </div>
         </div>
-        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Commencer</button></div>
       </div>
       <div class="game-ref-panel" style="margin-top:20px;">
-        <div class="game-ref-head" id="gRefToggle">&#9660; All 5 items — reference</div>
+        <div class="game-ref-head" id="gRefToggle">&#9660; Tous les éléments — référence</div>
         <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
       </div>
     </div>
     <div id="gamePlay" class="game-screen">
-      <div class="game-play">
-        <div class="game-mode-tag" id="gModeTag"></div>
-        <div class="game-term" id="gTerm"></div>
-        <div class="game-prompt" id="gPrompt"></div>
-        <div class="game-options" id="gOptions"></div>
-        <div class="game-feedback" id="gFeedback"></div>
-        <div class="game-example" id="gExample" style="display:none;"></div>
-        <div style="text-align:center;margin:12px 0;">
-          <button id="gBtnNext" class="game-btn primary" style="display:none;">Next &#8594;</button>
-        </div>
-        <div class="game-helpers">
-          <button id="gBtnHint" class="game-btn ghost small">Hint</button>
-          <button id="gBtnReveal" class="game-btn ghost small">Show answer</button>
-          <button id="gBtnKnow" class="game-btn know small" style="display:none">I know this</button>
-        </div>
-        <div class="game-progress-strip">
-          <div class="game-progress-bar"><div class="game-progress-fill" id="gProgressBar" style="width:0%"></div></div>
-          <div class="game-progress-text" id="gProgressTxt">0 / 0 mastered</div>
-        </div>
-        <div class="game-score-streak">Score: <strong id="gScore">0</strong>&nbsp;&nbsp;Streak: <strong id="gStreak">0</strong></div>
-        <div style="text-align:center;margin-top:14px;">
-          <button id="gBtnSaveQuit" class="game-btn ghost small">Save &amp; quit</button>
-        </div>
-      </div>
+      <div class="game-play"></div>
     </div>
     <div id="gameCompletion" class="game-screen">
       <div class="game-completion">
-        <h2>Mastered!</h2>
-        <p>You have completed all items in this chapter.</p>
+        <h2>Maîtrisé !</h2>
+        <p>Tu as terminé tous les éléments de ce chapitre.</p>
         <div class="game-stats-row" style="margin:20px 0;">
           <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
-          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
-          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure série</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Maîtrisés</div></div>
         </div>
         <div id="gMasteryMap"></div>
         <div class="game-btn-row">
-          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
-          <a href="worksheet.html" class="game-btn secondary">Worksheet</a>
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
         </div>
       </div>
     </div>
   </div>
 </div>
 <div class="game-toast" id="gToast"></div>
-<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<footer class="site-footer">Word Play &middot; Anglais B2 &middot; Jeu</footer>
 <script>
-window.GAME_DATA={chapterId:'causative',level:'b2',title:'Causative Have and Get',storageKey: 'wordplay_game_b2_causative',items:[
-  {id:'have_pp',term:'Have + object + past participle',meaning:'arrange for someone else to do something — formal',synonym:'get something done (formal)',example:'She <b>had her digital footprint audited</b> by a cybersecurity firm.',completion:'She ______ by a cybersecurity firm.',answer:'had her digital footprint audited'},
-  {id:'get_pp',term:'Get + object + past participle',meaning:'arrange or experience something — informal or achieved with effort',synonym:'have something done (informal)',example:'He <b>got his CV reviewed</b> by a career coach.',completion:'He ______ by a career coach.',answer:'got his CV reviewed'},
-  {id:'get_acc',term:'Get — accident or unwanted',meaning:'get + object + past participle for unwanted or accidental experiences',synonym:'suffer something',example:'She <b>got her laptop stolen</b> at the conference.',completion:'She ______ at the conference.',answer:'got her laptop stolen'},
-  {id:'tense',term:'Tense in have/get',meaning:'the tense is shown in have or get — the participle stays the same',synonym:'auxiliary carries the tense',example:'She <b>had</b> it reviewed last week. She <b>will have</b> it reviewed tomorrow.',completion:'She ______ her carbon emissions calculated last year.',answer:'had'},
-  {id:'pp_err',term:'Past participle — not -ing',meaning:'always use past participle after object — not -ing form',synonym:'common error to avoid',example:'She had her work <b>reviewed</b>. (NOT reviewing)',completion:'She had her work ______.',answer:'reviewed'},
-]};
+window.GAME_DATA = {
+  chapterId: "causative",
+  level: "b2",
+  title: "Causative — Faire faire quelque chose",
+  storageKey: 'wordplay_game_b2_causative',
+  items: [
+    {id:"have-done", term:"have something done", meaning:"faire faire quelque chose par quelqu’un", synonym:"faire faire", example:"I <b>had my car repaired</b>.", completion:"I had my car ______ . (réparée — par le garagiste)", answer:"repaired"},
+    {id:"hair-cut", term:"have one’s hair cut", meaning:"se faire couper les cheveux", synonym:"chez le coiffeur", example:"She <b>had her hair cut</b>.", completion:"She had her hair ______ .", answer:"cut"},
+    {id:"get-fixed", term:"get something fixed", meaning:"faire réparer — version orale avec get", synonym:"avec get", example:"I need to <b>get my phone fixed</b>.", completion:"I need to get my phone ______ .", answer:"fixed"},
+    {id:"wallet-stolen", term:"have something stolen", meaning:"se faire voler — la mésaventure subie", synonym:"subir", example:"He <b>had his wallet stolen</b>.", completion:"He had his wallet ______ . (volé)", answer:"stolen"},
+    {id:"make-do", term:"make someone do", meaning:"obliger quelqu’un à faire — sans to", synonym:"obliger", example:"The teacher <b>made us rewrite</b> it.", completion:"The teacher made us ______ it. (réécrire)", answer:"rewrite"},
+    {id:"get-to-do", term:"get someone to do", meaning:"persuader quelqu’un de faire — avec to", synonym:"persuader", example:"I <b>got him to help</b> me.", completion:"I got him ______ help me.", answer:"to"},
+    {id:"having-redone", term:"be having something done", meaning:"faire faire (en cours)", synonym:"en cours", example:"We're <b>having the kitchen redone</b>.", completion:"We're having the kitchen ______ . (refaite)", answer:"redone"},
+    {id:"will-have-sent", term:"will have something done", meaning:"je ferai envoyer — au futur", synonym:"au futur", example:"I'll <b>have the documents sent</b> to you.", completion:"I'll have the documents ______ to you. (envoyés)", answer:"sent"}
+  ]
+};
 </script>
 <script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
