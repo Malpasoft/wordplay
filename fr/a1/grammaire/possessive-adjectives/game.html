@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Les adjectifs possessifs — Jeu A1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../fr/index.html">Anglais pour francophones</a><span>&#8250;</span>
+  <a href="../../index.html">A1</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">Les adjectifs possessifs</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+</nav>
+<div class="container">
+  <h1>Les adjectifs possessifs — Jeu de Maîtrise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Maîtrise</h2>
+        <p>Chaque adjectif possessif passe par trois types de questions : sens, contexte et production. Atteins 100 points pour gagner.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Maîtrisés</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tu as une partie sauvegardée.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Commencer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Tous les éléments — référence</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Maîtrisé !</h2>
+        <p>Tu as terminé tous les éléments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure série</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Maîtrisés</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Anglais A1 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "possessive-adjectives",
+  level: "a1",
+  title: "Les adjectifs possessifs — my, your, his, her...",
+  storageKey: 'wordplay_game_a1_possessive-adjectives',
+  items: [
+    {id:"my", term:"my", meaning:"mon/ma/mes — première personne singulier", synonym:"mon/ma", example:"I love <b>my</b> dog.", completion:"I love ______ dog. (mon)", answer:"my"},
+    {id:"your", term:"your", meaning:"ton/ta/tes ou votre/vos", synonym:"ton/votre", example:"Is this <b>your</b> pen?", completion:"Is this ______ pen? (ton)", answer:"your"},
+    {id:"his", term:"his", meaning:"son/sa/ses — possesseur masculin", synonym:"possesseur masc.", example:"<b>His</b> car is red.", completion:"______ car is red. (sa voiture — à lui)", answer:"his"},
+    {id:"her", term:"her", meaning:"son/sa/ses — possesseur féminin", synonym:"possesseur fém.", example:"<b>Her</b> bag is blue.", completion:"______ bag is blue. (son sac — à elle)", answer:"her"},
+    {id:"its", term:"its", meaning:"son/sa — chose ou animal", synonym:"chose/animal", example:"The cat drinks <b>its</b> milk.", completion:"The cat drinks ______ milk. (son lait — du chat)", answer:"its"},
+    {id:"our", term:"our", meaning:"notre/nos — première personne pluriel", synonym:"notre/nos", example:"<b>Our</b> house is near the park.", completion:"______ house is near the park. (notre)", answer:"our"},
+    {id:"their", term:"their", meaning:"leur/leurs — troisième personne pluriel", synonym:"leur/leurs", example:"<b>Their</b> parents are teachers.", completion:"______ parents are teachers. (leurs)", answer:"their"},
+    {id:"his-her-contrast", term:"his vs her", meaning:"s'accorde avec le possesseur, pas l'objet", synonym:"possesseur = clé", example:"Tom has <b>his</b> book. / Anna has <b>her</b> book.", completion:"Tom has ______ book. Anna has ______ book. (son — à lui / elle)", answer:"his"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
