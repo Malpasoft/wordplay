@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="fr"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A2 Vocabulaire · School Subjects — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124"><link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Accueil</a><span>›</span><a href="../../index.html">A2</a><span>›</span><a href="../index.html">Vocabulaire</a><span>›</span><a href="index.html">School Subjects</a></div>
+  <div class="chapter-num">V3</div><h1>School Subjects</h1>
+  <p class="chapter-subtitle">Academic subjects · school life · learning verbs</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+    <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">School Subjects</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / 10 mastered</div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Recommencer</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Commencer</button>
+  </div></div>
+    <div id="gamePlay" class="game-screen"><div class="game-play"></div>
+  <div class="game-ref-panel" id="gRefPanel">
+    <button id="gRefToggle" class="game-ref-head">&#9660; Reference &mdash; all mots</button>
+    <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div>
+  </div></div>
+<div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Terminé !</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats"><div>Score <strong id="gFinalScore">0</strong></div><div>Mastery <strong id="gFinalPct">0%</strong></div></div>
+    <a href="../shopping-and-money/index.html" class="game-btn primary" style="text-decoration:none;text-align:center;display:block;margin-bottom:8px">Next: Shopping And Money &#8594;</a>
+    <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>window.LEVEL="a2";window.CHAPTER_ID="school-subjects";
+window.GAME_DATA={chapterId:"school-subjects",level:"a2",title:"School Subjects",storageKey:"wordplay_game_a2_school-subjects",items:[
+  {
+    "id": "biology",
+    "term": "biology",
+    "meaning": "the science that studies living things",
+    "synonym": "/baɪˈɒlədʒi/",
+    "example": "<b>Biology</b>: We studied photosynthesis in biology class.",
+    "completion": "We studied photosynthesis in ______ class.",
+    "answer": "biology"
+  },
+  {
+    "id": "chemistry",
+    "term": "chemistry",
+    "meaning": "the science of substances and how they react",
+    "synonym": "/ˈkemɪstrɪ/",
+    "example": "<b>Chemistry</b>: Chemistry is my favourite science subject.",
+    "completion": "Chemistry is my favourite science subject.",
+    "answer": "chemistry"
+  },
+  {
+    "id": "geography",
+    "term": "geography",
+    "meaning": "the study of the Earth, its features, and countries",
+    "synonym": "/dʒiˈɒɡrəfi/",
+    "example": "<b>Geography</b>: In geography we learn about volcanoes.",
+    "completion": "In ______ we learn about volcanoes.",
+    "answer": "geography"
+  },
+  {
+    "id": "literature",
+    "term": "literature",
+    "meaning": "written works, especially novels, poetry, and drama",
+    "synonym": "/ˈlɪtərətʃər/",
+    "example": "<b>Literature</b>: We read Shakespeare in English literature.",
+    "completion": "We read Shakespeare in English ______.",
+    "answer": "literature"
+  },
+  {
+    "id": "mathematics",
+    "term": "mathematics",
+    "meaning": "the study of numbers, shapes, and calculations",
+    "synonym": "/ˌmæθəˈmætɪks/",
+    "example": "<b>Mathematics</b>: Mathematics is essential for engineering.",
+    "completion": "Mathematics is essential for engineering.",
+    "answer": "mathematics"
+  },
+  {
+    "id": "physics",
+    "term": "physics",
+    "meaning": "the science of matter, energy, and forces",
+    "synonym": "/ˈfɪzɪks/",
+    "example": "<b>Physics</b>: She studied physics at university.",
+    "completion": "She studied ______ at university.",
+    "answer": "physics"
+  },
+  {
+    "id": "history",
+    "term": "history",
+    "meaning": "the study of past events",
+    "synonym": "/ˈhɪstəri/",
+    "example": "<b>History</b>: We studied the Second World War in history.",
+    "completion": "We studied the Second World War in ______.",
+    "answer": "history"
+  },
+  {
+    "id": "revision",
+    "term": "revision",
+    "meaning": "studying again to prepare for an exam",
+    "synonym": "/rɪˈvɪʒən/",
+    "example": "<b>Revision</b>: I need to do revision for my exams next week.",
+    "completion": "I need to do ______ for my exams next week.",
+    "answer": "revision"
+  },
+  {
+    "id": "assignment",
+    "term": "assignment",
+    "meaning": "a piece of work given to a student",
+    "synonym": "/əˈsaɪnmənt/",
+    "example": "<b>Assignment</b>: The assignment is due on Friday.",
+    "completion": "The ______ is due on Friday.",
+    "answer": "assignment"
+  },
+  {
+    "id": "tutor",
+    "term": "tutor",
+    "meaning": "a private teacher who helps you with a subject",
+    "synonym": "/ˈtjuːtər/",
+    "example": "<b>Tutor</b>: I have a maths tutor twice a week.",
+    "completion": "I have a maths ______ twice a week.",
+    "answer": "tutor"
+  }
+]};
+</script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body></html>

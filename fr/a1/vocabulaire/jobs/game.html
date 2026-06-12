@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A1 Vocabulaire · Jobs — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Accueil</a><span>›</span><a href="../../index.html">A1</a><span>›</span><a href="../index.html">Vocabulaire</a><span>›</span><a href="index.html">Jobs</a></div>
+  <div class="chapter-num">V9</div>
+  <h1>Jobs</h1>
+  <p class="chapter-subtitle">Common jobs and professions</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+    <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">Jobs</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / 10 mastered</div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Recommencer</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Commencer</button>
+  </div></div>
+    <div id="gamePlay" class="game-screen"><div class="game-play"></div>
+  <div class="game-ref-panel" id="gRefPanel">
+    <button id="gRefToggle" class="game-ref-head">&#9660; Reference &mdash; all mots</button>
+    <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div>
+  </div></div>
+<div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Terminé !</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats">
+      <div>Score <strong id="gFinalScore">0</strong></div>
+      <div>Meilleure série <strong id="gFinalStreak">0</strong></div>
+      <div>Mastery <strong id="gFinalPct">0%</strong></div>
+    </div>
+    <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>window.LEVEL="a1";window.CHAPTER_ID="jobs";
+window.GAME_DATA={chapterId:"jobs",level:"a1",title:"Jobs",storageKey:"wordplay_game_a1_jobs",items:[
+  {"id": "teacher", "term": "teacher", "meaning": "a person who teaches students", "synonym": "/ˈtiː.tʃər/", "example": "My <b>teacher</b> is very kind.", "completion": "My _____ is very kind.", "answer": "teacher"},
+  {"id": "doctor", "term": "doctor", "meaning": "a person who helps sick people", "synonym": "/ˈdɒk.tər/", "example": "I need to see a <b>doctor</b>.", "completion": "I need to see a _____.", "answer": "doctor"},
+  {"id": "nurse", "term": "nurse", "meaning": "a person who helps in a hospital", "synonym": "/nɜːs/", "example": "The <b>nurse</b> gave me medicine.", "completion": "The _____ gave me medicine.", "answer": "nurse"},
+  {"id": "police", "term": "police officer", "meaning": "a person who keeps people safe", "synonym": "/pəˈliːs/", "example": "The <b>police officer</b> helped us.", "completion": "The _____ helped us.", "answer": "police officer"},
+  {"id": "driver", "term": "driver", "meaning": "a person who drives a car or bus", "synonym": "/ˈdraɪ.vər/", "example": "The bus <b>driver</b> was friendly.", "completion": "The bus _____ was friendly.", "answer": "driver"},
+  {"id": "waiter", "term": "waiter", "meaning": "a person who serves food", "synonym": "/ˈweɪ.tər/", "example": "The <b>waiter</b> brought our food.", "completion": "The _____ brought our food.", "answer": "waiter"},
+  {"id": "cook", "term": "cook", "meaning": "a person who makes food professionally", "synonym": "/kʊk/", "example": "She works as a <b>cook</b>.", "completion": "She works as a _____.", "answer": "cook"},
+  {"id": "farmer", "term": "farmer", "meaning": "a person who works on a farm", "synonym": "/ˈfɑː.mər/", "example": "The <b>farmer</b> has many animals.", "completion": "The _____ has many animals.", "answer": "farmer"},
+  {"id": "shop", "term": "shop assistant", "meaning": "a person who works in a shop", "synonym": "/ʃɒp əˈsɪs.tənt/", "example": "The <b>shop assistant</b> helped me.", "completion": "The _____ helped me.", "answer": "shop assistant"},
+  {"id": "student", "term": "student", "meaning": "a person who studies", "synonym": "/ˈstjuː.dənt/", "example": "I am a <b>student</b>.", "completion": "I am a _____.", "answer": "student"}
+]};
+</script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body></html>

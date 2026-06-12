@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="fr"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A2 Vocabulaire · Health & Body — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124"><link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Accueil</a><span>›</span><a href="../../index.html">A2</a><span>›</span><a href="../index.html">Vocabulaire</a><span>›</span><a href="index.html">Health & Body</a></div>
+  <div class="chapter-num">V10</div><h1>Health & Body</h1>
+  <p class="chapter-subtitle">Body parts · illness · at the doctor</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+    <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">Health & Body</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / 10 mastered</div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Recommencer</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Commencer</button>
+  </div></div>
+    <div id="gamePlay" class="game-screen"><div class="game-play"></div>
+  <div class="game-ref-panel" id="gRefPanel">
+    <button id="gRefToggle" class="game-ref-head">&#9660; Reference &mdash; all mots</button>
+    <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div>
+  </div></div>
+<div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Terminé !</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats"><div>Score <strong id="gFinalScore">0</strong></div><div>Mastery <strong id="gFinalPct">0%</strong></div></div>
+    <a href="../school-subjects/index.html" class="game-btn primary" style="text-decoration:none;text-align:center;display:block;margin-bottom:8px">Next: School Subjects &#8594;</a>
+    <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>window.LEVEL="a2";window.CHAPTER_ID="music";
+window.GAME_DATA={chapterId:"music",level:"a2",title:"Music",storageKey:"wordplay_game_a2_music",items:[
+  {"id": "guitar", "term": "guitar", "meaning": "a stringed instrument you strum", "synonym": "/ɡɪˈtɑːr/", "example": "He plays the <b>guitar</b>.", "completion": "He plays the _____.", "answer": "guitar"},
+  {"id": "piano", "term": "piano", "meaning": "a large keyboard instrument", "synonym": "/piˈæn.əʊ/", "example": "She practises the <b>piano</b> every day.", "completion": "She practises the _____ every day.", "answer": "piano"},
+  {"id": "drums", "term": "drums", "meaning": "instruments you hit with sticks", "synonym": "/drʌmz/", "example": "He plays the <b>drums</b> in a band.", "completion": "He plays the _____ in a band.", "answer": "drums"},
+  {"id": "concert", "term": "concert", "meaning": "a live music performance", "synonym": "/ˈkɒn.sət/", "example": "We went to a <b>concert</b>.", "completion": "We went to a _____.", "answer": "concert"},
+  {"id": "band", "term": "band", "meaning": "a group of musicians", "synonym": "/bænd/", "example": "She sings in a <b>band</b>.", "completion": "She sings in a _____.", "answer": "band"},
+  {"id": "lyrics", "term": "lyrics", "meaning": "the words of a song", "synonym": "/ˈlɪr.ɪks/", "example": "I love the <b>lyrics</b> of this song.", "completion": "I love the _____ of this song.", "answer": "lyrics"},
+  {"id": "melody", "term": "melody", "meaning": "a tune; a series of musical notes", "synonym": "/ˈmel.ə.di/", "example": "It has a beautiful <b>melody</b>.", "completion": "It has a beautiful _____.", "answer": "melody"},
+  {"id": "rhythm", "term": "rhythm", "meaning": "a regular repeated pattern of sounds", "synonym": "/ˈrɪð.əm/", "example": "This song has a great <b>rhythm</b>.", "completion": "This song has a great _____.", "answer": "rhythm"},
+  {"id": "classical", "term": "classical", "meaning": "traditional formal music", "synonym": "/ˈklæs.ɪ.kəl/", "example": "She listens to <b>classical</b> music.", "completion": "She listens to _____ music.", "answer": "classical"},
+  {"id": "choir", "term": "choir", "meaning": "a group of singers", "synonym": "/kwaɪər/", "example": "I sing in the school <b>choir</b>.", "completion": "I sing in the school _____.", "answer": "choir"}
+]};
+</script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body></html>

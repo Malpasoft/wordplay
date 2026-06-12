@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A1 Vocabulaire · Daily Routine — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Accueil</a><span>›</span><a href="../../index.html">A1</a><span>›</span><a href="../index.html">Vocabulaire</a><span>›</span><a href="index.html">Daily Routine</a></div>
+  <div class="chapter-num">V4</div>
+  <h1>Daily Routine</h1>
+  <p class="chapter-subtitle">Morning · work · evening · time expressions</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+    <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">Daily Routine</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / 10 mastered</div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Recommencer</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Commencer</button>
+  </div></div>
+    <div id="gamePlay" class="game-screen"><div class="game-play"></div>
+  <div class="game-ref-panel" id="gRefPanel">
+    <button id="gRefToggle" class="game-ref-head">&#9660; Reference &mdash; all mots</button>
+    <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div>
+  </div></div>
+<div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Terminé !</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats">
+      <div>Score <strong id="gFinalScore">0</strong></div>
+      <div>Meilleure série <strong id="gFinalStreak">0</strong></div>
+      <div>Mastery <strong id="gFinalPct">0%</strong></div>
+    </div>
+    <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>window.LEVEL="a1";window.CHAPTER_ID="daily-routine";
+window.GAME_DATA={chapterId:"daily-routine",level:"a1",title:"Daily Routine",storageKey:"wordplay_game_a1_daily-routine",items:[
+  {
+    "id": "wake_up",
+    "term": "wake up",
+    "meaning": "to stop sleeping and open your eyes",
+    "synonym": "/weɪk ʌp/",
+    "example": "<b>Wake up</b> — I wake up at 7 o'clock.",
+    "completion": "I _____ at 7 o'clock.",
+    "answer": "wake up"
+  },
+  {
+    "id": "have_breakfast",
+    "term": "have breakfast",
+    "meaning": "to eat the first meal of the day",
+    "synonym": "/hæv ˈbrekfəst/",
+    "example": "<b>Have breakfast</b> — I have breakfast at 7:30.",
+    "completion": "I _____ at 7:30.",
+    "answer": "have breakfast"
+  },
+  {
+    "id": "go_to_work",
+    "term": "go to work",
+    "meaning": "to travel to your job",
+    "synonym": "/ɡəʊ tə wɜːk/",
+    "example": "<b>Go to work</b> — I go to work by bus.",
+    "completion": "I _____ by bus.",
+    "answer": "go to work"
+  },
+  {
+    "id": "have_lunch",
+    "term": "have lunch",
+    "meaning": "to eat the midday meal",
+    "synonym": "/hæv lʌntʃ/",
+    "example": "<b>Have lunch</b> — We have lunch at 1pm.",
+    "completion": "We _____ at 1pm.",
+    "answer": "have lunch"
+  },
+  {
+    "id": "finish_work",
+    "term": "finish work",
+    "meaning": "to stop working at the end of the day",
+    "synonym": "/ˈfɪnɪʃ wɜːk/",
+    "example": "<b>Finish work</b> — I finish work at 5pm.",
+    "completion": "I _____ at 5pm.",
+    "answer": "finish work"
+  },
+  {
+    "id": "cook_dinner",
+    "term": "cook dinner",
+    "meaning": "to prepare the evening meal",
+    "synonym": "/kʊk ˈdɪnər/",
+    "example": "<b>Cook dinner</b> — My mother cooks dinner every evening.",
+    "completion": "My mother cooks dinner every evening.",
+    "answer": "cook dinner"
+  },
+  {
+    "id": "watch_tv",
+    "term": "watch TV",
+    "meaning": "to look at television programmes",
+    "synonym": "/wɒtʃ tiːˈviː/",
+    "example": "<b>Watch tv</b> — I watch TV after dinner.",
+    "completion": "I _____ after dinner.",
+    "answer": "watch TV"
+  },
+  {
+    "id": "go_to_bed",
+    "term": "go to bed",
+    "meaning": "to get into bed to sleep",
+    "synonym": "/ɡəʊ tə bed/",
+    "example": "<b>Go to bed</b> — I go to bed at 10:30.",
+    "completion": "I _____ at 10:30.",
+    "answer": "go to bed"
+  },
+  {
+    "id": "shower",
+    "term": "have a shower",
+    "meaning": "to wash your body standing under running water",
+    "synonym": "/hæv ə ˈʃaʊər/",
+    "example": "<b>Have a shower</b> — I have a shower in the morning.",
+    "completion": "I _____ in the morning.",
+    "answer": "have a shower"
+  },
+  {
+    "id": "get_dressed",
+    "term": "get dressed",
+    "meaning": "to put on your clothes",
+    "synonym": "/ɡet drest/",
+    "example": "<b>Get dressed</b> — I get dressed after my shower.",
+    "completion": "I _____ after my shower.",
+    "answer": "get dressed"
+  }
+]};
+</script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body></html>

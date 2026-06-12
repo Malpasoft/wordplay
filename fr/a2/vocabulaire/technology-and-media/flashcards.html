@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Vocabulaire A2 · Technology and Media | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<style>
+.vocab-page { max-width: 800px; margin: 0 auto; padding: 20px; }
+.vocab-status { font-family: var(--font-sans); font-size: .75rem; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 20px; }
+.mode-tabs { display: flex; gap: 8px; margin-bottom: 24px; }
+.mode-tab { font-family: var(--font-sans); font-size: .72rem; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; padding: 8px 16px; border-radius: 4px; cursor: pointer;
+  border: 1.5px solid var(--hairline); background: transparent; color: var(--ink); transition: all .15s; }
+.mode-tab.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.flashcard-wrap { perspective: 800px; margin: 0 auto 20px; max-width: 480px; }
+.flashcard { width: 100%; height: 220px; position: relative; transform-style: preserve-3d;
+  transition: transform .5s; cursor: pointer; border-radius: 10px; }
+.flashcard.flipped { transform: rotateY(180deg); }
+.fc-face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 10px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 20px; text-align: center; border: 1px solid var(--hairline); }
+.fc-front { background: var(--paper); }
+.fc-back { background: var(--paper); transform: rotateY(180deg); }
+.fc-word { font-size: 1.8rem; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+.fc-ipa { font-family: var(--font-sans); font-size: .85rem; color: var(--muted); margin-bottom: 8px; }
+.fc-def { font-size: .95rem; color: var(--ink); margin-bottom: 8px; }
+.fc-ex { font-size: .85rem; color: var(--muted); font-style: italic; }
+.fc-audio-btn{background:none;border:1px solid var(--hairline);border-radius:4px;
+  padding:4px 10px;font-family:var(--font-sans);font-size:.65rem;font-weight:700;
+  letter-spacing:.5px;text-transform:uppercase;color:var(--muted);cursor:pointer;
+  margin-top:8px;transition:border-color .15s,color .15s}
+.fc-audio-btn:hover{border-color:var(--amber);color:var(--amber)}
+.fc-hint { font-family: var(--font-sans); font-size: .65rem; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 1px; margin-top: 12px; }
+.fc-nav { display: flex; align-items: center; gap: 16px; justify-content: center; margin-bottom: 20px; }
+.fc-btn { font-family: var(--font-sans); font-size: .72rem; font-weight: 700; letter-spacing: 1px;
+  text-transform: uppercase; padding: 9px 18px; border-radius: 4px; cursor: pointer;
+  border: 1.5px solid var(--hairline); background: transparent; color: var(--ink); }
+.fc-btn.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.fc-counter { font-family: var(--font-sans); font-size: .75rem; color: var(--muted); font-weight: 600; }
+.match-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+.match-col { display: flex; flex-direction: column; gap: 8px; }
+.match-item { padding: 12px 14px; border: 1.5px solid var(--hairline); border-radius: 6px;
+  cursor: pointer; font-size: .9rem; color: var(--ink); transition: border-color .15s, background .15s; user-select: none; }
+.match-item:hover { border-color: var(--ink); }
+.match-item.selected { border-color: var(--amber); background: rgba(184,134,11,.08); }
+.match-item.correct { border-color: var(--green); background: rgba(46,125,82,.08); pointer-events: none; }
+.match-item.wrong { border-color: var(--red); background: rgba(192,57,43,.08); }
+.match-score { font-family: var(--font-sans); font-size: .85rem; color: var(--muted);
+  text-align: center; margin-bottom: 16px; }
+.mastery-badge { display: inline-block; padding: 8px 18px; background: rgba(184,134,11,.12);
+  color: var(--amber); font-family: var(--font-sans); font-size: .78rem; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase; border-radius: 4px; margin-bottom: 16px; }
+.word-list-item { display: flex; align-items: baseline; gap: 12px; padding: 10px 0;
+  border-bottom: 1px solid var(--hairline); }
+.wl-word { font-weight: 700; font-size: 1rem; min-width: 140px; }
+.wl-ipa { font-family: var(--font-sans); font-size: .75rem; color: var(--muted); min-width: 100px; }
+.wl-def { font-size: .88rem; color: var(--ink); }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../../index.html" class="back back-link" aria-label="Retour"></a>
+    <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+    <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button>
+  </div>
+</header>
+<div class="breadcrumb"><a href="../../../../index.html">Accueil</a><span>›</span><a href="../../index.html">A2</a><span>›</span><strong>Technology and Media</strong></div>
+
+<nav class="chapter-nav" style="margin-bottom:20px">
+  <a href="flashcards.html" class="chapter-nav-btn active">Flashcards</a>
+    <a href="match.html" class="chapter-nav-btn">Match</a>
+  <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+  <a href="game.html" class="chapter-nav-btn">Jeu</a>
+</nav>
+<div class="vocab-page">
+  <div class="chapter-num">Vocabulaire</div>
+  <h1>Technology and Media</h1>
+  <div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">Thème maîtrisé</span></div>
+  <div class="vocab-status" id="vocabStatus">10 mots · tap to flip</div>
+
+  <div class="mode-tabs">
+    <button class="mode-tab active" onclick="setMode('flash', this)">Flashcards</button>
+    <button class="mode-tab" onclick="setMode('match', this)">Jeu d&rsquo;association</button>
+    <button class="mode-tab" onclick="setMode('list', this)">Liste de mots</button>
+  </div>
+
+  <div id="modeFlash">
+    <div class="flashcard-wrap">
+      <button class="flashcard" id="flashcard" onclick="flipCard()">
+        <div class="fc-face fc-front">
+          <div class="fc-word" id="fcWord"></div>
+          <div class="fc-ipa" id="fcIpa"></div>
+          <div class="fc-hint">tap to reveal definition</div>
+          <button class="fc-audio-btn" onclick="speakWord(event)">&#9654; Pronounce</button>
+        </div>
+        <div class="fc-face fc-back">
+          <div class="fc-def" id="fcDef"></div>
+          <div class="fc-ex" id="fcEx"></div>
+        </button>
+      </div>
+    </div>
+    <div class="fc-nav">
+      <button class="fc-btn" onclick="fcPrev()">&#9664; Prev</button>
+      <span class="fc-counter" id="fcCounter"></span>
+      <button class="fc-btn" onclick="fcNext()">Next &#9654;</button>
+    </div>
+    <div style="text-align:center">
+      <button class="fc-btn primary" onclick="markMastered()" id="btnMastered">Marquer le thème comme maîtrisé</button>
+    <div style="text-align:center;margin-top:12px"><a href="../transport-and-travel/index.html" id="nextTopicBtn" class="fc-btn primary" style="text-decoration:none;display:none">Next: Transport And Travel &#8594;</a></div>
+    </div>
+  </div>
+
+  <div id="modeMatch" style="display:none">
+    <div class="match-score" id="matchScore">Associe chaque mot à sa définition</div>
+    <div class="match-grid">
+      <div class="match-col" id="matchWords"></div>
+      <div class="match-col" id="matchDefs"></div>
+    </div>
+    <div style="text-align:center">
+      <button class="fc-btn" onclick="resetMatch()">Nouvelle manche</button>
+    </div>
+  </div>
+
+  <div id="modeList" style="display:none">
+    <div id="wordList"></div>
+  </div>
+</div>
+
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+var SLUG = 'technology-and-media';
+var LEVEL = 'a2';
+var MASTERY_KEY = 'wordplay_vocab_a2_' + SLUG + '_mastered';
+var WORDS = [{"word":"download","ipa":"ˈdaʊnləʊd","def":"télécharger — copier des données depuis internet","ex":"Can you <em>download</em> the app for me?"},{"word":"account","ipa":"əˈkaʊnt","def":"compte — un profil personnel sur un service","ex":"Create an <em>account</em> to continue."},{"word":"password","ipa":"ˈpɑːswɜːd","def":"mot de passe — le mot secret pour se connecter","ex":"Never share your <em>password</em>."},{"word":"search engine","ipa":"sɜːtʃ ˈɛndʒɪn","def":"moteur de recherche — l’outil pour chercher en ligne","ex":"I used a <em>search engine</em> to find it."},{"word":"update","ipa":"ʌpˈdeɪt","def":"mise à jour — une nouvelle version d’un logiciel","ex":"Install the latest <em>update</em>."},{"word":"wireless","ipa":"ˈwaɪələs","def":"sans fil — connecté sans câbles","ex":"The hotel has <em>wireless</em> internet."},{"word":"screen","ipa":"skriːn","def":"écran — la surface d’affichage d’un appareil","ex":"The <em>screen</em> on my phone is cracked."},{"word":"upload","ipa":"ˈʌpləʊd","def":"téléverser / mettre en ligne — envoyer des données vers internet","ex":"She <em>uploaded</em> the photos to the cloud."},{"word":"subscribe","ipa":"səbˈskraɪb","def":"s’abonner — payer régulièrement pour un service","ex":"I <em>subscribe</em> to a music streaming app."},{"word":"battery","ipa":"ˈbætəri","def":"batterie / pile — la source d’énergie d’un appareil","ex":"My phone <em>battery</em> is dead."}];
+var fcIdx = 0;
+var flipped = false;
+
+function setMode(mode, btn) {
+  document.querySelectorAll('.mode-tab').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+  document.getElementById('modeFlash').style.display = mode === 'flash' ? '' : 'none';
+  document.getElementById('modeMatch').style.display = mode === 'match' ? '' : 'none';
+  document.getElementById('modeList').style.display = mode === 'list' ? '' : 'none';
+  if (mode === 'match') initMatch();
+  if (mode === 'list') renderList();
+}
+
+function flipCard() {
+  flipped = !flipped;
+  document.getElementById('flashcard').classList.toggle('flipped', flipped);
+}
+
+function speakWord(e) {
+  if (e) e.stopPropagation();
+  var w = WORDS[fcIdx];
+  if (!w) return;
+  try {
+    var u = new SpeechSynthesisUtterance(w.word);
+    u.lang = 'en-GB'; u.rate = 0.9;
+    speechSynthesis.cancel();
+    speechSynthesis.speak(u);
+  } catch(err) {}
+}
+function showCard(idx) {
+  flipped = false;
+  document.getElementById('flashcard').classList.remove('flipped');
+  var w = WORDS[idx];
+  document.getElementById('fcWord').textContent = w.word;
+  document.getElementById('fcIpa').textContent = w.ipa;
+  document.getElementById('fcDef').textContent = w.def;
+  document.getElementById('fcEx').innerHTML = w.ex;
+  document.getElementById('fcCounter').textContent = (idx + 1) + ' / ' + WORDS.length;
+  fcSeen.add(idx);
+  if (!mastered && fcSeen.size >= WORDS.length) { mastered = true; setTimeout(markMastered, 700); }
+}
+
+function fcNext() { fcIdx = (fcIdx + 1) % WORDS.length; showCard(fcIdx); }
+function fcPrev() { fcIdx = (fcIdx - 1 + WORDS.length) % WORDS.length; showCard(fcIdx); }
+
+function markMastered() {
+  mastered = true;
+  try { localStorage.setItem(MASTERY_KEY, '1');
+    try {
+      var _pd = JSON.parse(localStorage.getItem('wordplay_progress')||'{}');
+      _pd['a2'] = _pd['a2'] || {};
+      _pd['a2']['vocab_mastered_technology-and-media'] = { done: true, date: new Date().toISOString() };
+      localStorage.setItem('wordplay_progress', JSON.stringify(_pd));
+    } catch(_e) {} } catch(e) {}
+  document.getElementById('masteryBadge').style.display = 'block';
+  document.getElementById('btnMastered').textContent = 'Mastered!';
+  document.getElementById('btnMastered').disabled = true;
+}
+
+function checkMastered() {
+  try {
+    if (localStorage.getItem(MASTERY_KEY) === '1') {
+      document.getElementById('masteryBadge').style.display = 'block';
+      document.getElementById('btnMastered').textContent = 'Mastered!';
+      document.getElementById('btnMastered').disabled = true;
+    }
+  } catch(e) {}
+}
+
+// Match game
+var matchSelected = null;
+function shuffle(arr) {
+  var a = arr.slice();
+  for (var i = a.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = a[i]; a[i] = a[j]; a[j] = t;
+  }
+  return a;
+}
+
+function initMatch() {
+  var sample = shuffle(WORDS).slice(0, 6);
+  var words = shuffle(sample.map(function(w) { return {id: w.word, text: w.word, type: 'word'}; }));
+  var defs = shuffle(sample.map(function(w) { return {id: w.word, text: w.def, type: 'def'}; }));
+  matchSelected = null;
+  document.getElementById('matchScore').textContent = 'Match each word to its definition';
+
+  function renderCol(col, items) {
+    col.innerHTML = '';
+    items.forEach(function(item) {
+      var el = document.createElement('div');
+      el.className = 'match-item';
+      el.textContent = item.text;
+      el.dataset.id = item.id;
+      el.dataset.type = item.type;
+      el.addEventListener('click', handleMatch);
+      col.appendChild(el);
+    });
+  }
+  renderCol(document.getElementById('matchWords'), words);
+  renderCol(document.getElementById('matchDefs'), defs);
+}
+
+function handleMatch(e) {
+  var el = e.currentTarget;
+  if (el.classList.contains('correct')) return;
+  if (!matchSelected) {
+    if (matchSelected && matchSelected !== el) matchSelected.classList.remove('selected');
+    matchSelected = el;
+    el.classList.add('selected');
+  } else {
+    var prev = matchSelected;
+    matchSelected = null;
+    var correct = prev.dataset.id === el.dataset.id && prev.dataset.type !== el.dataset.type;
+    if (correct) {
+      prev.classList.remove('selected'); prev.classList.add('correct');
+      el.classList.add('correct');
+      var remaining = document.querySelectorAll('.match-item:not(.correct)').length;
+      if (remaining === 0) { document.getElementById('matchScore').textContent = 'All matched!'; completedRounds++; if (!mastered && completedRounds >= 5) { mastered = true; setTimeout(markMastered, 700); } }
+    } else {
+      prev.classList.remove('selected');
+      prev.classList.add('wrong'); el.classList.add('wrong');
+      setTimeout(function() { prev.classList.remove('wrong'); el.classList.remove('wrong'); }, 600);
+    }
+  }
+}
+
+function resetMatch() { initMatch(); }
+
+function renderList() {
+  var html = WORDS.map(function(w) {
+    return '<div class="word-list-item"><span class="wl-word">' + w.word + '</span>' +
+      '<span class="wl-ipa">' + w.ipa + '</span>' +
+      '<span class="wl-def">' + w.def + '</span></div>';
+  }).join('');
+  document.getElementById('wordList').innerHTML = html;
+}
+
+var mastered = false;
+var fcSeen = new Set();
+var completedRounds = 0;
+showCard(0);
+checkMastered();
+</script>
+
+<div style="margin-top:24px;border-top:1px solid var(--hairline);padding-top:20px">
+  <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Mes notes et exemples</div>
+  <textarea id="my-notes-area" maxlength="500" placeholder="Write your own example sentence, a memory trick, or a note in your language…" style="width:100%;min-height:80px;padding:10px 12px;font-family:Georgia,serif;font-size:.88rem;color:var(--ink);background:var(--paper);border:1.5px solid var(--hairline);border-radius:6px;resize:vertical;line-height:1.6;box-sizing:border-box"></textarea>
+  <div style="font-family:var(--font-sans);font-size:.65rem;color:var(--muted);margin-top:4px;text-align:right"><span id="notes-chars">0</span>/500 · auto-saved</div>
+</div>
+<script>
+(function(){
+  var ta = document.getElementById('my-notes-area');
+  var cc = document.getElementById('notes-chars');
+  if (!ta) return;
+  var KEY = 'wp_notes_a2_technology-and-media';
+  try { ta.value = localStorage.getItem(KEY) || ''; cc.textContent = ta.value.length; } catch(e){}
+  var t;
+  ta.addEventListener('input', function() {
+    cc.textContent = ta.value.length;
+    clearTimeout(t);
+    t = setTimeout(function() {
+      try { localStorage.setItem(KEY, ta.value); } catch(e) {}
+    }, 600);
+  });
+})();
+</script>
+</body>
+</html>

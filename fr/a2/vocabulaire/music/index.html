@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Music — Vocabulaire A2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Retour"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button>
+</div></header>
+<div class="section-page">
+  <div class="breadcrumb">
+    <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+    <a href="../../index.html">A2</a><span>&#8250;</span>
+    <a href="../index.html">Vocabulaire</a><span>&#8250;</span>
+    <strong>Music</strong>
+  </div>
+  <div class="chapter-num">Vocabulaire &middot; 10 mots</div>
+  <h1 class="chapter-h1">Music</h1>
+  <div class="activity-grid">
+    <a href="slides.html" class="activity-card" data-activity="lesson">
+      <span class="ac-title">Leçon</span>
+      <p class="ac-desc">Étudie le vocabulaire avec explications et exemples</p>
+      <span class="ac-arrow">&#8594;</span>
+    </a>
+    <a href="flashcards.html" class="activity-card" data-activity="practice">
+      <span class="ac-title">Flashcards &amp; Match</span>
+      <p class="ac-desc">Flip cards, then match words to definitions</p>
+      <span class="ac-arrow">&#8594;</span>
+    </a>
+    <a href="match.html" class="activity-card" data-activity="match">
+      <span class="ac-title">Jeu d&rsquo;association</span>
+      <p class="ac-desc">Associe chaque mot à sa définition &mdash; 3 vies, chaque mot doit être associé deux fois</p>
+      <span class="ac-arrow">&#8594;</span>
+    </a>
+    <a href="game.html" class="activity-card" data-activity="game">
+      <span class="ac-title">Jeu de maîtrise</span>
+      <p class="ac-desc">Jeu en 4 étapes pour ancrer les mots dans la mémoire</p>
+      <span class="ac-arrow">&#8594;</span>
+    </a>
+  </div>
+</div>
+<footer class="site-footer">Word Play &middot; Anglais Cambridge A1&#8211;B2 &middot; Pour les francophones</footer>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+(function(){
+  try {
+    var prog=JSON.parse(localStorage.getItem('wordplay_progress')||'{}');
+    var lvl=prog['a2']||{};
+    var defs=[
+      ['slides.html', lvl['slides_music']&&lvl['slides_music'].done],
+      ['flashcards.html', !!localStorage.getItem('wordplay_vocab_a2_music_mastered')],
+      ['game.html', lvl['wordplay_game_a2_music']&&lvl['wordplay_game_a2_music'].pct>=70]
+    ];
+    defs.forEach(function(d){
+      if(!d[1]) return;
+      var card=document.querySelector('.activity-card[href="'+d[0]+'"]');
+      if(card) card.setAttribute('data-done','1');
+    });
+  }catch(e){}
+})();
+</script>
+</body>
+</html>

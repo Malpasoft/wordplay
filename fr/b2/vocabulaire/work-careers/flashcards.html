@@ -51,7 +51,7 @@
   <div class="site-header-inner">
     <a href="../index.html" class="back back-link" aria-label="Retour"></a>
     <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-    <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Dark</button>
+    <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button>
   </div>
 </header>
 <div class="container">
@@ -72,13 +72,13 @@
   </nav>
 
   <div class="vocab-page">
-    <div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">Topic mastered</span></div>
+    <div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">Thème maîtrisé</span></div>
     <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 words &middot; touche la carte pour révéler</div>
 
     <div class="mode-tabs">
       <button class="mode-tab active" onclick="setMode('flash',this)">Flashcards</button>
-      <button class="mode-tab" onclick="setMode('match',this)">Match</button>
-      <button class="mode-tab" onclick="setMode('list',this)">Word list</button>
+      <button class="mode-tab" onclick="setMode('match',this)">Associer</button>
+      <button class="mode-tab" onclick="setMode('list',this)">Liste de mots</button>
     </div>
 
     <div id="modeFlash">
@@ -101,7 +101,7 @@
         <button class="fc-btn" onclick="fcNext()">Next &#8594;</button>
       </div>
       <div style="text-align:center">
-        <button class="fc-btn primary" onclick="markMastered()" id="btnMastered">Mark topic as mastered</button>
+        <button class="fc-btn primary" onclick="markMastered()" id="btnMastered">Marquer le thème comme maîtrisé</button>
     <div style="text-align:center;margin-top:12px"><a href="../index.html" id="nextTopicBtn" class="fc-btn primary" style="text-decoration:none;display:none">B2 Vocab &#10003;</a></div>
       </div>
     </div>
@@ -113,7 +113,7 @@
         <div class="match-col" id="matchDefs"></div>
       </div>
       <div style="text-align:center">
-        <button class="fc-btn" onclick="initMatch()">New round</button>
+        <button class="fc-btn" onclick="initMatch()">Nouvelle manche</button>
       </div>
     </div>
 
@@ -247,7 +247,7 @@ checkMastered();
 </script>
 
 <div style="margin-top:24px;border-top:1px solid var(--hairline);padding-top:20px">
-  <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">My notes &amp; examples</div>
+  <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Mes notes et exemples</div>
   <textarea id="my-notes-area" maxlength="500" placeholder="Write your own example sentence, a memory trick, or a note in your language…" style="width:100%;min-height:80px;padding:10px 12px;font-family:Georgia,serif;font-size:.88rem;color:var(--ink);background:var(--paper);border:1.5px solid var(--hairline);border-radius:6px;resize:vertical;line-height:1.6;box-sizing:border-box"></textarea>
   <div style="font-family:var(--font-sans);font-size:.65rem;color:var(--muted);margin-top:4px;text-align:right"><span id="notes-chars">0</span>/500 · auto-saved</div>
 </div>

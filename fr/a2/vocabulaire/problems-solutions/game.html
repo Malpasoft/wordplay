@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="fr"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A2 Vocabulaire · Health & Body — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124"><link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Accueil</a><span>›</span><a href="../../index.html">A2</a><span>›</span><a href="../index.html">Vocabulaire</a><span>›</span><a href="index.html">Health & Body</a></div>
+  <div class="chapter-num">V12</div><h1>Health & Body</h1>
+  <p class="chapter-subtitle">Body parts · illness · at the doctor</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+    <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">Health & Body</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / 10 mastered</div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Recommencer</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Commencer</button>
+  </div></div>
+    <div id="gamePlay" class="game-screen"><div class="game-play"></div>
+  <div class="game-ref-panel" id="gRefPanel">
+    <button id="gRefToggle" class="game-ref-head">&#9660; Reference &mdash; all mots</button>
+    <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div>
+  </div></div>
+<div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Terminé !</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats"><div>Score <strong id="gFinalScore">0</strong></div><div>Mastery <strong id="gFinalPct">0%</strong></div></div>
+    <a href="../school-subjects/index.html" class="game-btn primary" style="text-decoration:none;text-align:center;display:block;margin-bottom:8px">Next: School Subjects &#8594;</a>
+    <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>window.LEVEL="a2";window.CHAPTER_ID="problems-solutions";
+window.GAME_DATA={chapterId:"problems-solutions",level:"a2",title:"Problems and Solutions",storageKey:"wordplay_game_a2_problems-solutions",items:[
+  {"id": "problem", "term": "problem", "meaning": "a situation that is difficult", "synonym": "/ˈprɒb.ləm/", "example": "I have a <b>problem</b> with my car.", "completion": "I have a _____ with my car.", "answer": "problem"},
+  {"id": "solution", "term": "solution", "meaning": "the answer to a problem", "synonym": "/səˈluː.ʃən/", "example": "We found a <b>solution</b>.", "completion": "We found a _____.", "answer": "solution"},
+  {"id": "mistake", "term": "mistake", "meaning": "something done wrong", "synonym": "/mɪˈsteɪk/", "example": "I made a <b>mistake</b>.", "completion": "I made a _____.", "answer": "mistake"},
+  {"id": "fix", "term": "fix", "meaning": "to repair something broken", "synonym": "/fɪks/", "example": "Can you <b>fix</b> my phone?", "completion": "Can you _____ my phone?", "answer": "fix"},
+  {"id": "complain", "term": "complain", "meaning": "to say you are unhappy about something", "synonym": "/kəmˈpleɪn/", "example": "I want to <b>complain</b> about the food.", "completion": "I want to _____ about the food.", "answer": "complain"},
+  {"id": "advice", "term": "advice", "meaning": "suggestions about what to do", "synonym": "/ədˈvaɪs/", "example": "Can you give me some <b>advice</b>?", "completion": "Can you give me some _____?", "answer": "advice"},
+  {"id": "repair", "term": "repair", "meaning": "to make something broken work again", "synonym": "/rɪˈpeər/", "example": "They will <b>repair</b> the road.", "completion": "They will _____ the road.", "answer": "repair"},
+  {"id": "emergency", "term": "emergency", "meaning": "a serious unexpected situation", "synonym": "/ɪˈmɜː.dʒən.si/", "example": "Call 112 in an <b>emergency</b>.", "completion": "Call 112 in an _____.", "answer": "emergency"},
+  {"id": "accident", "term": "accident", "meaning": "something bad that happens by chance", "synonym": "/ˈæk.sɪ.dənt/", "example": "There was an <b>accident</b> on the road.", "completion": "There was an _____ on the road.", "answer": "accident"},
+  {"id": "apologise", "term": "apologise", "meaning": "to say sorry", "synonym": "/əˈpɒl.ə.dʒaɪz/", "example": "I want to <b>apologise</b> for the delay.", "completion": "I want to _____ for the delay.", "answer": "apologise"}
+]};
+</script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body></html>

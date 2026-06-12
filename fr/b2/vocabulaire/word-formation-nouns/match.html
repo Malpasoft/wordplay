@@ -68,7 +68,7 @@ body.dark .match-screen-box{background:#1A1A1A}
 <header class="site-header"><div class="site-header-inner">
   <a href="index.html" class="back back-link" aria-label="Retour"></a>
   <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-  <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Dark</button>
+  <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button>
 </div></header>
 
 <div class="container">
@@ -100,7 +100,7 @@ body.dark .match-screen-box{background:#1A1A1A}
         <div class="match-progress-bar"><div class="match-progress-fill" id="progressFill" style="width:0%"></div></div>
         <div class="match-progress-txt" id="progressTxt">0 / 24 matches</div>
       </div>
-      <span class="match-mastery-badge" id="masteryBadge">Topic mastered</span>
+      <span class="match-mastery-badge" id="masteryBadge">Thème maîtrisé</span>
     </div>
 
     <!-- Game grid -->
@@ -119,22 +119,22 @@ body.dark .match-screen-box{background:#1A1A1A}
   <div class="match-screen-box">
     <div class="msb-title">Association parfaite !</div>
     <div class="msb-lives" id="winLives"></div>
-    <div class="msb-sub">You matched every word twice. Word Formation — Nouns vocabulary mastered!</div>
+    <div class="msb-sub">Tu as associé chaque mot deux fois. Word Formation — Nouns : vocabulaire maîtrisé !</div>
     <div class="msb-stat" id="winStat"></div>
     <button class="msb-btn" onclick="resetGame()">Rejouer</button>
     <a href="flashcards.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Flashcards</a>
-    <a href="game.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Mastery game</a>
+    <a href="game.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Jeu de maîtrise</a>
   </div>
 </div>
 
 <!-- Game over screen -->
 <div class="match-screen" id="loseScreen" style="display:none">
   <div class="match-screen-box">
-    <div class="msb-title">Out of lives!</div>
-    <div class="msb-sub">Keep practising — you need to match each word twice without 3 mistakes.</div>
+    <div class="msb-title">Plus de vies !</div>
+    <div class="msb-sub">Continue à t’entraîner — chaque mot doit être associé deux fois, sans faire 3 erreurs.</div>
     <div class="msb-stat" id="loseStat"></div>
     <button class="msb-btn" onclick="resetGame()">Réessayer</button>
-    <a href="flashcards.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Review cards first</a>
+    <a href="flashcards.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Revoir les cartes d&rsquo;abord</a>
   </div>
 </div>
 

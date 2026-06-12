@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""French definitions for fr/ B1-B2 vocabulaire flashcards & match games.
+"""French definitions for fr/ A1-B2 vocabulaire flashcards & match games.
 
 Keyed by chapter slug -> word id -> French def (translation + gloss).
 REPLACE maps slug -> id -> full replacement word dict (used to swap the
@@ -7,6 +7,322 @@ Spanish-track false-friends entries for francophone ones).
 """
 
 DEFS = {
+
+# ---------- A1 ----------
+
+'animals': {
+  'dog': 'chien — l’animal de compagnie le plus courant',
+  'cat': 'chat — petit animal de compagnie au pelage doux',
+  'bird': 'oiseau — animal à ailes qui vole',
+  'fish': 'poisson — animal qui vit dans l’eau',
+  'horse': 'cheval — grand animal que l’on peut monter',
+  'cow': 'vache — animal de la ferme qui donne du lait',
+  'chicken': 'poule / poulet — oiseau élevé pour ses œufs et sa viande',
+  'rabbit': 'lapin — petit animal aux longues oreilles',
+  'elephant': 'éléphant — très grand animal gris',
+  'monkey': 'singe — animal qui grimpe aux arbres',
+},
+
+'clothes': {
+  'shirt': 'chemise — vêtement porté sur le haut du corps',
+  'trousers': 'pantalon — vêtement pour les jambes (toujours pluriel en anglais !)',
+  'jacket': 'veste / blouson — manteau court porté sur d’autres vêtements',
+  'shoes': 'chaussures — ce que l’on porte aux pieds',
+  'dress': 'robe — vêtement féminin couvrant le corps et les jambes',
+  'hat': 'chapeau — couvre-chef porté sur la tête',
+  'socks': 'chaussettes — portées aux pieds, dans les chaussures',
+  'coat': 'manteau — long vêtement chaud porté dehors',
+  'jeans': 'jean — pantalon décontracté en toile denim (pluriel en anglais)',
+  'scarf': 'écharpe / foulard — tissu porté autour du cou',
+},
+
+'colours': {
+  'red': 'rouge — la couleur du feu ou du sang',
+  'blue': 'bleu — la couleur du ciel',
+  'green': 'vert — la couleur de l’herbe',
+  'yellow': 'jaune — une couleur vive comme le soleil',
+  'black': 'noir — la couleur la plus sombre',
+  'white': 'blanc — la couleur la plus claire',
+  'orange': 'orange — entre le rouge et le jaune',
+  'purple': 'violet — mélange sombre de rouge et de bleu',
+  'brown': 'marron / brun — la couleur de la terre ou du bois',
+  'pink': 'rose — un rouge clair',
+},
+
+'daily-routine': {
+  'wake up': 'se réveiller — arrêter de dormir',
+  'get dressed': 's’habiller — mettre ses vêtements',
+  'have breakfast': 'prendre le petit-déjeuner (have, pas take !)',
+  'go to school': 'aller à l’école',
+  'have lunch': 'déjeuner — prendre le repas de midi',
+  'do homework': 'faire ses devoirs (do, pas make !)',
+  'have dinner': 'dîner — prendre le repas du soir',
+  'watch TV': 'regarder la télé (watch, pas look at !)',
+  'go to bed': 'aller se coucher',
+  'brush teeth': 'se brosser les dents',
+},
+
+'family': {
+  'mother': 'mère — le parent féminin',
+  'father': 'père — le parent masculin',
+  'brother': 'frère — un garçon de la même famille',
+  'sister': 'sœur — une fille de la même famille',
+  'grandmother': 'grand-mère — la mère de ton père ou de ta mère',
+  'grandfather': 'grand-père — le père de ton père ou de ta mère',
+  'cousin': 'cousin / cousine — l’enfant de ton oncle ou de ta tante',
+  'aunt': 'tante — la sœur de ton père ou de ta mère',
+  'uncle': 'oncle — le frère de ton père ou de ta mère',
+  'parents': 'parents — ta mère et ton père seulement (les proches = relatives !)',
+},
+
+'food': {
+  'bread': 'pain — aliment cuit à base de farine (indénombrable en anglais)',
+  'apple': 'pomme — fruit rond, rouge ou vert',
+  'chicken': 'poulet — la viande de poulet',
+  'rice': 'riz — petits grains blancs ou bruns (indénombrable)',
+  'coffee': 'café — boisson chaude et sombre',
+  'water': 'eau — liquide transparent que l’on boit',
+  'salad': 'salade — plat froid de légumes crus',
+  'pasta': 'pâtes — aliment italien à base de farine et d’eau (singulier en anglais !)',
+  'milk': 'lait — liquide blanc produit par les vaches',
+  'orange': 'orange — agrume rond et juteux',
+},
+
+'hobbies': {
+  'reading': 'la lecture — lire des livres pour le plaisir',
+  'swimming': 'la natation — nager pour le sport ou le loisir',
+  'cooking': 'la cuisine — préparer des plats',
+  'cycling': 'le vélo — se déplacer à bicyclette',
+  'dancing': 'la danse — bouger son corps en musique',
+  'drawing': 'le dessin — faire des images au crayon',
+  'gardening': 'le jardinage — cultiver plantes et fleurs',
+  'photography': 'la photographie — prendre des photos',
+  'travelling': 'les voyages — découvrir d’autres endroits',
+  'music': 'la musique — jouer ou écouter des sons musicaux',
+},
+
+'house-and-rooms': {
+  'kitchen': 'cuisine — la pièce où l’on prépare les repas',
+  'bedroom': 'chambre — la pièce où l’on dort',
+  'bathroom': 'salle de bains — la pièce avec douche et toilettes',
+  'living room': 'salon — la pièce où la famille se détend',
+  'garden': 'jardin — espace extérieur avec plantes et pelouse',
+  'hall': 'entrée / couloir — l’espace derrière la porte d’entrée',
+  'stairs': 'escalier — les marches entre deux étages (pluriel en anglais)',
+  'window': 'fenêtre — ouverture vitrée dans un mur',
+  'door': 'porte — l’entrée que l’on ouvre pour passer',
+  'shelf': 'étagère — planche fixée au mur pour ranger',
+},
+
+'jobs': {
+  'teacher': 'professeur — personne qui enseigne à l’école',
+  'doctor': 'médecin — personne qui soigne les malades',
+  'nurse': 'infirmier / infirmière — personne qui soigne les patients à l’hôpital',
+  'chef': 'cuisinier professionnel — le « chef » français se dit boss !',
+  'police officer': 'policier / policière — personne qui fait respecter la loi',
+  'engineer': 'ingénieur — personne qui conçoit machines ou bâtiments',
+  'driver': 'chauffeur / conducteur — personne qui conduit un véhicule',
+  'farmer': 'agriculteur — personne qui cultive la terre',
+  'waiter': 'serveur — personne qui sert au restaurant',
+  'firefighter': 'pompier — personne qui éteint les incendies',
+},
+
+'numbers-and-time': {
+  'minute': 'minute — soixante secondes',
+  'hour': 'heure — soixante minutes (avec un h muet : an hour !)',
+  'day': 'jour — une période de vingt-quatre heures',
+  'week': 'semaine — une période de sept jours',
+  'month': 'mois — une des douze parties de l’année',
+  'year': 'année — trois cent soixante-cinq jours',
+  'today': 'aujourd’hui — ce jour-ci',
+  'tomorrow': 'demain — le jour suivant',
+  'yesterday': 'hier — le jour précédent',
+  'now': 'maintenant — en ce moment même',
+},
+
+'places-in-town': {
+  'supermarket': 'supermarché — grand magasin d’alimentation',
+  'school': 'école — le lieu où les enfants apprennent',
+  'hospital': 'hôpital — le lieu où l’on soigne les malades',
+  'park': 'parc — espace vert avec pelouses et arbres',
+  'bank': 'banque — l’endroit où l’on garde son argent',
+  'library': 'bibliothèque — FAUX AMI : pas « librairie » (= bookshop) !',
+  'restaurant': 'restaurant — l’endroit où l’on paie pour manger',
+  'station': 'gare — l’endroit où s’arrêtent les trains',
+  'post office': 'bureau de poste — pour envoyer lettres et colis',
+  'café': 'café — petit établissement pour boire et manger',
+},
+
+'weather': {
+  'sunny': 'ensoleillé — avec beaucoup de soleil',
+  'rainy': 'pluvieux — avec beaucoup de pluie',
+  'cold': 'froid — à basse température',
+  'hot': 'chaud — à haute température',
+  'cloudy': 'nuageux — avec beaucoup de nuages',
+  'windy': 'venteux — avec un vent fort',
+  'snow': 'neige — eau gelée blanche qui tombe du ciel',
+  'fog': 'brouillard — nuage épais au niveau du sol',
+  'warm': 'doux / tiède — agréablement chaud',
+  'temperature': 'température — la mesure du chaud et du froid',
+},
+
+# ---------- A2 ----------
+
+'cooking': {
+  'boil': 'faire bouillir — chauffer l’eau jusqu’aux bulles',
+  'fry': 'faire frire / revenir — cuire dans l’huile chaude',
+  'bake': 'cuire au four — pour le pain, les gâteaux',
+  'chop': 'hacher / couper — en petits morceaux',
+  'stir': 'remuer — tourner avec une cuillère',
+  'recipe': 'recette — les instructions pour cuisiner un plat',
+  'ingredient': 'ingrédient — un élément d’une recette',
+  'oven': 'four — l’appareil fermé où l’on fait cuire',
+  'pan': 'poêle / casserole — récipient de cuisson en métal',
+  'slice': 'couper en tranches — en morceaux plats et fins',
+},
+
+'feelings-emotions': {
+  'excited': 'enthousiaste / impatient — FAUX AMI : pas « excité » !',
+  'worried': 'inquiet — qui se fait du souci',
+  'disappointed': 'déçu — triste parce que quelque chose n’a pas eu lieu',
+  'proud': 'fier — content d’une réussite',
+  'nervous': 'nerveux / anxieux — inquiet avant un événement',
+  'confused': 'perdu / désorienté — qui ne comprend pas',
+  'surprised': 'surpris — qui ne s’y attendait pas',
+  'lonely': 'seul et triste — la solitude qui pèse (≠ alone, simple fait d’être seul)',
+  'relaxed': 'détendu — calme et sans inquiétude',
+  'jealous': 'jaloux — qui veut ce que les autres ont',
+},
+
+'health-and-body': {
+  'headache': 'mal de tête — douleur à la tête',
+  'fever': 'fièvre — température du corps trop élevée',
+  'appointment': 'rendez-vous (médical) — pas « appointements » !',
+  'medicine': 'médicament — substance qui soigne',
+  'symptom': 'symptôme — un signe de maladie',
+  'recover': 'guérir / se rétablir — aller mieux après une maladie',
+  'surgery': 'opération chirurgicale — aussi : cabinet médical en anglais britannique',
+  'allergy': 'allergie — mauvaise réaction du corps à quelque chose',
+  'prescription': 'ordonnance — le papier du médecin pour les médicaments',
+  'diet': 'alimentation / régime — ce qu’une personne mange habituellement',
+},
+
+'music': {
+  'guitar': 'guitare — instrument à cordes que l’on gratte',
+  'piano': 'piano — grand instrument à clavier',
+  'drums': 'batterie — instruments que l’on frappe avec des baguettes',
+  'concert': 'concert — un spectacle de musique en direct',
+  'band': 'groupe (de musique) — des musiciens qui jouent ensemble',
+  'lyrics': 'paroles — les mots d’une chanson (pluriel en anglais)',
+  'melody': 'mélodie — un air, une suite de notes',
+  'rhythm': 'rythme — un motif sonore régulier et répété',
+  'classical': 'classique — la musique traditionnelle savante',
+  'choir': 'chorale / chœur — un groupe de chanteurs (prononcé « kwaïeur » !)',
+},
+
+'problems-solutions': {
+  'problem': 'problème — une situation difficile',
+  'solution': 'solution — la réponse à un problème',
+  'mistake': 'erreur / faute — quelque chose de mal fait',
+  'fix': 'réparer — remettre en état (familier et courant)',
+  'complain': 'se plaindre — dire qu’on n’est pas content',
+  'advice': 'conseils — indénombrable : un conseil = a piece of advice !',
+  'repair': 'réparer — faire fonctionner à nouveau',
+  'emergency': 'urgence — situation grave et inattendue',
+  'accident': 'accident — événement malheureux et imprévu',
+  'apologise': 's’excuser — dire pardon (apologise, pas « excuse myself » !)',
+},
+
+'school-subjects': {
+  'textbook': 'manuel scolaire — le livre utilisé en classe',
+  'homework': 'devoirs — le travail scolaire à la maison (indénombrable !)',
+  'subject': 'matière — une discipline comme les maths ou l’histoire',
+  'lesson': 'cours / leçon — une période d’enseignement',
+  'exam': 'examen — passer un examen = take an exam (pas pass, qui veut dire réussir !)',
+  'teacher': 'professeur — la personne qui enseigne',
+  'classroom': 'salle de classe — la pièce où l’on étudie',
+  'term': 'trimestre — une période de l’année scolaire',
+  'grade': 'note — l’évaluation d’un travail scolaire',
+  'university': 'université — l’enseignement supérieur',
+},
+
+'shopping-and-money': {
+  'receipt': 'ticket de caisse / reçu — la preuve d’un achat (le p est muet !)',
+  'discount': 'remise / réduction — une baisse de prix',
+  'refund': 'remboursement — l’argent rendu après un retour',
+  'currency': 'devise / monnaie — l’argent utilisé dans un pays',
+  'budget': 'budget — un plan de dépenses',
+  'checkout': 'caisse — l’endroit où l’on paie dans un magasin',
+  'bargain': 'bonne affaire — quelque chose acheté pas cher',
+  'invoice': 'facture — la note à payer pour des biens ou services',
+  'afford': 'avoir les moyens de — pouvoir se payer quelque chose',
+  'cash': 'espèces / liquide — l’argent en pièces et billets',
+},
+
+'sports': {
+  'tennis': 'tennis — jeu de raquettes et de balle',
+  'basketball': 'basket — jeu de ballon et de panier en hauteur',
+  'athletics': 'athlétisme — course, saut, lancer',
+  'gymnastics': 'gymnastique — exercices et figures sur agrès',
+  'skiing': 'ski — glisser sur la neige avec de longues planches',
+  'golf': 'golf — jeu de clubs et de petite balle',
+  'volleyball': 'volley — jeu d’équipe avec un filet',
+  'score': 'marquer — obtenir un point dans un match',
+  'match': 'match — une rencontre entre deux équipes',
+  'team': 'équipe — un groupe qui joue ensemble',
+},
+
+'technology-and-media': {
+  'download': 'télécharger — copier des données depuis internet',
+  'account': 'compte — un profil personnel sur un service',
+  'password': 'mot de passe — le mot secret pour se connecter',
+  'search engine': 'moteur de recherche — l’outil pour chercher en ligne',
+  'update': 'mise à jour — une nouvelle version d’un logiciel',
+  'wireless': 'sans fil — connecté sans câbles',
+  'screen': 'écran — la surface d’affichage d’un appareil',
+  'upload': 'téléverser / mettre en ligne — envoyer des données vers internet',
+  'subscribe': 's’abonner — payer régulièrement pour un service',
+  'battery': 'batterie / pile — la source d’énergie d’un appareil',
+},
+
+'transport-and-travel': {
+  'departure': 'départ — l’heure à laquelle un véhicule part',
+  'arrival': 'arrivée — l’heure à laquelle un véhicule arrive',
+  'platform': 'quai — l’endroit où l’on monte dans le train',
+  'ticket': 'billet / ticket — le titre de transport',
+  'luggage': 'bagages — valises et sacs (indénombrable en anglais !)',
+  'flight': 'vol — un voyage en avion',
+  'border': 'frontière — la ligne entre deux pays',
+  'passenger': 'passager — une personne qui voyage dans un véhicule',
+  'timetable': 'horaires — le tableau des heures de transport',
+  'customs': 'douane — le contrôle des marchandises à la frontière',
+},
+
+'weather-detail': {
+  'foggy': 'brumeux — quand le brouillard gêne la visibilité',
+  'storm': 'tempête / orage — très mauvais temps avec vent et pluie',
+  'thunder': 'tonnerre — le bruit fort pendant l’orage',
+  'lightning': 'éclair / foudre — la lumière soudaine de l’orage',
+  'freezing': 'glacial — extrêmement froid',
+  'boiling': 'étouffant — extrêmement chaud (familier)',
+  'humid': 'humide — un air chaud et chargé d’eau',
+  'breeze': 'brise — un vent léger et agréable',
+  'forecast': 'prévisions (météo) — l’annonce du temps à venir',
+  'shower': 'averse — une courte période de pluie (aussi : douche !)',
+},
+
+'work-and-jobs': {
+  'salary': 'salaire — l’argent versé régulièrement pour un travail',
+  'interview': 'entretien (d’embauche) — le rendez-vous pour obtenir un poste',
+  'colleague': 'collègue — une personne avec qui l’on travaille',
+  'office': 'bureau — le lieu de travail (le meuble se dit desk !)',
+  'manager': 'responsable / chef — la personne qui dirige une équipe',
+  'experience': 'expérience — les compétences acquises en travaillant',
+  'part-time': 'à temps partiel — travailler moins que l’horaire complet',
+  'unemployed': 'au chômage — sans emploi',
+  'retire': 'prendre sa retraite — arrêter définitivement de travailler',
+  'promotion': 'promotion — le passage à un poste supérieur',
+},
 
 # ---------- B1 ----------
 

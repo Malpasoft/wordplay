@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A1 Vocabulaire · Animals — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Accueil</a><span>›</span><a href="../../index.html">A1</a><span>›</span><a href="../index.html">Vocabulaire</a><span>›</span><a href="index.html">Animals</a></div>
+  <div class="chapter-num">V1</div>
+  <h1>Animals</h1>
+  <p class="chapter-subtitle">Common animals · pets and farm animals</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+    <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">Animals</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / 10 mastered</div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Recommencer</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Commencer</button>
+  </div></div>
+    <div id="gamePlay" class="game-screen"><div class="game-play"></div>
+  <div class="game-ref-panel" id="gRefPanel">
+    <button id="gRefToggle" class="game-ref-head">&#9660; Reference &mdash; all mots</button>
+    <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div>
+  </div></div>
+<div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Terminé !</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats">
+      <div>Score <strong id="gFinalScore">0</strong></div>
+      <div>Meilleure série <strong id="gFinalStreak">0</strong></div>
+      <div>Mastery <strong id="gFinalPct">0%</strong></div>
+    </div>
+    <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>window.LEVEL="a1";window.CHAPTER_ID="animals";
+window.GAME_DATA={chapterId:"animals",level:"a1",title:"Animals",storageKey:"wordplay_game_a1_animals",items:[
+  {"id": "dog", "term": "dog", "meaning": "a common pet animal", "synonym": "/dɒɡ/", "example": "I have a <b>dog</b> called Max.", "completion": "I have a _____ called Max.", "answer": "dog"},
+  {"id": "cat", "term": "cat", "meaning": "a small furry pet", "synonym": "/kæt/", "example": "The <b>cat</b> is sleeping.", "completion": "The _____ is sleeping.", "answer": "cat"},
+  {"id": "bird", "term": "bird", "meaning": "an animal with wings that can fly", "synonym": "/bɜːd/", "example": "A <b>bird</b> is singing.", "completion": "A _____ is singing.", "answer": "bird"},
+  {"id": "fish", "term": "fish", "meaning": "an animal that lives in water", "synonym": "/fɪʃ/", "example": "There are <b>fish</b> in the lake.", "completion": "There are _____ in the lake.", "answer": "fish"},
+  {"id": "horse", "term": "horse", "meaning": "a large animal you can ride", "synonym": "/hɔːs/", "example": "She rides a <b>horse</b>.", "completion": "She rides a _____.", "answer": "horse"},
+  {"id": "cow", "term": "cow", "meaning": "a farm animal that gives milk", "synonym": "/kaʊ/", "example": "The <b>cow</b> is in the field.", "completion": "The _____ is in the field.", "answer": "cow"},
+  {"id": "chicken", "term": "chicken", "meaning": "a bird kept for eggs and meat", "synonym": "/ˈtʃɪk.ɪn/", "example": "We have ten <b>chickens</b>.", "completion": "We have ten _____.", "answer": "chickens"},
+  {"id": "rabbit", "term": "rabbit", "meaning": "a small animal with long ears", "synonym": "/ˈræb.ɪt/", "example": "My sister has a pet <b>rabbit</b>.", "completion": "My sister has a pet _____.", "answer": "rabbit"},
+  {"id": "elephant", "term": "elephant", "meaning": "a very large grey animal", "synonym": "/ˈel.ɪ.fənt/", "example": "The <b>elephant</b> is in the zoo.", "completion": "The _____ is in the zoo.", "answer": "elephant"},
+  {"id": "monkey", "term": "monkey", "meaning": "an animal that climbs trees", "synonym": "/ˈmʌŋ.ki/", "example": "The <b>monkey</b> ate a banana.", "completion": "The _____ ate a banana.", "answer": "monkey"}
+]};
+</script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body></html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A1 Vocabulaire · Places in Town — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Accueil</a><span>›</span><a href="../../index.html">A1</a><span>›</span><a href="../index.html">Vocabulaire</a><span>›</span><a href="index.html">Places in Town</a></div>
+  <div class="chapter-num">V11</div>
+  <h1>Places in Town</h1>
+  <p class="chapter-subtitle">Shops, buildings, transport · giving directions</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+    <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">Places in Town</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / 10 mastered</div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Recommencer</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Commencer</button>
+  </div></div>
+    <div id="gamePlay" class="game-screen"><div class="game-play"></div>
+  <div class="game-ref-panel" id="gRefPanel">
+    <button id="gRefToggle" class="game-ref-head">&#9660; Reference &mdash; all mots</button>
+    <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div>
+  </div></div>
+<div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Terminé !</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats">
+      <div>Score <strong id="gFinalScore">0</strong></div>
+      <div>Meilleure série <strong id="gFinalStreak">0</strong></div>
+      <div>Mastery <strong id="gFinalPct">0%</strong></div>
+    </div>
+    <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>window.LEVEL="a1";window.CHAPTER_ID="places-in-town";
+window.GAME_DATA={chapterId:"places-in-town",level:"a1",title:"Places in Town",storageKey:"wordplay_game_a1_places-in-town",items:[
+  {
+    "id": "supermarket",
+    "term": "supermarket",
+    "meaning": "a large shop selling food and household items",
+    "synonym": "/ˈsuːpərˌmɑːkɪt/",
+    "example": "<b>Supermarket</b> — I go to the supermarket on Saturday.",
+    "completion": "I go to the _____ on Saturday.",
+    "answer": "supermarket"
+  },
+  {
+    "id": "school",
+    "term": "school",
+    "meaning": "a place where children go to learn",
+    "synonym": "/skuːl/",
+    "example": "<b>School</b> — The school is near my house.",
+    "completion": "The _____ is near my house.",
+    "answer": "school"
+  },
+  {
+    "id": "hospital",
+    "term": "hospital",
+    "meaning": "a place where sick or injured people are treated",
+    "synonym": "/ˈhɒspɪtəl/",
+    "example": "<b>Hospital</b> — The hospital is open 24 hours.",
+    "completion": "The _____ is open 24 hours.",
+    "answer": "hospital"
+  },
+  {
+    "id": "bank",
+    "term": "bank",
+    "meaning": "a place where people keep money",
+    "synonym": "/bæŋk/",
+    "example": "<b>Bank</b> — I go to the bank on Fridays.",
+    "completion": "I go to the _____ on Fridays.",
+    "answer": "bank"
+  },
+  {
+    "id": "park",
+    "term": "park",
+    "meaning": "a public area with grass and trees",
+    "synonym": "/pɑːk/",
+    "example": "<b>Park</b> — We walk in the park every morning.",
+    "completion": "We walk in the _____ every morning.",
+    "answer": "park"
+  },
+  {
+    "id": "restaurant",
+    "term": "restaurant",
+    "meaning": "a place where you pay to eat meals",
+    "synonym": "/ˈrestərɒnt/",
+    "example": "<b>Restaurant</b> — There is a good restaurant near here.",
+    "completion": "There is a good _____ near here.",
+    "answer": "restaurant"
+  },
+  {
+    "id": "train_station",
+    "term": "train station",
+    "meaning": "a place where trains stop to let people on and off",
+    "synonym": "/treɪn ˈsteɪʃən/",
+    "example": "<b>Train station</b> — The train station is in the city centre.",
+    "completion": "The _____ is in the city centre.",
+    "answer": "train station"
+  },
+  {
+    "id": "library",
+    "term": "library",
+    "meaning": "a place where you can borrow books",
+    "synonym": "/ˈlaɪbrəri/",
+    "example": "<b>Library</b> — I go to the library to study.",
+    "completion": "I go to the _____ to study.",
+    "answer": "library"
+  },
+  {
+    "id": "pharmacy",
+    "term": "pharmacy",
+    "meaning": "a shop where you buy medicine",
+    "synonym": "/ˈfɑːməsi/",
+    "example": "<b>Pharmacy</b> — The pharmacy is next to the bank.",
+    "completion": "The _____ is next to the bank.",
+    "answer": "pharmacy"
+  },
+  {
+    "id": "post_office",
+    "term": "post office",
+    "meaning": "a place where you can send letters and parcels",
+    "synonym": "/pəʊst ˈɒfɪs/",
+    "example": "<b>Post office</b> — I sent a letter at the post office.",
+    "completion": "I sent a letter at the _____.",
+    "answer": "post office"
+  }
+]};
+</script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body></html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="fr"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A2 Vocabulaire · Health & Body — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124"><link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Accueil</a><span>›</span><a href="../../index.html">A2</a><span>›</span><a href="../index.html">Vocabulaire</a><span>›</span><a href="index.html">Health & Body</a></div>
+  <div class="chapter-num">V9</div><h1>Health & Body</h1>
+  <p class="chapter-subtitle">Body parts · illness · at the doctor</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+    <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">Health & Body</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / 10 mastered</div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Recommencer</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Commencer</button>
+  </div></div>
+    <div id="gamePlay" class="game-screen"><div class="game-play"></div>
+  <div class="game-ref-panel" id="gRefPanel">
+    <button id="gRefToggle" class="game-ref-head">&#9660; Reference &mdash; all mots</button>
+    <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div>
+  </div></div>
+<div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Terminé !</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats"><div>Score <strong id="gFinalScore">0</strong></div><div>Mastery <strong id="gFinalPct">0%</strong></div></div>
+    <a href="../school-subjects/index.html" class="game-btn primary" style="text-decoration:none;text-align:center;display:block;margin-bottom:8px">Next: School Subjects &#8594;</a>
+    <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>window.LEVEL="a2";window.CHAPTER_ID="weather-detail";
+window.GAME_DATA={chapterId:"weather-detail",level:"a2",title:"Weather (expanded)",storageKey:"wordplay_game_a2_weather-detail",items:[
+  {"id": "foggy", "term": "foggy", "meaning": "difficult to see because of thick mist", "synonym": "/ˈfɒɡ.i/", "example": "It was very <b>foggy</b> this morning.", "completion": "It was very _____ this morning.", "answer": "foggy"},
+  {"id": "storm", "term": "storm", "meaning": "very bad weather with wind and rain", "synonym": "/stɔːm/", "example": "A big <b>storm</b> is coming tonight.", "completion": "A big _____ is coming tonight.", "answer": "storm"},
+  {"id": "thunder", "term": "thunder", "meaning": "loud noise during a storm", "synonym": "/ˈθʌn.dər/", "example": "I heard <b>thunder</b> last night.", "completion": "I heard _____ last night.", "answer": "thunder"},
+  {"id": "lightning", "term": "lightning", "meaning": "a flash of light during a storm", "synonym": "/ˈlaɪt.nɪŋ/", "example": "Did you see the <b>lightning</b>?", "completion": "Did you see the _____?", "answer": "lightning"},
+  {"id": "freezing", "term": "freezing", "meaning": "extremely cold", "synonym": "/ˈfriː.zɪŋ/", "example": "It is <b>freezing</b> outside.", "completion": "It is _____ outside.", "answer": "freezing"},
+  {"id": "boiling", "term": "boiling", "meaning": "extremely hot (informal)", "synonym": "/ˈbɔɪ.lɪŋ/", "example": "It is <b>boiling</b> today!", "completion": "It is _____ today!", "answer": "boiling"},
+  {"id": "humid", "term": "humid", "meaning": "warm and wet air", "synonym": "/ˈhjuː.mɪd/", "example": "It is very <b>humid</b> in summer.", "completion": "It is very _____ in summer.", "answer": "humid"},
+  {"id": "breeze", "term": "breeze", "meaning": "a light, gentle wind", "synonym": "/briːz/", "example": "There is a nice <b>breeze</b>.", "completion": "There is a nice _____.", "answer": "breeze"},
+  {"id": "forecast", "term": "forecast", "meaning": "a report about future weather", "synonym": "/ˈfɔː.kɑːst/", "example": "What is the weather <b>forecast</b>?", "completion": "What is the weather _____?", "answer": "forecast"},
+  {"id": "shower", "term": "shower", "meaning": "a short period of rain", "synonym": "/ˈʃaʊ.ər/", "example": "There will be <b>showers</b> later.", "completion": "There will be _____ later.", "answer": "showers"}
+]};
+</script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body></html>

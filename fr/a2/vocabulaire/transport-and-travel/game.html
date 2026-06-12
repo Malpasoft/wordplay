@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="fr"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>A2 Vocabulaire · Transport & Travel — Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124"><link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head><body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button>
+</div></header>
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Accueil</a><span>›</span><a href="../../index.html">A2</a><span>›</span><a href="../index.html">Vocabulaire</a><span>›</span><a href="index.html">Transport & Travel</a></div>
+  <div class="chapter-num">V5</div><h1>Transport & Travel</h1>
+  <p class="chapter-subtitle">Getting around · booking · travel vocabulary</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+    <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+  </nav>
+  <div id="gameStart" class="game-screen active"><div class="game-start-card">
+    <div class="game-start-title">Transport & Travel</div>
+    <div class="game-start-meta"><span id="gStartMastered">0</span> / 10 mastered</div>
+    <div id="gResumeSection" style="display:none" class="resume-section">
+      <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+      <button id="gBtnNewFromResume" class="game-btn ghost">Recommencer</button>
+    </div>
+    <button id="gBtnStart" class="game-btn primary">Commencer</button>
+  </div></div>
+    <div id="gamePlay" class="game-screen"><div class="game-play"></div>
+  <div class="game-ref-panel" id="gRefPanel">
+    <button id="gRefToggle" class="game-ref-head">&#9660; Reference &mdash; all mots</button>
+    <div id="gRefBody" class="game-ref-body"><div id="gRefList"></div></div>
+  </div></div>
+<div id="gameCompletion" class="game-screen"><div class="game-completion-card">
+    <div class="completion-title">Terminé !</div>
+    <div id="gMasteryMap" style="margin:12px 0"></div>
+    <div class="completion-stats"><div>Score <strong id="gFinalScore">0</strong></div><div>Mastery <strong id="gFinalPct">0%</strong></div></div>
+    <a href="../work-and-jobs/index.html" class="game-btn primary" style="text-decoration:none;text-align:center;display:block;margin-bottom:8px">Next: Work And Jobs &#8594;</a>
+    <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+  </div></div>
+</div>
+<div id="gToast" class="game-toast"></div>
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>window.LEVEL="a2";window.CHAPTER_ID="transport-and-travel";
+window.GAME_DATA={chapterId:"transport-and-travel",level:"a2",title:"Transport & Travel",storageKey:"wordplay_game_a2_transport-and-travel",items:[
+  {
+    "id": "departure",
+    "term": "departure",
+    "meaning": "the act of leaving; the time when a vehicle leaves",
+    "synonym": "/dɪˈpɑːrtʃər/",
+    "example": "<b>Departure</b>: The departure time is 14:30.",
+    "completion": "The ______ time is 14:30.",
+    "answer": "departure"
+  },
+  {
+    "id": "arrival",
+    "term": "arrival",
+    "meaning": "the act of reaching a place",
+    "synonym": "/əˈraɪvəl/",
+    "example": "<b>Arrival</b>: Expected arrival time is 18:00.",
+    "completion": "Expected ______ time is 18:00.",
+    "answer": "arrival"
+  },
+  {
+    "id": "reservation",
+    "term": "reservation",
+    "meaning": "an arrangement to keep something for you in advance",
+    "synonym": "/ˌrezəˈveɪʃən/",
+    "example": "<b>Reservation</b>: I have a reservation at the hotel for Friday night.",
+    "completion": "I have a ______ at the hotel for Friday night.",
+    "answer": "reservation"
+  },
+  {
+    "id": "boarding_pass",
+    "term": "boarding pass",
+    "meaning": "a document that allows you to get on an aeroplane",
+    "synonym": "/ˈbɔːrdɪŋ pɑːs/",
+    "example": "<b>Boarding pass</b>: Show your boarding pass at the gate.",
+    "completion": "Show your ______ at the gate.",
+    "answer": "boarding pass"
+  },
+  {
+    "id": "luggage",
+    "term": "luggage",
+    "meaning": "bags and suitcases that you take when travelling",
+    "synonym": "/ˈlʊɡɪdʒ/",
+    "example": "<b>Luggage</b>: My luggage was too heavy and I had to pay extra.",
+    "completion": "My ______ was too heavy and I had to pay extra.",
+    "answer": "luggage"
+  },
+  {
+    "id": "customs",
+    "term": "customs",
+    "meaning": "the official check of goods when entering a country",
+    "synonym": "/ˈkʊstəmz/",
+    "example": "<b>Customs</b>: We had to go through customs at the airport.",
+    "completion": "We had to go through ______ at the airport.",
+    "answer": "customs"
+  },
+  {
+    "id": "itinerary",
+    "term": "itinerary",
+    "meaning": "a detailed plan of a journey",
+    "synonym": "/aɪˈtɪnərəri/",
+    "example": "<b>Itinerary</b>: Our travel agent sent us the full itinerary.",
+    "completion": "Our travel agent sent us the full ______.",
+    "answer": "itinerary"
+  },
+  {
+    "id": "delay",
+    "term": "delay",
+    "meaning": "when something happens later than expected",
+    "synonym": "/dɪˈleɪ/",
+    "example": "<b>Delay</b>: The flight was delayed by two hours.",
+    "completion": "The flight was ______ed by two hours.",
+    "answer": "delay"
+  },
+  {
+    "id": "transfer",
+    "term": "transfer",
+    "meaning": "moving from one vehicle, place, or route to another",
+    "synonym": "/ˈtrænsfɜːr/",
+    "example": "<b>Transfer</b>: We had a short transfer in Amsterdam.",
+    "completion": "We had a short ______ in Amsterdam.",
+    "answer": "transfer"
+  },
+  {
+    "id": "fare",
+    "term": "fare",
+    "meaning": "the money you pay to travel by bus, train, or taxi",
+    "synonym": "/feər/",
+    "example": "<b>Fare</b>: The train fare to Madrid is €45.",
+    "completion": "The train ______ to Madrid is €45.",
+    "answer": "fare"
+  }
+]};
+</script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body></html>

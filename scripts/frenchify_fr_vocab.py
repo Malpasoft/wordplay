@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Frenchify fr/ B1-B2 vocabulaire chapters.
+"""Frenchify fr/ A1-B2 vocabulaire chapters.
 
 - Replaces English defs with French glosses (scripts/content/fr_vocab_defs.py)
   in flashcards.html and match.html WORDS arrays (via node for safe JS parsing).
@@ -119,6 +119,42 @@ CHROME = [
     (' points</strong>', ' points</strong>'),
     ('tap card to reveal', 'touche la carte pour révéler'),
     ('words · ', 'mots · '),
+    # --- A1/A2 (a/-track template) additions ---
+    ('<html lang="en">', '<html lang="fr">'),
+    ('href="../../../../a/a1/index.html">A1<', 'href="../../index.html">A1<'),
+    ('href="../../../../a/a2/index.html">A2<', 'href="../../index.html">A2<'),
+    ('&#9680; Dark<', '&#9680; Sombre<'),
+    ('Word Play &middot; Cambridge English A1&#8594;C2', 'Word Play &middot; Anglais Cambridge A1&#8211;B2 &middot; Pour les francophones'),
+    ('A1 Vocab ·', 'A1 Vocabulaire ·'), ('A2 Vocab ·', 'A2 Vocabulaire ·'),
+    ('— A1 Vocabulary |', '— Vocabulaire A1 |'), ('— A2 Vocabulary |', '— Vocabulaire A2 |'),
+    ('A1 Vocabulary ·', 'Vocabulaire A1 ·'), ('A2 Vocabulary ·', 'Vocabulaire A2 ·'),
+    ('>Vocabulary &middot; ', '>Vocabulaire &middot; '),
+    (' words<', ' mots<'),
+    ('>Vocabulary</div>', '>Vocabulaire</div>'),
+    ('>Mastery Game<', '>Jeu de maîtrise<'),
+    ('>Mastery game</a>', '>Jeu de maîtrise</a>'),
+    ('>Study the vocabulary with explanations and examples<', '>Étudie le vocabulaire avec explications et exemples<'),
+    ('Flip through all ', 'Parcours les '),
+    (' words &mdash; see IPA, definition and example', ' mots &mdash; API, définition et exemple'),
+    ('4-stage game to lock words into long-term memory', 'Jeu en 4 étapes pour ancrer les mots dans la mémoire'),
+    ('>Mark topic as mastered</button>', '>Marquer le thème comme maîtrisé</button>'),
+    ('>Topic mastered</span>', '>Thème maîtrisé</span>'),
+    ('>My notes &amp; examples</div>', '>Mes notes et exemples</div>'),
+    ('>Word list</button>', '>Liste de mots</button>'),
+    ('>Review cards first</a>', '>Revoir les cartes d&rsquo;abord</a>'),
+    ('>Out of lives!</div>', '>Plus de vies !</div>'),
+    ('>New round</button>', '>Nouvelle manche</button>'),
+    ('>Match</button>', '>Associer</button>'),
+    ('>Examples</', '>Exemples</'),
+    ('>Complete!<', '>Terminé !<'),
+    ('>Resume<', '>Reprendre<'),
+    ('>Start over<', '>Recommencer<'),
+    ('>Start<', '>Commencer<'),
+    ('>Best streak ', '>Meilleure série '),
+    ('Keep practising — you need to match each word twice without 3 mistakes.',
+     'Continue à t’entraîner — chaque mot doit être associé deux fois, sans faire 3 erreurs.'),
+    ('You matched every word twice.', 'Tu as associé chaque mot deux fois.'),
+    (' vocabulary mastered!', ' : vocabulaire maîtrisé !'),
 ]
 
 
@@ -136,7 +172,8 @@ def main():
     node_script.write(NODE_REWRITE)
     node_script.close()
     failures = 0
-    for level in ('b1', 'b2'):
+    levels = tuple(sys.argv[1:]) or ('a1', 'a2', 'b1', 'b2')
+    for level in levels:
         base = os.path.join(ROOT, 'fr', level, 'vocabulaire')
         for slug in sorted(os.listdir(base)):
             d = os.path.join(base, slug)
