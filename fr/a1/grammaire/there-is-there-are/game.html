@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>There is / There are — Jeu A1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../fr/index.html">Anglais pour francophones</a><span>&#8250;</span>
+  <a href="../../index.html">A1</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">There is / There are</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+</nav>
+<div class="container">
+  <h1>There is / There are — Jeu de Maîtrise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Maîtrise</h2>
+        <p>Chaque forme de there is / there are passe par trois types de questions : sens, contexte et production. Atteins 100 points pour gagner.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Maîtrisés</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tu as une partie sauvegardée.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Commencer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Tous les éléments — référence</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Maîtrisé !</h2>
+        <p>Tu as terminé tous les éléments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure série</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Maîtrisés</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Anglais A1 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "there-is-there-are",
+  level: "a1",
+  title: "There is / There are — il y a",
+  storageKey: 'wordplay_game_a1_there-is-there-are',
+  items: [
+    {id:"there-is", term:"there is", meaning:"il y a + singulier — un seul objet ou personne", synonym:"there's", example:"<b>There is</b> a cat in the garden.", completion:"There ______ a cat in the garden. (il y a)", answer:"is"},
+    {id:"there-are", term:"there are", meaning:"il y a + pluriel — plusieurs objets ou personnes", synonym:"pluriel", example:"<b>There are</b> three chairs in the room.", completion:"There ______ three chairs in the room. (il y a)", answer:"are"},
+    {id:"there-is-some", term:"there is some + indénombrable", meaning:"il y a du/de la — avec milk, water, money...", synonym:"indénombrable", example:"<b>There is some</b> milk in the fridge.", completion:"There is ______ milk in the fridge. (du)", answer:"some"},
+    {id:"there-isnt", term:"there isn't", meaning:"il n'y a pas + singulier", synonym:"négation sing.", example:"<b>There isn't</b> a swimming pool.", completion:"There ______ a swimming pool. (il n'y a pas)", answer:"isn't"},
+    {id:"there-arent-any", term:"there aren't any", meaning:"il n'y a pas de + pluriel — avec any", synonym:"négation plur.", example:"<b>There aren't any</b> shops near here.", completion:"There aren't ______ shops near here. (pas de)", answer:"any"},
+    {id:"is-there", term:"Is there...?", meaning:"y a-t-il + singulier ? — question par inversion", synonym:"question sing.", example:"<b>Is there</b> a bank near here?", completion:"______ there a bank near here? (y a-t-il)", answer:"is"},
+    {id:"are-there", term:"Are there any...?", meaning:"y a-t-il des... ? — question au pluriel", synonym:"question plur.", example:"<b>Are there any</b> restaurants?", completion:"______ there any restaurants? (y a-t-il)", answer:"are"},
+    {id:"short-answer", term:"Yes, there is.", meaning:"réponse courte — on reprend there + is/are", synonym:"réponse", example:"Is there a pool? <b>Yes, there is.</b>", completion:"Is there a pool? Yes, there ______. (réponse courte)", answer:"is"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
