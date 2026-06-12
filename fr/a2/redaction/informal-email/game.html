@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Email informel — Jeu A2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../fr/index.html">Anglais pour francophones</a><span>&#8250;</span>
+  <a href="../../index.html">A2</a><span>&#8250;</span>
+  <a href="../index.html">Rédaction</a><span>&#8250;</span>
+  <a href="index.html">Email informel</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+</nav>
+<div class="container">
+  <h1>Email informel — Jeu de Maîtrise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Maîtrise</h2>
+        <p>Chaque formule d'email passe par trois types de questions : sens, contexte et production. Atteins 100 points pour gagner.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Maîtrisés</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tu as une partie sauvegardée.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Commencer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Tous les éléments — référence</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Maîtrisé !</h2>
+        <p>Tu as terminé tous les éléments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure série</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Maîtrisés</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Anglais A2 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "informal-email",
+  level: "a2",
+  title: "Informal Email — Écrire à un ami",
+  storageKey: 'wordplay_game_a2_informal-email',
+  items: [
+    {id:"thanks-for", term:"Thanks for your email!", meaning:"merci pour ton email — l'ouverture standard", synonym:"ouverture", example:"<b>Thanks for</b> your email!", completion:"Thanks ______ your email! (préposition)", answer:"for"},
+    {id:"hear-from", term:"to hear from you", meaning:"avoir de tes nouvelles — hear + from", synonym:"nouvelles", example:"It was great to <b>hear from</b> you!", completion:"It was great to hear ______ you! (préposition)", answer:"from"},
+    {id:"guess-what", term:"Guess what?", meaning:"devine quoi ? — annoncer une nouvelle", synonym:"accroche", example:"<b>Guess what?</b> I have a new bike!", completion:"______ what? I have a new bike! (devine)", answer:"guess"},
+    {id:"by-the-way", term:"by the way", meaning:"au fait — changer de sujet en douceur", synonym:"transition", example:"<b>By the way</b>, how is your sister?", completion:"By the ______, how is your sister? (au fait)", answer:"way"},
+    {id:"what-about-you", term:"What about you?", meaning:"et toi ? — relancer son correspondant", synonym:"relance", example:"<b>What about</b> you?", completion:"What ______ you? (et toi)", answer:"about"},
+    {id:"why-dont-you", term:"Why don't you...?", meaning:"pourquoi ne... pas ? — l'invitation amicale", synonym:"invitation", example:"<b>Why don't you</b> come to my house?", completion:"Why ______ you come to my house? (négation)", answer:"don't"},
+    {id:"write-back", term:"Write back soon!", meaning:"réponds vite — la clôture qui appelle une réponse", synonym:"clôture", example:"<b>Write back</b> soon! Léa", completion:"Write ______ soon! Léa (réponds)", answer:"back"},
+    {id:"love", term:"Love, + prénom", meaning:"bisous — la signature entre proches", synonym:"signature", example:"<b>Love</b>, Léa", completion:"______, Léa (bisous)", answer:"love"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

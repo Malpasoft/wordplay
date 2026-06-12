@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>La description — Jeu A2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../fr/index.html">Anglais pour francophones</a><span>&#8250;</span>
+  <a href="../../index.html">A2</a><span>&#8250;</span>
+  <a href="../index.html">Rédaction</a><span>&#8250;</span>
+  <a href="index.html">La description</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+</nav>
+<div class="container">
+  <h1>La description — Jeu de Maîtrise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Maîtrise</h2>
+        <p>Chaque outil de description passe par trois types de questions : sens, contexte et production. Atteins 100 points pour gagner.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Maîtrisés</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tu as une partie sauvegardée.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Commencer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Tous les éléments — référence</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Maîtrisé !</h2>
+        <p>Tu as terminé tous les éléments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure série</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Maîtrisés</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Anglais A2 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "description",
+  level: "a2",
+  title: "Description — Décrire une personne ou un lieu",
+  storageKey: 'wordplay_game_a2_description',
+  items: [
+    {id:"is-called", term:"is called", meaning:"s'appelle — présenter quelqu'un", synonym:"identité", example:"My best friend <b>is called</b> Marco.", completion:"My best friend is ______ Marco. (s'appelle)", answer:"called"},
+    {id:"is-tall", term:"she is tall", meaning:"la taille avec be — is + adjectif", synonym:"taille", example:"She <b>is tall</b> and slim.", completion:"She ______ tall and slim. (est)", answer:"is"},
+    {id:"has-got-hair", term:"has got long brown hair", meaning:"les cheveux avec have got — hair singulier", synonym:"cheveux", example:"He <b>has got</b> short black hair.", completion:"He has ______ short black hair. (possession)", answer:"got"},
+    {id:"friendly", term:"friendly", meaning:"sympa — PAS sympathetic (faux ami)", synonym:"caractère", example:"My friend is very <b>friendly</b>.", completion:"My friend is very ______. (sympa)", answer:"friendly"},
+    {id:"a-bit-shy", term:"a bit shy", meaning:"un peu timide — nuancer un adjectif", synonym:"nuance", example:"He is kind but <b>a bit</b> shy.", completion:"He is kind but a ______ shy. (un peu)", answer:"bit"},
+    {id:"there-is-place", term:"There is a park", meaning:"il y a — décrire un lieu", synonym:"lieu", example:"<b>There is</b> a beautiful park near the river.", completion:"______ is a beautiful park near the river. (il y a)", answer:"there"},
+    {id:"good-at", term:"good at", meaning:"doué en — good AT, jamais good in", synonym:"good at", example:"She is really good <b>at</b> tennis.", completion:"She is really good ______ tennis. (préposition)", answer:"at"},
+    {id:"because", term:"because", meaning:"parce que — justifier ce qu'on aime", synonym:"cause", example:"I love this place <b>because</b> it is sunny.", completion:"I love this place ______ it is sunny. (parce que)", answer:"because"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
