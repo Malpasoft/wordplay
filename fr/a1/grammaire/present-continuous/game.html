@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Le present continuous — Jeu A1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../fr/index.html">Anglais pour francophones</a><span>&#8250;</span>
+  <a href="../../index.html">A1</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">Le present continuous</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+</nav>
+<div class="container">
+  <h1>Le present continuous — Jeu de Maîtrise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Maîtrise</h2>
+        <p>Chaque forme du present continuous passe par trois types de questions : sens, contexte et production. Atteins 100 points pour gagner.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Maîtrisés</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tu as une partie sauvegardée.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Commencer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Tous les éléments — référence</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Maîtrisé !</h2>
+        <p>Tu as terminé tous les éléments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure série</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Maîtrisés</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Anglais A1 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "present-continuous",
+  level: "a1",
+  title: "Le present continuous — I am working",
+  storageKey: 'wordplay_game_a1_present-continuous',
+  items: [
+    {id:"am-working", term:"I am working", meaning:"action en cours — be + verbe-ing", synonym:"maintenant", example:"I <b>am working</b> right now.", completion:"I am ______ right now. (en train de travailler)", answer:"working"},
+    {id:"is-sleeping", term:"she is sleeping", meaning:"3e personne — is + verbe-ing", synonym:"is + -ing", example:"The baby <b>is sleeping</b>.", completion:"The baby is ______. (en train de dormir)", answer:"sleeping"},
+    {id:"are-playing", term:"they are playing", meaning:"pluriel — are + verbe-ing", synonym:"are + -ing", example:"They <b>are playing</b> football.", completion:"They are ______ football. (en train de jouer)", answer:"playing"},
+    {id:"making", term:"making", meaning:"le e tombe — make → making", synonym:"orthographe", example:"She is <b>making</b> a cake.", completion:"She is ______ a cake. (make + ing)", answer:"making"},
+    {id:"running", term:"running", meaning:"consonne doublée — run → running", synonym:"orthographe", example:"He is <b>running</b> in the park.", completion:"He is ______ in the park. (run + ing)", answer:"running"},
+    {id:"isnt-sleeping", term:"she isn't sleeping", meaning:"négation — be + not + verbe-ing", synonym:"négation", example:"She <b>isn't sleeping</b> now.", completion:"She ______ sleeping now. (négation)", answer:"isn't"},
+    {id:"are-you-doing", term:"What are you doing?", meaning:"la question du continuous — avec be, sans do", synonym:"question", example:"What <b>are</b> you <b>doing</b>?", completion:"What ______ you doing? (auxiliaire)", answer:"are"},
+    {id:"state-verbs", term:"I love (jamais loving)", meaning:"verbes d'état — like, love, want, need restent au simple", synonym:"verbe d'état", example:"I <b>love</b> this song!", completion:"I ______ this song! (et non « am loving »)", answer:"love"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
