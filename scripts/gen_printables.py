@@ -131,6 +131,8 @@ TRACKS = [
     ('es',      os.path.join(ROOT, 'es',          'a1', 'gramatica')),
     ('en',      os.path.join(ROOT, 'espanol-en',  'a1', 'grammar')),
     ('en',      os.path.join(ROOT, 'espanol-en',  'a2', 'grammar')),
+    ('fr',      os.path.join(ROOT, 'fr',          'a1', 'grammaire')),
+    ('fr',      os.path.join(ROOT, 'fr',          'a2', 'grammaire')),
     ('fr',      os.path.join(ROOT, 'fr',          'b1', 'grammaire')),
     ('fr',      os.path.join(ROOT, 'fr',          'b2', 'grammaire')),
 ]
