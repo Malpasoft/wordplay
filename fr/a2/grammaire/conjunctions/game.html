@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Les conjonctions — Jeu A2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../fr/index.html">Anglais pour francophones</a><span>&#8250;</span>
+  <a href="../../index.html">A2</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">Les conjonctions</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+</nav>
+<div class="container">
+  <h1>Les conjonctions — Jeu de Maîtrise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Maîtrise</h2>
+        <p>Chaque conjonction passe par trois types de questions : sens, contexte et production. Atteins 100 points pour gagner.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Maîtrisés</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tu as une partie sauvegardée.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Commencer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Tous les éléments — référence</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Maîtrisé !</h2>
+        <p>Tu as terminé tous les éléments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure série</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Maîtrisés</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Anglais A2 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "conjunctions",
+  level: "a2",
+  title: "Les conjonctions — and, but, so, because",
+  storageKey: 'wordplay_game_a2_conjunctions',
+  items: [
+    {id:"and", term:"and", meaning:"et — pour ajouter une idée", synonym:"addition", example:"I like tea <b>and</b> coffee.", completion:"I like tea ______ coffee. (et)", answer:"and"},
+    {id:"but", term:"but", meaning:"mais — pour opposer deux idées", synonym:"contraste", example:"He is rich <b>but</b> unhappy.", completion:"He is rich ______ unhappy. (mais)", answer:"but"},
+    {id:"or", term:"or", meaning:"ou — pour proposer un choix", synonym:"choix", example:"Do you want tea <b>or</b> coffee?", completion:"Do you want tea ______ coffee? (ou)", answer:"or"},
+    {id:"because", term:"because", meaning:"parce que — introduit la cause", synonym:"cause", example:"I stayed in <b>because</b> it was raining.", completion:"I stayed in ______ it was raining. (parce que)", answer:"because"},
+    {id:"so", term:"so", meaning:"donc — introduit la conséquence", synonym:"conséquence", example:"It was raining, <b>so</b> I stayed in.", completion:"It was raining, ______ I stayed in. (donc)", answer:"so"},
+    {id:"when-present", term:"when I get home", meaning:"quand + présent — jamais will après when", synonym:"temps", example:"I'll call you when I <b>get</b> home.", completion:"I'll call you when I ______ home. (arrive, au présent)", answer:"get"},
+    {id:"if", term:"if it rains", meaning:"si + présent — la condition", synonym:"condition", example:"<b>If</b> it rains, we'll stay at home.", completion:"______ it rains, we'll stay at home. (si)", answer:"if"},
+    {id:"finally", term:"finally", meaning:"enfin — le dernier jalon du récit", synonym:"récit", example:"<b>Finally</b>, we took the train home.", completion:"______, we took the train home. (enfin)", answer:"finally"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

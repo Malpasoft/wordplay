@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Questions indirectes — Jeu A2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../fr/index.html">Anglais pour francophones</a><span>&#8250;</span>
+  <a href="../../index.html">A2</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">Questions indirectes</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+</nav>
+<div class="container">
+  <h1>Questions indirectes — Jeu de Maîtrise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Maîtrise</h2>
+        <p>Chaque structure de question indirecte passe par trois types de questions : sens, contexte et production. Atteins 100 points pour gagner.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Maîtrisés</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tu as une partie sauvegardée.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Commencer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Tous les éléments — référence</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Maîtrisé !</h2>
+        <p>Tu as terminé tous les éléments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure série</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Maîtrisés</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Anglais A2 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "indirect-questions",
+  level: "a2",
+  title: "Les questions indirectes — Can you tell me where the station is?",
+  storageKey: 'wordplay_game_a2_indirect-questions',
+  items: [
+    {id:"can-you-tell-me", term:"Can you tell me...?", meaning:"pourriez-vous me dire... — la formule polie", synonym:"formule", example:"<b>Can you tell me</b> where the station is?", completion:"Can you ______ me where the station is? (dire)", answer:"tell"},
+    {id:"no-inversion", term:"where the station is", meaning:"ordre normal — l'inversion disparaît", synonym:"ordre des mots", example:"Can you tell me where <b>the station is</b>?", completion:"Can you tell me where the station ______? (verbe à la fin)", answer:"is"},
+    {id:"does-disparait", term:"where she lives", meaning:"does disparaît — le -s revient sur le verbe", synonym:"sans does", example:"Do you know where she <b>lives</b>?", completion:"Do you know where she ______? (habite)", answer:"lives"},
+    {id:"did-disparait", term:"when they arrived", meaning:"did disparaît — le verbe passe au passé", synonym:"sans did", example:"Can you tell me when they <b>arrived</b>?", completion:"Can you tell me when they ______? (sont arrivés)", answer:"arrived"},
+    {id:"if", term:"if", meaning:"si — pour les questions oui/non", synonym:"oui/non", example:"Do you know <b>if</b> there is a bank near here?", completion:"Do you know ______ there is a bank near here? (si)", answer:"if"},
+    {id:"do-you-know", term:"Do you know...?", meaning:"savez-vous... — pour demander à un inconnu", synonym:"formule", example:"<b>Do you know</b> what time it opens?", completion:"Do you ______ what time it opens? (savez)", answer:"know"},
+    {id:"i-wonder", term:"I wonder...", meaning:"je me demande... — la question pour soi-même", synonym:"se demander", example:"<b>I wonder</b> if she is at home.", completion:"I ______ if she is at home. (me demande)", answer:"wonder"},
+    {id:"could-you", term:"Could you tell me...?", meaning:"pourriez-vous — encore plus poli que can", synonym:"politesse", example:"<b>Could</b> you tell me how much it costs?", completion:"______ you tell me how much it costs? (pourriez)", answer:"could"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
