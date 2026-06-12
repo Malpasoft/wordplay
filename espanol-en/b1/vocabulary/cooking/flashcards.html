@@ -4,14 +4,267 @@
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Practice | Word Play</title>
+<title>Cooking — Flashcards | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<style>
+.vocab-page{max-width:800px;margin:0 auto;padding:20px 0}
+.mode-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap}
+.mode-tab{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:8px 16px;border-radius:4px;cursor:pointer;border:1.5px solid var(--hairline);background:transparent;color:var(--ink);transition:all .15s}
+.mode-tab.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.flashcard-wrap{perspective:800px;margin:0 auto 20px;max-width:480px}
+.flashcard{width:100%;height:220px;position:relative;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;border-radius:10px}
+.flashcard.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;border:1px solid var(--hairline)}
+.fc-front{background:var(--paper)}
+.fc-back{background:var(--paper);transform:rotateY(180deg)}
+.fc-word{font-size:1.8rem;font-weight:700;color:var(--ink);margin-bottom:6px}
+.fc-ipa{font-family:var(--font-sans);font-size:.85rem;color:var(--muted);margin-bottom:8px}
+.fc-def{font-size:.95rem;color:var(--ink);margin-bottom:8px}
+.fc-ex{font-size:.85rem;color:var(--muted);font-style:italic}
+.fc-hint{font-family:var(--font-sans);font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:12px}
+.fc-audio-btn{background:none;border:1px solid var(--hairline);border-radius:4px;padding:5px 12px;font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);cursor:pointer;margin-top:10px}
+.fc-audio-btn:hover{border-color:var(--amber);color:var(--amber)}
+.fc-nav{display:flex;align-items:center;gap:16px;justify-content:center;margin-bottom:20px}
+.fc-btn{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 18px;border-radius:4px;cursor:pointer;border:1.5px solid var(--hairline);background:transparent;color:var(--ink)}
+.fc-btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.fc-counter{font-family:var(--font-sans);font-size:.75rem;color:var(--muted);font-weight:600}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.match-col{display:flex;flex-direction:column;gap:8px}
+.match-item{padding:12px 14px;border:1.5px solid var(--hairline);border-radius:6px;cursor:pointer;font-size:.9rem;color:var(--ink);transition:border-color .15s,background .15s;user-select:none}
+.match-item.selected{border-color:var(--amber);background:rgba(184,134,11,.08)}
+.match-item.correct{border-color:var(--green);background:rgba(46,125,82,.08);pointer-events:none}
+.match-item.wrong{border-color:var(--red);background:rgba(192,57,43,.08)}
+.match-score{font-family:var(--font-sans);font-size:.85rem;color:var(--muted);text-align:center;margin-bottom:16px}
+.mastery-badge{display:inline-block;padding:8px 18px;background:rgba(184,134,11,.12);color:var(--amber);font-family:var(--font-sans);font-size:.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:4px;margin-bottom:16px}
+.word-list-item{display:flex;align-items:baseline;gap:12px;padding:10px 0;border-bottom:1px solid var(--hairline)}
+.wl-word{font-weight:700;font-size:1rem;min-width:160px}
+.wl-def{font-size:.88rem;color:var(--ink)}
+</style>
 </head>
 <body>
-<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">◐ Dark</button></div></header>
-<div class="section-page"><p>Flashcards coming soon.</p></div>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="../index.html" class="back back-link" aria-label="Back"></a>
+    <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">◐ Dark</button>
+  </div>
+</header>
+<div class="container">
+  <div class="breadcrumb">
+    <a href="../../../../index.html">Home</a><span>›</span>
+    <a href="../../index.html">B1</a><span>›</span>
+    <a href="../index.html">Vocabulary</a><span>›</span>
+    <strong>Cooking</strong>
+  </div>
+  <div class="chapter-num">V1</div>
+  <h1>Cooking</h1>
+  <nav class="chapter-nav">
+    <a href="flashcards.html" class="chapter-nav-btn active">Flashcards</a>
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Review</a>
+    <a href="game.html" class="chapter-nav-btn">Game</a>
+  </nav>
+
+  <div class="vocab-page">
+    <div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">Topic mastered</span></div>
+    <div style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">15 words · tap card to reveal</div>
+
+    <div class="mode-tabs">
+      <button class="mode-tab active" onclick="setMode('flash',this)">Flashcards</button>
+      <button class="mode-tab" onclick="setMode('match',this)">Match</button>
+      <button class="mode-tab" onclick="setMode('list',this)">Word list</button>
+    </div>
+
+    <div id="modeFlash">
+      <div class="flashcard-wrap">
+        <button class="flashcard" id="flashcard" onclick="flipCard()">
+          <div class="fc-face fc-front">
+            <div class="fc-word" id="fcWord"></div>
+            <div class="fc-ipa" id="fcIpa"></div>
+            <button class="fc-audio-btn" onclick="speakWord(event)">▶ Pronounce</button>
+            <div class="fc-hint">tap to reveal</div>
+          </div>
+          <div class="fc-face fc-back">
+            <div class="fc-def" id="fcDef"></div>
+            <div class="fc-ex" id="fcEx"></div>
+          </div>
+        </button>
+      </div>
+      <div class="fc-nav">
+        <button class="fc-btn" onclick="fcPrev()">◀ Prev</button>
+        <span class="fc-counter" id="fcCounter"></span>
+        <button class="fc-btn" onclick="fcNext()">Next ▶</button>
+      </div>
+      <div style="text-align:center">
+        <button class="fc-btn primary" onclick="markMastered()" id="btnMastered">Mark topic as mastered</button>
+      </div>
+    </div>
+
+    <div id="modeMatch" style="display:none">
+      <div class="match-score" id="matchScore">Match each word to its definition</div>
+      <div class="match-grid">
+        <div class="match-col" id="matchWords"></div>
+        <div class="match-col" id="matchDefs"></div>
+      </div>
+      <div style="text-align:center">
+        <button class="fc-btn" onclick="initMatch()">New round</button>
+      </div>
+    </div>
+
+    <div id="modeList" style="display:none">
+      <div id="wordList"></div>
+    </div>
+  </div>
+</div>
+<footer class="site-footer">Word Play · Spanish B1 · Vocabulary</footer>
 <script src="../../../../shared/store.js?v=v107"></script>
+<script>
+var SLUG = 'cooking';
+var LEVEL = 'b1';
+var MASTERY_KEY = 'wordplay_vocab_a1_' + SLUG + '_mastered';
+var WORDS = [{"word": "asar", "ipa": "aˈsar", "def": "to roast", "ex": "Vamos a <b>asar</b> un pollo para la comida del domingo."}, {"word": "picar", "ipa": "piˈkar", "def": "to chop finely", "ex": "Hay que <b>picar</b> la cebolla muy fina."}, {"word": "aliñar", "ipa": "aliˈɲar", "def": "to dress (a salad)", "ex": "Voy a <b>aliñar</b> la ensalada con aceite y vinagre."}, {"word": "la masa", "ipa": "ˈmasa", "def": "dough", "ex": "Deja reposar la <b>masa</b> media hora."}, {"word": "la harina", "ipa": "aˈrina", "def": "flour", "ex": "Necesitamos <b>harina</b> para hacer el bizcocho."}, {"word": "el sabor", "ipa": "saˈβor", "def": "flavour, taste", "ex": "Esta salsa tiene un <b>sabor</b> muy intenso."}, {"word": "sabroso", "ipa": "saˈβroso", "def": "tasty", "ex": "El guiso de tu abuela está muy <b>sabroso</b>."}, {"word": "soso", "ipa": "ˈsoso", "def": "bland, lacking salt", "ex": "El arroz está un poco <b>soso</b> — ponle sal."}, {"word": "la olla", "ipa": "ˈoʎa", "def": "pot, saucepan", "ex": "Pon las lentejas en la <b>olla</b> grande."}, {"word": "congelar", "ipa": "konxeˈlar", "def": "to freeze", "ex": "Puedes <b>congelar</b> el pan que sobre."}, {"word": "calentar", "ipa": "kalenˈtar", "def": "to heat up", "ex": "Voy a <b>calentar</b> la sopa en el microondas."}, {"word": "a fuego lento", "ipa": "a ˈfweɣo ˈlento", "def": "on a low heat", "ex": "Cocina la salsa <b>a fuego lento</b> veinte minutos."}];
+var fcIdx = 0, flipped = false;
+
+function setMode(mode, btn) {
+  document.querySelectorAll('.mode-tab').forEach(function(b){b.classList.remove('active');});
+  btn.classList.add('active');
+  document.getElementById('modeFlash').style.display = mode==='flash'?'':'none';
+  document.getElementById('modeMatch').style.display = mode==='match'?'':'none';
+  document.getElementById('modeList').style.display = mode==='list'?'':'none';
+  if(mode==='match') initMatch();
+  if(mode==='list') renderList();
+}
+
+function flipCard(){
+  flipped=!flipped;
+  document.getElementById('flashcard').classList.toggle('flipped',flipped);
+}
+
+function showCard(idx){
+  flipped=false;
+  document.getElementById('flashcard').classList.remove('flipped');
+  var w=WORDS[idx];
+  document.getElementById('fcWord').textContent=w.word;
+  document.getElementById('fcIpa').textContent=w.ipa;
+  document.getElementById('fcDef').textContent=w.def;
+  document.getElementById('fcEx').innerHTML=w.ex||'';
+  document.getElementById('fcCounter').textContent=(idx+1)+' / '+WORDS.length;
+  fcSeen.add(idx);
+  if (!mastered && fcSeen.size >= WORDS.length) { mastered = true; setTimeout(markMastered, 700); }
+}
+
+function fcNext(){fcIdx=(fcIdx+1)%WORDS.length;showCard(fcIdx);}
+function fcPrev(){fcIdx=(fcIdx-1+WORDS.length)%WORDS.length;showCard(fcIdx);}
+
+function markMastered(){
+  try{localStorage.setItem(MASTERY_KEY,'1');}catch(e){}
+  document.getElementById('masteryBadge').style.display='block';
+  var btn=document.getElementById('btnMastered');
+  btn.textContent='Mastered!'; btn.disabled=true;
+  if(window.FCEStore){FCEStore.saveResult(SLUG,1,1,{});}
+}
+
+function checkMastered(){
+  try{
+    if(localStorage.getItem(MASTERY_KEY)==='1'){
+      document.getElementById('masteryBadge').style.display='block';
+      var btn=document.getElementById('btnMastered');
+      btn.textContent='Mastered!'; btn.disabled=true;
+    }
+  }catch(e){}
+}
+
+var matchSelected=null;
+function shuffle(a){var b=a.slice();for(var i=b.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=b[i];b[i]=b[j];b[j]=t;}return b;}
+
+function initMatch(){
+  var sample=shuffle(WORDS).slice(0,6);
+  var words=shuffle(sample.map(function(w){return{id:w.word,text:w.word,type:'word'};}));
+  var defs=shuffle(sample.map(function(w){return{id:w.word,text:w.def,type:'def'};}));
+  matchSelected=null;
+  document.getElementById('matchScore').textContent='Match each word to its definition';
+  function renderCol(col,items){
+    col.innerHTML='';
+    items.forEach(function(item){
+      var el=document.createElement('div');
+      el.className='match-item'; el.textContent=item.text;
+      el.dataset.id=item.id; el.dataset.type=item.type;
+      el.addEventListener('click',handleMatch);
+      col.appendChild(el);
+    });
+  }
+  renderCol(document.getElementById('matchWords'),words);
+  renderCol(document.getElementById('matchDefs'),defs);
+}
+
+function handleMatch(e){
+  var el=e.currentTarget;
+  if(el.classList.contains('correct')) return;
+  if(!matchSelected){
+    if(matchSelected&&matchSelected!==el) matchSelected.classList.remove('selected');
+    matchSelected=el; el.classList.add('selected');
+  }else{
+    var prev=matchSelected; matchSelected=null;
+    var correct=prev.dataset.id===el.dataset.id&&prev.dataset.type!==el.dataset.type;
+    if(correct){
+      prev.classList.remove('selected'); prev.classList.add('correct');
+      el.classList.add('correct');
+      var remaining=document.querySelectorAll('.match-item:not(.correct)').length;
+      if(remaining===0) document.getElementById('matchScore').textContent='All matched!'; completedRounds++; if (!mastered && completedRounds >= 5) { mastered = true; setTimeout(markMastered, 700); }
+    }else{
+      prev.classList.remove('selected');
+      prev.classList.add('wrong'); el.classList.add('wrong');
+      setTimeout(function(){prev.classList.remove('wrong');el.classList.remove('wrong');},600);
+    }
+  }
+}
+
+function renderList(){
+  var html=WORDS.map(function(w){
+    return '<div class="word-list-item"><span class="wl-word">'+w.word+'</span><span class="wl-def">'+w.def+'</span></div>';
+  }).join('');
+  document.getElementById('wordList').innerHTML=html;
+}
+
+function speakWord(e) {
+  if (e) e.stopPropagation();
+  if (!window.speechSynthesis) return;
+  var utt = new SpeechSynthesisUtterance(WORDS[fcIdx].word);
+  utt.lang = 'es-ES'; utt.rate = 0.9;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(utt);
+}
+var mastered = false;
+var fcSeen = new Set();
+var completedRounds = 0;
+showCard(0);
+checkMastered();
+</script>
+
+<div style="margin-top:24px;border-top:1px solid var(--hairline);padding-top:20px">
+  <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">My notes &amp; examples</div>
+  <textarea id="my-notes-area" maxlength="500" placeholder="Write your own example sentence, a memory trick, or a note in your language…" style="width:100%;min-height:80px;padding:10px 12px;font-family:Georgia,serif;font-size:.88rem;color:var(--ink);background:var(--paper);border:1.5px solid var(--hairline);border-radius:6px;resize:vertical;line-height:1.6;box-sizing:border-box"></textarea>
+  <div style="font-family:var(--font-sans);font-size:.65rem;color:var(--muted);margin-top:4px;text-align:right"><span id="notes-chars">0</span>/500 · auto-saved</div>
+</div>
+<script>
+(function(){
+  var ta = document.getElementById('my-notes-area');
+  var cc = document.getElementById('notes-chars');
+  if (!ta) return;
+  var KEY = 'wp_notes_a1_cooking';
+  try { ta.value = localStorage.getItem(KEY) || ''; cc.textContent = ta.value.length; } catch(e){}
+  var t;
+  ta.addEventListener('input', function() {
+    cc.textContent = ta.value.length;
+    clearTimeout(t);
+    t = setTimeout(function() {
+      try { localStorage.setItem(KEY, ta.value); } catch(e) {}
+    }, 600);
+  });
+})();
+</script>
 </body>
 </html>

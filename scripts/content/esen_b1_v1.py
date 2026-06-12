@@ -1,0 +1,96 @@
+# -*- coding: utf-8 -*-
+"""espanol-en B1 vocabulary — batch 1 (V1-V6, 12 words each)."""
+
+CHAPTERS = {
+
+'cooking': dict(num='V1', short='Cooking', words=[
+  ('asar', 'aˈsar', 'to roast', 'Vamos a <b>asar</b> un pollo para la comida del domingo.'),
+  ('picar', 'piˈkar', 'to chop finely', 'Hay que <b>picar</b> la cebolla muy fina.'),
+  ('aliñar', 'aliˈɲar', 'to dress (a salad)', 'Voy a <b>aliñar</b> la ensalada con aceite y vinagre.'),
+  ('la masa', 'ˈmasa', 'dough', 'Deja reposar la <b>masa</b> media hora.'),
+  ('la harina', 'aˈrina', 'flour', 'Necesitamos <b>harina</b> para hacer el bizcocho.'),
+  ('el sabor', 'saˈβor', 'flavour, taste', 'Esta salsa tiene un <b>sabor</b> muy intenso.'),
+  ('sabroso', 'saˈβroso', 'tasty', 'El guiso de tu abuela está muy <b>sabroso</b>.'),
+  ('soso', 'ˈsoso', 'bland, lacking salt', 'El arroz está un poco <b>soso</b> — ponle sal.'),
+  ('la olla', 'ˈoʎa', 'pot, saucepan', 'Pon las lentejas en la <b>olla</b> grande.'),
+  ('congelar', 'konxeˈlar', 'to freeze', 'Puedes <b>congelar</b> el pan que sobre.'),
+  ('calentar', 'kalenˈtar', 'to heat up', 'Voy a <b>calentar</b> la sopa en el microondas.'),
+  ('a fuego lento', 'a ˈfweɣo ˈlento', 'on a low heat', 'Cocina la salsa <b>a fuego lento</b> veinte minutos.'),
+]),
+
+'feelings-emotions': dict(num='V2', short='Feelings & Emotions', words=[
+  ('avergonzado', 'aβerɣonˈθaðo', 'embarrassed, ashamed', 'Me sentí <b>avergonzado</b> por llegar tan tarde.'),
+  ('decepcionado', 'deθepθjoˈnaðo', 'disappointed', 'Estoy <b>decepcionado</b> con el final de la serie.'),
+  ('agobiado', 'aɣoˈβjaðo', 'overwhelmed, stressed', 'Está <b>agobiado</b> con tanto trabajo.'),
+  ('animado', 'aniˈmaðo', 'cheerful, lively', 'Hoy te veo muy <b>animado</b>.'),
+  ('deprimido', 'depriˈmiðo', 'depressed', 'Después de la mudanza estaba un poco <b>deprimido</b>.'),
+  ('la esperanza', 'espeˈranθa', 'hope', 'Nunca hay que perder la <b>esperanza</b>.'),
+  ('echar de menos', 'eˈtʃar de ˈmenos', 'to miss (someone)', 'Voy a <b>echar de menos</b> a mis amigos del pueblo.'),
+  ('estar harto de', 'esˈtar ˈarto ðe', 'to be fed up with', 'Estoy <b>harto de</b> esperar el autobús cada mañana.'),
+  ('la confianza', 'konˈfjanθa', 'trust, confidence', 'La <b>confianza</b> se gana poco a poco.'),
+  ('el estado de ánimo', 'esˈtaðo ðe ˈanimo', 'mood', 'La música cambia mi <b>estado de ánimo</b>.'),
+  ('sentirse a gusto', 'senˈtirse a ˈɣusto', 'to feel at ease', 'En esta ciudad me <b>siento a gusto</b>.'),
+  ('la ilusión', 'iluˈsjon', 'excitement, hopeful joy (false friend!)', 'Me hace mucha <b>ilusión</b> tu visita.'),
+]),
+
+'health-and-body': dict(num='V3', short='Health & Body', words=[
+  ('la herida', 'eˈriða', 'wound, injury', 'Hay que limpiar bien la <b>herida</b>.'),
+  ('la quemadura', 'kemaˈðura', 'burn', 'Esa <b>quemadura</b> necesita agua fría inmediatamente.'),
+  ('marearse', 'mareˈarse', 'to feel dizzy / get travel-sick', 'Siempre me <b>mareo</b> en los viajes largos en coche.'),
+  ('la tensión', 'tenˈsjon', 'blood pressure', 'El médico me tomó la <b>tensión</b>.'),
+  ('el análisis de sangre', 'aˈnalisis ðe ˈsangre', 'blood test', 'Mañana me hacen un <b>análisis de sangre</b> en ayunas.'),
+  ('la receta médica', 'reˈθeta ˈmeðika', 'prescription', 'Sin <b>receta médica</b> no venden este medicamento.'),
+  ('vacunarse', 'bakuˈnarse', 'to get vaccinated', 'Hay que <b>vacunarse</b> antes de viajar a algunos países.'),
+  ('el seguro médico', 'seˈɣuro ˈmeðiko', 'health insurance', 'El <b>seguro médico</b> cubre las urgencias.'),
+  ('las urgencias', 'urˈxenθjas', 'A&E, emergency room', 'Lo llevaron a <b>urgencias</b> con mucha fiebre.'),
+  ('torcerse el tobillo', 'torˈθerse el toˈβiʎo', 'to sprain your ankle', 'Me <b>torcí el tobillo</b> jugando al baloncesto.'),
+  ('la radiografía', 'raðjoɣraˈfia', 'X-ray', 'La <b>radiografía</b> muestra que no hay fractura.'),
+  ('embarazada', 'embaraˈθaða', 'pregnant (false friend!)', 'Mi hermana está <b>embarazada</b> de cinco meses.'),
+]),
+
+'music': dict(num='V4', short='Music', words=[
+  ('componer', 'kompoˈner', 'to compose', 'Empezó a <b>componer</b> canciones a los quince años.'),
+  ('ensayar', 'ensaˈʝar', 'to rehearse', 'El grupo tiene que <b>ensayar</b> antes del concierto.'),
+  ('la gira', 'ˈxira', 'tour', 'La banda está de <b>gira</b> por Latinoamérica.'),
+  ('el estreno', 'esˈtreno', 'premiere, debut', 'El <b>estreno</b> del musical es este viernes.'),
+  ('la actuación', 'aktwaˈθjon', 'performance', 'Su <b>actuación</b> en directo fue impresionante.'),
+  ('el público', 'ˈpuβliko', 'audience', 'El <b>público</b> cantó todas las canciones.'),
+  ('en directo', 'en diˈrekto', 'live', 'Prefiero escuchar la música <b>en directo</b>.'),
+  ('la voz', 'ˈboθ', 'voice', 'Esa cantante tiene una <b>voz</b> única.'),
+  ('el éxito', 'ˈeksito', 'hit, success (false friend!)', 'Esta canción fue el gran <b>éxito</b> del verano.'),
+  ('el coro', 'ˈkoro', 'choir, chorus', 'Canto en el <b>coro</b> de mi barrio.'),
+  ('la entrada', 'enˈtraða', 'ticket (for a show)', 'Las <b>entradas</b> para el concierto se agotaron en una hora.'),
+  ('la melodía', 'meloˈðia', 'melody, tune', 'No recuerdo la letra, pero sí la <b>melodía</b>.'),
+]),
+
+'problems-solutions': dict(num='V5', short='Problems & Solutions', words=[
+  ('el malentendido', 'malentenˈdiðo', 'misunderstanding', 'Todo fue un <b>malentendido</b> — nadie tenía la culpa.'),
+  ('el lío', 'ˈlio', 'mess, muddle', '¡Qué <b>lío</b> con los horarios de los trenes!'),
+  ('la culpa', 'ˈkulpa', 'fault, blame', 'No fue <b>culpa</b> tuya — tranquilo.'),
+  ('disculparse', 'diskulˈparse', 'to apologise', 'Deberías <b>disculparte</b> con tu compañera.'),
+  ('el consejo', 'konˈsexo', 'piece of advice', 'Te voy a dar un <b>consejo</b>: habla con él.'),
+  ('aconsejar', 'akonseˈxar', 'to advise', 'Te <b>aconsejo</b> reservar con antelación.'),
+  ('la desventaja', 'desβenˈtaxa', 'disadvantage', 'La única <b>desventaja</b> del piso es el ruido.'),
+  ('solucionar', 'soluθjoˈnar', 'to solve, sort out', 'Vamos a <b>solucionar</b> este problema hoy mismo.'),
+  ('el riesgo', 'ˈrjesɣo', 'risk', 'No quiero correr ese <b>riesgo</b>.'),
+  ('evitar', 'eβiˈtar', 'to avoid', 'Sal pronto para <b>evitar</b> el tráfico.'),
+  ('enfrentarse a', 'enfrenˈtarse a', 'to face, confront', 'Hay que <b>enfrentarse a</b> los problemas con calma.'),
+  ('el reto', 'ˈreto', 'challenge', 'Aprender chino es todo un <b>reto</b>.'),
+]),
+
+'school-subjects': dict(num='V6', short='School Subjects', words=[
+  ('la beca', 'ˈbeka', 'scholarship, grant', 'Consiguió una <b>beca</b> para estudiar en Salamanca.'),
+  ('el bachillerato', 'batʃiʎeˈrato', 'sixth form / high school diploma', 'Mi prima está terminando el <b>bachillerato</b>.'),
+  ('la carrera', 'kaˈrera', 'university degree (false friend!)', 'Estudió la <b>carrera</b> de Medicina en Granada.'),
+  ('matricularse', 'matrikuˈlarse', 'to enrol, register', 'Me voy a <b>matricular</b> en un curso de alemán.'),
+  ('la formación', 'formaˈθjon', 'training, education', 'La empresa ofrece <b>formación</b> a los nuevos empleados.'),
+  ('el título', 'ˈtitulo', 'degree, qualification', 'Colgó el <b>título</b> en la pared de su despacho.'),
+  ('los apuntes', 'aˈpuntes', 'class notes', '¿Me dejas tus <b>apuntes</b> de historia?'),
+  ('repasar', 'repaˈsar', 'to revise, review', 'Tengo que <b>repasar</b> los verbos antes del examen.'),
+  ('el trimestre', 'triˈmestre', 'term', 'Este <b>trimestre</b> tenemos tres exámenes.'),
+  ('la optativa', 'optaˈtiβa', 'optional subject, elective', 'Elegí francés como <b>optativa</b>.'),
+  ('la conferencia', 'konfeˈrenθja', 'lecture, talk (false friend!)', 'Mañana hay una <b>conferencia</b> sobre Cervantes.'),
+  ('sacar buenas notas', 'saˈkar ˈbwenas ˈnotas', 'to get good marks', 'Si estudias cada día, vas a <b>sacar buenas notas</b>.'),
+]),
+
+}

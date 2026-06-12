@@ -1,0 +1,96 @@
+# -*- coding: utf-8 -*-
+"""espanol-en B1 vocabulary — batch 2 (V7-V12, 12 words each)."""
+
+CHAPTERS = {
+
+'shopping-and-money': dict(num='V7', short='Shopping & Money', words=[
+  ('ahorrar', 'aoˈrar', 'to save (money)', 'Quiero <b>ahorrar</b> para comprarme una bici.'),
+  ('el préstamo', 'ˈprestamo', 'loan', 'Pidieron un <b>préstamo</b> para reformar la casa.'),
+  ('pedir prestado', 'peˈðir presˈtaðo', 'to borrow', '¿Te puedo <b>pedir prestado</b> el cargador?'),
+  ('la cuenta', 'ˈkwenta', 'account; the bill', 'Camarero, la <b>cuenta</b>, por favor.'),
+  ('la factura', 'fakˈtura', 'bill, invoice', 'La <b>factura</b> de la luz ha subido otra vez.'),
+  ('el cajero automático', 'kaˈxero awtoˈmatiko', 'cash machine, ATM', 'Saqué dinero del <b>cajero automático</b> de la esquina.'),
+  ('el escaparate', 'eskapaˈrate', 'shop window', 'Vi el vestido en el <b>escaparate</b> y entré.'),
+  ('hacer cola', 'aˈθer ˈkola', 'to queue', 'Tuvimos que <b>hacer cola</b> media hora en las rebajas.'),
+  ('el reembolso', 'reemˈbolso', 'refund', 'Pedí el <b>reembolso</b> porque el pedido llegó roto.'),
+  ('la garantía', 'ɣaranˈtia', 'warranty, guarantee', 'El portátil tiene dos años de <b>garantía</b>.'),
+  ('la marca', 'ˈmarka', 'brand', 'No me importa la <b>marca</b>, solo la calidad.'),
+  ('de segunda mano', 'de seˈɣunda ˈmano', 'second-hand', 'Compré la bici <b>de segunda mano</b> por internet.'),
+]),
+
+'sports': dict(num='V8', short='Sports', words=[
+  ('el árbitro', 'ˈarβitro', 'referee', 'El <b>árbitro</b> pitó penalti en el último minuto.'),
+  ('la liga', 'ˈliɣa', 'league', 'Su equipo va primero en la <b>liga</b>.'),
+  ('empatar', 'empaˈtar', 'to draw, tie', 'Los dos equipos <b>empataron</b> a dos goles.'),
+  ('la temporada', 'tempoˈraða', 'season', 'La <b>temporada</b> de fútbol empieza en agosto.'),
+  ('lesionarse', 'lesjoˈnarse', 'to get injured', 'Se <b>lesionó</b> la rodilla en el entrenamiento.'),
+  ('el aficionado', 'afiθjoˈnaðo', 'fan, supporter', 'Los <b>aficionados</b> llenaron el estadio.'),
+  ('batir un récord', 'baˈtir un ˈrekorð', 'to break a record', 'La nadadora volvió a <b>batir un récord</b> mundial.'),
+  ('el vestuario', 'besˈtwarjo', 'changing room', 'El equipo celebró la victoria en el <b>vestuario</b>.'),
+  ('la medalla', 'meˈðaʎa', 'medal', 'Ganó la <b>medalla</b> de plata en los Juegos.'),
+  ('el torneo', 'torˈneo', 'tournament', 'Se apuntaron al <b>torneo</b> de pádel del barrio.'),
+  ('la carrera', 'kaˈrera', 'race', 'Corrió la <b>carrera</b> de diez kilómetros en cuarenta minutos.'),
+  ('el rival', 'riˈβal', 'opponent, rival', 'El <b>rival</b> de mañana es muy fuerte.'),
+]),
+
+'technology-and-media': dict(num='V9', short='Technology & Media', words=[
+  ('el enlace', 'enˈlaθe', 'link', 'Te mando el <b>enlace</b> del artículo por correo.'),
+  ('compartir', 'komparˈtir', 'to share', 'No <b>compartas</b> tus datos personales en internet.'),
+  ('el perfil', 'perˈfil', 'profile', 'Cambié la foto de mi <b>perfil</b>.'),
+  ('las redes sociales', 'ˈreðes soˈθjales', 'social media', 'Pasa demasiado tiempo en las <b>redes sociales</b>.'),
+  ('el titular', 'tituˈlar', 'headline', 'Solo leí el <b>titular</b>, no la noticia entera.'),
+  ('la prensa', 'ˈprensa', 'the press', 'La <b>prensa</b> publicó la noticia esta mañana.'),
+  ('el periodista', 'perjoˈðista', 'journalist', 'La <b>periodista</b> entrevistó a la ministra.'),
+  ('la publicidad', 'puβliθiˈðað', 'advertising', 'Hay demasiada <b>publicidad</b> en esta página.'),
+  ('el anuncio', 'aˈnunθjo', 'advert, announcement', 'Ese <b>anuncio</b> de televisión es muy gracioso.'),
+  ('la copia de seguridad', 'ˈkopja ðe seɣuriˈðað', 'backup', 'Haz una <b>copia de seguridad</b> antes de actualizar.'),
+  ('actualizar', 'aktwaliˈθar', 'to update', 'Tengo que <b>actualizar</b> el sistema del móvil.'),
+  ('borrar', 'boˈrar', 'to delete', 'Sin querer <b>borré</b> todas las fotos del viaje.'),
+]),
+
+'transport-and-travel': dict(num='V10', short='Transport & Travel', words=[
+  ('el alojamiento', 'aloxaˈmjento', 'accommodation', 'El precio incluye vuelo y <b>alojamiento</b>.'),
+  ('la aduana', 'aˈðwana', 'customs', 'En la <b>aduana</b> revisaron todas las maletas.'),
+  ('hacer escala', 'aˈθer esˈkala', 'to have a stopover', 'El vuelo <b>hace escala</b> en Lisboa.'),
+  ('el embarque', 'emˈbarke', 'boarding', 'La puerta de <b>embarque</b> cambia a menudo.'),
+  ('el atasco', 'aˈtasko', 'traffic jam', 'Llegamos tarde por un <b>atasco</b> enorme.'),
+  ('la autopista', 'awtoˈpista', 'motorway', 'Por la <b>autopista</b> se tarda una hora menos.'),
+  ('el peaje', 'peˈaxe', 'toll', 'Esta <b>autopista</b> tiene tres <b>peajes</b>.'),
+  ('el seguro de viaje', 'seˈɣuro ðe ˈbjaxe', 'travel insurance', 'Contrata un <b>seguro de viaje</b> antes de salir.'),
+  ('el albergue', 'alˈβerɣe', 'hostel', 'Dormimos en un <b>albergue</b> del Camino de Santiago.'),
+  ('recorrer', 'rekoˈrer', 'to travel around', 'Queremos <b>recorrer</b> Andalucía en coche.'),
+  ('el trayecto', 'traˈʝekto', 'journey, route', 'El <b>trayecto</b> en tren dura dos horas.'),
+  ('la excursión', 'ekskurˈsjon', 'day trip, excursion', 'Hicimos una <b>excursión</b> a Toledo.'),
+]),
+
+'weather-detail': dict(num='V11', short='Weather in Detail', words=[
+  ('el chubasco', 'tʃuˈβasko', 'sudden downpour', 'Por la tarde habrá <b>chubascos</b> en el norte.'),
+  ('la sequía', 'seˈkia', 'drought', 'La <b>sequía</b> ha dejado los embalses vacíos.'),
+  ('la inundación', 'inundaˈθjon', 'flood', 'Las lluvias causaron <b>inundaciones</b> en el sur.'),
+  ('la borrasca', 'boˈraska', 'storm front, low pressure', 'Se acerca una <b>borrasca</b> por el Atlántico.'),
+  ('el anticiclón', 'antiθiˈklon', 'high pressure, anticyclone', 'El <b>anticiclón</b> trae días soleados y estables.'),
+  ('la racha de viento', 'ˈratʃa ðe ˈbjento', 'gust of wind', 'Hubo <b>rachas de viento</b> de cien kilómetros por hora.'),
+  ('nublarse', 'nuˈβlarse', 'to cloud over', 'Por la tarde se <b>nubló</b> de repente.'),
+  ('escampar', 'eskamˈpar', 'to stop raining', 'Esperamos en el bar hasta que <b>escampó</b>.'),
+  ('el clima', 'ˈklima', 'climate', 'El <b>clima</b> mediterráneo es suave en invierno.'),
+  ('bajo cero', 'ˈbaxo ˈθero', 'below zero', 'Esta noche las temperaturas bajarán <b>bajo cero</b>.'),
+  ('templado', 'temˈplaðo', 'mild', 'La primavera aquí es <b>templada</b> y agradable.'),
+  ('el arcoíris', 'arkoˈiris', 'rainbow', 'Después de la tormenta salió un <b>arcoíris</b> precioso.'),
+]),
+
+'work-and-jobs': dict(num='V12', short='Work & Jobs', words=[
+  ('el puesto', 'ˈpwesto', 'position, post', 'Solicitó un <b>puesto</b> de responsable de ventas.'),
+  ('el ascenso', 'asˈθenso', 'promotion', 'Le dieron el <b>ascenso</b> después de cinco años.'),
+  ('la jornada laboral', 'xorˈnaða laβoˈral', 'working day/hours', 'La <b>jornada laboral</b> aquí es de ocho horas.'),
+  ('a tiempo completo', 'a ˈtjempo komˈpleto', 'full-time', 'Busca un trabajo <b>a tiempo completo</b>.'),
+  ('la plantilla', 'planˈtiʎa', 'staff, workforce', 'La <b>plantilla</b> de la fábrica es de doscientas personas.'),
+  ('el sindicato', 'sindiˈkato', 'trade union', 'El <b>sindicato</b> negocia el nuevo convenio.'),
+  ('la huelga', 'ˈwelɣa', 'strike', 'Los conductores están en <b>huelga</b> esta semana.'),
+  ('jubilarse', 'xuβiˈlarse', 'to retire', 'Mi padre se <b>jubila</b> el año que viene.'),
+  ('el contrato', 'konˈtrato', 'contract', 'Firmó un <b>contrato</b> de seis meses.'),
+  ('dimitir', 'dimiˈtir', 'to resign', 'Decidió <b>dimitir</b> y montar su propia empresa.'),
+  ('las prácticas', 'ˈpraktikas', 'internship, work placement', 'Hizo las <b>prácticas</b> en una agencia de viajes.'),
+  ('la experiencia laboral', 'ekspeˈrjenθja laβoˈral', 'work experience', 'Piden dos años de <b>experiencia laboral</b>.'),
+]),
+
+}

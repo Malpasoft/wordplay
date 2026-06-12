@@ -1,17 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Game | Word Play</title>
+<title>Conditional Clauses — Oraciones con Si — B1 Grammar Game | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
 </head>
 <body>
-<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">◐ Dark</button></div></header>
-<div class="section-page"><p>Game coming soon.</p></div>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>&#8250;</span>
+  <a href="../../../../espanol-en/index.html">Spanish</a><span>&#8250;</span>
+  <a href="../../index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Grammar</a><span>&#8250;</span>
+  <a href="index.html">Conditional Clauses</a><span>&#8250;</span>
+  <strong>Game</strong>
+</div>
+<div class="container">
+  <h1>Conditional Clauses — Mastery Game</h1>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Practice</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  <a href="printables.html" class="chapter-nav-btn">Printables</a>
+</nav>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Dominio Mastery</h2>
+        <p>Each conditional pattern passes through three question types: meaning, context and production. Reach 100 points to win.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved session.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You have completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Worksheet</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Spanish B1 &middot; Game</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: 'conditional-clauses',
+  level: 'b1',
+  title: "Conditional Clauses — Oraciones con Si",
+  storageKey: 'wordplay_game_es_b1_conditional-clauses',
+  items: [
+    {id:"si", term:"si", meaning:"if - no accent, unlike sí meaning yes", synonym:"condition marker", example:"<b>Si</b> llueve, no salimos.", completion:"______ llueve, no salimos. (if)", answer:"si"},
+    {id:"si-llueve", term:"si llueve", meaning:"if it rains - real condition with the present tense", synonym:"real condition", example:"<b>Si llueve</b>, nos quedamos en casa.", completion:"Si ______, nos quedamos en casa. (it rains)", answer:"llueve"},
+    {id:"aprobaras", term:"aprobarás", meaning:"you will pass - the future result of a real condition", synonym:"future result", example:"Si estudias, <b>aprobarás</b>.", completion:"Si estudias, ______. (you will pass)", answer:"aprobarás"},
+    {id:"tuviera", term:"tuviera", meaning:"had - imperfect subjunctive of tener", synonym:"unreal \"had\"", example:"Si <b>tuviera</b> tiempo, viajaría más.", completion:"Si ______ tiempo, viajaría más. (I had)", answer:"tuviera"},
+    {id:"fuera", term:"fuera", meaning:"were - imperfect subjunctive of ser", synonym:"unreal \"were\"", example:"Si <b>fuera</b> rico, compraría una casa.", completion:"Si ______ rico, compraría una casa. (I were)", answer:"fuera"},
+    {id:"pudiera", term:"pudiera", meaning:"could - imperfect subjunctive of poder", synonym:"unreal \"could\"", example:"Si <b>pudiera</b>, te ayudaría.", completion:"Si ______, te ayudaría. (I could)", answer:"pudiera"},
+    {id:"hiciera", term:"hiciera", meaning:"did or made - imperfect subjunctive of hacer", synonym:"unreal \"did\"", example:"Si <b>hiciera</b> sol, iríamos a la playa.", completion:"Si ______ sol, iríamos a la playa. (it were sunny)", answer:"hiciera"},
+    {id:"viajaria", term:"viajaría", meaning:"I would travel - the conditional result of an unreal condition", synonym:"conditional result", example:"Si tuviera dinero, <b>viajaría</b> por todo el mundo.", completion:"Si tuviera dinero, ______ por todo el mundo. (I would travel)", answer:"viajaría"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
 </body>
 </html>
