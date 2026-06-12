@@ -26,7 +26,21 @@ import unicodedata
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FC_TPL = os.path.join(ROOT, 'espanol-en/a1/vocabulary/animals')
 G_TPL = os.path.join(ROOT, 'espanol-en/a2/grammar/past-simple')
+LEVEL = 'a2'  # overridable via --level b1|b2
 OUT = os.path.join(ROOT, 'espanol-en/a2/vocabulary')
+
+
+def lvl_fix(s):
+    """Swap the grammar template's A2 markers for the target level."""
+    if LEVEL == 'a2':
+        return s
+    lv = LEVEL.upper()
+    s = s.replace('espanol-en/a2/index.html', f'espanol-en/{LEVEL}/index.html')
+    s = s.replace('>A2</a>', f'>{lv}</a>')
+    s = s.replace('Spanish A2', f'Spanish {lv}')
+    s = s.replace('A2 Grammar', f'{lv} Vocabulary')
+    s = s.replace('Grammar A2', f'Vocabulary {lv}')
+    return s
 
 
 def deacc(s):
@@ -133,9 +147,9 @@ def render(slug, d):
     # flashcards from animals template
     s = open(os.path.join(FC_TPL, 'flashcards.html'), encoding='utf-8').read()
     s = s.replace('Animals', short).replace('animals', slug)
-    s = s.replace("var LEVEL = 'a1';", "var LEVEL = 'a2';")
-    s = s.replace('>A1</a>', '>A2</a>')
-    s = s.replace('Spanish A1', 'Spanish A2')
+    s = s.replace("var LEVEL = 'a1';", f"var LEVEL = '{LEVEL}';")
+    s = s.replace('>A1</a>', f'>{LEVEL.upper()}</a>')
+    s = s.replace('Spanish A1', f'Spanish {LEVEL.upper()}')
     s = s.replace('<div class="chapter-num">V3</div>', f'<div class="chapter-num">{num}</div>')
     words_js = jd([{'word': w, 'ipa': ipa, 'def': df, 'ex': ex} for w, ipa, df, ex in words])
     s = seg_replace(s, 'var WORDS = ', ';\n', words_js)
@@ -144,9 +158,9 @@ def render(slug, d):
     # slides from animals template (simple intro deck + word groups)
     s = open(os.path.join(FC_TPL, 'slides.html'), encoding='utf-8').read()
     s = s.replace('Animals', short).replace('animals', slug)
-    s = s.replace('window.LEVEL="a1"', 'window.LEVEL="a2"')
-    s = s.replace('>A1</a>', '>A2</a>')
-    s = s.replace('Spanish A1', 'Spanish A2')
+    s = s.replace('window.LEVEL="a1"', f'window.LEVEL="{LEVEL}"')
+    s = s.replace('>A1</a>', f'>{LEVEL.upper()}</a>')
+    s = s.replace('Spanish A1', f'Spanish {LEVEL.upper()}')
     s = s.replace('<div class="chapter-num">V3</div>', f'<div class="chapter-num">{num}</div>')
     half = (len(words) + 1) // 2
     def word_rows(chunk):
@@ -191,9 +205,9 @@ def render(slug, d):
     s = seg_replace(s, '<form id="worksheet">', '</form>', form)
     s = seg_replace(s, '<div id="results" class="results-panel" style="display:none"></div>\n<script>',
                     '</script>\n<script src="../../../../shared/i18n.js',
-                    f"\nwindow.CHAPTER_ID = '{slug}';\nwindow.LEVEL = 'a2';\n"
+                    f"\nwindow.CHAPTER_ID = '{slug}';\nwindow.LEVEL = '{LEVEL}';\n"
                     f"window.SECTION = 'vocabulary';\n" + cfg)
-    open(os.path.join(out_dir, 'worksheet.html'), 'w', encoding='utf-8').write(s)
+    open(os.path.join(out_dir, 'worksheet.html'), 'w', encoding='utf-8').write(lvl_fix(s))
 
     # game from grammar template
     s = open(os.path.join(G_TPL, 'game.html'), encoding='utf-8').read()
@@ -203,13 +217,13 @@ def render(slug, d):
     s = s.replace('<h1>Past Simple — Mastery Game</h1>', f'<h1>{short} — Mastery Game</h1>')
     s = s.replace('Each preterite form passes through three question types: meaning, context and production. Reach 100 points to win.',
                   'Each word passes through three question types: meaning, context and production. Reach 100 points to win.')
-    gd = (f"\nwindow.GAME_DATA = {{\n  chapterId: '{slug}',\n  level: 'a2',\n"
+    gd = (f"\nwindow.GAME_DATA = {{\n  chapterId: '{slug}',\n  level: '{LEVEL}',\n"
           f"  title: {jd(short + ' — Vocabulary')},\n"
-          f"  storageKey: 'wordplay_game_es_a2_{slug}',\n  items: [\n{build_game_items(words)}\n  ]\n}};\n")
+          f"  storageKey: 'wordplay_game_es_{LEVEL}_{slug}',\n  items: [\n{build_game_items(words)}\n  ]\n}};\n")
     s = seg_replace(s, '&middot; Game</footer>\n<script>',
                     '</script>\n<script src="../../../../shared/i18n.js', gd)
     s = s.replace("'past-simple'", f"'{slug}'")
-    open(os.path.join(out_dir, 'game.html'), 'w', encoding='utf-8').write(s)
+    open(os.path.join(out_dir, 'game.html'), 'w', encoding='utf-8').write(lvl_fix(s))
 
     # hub: just clear the Coming soon marker
     hub_p = os.path.join(out_dir, 'index.html')
@@ -226,6 +240,12 @@ def render(slug, d):
 
 
 def main():
+    global LEVEL, OUT
+    if '--level' in sys.argv:
+        i = sys.argv.index('--level')
+        LEVEL = sys.argv[i + 1]
+        del sys.argv[i:i + 2]
+        OUT = os.path.join(ROOT, f'espanol-en/{LEVEL}/vocabulary')
     spec = importlib.util.spec_from_file_location('content', sys.argv[1])
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)

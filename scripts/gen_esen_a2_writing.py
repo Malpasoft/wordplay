@@ -20,6 +20,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, 'scripts'))
 import gen_esen_a2 as G  # noqa: E402
 
+LEVEL = 'a2'  # overridable via --level b1|b2
 OUT = os.path.join(ROOT, 'espanol-en/a2/writing')
 PRINT_TPL = os.path.join(ROOT, 'espanol-en/a1/writing/personal-introduction/printables.html')
 
@@ -34,7 +35,7 @@ PRINTABLES_CARD = '''    <a href="printables.html" class="activity-card" data-ac
 def build_printables(d):
     s = open(PRINT_TPL, encoding='utf-8').read()
     s = s.replace('Personal Introduction', d['short'])
-    s = s.replace('Spanish A1', 'Spanish A2')
+    s = s.replace('Spanish A1', f'Spanish {LEVEL.upper()}')
     rows = '\n'.join(
         f'<div class="ref-row"><span class="ref-label">{l}</span><span>{t}</span></div>'
         for l, t in d['ref_rows'])
@@ -52,6 +53,13 @@ def build_printables(d):
 
 
 def main():
+    global LEVEL, OUT
+    if '--level' in sys.argv:
+        i = sys.argv.index('--level')
+        LEVEL = sys.argv[i + 1]
+        del sys.argv[i:i + 2]
+        OUT = os.path.join(ROOT, f'espanol-en/{LEVEL}/writing')
+        G.LEVEL = LEVEL
     spec = importlib.util.spec_from_file_location('content', sys.argv[1])
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)

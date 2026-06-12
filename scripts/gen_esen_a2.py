@@ -31,7 +31,21 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 TPL_DIR = os.path.join(ROOT, 'espanol-en/a2/grammar/past-simple')
+LEVEL = 'a2'  # overridable via --level b1|b2 (template stays the a2 chapter)
 OUT_BASE = os.path.join(ROOT, 'espanol-en/a2/grammar')
+
+
+def lvl_fix(s):
+    """Swap the template's A2 level markers for the target level."""
+    if LEVEL == 'a2':
+        return s
+    lv = LEVEL.upper()
+    s = s.replace('espanol-en/a2/index.html', f'espanol-en/{LEVEL}/index.html')
+    s = s.replace('>A2</a>', f'>{lv}</a>')
+    s = s.replace('Spanish A2', f'Spanish {lv}')
+    s = s.replace('A2 Grammar', f'{lv} Grammar')
+    s = s.replace('Grammar A2', f'Grammar {lv}')
+    return s
 
 
 def esc(s):
@@ -127,7 +141,7 @@ def build_ws_config(slug, d, total):
     titles = (f'{{ex1:{json.dumps("Exercise 1 - " + d["ex1"][0])},'
               f'ex2:{json.dumps("Exercise 2 - " + d["ex2"][0])},'
               f'ex3:{json.dumps("Exercise 3 - " + d["ex3"][0])}}}')
-    return (f"\nwindow.CHAPTER_ID = '{slug}';\nwindow.LEVEL = 'a2';\n"
+    return (f"\nwindow.CHAPTER_ID = '{slug}';\nwindow.LEVEL = '{LEVEL}';\n"
             f"window.SECTION = 'grammar';\nwindow.TOTAL_POINTS = {total};\n"
             f"window.ANSWERS = {{\n{answers}\n}};\n"
             f"window.EXPLANATIONS = {{\n{expl_js}\n}};\n"
@@ -139,9 +153,9 @@ def build_game_data(slug, d):
         '    {id:%s, term:%s, meaning:%s, synonym:%s, example:%s, completion:%s, answer:%s}' % tuple(
             json.dumps(v, ensure_ascii=False) for v in it)
         for it in d['items'])
-    return (f"\nwindow.GAME_DATA = {{\n  chapterId: '{slug}',\n  level: 'a2',\n"
+    return (f"\nwindow.GAME_DATA = {{\n  chapterId: '{slug}',\n  level: '{LEVEL}',\n"
             f"  title: {json.dumps(d['title'], ensure_ascii=False)},\n"
-            f"  storageKey: 'wordplay_game_es_a2_{slug}',\n  items: [\n{items}\n  ]\n}};\n")
+            f"  storageKey: 'wordplay_game_es_{LEVEL}_{slug}',\n  items: [\n{items}\n  ]\n}};\n")
 
 
 def seg_replace(s, start, end, new, incl=False):
@@ -175,7 +189,7 @@ def render(slug, d):
                   f'<p class="chapter-subtitle">{d["subtitle"]}</p>')
     s = seg_replace(s, '<div class="slide-deck" id="slide-deck">',
                     '</div>\n<div class="deck-nav">', build_slides(d) + '\n')
-    open(os.path.join(out_dir, 'slides.html'), 'w', encoding='utf-8').write(s)
+    open(os.path.join(out_dir, 'slides.html'), 'w', encoding='utf-8').write(lvl_fix(s))
 
     # worksheet
     form, total = build_form(d)
@@ -186,7 +200,7 @@ def render(slug, d):
     s = seg_replace(s, '<div id="results" class="results-panel" style="display:none"></div>\n<script>',
                     '</script>\n<script src="../../../../shared/i18n.js',
                     build_ws_config(slug, d, total))
-    open(os.path.join(out_dir, 'worksheet.html'), 'w', encoding='utf-8').write(s)
+    open(os.path.join(out_dir, 'worksheet.html'), 'w', encoding='utf-8').write(lvl_fix(s))
 
     # game
     s = common(tpl['game.html'])
@@ -196,11 +210,11 @@ def render(slug, d):
     s = seg_replace(s, '&middot; Game</footer>\n<script>',
                     '</script>\n<script src="../../../../shared/i18n.js',
                     build_game_data(slug, d))
-    open(os.path.join(out_dir, 'game.html'), 'w', encoding='utf-8').write(s)
+    open(os.path.join(out_dir, 'game.html'), 'w', encoding='utf-8').write(lvl_fix(s))
 
     # hub
     s = common(tpl['index.html'])
-    open(os.path.join(out_dir, 'index.html'), 'w', encoding='utf-8').write(s)
+    open(os.path.join(out_dir, 'index.html'), 'w', encoding='utf-8').write(lvl_fix(s))
 
     # remove stub flashcards.html (grammar chapters have none)
     fc = os.path.join(out_dir, 'flashcards.html')
@@ -218,6 +232,12 @@ def render(slug, d):
 
 
 def main():
+    global LEVEL, OUT_BASE
+    if '--level' in sys.argv:
+        i = sys.argv.index('--level')
+        LEVEL = sys.argv[i + 1]
+        del sys.argv[i:i + 2]
+        OUT_BASE = os.path.join(ROOT, f'espanol-en/{LEVEL}/grammar')
     mod_path = sys.argv[1]
     spec = importlib.util.spec_from_file_location('content', mod_path)
     mod = importlib.util.module_from_spec(spec)
