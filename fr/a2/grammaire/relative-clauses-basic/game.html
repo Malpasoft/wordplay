@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Les relatives — Jeu A2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../fr/index.html">Anglais pour francophones</a><span>&#8250;</span>
+  <a href="../../index.html">A2</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">Les relatives</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Leçon</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+</nav>
+<div class="container">
+  <h1>Les relatives — Jeu de Maîtrise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Maîtrise</h2>
+        <p>Chaque pronom relatif passe par trois types de questions : sens, contexte et production. Atteins 100 points pour gagner.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Maîtrisés</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tu as une partie sauvegardée.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Commencer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Tous les éléments — référence</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Maîtrisé !</h2>
+        <p>Tu as terminé tous les éléments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure série</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Maîtrisés</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Anglais A2 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "relative-clauses-basic",
+  level: "a2",
+  title: "Les relatives — who, which, that",
+  storageKey: 'wordplay_game_a2_relative-clauses-basic',
+  items: [
+    {id:"who", term:"who", meaning:"qui — pour les personnes uniquement", synonym:"personnes", example:"The man <b>who</b> lives here is a doctor.", completion:"The man ______ lives here is a doctor. (qui)", answer:"who"},
+    {id:"which", term:"which", meaning:"qui/que — pour les choses et les animaux", synonym:"choses", example:"The book <b>which</b> is on the table is mine.", completion:"The book ______ is on the table is mine. (qui)", answer:"which"},
+    {id:"that", term:"that", meaning:"le joker — remplace who et which", synonym:"joker", example:"She's the singer <b>that</b> everyone loves.", completion:"She's the singer ______ everyone loves. (que)", answer:"that"},
+    {id:"who-speaks", term:"who + verbe-s", meaning:"accord — le verbe suit l'antécédent", synonym:"accord", example:"I have a friend who <b>speaks</b> four languages.", completion:"I have a friend who ______ four languages. (parle)", answer:"speaks"},
+    {id:"which-animal", term:"which (animaux)", meaning:"les animaux prennent which, pas who", synonym:"animaux", example:"The dog <b>which</b> barks all night is next door.", completion:"The dog ______ barks all night is next door. (qui)", answer:"which"},
+    {id:"no-double", term:"who (sans double sujet)", meaning:"who est déjà le sujet — pas de he/she en plus", synonym:"sujet unique", example:"The teacher who <b>helped</b> me has left.", completion:"The teacher who ______ me has left. (a aidé)", answer:"helped"},
+    {id:"omitted", term:"pronom objet omis", meaning:"le relatif objet peut disparaître", synonym:"omission", example:"The film <b>that</b> we watched was great.", completion:"The film ______ we watched was great. (que)", answer:"that"},
+    {id:"people-who", term:"the people who", meaning:"people est pluriel — verbe sans -s", synonym:"pluriel", example:"The people who <b>live</b> here are nice.", completion:"The people who ______ here are nice. (habitent)", answer:"live"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
