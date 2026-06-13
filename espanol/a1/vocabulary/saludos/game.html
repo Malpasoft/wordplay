@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Saludos y Despedidas — Juego | Espa&#241;ol A1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/a1/index.html">A1</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>Saludos y Despedidas</strong>
+</div>
+<div class="chapter-num">V01</div>
+<h1>Saludos y Despedidas</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="game-root"></div>
+<script>
+window.GAME_DATA = {
+  chapterId: "saludos",
+  level: "a1",
+  title: "Saludos y Despedidas",
+  storageKey: "wordplay_game_es_a1_saludos",
+  section: 'vocabulary',
+  items: [
+    {id:"hola", term:"hola", meaning:"expresión de saludo informal", synonym:"Espa&#241;ol para: expresión de saludo informal", example:"¡<b>Hola</b>! ¿Cómo estás?", completion:"¡______! ¿Cómo estás?", answer:"hola"},
+    {id:"buenos-dias", term:"buenos días", meaning:"saludo que se usa por la mañana", synonym:"Espa&#241;ol para: saludo que se usa por la mañana", example:"<b>Buenos días</b>, señora García.", completion:"______, señora García.", answer:"buenos días", accept:["buenos dias"]},
+    {id:"buenas-tardes", term:"buenas tardes", meaning:"saludo que se usa por la tarde", synonym:"Espa&#241;ol para: saludo que se usa por la tarde", example:"<b>Buenas tardes</b>, ¿en qué le puedo ayudar?", completion:"______, ¿en qué le puedo ayudar?", answer:"buenas tardes"},
+    {id:"buenas-noches", term:"buenas noches", meaning:"saludo o despedida que se usa por la noche", synonym:"Espa&#241;ol para: saludo o despedida que se usa por la noche", example:"<b>Buenas noches</b>, que descanse.", completion:"______, que descanse.", answer:"buenas noches"},
+    {id:"adios", term:"adiós", meaning:"expresión de despedida", synonym:"Espa&#241;ol para: expresión de despedida", example:"<b>Adiós</b>, nos vemos mañana.", completion:"______, nos vemos mañana.", answer:"adiós", accept:["adios"]},
+    {id:"hasta-luego", term:"hasta luego", meaning:"despedida informal que indica que nos veremos pronto", synonym:"Espa&#241;ol para: despedida informal que indica que nos veremos pronto", example:"<b>Hasta luego</b>, Juan.", completion:"______, Juan.", answer:"hasta luego"},
+    {id:"como-estas", term:"¿cómo estás?", meaning:"pregunta informal para saber el estado de alguien", synonym:"Espa&#241;ol para: pregunta informal para saber el estado de alguien", example:"<b>¿Cómo estás?</b> Hace tiempo que no te veo.", completion:"______ Hace tiempo que no te veo.", answer:"¿cómo estás?", accept:["¿como estas?"]},
+    {id:"como-te-llamas", term:"¿cómo te llamas?", meaning:"pregunta para saber el nombre de alguien", synonym:"Espa&#241;ol para: pregunta para saber el nombre de alguien", example:"<b>¿Cómo te llamas?</b> —Me llamo Ana.", completion:"______ —Me llamo Ana.", answer:"¿cómo te llamas?", accept:["¿como te llamas?"]}
+  ]
+};
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol A1 &middot; Vocabulario</footer>
+</body>
+</html>

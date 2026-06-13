@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Los Números — Juego | Espa&#241;ol A1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/a1/index.html">A1</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>Los Números</strong>
+</div>
+<div class="chapter-num">V02</div>
+<h1>Los Números</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="game-root"></div>
+<script>
+window.GAME_DATA = {
+  chapterId: "numeros",
+  level: "a1",
+  title: "Los Números",
+  storageKey: "wordplay_game_es_a1_numeros",
+  section: 'vocabulary',
+  items: [
+    {id:"uno", term:"uno", meaning:"número 1, la primera cifra natural", synonym:"Espa&#241;ol para: número 1, la primera cifra natural", example:"Tengo <b>uno</b> hermano pequeño.", completion:"Tengo ______ hermano pequeño.", answer:"uno"},
+    {id:"dos", term:"dos", meaning:"número 2, la segunda cifra natural", synonym:"Espa&#241;ol para: número 2, la segunda cifra natural", example:"Hay <b>dos</b> manzanas en la mesa.", completion:"Hay ______ manzanas en la mesa.", answer:"dos"},
+    {id:"tres", term:"tres", meaning:"número 3, la tercera cifra natural", synonym:"Espa&#241;ol para: número 3, la tercera cifra natural", example:"Son las <b>tres</b> de la tarde.", completion:"Son las ______ de la tarde.", answer:"tres"},
+    {id:"diez", term:"diez", meaning:"número 10, el resultado de sumar cinco y cinco", synonym:"Espa&#241;ol para: número 10, el resultado de sumar cinco y cinco", example:"El autobús llega en <b>diez</b> minutos.", completion:"El autobús llega en ______ minutos.", answer:"diez"},
+    {id:"veinte", term:"veinte", meaning:"número 20, el doble de diez", synonym:"Espa&#241;ol para: número 20, el doble de diez", example:"Tengo <b>veinte</b> años.", completion:"Tengo ______ años.", answer:"veinte"},
+    {id:"treinta", term:"treinta", meaning:"número 30, el triple de diez", synonym:"Espa&#241;ol para: número 30, el triple de diez", example:"Hay <b>treinta</b> alumnos en clase.", completion:"Hay ______ alumnos en clase.", answer:"treinta"},
+    {id:"cien", term:"cien", meaning:"número 100, diez veces diez", synonym:"Espa&#241;ol para: número 100, diez veces diez", example:"Esto cuesta <b>cien</b> euros.", completion:"Esto cuesta ______ euros.", answer:"cien"},
+    {id:"primero", term:"primero", meaning:"número ordinal que indica el primer lugar en una serie", synonym:"Espa&#241;ol para: número ordinal que indica el primer lugar en una serie", example:"Soy el <b>primero</b> de la fila.", completion:"Soy el ______ de la fila.", answer:"primero"}
+  ]
+};
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol A1 &middot; Vocabulario</footer>
+</body>
+</html>

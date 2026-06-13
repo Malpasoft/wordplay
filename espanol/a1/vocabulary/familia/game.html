@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>La Familia — Juego | Espa&#241;ol A1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/a1/index.html">A1</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>La Familia</strong>
+</div>
+<div class="chapter-num">V04</div>
+<h1>La Familia</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="game-root"></div>
+<script>
+window.GAME_DATA = {
+  chapterId: "familia",
+  level: "a1",
+  title: "La Familia",
+  storageKey: "wordplay_game_es_a1_familia",
+  section: 'vocabulary',
+  items: [
+    {id:"madre", term:"madre", meaning:"mujer que tiene hijos o ha dado a luz", synonym:"Espa&#241;ol para: mujer que tiene hijos o ha dado a luz", example:"Mi <b>madre</b> cocina muy bien.", completion:"Mi ______ cocina muy bien.", answer:"madre"},
+    {id:"padre", term:"padre", meaning:"hombre que tiene hijos", synonym:"Espa&#241;ol para: hombre que tiene hijos", example:"Mi <b>padre</b> trabaja en un hospital.", completion:"Mi ______ trabaja en un hospital.", answer:"padre"},
+    {id:"hermano", term:"hermano", meaning:"persona que tiene los mismos padres que otra", synonym:"Espa&#241;ol para: persona que tiene los mismos padres que otra", example:"Mi <b>hermano</b> tiene doce años.", completion:"Mi ______ tiene doce años.", answer:"hermano"},
+    {id:"hermana", term:"hermana", meaning:"mujer que tiene los mismos padres que otra", synonym:"Espa&#241;ol para: mujer que tiene los mismos padres que otra", example:"Mi <b>hermana</b> estudia medicina.", completion:"Mi ______ estudia medicina.", answer:"hermana"},
+    {id:"abuelo", term:"abuelo", meaning:"padre del padre o de la madre", synonym:"Espa&#241;ol para: padre del padre o de la madre", example:"Mi <b>abuelo</b> tiene ochenta años.", completion:"Mi ______ tiene ochenta años.", answer:"abuelo"},
+    {id:"abuela", term:"abuela", meaning:"madre del padre o de la madre", synonym:"Espa&#241;ol para: madre del padre o de la madre", example:"Mi <b>abuela</b> me enseña a cocinar.", completion:"Mi ______ me enseña a cocinar.", answer:"abuela"},
+    {id:"hijo", term:"hijo", meaning:"persona en relación con sus padres", synonym:"Espa&#241;ol para: persona en relación con sus padres", example:"Tengo un <b>hijo</b> de cinco años.", completion:"Tengo un ______ de cinco años.", answer:"hijo"},
+    {id:"hija", term:"hija", meaning:"mujer en relación con sus padres", synonym:"Espa&#241;ol para: mujer en relación con sus padres", example:"Su <b>hija</b> estudia en la universidad.", completion:"Su ______ estudia en la universidad.", answer:"hija"}
+  ]
+};
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol A1 &middot; Vocabulario</footer>
+</body>
+</html>

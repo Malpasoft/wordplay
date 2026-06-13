@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Días y Meses — Juego | Espa&#241;ol A1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/a1/index.html">A1</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>Días y Meses</strong>
+</div>
+<div class="chapter-num">V09</div>
+<h1>Días y Meses</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="game-root"></div>
+<script>
+window.GAME_DATA = {
+  chapterId: "dias-meses",
+  level: "a1",
+  title: "Días y Meses",
+  storageKey: "wordplay_game_es_a1_dias-meses",
+  section: 'vocabulary',
+  items: [
+    {id:"lunes", term:"lunes", meaning:"primer día de la semana laboral", synonym:"Espa&#241;ol para: primer día de la semana laboral", example:"El <b>lunes</b> empieza la semana de trabajo.", completion:"El ______ empieza la semana de trabajo.", answer:"lunes"},
+    {id:"martes", term:"martes", meaning:"segundo día de la semana", synonym:"Espa&#241;ol para: segundo día de la semana", example:"Los <b>martes</b> tengo clase de español.", completion:"Los ______ tengo clase de español.", answer:"martes"},
+    {id:"miercoles", term:"miércoles", meaning:"tercer día de la semana", synonym:"Espa&#241;ol para: tercer día de la semana", example:"El <b>miércoles</b> quedamos para comer.", completion:"El ______ quedamos para comer.", answer:"miércoles", accept:["miercoles"]},
+    {id:"viernes", term:"viernes", meaning:"quinto día de la semana, antes del fin de semana", synonym:"Espa&#241;ol para: quinto día de la semana, antes del fin de semana", example:"El <b>viernes</b> salimos a celebrar el fin de semana.", completion:"El ______ salimos a celebrar el fin de semana.", answer:"viernes"},
+    {id:"sabado", term:"sábado", meaning:"sexto día de la semana, primer día del fin de semana", synonym:"Espa&#241;ol para: sexto día de la semana, primer día del fin de semana", example:"El <b>sábado</b> voy al mercado por la mañana.", completion:"El ______ voy al mercado por la mañana.", answer:"sábado", accept:["sabado"]},
+    {id:"domingo", term:"domingo", meaning:"séptimo día de la semana, día de descanso", synonym:"Espa&#241;ol para: séptimo día de la semana, día de descanso", example:"El <b>domingo</b> me quedo en casa y descanso.", completion:"El ______ me quedo en casa y descanso.", answer:"domingo"},
+    {id:"enero", term:"enero", meaning:"primer mes del año", synonym:"Espa&#241;ol para: primer mes del año", example:"En <b>enero</b> hace mucho frío en Madrid.", completion:"En ______ hace mucho frío en Madrid.", answer:"enero"},
+    {id:"marzo", term:"marzo", meaning:"tercer mes del año, inicio de la primavera", synonym:"Espa&#241;ol para: tercer mes del año, inicio de la primavera", example:"En <b>marzo</b> empiezan a florecer los árboles.", completion:"En ______ empiezan a florecer los árboles.", answer:"marzo"}
+  ]
+};
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol A1 &middot; Vocabulario</footer>
+</body>
+</html>
