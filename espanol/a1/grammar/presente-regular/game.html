@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Presente Regular — Juego A1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../index.html">A1</a><span>&#8250;</span>
+  <a href="../index.html">Gramática</a><span>&#8250;</span>
+  <a href="index.html">Presente Regular</a><span>&#8250;</span>
+  <strong>Juego</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="container">
+  <h1>Presente Regular — Juego de Dominio</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 patrones de conjugación del presente regular · 3 rondas cada uno · llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos del mismo concepto y rachas entre conceptos a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominados</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todos los elementos de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominados</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="worksheet.html" class="game-btn secondary">Ejercicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol A1 &middot; Juego</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "presente-regular",
+  level: "a1",
+  title: "Presente de Indicativo — Verbos Regulares",
+  storageKey: "wordplay_game_es_a1_presente-regular",
+  items: [
+    {id:"ar-yo", term:"yo -AR (-o)", meaning:"primera persona singular de verbos -AR: radical + -o", synonym:"hablo, trabajo, escucho", example:"Yo hablo español todos los días.", completion:"Yo ______ (escuchar) música por las mañanas.", answer:"escucho"},
+    {id:"ar-ellos", term:"ellos -AR (-an)", meaning:"tercera persona plural de verbos -AR: radical + -an", synonym:"hablan, trabajan, estudian", example:"Ellos trabajan en el mismo hospital.", completion:"Mis amigos ______ (estudiar) juntos.", answer:"estudian"},
+    {id:"er-tu", term:"tú -ER (-es)", meaning:"segunda persona singular de verbos -ER: radical + -es", synonym:"comes, bebes, lees", example:"¿Comes en la cafetería o en casa?", completion:"Tú ______ (beber) mucha agua.", answer:"bebes"},
+    {id:"er-nosotros", term:"nosotros -ER (-emos)", meaning:"primera persona plural de verbos -ER: radical + -emos", synonym:"comemos, bebemos, comprendemos", example:"Comemos juntos todos los viernes.", completion:"Nosotros ______ (comprender) la gramática.", answer:"comprendemos"},
+    {id:"ir-nosotros", term:"nosotros -IR (-imos)", meaning:"primera persona plural de verbos -IR: radical + -imos", synonym:"vivimos, escribimos, abrimos", example:"Vivimos en el mismo barrio.", completion:"Nosotros ______ (escribir) muchos correos.", answer:"escribimos"},
+    {id:"ir-vosotros", term:"vosotros -IR (-ís)", meaning:"segunda persona plural de verbos -IR: radical + -ís", synonym:"vivís, escribís, abrís", example:"¿Vivís cerca del centro?", completion:"Vosotros ______ (abrir) la tienda a las nueve.", answer:"abrís"},
+    {id:"ar-tu", term:"tú -AR (-as)", meaning:"segunda persona singular de verbos -AR: radical + -as", synonym:"hablas, trabajas, escuchas", example:"¿Hablas inglés?", completion:"Tú ______ (caminar) muy rápido.", answer:"caminas"},
+    {id:"yo-todo", term:"yo = siempre -o", meaning:"la primera persona singular (yo) siempre termina en -o en los tres grupos", synonym:"-o (AR/ER/IR)", example:"Yo hablo, como y vivo aquí.", completion:"Yo ______ (correr) por las mañanas.", answer:"corro"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

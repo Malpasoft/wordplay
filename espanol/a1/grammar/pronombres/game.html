@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Pronombres Personales — Juego A1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../index.html">A1</a><span>&#8250;</span>
+  <a href="../index.html">Gramática</a><span>&#8250;</span>
+  <a href="index.html">Pronombres Personales</a><span>&#8250;</span>
+  <strong>Juego</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="container">
+  <h1>Pronombres Personales — Juego de Dominio</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 pronombres personales · 3 rondas cada uno · llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos del mismo concepto y rachas entre conceptos a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominados</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todos los elementos de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominados</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="worksheet.html" class="game-btn secondary">Ejercicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol A1 &middot; Juego</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "pronombres",
+  level: "a1",
+  title: "Pronombres Personales — Sujeto",
+  storageKey: "wordplay_game_es_a1_pronombres",
+  items: [
+    {id:"yo", term:"yo", meaning:"primera persona singular — el hablante", synonym:"I", example:"Yo hablo español todos los días.", completion:"Yo ______ (trabajar, 1.ª pers. sing.) en una oficina.", answer:"trabajo"},
+    {id:"tu", term:"tú", meaning:"segunda persona singular informal — la persona con quien hablas", synonym:"you (informal)", example:"¿Tú estudias en la universidad?", completion:"Tú ______ (vivir, 2.ª pers. sing.) en Madrid, ¿verdad?", answer:"vives"},
+    {id:"el-ella", term:"él / ella", meaning:"tercera persona singular — una persona (él = hombre, ella = mujer)", synonym:"he / she", example:"Ella trabaja en un hospital.", completion:"Mi hermano ______ (ser, 3.ª pers. sing.) muy alto.", answer:"es"},
+    {id:"nosotros", term:"nosotros/as", meaning:"primera persona plural — el hablante y otros", synonym:"we", example:"Nosotros vivimos en el mismo barrio.", completion:"Nosotros ______ (estudiar, 1.ª pers. pl.) juntos.", answer:"estudiamos"},
+    {id:"vosotros", term:"vosotros/as", meaning:"segunda persona plural informal (España) — grupo de personas", synonym:"you all (Spain)", example:"Vosotros coméis mucho.", completion:"Vosotros ______ (hablar, 2.ª pers. pl.) muy rápido.", answer:"habláis"},
+    {id:"ellos", term:"ellos / ellas", meaning:"tercera persona plural — varias personas", synonym:"they", example:"Ellos son mis mejores amigos.", completion:"Mis padres ______ (vivir, 3.ª pers. pl.) en Sevilla.", answer:"viven"},
+    {id:"usted", term:"usted", meaning:"segunda persona singular formal — se conjuga como él/ella", synonym:"you (formal)", example:"¿Cómo está usted?", completion:"Usted ______ (hablar) muy bien español.", answer:"habla"},
+    {id:"ustedes", term:"ustedes", meaning:"segunda persona plural (toda América Latina) — formal e informal", synonym:"you all (Latin America)", example:"Ustedes son muy amables.", completion:"Ustedes ______ (ser) estudiantes de español.", answer:"son"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
