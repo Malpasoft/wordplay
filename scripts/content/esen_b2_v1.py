@@ -1,0 +1,96 @@
+# -*- coding: utf-8 -*-
+"""espanol-en B2 vocabulary — batch 1 (V1-V6, 12 words each)."""
+
+CHAPTERS = {
+
+'cooking': dict(num='V1', short='Cooking & Cuisine', words=[
+  ('adobar', 'aðoˈβar', 'to marinate', 'Conviene <b>adobar</b> la carne unas horas antes de asarla.'),
+  ('el escabeche', 'eskaˈβetʃe', 'pickled marinade', 'El bonito en <b>escabeche</b> es una conserva tradicional española.'),
+  ('la degustación', 'deɣustaˈθjon', 'tasting, tasting session', 'Hicimos una <b>degustación</b> de aceites de oliva virgen.'),
+  ('la elaboración', 'elaβoraˈθjon', 'preparation, making (of food)', 'La <b>elaboración</b> del queso manchego lleva varias semanas.'),
+  ('el condimento', 'kondiˈmento', 'seasoning, condiment', 'Los <b>condimentos</b> más usados en la cocina española son el pimentón y el azafrán.'),
+  ('la textura', 'tesˈtura', 'texture', 'La <b>textura</b> cremosa del risotto es su característica principal.'),
+  ('al vapor', 'al baˈpor', 'steamed', 'Las verduras <b>al vapor</b> conservan mejor sus nutrientes.'),
+  ('en crudo', 'en ˈkruðo', 'raw, uncooked', 'El salmón <b>en crudo</b> se usa para hacer sushi.'),
+  ('la receta casera', 'reˈθeta kaˈsera', 'home recipe, home-cooked recipe', 'Esta salsa es una <b>receta casera</b> de mi abuela.'),
+  ('el plato de temporada', 'ˈplato ðe tempoˈraða', 'seasonal dish', 'El restaurante ofrece un <b>plato de temporada</b> que cambia cada mes.'),
+  ('la maduración', 'maðuraˈθjon', 'ripening, maturing', 'La <b>maduración</b> del jamón serrano dura como mínimo dieciocho meses.'),
+  ('rebozado', 'reβoˈθaðo', 'battered, breaded', 'El bacalao <b>rebozado</b> se sirve con pimientos de padrón.'),
+]),
+
+'feelings-emotions': dict(num='V2', short='Feelings & Emotions', words=[
+  ('el remordimiento', 'remordjiˈmjento', 'remorse, guilt', 'Sintió un profundo <b>remordimiento</b> por sus palabras.'),
+  ('la añoranza', 'aɲoˈranθa', 'nostalgia, longing', 'La <b>añoranza</b> de su tierra natal le hacía llorar.'),
+  ('el desasosiego', 'desasoˈsjeɣo', 'unease, restlessness', 'Un extraño <b>desasosiego</b> le impedía dormir.'),
+  ('la euforia', 'ewˈforja', 'euphoria, elation', 'La victoria los llenó de una <b>euforia</b> incontenible.'),
+  ('el rencor', 'renˈkor', 'resentment, grudge', 'No guarda <b>rencor</b> a nadie — perdonar le hace bien.'),
+  ('la compasión', 'kompaˈsjon', 'compassion', 'Actuó movido por la <b>compasión</b>, no por el deber.'),
+  ('desahogarse', 'desaoˈɣarse', 'to vent, let it all out', 'Necesitaba <b>desahogarse</b> con alguien de confianza.'),
+  ('el orgullo', 'orˈɣuʎo', 'pride (also arrogance)', 'El <b>orgullo</b> le impide pedir disculpas.'),
+  ('la angustia', 'anˈɡustja', 'anguish, anxiety', 'La <b>angustia</b> ante los resultados le impedía concentrarse.'),
+  ('superar', 'supeˈrar', 'to overcome, get over', 'Con tiempo, consiguió <b>superar</b> la pérdida.'),
+  ('la ternura', 'terˈnura', 'tenderness, warmth', 'Le miró con una <b>ternura</b> que conmovió a todos.'),
+  ('envidiar', 'embiˈðjar', 'to envy', 'No <b>envidio</b> su éxito — me alegro por ella.'),
+]),
+
+'health-and-body': dict(num='V3', short='Health & The Body', words=[
+  ('el malestar', 'malesˈtar', 'malaise, discomfort', 'Un <b>malestar</b> general le obligó a quedarse en cama.'),
+  ('crónico', 'ˈkroniko', 'chronic', 'El dolor de espalda <b>crónico</b> afecta a millones de personas.'),
+  ('el diagnóstico', 'djaɣˈnostiko', 'diagnosis', 'El <b>diagnóstico</b> tardó varias semanas en llegar.'),
+  ('el tratamiento', 'trataˈmjento', 'treatment', 'El <b>tratamiento</b> consiste en fisioterapia durante tres meses.'),
+  ('la intervención quirúrgica', 'interβenˈθjon kiˈruɾxika', 'surgical procedure, operation', 'La <b>intervención quirúrgica</b> fue un éxito.'),
+  ('el pronóstico', 'proˈnostiko', 'prognosis', 'El médico dio un <b>pronóstico</b> favorable.'),
+  ('la convalecencia', 'komβaleˈθenθja', 'convalescence, recovery period', 'Pasó dos semanas de <b>convalecencia</b> en casa de sus padres.'),
+  ('la prevención', 'preβenˈθjon', 'prevention', 'La <b>prevención</b> es mejor que el tratamiento.'),
+  ('el estilo de vida', 'esˈtilo ðe ˈβiða', 'lifestyle', 'Cambiar el <b>estilo de vida</b> redujo su presión arterial.'),
+  ('la recaída', 'rekaˈiða', 'relapse', 'Tuvo una <b>recaída</b> y tuvo que volver al hospital.'),
+  ('el bienestar', 'bjenˈestar', 'wellbeing', 'El ejercicio contribuye enormemente al <b>bienestar</b> mental.'),
+  ('el historial médico', 'istoˈrjal ˈmeðiko', 'medical history', 'El médico revisó su <b>historial médico</b> antes de recetar.'),
+]),
+
+'music': dict(num='V4', short='Music & Performance', words=[
+  ('la partitura', 'partiˈtura', 'score (music)', 'El director interpretó la obra sin <b>partitura</b>.'),
+  ('afinar', 'afiˈnar', 'to tune (an instrument)', 'Hay que <b>afinar</b> la guitarra antes de empezar.'),
+  ('el conservatorio', 'konserβaˈtorjo', 'conservatoire', 'Estudió diez años en el <b>conservatorio</b>.'),
+  ('la disonancia', 'disoˈnanθja', 'dissonance', 'La <b>disonancia</b> entre los dos instrumentos era intencionada.'),
+  ('interpretar', 'interpreˈtar', 'to perform, interpret', 'La soprano <b>interpretó</b> el papel de Carmen de forma magistral.'),
+  ('la sinfonía', 'simfoˈnia', 'symphony', 'La Novena <b>Sinfonía</b> de Beethoven se estrenó en 1824.'),
+  ('el ritmo', 'ˈritmo', 'rhythm', 'El <b>ritmo</b> del flamenco es muy complejo y difícil de imitar.'),
+  ('el preludio', 'preˈluðjo', 'prelude', 'El pianista comenzó con un breve <b>preludio</b> de Bach.'),
+  ('la improvisación', 'improβisaˈθjon', 'improvisation', 'El jazz se basa en gran parte en la <b>improvisación</b>.'),
+  ('la orquesta', 'orˈkesta', 'orchestra', 'La <b>orquesta</b> interpretó el concierto con una precisión asombrosa.'),
+  ('la composición', 'komposiˈθjon', 'composition', 'Su última <b>composición</b> ganó el premio de música contemporánea.'),
+  ('el solista', 'soˈlista', 'soloist', 'El <b>solista</b> recibió una ovación de varios minutos.'),
+]),
+
+'problems-solutions': dict(num='V5', short='Problems & Solutions', words=[
+  ('el dilema', 'diˈlema', 'dilemma', 'Se enfrentaba a un <b>dilema</b> moral sin solución fácil.'),
+  ('la controversia', 'konˈtroβersja', 'controversy', 'La nueva ley generó una gran <b>controversia</b> en los medios.'),
+  ('el obstáculo', 'oβsˈtakulo', 'obstacle', 'Los <b>obstáculos</b> burocráticos ralentizaron el proyecto.'),
+  ('la mediación', 'meðjaˈθjon', 'mediation', 'La <b>mediación</b> de la ONU evitó un conflicto mayor.'),
+  ('abordar', 'aβorˈdar', 'to tackle, address', 'Es necesario <b>abordar</b> el problema desde una perspectiva diferente.'),
+  ('la repercusión', 'reperkuˈsjon', 'repercussion, impact', 'Las <b>repercusiones</b> de la crisis se notaron años después.'),
+  ('la brecha', 'ˈbretʃa', 'gap, divide', 'La <b>brecha</b> digital entre generaciones sigue creciendo.'),
+  ('paliar', 'paˈljar', 'to alleviate, palliate', 'Las ayudas económicas <b>paliaron</b> los efectos del desempleo.'),
+  ('el desafío', 'desaˈfio', 'challenge, threat', 'El cambio climático es el mayor <b>desafío</b> de nuestro tiempo.'),
+  ('la incertidumbre', 'inθertiˈðumbre', 'uncertainty', 'La <b>incertidumbre</b> económica afecta al consumo.'),
+  ('la propuesta', 'proˈpwesta', 'proposal, suggestion', 'El comité aprobó la <b>propuesta</b> por unanimidad.'),
+  ('la alternativa', 'alternaˈtiβa', 'alternative', 'No queda otra <b>alternativa</b> que reformar el sistema.'),
+]),
+
+'school-subjects': dict(num='V6', short='Education & Learning', words=[
+  ('la investigación', 'imbestiɣaˈθjon', 'research', 'Su <b>investigación</b> sobre energía solar recibió financiación internacional.'),
+  ('el expediente académico', 'ekspeˈðjente akaˈðemiko', 'academic record, transcript', 'Necesita un <b>expediente académico</b> excelente para esa beca.'),
+  ('el posgrado', 'posˈɣraðo', 'postgraduate (degree/course)', 'Después de la carrera hizo un <b>posgrado</b> en finanzas en Londres.'),
+  ('la tutoría', 'tutoˈria', 'tutorial, tutoring session', 'Habló con su profesor en la <b>tutoría</b> para aclarar las dudas.'),
+  ('la asignatura troncal', 'asiɣnaˈtura tronˈkal', 'core subject', 'Matemáticas es una <b>asignatura troncal</b> en todos los cursos.'),
+  ('convalidar', 'komβaliˈðar', 'to have (a qualification) recognised', 'Tuvo que <b>convalidar</b> su título extranjero para trabajar aquí.'),
+  ('el tribunal de examen', 'triˈβunal ðe ekˈsamen', 'examination board, exam panel', 'El <b>tribunal de examen</b> estaba formado por tres profesores.'),
+  ('el aula magna', 'ˈawla ˈmaɣna', 'main lecture hall, great hall', 'La conferencia tuvo lugar en el <b>aula magna</b> de la facultad.'),
+  ('la metodología', 'metoðoloˈxia', 'methodology', 'La <b>metodología</b> del proyecto se basaba en entrevistas cualitativas.'),
+  ('el plagio', 'ˈplaxjo', 'plagiarism', 'El <b>plagio</b> académico conlleva la anulación del trabajo.'),
+  ('la matrícula de honor', 'maˈtrikula ðe oˈnor', 'distinction (top grade)', 'Obtuvo <b>matrícula de honor</b> en tres asignaturas.'),
+  ('el doctorado', 'doktoˈraðo', 'doctorate, PhD', 'Está haciendo el <b>doctorado</b> en lingüística computacional.'),
+]),
+
+}

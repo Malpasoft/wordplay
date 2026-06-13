@@ -1,0 +1,96 @@
+# -*- coding: utf-8 -*-
+"""espanol-en B2 vocabulary — batch 2 (V7-V12, 12 words each)."""
+
+CHAPTERS = {
+
+'shopping-and-money': dict(num='V7', short='Money & Finance', words=[
+  ('la inversión', 'imberˈsjon', 'investment', 'La <b>inversión</b> en energías renovables ha crecido un 40%.'),
+  ('la cotización', 'kotiθaˈθjon', 'stock price, quote', 'La <b>cotización</b> de la empresa cayó tras el escándalo.'),
+  ('el presupuesto', 'presuˈpwesto', 'budget', 'El gobierno aprobó el <b>presupuesto</b> anual con recortes en sanidad.'),
+  ('la deuda', 'ˈðewða', 'debt', 'La <b>deuda</b> pública del país superó el 100% del PIB.'),
+  ('el déficit', 'ˈðefiθit', 'deficit', 'El <b>déficit</b> presupuestario obliga a tomar medidas urgentes.'),
+  ('la rentabilidad', 'rentaβiliˈðað', 'profitability, return', 'La <b>rentabilidad</b> del negocio no justifica el riesgo.'),
+  ('la inflación', 'inflaˈθjon', 'inflation', 'La alta <b>inflación</b> erosiona el poder adquisitivo.'),
+  ('el tipo de interés', 'ˈtipo ðe inteˈres', 'interest rate', 'El banco central subió el <b>tipo de interés</b> en medio punto.'),
+  ('el fondo de inversión', 'ˈfondo ðe imberˈsjon', 'investment fund', 'Invirtió sus ahorros en un <b>fondo de inversión</b> de bajo riesgo.'),
+  ('la subvención', 'suββenˈθjon', 'subsidy, grant', 'La empresa recibió una <b>subvención</b> para modernizar la maquinaria.'),
+  ('el poder adquisitivo', 'poˈðer aðkisiˈtiβo', 'purchasing power', 'El <b>poder adquisitivo</b> de los trabajadores ha bajado.'),
+  ('la quiebra', 'ˈkjeβra', 'bankruptcy', 'La empresa entró en <b>quiebra</b> tras perder a su principal cliente.'),
+]),
+
+'sports': dict(num='V8', short='Sports & Competition', words=[
+  ('la clasificación', 'klasifikaˈθjon', 'ranking, standings, qualification', 'El equipo ocupa el tercer puesto en la <b>clasificación</b>.'),
+  ('la fase eliminatoria', 'ˈfase eliminaˈtorja', 'knockout stage, elimination round', 'Superaron la <b>fase eliminatoria</b> con una victoria convincente.'),
+  ('el palmarés', 'palmaˈres', 'track record of wins, roll of honour', 'Su <b>palmarés</b> incluye tres títulos mundiales y dos olímpicos.'),
+  ('la marca personal', 'ˈmarka persoˈnal', 'personal best (PB)', 'Batió su <b>marca personal</b> en los cien metros lisos.'),
+  ('el entrenador', 'entrenˈaðor', 'coach, trainer', 'El nuevo <b>entrenador</b> cambió por completo la táctica del equipo.'),
+  ('el patrocinador', 'patroθiˈnaðor', 'sponsor', 'El club firmó un acuerdo con su nuevo <b>patrocinador</b> principal.'),
+  ('las instalaciones deportivas', 'instalaˈθjones deportiˈβas', 'sports facilities', 'El municipio renovó las <b>instalaciones deportivas</b> del polideportivo.'),
+  ('el rendimiento', 'rendiˈmjento', 'performance, output', 'Su <b>rendimiento</b> mejoró notablemente tras el cambio de entrenador.'),
+  ('la selección nacional', 'selekˈθjon naˈθjonal', 'national team', 'La <b>selección nacional</b> se clasificó para el mundial.'),
+  ('el dopaje', 'doˈpaxe', 'doping', 'El deportista fue descalificado por <b>dopaje</b>.'),
+  ('el entrenamiento de alto rendimiento', 'entrenˈamjento ðe ˈalto rendiˈmjento', 'high-performance training', 'El <b>entrenamiento de alto rendimiento</b> requiere un equipo multidisciplinar.'),
+  ('la retransmisión', 'retransmisˈjon', 'broadcast, live coverage', 'La <b>retransmisión</b> del partido alcanzó diez millones de espectadores.'),
+]),
+
+'technology-and-media': dict(num='V9', short='Technology & Media', words=[
+  ('la inteligencia artificial', 'inteliˈxenθja artiˈfisial', 'artificial intelligence', 'La <b>inteligencia artificial</b> está transformando el mercado laboral.'),
+  ('el algoritmo', 'alɣoˈritmo', 'algorithm', 'El <b>algoritmo</b> de la plataforma determina qué contenido ves.'),
+  ('el ciberataque', 'θiβeraˈtake', 'cyberattack', 'La empresa sufrió un grave <b>ciberataque</b> que comprometió datos de clientes.'),
+  ('la privacidad', 'priβaθiˈðað', 'privacy', 'Muchos usuarios desconocen cómo se gestiona su <b>privacidad</b> en línea.'),
+  ('la desinformación', 'desinformaˈθjon', 'disinformation, misinformation', 'La <b>desinformación</b> se propaga muy rápidamente en las redes sociales.'),
+  ('la huella digital', 'ˈweʎa dixiˈtal', 'digital footprint', 'Reducir tu <b>huella digital</b> es difícil una vez que has creado cuentas.'),
+  ('el cifrado', 'θiˈfraðo', 'encryption', 'La aplicación usa <b>cifrado</b> de extremo a extremo.'),
+  ('la transmisión en directo', 'transmisˈjon en diˈrekto', 'live streaming', 'El concierto se emitió mediante <b>transmisión en directo</b> por internet.'),
+  ('la convergencia digital', 'komberˈxenθja dixiˈtal', 'digital convergence', 'La <b>convergencia digital</b> ha fusionado televisión, cine y música.'),
+  ('la realidad aumentada', 'reaˈliðað awmentˈaða', 'augmented reality', 'La <b>realidad aumentada</b> se usa ya en medicina y educación.'),
+  ('el código fuente', 'ˈkoðiɣo ˈfwente', 'source code', 'Publicaron el <b>código fuente</b> bajo una licencia de código abierto.'),
+  ('el macrodato', 'makroˈðato', 'big data', 'El análisis de <b>macrodatos</b> permite predecir tendencias de consumo.'),
+]),
+
+'transport-and-travel': dict(num='V10', short='Transport & Travel', words=[
+  ('la infraestructura', 'infraestrukˈtura', 'infrastructure', 'El gobierno invertirá en <b>infraestructura</b> ferroviaria.'),
+  ('el tráfico aéreo', 'ˈtrafiko ˈaereo', 'air traffic', 'Las tormentas provocaron retrasos en el <b>tráfico aéreo</b>.'),
+  ('la congestión', 'konxesˈtjon', 'congestion', 'La <b>congestión</b> de las carreteras de acceso es un problema diario.'),
+  ('la tarifa', 'taˈrifa', 'fare, rate, tariff', 'La <b>tarifa</b> de larga distancia es competitiva con el avión.'),
+  ('el intercambiador', 'interkamˈbjaðor', 'transport interchange, hub', 'El <b>intercambiador</b> de Moncloa conecta metro, autobuses y Cercanías.'),
+  ('el carnet de conducir', 'karˈnet ðe konduˈθir', 'driving licence', 'Se sacó el <b>carnet de conducir</b> a los dieciocho años.'),
+  ('la movilidad sostenible', 'moβiliˈðað sosˈteniβle', 'sustainable mobility', 'La ciudad apuesta por la <b>movilidad sostenible</b>: bicis y transporte público.'),
+  ('el itinerario', 'itineˈrarjo', 'itinerary, route', 'El <b>itinerario</b> incluía tres países en diez días.'),
+  ('la visa de trabajo', 'ˈβisa ðe traˈβaxo', 'work visa', 'Necesita una <b>visa de trabajo</b> para residir en el extranjero.'),
+  ('el transbordo', 'transˈbordo', 'transfer, connection (transport)', 'El <b>transbordo</b> en Frankfurt duró tres horas.'),
+  ('la puntualidad', 'puntwaliˈðað', 'punctuality', 'El tren de alta velocidad destaca por su <b>puntualidad</b>.'),
+  ('la ruta alternativa', 'ˈruta alternaˈtiβa', 'alternative route', 'El GPS propuso una <b>ruta alternativa</b> para evitar el atasco.'),
+]),
+
+'weather-detail': dict(num='V11', short='Weather & Climate', words=[
+  ('el calentamiento global', 'kalenˈtamjento ɣloˈβal', 'global warming', 'El <b>calentamiento global</b> aumenta la frecuencia de fenómenos extremos.'),
+  ('la ola de calor', 'ˈola ðe kaˈlor', 'heatwave', 'La <b>ola de calor</b> de julio batió récords históricos en toda Europa.'),
+  ('la tormenta eléctrica', 'torˈmenta eˈlektrika', 'electrical storm, thunderstorm', 'Una <b>tormenta eléctrica</b> dejó sin suministro a miles de hogares.'),
+  ('el vendaval', 'bendaˈβal', 'strong wind, gale', 'Un <b>vendaval</b> derrumbó varios árboles en el parque.'),
+  ('las precipitaciones', 'preθipitaˈθjones', 'precipitation, rainfall', 'Las <b>precipitaciones</b> de este mes superaron la media histórica.'),
+  ('la inversión térmica', 'imberˈsjon ˈtermika', 'temperature inversion', 'La <b>inversión térmica</b> atrapa la contaminación sobre las ciudades.'),
+  ('el fenómeno meteorológico', 'feˈnomeno meteoroˈloxiko', 'meteorological phenomenon', 'La gota fría es un <b>fenómeno meteorológico</b> típico del Mediterráneo.'),
+  ('la previsión meteorológica', 'preβiˈsjon meteoroˈloxika', 'weather forecast (detailed)', 'Según la <b>previsión meteorológica</b>, el fin de semana será lluvioso.'),
+  ('el deshielo', 'desˈjelo', 'thaw, ice melt', 'El <b>deshielo</b> de los glaciares sube el nivel del mar.'),
+  ('árido', 'ˈariðo', 'arid, dry', 'Las zonas <b>áridas</b> del sureste español sufren escasez de agua.'),
+  ('húmedo', 'ˈumeðo', 'humid, damp', 'El clima <b>húmedo</b> del norte de España favorece la vegetación exuberante.'),
+  ('la alerta naranja', 'aˈlerta naˈranxa', 'orange weather warning', 'Se activó la <b>alerta naranja</b> por riesgo de fuertes lluvias.'),
+]),
+
+'work-and-jobs': dict(num='V12', short='Work & Careers', words=[
+  ('la negociación colectiva', 'neɣoθjaˈθjon kolekˈtiβa', 'collective bargaining', 'El convenio se firmó tras meses de <b>negociación colectiva</b>.'),
+  ('el convenio colectivo', 'komˈbenjo kolekˈtiβo', 'collective agreement', 'El <b>convenio colectivo</b> regula las condiciones laborales del sector.'),
+  ('la baja por enfermedad', 'ˈbaxa por enfermeˈðað', 'sick leave', 'Estuvo dos semanas de <b>baja por enfermedad</b> por una operación.'),
+  ('la conciliación laboral', 'konθiljaˈθjon laβoˈral', 'work-life balance', 'La empresa ofrece medidas de <b>conciliación laboral</b> como el teletrabajo.'),
+  ('el despido improcedente', 'desˈpiðo improθeˈðente', 'unfair dismissal', 'Demandó a la empresa por <b>despido improcedente</b>.'),
+  ('la remuneración', 'remuneraˈθjon', 'remuneration, pay', 'La <b>remuneración</b> incluye salario base más incentivos trimestrales.'),
+  ('el perfil profesional', 'perˈfil profesjoˈnal', 'professional profile', 'Actualizó su <b>perfil profesional</b> en la red antes de buscar empleo.'),
+  ('la formación continua', 'formaˈθjon konˈtinwa', 'continuing education, CPD', 'El sector tecnológico exige <b>formación continua</b> para mantenerse al día.'),
+  ('el mercado laboral', 'merˈkaðo laβoˈral', 'labour market', 'El <b>mercado laboral</b> se ha vuelto más competitivo para los jóvenes.'),
+  ('el teletrabajo', 'teletraˈβaxo', 'remote work, teleworking', 'El <b>teletrabajo</b> se generalizó tras la pandemia.'),
+  ('el ascenso por méritos', 'asˈθenso por ˈmeritos', 'merit-based promotion', 'En esta empresa el <b>ascenso por méritos</b> es la norma, no la excepción.'),
+  ('la prejubilación', 'prexuβilaˈθjon', 'early retirement', 'Aceptó la <b>prejubilación</b> a los cincuenta y ocho años.'),
+]),
+
+}
