@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Tiempos Literarios — Juego C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Gramática</a><span>&#8250;</span>
+  <a href="index.html">Tiempos Literarios</a><span>&#8250;</span>
+  <strong>Juego</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="container">
+  <h1>Tiempos Literarios — Juego de Dominio</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>Pretérito anterior, futuro de subjuntivo y variación dialectal en el pasado</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos del mismo concepto y rachas entre conceptos a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominados</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todos los elementos de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominados</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="worksheet.html" class="game-btn secondary">Ejercicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C2 &middot; Juego</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "tiempos-literarios",
+  level: "c2",
+  title: "Los Tiempos Literarios y la Variación Dialectal en los Tiempos del Pasado",
+  storageKey: "wordplay_game_es_c2_tiempos-literarios",
+  items: [
+    {id:"tiempos-literarios-01", term:"pretérito anterior", meaning:"Hubo + participio: acción inmediatamente anterior en registro literario", synonym:"Hubo + participio: acción inmediatamente", example:"Cuando hubo terminado, se fue.", completion:"Cuando hubo terminado, se fue.", answer:"pretérito anterior"},
+    {id:"tiempos-literarios-02", term:"futuro de subjuntivo", meaning:"Forma arcaica (amare) conservada en textos legales y refranes", synonym:"Forma arcaica (amare) conservada en text", example:"El que infringiere esta norma…", completion:"El que infringiere esta norma…", answer:"futuro de subjuntivo"},
+    {id:"tiempos-literarios-03", term:"perfecto compuesto (España)", meaning:"He + participio: acciones del mismo día o conectadas al presente (España)", synonym:"He + participio: acciones del mismo día ", example:"He llegado esta mañana.", completion:"He llegado esta mañana.", answer:"perfecto compuesto España"},
+    {id:"tiempos-literarios-04", term:"indefinido (latinoamérica)", meaning:"Sustituyeal perfecto compuesto en casi todos los contextos en Latinoamérica", synonym:"Sustituyeal perfecto compuesto en casi t", example:"Llegué esta mañana.", completion:"Llegué esta mañana.", answer:"indefinido latinoamérica"},
+    {id:"tiempos-literarios-05", term:"imperfecto por condicional", meaning:"En registro coloquial, el imperfecto puede reemplazar al condicional", synonym:"En registro coloquial, el imperfecto pue", example:"Si pudiera, lo hacía ya.", completion:"Si pudiera, lo hacía ya.", answer:"imperfecto por condicional"},
+    {id:"tiempos-literarios-06", term:"anterioridad inmediata", meaning:"El pretérito anterior indica que la acción ocurrió inmediatamente antes de otra", synonym:"El pretérito anterior indica que la acci", example:"No bien hubo salido, llegaron.", completion:"No bien hubo salido, llegaron.", answer:"anterioridad inmediata"},
+    {id:"tiempos-literarios-07", term:"variación dialectal", meaning:"Diferencias en el uso de tiempos del pasado entre España y Latinoamérica", synonym:"Diferencias en el uso de tiempos del pas", example:"He comido (ES) / Comí (LA)", completion:"He comido (ES) / Comí (LA)", answer:"variación dialectal"},
+    {id:"tiempos-literarios-08", term:"imperfecto periodístico", meaning:"Uso del imperfecto para presentar hechos recientes como si fueran en curso", synonym:"Uso del imperfecto para presentar hechos", example:"El acuerdo se firmaba ayer.", completion:"El acuerdo se firmaba ayer.", answer:"imperfecto periodístico"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

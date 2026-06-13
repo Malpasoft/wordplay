@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Gramática del Discurso — Juego C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Gramática</a><span>&#8250;</span>
+  <a href="index.html">Gramática del Discurso</a><span>&#8250;</span>
+  <strong>Juego</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="container">
+  <h1>Gramática del Discurso — Juego de Dominio</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>Cohesión textual: referencia, sustitución, elipsis, progresión temática</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos del mismo concepto y rachas entre conceptos a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominados</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todos los elementos de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominados</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="worksheet.html" class="game-btn secondary">Ejercicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C2 &middot; Juego</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "gramatica-discursiva",
+  level: "c2",
+  title: "La Gramática del Discurso: Coherencia y Cohesión Textual",
+  storageKey: "wordplay_game_es_c2_gramatica-discursiva",
+  items: [
+    {id:"gramatica-discursiva-01", term:"anáfora", meaning:"Elemento referencial que retoma algo mencionado anteriormente", synonym:"Elemento referencial que retoma algo men", example:"Juan llegó tarde. Él estaba cansado.", completion:"Juan llegó tarde. Él estaba cansado.", answer:"anáfora"},
+    {id:"gramatica-discursiva-02", term:"catáfora", meaning:"Elemento referencial que anticipa algo mencionado después", synonym:"Elemento referencial que anticipa algo m", example:"Esto es lo que propongo: cancelar la reunión.", completion:"Esto es lo que propongo: cancelar la reunión.", answer:"catáfora"},
+    {id:"gramatica-discursiva-03", term:"elipsis", meaning:"Omisión de un elemento recuperable por el contexto", synonym:"Omisión de un elemento recuperable por e", example:"¿Has terminado? — Sí, [he terminado].", completion:"¿Has terminado? — Sí, [he terminado].", answer:"elipsis"},
+    {id:"gramatica-discursiva-04", term:"isotopía", meaning:"Red de términos del mismo campo semántico que mantiene la unidad temática", synonym:"Red de términos del mismo campo semántic", example:"hospital, médico, enfermera, diagnóstico, paciente", completion:"hospital, médico, enfermera, diagnóstico, paciente", answer:"isotopía"},
+    {id:"gramatica-discursiva-05", term:"progresión lineal", meaning:"El rema de una oración se convierte en el tema de la siguiente", synonym:"El rema de una oración se convierte en e", example:"Juan fue al mercado. El mercado estaba cerrado.", completion:"Juan fue al mercado. El mercado estaba cerrado.", answer:"progresión lineal"},
+    {id:"gramatica-discursiva-06", term:"tema-rema", meaning:"Estructura informativa: tema = dado, rema = nuevo", synonym:"Estructura informativa: tema = dado, rem", example:"Juan (tema) llegó tarde (rema).", completion:"Juan (tema) llegó tarde (rema).", answer:"tema-rema"},
+    {id:"gramatica-discursiva-07", term:"hiponimia", meaning:"Relación clase-miembro: el hipónimo es más específico que el hiperónimo", synonym:"Relación clase-miembro: el hipónimo es m", example:"manzana (hipónimo) — fruta (hiperónimo)", completion:"manzana (hipónimo) — fruta (hiperónimo)", answer:"hiponimia"},
+    {id:"gramatica-discursiva-08", term:"sustitución", meaning:"Reemplazar un elemento por otro de significado equivalente en el contexto", synonym:"Reemplazar un elemento por otro de signi", example:"¿Quieres un café? — Sí, uno solo.", completion:"¿Quieres un café? — Sí, uno solo.", answer:"sustitución"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

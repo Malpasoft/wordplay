@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Géneros Textuales — Juego C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Gramática</a><span>&#8250;</span>
+  <a href="index.html">Géneros Textuales</a><span>&#8250;</span>
+  <strong>Juego</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="container">
+  <h1>Géneros Textuales — Juego de Dominio</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>Géneros textuales: narrativo, argumentativo, expositivo, instructivo — rasgos y estructura</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos del mismo concepto y rachas entre conceptos a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominados</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todos los elementos de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominados</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="worksheet.html" class="game-btn secondary">Ejercicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C2 &middot; Juego</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "generos-textuales",
+  level: "c2",
+  title: "Los Géneros Textuales: Estructura y Rasgos Lingüísticos",
+  storageKey: "wordplay_game_es_c2_generos-textuales",
+  items: [
+    {id:"generos-textuales-01", term:"texto argumentativo", meaning:"Expone una tesis y la defiende con argumentos, contraargumentos y conclusión", synonym:"Expone una tesis y la defiende con argum", example:"Ensayo, editorial, artículo de opinión", completion:"Ensayo, editorial, artículo de opinión", answer:"texto argumentativo"},
+    {id:"generos-textuales-02", term:"texto expositivo", meaning:"Informa objetivamente usando impersonales, evidencialidad y nominalizaciones", synonym:"Informa objetivamente usando impersonale", example:"Artículo científico, enciclopedia", completion:"Artículo científico, enciclopedia", answer:"texto expositivo"},
+    {id:"generos-textuales-03", term:"texto narrativo", meaning:"Relata eventos con perspectiva temporal: imperfecto (fondo) + indefinido (primer plano)", synonym:"Relata eventos con perspectiva temporal:", example:"Novela, cuento, crónica", completion:"Novela, cuento, crónica", answer:"texto narrativo"},
+    {id:"generos-textuales-04", term:"tesis", meaning:"Posición o hipótesis del autor que se defiende en el texto argumentativo", synonym:"Posición o hipótesis del autor que se de", example:"En este trabajo se sostiene que el cambio climático es irreversible.", completion:"En este trabajo se sostiene que el cambio climático es irreversible.", answer:"tesis"},
+    {id:"generos-textuales-05", term:"contraargumento", meaning:"Objeción prevista que el autor introduce para luego refutar", synonym:"Objeción prevista que el autor introduce", example:"Si bien es cierto que hay costes, estos se compensan con los beneficios.", completion:"Si bien es cierto que hay costes, estos se compensan con los beneficios.", answer:"contraargumento"},
+    {id:"generos-textuales-06", term:"presente histórico", meaning:"Uso del presente para narrar eventos pasados con mayor viveza", synonym:"Uso del presente para narrar eventos pas", example:"Y de repente, el general se levanta y grita.", completion:"Y de repente, el general se levanta y grita.", answer:"presente histórico"},
+    {id:"generos-textuales-07", term:"evidencialidad", meaning:"Recurso que señala la fuente de la información", synonym:"Recurso que señala la fuente de la infor", example:"Según los datos del INE / De acuerdo con los estudios", completion:"Según los datos del INE / De acuerdo con los estudios", answer:"evidencialidad"},
+    {id:"generos-textuales-08", term:"texto instructivo", meaning:"Guía una acción usando imperativo, infinitivo o se + verbo", synonym:"Guía una acción usando imperativo, infin", example:"Receta, manual de instrucciones", completion:"Receta, manual de instrucciones", answer:"texto instructivo"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

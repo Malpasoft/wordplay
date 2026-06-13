@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Subordinadas: Modo — Juego C1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../index.html">C1</a><span>&#8250;</span>
+  <a href="../index.html">Gramática</a><span>&#8250;</span>
+  <a href="index.html">Subordinadas: Modo</a><span>&#8250;</span>
+  <strong>Juego</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="container">
+  <h1>Subordinadas: Modo — Juego de Dominio</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>Controla el modo en las subordinadas sustantivas según el verbo principal</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos del mismo concepto y rachas entre conceptos a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominados</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todos los elementos de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominados</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="worksheet.html" class="game-btn secondary">Ejercicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C1 &middot; Juego</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "subordinadas-c1",
+  level: "c1",
+  title: "Subordinadas Sustantivas: Modo y Diferencias Semánticas",
+  storageKey: "wordplay_game_es_c1_subordinadas-c1",
+  items: [
+    {id:"subordinadas-c1-01", term:"creer + indicativo", meaning:"Verbo de opinión en afirmativo → indicativo", synonym:"Verbo de opinión en afirmativo → indicat", example:"Creo que tiene razón.", completion:"Creo que tiene razón.", answer:"creer + indicativo"},
+    {id:"subordinadas-c1-02", term:"no creer + subjuntivo", meaning:"Negación de opinión → subjuntivo", synonym:"Negación de opinión → subjuntivo", example:"No creo que tenga razón.", completion:"No creo que tenga razón.", answer:"no creer + subjuntivo"},
+    {id:"subordinadas-c1-03", term:"querer + subjuntivo", meaning:"Verbo de deseo con diferente sujeto → subjuntivo", synonym:"Verbo de deseo con diferente sujeto → su", example:"Quiero que vengas.", completion:"Quiero que vengas.", answer:"querer + subjuntivo"},
+    {id:"subordinadas-c1-04", term:"mismo sujeto + infinitivo", meaning:"Cuando el sujeto es el mismo en ambas cláusulas, se usa infinitivo", synonym:"Cuando el sujeto es el mismo en ambas cl", example:"Espero aprobar el examen.", completion:"Espero aprobar el examen.", answer:"mismo sujeto + infinitivo"},
+    {id:"subordinadas-c1-05", term:"es cierto + indicativo", meaning:"Expresiones de certeza → indicativo", synonym:"Expresiones de certeza → indicativo", example:"Es cierto que lo hizo.", completion:"Es cierto que lo hizo.", answer:"es cierto + indicativo"},
+    {id:"subordinadas-c1-06", term:"no es cierto + subjuntivo", meaning:"Negación de certeza → subjuntivo", synonym:"Negación de certeza → subjuntivo", example:"No es cierto que lo hiciera.", completion:"No es cierto que lo hiciera.", answer:"no es cierto + subjuntivo"},
+    {id:"subordinadas-c1-07", term:"es posible + subjuntivo", meaning:"Expresiones de posibilidad/valoración → subjuntivo", synonym:"Expresiones de posibilidad/valoración → ", example:"Es posible que llueva mañana.", completion:"Es posible que llueva mañana.", answer:"es posible + subjuntivo"},
+    {id:"subordinadas-c1-08", term:"pedir + subjuntivo", meaning:"Verbos de influencia siempre exigen subjuntivo (distinto sujeto)", synonym:"Verbos de influencia siempre exigen subj", example:"Le pidió que enviara el informe.", completion:"Le pidió que enviara el informe.", answer:"pedir + subjuntivo"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

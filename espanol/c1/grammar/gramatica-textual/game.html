@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Cohesión Textual — Juego C1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../index.html">C1</a><span>&#8250;</span>
+  <a href="../index.html">Gramática</a><span>&#8250;</span>
+  <a href="index.html">Cohesión Textual</a><span>&#8250;</span>
+  <strong>Juego</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="container">
+  <h1>Cohesión Textual — Juego de Dominio</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 conceptos clave · 3 rondas cada uno · llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos del mismo concepto y rachas entre conceptos a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominados</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todos los elementos de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominados</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="worksheet.html" class="game-btn secondary">Ejercicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C1 &middot; Juego</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "gramatica-textual",
+  level: "c1",
+  title: "La Cohesión Textual — Referencia, Sustitución y Elipsis",
+  storageKey: "wordplay_game_es_c1_gramatica-textual",
+  items: [
+    {id:"tex-c1-01", term:"el de", meaning:"sustitución nominal con artículo + de", synonym:"sustitución: el/la de", example:"Mi coche es rojo, pero <b>el de</b> Ana es plateado.", completion:"Mi coche es rojo, pero ______ Ana es plateado. (sustitución nominal)", answer:"el de"},
+    {id:"tex-c1-02", term:"lo sé", meaning:"«lo» neutro como sustituto oracional", synonym:"lo = proposición entera", example:"¿Sabes que cambiaron la fecha? — Sí, <b>lo sé</b>.", completion:"¿Sabes que cambiaron la fecha? — Sí, ______. (sustitución oracional)", answer:"lo sé"},
+    {id:"tex-c1-03", term:"lo es", meaning:"«lo» neutro como sustituto atributivo con «ser»", synonym:"lo + ser = atributo", example:"¿Es complicado el proceso? — Sí, <b>lo es</b>, pero manejable.", completion:"¿Es complicado el proceso? — Sí, ______. (sustituto atributivo)", answer:"lo es"},
+    {id:"tex-c1-04", term:"estos", meaning:"demostrativo anafórico de proximidad (masc. pl.)", synonym:"anáfora: estos = referente reciente", example:"Entraron los inspectores. <b>Estos</b> solicitaron todos los documentos.", completion:"Entraron los inspectores. ______ solicitaron todos los documentos. (anáfora)", answer:"estos"},
+    {id:"tex-c1-05", term:"lo hecho", meaning:"elipsis verbal con «lo hecho» como pro-verbo", synonym:"elipsis: lo hecho = acción ya dicha", example:"¿Has reservado la sala? — Sí, ya está <b>lo hecho</b>. No, espera: ya <b>lo he hecho</b>.", completion:"¿Has reservado la sala? — Sí, ya ______. (elipsis verbal)", answer:"lo he hecho"},
+    {id:"tex-c1-06", term:"dichos", meaning:"conector referencial formal: dichos (masc. pl.)", synonym:"dicho/a/os/as = ya mencionado", example:"<b>Dichos</b> documentos deben ser entregados antes del lunes.", completion:"______ documentos deben ser entregados antes del lunes. (conector referencial formal, pl.)", answer:"dichos"},
+    {id:"tex-c1-07", term:"animales", meaning:"hiperónimo como mecanismo de isotopía léxica", synonym:"isotopía: hiperónimo", example:"Los delfines, las orcas y los tiburones… Estos <b>animales</b> habitan en todos los océanos.", completion:"Los delfines, las orcas y los tiburones… Estos ______ habitan en todos los océanos. (hiperónimo)", answer:"animales"},
+    {id:"tex-c1-08", term:"lo difícil", meaning:"«lo» + adjetivo: nominalización del aspecto abstracto", synonym:"lo + adj. = aspecto abstracto", example:"<b>Lo difícil</b> del proyecto no es la técnica, sino la coordinación del equipo.", completion:"______ del proyecto no es la técnica, sino la coordinación. (lo + adj., aspecto abstracto)", answer:"lo difícil"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

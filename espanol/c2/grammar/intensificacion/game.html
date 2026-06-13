@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Intensificación y Atenuación — Juego C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Gramática</a><span>&#8250;</span>
+  <a href="index.html">Intensificación y Atenuación</a><span>&#8250;</span>
+  <strong>Juego</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="container">
+  <h1>Intensificación y Atenuación — Juego de Dominio</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>Intensificación y atenuación: superlativo, adverbios, condicional de cortesía, impersonalización</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos del mismo concepto y rachas entre conceptos a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominados</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todos los elementos de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominados</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="worksheet.html" class="game-btn secondary">Ejercicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C2 &middot; Juego</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "intensificacion",
+  level: "c2",
+  title: "Intensificación y Atenuación Pragmáticas",
+  storageKey: "wordplay_game_es_c2_intensificacion",
+  items: [
+    {id:"intensificacion-01", term:"intensificación", meaning:"Operación pragmática que amplifica el significado o el grado de una propiedad", synonym:"Operación pragmática que amplifica el si", example:"Es un problema gravísimo", completion:"Es un problema gravísimo", answer:"intensificacion"},
+    {id:"intensificacion-02", term:"atenuación", meaning:"Operación pragmática que reduce el impacto de lo dicho para la imagen o la certeza", synonym:"Operación pragmática que reduce el impac", example:"El resultado es algo decepcionante", completion:"El resultado es algo decepcionante", answer:"atenuacion"},
+    {id:"intensificacion-03", term:"superlativo absoluto", meaning:"Forma en -ísimo que expresa el grado máximo de una cualidad sin comparación", synonym:"Forma en -ísimo que expresa el grado máx", example:"un texto clarísimo", completion:"un texto clarísimo", answer:"superlativo absoluto"},
+    {id:"intensificacion-04", term:"condicional de cortesía", meaning:"Uso del condicional para suavizar peticiones, críticas o afirmaciones", synonym:"Uso del condicional para suavizar petici", example:"Querría hacerte una pregunta", completion:"Querría hacerte una pregunta", answer:"condicional cortesia"},
+    {id:"intensificacion-05", term:"impersonalización", meaning:"Eliminación del agente para distribuir la responsabilidad o atenuar la asertividad", synonym:"Eliminación del agente para distribuir l", example:"Cabría revisar este punto", completion:"Cabría revisar este punto", answer:"impersonalizacion"},
+    {id:"intensificacion-06", term:"reserva epistémica", meaning:"Marcador que limita la certeza del hablante sobre lo afirmado", synonym:"Marcador que limita la certeza del habla", example:"Que yo sepa, llegó ayer", completion:"Que yo sepa, llegó ayer", answer:"reserva epistemica"},
+    {id:"intensificacion-07", term:"reduplicación expresiva", meaning:"Repetición de un elemento para reforzar su valor intensivo", synonym:"Repetición de un elemento para reforzar ", example:"muy muy tarde, buenísimo buenísimo", completion:"muy muy tarde, buenísimo buenísimo", answer:"reduplicacion"},
+    {id:"intensificacion-08", term:"registro", meaning:"Variedad de lengua asociada a una situación comunicativa específica (formal, coloquial, escrito, oral)", synonym:"Variedad de lengua asociada a una situac", example:"mogollón (coloquial) vs. una cantidad ingente (formal)", completion:"mogollón (coloquial) vs. una cantidad ingente (formal)", answer:"registro linguistico"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Aspecto Verbal — Juego C1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../index.html">C1</a><span>&#8250;</span>
+  <a href="../index.html">Gramática</a><span>&#8250;</span>
+  <a href="index.html">Aspecto Verbal</a><span>&#8250;</span>
+  <strong>Juego</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="container">
+  <h1>Aspecto Verbal — Juego de Dominio</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 conceptos aspectuales clave · 3 rondas cada uno · llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos del mismo concepto y rachas entre conceptos a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominados</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todos los elementos de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominados</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="worksheet.html" class="game-btn secondary">Ejercicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C1 &middot; Juego</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "aspecto-verbal",
+  level: "c1",
+  title: "El Aspecto Verbal: Perfectivo e Imperfectivo",
+  storageKey: "wordplay_game_es_c1_aspecto-verbal",
+  items: [
+    {id:"aspecto-verbal-01", term:"aspecto perfectivo", meaning:"perspectiva que presenta el evento como un todo cerrado y acabado", synonym:"perspectiva que presenta el evento como ", example:"Ayer <b>terminé</b> el proyecto: el indefinido expresa <b>aspecto perfectivo</b>.", completion:"Ayer <b>terminé</b> el proyecto: el indefinido expresa <b>______</b>.", answer:"aspecto perfectivo"},
+    {id:"aspecto-verbal-02", term:"aspecto imperfectivo", meaning:"perspectiva que presenta el evento como un proceso en curso, sin límite visible", synonym:"perspectiva que presenta el evento como ", example:"<b>Estudiaba</b> cuando sonó el teléfono: imperfecto expresa <b>aspecto imperfectivo</b>.", completion:"<b>Estudiaba</b> cuando sonó el teléfono: imperfecto expresa <b>______</b>.", answer:"aspecto imperfectivo"},
+    {id:"aspecto-verbal-03", term:"llevo tres horas estudiando", meaning:"perífrasis durativa: llevar + expresión de tiempo + gerundio", synonym:"perífrasis durativa: llevar + expresión ", example:"<b>Llevo tres horas estudiando</b> y todavía me quedan dos capítulos.", completion:"<b>Llevo tres horas estudiando</b> y todavía me quedan dos capítulos.", answer:"llevo tres horas estudiando"},
+    {id:"aspecto-verbal-04", term:"acaba de llegar", meaning:"perífrasis de aspecto reciente: acabar de + infinitivo en presente", synonym:"perífrasis de aspecto reciente: acabar d", example:"No la llames ahora: <b>acaba de llegar</b> y necesita descansar.", completion:"No la llames ahora: <b>______</b> y necesita descansar.", answer:"acaba de llegar"},
+    {id:"aspecto-verbal-05", term:"se puso a trabajar", meaning:"perífrasis incoativa: ponerse a + infinitivo (inicio abrupto)", synonym:"perífrasis incoativa: ponerse a + infini", example:"Nada más llegar a casa, <b>se puso a trabajar</b> sin descansar.", completion:"Nada más llegar a casa, <b>______</b> sin descansar.", answer:"se puso a trabajar"},
+    {id:"aspecto-verbal-06", term:"dejó de fumar", meaning:"perífrasis cesativa: dejar de + infinitivo (fin de una acción)", synonym:"perífrasis cesativa: dejar de + infiniti", example:"<b>Dejó de fumar</b> hace cinco años y ahora tiene mucha más energía.", completion:"<b>Dejó de fumar</b> hace cinco años y ahora tiene mucha más energía.", answer:"dejó de fumar"},
+    {id:"aspecto-verbal-07", term:"verbo de logro", meaning:"Aktionsart: evento instantáneo y télico con punto final natural", synonym:"Aktionsart: evento instantáneo y télico ", example:"<b>Llegar, encontrar, ganar</b> son verbos de <b>logro</b>: ocurren en un instante.", completion:"<b>Llegar, encontrar, ganar</b> son verbos de <b>logro</b>: ocurren en un instante.", answer:"verbo de logro"},
+    {id:"aspecto-verbal-08", term:"había terminado", meaning:"pluscuamperfecto: aspecto perfectivo anterior a otro punto pasado", synonym:"pluscuamperfecto: aspecto perfectivo ant", example:"Cuando llegaste, yo ya <b>había terminado</b> de preparar la cena.", completion:"Cuando llegaste, yo ya <b>______</b> de preparar la cena.", answer:"había terminado"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
