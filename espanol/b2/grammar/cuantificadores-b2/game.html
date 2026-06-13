@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Cuantificadores Avanzados — Juego B2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../index.html">B2</a><span>&#8250;</span>
+  <a href="../index.html">Gramática</a><span>&#8250;</span>
+  <a href="index.html">Cuantificadores Avanzados</a><span>&#8250;</span>
+  <strong>Juego</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="container">
+  <h1>Cuantificadores Avanzados — Juego de Dominio</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 conceptos clave · 3 rondas cada uno · llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos del mismo concepto y rachas entre conceptos a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominados</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todos los elementos de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominados</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="worksheet.html" class="game-btn secondary">Ejercicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol B2 &middot; Juego</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "cuantificadores-b2",
+  level: "b2",
+  title: "Los Cuantificadores y Determinantes Avanzados",
+  storageKey: "wordplay_game_es_b2_cuantificadores-b2",
+  items: [
+    {id:"cuantificadores-b2-01", term:"sendos", meaning:"distributivo: uno para cada uno de los mencionados (formal)", synonym:"distributivo: uno para cada uno de los m", example:"Los dos socios firmaron <b>sendos</b> contratos ante el notario.", completion:"Los dos socios firmaron <b>______</b> contratos ante el notario.", answer:"sendos"},
+    {id:"cuantificadores-b2-02", term:"ambos", meaning:"los dos exactamente, sin excepción", synonym:"los dos exactamente, sin excepción", example:"<b>Ambos</b> candidatos presentaron sus proyectos ante el jurado.", completion:"<b>Ambos</b> candidatos presentaron sus proyectos ante el jurado.", answer:"ambos"},
+    {id:"cuantificadores-b2-03", term:"varios", meaning:"más de dos, cantidad indeterminada; precede al sustantivo", synonym:"más de dos, cantidad indeterminada; prec", example:"He encontrado <b>varios</b> errores en el documento.", completion:"He encontrado <b>______</b> errores en el documento.", answer:"varios"},
+    {id:"cuantificadores-b2-04", term:"cualquier", meaning:"forma apocopada de cualquiera; ante sustantivo, invariable", synonym:"forma apocopada de cualquiera; ante sust", example:"<b>Cualquier</b> ciudadano puede presentar una reclamación.", completion:"<b>Cualquier</b> ciudadano puede presentar una reclamación.", answer:"cualquier"},
+    {id:"cuantificadores-b2-05", term:"cualquiera", meaning:"pronombre o adjetivo pospuesto al sustantivo", synonym:"pronombre o adjetivo pospuesto al sustan", example:"Un día <b>cualquiera</b> puede cambiar tu vida.", completion:"Un día <b>______</b> puede cambiar tu vida.", answer:"cualquiera"},
+    {id:"cuantificadores-b2-06", term:"cierto (antes)", meaning:"antes del sustantivo: un determinado, algún", synonym:"antes del sustantivo: un determinado, al", example:"<b>Cierta</b> persona me contó lo que había ocurrido.", completion:"<b>Cierta</b> persona me contó lo que había ocurrido.", answer:"cierto"},
+    {id:"cuantificadores-b2-07", term:"los demás", meaning:"el resto del grupo; demás es invariable, el artículo concuerda", synonym:"el resto del grupo; demás es invariable,", example:"<b>Los demás</b> participantes esperaban en el pasillo.", completion:"<b>Los demás</b> participantes esperaban en el pasillo.", answer:"los demás"},
+    {id:"cuantificadores-b2-08", term:"lo demás", meaning:"el resto de las cosas (neutro); lo que queda", synonym:"el resto de las cosas (neutro); lo que q", example:"Ya hemos resuelto lo esencial; <b>lo demás</b> puede esperar.", completion:"Ya hemos resuelto lo esencial; <b>______</b> puede esperar.", answer:"lo demás"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
