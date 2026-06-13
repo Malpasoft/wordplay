@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Imperativo — Juego A2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../index.html">A2</a><span>&#8250;</span>
+  <a href="../index.html">Gramática</a><span>&#8250;</span>
+  <a href="index.html">Imperativo</a><span>&#8250;</span>
+  <strong>Juego</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="container">
+  <h1>Imperativo — Juego de Dominio</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 conceptos clave · 3 rondas cada uno · llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos del mismo concepto y rachas entre conceptos a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominados</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todos los elementos de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominados</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="worksheet.html" class="game-btn secondary">Ejercicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol A2 &middot; Juego</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "imperativo",
+  level: "a2",
+  title: "El Imperativo — Dar órdenes, instrucciones y consejos",
+  storageKey: "wordplay_game_es_a2_imperativo",
+  items: [
+    {id:"imp-afi-01", term:"imperativo afirmativo tú (regular)", meaning:"Se forma con la 3.ª persona del singular del presente de indicativo", synonym:"3.ª pers. sg. indicativo", example:"Habla más despacio. / Corre más rápido.", completion:"_____ (escuchar, tú) la música más bajito, por favor.", answer:"Escucha"},
+    {id:"imp-neg-02", term:"imperativo negativo tú", meaning:"Se forma con \"no\" más la 2.ª persona del singular del presente de subjuntivo", synonym:"no + subjuntivo tú", example:"No hables tan alto. / No comas tan rápido.", completion:"No _____ (hablar, tú) con la boca llena.", answer:"hables"},
+    {id:"imp-ust-03", term:"imperativo usted/ustedes", meaning:"Usa las formas del presente de subjuntivo para las dos personas de cortesía", synonym:"subjuntivo para cortesía", example:"Hable usted más alto. / Pasen ustedes, por favor.", completion:"_____ (sentarse, usted) aquí, por favor.", answer:"Siéntese"},
+    {id:"imp-vos-04", term:"imperativo vosotros", meaning:"Se forma sustituyendo la -r del infinitivo por -d; nunca lleva tilde", synonym:"-r → -d", example:"Hablad en voz alta. / Comed toda la verdura.", completion:"_____ (escribir, vosotros) la fecha al principio de la hoja.", answer:"Escribid"},
+    {id:"imp-irr-05", term:"irregulares tú: ven / ve / haz / di", meaning:"Cuatro de los ocho imperativos irregulares de tú más frecuentes", synonym:"imperativos irregulares 1", example:"Ven aquí. / Ve al médico. / Haz la cama. / Di la verdad.", completion:"_____ (hacer, tú) los deberes antes de salir.", answer:"Haz"},
+    {id:"imp-irr-06", term:"irregulares tú: pon / sal / ten / sé", meaning:"Los otros cuatro imperativos irregulares de tú fundamentales", synonym:"imperativos irregulares 2", example:"Pon la mesa. / Sal de aquí. / Ten paciencia. / Sé honesto.", completion:"_____ (tener, tú) cuidado con el escalón.", answer:"Ten"},
+    {id:"imp-pro-07", term:"afirmativo: verbo + pronombre", meaning:"En el imperativo afirmativo el pronombre se une al verbo formando una sola palabra", synonym:"pronombre enclítico", example:"Dímelo. / Levántate. / Cómpraselo.", completion:"Por favor, _____ (decir, tú + me + lo) — ¡quiero saber la verdad!", answer:"dímelo"},
+    {id:"imp-neg-08", term:"negativo: no + pronombre + verbo", meaning:"En el imperativo negativo el pronombre va entre no y el verbo", synonym:"pronombre preverbal en negativo", example:"No me lo digas. / No te vayas todavía.", completion:"No _____ (levantarse, tú) todavía — la clase no ha terminado.", answer:"te levantes"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

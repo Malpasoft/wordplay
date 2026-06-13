@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Gerundio — Juego A2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../index.html">A2</a><span>&#8250;</span>
+  <a href="../index.html">Gramática</a><span>&#8250;</span>
+  <a href="index.html">Gerundio</a><span>&#8250;</span>
+  <strong>Juego</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="container">
+  <h1>Gerundio — Juego de Dominio</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 conceptos clave · 3 rondas cada uno · llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos del mismo concepto y rachas entre conceptos a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominados</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todos los elementos de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominados</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="worksheet.html" class="game-btn secondary">Ejercicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol A2 &middot; Juego</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "gerundio",
+  level: "a2",
+  title: "El Gerundio y Estar + Gerundio — Acciones en progreso",
+  storageKey: "wordplay_game_es_a2_gerundio",
+  items: [
+    {id:"ger-form-01", term:"-ando / -iendo", meaning:"Terminaciones del gerundio regular: -ando para -AR y -iendo para -ER e -IR", synonym:"terminaciones del gerundio", example:"hablar → hablando / comer → comiendo / vivir → viviendo", completion:"El gerundio de \"trabajar\" es trabaj_____.", answer:"ando"},
+    {id:"ger-irr-02", term:"diciendo / pidiendo / siguiendo", meaning:"Gerundios irregulares de verbos -IR con cambio e→i en la raíz", synonym:"gerundio con e→i", example:"decir → diciendo / pedir → pidiendo / seguir → siguiendo", completion:"El gerundio de \"pedir\" es p_____.", answer:"idiendo"},
+    {id:"ger-irr-03", term:"durmiendo / muriendo", meaning:"Gerundios irregulares de verbos -IR con cambio o→u en la raíz", synonym:"gerundio con o→u", example:"dormir → durmiendo / morir → muriendo", completion:"El gerundio de \"dormir\" es d_____.", answer:"urmiendo"},
+    {id:"ger-est-04", term:"estar + gerundio", meaning:"Perífrasis para expresar que una acción está ocurriendo en el momento presente", synonym:"acción en progreso", example:"Estoy comiendo. / Está leyendo. / Estamos trabajando.", completion:"Ahora mismo _____ (ella, hablar) por teléfono con su jefe.", answer:"está hablando"},
+    {id:"ger-seg-05", term:"seguir + gerundio", meaning:"Perífrasis que expresa que una acción continúa sin interrupción", synonym:"acción continuada", example:"Sigo buscando trabajo. / Siguen estudiando juntos.", completion:"¿Todavía _____ (tú, vivir) en Madrid?", answer:"sigues viviendo"},
+    {id:"ger-lle-06", term:"llevar + tiempo + gerundio", meaning:"Perífrasis que expresa la duración de una acción desde su inicio hasta el presente", synonym:"duración hasta ahora", example:"Llevo dos horas esperando. / Llevan un año estudiando juntos.", completion:"_____ (nosotros) tres horas _____ (esperar) el tren.", answer:"Llevamos... esperando"},
+    {id:"ger-ley-07", term:"leyendo / cayendo / oyendo", meaning:"Gerundios con -yendo cuando la raíz del verbo termina en vocal", synonym:"raíz vocal + -yendo", example:"leer → leyendo / caer → cayendo / oír → oyendo", completion:"El gerundio de \"leer\" es _____.", answer:"leyendo"},
+    {id:"ger-pro-08", term:"gerundio + pronombre enclítico", meaning:"Al unir un pronombre al gerundio se añade tilde si es necesario mantener el acento", synonym:"tilde en gerundio con pronombre", example:"Estoy leyéndolo. / Está haciéndolo. / Sigo escribiéndote.", completion:"Estoy escrib_____ una carta a mis amigos. (escribir + CD la)", answer:"iéndola"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

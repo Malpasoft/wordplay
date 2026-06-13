@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Pronombres Objeto — Juego A2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../index.html">A2</a><span>&#8250;</span>
+  <a href="../index.html">Gramática</a><span>&#8250;</span>
+  <a href="index.html">Pronombres Objeto</a><span>&#8250;</span>
+  <strong>Juego</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="container">
+  <h1>Pronombres Objeto — Juego de Dominio</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 conceptos clave · 3 rondas cada uno · llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos del mismo concepto y rachas entre conceptos a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominados</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todos los elementos de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominados</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="worksheet.html" class="game-btn secondary">Ejercicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol A2 &middot; Juego</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "pronombres-objeto",
+  level: "a2",
+  title: "Pronombres de Complemento Directo e Indirecto — Lo, la, le y sus combinaciones",
+  storageKey: "wordplay_game_es_a2_pronombres-objeto",
+  items: [
+    {id:"pron-cd-01", term:"lo / la", meaning:"Pronombres de complemento directo de tercera persona singular", synonym:"CD singular 3.ª", example:"He perdido el paraguas. — Lo he perdido.", completion:"No encuentro la llave. — No _____ encuentro.", answer:"la"},
+    {id:"pron-cd-02", term:"los / las", meaning:"Pronombres de complemento directo de tercera persona plural", synonym:"CD plural 3.ª", example:"Compré las flores. — Las compré esta mañana.", completion:"Busco los documentos. — _____ busco desde ayer.", answer:"Los"},
+    {id:"pron-ci-03", term:"le / les", meaning:"Pronombres de complemento indirecto de tercera persona", synonym:"CI 3.ª", example:"Le mandé un mensaje a Carlos.", completion:"Voy a escribir a mis padres. — Voy a escribir_____ esta noche.", answer:"les"},
+    {id:"pron-se-04", term:"se lo / se la", meaning:"Combinación de CI (le/les) + CD cuando le/les se convierte en se", synonym:"le → se + CD", example:"Le di el libro. → Se lo di.", completion:"Les expliqué la lección. → _____ expliqué.", answer:"Se la"},
+    {id:"pron-pos-05", term:"antes del verbo conjugado", meaning:"Posición estándar del pronombre objeto en oraciones con un solo verbo", synonym:"pronombre preverbal", example:"No lo entiendo. / La veo cada día.", completion:"Tengo el informe. — _____ tengo aquí mismo. (pronombre + verbo)", answer:"Lo"},
+    {id:"pron-inf-06", term:"unido al infinitivo o antes del auxiliar", meaning:"Posición del pronombre con perífrasis verbales: dos opciones igualmente correctas", synonym:"pronombre con infinitivo", example:"Quiero comprarlo. / Lo quiero comprar.", completion:"Necesito llamar a Ana. — Necesito llamar_____ / _____ necesito llamar.", answer:"la / La"},
+    {id:"pron-me-07", term:"me / te / nos / os", meaning:"Pronombres de primera y segunda persona para CD y CI", synonym:"pronombres de 1.ª y 2.ª persona", example:"Me ayudó mucho. / Te lo digo mañana.", completion:"El profesor _____ explicó la gramática a nosotros muy bien. (CI 1.ª pl.)", answer:"nos"},
+    {id:"pron-ger-08", term:"gerundio + pronombre (con tilde)", meaning:"Al unir el pronombre al gerundio se añade tilde si el acento lo requiere", synonym:"pronombre enclítico en gerundio", example:"Estoy leyéndolo. / Están haciéndoselo.", completion:"Estoy escrib_____ una carta. (escrib + CI te + CD la)", answer:"iéndotela"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
