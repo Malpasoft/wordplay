@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Los Números — Juego A1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../index.html">A1</a><span>&#8250;</span>
+  <a href="../index.html">Gramática</a><span>&#8250;</span>
+  <a href="index.html">Los Números</a><span>&#8250;</span>
+  <strong>Juego</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="container">
+  <h1>Los Números — Juego de Dominio</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 grupos de números clave · 3 rondas cada uno · llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos del mismo concepto y rachas entre conceptos a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominados</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todos los elementos de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominados</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="worksheet.html" class="game-btn secondary">Ejercicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol A1 &middot; Juego</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "numeros",
+  level: "a1",
+  title: "Los Números — Cardinales y Ordinales",
+  storageKey: "wordplay_game_es_a1_numeros",
+  items: [
+    {id:"1-20", term:"1 al 20", meaning:"los veinte primeros números cardinales", synonym:"los números básicos", example:"Tengo quince euros en la cartera.", completion:"Mi hermano tiene ______ (17) años.", answer:"diecisiete"},
+    {id:"21-99", term:"21 al 99", meaning:"números del 21 al 99: decenas + y + unidades", synonym:"números compuestos", example:"Hay treinta y dos estudiantes en la clase.", completion:"El autobús sale en ______ (45) minutos.", answer:"cuarenta y cinco"},
+    {id:"cien-ciento", term:"cien / ciento", meaning:"cien = exactamente 100; ciento cuando va seguido de más cifras", synonym:"la centena", example:"Cien personas asistieron al evento.", completion:"Hay ______ (101) páginas en el libro.", answer:"ciento uno"},
+    {id:"centenas", term:"centenas (200–900)", meaning:"doscientos, trescientos… novecientos — concuerdan en género", synonym:"múltiplos de cien", example:"La ciudad tiene doscientas mil habitantes.", completion:"El tren cuesta ______ (300) euros.", answer:"trescientos"},
+    {id:"primer", term:"primer / primero", meaning:"ordinal de 1.º: primer ante masc. sing., primero en otros casos", synonym:"primer / primera", example:"El primer día de clase es importante.", completion:"Vivo en el ______ (1.º) piso.", answer:"primer"},
+    {id:"segundo", term:"segundo/a", meaning:"ordinal de 2.º — concuerda en género", synonym:"segundo / segunda", example:"Es la segunda vez que vengo aquí.", completion:"Tiene una ______ (2.ª) oportunidad.", answer:"segunda"},
+    {id:"decenas", term:"decenas (30–90)", meaning:"treinta, cuarenta, cincuenta, sesenta, setenta, ochenta, noventa", synonym:"múltiplos de diez", example:"Mi padre tiene sesenta años.", completion:"La ciudad está a ______ (80) kilómetros.", answer:"ochenta"},
+    {id:"veinti", term:"veinti- (21–29)", meaning:"del 21 al 29: se escribe en una sola palabra con veinti-", synonym:"veintiuno a veintinueve", example:"Tengo veintitrés años.", completion:"Hay ______ (22) personas aquí.", answer:"veintidós"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

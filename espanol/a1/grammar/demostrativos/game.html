@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Los Demostrativos — Juego A1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../index.html">A1</a><span>&#8250;</span>
+  <a href="../index.html">Gramática</a><span>&#8250;</span>
+  <a href="index.html">Los Demostrativos</a><span>&#8250;</span>
+  <strong>Juego</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="container">
+  <h1>Los Demostrativos — Juego de Dominio</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 series de demostrativos · 3 rondas cada uno · llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos del mismo concepto y rachas entre conceptos a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominados</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todos los elementos de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominados</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="worksheet.html" class="game-btn secondary">Ejercicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol A1 &middot; Juego</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "demostrativos",
+  level: "a1",
+  title: "Los Demostrativos — Este, Ese, Aquel",
+  storageKey: "wordplay_game_es_a1_demostrativos",
+  items: [
+    {id:"este", term:"este / esta", meaning:"demostrativo singular para objetos cercanos al hablante", synonym:"this (singular)", example:"Este libro es muy bueno.", completion:"______ casa es muy grande. (aquí, femenino)", answer:"Esta"},
+    {id:"estos", term:"estos / estas", meaning:"demostrativo plural para objetos cercanos al hablante", synonym:"these", example:"Estos zapatos son muy cómodos.", completion:"______ flores son muy bonitas. (aquí, femenino plural)", answer:"Estas"},
+    {id:"ese", term:"ese / esa", meaning:"demostrativo singular para objetos cercanos al oyente", synonym:"that (near listener)", example:"¿Puedes pasarme esa sal?", completion:"Ese ______ (hombre, cerca de ti) es mi vecino.", answer:"hombre"},
+    {id:"aquel", term:"aquel / aquella", meaning:"demostrativo singular para objetos lejanos de ambos", synonym:"that (far, over there)", example:"Aquel edificio es muy antiguo.", completion:"______ montaña de allí es el Teide. (femenino)", answer:"Aquella"},
+    {id:"aquellos", term:"aquellos / aquellas", meaning:"demostrativo plural para objetos lejanos de ambos", synonym:"those (far, over there)", example:"Aquellos árboles son centenarios.", completion:"______ casas de allá son muy antiguas. (fem. pl.)", answer:"Aquellas"},
+    {id:"esto", term:"esto / eso / aquello", meaning:"demostrativos neutros — para objetos no identificados o ideas", synonym:"this/that (neuter)", example:"¿Qué es esto? — No sé.", completion:"______ es lo que más me gusta de España. (neutro, referencia general)", answer:"Eso"},
+    {id:"concordancia", term:"concordancia del demostrativo", meaning:"el demostrativo concuerda en género y número con el sustantivo", synonym:"género y número", example:"Este hombre / esta mujer / estos niños / estas niñas.", completion:"______ (lejano, fem. sing.) ciudad es muy bonita.", answer:"Aquella"},
+    {id:"distancia", term:"tres distancias", meaning:"este = cerca del hablante; ese = cerca del oyente; aquel = lejos de ambos", synonym:"aquí / ahí / allí", example:"Este café, esa silla, aquel edificio.", completion:"______ (cerca de ti) sombrero es tuyo?", answer:"¿Ese"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
