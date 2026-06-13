@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>El Trabajo y la Oficina — Juego | Espa&#241;ol A2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/a2/index.html">A2</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>El Trabajo y la Oficina</strong>
+</div>
+<div class="chapter-num">V07</div>
+<h1>El Trabajo y la Oficina</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="game-root"></div>
+<script>
+window.GAME_DATA = {
+  chapterId: "trabajo-oficina",
+  level: "a2",
+  title: "El Trabajo y la Oficina",
+  storageKey: "wordplay_game_es_a2_trabajo-oficina",
+  section: 'vocabulary',
+  items: [
+    {id:"jefe", term:"jefe", meaning:"persona que dirige a otras en un lugar de trabajo", synonym:"Espa&#241;ol para: persona que dirige a otras en un lugar de trabajo", example:"Mi <b>jefe</b> es muy exigente pero justo.", completion:"Mi ______ es muy exigente pero justo.", answer:"jefe"},
+    {id:"reunion", term:"reunión", meaning:"encuentro de varias personas para tratar un asunto", synonym:"Espa&#241;ol para: encuentro de varias personas para tratar un asunto", example:"Tengo una <b>reunión</b> importante a las diez.", completion:"Tengo una ______ importante a las diez.", answer:"reunión", accept:["reunion"]},
+    {id:"correo-electronico", term:"correo electrónico", meaning:"mensaje enviado por internet", synonym:"Espa&#241;ol para: mensaje enviado por internet", example:"Envíame un <b>correo electrónico</b> con los datos.", completion:"Envíame un ______ con los datos.", answer:"correo electrónico", accept:["correo electronico"]},
+    {id:"ordenador", term:"ordenador", meaning:"máquina electrónica que procesa información", synonym:"Espa&#241;ol para: máquina electrónica que procesa información", example:"Trabajo con el <b>ordenador</b> ocho horas al día.", completion:"Trabajo con el ______ ocho horas al día.", answer:"ordenador"},
+    {id:"impresora", term:"impresora", meaning:"máquina que imprime documentos en papel", synonym:"Espa&#241;ol para: máquina que imprime documentos en papel", example:"La <b>impresora</b> está sin tinta, hay que comprar más.", completion:"La ______ está sin tinta, hay que comprar más.", answer:"impresora"},
+    {id:"contrato", term:"contrato", meaning:"documento legal que establece las condiciones de trabajo", synonym:"Espa&#241;ol para: documento legal que establece las condiciones de trabajo", example:"Firmé el <b>contrato</b> de trabajo ayer.", completion:"Firmé el ______ de trabajo ayer.", answer:"contrato"},
+    {id:"sueldo", term:"sueldo", meaning:"dinero que se recibe a cambio del trabajo", synonym:"Espa&#241;ol para: dinero que se recibe a cambio del trabajo", example:"Mi <b>sueldo</b> aumentó el año pasado.", completion:"Mi ______ aumentó el año pasado.", answer:"sueldo"},
+    {id:"vacaciones", term:"vacaciones", meaning:"período oficial de descanso en el trabajo", synonym:"Espa&#241;ol para: período oficial de descanso en el trabajo", example:"Tengo dos semanas de <b>vacaciones</b> en agosto.", completion:"Tengo dos semanas de ______ en agosto.", answer:"vacaciones"}
+  ]
+};
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol A2 &middot; Vocabulario</footer>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>La Casa y el Hogar — Juego | Espa&#241;ol A2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/a2/index.html">A2</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>La Casa y el Hogar</strong>
+</div>
+<div class="chapter-num">V02</div>
+<h1>La Casa y el Hogar</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="game-root"></div>
+<script>
+window.GAME_DATA = {
+  chapterId: "casa-hogar",
+  level: "a2",
+  title: "La Casa y el Hogar",
+  storageKey: "wordplay_game_es_a2_casa-hogar",
+  section: 'vocabulary',
+  items: [
+    {id:"cocina", term:"cocina", meaning:"habitación de la casa donde se prepara la comida", synonym:"Espa&#241;ol para: habitación de la casa donde se prepara la comida", example:"Preparo la comida en la <b>cocina</b>.", completion:"Preparo la comida en la ______.", answer:"cocina"},
+    {id:"salon", term:"salón", meaning:"habitación principal de la casa para estar y recibir visitas", synonym:"Espa&#241;ol para: habitación principal de la casa para estar y recibir visitas", example:"Vemos la tele en el <b>salón</b> por las noches.", completion:"Vemos la tele en el ______ por las noches.", answer:"salón", accept:["salon"]},
+    {id:"dormitorio", term:"dormitorio", meaning:"habitación de la casa donde se duerme", synonym:"Espa&#241;ol para: habitación de la casa donde se duerme", example:"Mi <b>dormitorio</b> tiene una cama grande.", completion:"Mi ______ tiene una cama grande.", answer:"dormitorio"},
+    {id:"bano", term:"baño", meaning:"habitación de la casa con ducha, bañera e inodoro", synonym:"Espa&#241;ol para: habitación de la casa con ducha, bañera e inodoro", example:"El <b>baño</b> está al final del pasillo.", completion:"El ______ está al final del pasillo.", answer:"baño", accept:["bano"]},
+    {id:"ventana", term:"ventana", meaning:"apertura en la pared para dar luz y ventilación", synonym:"Espa&#241;ol para: apertura en la pared para dar luz y ventilación", example:"Abro la <b>ventana</b> cada mañana para ventilar.", completion:"Abro la ______ cada mañana para ventilar.", answer:"ventana"},
+    {id:"puerta", term:"puerta", meaning:"elemento que cierra o abre un acceso", synonym:"Espa&#241;ol para: elemento que cierra o abre un acceso", example:"Cierra la <b>puerta</b> al salir, por favor.", completion:"Cierra la ______ al salir, por favor.", answer:"puerta"},
+    {id:"mueble", term:"mueble", meaning:"objeto que sirve para equipar y decorar una habitación", synonym:"Espa&#241;ol para: objeto que sirve para equipar y decorar una habitación", example:"Los <b>muebles</b> del salón son de madera.", completion:"Los ______ del salón son de madera.", answer:"mueble"},
+    {id:"silla", term:"silla", meaning:"asiento con respaldo para una persona", synonym:"Espa&#241;ol para: asiento con respaldo para una persona", example:"Siéntate en esta <b>silla</b>, por favor.", completion:"Siéntate en esta ______, por favor.", answer:"silla"}
+  ]
+};
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol A2 &middot; Vocabulario</footer>
+</body>
+</html>
