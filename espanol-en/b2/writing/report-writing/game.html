@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Writing a Formal Report — B2 Grammar Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>&#8250;</span>
+  <a href="../../../../espanol-en/index.html">Spanish</a><span>&#8250;</span>
+  <a href="../../index.html">B2</a><span>&#8250;</span>
+  <a href="../index.html">Writing</a><span>&#8250;</span>
+  <a href="index.html">Report Writing</a><span>&#8250;</span>
+  <strong>Game</strong>
+</div>
+<div class="container">
+  <h1>Report Writing — Mastery Game</h1>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Practice</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  <a href="printables.html" class="chapter-nav-btn">Printables</a>
+</nav>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Dominio Mastery</h2>
+        <p>Match the report phrase to its section.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved session.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You have completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Worksheet</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Spanish B2 &middot; Game</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: 'report-writing',
+  level: 'b2',
+  title: "Writing a Formal Report",
+  storageKey: 'wordplay_game_es_b2_report-writing',
+  items: [
+    {id:"informe-objeto", term:"El presente informe tiene por objeto", meaning:"this report aims to (purpose)", synonym:"intro purpose", example:"<b>El presente informe tiene por objeto</b> analizar las causas del descenso.", completion:"______ ______ ______ ______ ______ ______ ______ presentar los resultados de la encuesta.", answer:"El presente informe tiene por objeto"},
+    {id:"se-ha-llevado", term:"Se ha llevado a cabo", meaning:"has been carried out (method)", synonym:"method phrase", example:"<b>Se ha llevado a cabo</b> una encuesta entre 150 estudiantes.", completion:"______ ______ ______ ______ ______ un análisis de los datos disponibles.", answer:"Se ha llevado a cabo"},
+    {id:"resultados-revelan", term:"Los resultados revelan que", meaning:"the findings reveal that", synonym:"findings opener", example:"<b>Los resultados revelan que</b> el 65% considera insuficiente la oferta.", completion:"______ ______ ______ ______ el 72% de los encuestados está satisfecho.", answer:"Los resultados revelan que"},
+    {id:"cabe-destacar", term:"Cabe destacar que", meaning:"it is worth noting that", synonym:"highlight result", example:"<b>Cabe destacar que</b> los estudiantes de cursos superiores mostraron menos satisfacción.", completion:"______ ______ ______ los resultados varían significativamente entre grupos.", answer:"Cabe destacar que"},
+    {id:"opcion-ventaja", term:"La opción A presenta la ventaja de", meaning:"option A has the advantage of", synonym:"balanced evaluation", example:"<b>La opción A presenta la ventaja de</b> ser más económica, aunque requiere más tiempo.", completion:"______ ______ ______ ______ ______ ______ ______ ofrecer resultados rápidos, aunque es más costosa.", answer:"La opción A presenta la ventaja de"},
+    {id:"se-recomienda", term:"Se recomienda que", meaning:"it is recommended that (subjunctive)", synonym:"recommendation subjunctive", example:"<b>Se recomienda que</b> el centro amplíe la oferta en horario de tarde.", completion:"______ ______ ______ el ayuntamiento revise el equipamiento deportivo.", answer:"Se recomienda que"},
+    {id:"seria-aconsejable", term:"Sería aconsejable implementar", meaning:"it would be advisable to implement", synonym:"recommendation conditional", example:"<b>Sería aconsejable implementar</b> un sistema de retroalimentación trimestral.", completion:"______ ______ ______ un programa de formación continua para el profesorado.", answer:"Sería aconsejable implementar"},
+    {id:"medidas-propuestas", term:"En conclusión, las medidas propuestas", meaning:"in conclusion, the proposed measures", synonym:"report conclusion", example:"<b>En conclusión, las medidas propuestas</b> contribuirán a mejorar la experiencia.", completion:"______ ______ , ______ ______ ______ mejorarán la satisfacción de los usuarios.", answer:"En conclusión las medidas propuestas"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

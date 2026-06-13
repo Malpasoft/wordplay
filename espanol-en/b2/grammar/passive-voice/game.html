@@ -1,17 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Game | Word Play</title>
+<title>The Passive Voice — El pasivo — B2 Grammar Game | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
 </head>
 <body>
-<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">◐ Dark</button></div></header>
-<div class="section-page"><p>Game coming soon.</p></div>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>&#8250;</span>
+  <a href="../../../../espanol-en/index.html">Spanish</a><span>&#8250;</span>
+  <a href="../../index.html">B2</a><span>&#8250;</span>
+  <a href="../index.html">Grammar</a><span>&#8250;</span>
+  <a href="index.html">The Passive Voice</a><span>&#8250;</span>
+  <strong>Game</strong>
+</div>
+<div class="container">
+  <h1>The Passive Voice — Mastery Game</h1>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Practice</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  <a href="printables.html" class="chapter-nav-btn">Printables</a>
+</nav>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Dominio Mastery</h2>
+        <p>Master the passive voice in Spanish: ser + participle, estar + participle for states, and the se pasivo. Reach 100 points to win.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved session.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You have completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Worksheet</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Spanish B2 &middot; Game</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: 'passive-voice',
+  level: 'b2',
+  title: "The Passive Voice — El pasivo",
+  storageKey: 'wordplay_game_es_b2_passive-voice',
+  items: [
+    {id:"fue-aprobada", term:"fue aprobada", meaning:"was approved (ser passive, f.)", synonym:"ser passive past", example:"La ley <b>fue aprobada</b> por el parlamento en mayo.", completion:"La ley ______ ______ por el parlamento. (was approved)", answer:"fue aprobada"},
+    {id:"estaba-cerrada", term:"estaba cerrada", meaning:"was closed (state)", synonym:"estar + participle state", example:"Cuando llegué, la tienda <b>estaba cerrada</b>.", completion:"Cuando llegué, la tienda ______ ______ . (was closed — state)", answer:"estaba cerrada"},
+    {id:"se-venden", term:"se venden", meaning:"are sold / for sale", synonym:"se pasivo plural", example:"<b>Se venden</b> pisos en este edificio.", completion:"______ ______ pisos en este edificio. (are sold)", answer:"se venden"},
+    {id:"se-dice-que", term:"se dice que", meaning:"it is said that", synonym:"impersonal se", example:"<b>Se dice que</b> el proyecto empezará pronto.", completion:"______ ______ ______ el proyecto empezará pronto. (it is said that)", answer:"se dice que"},
+    {id:"fue-construido", term:"fue construido por", meaning:"was built by (ser passive)", synonym:"ser passive with agent", example:"El estadio <b>fue construido por</b> una empresa española.", completion:"El estadio ______ ______ ______ una empresa española. (was built by)", answer:"fue construido por"},
+    {id:"se-aplican", term:"se aplican", meaning:"are applied (se pasivo)", synonym:"se pasivo formal", example:"<b>Se aplican</b> las mismas normas en todos los países.", completion:"______ ______ las mismas normas en todos los países. (are applied)", answer:"se aplican"},
+    {id:"se-le-concedio", term:"se le concedió", meaning:"she/he was granted", synonym:"se + indirect obj.", example:"<b>Se le concedió</b> la beca por sus méritos académicos.", completion:"______ ______ ______ la beca por sus méritos. (was granted)", answer:"se le concedio"},
+    {id:"se-cree-que", term:"se cree que", meaning:"it is believed that", synonym:"impersonal belief", example:"<b>Se cree que</b> el cambio climático es la mayor amenaza.", completion:"______ ______ ______ el cambio climático es urgente. (it is believed that)", answer:"se cree que"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
 </body>
 </html>

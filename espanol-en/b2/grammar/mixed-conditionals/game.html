@@ -1,17 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Game | Word Play</title>
+<title>Mixed Conditionals — Si hubiera estudiado, sabría — B2 Grammar Game | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
 </head>
 <body>
-<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">◐ Dark</button></div></header>
-<div class="section-page"><p>Game coming soon.</p></div>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>&#8250;</span>
+  <a href="../../../../espanol-en/index.html">Spanish</a><span>&#8250;</span>
+  <a href="../../index.html">B2</a><span>&#8250;</span>
+  <a href="../index.html">Grammar</a><span>&#8250;</span>
+  <a href="index.html">Mixed Conditionals</a><span>&#8250;</span>
+  <strong>Game</strong>
+</div>
+<div class="container">
+  <h1>Mixed Conditionals — Mastery Game</h1>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Practice</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  <a href="printables.html" class="chapter-nav-btn">Printables</a>
+</nav>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Dominio Mastery</h2>
+        <p>Master mixed conditionals in Spanish: past hypothesis with present result, and present traits with past results. Reach 100 points to win.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved session.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You have completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Worksheet</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Spanish B2 &middot; Game</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: 'mixed-conditionals',
+  level: 'b2',
+  title: "Mixed Conditionals — Si hubiera estudiado, sabría",
+  storageKey: 'wordplay_game_es_b2_mixed-conditionals',
+  items: [
+    {id:"hubiera-nacido", term:"si hubiera nacido", meaning:"if I/she had been born", synonym:"past hypothesis", example:"<b>Si hubiera nacido</b> en España, hablaría español de niño.", completion:"______ ______ ______ en España, hablaría español de niño.", answer:"si hubiera nacido"},
+    {id:"ahora-tendria", term:"ahora tendría", meaning:"I would now have", synonym:"present result", example:"Si hubiera ahorrado, <b>ahora tendría</b> suficiente.", completion:"Si hubiera ahorrado, ______ ______ suficiente. (I would now have)", answer:"ahora tendria"},
+    {id:"fuera-habia", term:"si fuera… lo habría", meaning:"if she were… she would have", synonym:"present trait → past result", example:"<b>Si fuera</b> más paciente, <b>lo habría</b> intentado.", completion:"______ ______ más paciente, ______ ______ intentado. (present trait → past result)", answer:"si fuera"},
+    {id:"no-hubiera", term:"si no hubiera", meaning:"if I/she had not", synonym:"negative past hypothesis", example:"<b>Si no hubiera</b> aceptado ese trabajo, estaría en casa ahora.", completion:"______ ______ ______ aceptado ese trabajo, estaría en casa. (if not had)", answer:"si no hubiera"},
+    {id:"habria-dicho", term:"lo habría dicho", meaning:"she would have said it", synonym:"past result", example:"Si no fuera tan tímida, <b>lo habría dicho</b> antes.", completion:"Si no fuera tan tímida, ______ ______ ______ antes. (she would have said)", answer:"lo habria dicho"},
+    {id:"ahora-estaria", term:"ahora estaría", meaning:"I would be now", synonym:"present result", example:"Si hubiera llegado a tiempo, <b>ahora estaría</b> en casa.", completion:"Si hubiera llegado a tiempo, ______ ______ en casa. (I would be now)", answer:"ahora estaria"},
+    {id:"si-tuviera-habria", term:"si tuviera… habría", meaning:"if she had (trait)… she would have", synonym:"habitual trait → past result", example:"<b>Si tuviera</b> más confianza, <b>habría</b> pedido el ascenso.", completion:"______ ______ más confianza, ______ pedido el ascenso.", answer:"si tuviera"},
+    {id:"hoy-seria", term:"hoy sería", meaning:"today she/he would be", synonym:"present result", example:"Si hubiera seguido entrenando, <b>hoy sería</b> campeona.", completion:"Si hubiera seguido entrenando, ______ ______ campeona. (today she would be)", answer:"hoy seria"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
 </body>
 </html>

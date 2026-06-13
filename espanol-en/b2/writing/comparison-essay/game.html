@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Writing a Comparison Essay — B2 Grammar Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>&#8250;</span>
+  <a href="../../../../espanol-en/index.html">Spanish</a><span>&#8250;</span>
+  <a href="../../index.html">B2</a><span>&#8250;</span>
+  <a href="../index.html">Writing</a><span>&#8250;</span>
+  <a href="index.html">Comparison Essay</a><span>&#8250;</span>
+  <strong>Game</strong>
+</div>
+<div class="container">
+  <h1>Comparison Essay — Mastery Game</h1>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Practice</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  <a href="printables.html" class="chapter-nav-btn">Printables</a>
+</nav>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Dominio Mastery</h2>
+        <p>Match the comparison connector to its function.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved session.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You have completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Worksheet</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Spanish B2 &middot; Game</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: 'comparison-essay',
+  level: 'b2',
+  title: "Writing a Comparison Essay",
+  storageKey: 'wordplay_game_es_b2_comparison-essay',
+  items: [
+    {id:"mientras-que", term:"Mientras que", meaning:"while / whereas (contrast)", synonym:"direct contrast", example:"<b>Mientras que</b> el alquiler en Madrid supera 1.200€, en el campo es la mitad.", completion:"______ ______ la ciudad ofrece más empleos, el campo ofrece más calidad de vida.", answer:"Mientras que"},
+    {id:"en-cambio", term:"En cambio,", meaning:"on the other hand / instead", synonym:"contrasting alternative", example:"La ciudad es cara. <b>En cambio,</b> el campo es más asequible.", completion:"______ ______ , el transporte rural es más costoso. (on the other hand)", answer:"En cambio"},
+    {id:"del-mismo-modo", term:"Del mismo modo,", meaning:"in the same way / likewise", synonym:"similarity", example:"<b>Del mismo modo,</b> ambas opciones ofrecen oportunidades de crecimiento.", completion:"______ ______ ______ , tanto la FP como la universidad permiten especializarse.", answer:"Del mismo modo"},
+    {id:"tanto-como", term:"Tanto… como", meaning:"both A and B (similarity grouping)", synonym:"grouping trait", example:"<b>Tanto</b> la ciudad <b>como</b> el campo han mejorado su conectividad.", completion:"______ la universidad ______ la FP ofrecen salidas al mercado laboral.", answer:"Tanto como"},
+    {id:"en-lo-que-respecta", term:"En lo que respecta a", meaning:"with regard to / as for", synonym:"criterion intro", example:"<b>En lo que respecta a</b> el coste de vida, la ciudad es más cara.", completion:"______ ______ ______ ______ las salidas laborales, la FP es más directa.", answer:"En lo que respecta a"},
+    {id:"aunque-ambos", term:"Aunque ambos…", meaning:"although both… (partial similarity)", synonym:"partial similarity", example:"<b>Aunque ambos</b> tienen inconvenientes, el sistema público es más accesible.", completion:"______ ______ presentan ventajas, la ciudad ofrece más oportunidades.", answer:"Aunque ambos"},
+    {id:"por-el-contrario", term:"Por el contrario,", meaning:"on the contrary (direct contrast)", synonym:"direct contrast", example:"La ciudad es ruidosa. <b>Por el contrario,</b> el campo es tranquilo.", completion:"______ ______ ______ , la FP tiene acceso más rápido al mercado laboral.", answer:"Por el contrario"},
+    {id:"en-definitiva-comp", term:"En definitiva,", meaning:"in short / ultimately (conclusion)", synonym:"nuanced conclusion", example:"<b>En definitiva,</b> la elección depende de las prioridades personales.", completion:"______ , ambas opciones presentan ventajas claras. (in short)", answer:"En definitiva"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

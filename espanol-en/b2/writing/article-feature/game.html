@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Writing a Feature Article — B2 Grammar Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>&#8250;</span>
+  <a href="../../../../espanol-en/index.html">Spanish</a><span>&#8250;</span>
+  <a href="../../index.html">B2</a><span>&#8250;</span>
+  <a href="../index.html">Writing</a><span>&#8250;</span>
+  <a href="index.html">Feature Article</a><span>&#8250;</span>
+  <strong>Game</strong>
+</div>
+<div class="container">
+  <h1>Feature Article — Mastery Game</h1>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Practice</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  <a href="printables.html" class="chapter-nav-btn">Printables</a>
+</nav>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Dominio Mastery</h2>
+        <p>Match the feature article technique to its example.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved session.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You have completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Worksheet</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Spanish B2 &middot; Game</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: 'article-feature',
+  level: 'b2',
+  title: "Writing a Feature Article",
+  storageKey: 'wordplay_game_es_b2_article-feature',
+  items: [
+    {id:"sabias-que", term:"¿Sabías que…?", meaning:"did you know that…? (hook)", synonym:"statistic hook", example:"<b>¿Sabías que</b> el 60% de los españoles se siente solo?", completion:"¿______ que el 40% pasa cuatro horas al día en redes? (Did you know)", answer:"¿Sabías"},
+    {id:"lo-pocos-saben", term:"Lo que pocos saben es que", meaning:"what few people know is that", synonym:"surprising angle", example:"<b>Lo que pocos saben es que</b> detrás de cada foto hay horas de edición.", completion:"______ ______ ______ ______ ______ el problema es más profundo.", answer:"Lo que pocos saben es que"},
+    {id:"tu-mismo", term:"Tú mismo habrás notado que", meaning:"you yourself will have noticed that", synonym:"direct address", example:"<b>Tú mismo habrás notado que</b> el tiempo libre escasea.", completion:"______ ______ ______ ______ el ritmo de vida ha cambiado.", answer:"Tú mismo habrás notado que"},
+    {id:"segun-informe", term:"Según un informe reciente,", meaning:"according to a recent report", synonym:"evidence", example:"<b>Según un informe reciente,</b> el aislamiento afecta a todos los grupos.", completion:"______ ______ ______ ______ , el 58% de los jóvenes se siente ansioso.", answer:"Según un informe reciente"},
+    {id:"no-cabe-duda", term:"No cabe duda de que", meaning:"there is no doubt that", synonym:"angle assertion", example:"<b>No cabe duda de que</b> las redes han cambiado nuestra forma de relacionarnos.", completion:"______ ______ ______ ______ la tecnología ha transformado el mercado laboral.", answer:"No cabe duda de que"},
+    {id:"pero-precio", term:"¿Pero a qué precio?", meaning:"but at what cost? (rhetorical)", synonym:"rhetorical question", example:"Las redes conectan a millones. <b>¿Pero a qué precio?</b>", completion:"______ ______ ______ ______ ? (at what cost, rhetorical)", answer:"¿Pero a qué precio?"},
+    {id:"es-real", term:"Es un problema real.", meaning:"it is a real problem (short sentence)", synonym:"impact rhythm", example:"<b>Es un problema real.</b> Y va en aumento.", completion:"______ ______ ______ ______ . Y va en aumento. (impact sentence)", answer:"Es un problema real"},
+    {id:"solucion-manos", term:"La solución está en nuestras manos.", meaning:"the solution is in our hands", synonym:"closing line", example:"La solución, como siempre, <b>está en nuestras manos.</b>", completion:"______ ______ , como siempre, ______ ______ ______ ______ . (closing line)", answer:"La solución está en nuestras manos"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Writing a Narrative Essay — B2 Grammar Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>&#8250;</span>
+  <a href="../../../../espanol-en/index.html">Spanish</a><span>&#8250;</span>
+  <a href="../../index.html">B2</a><span>&#8250;</span>
+  <a href="../index.html">Writing</a><span>&#8250;</span>
+  <a href="index.html">Narrative Essay</a><span>&#8250;</span>
+  <strong>Game</strong>
+</div>
+<div class="container">
+  <h1>Narrative Essay — Mastery Game</h1>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Practice</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  <a href="printables.html" class="chapter-nav-btn">Printables</a>
+</nav>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Dominio Mastery</h2>
+        <p>Match the narrative essay phrase to its function.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved session.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You have completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Worksheet</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Spanish B2 &middot; Game</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: 'narrative-essay',
+  level: 'b2',
+  title: "Writing a Narrative Essay",
+  storageKey: 'wordplay_game_es_b2_narrative-essay',
+  items: [
+    {id:"era-tarde", term:"Era una tarde de julio cuando", meaning:"it was a July afternoon when (scene)", synonym:"scene setter", example:"<b>Era una tarde de julio cuando</b> sonó el teléfono.", completion:"______ ______ ______ ______ ______ ______ llegó la noticia que lo cambió todo.", answer:"Era una tarde de julio cuando"},
+    {id:"de-repente", term:"De repente,", meaning:"suddenly (pace accelerator)", synonym:"surprise marker", example:"<b>De repente,</b> todo cambió.", completion:"______ ______ , me di cuenta de que había cometido un error.", answer:"De repente"},
+    {id:"mientras-esperaba", term:"Mientras esperaba,", meaning:"while I was waiting (slow pace)", synonym:"simultaneous action", example:"<b>Mientras esperaba,</b> los minutos parecían horas.", completion:"______ ______ , el silencio se hacía cada vez más denso.", answer:"Mientras esperaba"},
+    {id:"manos-temblaban", term:"Las manos me temblaban", meaning:"my hands were trembling (show emotion)", synonym:"physical reaction", example:"<b>Las manos me temblaban</b> y no podía hablar.", completion:"______ ______ ______ ______ y el corazón me latía deprisa.", answer:"Las manos me temblaban"},
+    {id:"en-ese-instante", term:"En ese instante,", meaning:"in that instant (climax marker)", synonym:"climax", example:"<b>En ese instante,</b> comprendí que nada volvería a ser lo mismo.", completion:"______ ______ ______ , lo entendí todo. (in that instant)", answer:"En ese instante"},
+    {id:"aire-olia", term:"El aire olía a", meaning:"the air smelled of (sensory detail)", synonym:"sensory", example:"<b>El aire olía a</b> pino y tierra mojada.", completion:"______ ______ ______ ______ café recién hecho y lluvia.", answer:"El aire olía a"},
+    {id:"experiencia-enseno", term:"Aquella experiencia me enseñó que", meaning:"that experience taught me that", synonym:"reflection opener", example:"<b>Aquella experiencia me enseñó que</b> a veces los obstáculos nos forman.", completion:"______ ______ ______ ______ ______ los mayores retos son los más valiosos.", answer:"Aquella experiencia me enseñó que"},
+    {id:"crei-derrota", term:"Lo que creí una derrota resultó ser", meaning:"what I believed was a defeat turned out to be", synonym:"circular echo", example:"<b>Lo que creí una derrota resultó ser</b> el inicio de algo mejor.", completion:"______ ______ ______ ______ ______ ______ ______ el punto de partida de algo nuevo.", answer:"Lo que creí una derrota resultó ser"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Writing an Opinion Essay — Un Ensayo de Opinión — B1 Grammar Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>&#8250;</span>
+  <a href="../../../../espanol-en/index.html">Spanish</a><span>&#8250;</span>
+  <a href="../../index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Writing</a><span>&#8250;</span>
+  <a href="index.html">An Opinion Essay</a><span>&#8250;</span>
+  <strong>Game</strong>
+</div>
+<div class="container">
+  <h1>An Opinion Essay — Mastery Game</h1>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Practice</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  <a href="printables.html" class="chapter-nav-btn">Printables</a>
+</nav>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Dominio Mastery</h2>
+        <p>Practise the key phrases for opinion writing in Spanish. Reach 100 points to win.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved session.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You have completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Worksheet</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Spanish B1 &middot; Game</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: 'opinion-essay',
+  level: 'b1',
+  title: "Writing an Opinion Essay — Un Ensayo de Opinión",
+  storageKey: 'wordplay_game_es_b1_opinion-essay',
+  items: [
+    {id:"en-mi-opinion", term:"en mi opinión", meaning:"in my opinion", synonym:"opinion opener", example:"<b>En mi opinión,</b> el deporte es esencial para la salud.", completion:"______ ______ ______ , el deporte es esencial. (In my opinion)", answer:"en mi opinion"},
+    {id:"ya-que", term:"ya que", meaning:"since, because (essay)", synonym:"reason connector", example:"Es una buena idea <b>ya que</b> reduce la contaminación.", completion:"Es una buena idea ______ ______ reduce la contaminación.", answer:"ya que"},
+    {id:"primer-lugar", term:"en primer lugar", meaning:"in the first place", synonym:"sequence", example:"<b>En primer lugar,</b> hay que invertir en educación.", completion:"______ ______ ______ , hay que invertir en educación.", answer:"en primer lugar"},
+    {id:"sin-embargo", term:"sin embargo", meaning:"however", synonym:"contrast", example:"<b>Sin embargo,</b> el precio sigue siendo un problema.", completion:"______ ______ , el precio sigue siendo un problema.", answer:"sin embargo"},
+    {id:"es-verdad", term:"es verdad que", meaning:"it is true that", synonym:"concession", example:"<b>Es verdad que</b> es caro; sin embargo, vale la pena.", completion:"______ ______ ______ es caro; sin embargo, vale la pena.", answer:"es verdad"},
+    {id:"en-definitiva", term:"en definitiva", meaning:"in short, all in all", synonym:"conclusion", example:"<b>En definitiva,</b> creo que los beneficios superan los inconvenientes.", completion:"______ ______ , creo que los beneficios superan los inconvenientes.", answer:"en definitiva"},
+    {id:"desde-mi-punto", term:"desde mi punto de vista", meaning:"from my point of view", synonym:"opinion", example:"<b>Desde mi punto de vista,</b> la tecnología nos ha cambiado la vida.", completion:"______ ______ ______ ______ ______ , la tecnología nos ha cambiado la vida.", answer:"desde mi punto de vista"},
+    {id:"a-pesar-de", term:"a pesar de que", meaning:"despite the fact that", synonym:"concession-contrast", example:"<b>A pesar de que</b> es difícil, merece la pena intentarlo.", completion:"______ ______ ______ ______ es difícil, merece la pena intentarlo.", answer:"a pesar de"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

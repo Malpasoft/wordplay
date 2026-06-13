@@ -1,17 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>Game | Word Play</title>
+<title>Advanced Reflexive Verbs — Se me olvidó, se nos acabó — B2 Grammar Game | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
 </head>
 <body>
-<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">◐ Dark</button></div></header>
-<div class="section-page"><p>Game coming soon.</p></div>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>&#8250;</span>
+  <a href="../../../../espanol-en/index.html">Spanish</a><span>&#8250;</span>
+  <a href="../../index.html">B2</a><span>&#8250;</span>
+  <a href="../index.html">Grammar</a><span>&#8250;</span>
+  <a href="index.html">Advanced Reflexive Verbs</a><span>&#8250;</span>
+  <strong>Game</strong>
+</div>
+<div class="container">
+  <h1>Advanced Reflexive Verbs — Mastery Game</h1>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="worksheet.html" class="chapter-nav-btn">Practice</a>
+    <a href="game.html" class="chapter-nav-btn active">Game</a>
+  <a href="printables.html" class="chapter-nav-btn">Printables</a>
+</nav>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Dominio Mastery</h2>
+        <p>Master advanced reflexive verbs in Spanish: accidental events with se, reciprocal verbs, and verbs that change meaning with the reflexive. Reach 100 points to win.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved session.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You have completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Worksheet</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Spanish B2 &middot; Game</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: 'reflexive-verbs',
+  level: 'b2',
+  title: "Advanced Reflexive Verbs — Se me olvidó, se nos acabó",
+  storageKey: 'wordplay_game_es_b2_reflexive-verbs',
+  items: [
+    {id:"se-me-olvido", term:"se me olvidó", meaning:"I forgot (accidentally)", synonym:"involuntary se singular", example:"<b>Se me olvidó</b> el libro en casa.", completion:"______ ______ ______ el libro en casa. (I forgot — accidental)", answer:"se me olvido"},
+    {id:"se-nos-acabo", term:"se nos acabó", meaning:"we ran out of", synonym:"involuntary se plural subject", example:"<b>Se nos acabó</b> la gasolina en la autopista.", completion:"______ ______ ______ la gasolina en la autopista. (we ran out of)", answer:"se nos acabo"},
+    {id:"se-le-cayeron", term:"se le cayeron", meaning:"she/he dropped (pl.)", synonym:"involuntary se plural thing", example:"<b>Se le cayeron</b> todos los papeles.", completion:"______ ______ ______ todos los papeles. (she dropped — pl.)", answer:"se le cayeron"},
+    {id:"se-llevan", term:"se llevan bien", meaning:"they get on well", synonym:"reciprocal llevarse bien", example:"<b>Se llevan</b> muy bien desde que se conocieron.", completion:"______ ______ muy bien desde que se conocieron. (they get on)", answer:"se llevan"},
+    {id:"irse", term:"irse", meaning:"to leave, go away", synonym:"reflexive changed meaning", example:"Después de la reunión, <b>se fue</b> sin decir nada.", completion:"Después de la reunión, ______ sin decir nada. (left)", answer:"se fue"},
+    {id:"quedarse", term:"quedarse", meaning:"to stay, remain", synonym:"reflexive changed meaning", example:"Decidieron <b>quedarse</b> en casa esa noche.", completion:"Decidieron ______ en casa esa noche. (stay)", answer:"quedarse"},
+    {id:"se-rompieron", term:"se rompieron", meaning:"they broke (accidental, pl.)", synonym:"involuntary rupture", example:"<b>Se rompieron</b> dos vasos durante la mudanza.", completion:"______ ______ dos vasos durante la mudanza. (broke — accidental)", answer:"se rompieron"},
+    {id:"el-uno-al-otro", term:"el uno al otro", meaning:"each other (with direct obj.)", synonym:"reciprocal clarifier", example:"Se ayudan <b>el uno al otro</b> en todo momento.", completion:"Se ayudan ______ ______ ______ ______ en todo momento.", answer:"el uno al otro"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
 </body>
 </html>
