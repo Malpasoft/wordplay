@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Common Mistakes — Mastery Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="index.html" class="back back-link" aria-label="Back"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>&#8250;</span>
+  <a href="../../../../espanol-en/index.html">Spanish</a><span>&#8250;</span>
+  <a href="../../index.html">A1</a><span>&#8250;</span>
+  <a href="../index.html">Grammar</a><span>&#8250;</span>
+  <a href="index.html">Common Mistakes</a><span>&#8250;</span>
+  <strong>Mastery Game</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Review</a>
+  <a href="game.html" class="chapter-nav-btn active">Game</a>
+  <a href="printables.html" class="chapter-nav-btn">Printables</a>
+</nav>
+<div class="section-page">
+  <h1>Common Mistakes &mdash; Mastery Game</h1>
+  <div style="max-width:700px;margin:0 auto;padding:20px">
+    <div id="gameStart" class="game-start" style="text-align:center">
+      <p style="color:var(--muted);margin-bottom:16px">4 error types &times; 3 question types = reach 100 points to win</p>
+      <p style="color:var(--muted);font-size:.85rem;margin-bottom:24px">Master the six most common A1 Spanish mistakes.</p>
+      <div id="gStartMastered" style="margin-bottom:16px"></div>
+      <button id="gBtnStart" class="fc-btn primary" style="padding:12px 32px" onclick="startGame()">Start Game</button>
+    </div>
+    <div id="gamePlay" style="display:none">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" style="display:none;text-align:center">
+      <div style="font-size:2rem;margin-bottom:20px;color:var(--amber)">&#9670;</div>
+      <div style="font-size:1.4rem;font-weight:700;margin-bottom:10px">Mastery Achieved!</div>
+      <div id="gFinalScore" style="font-size:1.1rem;color:var(--muted);margin-bottom:24px">Score: 100</div>
+      <button class="fc-btn primary" style="padding:12px 32px" onclick="backToChapter()">&#8592; Back to Chapter</button>
+    </div>
+  </div>
+</div>
+<footer class="site-footer">Word Play &middot; Spanish A1 &middot; Game</footer>
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+window.GAME_DATA = {
+  chapterId: 'common-mistakes',
+  level: 'a1',
+  title: "Common Mistakes — Typical Beginner Errors",
+  storageKey: 'wordplay_game_es_a1_common-mistakes',
+  items: [
+    {id:"verb-conjugation", term:"verb conjugation", meaning:"Spanish verbs change form to match the subject — never use the infinitive alone", synonym:"conjugate the verb", example:"Yo <b>hablo</b> inglés. (NOT: Yo soy hablar inglés.)", completion:"Yo ______ en casa. (to work — I work)", answer:"trabajo"},
+    {id:"ser-location", term:"ser vs estar — location", meaning:"Use ESTAR for location and current state, SER for identity and permanent traits", synonym:"estar = location/state", example:"¿Dónde <b>estás</b>? (NOT: ¿Dónde eres?)", completion:"María ______ en la biblioteca ahora. (she is — location)", answer:"está"},
+    {id:"adjective-gender", term:"adjective gender agreement", meaning:"Adjectives must match the gender (masculine/feminine) of the noun they describe", synonym:"-o masc / -a fem", example:"El niño es <b>bonito</b>. La niña es <b>bonita</b>.", completion:"La casa es ______. (big — feminine form)", answer:"grande"},
+    {id:"object-pronoun", term:"object pronoun placement", meaning:"In Spanish, object pronouns (me, te, lo, la, le...) go BEFORE the conjugated verb", synonym:"pronoun before verb", example:"<b>La</b> veo mañana. (NOT: Veo ella mañana.)", completion:"______ digo la verdad. (to him/her — indirect pronoun)", answer:"le"}
+  ]
+};
+
+function startGame() {
+  document.getElementById('gameStart').style.display = 'none';
+  document.getElementById('gamePlay').style.display = 'block';
+}
+function backToChapter() { window.location.href = 'index.html'; }
+
+document.addEventListener('DOMContentLoaded', function() {
+  var DATA = window.GAME_DATA;
+  var play = document.querySelector('#gamePlay .game-play');
+  if (!play) return;
+  var score = 0, won = false;
+  var queue = [];
+  DATA.items.forEach(function(it) { queue.push({item:it,type:'meaning'}); queue.push({item:it,type:'context'}); queue.push({item:it,type:'production'}); });
+  queue.sort(function(){return Math.random()-.5;});
+  var qi = 0;
+
+  function updateScore(delta) {
+    score = Math.max(0, score + delta);
+    var bar = document.getElementById('gScoreBar');
+    if (bar) bar.style.width = Math.min(100,score)+'%';
+    var sc = document.getElementById('gScore');
+    if (sc) sc.textContent = score + ' / 100';
+    if (score >= 100 && !won) { won = true; finish(); }
+  }
+
+  function renderQ() {
+    if (qi >= queue.length) { qi = 0; queue.sort(function(){return Math.random()-.5;}); }
+    var q = queue[qi++];
+    var it = q.item;
+    var html = '<div style="margin-bottom:16px"><div style="font-size:.75rem;font-weight:700;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:4px">';
+    var qtext, opts, correct;
+    if (q.type === 'meaning') {
+      html += 'WHAT DOES IT MEAN?</div>';
+      qtext = '<b>' + it.term + '</b>';
+      correct = it.meaning;
+      opts = [it.meaning, it.synonym + ' — the alternate form', DATA.items.filter(function(x){return x.id!==it.id;})[0].meaning];
+    } else if (q.type === 'context') {
+      html += 'SPOT THE CONTEXT</div>';
+      qtext = it.example;
+      correct = it.synonym;
+      opts = [it.synonym, DATA.items.filter(function(x){return x.id!==it.id;})[1].synonym, DATA.items.filter(function(x){return x.id!==it.id;})[2].synonym];
+    } else {
+      html += 'COMPLETE THE SENTENCE</div>';
+      qtext = it.completion;
+      correct = it.answer;
+      opts = null;
+    }
+    html += '<p style="font-size:1.05rem;margin:12px 0 20px">' + qtext + '</p>';
+    if (opts) {
+      opts.sort(function(){return Math.random()-.5;});
+      html += '<div style="display:flex;flex-direction:column;gap:10px">';
+      opts.forEach(function(o) {
+        html += '<button class="choice-btn" style="text-align:left;padding:12px 16px;border:1.5px solid var(--hairline);border-radius:6px;background:transparent;cursor:pointer;font-size:.95rem" onclick="checkMC(this,\'' + correct.replace(/'/g,"\\'") + '\',\'' + o.replace(/'/g,"\\'") + '\')">' + o + '</button>';
+      });
+      html += '</div>';
+    } else {
+      html += '<input id="gInput" type="text" placeholder="type your answer..." style="width:100%;padding:10px 12px;border:1.5px solid var(--hairline);border-radius:6px;font-size:.95rem;background:var(--paper);color:var(--ink)">';
+      html += '<br><button class="fc-btn primary" style="margin-top:12px" onclick="checkText()">Check</button>';
+    }
+    html += '</div><div id="gScoreWrap" style="margin-top:24px;display:flex;align-items:center;gap:12px"><div style="flex:1;height:8px;background:var(--hairline);border-radius:4px"><div id="gScoreBar" style="height:8px;background:var(--amber);border-radius:4px;width:'+Math.min(100,score)+'%;transition:width .4s"></div></div><span id="gScore" style="font-size:.85rem;color:var(--muted)">'+score+' / 100</span></div>';
+    play.innerHTML = html;
+    var inp = document.getElementById('gInput');
+    if (inp) inp.addEventListener('keydown', function(e){ if(e.key==='Enter') checkText(); });
+  }
+
+  window.checkMC = function(btn, correct, chosen) {
+    var btns = btn.parentNode.querySelectorAll('.choice-btn');
+    btns.forEach(function(b){ b.disabled = true; });
+    if (chosen === correct) {
+      btn.style.background = '#2E7D52'; btn.style.color = '#fff'; btn.style.borderColor = '#2E7D52';
+      updateScore(10);
+      setTimeout(function(){ renderQ(); }, 900);
+    } else {
+      btn.style.background = '#c0392b'; btn.style.color = '#fff'; btn.style.borderColor = '#c0392b';
+      btns.forEach(function(b){ if(b.textContent.trim()===correct){ b.style.background='#2E7D52';b.style.color='#fff';b.style.borderColor='#2E7D52'; }});
+      updateScore(-3);
+      setTimeout(function(){ renderQ(); }, 1400);
+    }
+  };
+
+  window.checkText = function() {
+    var inp = document.getElementById('gInput');
+    if (!inp) return;
+    var val = inp.value.trim().toLowerCase();
+    var q = queue[qi-1];
+    var correct = q.item.answer.toLowerCase();
+    inp.disabled = true;
+    document.querySelectorAll('#gamePlay .fc-btn').forEach(function(b){b.disabled=true;});
+    if (val === correct || val.replace(/[^a-záéíóúüñ]/gi,'') === correct.replace(/[^a-záéíóúüñ]/gi,'')) {
+      inp.style.borderColor = '#2E7D52';
+      updateScore(10);
+      setTimeout(function(){ renderQ(); }, 900);
+    } else {
+      inp.style.borderColor = '#c0392b';
+      var fb = document.createElement('p');
+      fb.style.cssText = 'color:#c0392b;font-size:.85rem;margin-top:8px';
+      fb.textContent = 'Correct: ' + q.item.answer;
+      inp.parentNode.appendChild(fb);
+      updateScore(-3);
+      setTimeout(function(){ renderQ(); }, 1600);
+    }
+  };
+
+  function finish() {
+    document.getElementById('gamePlay').style.display = 'none';
+    document.getElementById('gameCompletion').style.display = 'block';
+    document.getElementById('gFinalScore').textContent = 'Score: ' + score;
+    if (window.FCEStore) { try { window.FCEStore.touchStreak(); window.FCEStore.addXP(10); } catch(e){} }
+    try {
+      var raw = localStorage.getItem('wordplay_progress');
+      var data = raw ? JSON.parse(raw) : {};
+      data['a1'] = data['a1'] || {};
+      data['a1']['wordplay_game_common-mistakes'] = {pct: 100};
+      localStorage.setItem('wordplay_progress', JSON.stringify(data));
+    } catch(e) {}
+  }
+
+  var mastered = false;
+  try {
+    var raw = localStorage.getItem('wordplay_progress');
+    if (raw) { var d = JSON.parse(raw); mastered = !!(d['a1'] && d['a1']['wordplay_game_common-mistakes'] && d['a1']['wordplay_game_common-mistakes'].pct >= 100); }
+  } catch(e){}
+  if (mastered) document.getElementById('gStartMastered').innerHTML = '<p style="color:#2E7D52;font-size:.85rem">&#10003; Previously mastered</p>';
+});
+</script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

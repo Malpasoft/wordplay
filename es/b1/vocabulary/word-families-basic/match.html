@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>B1 Vocab · Word Families Basic — Match Game | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<style>
+/* ── Layout ── */
+.match-page{max-width:780px;margin:0 auto;padding:16px 0 60px}
+
+/* ── Header bar ── */
+.match-hud{display:flex;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+.match-lives{display:flex;gap:4px;font-size:1.3rem;line-height:1}
+.heart{color:var(--amber);transition:color .2s,transform .2s}
+.heart.lost{color:var(--hairline)}
+.heart.shake{animation:hshake .35s ease}
+@keyframes hshake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.match-progress-wrap{flex:1;min-width:120px}
+.match-progress-bar{height:5px;border-radius:3px;background:var(--hairline);overflow:hidden}
+.match-progress-fill{height:100%;background:var(--amber);border-radius:3px;transition:width .25s}
+.match-progress-txt{font-family:var(--font-sans);font-size:.62rem;font-weight:700;color:var(--muted);margin-top:4px}
+.match-mastery-badge{font-family:var(--font-sans);font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:3px;background:rgba(39,174,96,.12);color:#1e7a45;border:1px solid rgba(39,174,96,.3);display:none}
+.match-mastery-badge.show{display:inline-block}
+
+/* ── Grid ── */
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:460px){.match-grid{gap:7px}}
+.match-col-head{font-family:var(--font-sans);font-size:.58rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.match-col{display:flex;flex-direction:column;gap:7px}
+
+/* ── Word cards (left) ── */
+.mw{padding:10px 12px;border:1.5px solid var(--hairline);border-radius:7px;font-size:.88rem;font-weight:700;color:var(--ink);cursor:pointer;transition:border-color .12s,background .12s,opacity .2s;user-select:none;position:relative;min-height:40px;display:flex;align-items:center;justify-content:space-between;gap:6px}
+.mw:hover:not(.done-word):not(.selected-word){border-color:var(--amber)}
+.mw.selected-word{border-color:var(--amber);background:rgba(184,134,11,.1);box-shadow:0 0 0 2px rgba(184,134,11,.2)}
+.mw.half-word{border-left:3px solid var(--amber)}
+.mw.done-word{opacity:.35;cursor:default;border-color:var(--hairline)}
+.mw.wrong-word{border-color:#c0392b;background:rgba(192,57,43,.08);animation:wshake .3s ease}
+@keyframes wshake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.mw-badge{font-family:var(--font-sans);font-size:.6rem;font-weight:800;padding:2px 5px;border-radius:3px;flex-shrink:0}
+.mw-badge.half-badge{background:rgba(184,134,11,.15);color:var(--amber)}
+.mw-badge.done-badge{background:rgba(39,174,96,.12);color:#27ae60}
+
+/* ── Definition cards (right) ── */
+.md{padding:10px 12px;border:1.5px solid var(--hairline);border-radius:7px;font-size:.82rem;color:var(--ink);cursor:pointer;transition:border-color .12s,background .12s;user-select:none;min-height:40px;display:flex;align-items:center;line-height:1.4}
+.md:hover:not(.no-select){border-color:var(--ink)}
+.md.no-select{cursor:default}
+.md.flash-correct{border-color:#27ae60;background:rgba(39,174,96,.1);transition:none}
+.md.flash-wrong{border-color:#c0392b;background:rgba(192,57,43,.08);animation:wshake .3s ease}
+
+/* ── Overlay screens ── */
+.match-screen{position:fixed;inset:0;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:900;padding:20px}
+.match-screen-box{background:var(--paper);border-radius:14px;padding:32px 28px;text-align:center;max-width:380px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,.3)}
+body.dark .match-screen-box{background:#1A1A1A}
+.msb-title{font-size:1.4rem;font-weight:700;color:var(--ink);margin-bottom:8px}
+.msb-sub{font-family:var(--font-sans);font-size:.82rem;color:var(--muted);margin-bottom:20px;line-height:1.5}
+.msb-stat{font-family:var(--font-sans);font-size:.78rem;font-weight:700;padding:6px 12px;border-radius:5px;background:rgba(184,134,11,.08);color:var(--amber);display:inline-block;margin-bottom:20px}
+.msb-btn{font-family:var(--font-sans);font-size:.82rem;font-weight:700;padding:11px 24px;border-radius:7px;border:none;background:var(--amber);color:#fff;cursor:pointer;margin:4px}
+.msb-btn.ghost{background:transparent;border:1.5px solid var(--hairline);color:var(--ink)}
+.msb-lives{font-size:1.4rem;margin-bottom:8px}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="index.html" class="back back-link" aria-label="Back"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Inicio</a><span>›</span><a href="../../../../es/index.html">Para hispanohablantes</a><span>›</span><a href="../../index.html">B1</a><span>›</span><a href="../index.html">Vocabulario</a><span>›</span><a href="index.html">Word Families Basic</a><span>›</span>
+    <strong>Match game</strong></div>
+  <h1>Word Families Basic — Match</h1>
+  <nav class="chapter-nav">
+    <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+    <a href="flashcards.html" class="chapter-nav-btn">Flashcards</a>
+    <a href="match.html" class="chapter-nav-btn active">Match</a>
+    <a href="game.html" class="chapter-nav-btn">Game</a>
+  </nav>
+
+  <div class="match-page">
+    <!-- HUD -->
+    <div class="match-hud">
+      <div class="match-lives" id="livesDisplay">
+        <span class="heart" id="h1"></span>
+        <span class="heart" id="h2"></span>
+        <span class="heart" id="h3"></span>
+      </div>
+      <div class="match-progress-wrap">
+        <div class="match-progress-bar"><div class="match-progress-fill" id="progressFill" style="width:0%"></div></div>
+        <div class="match-progress-txt" id="progressTxt">0 / 20 matches</div>
+      </div>
+      <span class="match-mastery-badge" id="masteryBadge">Topic mastered</span>
+    </div>
+
+    <!-- Game grid -->
+    <div class="match-col-head" style="grid-column:1">Words</div>
+    <div class="match-grid">
+      <div class="match-col" id="leftCol"></div>
+      <div class="match-col" id="rightCol"></div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+
+<!-- Win screen -->
+<div class="match-screen" id="winScreen" style="display:none">
+  <div class="match-screen-box">
+    <div class="msb-title">Match Master!</div>
+    <div class="msb-lives" id="winLives"></div>
+    <div class="msb-sub">You matched every word twice. Word Families Basic vocabulary mastered!</div>
+    <div class="msb-stat" id="winStat"></div>
+    <button class="msb-btn" onclick="resetGame()">Play again</button>
+    <a href="flashcards.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Flashcards</a>
+    <a href="game.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Mastery game</a>
+  </div>
+</div>
+
+<!-- Game over screen -->
+<div class="match-screen" id="loseScreen" style="display:none">
+  <div class="match-screen-box">
+    <div class="msb-title">Out of lives!</div>
+    <div class="msb-sub">Keep practising — you need to match each word twice without 3 mistakes.</div>
+    <div class="msb-stat" id="loseStat"></div>
+    <button class="msb-btn" onclick="resetGame()">Try again</button>
+    <a href="flashcards.html" class="msb-btn ghost" style="text-decoration:none;display:inline-block">Review cards first</a>
+  </div>
+</div>
+
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+var WORDS = [
+  {"word": "happy", "def": "feliz — contento"},
+  {"word": "happiness", "def": "felicidad — estado feliz"},
+  {"word": "happily", "def": "felizmente — de forma feliz"},
+  {"word": "unhappy", "def": "infeliz — triste"},
+  {"word": "create", "def": "crear — hacer algo nuevo"},
+  {"word": "creation", "def": "creación — cosa creada"},
+  {"word": "creative", "def": "creativo — imaginativo"},
+  {"word": "creator", "def": "creador — quien crea"},
+  {"word": "judge", "def": "juez — juzgar"},
+  {"word": "judgment", "def": "juicio — decisión"}
+];
+var MASTERY_KEY = 'wordplay_vocab_es-b1_word-families-basic_mastered';
+var PROG_KEY    = 'b1';
+var SLUG        = 'word-families-basic';
+var TOTAL_NEEDED = WORDS.length * 2; // 20 matches to win
+
+/* ── State ── */
+var state = [];    // [{word,def,matchCount}]
+var lives  = 3;
+var selIdx = null; // selected word index (in state array)
+var totalDone = 0;
+var rightPool  = []; // [{word,def}] shuffled defs of words with matchCount < 2
+var animLock   = false; // prevent clicks during animations
+
+var HEART_FULL  = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
+var HEART_EMPTY = '<svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
+
+function initState() {
+  state = WORDS.map(function(w){ return {word:w.word, def:w.def, matchCount:0}; });
+  lives = 3; selIdx = null; totalDone = 0; animLock = false;
+  rebuildPool();
+}
+
+function shuffle(a){
+  var b = a.slice();
+  for(var i=b.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=b[i]; b[i]=b[j]; b[j]=t; }
+  return b;
+}
+
+function rebuildPool(){
+  rightPool = shuffle(
+    state.filter(function(w){ return w.matchCount < 2; })
+         .map(function(w){ return {word:w.word, def:w.def}; })
+  );
+}
+
+/* ── Render ── */
+function renderLeft(){
+  var el = document.getElementById('leftCol');
+  el.innerHTML = state.map(function(w,i){
+    var cls = 'mw';
+    if(w.matchCount === 2)  cls += ' done-word';
+    else if(w.matchCount === 1) cls += ' half-word';
+    if(selIdx === i && w.matchCount < 2) cls += ' selected-word';
+    var badge = '';
+    if(w.matchCount === 1)  badge = '<span class="mw-badge half-badge">1/2</span>';
+    if(w.matchCount === 2)  badge = '<span class="mw-badge done-badge">&#10003;</span>';
+    var click = w.matchCount < 2 ? ' onclick="clickWord('+i+')"' : '';
+    return '<div class="'+cls+'"'+click+'>'+escH(w.word)+badge+'</div>';
+  }).join('');
+}
+
+function renderRight(){
+  var el = document.getElementById('rightCol');
+  el.innerHTML = rightPool.map(function(item,i){
+    var cls = 'md' + (selIdx === null ? ' no-select' : '');
+    return '<div class="'+cls+'" id="def'+i+'" onclick="clickDef('+i+')">'+escH(item.def)+'</div>';
+  }).join('');
+}
+
+function render(){ renderLeft(); renderRight(); updateHud(); }
+
+function updateHud(){
+  var pct = Math.round(totalDone / TOTAL_NEEDED * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressTxt').textContent = totalDone + ' / ' + TOTAL_NEEDED + ' matches';
+  // Hearts
+  ['h1','h2','h3'].forEach(function(id,i){
+    var el = document.getElementById(id);
+    if(i < lives){ el.innerHTML = HEART_FULL;  el.className = 'heart'; }
+    else          { el.innerHTML = HEART_EMPTY; el.className = 'heart lost'; }
+  });
+}
+
+/* ── Interactions ── */
+function clickWord(i){
+  if(animLock) return;
+  if(state[i].matchCount >= 2) return;
+  selIdx = (selIdx === i) ? null : i; // toggle
+  render();
+}
+
+function clickDef(i){
+  if(animLock) return;
+  if(selIdx === null) return;
+
+  var def  = rightPool[i];
+  var word = state[selIdx];
+
+  if(def.word === word.word){
+    /* ── Correct match ── */
+    var defEl  = document.getElementById('def'+i);
+    var wordIdx = selIdx;
+    if(defEl) defEl.classList.add('flash-correct');
+    animLock = true;
+
+    setTimeout(function(){
+      state[wordIdx].matchCount++;
+      totalDone++;
+      selIdx = null;
+      rebuildPool();
+      animLock = false;
+
+      if(state.every(function(w){ return w.matchCount >= 2; })){
+        masterGame();
+      } else {
+        render();
+      }
+    }, 320);
+
+  } else {
+    /* ── Wrong match ── */
+    var defEl  = document.getElementById('def'+i);
+    var wrdEl  = document.querySelector('.mw.selected-word');
+    if(defEl) defEl.classList.add('flash-wrong');
+    if(wrdEl) { wrdEl.classList.add('wrong-word'); wrdEl.classList.remove('selected-word'); }
+
+    lives--;
+    selIdx = null;
+    animLock = true;
+
+    // Shake the heart that was just lost
+    var heartIdx = lives; // lives=2 → heart #3 (index 2)
+    var heartEl = document.getElementById('h'+(heartIdx+1));
+    if(heartEl){ heartEl.innerHTML = HEART_EMPTY; heartEl.className = 'heart lost shake'; }
+
+    updateHud();
+
+    setTimeout(function(){
+      if(defEl) defEl.classList.remove('flash-wrong');
+      if(wrdEl) wrdEl.classList.remove('wrong-word');
+      animLock = false;
+      if(lives <= 0){
+        gameOver();
+      } else {
+        render();
+      }
+    }, 560);
+  }
+}
+
+/* ── End states ── */
+function masterGame(){
+  // Save mastery
+  try{
+    localStorage.setItem(MASTERY_KEY,'1');
+    var raw = localStorage.getItem('wordplay_progress');
+    var pd  = raw ? JSON.parse(raw) : {};
+    pd[PROG_KEY] = pd[PROG_KEY] || {};
+    pd[PROG_KEY]['vocab_mastered_'+SLUG] = {done:true, date:new Date().toISOString()};
+    localStorage.setItem('wordplay_progress', JSON.stringify(pd));
+  }catch(e){}
+  if(window.FCEStore) FCEStore.saveResult(SLUG,1,1,{});
+
+  // Show mastery badge in HUD
+  document.getElementById('masteryBadge').classList.add('show');
+
+  // Win screen
+  var ls = Array(lives).fill(HEART_FULL).join('') + Array(3-lives).fill(HEART_EMPTY).join('');
+  document.getElementById('winLives').innerHTML = ls;
+  document.getElementById('winStat').textContent = lives + ' of 3 lives remaining';
+  document.getElementById('winScreen').style.display = 'flex';
+}
+
+function gameOver(){
+  var matched = totalDone;
+  document.getElementById('loseStat').textContent = matched + ' of ' + TOTAL_NEEDED + ' matches completed';
+  document.getElementById('loseScreen').style.display = 'flex';
+}
+
+function resetGame(){
+  document.getElementById('winScreen').style.display  = 'none';
+  document.getElementById('loseScreen').style.display = 'none';
+  document.getElementById('masteryBadge').classList.remove('show');
+  initState();
+  render();
+}
+
+function escH(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+/* ── Check existing mastery ── */
+(function(){
+  try{
+    if(localStorage.getItem(MASTERY_KEY)==='1'){
+      document.getElementById('masteryBadge').classList.add('show');
+    }
+  }catch(e){}
+})();
+
+/* ── Start ── */
+initState();
+render();
+</script>
+</body>
+</html>

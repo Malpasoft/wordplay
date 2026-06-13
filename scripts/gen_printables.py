@@ -137,6 +137,8 @@ TRACKS = [
     ('fr',      os.path.join(ROOT, 'fr',          'a2', 'grammaire')),
     ('fr',      os.path.join(ROOT, 'fr',          'b1', 'grammaire')),
     ('fr',      os.path.join(ROOT, 'fr',          'b2', 'grammaire')),
+    ('fr',      os.path.join(ROOT, 'fr',          'b1', 'redaction')),
+    ('fr',      os.path.join(ROOT, 'fr',          'b2', 'redaction')),
 ]
 
 # Also process es/a2, a1 (full tracks if needed by caller)

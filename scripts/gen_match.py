@@ -57,6 +57,13 @@ def vocab_chapters():
         if os.path.isdir(d):
             out.extend(os.path.join(d, s) for s in sorted(os.listdir(d))
                        if os.path.isdir(os.path.join(d, s)))
+    # L1-mediated tracks: es/ and espanol-en/ vocabulary
+    for track in ('es', 'espanol-en'):
+        for level in ('a1', 'a2', 'b1', 'b2'):
+            d = os.path.join(ROOT, track, level, 'vocabulary')
+            if os.path.isdir(d):
+                out.extend(os.path.join(d, s) for s in sorted(os.listdir(d))
+                           if os.path.isdir(os.path.join(d, s)))
     return out
 
 
@@ -96,8 +103,11 @@ def parse_words(html):
 def build_match(tpl, fc_html, words, level, slug, title):
     key_m = KEY_RE.search(fc_html)
     mastery_key = key_m.group(1) if key_m else f'wordplay_vocab_{level}_{slug}_mastered'
-
     out = tpl
+    # Carry lang attribute from source page (e.g. "es" for Spanish-UI tracks)
+    lang_m = re.search(r'<html lang="([^"]+)"', fc_html)
+    if lang_m and lang_m.group(1) != 'en':
+        out = out.replace('<html lang="en">', f'<html lang="{lang_m.group(1)}">')
     out = out.replace('<title>A1 Vocab · Animals — Match Game | Word Play</title>',
                       f'<title>{level.upper()} Vocab · {title} — Match Game | Word Play</title>')
     # breadcrumb: reuse the chapter's own, pointing the last crumb at index.html
@@ -168,14 +178,14 @@ def main():
             skipped.append(rel)
             continue
         parts = rel.split(os.sep)
-        level, slug = parts[1], parts[3]
+        track, level, slug = parts[0], parts[1], parts[3]
         h1 = H1_RE.search(fc_html)
         title = TAG_RE.sub('', h1.group(1)).strip() if h1 else slug.replace('-', ' ').title()
         with open(target, 'w', encoding='utf-8') as f:
             f.write(build_match(tpl, fc_html, words, level, slug, title))
-        # hub card
+        # hub card — skip for es/ and espanol-en/ (their hub already says "Flashcards & Match")
         hub_p = os.path.join(ch, 'index.html')
-        if os.path.exists(hub_p):
+        if os.path.exists(hub_p) and track not in ('es', 'espanol-en'):
             hub, changed = add_hub_card(open(hub_p, encoding='utf-8').read())
             if changed:
                 open(hub_p, 'w', encoding='utf-8').write(hub)
