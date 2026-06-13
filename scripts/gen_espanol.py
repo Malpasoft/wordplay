@@ -455,6 +455,82 @@ def render(slug, d):
     return r.returncode == 0
 
 
+def normalize_ex_mc(ex):
+    """Convert dict-format MC exercise to (title, instruct, questions) tuple.
+    Handles question answers as either string or integer index."""
+    if isinstance(ex, tuple):
+        title, instruct, qs = ex
+        normalized = []
+        for q in qs:
+            text, opts, a, expl = q
+            if isinstance(a, int):
+                a = opts[a]
+            normalized.append((text, opts, a, expl))
+        return (title, instruct, normalized)
+    # dict format: dict(title=..., questions=[...])
+    title = ex['title']
+    instruct = ex.get('instruct', '')
+    qs = []
+    for q in ex['questions']:
+        text, opts, a, expl = q
+        if isinstance(a, int):
+            a = opts[a]
+        qs.append((text, opts, a, expl))
+    return (title, instruct, qs)
+
+
+def normalize_ex_typed(ex):
+    """Convert dict-format typed exercise to (title, instruct, questions) tuple."""
+    if isinstance(ex, tuple):
+        title, instruct, qs = ex
+        normalized = []
+        for q in qs:
+            if len(q) == 4:
+                text, answer, _accepted, expl = q
+            else:
+                text, answer, expl = q
+            normalized.append((text, answer, expl))
+        return (title, instruct, normalized)
+    title = ex['title']
+    instruct = ex.get('instruct', '')
+    qs = []
+    for q in ex['questions']:
+        if len(q) == 4:
+            text, answer, _accepted, expl = q
+        else:
+            text, answer, expl = q
+        qs.append((text, answer, expl))
+    return (title, instruct, qs)
+
+
+def normalize_items(items, slug):
+    """Convert dict-format items list to 7-tuple format."""
+    if not items:
+        return items
+    if isinstance(items[0], dict):
+        result = []
+        for i, item in enumerate(items):
+            term = item['term']
+            definition = item['definition']
+            example = item['example']
+            accepts = item.get('accept', [term])
+            answer = accepts[0] if accepts else term
+            fill = example.replace(term, '______') if term in example else example
+            result.append((f'{slug}-{i+1:02d}', term, definition, definition[:40], example, fill, answer))
+        return result
+    return items
+
+
+def normalize_chapter(d, slug):
+    """Normalize chapter dict to renderer-expected formats."""
+    d = dict(d)
+    d['ex1'] = normalize_ex_mc(d['ex1'])
+    d['ex2'] = normalize_ex_typed(d['ex2'])
+    d['ex3'] = normalize_ex_mc(d['ex3'])
+    d['items'] = normalize_items(d['items'], slug)
+    return d
+
+
 def main():
     mod_path = sys.argv[1]
     spec = importlib.util.spec_from_file_location('content', mod_path)
@@ -462,7 +538,7 @@ def main():
     spec.loader.exec_module(mod)
     ok = True
     for slug, d in mod.CHAPTERS.items():
-        ok = render(slug, d) and ok
+        ok = render(slug, normalize_chapter(d, slug)) and ok
     sys.exit(0 if ok else 1)
 
 

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Subjuntivo Temporal — Juego B1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Gramática</a><span>&#8250;</span>
+  <a href="index.html">Subjuntivo Temporal</a><span>&#8250;</span>
+  <strong>Juego</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="container">
+  <h1>Subjuntivo Temporal — Juego de Dominio</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>Usa el subjuntivo o indicativo con conjunciones temporales según el contexto</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos del mismo concepto y rachas entre conceptos a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominados</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todos los elementos de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominados</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="worksheet.html" class="game-btn secondary">Ejercicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol B1 &middot; Juego</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "subjuntivo-temporal",
+  level: "b1",
+  title: "El Subjuntivo en Oraciones Temporales",
+  storageKey: "wordplay_game_es_b1_subjuntivo-temporal",
+  items: [
+    {id:"subjuntivo-temporal-01", term:"cuando + subjuntivo", meaning:"oración temporal con referencia futura", synonym:"oración temporal con referencia futura", example:"Cuando llegues, avísame.", completion:"Cuando llegues, avísame.", answer:"cuando subjuntivo"},
+    {id:"subjuntivo-temporal-02", term:"hasta que + subjuntivo", meaning:"límite futuro", synonym:"límite futuro", example:"Espera hasta que termine.", completion:"Espera hasta que termine.", answer:"hasta que subjuntivo"},
+    {id:"subjuntivo-temporal-03", term:"antes de que + subjuntivo", meaning:"siempre subjuntivo (acción anterior)", synonym:"siempre subjuntivo (acción anterior)", example:"Llama antes de que sea tarde.", completion:"Llama antes de que sea tarde.", answer:"antes de que"},
+    {id:"subjuntivo-temporal-04", term:"en cuanto + subjuntivo", meaning:"tan pronto como — acción futura", synonym:"tan pronto como — acción futura", example:"En cuanto puedas, ven.", completion:"En cuanto puedas, ven.", answer:"en cuanto subjuntivo"},
+    {id:"subjuntivo-temporal-05", term:"mientras + subjuntivo (fut.)", meaning:"durante el tiempo en que (referencia futura)", synonym:"durante el tiempo en que (referencia fut", example:"Llámame mientras estés allí.", completion:"Llámame mientras estés allí.", answer:"mientras subjuntivo"},
+    {id:"subjuntivo-temporal-06", term:"cuando + indicativo", meaning:"hábito o acción pasada ya ocurrida", synonym:"hábito o acción pasada ya ocurrida", example:"Cuando llegué, comí.", completion:"Cuando llegué, comí.", answer:"cuando indicativo"},
+    {id:"subjuntivo-temporal-07", term:"después de que + subjuntivo", meaning:"después de una acción futura", synonym:"después de una acción futura", example:"Hablaremos después de que termines.", completion:"Hablaremos después de que termines.", answer:"después de que subjuntivo"},
+    {id:"subjuntivo-temporal-08", term:"antes de + infinitivo", meaning:"mismo sujeto — sin cambio de sujeto", synonym:"mismo sujeto — sin cambio de sujeto", example:"Llama antes de llegar.", completion:"Llama antes de llegar.", answer:"antes de infinitivo"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

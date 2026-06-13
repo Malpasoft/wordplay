@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Subjuntivo Imperfecto — Juego B1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Gramática</a><span>&#8250;</span>
+  <a href="index.html">Subjuntivo Imperfecto</a><span>&#8250;</span>
+  <strong>Juego</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="container">
+  <h1>Subjuntivo Imperfecto — Juego de Dominio</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 conceptos clave · 3 rondas cada uno · llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos del mismo concepto y rachas entre conceptos a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominados</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todos los elementos de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominados</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="worksheet.html" class="game-btn secondary">Ejercicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol B1 &middot; Juego</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "subjuntivo-imperfecto",
+  level: "b1",
+  title: "El Subjuntivo Imperfecto — Hipótesis y deseos en el pasado",
+  storageKey: "wordplay_game_es_b1_subjuntivo-imperfecto",
+  items: [
+    {id:"subjimp-01", term:"tuviera", meaning:"subjuntivo imperfecto de TENER (yo/él)", synonym:"tener: cond. tipo 2 / deseos", example:"Si tuviera más dinero, viajaría por el mundo.", completion:"Si ______ más dinero, viajaría por el mundo.", answer:"tuviera"},
+    {id:"subjimp-02", term:"fuera", meaning:"subjuntivo imperfecto de SER/IR (yo/él)", synonym:"ser/ir: hipótesis e irrealidad", example:"Actúa como si fuera el jefe de todos.", completion:"Actúa como si ______ el jefe de todos.", answer:"fuera"},
+    {id:"subjimp-03", term:"pudiera", meaning:"subjuntivo imperfecto de PODER (yo/él)", synonym:"poder: deseos y condiciones irreales", example:"Ojalá pudiera quedarme más tiempo.", completion:"Ojalá ______ quedarme más tiempo.", answer:"pudiera"},
+    {id:"subjimp-04", term:"dijera", meaning:"subjuntivo imperfecto de DECIR (yo/él)", synonym:"decir: raíz dij- del indefinido", example:"Quería que lo dijera él mismo.", completion:"Quería que lo ______ él mismo.", answer:"dijera"},
+    {id:"subjimp-05", term:"habláramos", meaning:"subjuntivo imperfecto de HABLAR (nosotros) — con tilde", synonym:"nosotros: tilde obligatoria -áramos", example:"Nos pidió que habláramos más despacio.", completion:"Nos pidió que ______ más despacio.", answer:"habláramos"},
+    {id:"subjimp-06", term:"quisiera", meaning:"subjuntivo imperfecto de QUERER (yo/él)", synonym:"querer: raíz quis- del indefinido", example:"Ojalá quisiera acompañarnos.", completion:"Ojalá ______ acompañarnos.", answer:"quisiera"},
+    {id:"subjimp-07", term:"supiera", meaning:"subjuntivo imperfecto de SABER (yo/él)", synonym:"saber: raíz sup- del indefinido", example:"Si supiera la verdad, te la contaría.", completion:"Si ______ la verdad, te la contaría.", answer:"supiera"},
+    {id:"subjimp-08", term:"vinieran", meaning:"subjuntivo imperfecto de VENIR (ellos)", synonym:"venir: raíz vinier- del indefinido", example:"Le sorprendió que vinieran tan tarde.", completion:"Le sorprendió que ______ tan tarde.", answer:"vinieran"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
