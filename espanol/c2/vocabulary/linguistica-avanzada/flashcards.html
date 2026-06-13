@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Lingüística Avanzada — Tarjetas | Espa&#241;ol C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<style>
+.fc-wrap{perspective:800px;margin:0 auto 20px;max-width:480px}
+.fc{width:100%;height:220px;position:relative;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;border-radius:10px}
+.fc.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;border:1px solid var(--hairline)}
+.fc-front,.fc-back{background:var(--paper)}
+.fc-back{transform:rotateY(180deg)}
+.fc-word{font-size:1.8rem;font-weight:700;color:var(--ink);margin-bottom:6px}
+.fc-ipa{font-family:var(--font-sans);font-size:.85rem;color:var(--muted);margin-bottom:8px}
+.fc-def{font-size:.95rem;color:var(--ink);margin-bottom:6px}
+.fc-ex{font-size:.82rem;color:var(--muted);font-style:italic}
+.fc-hint{font-family:var(--font-sans);font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:10px}
+.fc-audio{background:none;border:1px solid var(--hairline);border-radius:4px;padding:5px 12px;font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);cursor:pointer;margin-top:8px}
+.fc-audio:hover{border-color:var(--amber);color:var(--amber)}
+.fc-nav{display:flex;align-items:center;gap:16px;justify-content:center;margin-bottom:20px}
+.fc-btn{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 18px;border-radius:4px;cursor:pointer;border:1.5px solid var(--hairline);background:transparent;color:var(--ink)}
+.fc-btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.fc-counter{font-family:var(--font-sans);font-size:.75rem;color:var(--muted);font-weight:600}
+.mastery-badge{display:inline-block;padding:8px 18px;background:rgba(184,134,11,.12);color:var(--amber);font-family:var(--font-sans);font-size:.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:4px;margin-bottom:16px}
+</style>
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/c2/index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>Lingüística Avanzada</strong>
+</div>
+<div class="chapter-num">V02</div>
+<h1>Lingüística Avanzada</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn active">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">&#10003; Tema dominado</span></div>
+<p style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 palabras &middot; pulsa la tarjeta para ver la definici&#243;n</p>
+<div class="fc-nav"><button class="fc-btn" onclick="prevCard()">&#8592; Anterior</button><span class="fc-counter" id="fcCounter">1 / 12</span><button class="fc-btn primary" onclick="nextCard()">Siguiente &#8594;</button></div>
+<div class="fc-wrap"><div class="fc" id="fcCard" onclick="flipCard()"><div class="fc-face fc-front"><div class="fc-word" id="fcWord"></div><div class="fc-ipa" id="fcIpa"></div><div class="fc-hint">Pulsa para ver la definici&#243;n</div></div><div class="fc-face fc-back"><div class="fc-def" id="fcDef"></div><div class="fc-ex" id="fcEx"></div><button class="fc-audio" onclick="event.stopPropagation();speakWord()">&#9654; Escuchar</button></div></div></div>
+<script>
+var WORDS = [{"word": "competencia pragmática", "ipa": "kom.pe.ˈten.θja pɾaɣ.ˈma.ti.ka", "def": "Capacidad del hablante para usar el lenguaje de manera adecuada al contexto social, cultural e interaccional.", "ex": "La <b>competencia pragmática</b> incluye saber cuándo callar, cuándo interrumpir y cómo interpretar el silencio como acto comunicativo."}, {"word": "acto de habla", "ipa": "ˈak.to ðe ˈa.βla", "def": "Unidad mínima de comunicación que realiza una acción social —prometer, ordenar, afirmar— más allá de transmitir información.", "ex": "Decir «¿podrías abrir la ventana?» no es una pregunta sobre capacidades: es un <b>acto de habla</b> directivo encubierto bajo forma interrogativa."}, {"word": "fuerza ilocutiva", "ipa": "ˈfweɾ.θa i.lo.ku.ˈti.βa", "def": "Intención o propósito comunicativo que subyace a un enunciado y determina qué acción social realiza al ser pronunciado.", "ex": "La <b>fuerza ilocutiva</b> de «te lo advierto» es amenazante aunque las palabras, aisladas, parezcan meramente informativas."}, {"word": "deixis", "ipa": "ˈdejk.sis", "def": "Función lingüística que ancla la referencia de expresiones al contexto espacial, temporal o personal de la enunciación.", "ex": "Palabras como «aquí», «ahora» y «yo» son expresiones deícticas cuyo significado depende enteramente del contexto de la <b>deixis</b> enunciativa."}, {"word": "presuposición", "ipa": "pɾe.su.po.si.ˈθjon", "def": "Contenido implícito que el hablante da por sentado antes de pronunciar un enunciado y que no se cuestiona directamente.", "ex": "La pregunta «¿cuándo dejaste de mentir?» carga una <b>presuposición</b> acusatoria que el interlocutor no puede rechazar sin parecer evasivo."}, {"word": "implicatura conversacional", "ipa": "im.pli.ˈka.tu.ɾa kon.βeɾ.sa.θjo.ˈnal", "def": "Significado adicional que se infiere de un enunciado a partir de las normas cooperativas de la conversación, sin estar codificado literalmente.", "ex": "Responder «he comido» a «¿tienes hambre?» es una <b>implicatura conversacional</b> que comunica negativa sin negarla explícitamente."}, {"word": "variación fonológica", "ipa": "ba.ɾja.ˈθjon fo.no.ˈlo.xi.ka", "def": "Diferencias sistemáticas en la realización de fonemas según factores geográficos, sociales o estilísticos dentro de una comunidad lingüística.", "ex": "El seseo y el ceceo son muestras de <b>variación fonológica</b> que no afectan la comprensión mutua pero marcan identidades dialectales fuertes."}, {"word": "morfofonología", "ipa": "moɾ.fo.fo.no.lo.ˈxi.a", "def": "Rama de la lingüística que estudia las interacciones entre la estructura morfológica de las palabras y su realización fonológica.", "ex": "La <b>morfofonología</b> explica por qué el sufijo «-ción» alterna con «-sión» en pares como «producción» y «comprensión»."}, {"word": "pidgin", "ipa": "ˈpið.xin", "def": "Sistema lingüístico de contacto, simplificado y sin hablantes nativos, que surge cuando dos comunidades necesitan comunicarse sin idioma común.", "ex": "El <b>pidgin</b> camerunés mezcla inglés, francés y lenguas bantúes en una gramática reducida que sirve para el comercio interétnico."}, {"word": "criollo", "ipa": "ˈkɾjo.ʎo", "def": "Lengua de contacto que, habiendo partido de un pidgin, adquiere hablantes nativos y se convierte en el idioma principal de una comunidad.", "ex": "El papiamento es un <b>criollo</b> ibérico hablado en las Antillas holandesas que ha alcanzado estatus de lengua oficial con literatura propia."}, {"word": "diglosia", "ipa": "di.ˈɣlo.sja", "def": "Situación sociolingüística en que dos variedades de una lengua coexisten con funciones sociales diferenciadas: una alta y otra baja.", "ex": "En muchas comunidades arabófonas existe <b>diglosia</b> entre el árabe clásico coránico, usado en escritura formal, y los dialectos locales cotidianos."}, {"word": "lexicogénesis", "ipa": "lek.si.ko.ˈxe.ne.sis", "def": "Conjunto de procesos mediante los cuales una lengua crea nuevas unidades léxicas para nombrar realidades o conceptos emergentes.", "ex": "La <b>lexicogénesis</b> digital ha incorporado préstamos, neologismos y calcos a un ritmo sin precedentes en la historia del español contemporáneo."}];
+var STORAGE_KEY = "wordplay_vocab_mastered_es_c2_linguistica-avanzada";
+var idx = 0, seen = new Set();
+function showCard() {
+  var w = WORDS[idx];
+  document.getElementById('fcWord').textContent = w.word;
+  document.getElementById('fcIpa').textContent = w.ipa ? '[' + w.ipa + ']' : '';
+  document.getElementById('fcDef').textContent = w.def;
+  document.getElementById('fcEx').innerHTML = w.ex;
+  document.getElementById('fcCard').classList.remove('flipped');
+  document.getElementById('fcCounter').textContent = (idx+1) + ' / ' + WORDS.length;
+  seen.add(idx);
+  if (seen.size === WORDS.length) {
+    var sk = (window.store || localStorage);
+    var prog = JSON.parse(sk.getItem('wordplay_progress') || '{}');
+    prog["c2"] = prog["c2"] || {};
+    prog["c2"][STORAGE_KEY] = {done:true, date:new Date().toISOString().slice(0,10)};
+    sk.setItem('wordplay_progress', JSON.stringify(prog));
+    document.getElementById('masteryBadge').style.display = '';
+  }
+}
+function flipCard() { document.getElementById('fcCard').classList.toggle('flipped'); }
+function nextCard() { idx = (idx + 1) % WORDS.length; showCard(); }
+function prevCard() { idx = (idx - 1 + WORDS.length) % WORDS.length; showCard(); }
+function speakWord() {
+  var u = new SpeechSynthesisUtterance(WORDS[idx].word);
+  u.lang = 'es-ES'; u.rate = 0.85;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(u);
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === ' ') nextCard();
+  if (e.key === 'ArrowLeft') prevCard();
+  if (e.key === 'Enter') flipCard();
+});
+showCard();
+(function checkMastery() {
+  var sk = (window.store || localStorage);
+  var prog = JSON.parse(sk.getItem('wordplay_progress') || '{}');
+  if (prog["c2"] && prog["c2"][STORAGE_KEY] && prog["c2"][STORAGE_KEY].done)
+    document.getElementById('masteryBadge').style.display = '';
+})();
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C2 &middot; Vocabulario</footer>
+</body>
+</html>

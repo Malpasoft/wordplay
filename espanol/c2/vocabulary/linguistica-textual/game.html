@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Lingüística Textual — Juego | Espa&#241;ol C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/c2/index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>Lingüística Textual</strong>
+</div>
+<div class="chapter-num">V10</div>
+<h1>Lingüística Textual</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="game-root"></div>
+<script>
+window.GAME_DATA = {
+  chapterId: "linguistica-textual",
+  level: "c2",
+  title: "Lingüística Textual",
+  storageKey: "wordplay_game_es_c2_linguistica-textual",
+  section: 'vocabulary',
+  items: [
+    {id:"cohesion-textual", term:"cohesión textual", meaning:"conjunto de mecanismos léxicos y gramaticales que conectan las partes de un texto y le dan unidad", synonym:"Espa&#241;ol para: conjunto de mecanismos léxicos y gramaticales que conectan las partes de un texto y le dan unidad", example:"La <b>cohesión textual</b> se logra mediante la correferencia, la elipsis y los conectores.", completion:"La ______ se logra mediante la correferencia, la elipsis y los conectores.", answer:"cohesión textual", accept:["cohesion textual"]},
+    {id:"coherencia-pragmatica", term:"coherencia pragmática", meaning:"propiedad del discurso que asegura que el texto tiene sentido global en su contexto de uso", synonym:"Espa&#241;ol para: propiedad del discurso que asegura que el texto tiene sentido global en su contexto de uso", example:"La <b>coherencia pragmática</b> depende tanto de la estructura del texto como de los conocimientos compartidos.", completion:"La ______ depende tanto de la estructura del texto como de los conocimientos compartidos.", answer:"coherencia pragmática", accept:["coherencia pragmatica"]},
+    {id:"progresion-tematica", term:"progresión temática", meaning:"modo en que se introduce y desarrolla la información nueva a lo largo de un texto", synonym:"Espa&#241;ol para: modo en que se introduce y desarrolla la información nueva a lo largo de un texto", example:"Una buena <b>progresión temática</b> evita las repeticiones innecesarias y guía al lector.", completion:"Una buena ______ evita las repeticiones innecesarias y guía al lector.", answer:"progresión temática", accept:["progresion tematica"]},
+    {id:"isotopia", term:"isotopía", meaning:"recurrencia de rasgos semánticos a lo largo de un texto que crea su unidad temática", synonym:"Espa&#241;ol para: recurrencia de rasgos semánticos a lo largo de un texto que crea su unidad temática", example:"La <b>isotopía</b> del fuego en el poema refuerza el tema de la pasión destructiva.", completion:"La ______ del fuego en el poema refuerza el tema de la pasión destructiva.", answer:"isotopía", accept:["isotopia"]},
+    {id:"tipologia-textual", term:"tipología textual", meaning:"clasificación de los textos según su función comunicativa dominante: narrar, describir, argumentar, etc.", synonym:"Espa&#241;ol para: clasificación de los textos según su función comunicativa dominante: narrar, describir, argumentar, etc.", example:"Dominar la <b>tipología textual</b> permite elegir la estructura adecuada para cada propósito.", completion:"Dominar la ______ permite elegir la estructura adecuada para cada propósito.", answer:"tipología textual", accept:["tipologia textual"]},
+    {id:"deixis-textual", term:"deixis textual", meaning:"uso de expresiones que remiten a elementos del propio texto en lugar de a la realidad externa", synonym:"Espa&#241;ol para: uso de expresiones que remiten a elementos del propio texto en lugar de a la realidad externa", example:"La expresión «como veremos más adelante» es un ejemplo de <b>deixis textual</b> anafórica.", completion:"La expresión «como veremos más adelante» es un ejemplo de ______ anafórica.", answer:"deixis textual"},
+    {id:"macroestructura", term:"macroestructura", meaning:"organización semántica global de un texto que resume su contenido esencial", synonym:"Espa&#241;ol para: organización semántica global de un texto que resume su contenido esencial", example:"Van Dijk distingue la <b>macroestructura</b> semántica de la superestructura formal del texto.", completion:"Van Dijk distingue la ______ semántica de la superestructura formal del texto.", answer:"macroestructura"},
+    {id:"superestructura", term:"superestructura", meaning:"esquema formal convencional que organiza los textos de un tipo determinado", synonym:"Espa&#241;ol para: esquema formal convencional que organiza los textos de un tipo determinado", example:"La <b>superestructura</b> de la noticia incluye el titular, el lead y el cuerpo informativo.", completion:"La ______ de la noticia incluye el titular, el lead y el cuerpo informativo.", answer:"superestructura"}
+  ]
+};
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C2 &middot; Vocabulario</footer>
+</body>
+</html>

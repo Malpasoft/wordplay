@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Arte Contemporáneo — Juego | Espa&#241;ol C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/c2/index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>Arte Contemporáneo</strong>
+</div>
+<div class="chapter-num">V06</div>
+<h1>Arte Contemporáneo</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="game-root"></div>
+<script>
+window.GAME_DATA = {
+  chapterId: "arte-contemporaneo",
+  level: "c2",
+  title: "Arte Contemporáneo",
+  storageKey: "wordplay_game_es_c2_arte-contemporaneo",
+  section: 'vocabulary',
+  items: [
+    {id:"arte-conceptual", term:"arte conceptual", meaning:"Modalidad artística en que la idea o concepto es la obra misma, desplazando la habilidad técnica o el objeto físico a un lugar secundario.", synonym:"Espa&#241;ol para: Modalidad artística en que la idea o concepto es la obra misma, desplazando la habilidad técnica o el objeto físico a un lugar secundario.", example:"En el <b>arte conceptual</b>, la propuesta de Duchamp de exhibir un urinario como escultura desplazó el foco de la pericia manual al gesto intelectual.", completion:"En el ______, la propuesta de Duchamp de exhibir un urinario como escultura desplazó el foco de la pericia manual al gesto intelectual.", answer:"arte conceptual"},
+    {id:"apropiacion", term:"apropiación", meaning:"Estrategia artística que consiste en tomar imágenes, objetos o textos preexistentes y recontextualizarlos para producir un nuevo significado.", synonym:"Espa&#241;ol para: Estrategia artística que consiste en tomar imágenes, objetos o textos preexistentes y recontextualizarlos para producir un nuevo significado.", example:"La <b>apropiación</b> de iconos publicitarios por Warhol cuestionó las fronteras entre alta cultura y cultura de masas desde dentro del propio mercado del arte.", completion:"La ______ de iconos publicitarios por Warhol cuestionó las fronteras entre alta cultura y cultura de masas desde dentro del propio mercado del arte.", answer:"apropiación", accept:["apropiacion"]},
+    {id:"hiperrealidad", term:"hiperrealidad", meaning:"Condición posmoderna en que los signos y simulaciones ya no remiten a ninguna realidad exterior, sino que se constituyen como la única realidad.", synonym:"Espa&#241;ol para: Condición posmoderna en que los signos y simulaciones ya no remiten a ninguna realidad exterior, sino que se constituyen como la única realidad.", example:"Baudrillard sostuvo que Disneylandia es el paradigma de la <b>hiperrealidad</b>: no imita el mundo real, sino que disimula que el mundo real ya no existe.", completion:"Baudrillard sostuvo que Disneylandia es el paradigma de la ______: no imita el mundo real, sino que disimula que el mundo real ya no existe.", answer:"hiperrealidad"},
+    {id:"simulacro", term:"simulacro", meaning:"Copia sin original; representación que sustituye completamente al referente real hasta el punto de que este deja de importar o existir.", synonym:"Espa&#241;ol para: Copia sin original; representación que sustituye completamente al referente real hasta el punto de que este deja de importar o existir.", example:"Los mapas que generan el territorio, y no al revés, son para Baudrillard el modelo del <b>simulacro</b> que define la cultura mediática contemporánea.", completion:"Los mapas que generan el territorio, y no al revés, son para Baudrillard el modelo del ______ que define la cultura mediática contemporánea.", answer:"simulacro"},
+    {id:"ironia-posmoderna", term:"ironía posmoderna", meaning:"Distanciamiento reflexivo y autoconsciente que adopta el arte contemporáneo respecto a sus propias convenciones, géneros y tradiciones.", synonym:"Espa&#241;ol para: Distanciamiento reflexivo y autoconsciente que adopta el arte contemporáneo respecto a sus propias convenciones, géneros y tradiciones.", example:"La <b>ironía posmoderna</b> de Koons al exhibir perritos de globo en acero inoxidable celebra y critique simultáneamente el kitsch de consumo masivo.", completion:"La ______ de Koons al exhibir perritos de globo en acero inoxidable celebra y critique simultáneamente el kitsch de consumo masivo.", answer:"ironía posmoderna", accept:["ironia posmoderna"]},
+    {id:"critica-institucional", term:"crítica institucional", meaning:"Práctica artística que examina, problematiza y subvierte las condiciones sociales, económicas e ideológicas de las instituciones del mundo del arte.", synonym:"Espa&#241;ol para: Práctica artística que examina, problematiza y subvierte las condiciones sociales, económicas e ideológicas de las instituciones del mundo del arte.", example:"La <b>crítica institucional</b> de Hans Haacke expuso en el propio museo la red de intereses financieros y políticos que sostenían su colección.", completion:"La ______ de Hans Haacke expuso en el propio museo la red de intereses financieros y políticos que sostenían su colección.", answer:"crítica institucional", accept:["critica institucional"]},
+    {id:"estetica-relacional", term:"estética relacional", meaning:"Paradigma artístico teorizado por Bourriaud que considera la obra como productora de relaciones humanas y situaciones de encuentro colectivo.", synonym:"Espa&#241;ol para: Paradigma artístico teorizado por Bourriaud que considera la obra como productora de relaciones humanas y situaciones de encuentro colectivo.", example:"Las obras de Tiravanija, que consisten en cocinar arroz para el público, son el ejemplo canónico de la <b>estética relacional</b> que disuelve la autoría en la convivencia.", completion:"Las obras de Tiravanija, que consisten en cocinar arroz para el público, son el ejemplo canónico de la ______ que disuelve la autoría en la convivencia.", answer:"estética relacional", accept:["estetica relacional"]},
+    {id:"bioarte", term:"bioarte", meaning:"Práctica artística que utiliza organismos vivos, tejidos, ADN u otros materiales biológicos como medio expresivo, planteando cuestiones éticas sobre la vida.", synonym:"Espa&#241;ol para: Práctica artística que utiliza organismos vivos, tejidos, ADN u otros materiales biológicos como medio expresivo, planteando cuestiones éticas sobre la vida.", example:"Eduardo Kac creó con ingeniería genética un conejo fluorescente para su proyecto de <b>bioarte</b>, detonando debates sobre manipulación de la vida y propiedad artística.", completion:"Eduardo Kac creó con ingeniería genética un conejo fluorescente para su proyecto de ______, detonando debates sobre manipulación de la vida y propiedad artística.", answer:"bioarte"}
+  ]
+};
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C2 &middot; Vocabulario</footer>
+</body>
+</html>

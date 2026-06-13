@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Educación y Conocimiento — Juego | Espa&#241;ol C1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/c1/index.html">C1</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>Educación y Conocimiento</strong>
+</div>
+<div class="chapter-num">V12</div>
+<h1>Educación y Conocimiento</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="game-root"></div>
+<script>
+window.GAME_DATA = {
+  chapterId: "educacion-conocimiento",
+  level: "c1",
+  title: "Educación y Conocimiento",
+  storageKey: "wordplay_game_es_c1_educacion-conocimiento",
+  section: 'vocabulary',
+  items: [
+    {id:"pedagogia-critica", term:"pedagogía crítica", meaning:"enfoque educativo que invita a cuestionar las estructuras de poder y fomenta el pensamiento emancipador", synonym:"Espa&#241;ol para: enfoque educativo que invita a cuestionar las estructuras de poder y fomenta el pensamiento emancipador", example:"La <b>pedagogía crítica</b> de Freire transformó la educación en América Latina.", completion:"La ______ de Freire transformó la educación en América Latina.", answer:"pedagogía crítica", accept:["pedagogia critica"]},
+    {id:"aprendizaje-significativo", term:"aprendizaje significativo", meaning:"proceso en el que el estudiante conecta el nuevo conocimiento con lo que ya sabe", synonym:"Espa&#241;ol para: proceso en el que el estudiante conecta el nuevo conocimiento con lo que ya sabe", example:"El <b>aprendizaje significativo</b> favorece la retención a largo plazo.", completion:"El ______ favorece la retención a largo plazo.", answer:"aprendizaje significativo"},
+    {id:"curriculo-oculto", term:"currículo oculto", meaning:"normas, valores y actitudes que se transmiten en la escuela sin que estén en el programa oficial", synonym:"Espa&#241;ol para: normas, valores y actitudes que se transmiten en la escuela sin que estén en el programa oficial", example:"El <b>currículo oculto</b> puede reforzar estereotipos de género sin que nadie lo advierta.", completion:"El ______ puede reforzar estereotipos de género sin que nadie lo advierta.", answer:"currículo oculto", accept:["curriculo oculto"]},
+    {id:"evaluacion-formativa", term:"evaluación formativa", meaning:"tipo de evaluación continua que orienta el proceso de aprendizaje en lugar de calificarlo", synonym:"Espa&#241;ol para: tipo de evaluación continua que orienta el proceso de aprendizaje en lugar de calificarlo", example:"La <b>evaluación formativa</b> da retroalimentación constante al estudiante.", completion:"La ______ da retroalimentación constante al estudiante.", answer:"evaluación formativa", accept:["evaluacion formativa"]},
+    {id:"brecha-de-rendimiento", term:"brecha de rendimiento", meaning:"diferencia sistemática en los resultados académicos entre distintos grupos sociales o étnicos", synonym:"Espa&#241;ol para: diferencia sistemática en los resultados académicos entre distintos grupos sociales o étnicos", example:"La <b>brecha de rendimiento</b> entre alumnos según el nivel socioeconómico es preocupante.", completion:"La ______ entre alumnos según el nivel socioeconómico es preocupante.", answer:"brecha de rendimiento"},
+    {id:"alfabetizacion-mediatica", term:"alfabetización mediática", meaning:"capacidad de analizar, evaluar y crear contenidos en medios de comunicación e internet", synonym:"Espa&#241;ol para: capacidad de analizar, evaluar y crear contenidos en medios de comunicación e internet", example:"La <b>alfabetización mediática</b> es fundamental para combatir la desinformación.", completion:"La ______ es fundamental para combatir la desinformación.", answer:"alfabetización mediática", accept:["alfabetizacion mediatica"]},
+    {id:"autonomia-del-aprendiz", term:"autonomía del aprendiz", meaning:"capacidad del estudiante de gestionar su propio proceso de aprendizaje sin depender del profesor", synonym:"Espa&#241;ol para: capacidad del estudiante de gestionar su propio proceso de aprendizaje sin depender del profesor", example:"Fomentar la <b>autonomía del aprendiz</b> prepara a los estudiantes para el aprendizaje continuo.", completion:"Fomentar la ______ prepara a los estudiantes para el aprendizaje continuo.", answer:"autonomía del aprendiz", accept:["autonomia del aprendiz"]},
+    {id:"pensamiento-critico", term:"pensamiento crítico", meaning:"capacidad de analizar la información de forma objetiva para emitir juicios fundamentados", synonym:"Espa&#241;ol para: capacidad de analizar la información de forma objetiva para emitir juicios fundamentados", example:"El <b>pensamiento crítico</b> es la habilidad más demandada por las universidades.", completion:"El ______ es la habilidad más demandada por las universidades.", answer:"pensamiento crítico", accept:["pensamiento critico"]}
+  ]
+};
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C1 &middot; Vocabulario</footer>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Ética y Bioética — Juego | Espa&#241;ol C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/c2/index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>Ética y Bioética</strong>
+</div>
+<div class="chapter-num">V09</div>
+<h1>Ética y Bioética</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="game-root"></div>
+<script>
+window.GAME_DATA = {
+  chapterId: "etica-bioetica",
+  level: "c2",
+  title: "Ética y Bioética",
+  storageKey: "wordplay_game_es_c2_etica-bioetica",
+  section: 'vocabulary',
+  items: [
+    {id:"autonomia-moral", term:"autonomía moral", meaning:"capacidad del individuo de darse a sí mismo leyes morales mediante la razón", synonym:"Espa&#241;ol para: capacidad del individuo de darse a sí mismo leyes morales mediante la razón", example:"La <b>autonomía moral</b> kantiana exige actuar por deber y no por inclinación.", completion:"La ______ kantiana exige actuar por deber y no por inclinación.", answer:"autonomía moral", accept:["autonomia moral"]},
+    {id:"principialismo", term:"principialismo", meaning:"marco bioético basado en cuatro principios: autonomía, beneficencia, no maleficencia y justicia", synonym:"Espa&#241;ol para: marco bioético basado en cuatro principios: autonomía, beneficencia, no maleficencia y justicia", example:"El comité adoptó el <b>principialismo</b> de Beauchamp y Childress como guía para sus decisiones.", completion:"El comité adoptó el ______ de Beauchamp y Childress como guía para sus decisiones.", answer:"principialismo"},
+    {id:"consentimiento-informado", term:"consentimiento informado", meaning:"aceptación voluntaria y documentada de un paciente tras conocer los riesgos de un procedimiento", synonym:"Espa&#241;ol para: aceptación voluntaria y documentada de un paciente tras conocer los riesgos de un procedimiento", example:"El médico no puede operar sin el <b>consentimiento informado</b> del paciente.", completion:"El médico no puede operar sin el ______ del paciente.", answer:"consentimiento informado"},
+    {id:"eugenesia", term:"eugenesia", meaning:"práctica que busca mejorar las características hereditarias de una población mediante selección o intervención", synonym:"Espa&#241;ol para: práctica que busca mejorar las características hereditarias de una población mediante selección o intervención", example:"La historia del siglo XX muestra los peligros de la <b>eugenesia</b> aplicada como política estatal.", completion:"La historia del siglo XX muestra los peligros de la ______ aplicada como política estatal.", answer:"eugenesia"},
+    {id:"transhumanismo", term:"transhumanismo", meaning:"movimiento que defiende mejorar las capacidades humanas mediante la tecnología", synonym:"Espa&#241;ol para: movimiento que defiende mejorar las capacidades humanas mediante la tecnología", example:"El <b>transhumanismo</b> plantea dilemas éticos sobre la igualdad de acceso a las mejoras.", completion:"El ______ plantea dilemas éticos sobre la igualdad de acceso a las mejoras.", answer:"transhumanismo"},
+    {id:"responsabilidad-generacional", term:"responsabilidad generacional", meaning:"obligación moral con las generaciones futuras de preservar el entorno y los recursos del planeta", synonym:"Espa&#241;ol para: obligación moral con las generaciones futuras de preservar el entorno y los recursos del planeta", example:"Hans Jonas fundamentó la <b>responsabilidad generacional</b> en el principio de precaución.", completion:"Hans Jonas fundamentó la ______ en el principio de precaución.", answer:"responsabilidad generacional"},
+    {id:"dilema-del-tranvia", term:"dilema del tranvía", meaning:"experimento mental filosófico que pone a prueba la intuición moral ante el sacrificio de una minoría", synonym:"Espa&#241;ol para: experimento mental filosófico que pone a prueba la intuición moral ante el sacrificio de una minoría", example:"El <b>dilema del tranvía</b> revela la tensión entre el utilitarismo y la deontología.", completion:"El ______ revela la tensión entre el utilitarismo y la deontología.", answer:"dilema del tranvía", accept:["dilema del tranvia"]},
+    {id:"etica-del-cuidado", term:"ética del cuidado", meaning:"corriente ética que pone el énfasis en las relaciones, la empatía y la responsabilidad hacia los demás", synonym:"Espa&#241;ol para: corriente ética que pone el énfasis en las relaciones, la empatía y la responsabilidad hacia los demás", example:"Gilligan desarrolló la <b>ética del cuidado</b> como alternativa a los enfoques universalistas.", completion:"Gilligan desarrolló la ______ como alternativa a los enfoques universalistas.", answer:"ética del cuidado", accept:["etica del cuidado"]}
+  ]
+};
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C2 &middot; Vocabulario</footer>
+</body>
+</html>

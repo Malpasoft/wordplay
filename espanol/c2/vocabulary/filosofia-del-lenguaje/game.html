@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Filosofía del Lenguaje — Juego | Espa&#241;ol C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/c2/index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>Filosofía del Lenguaje</strong>
+</div>
+<div class="chapter-num">V03</div>
+<h1>Filosofía del Lenguaje</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="game-root"></div>
+<script>
+window.GAME_DATA = {
+  chapterId: "filosofia-del-lenguaje",
+  level: "c2",
+  title: "Filosofía del Lenguaje",
+  storageKey: "wordplay_game_es_c2_filosofia-del-lenguaje",
+  section: 'vocabulary',
+  items: [
+    {id:"teoria-referencial", term:"teoría referencial", meaning:"Doctrina filosófica que sostiene que el significado de una expresión lingüística es el objeto o entidad a la que dicha expresión se refiere.", synonym:"Espa&#241;ol para: Doctrina filosófica que sostiene que el significado de una expresión lingüística es el objeto o entidad a la que dicha expresión se refiere.", example:"La <b>teoría referencial</b> enfrenta el problema de las expresiones sin referente actual, como «el unicornio» o «el rey de Francia».", completion:"La ______ enfrenta el problema de las expresiones sin referente actual, como «el unicornio» o «el rey de Francia».", answer:"teoría referencial", accept:["teoria referencial"]},
+    {id:"condiciones-de-verdad", term:"condiciones de verdad", meaning:"Circunstancias o estados del mundo que, de darse, harían verdadero un enunciado; base de la semántica formal de inspiración tarskiana.", synonym:"Espa&#241;ol para: Circunstancias o estados del mundo que, de darse, harían verdadero un enunciado; base de la semántica formal de inspiración tarskiana.", example:"Conocer las <b>condiciones de verdad</b> de «está lloviendo» equivale a saber qué situación meteorológica haría verdadera esa oración.", completion:"Conocer las ______ de «está lloviendo» equivale a saber qué situación meteorológica haría verdadera esa oración.", answer:"condiciones de verdad"},
+    {id:"holismo-semantico", term:"holismo semántico", meaning:"Tesis según la cual el significado de cualquier expresión lingüística depende de su relación con el conjunto total de creencias o del lenguaje.", synonym:"Espa&#241;ol para: Tesis según la cual el significado de cualquier expresión lingüística depende de su relación con el conjunto total de creencias o del lenguaje.", example:"El <b>holismo semántico</b> de Quine implica que no podemos cambiar el significado de un término sin alterar toda la red de nuestras creencias.", completion:"El ______ de Quine implica que no podemos cambiar el significado de un término sin alterar toda la red de nuestras creencias.", answer:"holismo semántico", accept:["holismo semantico"]},
+    {id:"sentido-y-referencia", term:"sentido y referencia", meaning:"Distinción fregeana entre el modo de presentación de un objeto (sentido) y el objeto mismo al que apunta una expresión (referencia).", synonym:"Espa&#241;ol para: Distinción fregeana entre el modo de presentación de un objeto (sentido) y el objeto mismo al que apunta una expresión (referencia).", example:"«Lucero del alba» y «estrella vespertina» tienen la misma referencia —Venus— pero distinto <b>sentido y referencia</b> en la teoría de Frege.", completion:"«Lucero del alba» y «estrella vespertina» tienen la misma referencia —Venus— pero distinto ______ en la teoría de Frege.", answer:"sentido y referencia"},
+    {id:"metalenguaje", term:"metalenguaje", meaning:"Lenguaje de orden superior que se usa para hablar o describir otro lenguaje —el lenguaje objeto— sin confundirse con él.", synonym:"Espa&#241;ol para: Lenguaje de orden superior que se usa para hablar o describir otro lenguaje —el lenguaje objeto— sin confundirse con él.", example:"Cuando decimos que «gato» tiene cinco letras, usamos el español como <b>metalenguaje</b> para hablar sobre la palabra, no sobre el animal.", completion:"Cuando decimos que «gato» tiene cinco letras, usamos el español como ______ para hablar sobre la palabra, no sobre el animal.", answer:"metalenguaje"},
+    {id:"enunciado-performativo", term:"enunciado performativo", meaning:"Enunciado que no describe una realidad sino que la constituye o realiza mediante su propia pronunciación en el contexto adecuado.", synonym:"Espa&#241;ol para: Enunciado que no describe una realidad sino que la constituye o realiza mediante su propia pronunciación en el contexto adecuado.", example:"«Los declaro marido y mujer» es un clásico <b>enunciado performativo</b> de Austin: no informa sobre un matrimonio, sino que lo instaura.", completion:"«Los declaro marido y mujer» es un clásico ______ de Austin: no informa sobre un matrimonio, sino que lo instaura.", answer:"enunciado performativo"},
+    {id:"hermeneutica", term:"hermenéutica", meaning:"Teoría y práctica de la interpretación de textos, discursos y acciones humanas, con especial atención al papel del contexto y la tradición.", synonym:"Espa&#241;ol para: Teoría y práctica de la interpretación de textos, discursos y acciones humanas, con especial atención al papel del contexto y la tradición.", example:"La <b>hermenéutica</b> de Gadamer sostiene que toda interpretación está mediada por un horizonte histórico que no podemos abandonar del todo.", completion:"La ______ de Gadamer sostiene que toda interpretación está mediada por un horizonte histórico que no podemos abandonar del todo.", answer:"hermenéutica", accept:["hermeneutica"]},
+    {id:"juegos-de-lenguaje", term:"juegos de lenguaje", meaning:"Concepto wittgensteiniano que designa las múltiples prácticas lingüísticas entretejidas con formas de vida, cada una con sus propias reglas.", synonym:"Espa&#241;ol para: Concepto wittgensteiniano que designa las múltiples prácticas lingüísticas entretejidas con formas de vida, cada una con sus propias reglas.", example:"Según Wittgenstein, la metafísica surge de confundir <b>juegos de lenguaje</b> distintos, tomando preguntas gramaticales por preguntas empíricas.", completion:"Según Wittgenstein, la metafísica surge de confundir ______ distintos, tomando preguntas gramaticales por preguntas empíricas.", answer:"juegos de lenguaje"}
+  ]
+};
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C2 &middot; Vocabulario</footer>
+</body>
+</html>

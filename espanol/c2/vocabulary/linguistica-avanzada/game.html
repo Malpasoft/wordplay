@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Lingüística Avanzada — Juego | Espa&#241;ol C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/c2/index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>Lingüística Avanzada</strong>
+</div>
+<div class="chapter-num">V02</div>
+<h1>Lingüística Avanzada</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="game-root"></div>
+<script>
+window.GAME_DATA = {
+  chapterId: "linguistica-avanzada",
+  level: "c2",
+  title: "Lingüística Avanzada",
+  storageKey: "wordplay_game_es_c2_linguistica-avanzada",
+  section: 'vocabulary',
+  items: [
+    {id:"competencia-pragmatica", term:"competencia pragmática", meaning:"Capacidad del hablante para usar el lenguaje de manera adecuada al contexto social, cultural e interaccional.", synonym:"Espa&#241;ol para: Capacidad del hablante para usar el lenguaje de manera adecuada al contexto social, cultural e interaccional.", example:"La <b>competencia pragmática</b> incluye saber cuándo callar, cuándo interrumpir y cómo interpretar el silencio como acto comunicativo.", completion:"La ______ incluye saber cuándo callar, cuándo interrumpir y cómo interpretar el silencio como acto comunicativo.", answer:"competencia pragmática", accept:["competencia pragmatica"]},
+    {id:"acto-de-habla", term:"acto de habla", meaning:"Unidad mínima de comunicación que realiza una acción social —prometer, ordenar, afirmar— más allá de transmitir información.", synonym:"Espa&#241;ol para: Unidad mínima de comunicación que realiza una acción social —prometer, ordenar, afirmar— más allá de transmitir información.", example:"Decir «¿podrías abrir la ventana?» no es una pregunta sobre capacidades: es un <b>acto de habla</b> directivo encubierto bajo forma interrogativa.", completion:"Decir «¿podrías abrir la ventana?» no es una pregunta sobre capacidades: es un ______ directivo encubierto bajo forma interrogativa.", answer:"acto de habla"},
+    {id:"fuerza-ilocutiva", term:"fuerza ilocutiva", meaning:"Intención o propósito comunicativo que subyace a un enunciado y determina qué acción social realiza al ser pronunciado.", synonym:"Espa&#241;ol para: Intención o propósito comunicativo que subyace a un enunciado y determina qué acción social realiza al ser pronunciado.", example:"La <b>fuerza ilocutiva</b> de «te lo advierto» es amenazante aunque las palabras, aisladas, parezcan meramente informativas.", completion:"La ______ de «te lo advierto» es amenazante aunque las palabras, aisladas, parezcan meramente informativas.", answer:"fuerza ilocutiva"},
+    {id:"deixis", term:"deixis", meaning:"Función lingüística que ancla la referencia de expresiones al contexto espacial, temporal o personal de la enunciación.", synonym:"Espa&#241;ol para: Función lingüística que ancla la referencia de expresiones al contexto espacial, temporal o personal de la enunciación.", example:"Palabras como «aquí», «ahora» y «yo» son expresiones deícticas cuyo significado depende enteramente del contexto de la <b>deixis</b> enunciativa.", completion:"Palabras como «aquí», «ahora» y «yo» son expresiones deícticas cuyo significado depende enteramente del contexto de la ______ enunciativa.", answer:"deixis"},
+    {id:"presuposicion", term:"presuposición", meaning:"Contenido implícito que el hablante da por sentado antes de pronunciar un enunciado y que no se cuestiona directamente.", synonym:"Espa&#241;ol para: Contenido implícito que el hablante da por sentado antes de pronunciar un enunciado y que no se cuestiona directamente.", example:"La pregunta «¿cuándo dejaste de mentir?» carga una <b>presuposición</b> acusatoria que el interlocutor no puede rechazar sin parecer evasivo.", completion:"La pregunta «¿cuándo dejaste de mentir?» carga una ______ acusatoria que el interlocutor no puede rechazar sin parecer evasivo.", answer:"presuposición", accept:["presuposicion"]},
+    {id:"implicatura-conversacional", term:"implicatura conversacional", meaning:"Significado adicional que se infiere de un enunciado a partir de las normas cooperativas de la conversación, sin estar codificado literalmente.", synonym:"Espa&#241;ol para: Significado adicional que se infiere de un enunciado a partir de las normas cooperativas de la conversación, sin estar codificado literalmente.", example:"Responder «he comido» a «¿tienes hambre?» es una <b>implicatura conversacional</b> que comunica negativa sin negarla explícitamente.", completion:"Responder «he comido» a «¿tienes hambre?» es una ______ que comunica negativa sin negarla explícitamente.", answer:"implicatura conversacional"},
+    {id:"variacion-fonologica", term:"variación fonológica", meaning:"Diferencias sistemáticas en la realización de fonemas según factores geográficos, sociales o estilísticos dentro de una comunidad lingüística.", synonym:"Espa&#241;ol para: Diferencias sistemáticas en la realización de fonemas según factores geográficos, sociales o estilísticos dentro de una comunidad lingüística.", example:"El seseo y el ceceo son muestras de <b>variación fonológica</b> que no afectan la comprensión mutua pero marcan identidades dialectales fuertes.", completion:"El seseo y el ceceo son muestras de ______ que no afectan la comprensión mutua pero marcan identidades dialectales fuertes.", answer:"variación fonológica", accept:["variacion fonologica"]},
+    {id:"morfofonologia", term:"morfofonología", meaning:"Rama de la lingüística que estudia las interacciones entre la estructura morfológica de las palabras y su realización fonológica.", synonym:"Espa&#241;ol para: Rama de la lingüística que estudia las interacciones entre la estructura morfológica de las palabras y su realización fonológica.", example:"La <b>morfofonología</b> explica por qué el sufijo «-ción» alterna con «-sión» en pares como «producción» y «comprensión».", completion:"La ______ explica por qué el sufijo «-ción» alterna con «-sión» en pares como «producción» y «comprensión».", answer:"morfofonología", accept:["morfofonologia"]}
+  ]
+};
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C2 &middot; Vocabulario</footer>
+</body>
+</html>

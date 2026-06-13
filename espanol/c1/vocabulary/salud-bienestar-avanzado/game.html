@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Salud y Bienestar Avanzado — Juego | Espa&#241;ol C1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/c1/index.html">C1</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>Salud y Bienestar Avanzado</strong>
+</div>
+<div class="chapter-num">V11</div>
+<h1>Salud y Bienestar Avanzado</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="game-root"></div>
+<script>
+window.GAME_DATA = {
+  chapterId: "salud-bienestar-avanzado",
+  level: "c1",
+  title: "Salud y Bienestar Avanzado",
+  storageKey: "wordplay_game_es_c1_salud-bienestar-avanzado",
+  section: 'vocabulary',
+  items: [
+    {id:"epidemiologia", term:"epidemiología", meaning:"ciencia que estudia la distribución y los factores determinantes de las enfermedades en la población", synonym:"Espa&#241;ol para: ciencia que estudia la distribución y los factores determinantes de las enfermedades en la población", example:"La <b>epidemiología</b> permitió rastrear el origen del brote infeccioso.", completion:"La ______ permitió rastrear el origen del brote infeccioso.", answer:"epidemiología", accept:["epidemiologia"]},
+    {id:"comorbilidad", term:"comorbilidad", meaning:"presencia simultánea de dos o más enfermedades o trastornos en un mismo paciente", synonym:"Espa&#241;ol para: presencia simultánea de dos o más enfermedades o trastornos en un mismo paciente", example:"La <b>comorbilidad</b> entre diabetes e hipertensión agrava el pronóstico.", completion:"La ______ entre diabetes e hipertensión agrava el pronóstico.", answer:"comorbilidad"},
+    {id:"prevencion-primaria", term:"prevención primaria", meaning:"medidas para evitar que aparezca una enfermedad antes de que se produzca", synonym:"Espa&#241;ol para: medidas para evitar que aparezca una enfermedad antes de que se produzca", example:"Las vacunas son el instrumento más eficaz de <b>prevención primaria</b>.", completion:"Las vacunas son el instrumento más eficaz de ______.", answer:"prevención primaria", accept:["prevencion primaria"]},
+    {id:"cronicidad", term:"cronicidad", meaning:"carácter de larga duración o permanente de una enfermedad que no tiene cura completa", synonym:"Espa&#241;ol para: carácter de larga duración o permanente de una enfermedad que no tiene cura completa", example:"La <b>cronicidad</b> de la depresión exige un tratamiento continuado y multidisciplinar.", completion:"La ______ de la depresión exige un tratamiento continuado y multidisciplinar.", answer:"cronicidad"},
+    {id:"adherencia-terapeutica", term:"adherencia terapéutica", meaning:"grado en que un paciente sigue las instrucciones médicas", synonym:"Espa&#241;ol para: grado en que un paciente sigue las instrucciones médicas", example:"La baja <b>adherencia terapéutica</b> reduce la efectividad de los tratamientos crónicos.", completion:"La baja ______ reduce la efectividad de los tratamientos crónicos.", answer:"adherencia terapéutica", accept:["adherencia terapeutica"]},
+    {id:"atencion-primaria", term:"atención primaria", meaning:"primer nivel de contacto del ciudadano con el sistema sanitario", synonym:"Espa&#241;ol para: primer nivel de contacto del ciudadano con el sistema sanitario", example:"Un sistema de <b>atención primaria</b> fuerte descarga la presión sobre los hospitales.", completion:"Un sistema de ______ fuerte descarga la presión sobre los hospitales.", answer:"atención primaria", accept:["atencion primaria"]},
+    {id:"medicina-de-precision", term:"medicina de precisión", meaning:"enfoque que adapta el tratamiento a las características genéticas y clínicas de cada paciente", synonym:"Espa&#241;ol para: enfoque que adapta el tratamiento a las características genéticas y clínicas de cada paciente", example:"La <b>medicina de precisión</b> permite tratamientos oncológicos más eficaces.", completion:"La ______ permite tratamientos oncológicos más eficaces.", answer:"medicina de precisión", accept:["medicina de precision"]},
+    {id:"salud-mental", term:"salud mental", meaning:"estado de bienestar psicológico y emocional que permite a una persona funcionar con normalidad", synonym:"Espa&#241;ol para: estado de bienestar psicológico y emocional que permite a una persona funcionar con normalidad", example:"El estigma en torno a la <b>salud mental</b> impide que muchas personas busquen ayuda.", completion:"El estigma en torno a la ______ impide que muchas personas busquen ayuda.", answer:"salud mental"}
+  ]
+};
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C1 &middot; Vocabulario</footer>
+</body>
+</html>

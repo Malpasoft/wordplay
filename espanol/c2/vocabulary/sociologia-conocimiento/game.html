@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Sociología del Conocimiento — Juego | Espa&#241;ol C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/c2/index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>Sociología del Conocimiento</strong>
+</div>
+<div class="chapter-num">V11</div>
+<h1>Sociología del Conocimiento</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="game-root"></div>
+<script>
+window.GAME_DATA = {
+  chapterId: "sociologia-conocimiento",
+  level: "c2",
+  title: "Sociología del Conocimiento",
+  storageKey: "wordplay_game_es_c2_sociologia-conocimiento",
+  section: 'vocabulary',
+  items: [
+    {id:"campo-social", term:"campo social", meaning:"espacio de relaciones objetivas entre agentes que compiten por el capital específico de ese ámbito", synonym:"Espa&#241;ol para: espacio de relaciones objetivas entre agentes que compiten por el capital específico de ese ámbito", example:"Bourdieu mostró que el <b>campo social</b> literario tiene sus propias reglas de acumulación de capital.", completion:"Bourdieu mostró que el ______ literario tiene sus propias reglas de acumulación de capital.", answer:"campo social"},
+    {id:"habitus", term:"habitus", meaning:"sistema de disposiciones duraderas adquiridas por la experiencia social que orienta la conducta", synonym:"Espa&#241;ol para: sistema de disposiciones duraderas adquiridas por la experiencia social que orienta la conducta", example:"El <b>habitus</b> de clase influye en las elecciones culturales sin que el sujeto lo perciba.", completion:"El ______ de clase influye en las elecciones culturales sin que el sujeto lo perciba.", answer:"habitus"},
+    {id:"capital-cultural", term:"capital cultural", meaning:"conjunto de recursos simbólicos, conocimientos y competencias que otorgan ventaja social", synonym:"Espa&#241;ol para: conjunto de recursos simbólicos, conocimientos y competencias que otorgan ventaja social", example:"El <b>capital cultural</b> acumulado en la familia determina en gran medida el éxito escolar.", completion:"El ______ acumulado en la familia determina en gran medida el éxito escolar.", answer:"capital cultural"},
+    {id:"violencia-simbolica", term:"violencia simbólica", meaning:"forma de dominación ejercida con el consentimiento tácito de los dominados mediante la naturalización del orden social", synonym:"Espa&#241;ol para: forma de dominación ejercida con el consentimiento tácito de los dominados mediante la naturalización del orden social", example:"Bourdieu describió la <b>violencia simbólica</b> como el más eficaz mecanismo de reproducción social.", completion:"Bourdieu describió la ______ como el más eficaz mecanismo de reproducción social.", answer:"violencia simbólica", accept:["violencia simbolica"]},
+    {id:"accion-comunicativa", term:"acción comunicativa", meaning:"tipo de acción social orientada al entendimiento recíproco mediante el uso del lenguaje", synonym:"Espa&#241;ol para: tipo de acción social orientada al entendimiento recíproco mediante el uso del lenguaje", example:"Habermas opone la <b>acción comunicativa</b> a la acción estratégica orientada al éxito.", completion:"Habermas opone la ______ a la acción estratégica orientada al éxito.", answer:"acción comunicativa", accept:["accion comunicativa"]},
+    {id:"sistema-mundo", term:"sistema-mundo", meaning:"marco teórico que analiza las relaciones de dependencia entre naciones a escala global", synonym:"Espa&#241;ol para: marco teórico que analiza las relaciones de dependencia entre naciones a escala global", example:"Wallerstein desarrolló la teoría del <b>sistema-mundo</b> para explicar las asimetrías Norte-Sur.", completion:"Wallerstein desarrolló la teoría del ______ para explicar las asimetrías Norte-Sur.", answer:"sistema-mundo"},
+    {id:"estructura-de-oportunidades", term:"estructura de oportunidades", meaning:"conjunto de factores sociales externos que condicionan las posibilidades de acción de los individuos", synonym:"Espa&#241;ol para: conjunto de factores sociales externos que condicionan las posibilidades de acción de los individuos", example:"La <b>estructura de oportunidades</b> varía radicalmente entre zonas ricas y empobrecidas.", completion:"La ______ varía radicalmente entre zonas ricas y empobrecidas.", answer:"estructura de oportunidades"},
+    {id:"teoria-del-actor-red", term:"teoría del actor-red", meaning:"enfoque que considera que los objetos técnicos y los seres humanos participan como actores en las redes sociales", synonym:"Espa&#241;ol para: enfoque que considera que los objetos técnicos y los seres humanos participan como actores en las redes sociales", example:"La <b>teoría del actor-red</b> atribuye agencia a los artefactos tecnológicos en la vida social.", completion:"La ______ atribuye agencia a los artefactos tecnológicos en la vida social.", answer:"teoría del actor-red", accept:["teoria del actor-red"]}
+  ]
+};
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C2 &middot; Vocabulario</footer>
+</body>
+</html>

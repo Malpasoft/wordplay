@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Discurso y Poder | Vocabulario C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/c2/index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>Discurso y Poder</strong>
+</div>
+<div class="chapter-num">V07</div>
+<h1>Discurso y Poder</h1>
+<p class="chapter-subtitle">12 palabras esenciales con definici&#243;n y ejemplo en espa&#241;ol</p>
+<div class="act-grid">
+<a href="flashcards.html" class="act-card" style="--ac-color:var(--amber)">
+  <div class="act-title">Tarjetas</div>
+  <div class="act-desc">Estudia las palabras con tarjetas interactivas</div>
+  <span class="act-cta">Ir &#8594;</span>
+</a>
+<a href="slides.html" class="act-card" style="--ac-color:var(--amber)">
+  <div class="act-title">Lecci&#243;n</div>
+  <div class="act-desc">Lista completa de palabras con definiciones</div>
+  <span class="act-cta">Ir &#8594;</span>
+</a>
+<a href="game.html" class="act-card" style="--ac-color:#2E7D52">
+  <div class="act-title">Juego de Maest&#237;a</div>
+  <div class="act-desc">Juego interactivo para dominar las palabras</div>
+  <span class="act-cta">Ir &#8594;</span>
+</a>
+<a href="match.html" class="act-card" style="--ac-color:#2E7D52">
+  <div class="act-title">Relacionar</div>
+  <div class="act-desc">Relaciona palabras con sus definiciones</div>
+  <span class="act-cta">Ir &#8594;</span>
+</a>
+</div>
+<script>
+(function() {
+  var sk=(window.store||localStorage);
+  var prog=JSON.parse(sk.getItem('wordplay_progress')||'{}');
+  var lv=prog["c2"]||{};
+  var fk='wordplay_vocab_mastered_es_c2_discurso-poder';
+  var gk='wordplay_game_es_c2_discurso-poder';
+  var mk='wordplay_match_es_c2_discurso-poder';
+  if(lv[fk]&&lv[fk].done) document.querySelector('[href="flashcards.html"]').classList.add('done');
+  if(lv[gk]&&lv[gk].pct>=100) document.querySelector('[href="game.html"]').classList.add('done');
+  if(lv[mk]&&lv[mk].done) document.querySelector('[href="match.html"]').classList.add('done');
+})();
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C2 &middot; Vocabulario</footer>
+</body>
+</html>

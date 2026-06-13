@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Lingüística Textual — Relacionar | Espa&#241;ol C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<style>
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.match-col{display:flex;flex-direction:column;gap:8px}
+.match-item{padding:12px 14px;border:1.5px solid var(--hairline);border-radius:6px;cursor:pointer;font-size:.9rem;color:var(--ink);transition:border-color .15s,background .15s;user-select:none;min-height:48px;display:flex;align-items:center}
+.match-item.selected{border-color:var(--amber);background:rgba(184,134,11,.08)}
+.match-item.correct{border-color:var(--green,#2E7D52);background:rgba(46,125,82,.08);pointer-events:none;color:var(--muted)}
+.match-item.wrong{border-color:var(--red,#C03A2B);background:rgba(192,57,43,.08)}
+.match-status{font-family:var(--font-sans);font-size:.85rem;color:var(--muted);text-align:center;margin-bottom:16px}
+.heart-row{display:flex;gap:6px;justify-content:center;margin-bottom:12px}
+.heart-svg{width:22px;height:22px}
+.mastery-badge{display:inline-block;padding:8px 18px;background:rgba(184,134,11,.12);color:var(--amber);font-family:var(--font-sans);font-size:.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:4px;margin-bottom:16px}
+</style>
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/c2/index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>Lingüística Textual</strong>
+</div>
+<div class="chapter-num">V10</div>
+<h1>Lingüística Textual</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn">Juego</a><a href="match.html" class="chapter-nav-btn active">Relacionar</a></nav>
+<div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">&#10003; Tema dominado</span></div>
+<div class="match-status" id="matchStatus">Relaciona cada palabra con su definici&#243;n</div>
+<div class="heart-row" id="heartRow"></div>
+<div class="match-grid"><div class="match-col" id="colWords"></div><div class="match-col" id="colDefs"></div></div>
+<div style="text-align:center;margin-top:12px"><button class="fc-btn" onclick="restart()">Reiniciar</button></div>
+<script>
+var PAIRS = [["cohesión textual", "conjunto de mecanismos léxicos y gramaticales que conectan las partes de un texto y le dan unidad"], ["coherencia pragmática", "propiedad del discurso que asegura que el texto tiene sentido global en su contexto de uso"], ["progresión temática", "modo en que se introduce y desarrolla la información nueva a lo largo de un texto"], ["isotopía", "recurrencia de rasgos semánticos a lo largo de un texto que crea su unidad temática"], ["tipología textual", "clasificación de los textos según su función comunicativa dominante: narrar, describir, argumentar, etc."], ["deixis textual", "uso de expresiones que remiten a elementos del propio texto en lugar de a la realidad externa"], ["macroestructura", "organización semántica global de un texto que resume su contenido esencial"], ["superestructura", "esquema formal convencional que organiza los textos de un tipo determinado"]];
+var STORAGE_KEY = "wordplay_match_es_c2_linguistica-textual";
+var LEVEL = "c2";
+var lives = 3, matched = 0, needTwo = 0, selected = null;
+var rounds = []; /* each word needs 2 correct matches */
+function shuffle(a) { for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]; } return a; }
+function heartSVG(filled) {
+  return '<svg class="heart-svg" viewBox="0 0 24 24"><path fill="' + (filled?'var(--amber)':'var(--hairline)') + '" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
+}
+function updateHearts() {
+  document.getElementById('heartRow').innerHTML = heartSVG(lives>=1)+heartSVG(lives>=2)+heartSVG(lives>=3);
+}
+function buildRound() {
+  var words = shuffle(PAIRS.map(function(p,i){return {idx:i,text:p[0],type:'w'};}));
+  var defs = shuffle(PAIRS.map(function(p,i){return {idx:i,text:p[1],type:'d'};}));
+  document.getElementById('colWords').innerHTML = words.map(function(w){
+    return '<div class="match-item" data-idx="'+w.idx+'" data-type="w" onclick="pick(this)">'+w.text+'</div>';
+  }).join('');
+  document.getElementById('colDefs').innerHTML = defs.map(function(d){
+    return '<div class="match-item" data-idx="'+d.idx+'" data-type="d" onclick="pick(this)">'+d.text+'</div>';
+  }).join('');
+  matched = 0; selected = null;
+  document.getElementById('matchStatus').textContent = 'Relaciona cada palabra con su definición';
+}
+function pick(el) {
+  if (el.classList.contains('correct') || el.classList.contains('wrong')) return;
+  if (selected && selected === el) { el.classList.remove('selected'); selected = null; return; }
+  if (!selected) { el.classList.add('selected'); selected = el; return; }
+  if (selected.dataset.type === el.dataset.type) {
+    selected.classList.remove('selected'); selected.classList.add('selected');
+    el.classList.add('selected'); selected.classList.remove('selected'); selected = el;
+    return;
+  }
+  var a = selected, b = el;
+  if (a.dataset.idx === b.dataset.idx) {
+    a.classList.remove('selected'); a.classList.add('correct');
+    b.classList.add('correct'); matched++; selected = null;
+    if (matched === PAIRS.length) { needTwo++; if (needTwo >= 2) finish(); else { setTimeout(buildRound,600); } }
+  } else {
+    a.classList.add('wrong'); b.classList.add('wrong');
+    lives = Math.max(0, lives - 1); updateHearts();
+    setTimeout(function(){ a.classList.remove('wrong','selected'); b.classList.remove('wrong'); selected=null; }, 700);
+    if (lives === 0) { document.getElementById('matchStatus').textContent = 'Sin vidas. Reinicia para intentarlo de nuevo.'; }
+  }
+}
+function finish() {
+  var sk = (window.store || localStorage);
+  var prog = JSON.parse(sk.getItem('wordplay_progress') || '{}');
+  prog[LEVEL] = prog[LEVEL] || {};
+  prog[LEVEL][STORAGE_KEY] = {done:true, date:new Date().toISOString().slice(0,10)};
+  sk.setItem('wordplay_progress', JSON.stringify(prog));
+  document.getElementById('masteryBadge').style.display = '';
+  document.getElementById('matchStatus').textContent = '¡Tema dominado!';
+}
+function restart() { lives=3; needTwo=0; updateHearts(); buildRound(); document.getElementById('masteryBadge').style.display='none'; }
+(function init() {
+  updateHearts(); buildRound();
+  var sk=(window.store||localStorage);
+  var prog=JSON.parse(sk.getItem('wordplay_progress')||'{}');
+  if(prog[LEVEL]&&prog[LEVEL][STORAGE_KEY]&&prog[LEVEL][STORAGE_KEY].done)
+    document.getElementById('masteryBadge').style.display='';
+})();
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C2 &middot; Vocabulario</footer>
+</body>
+</html>

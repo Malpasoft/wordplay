@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Historia de las Ideas — Juego | Espa&#241;ol C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/c2/index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>Historia de las Ideas</strong>
+</div>
+<div class="chapter-num">V05</div>
+<h1>Historia de las Ideas</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="game-root"></div>
+<script>
+window.GAME_DATA = {
+  chapterId: "historia-ideas",
+  level: "c2",
+  title: "Historia de las Ideas",
+  storageKey: "wordplay_game_es_c2_historia-ideas",
+  section: 'vocabulary',
+  items: [
+    {id:"escolasticismo", term:"escolasticismo", meaning:"Corriente filosófica y teológica medieval que intentó armonizar la razón aristotélica con la fe cristiana mediante el método disputacional.", synonym:"Espa&#241;ol para: Corriente filosófica y teológica medieval que intentó armonizar la razón aristotélica con la fe cristiana mediante el método disputacional.", example:"El <b>escolasticismo</b> de Tomás de Aquino construyó una síntesis monumental entre la metafísica de Aristóteles y la teología del dogma cristiano.", completion:"El ______ de Tomás de Aquino construyó una síntesis monumental entre la metafísica de Aristóteles y la teología del dogma cristiano.", answer:"escolasticismo"},
+    {id:"empirismo", term:"empirismo", meaning:"Corriente filosófica que sostiene que el conocimiento procede exclusivamente de la experiencia sensible y no de principios innatos o a priori.", synonym:"Espa&#241;ol para: Corriente filosófica que sostiene que el conocimiento procede exclusivamente de la experiencia sensible y no de principios innatos o a priori.", example:"El <b>empirismo</b> de Hume llevó sus premisas hasta el límite: si todo conocimiento viene de los sentidos, la causalidad misma se vuelve cuestionable.", completion:"El ______ de Hume llevó sus premisas hasta el límite: si todo conocimiento viene de los sentidos, la causalidad misma se vuelve cuestionable.", answer:"empirismo"},
+    {id:"racionalismo", term:"racionalismo", meaning:"Corriente filosófica que defiende que la razón, con independencia de la experiencia, puede alcanzar verdades necesarias y universales.", synonym:"Espa&#241;ol para: Corriente filosófica que defiende que la razón, con independencia de la experiencia, puede alcanzar verdades necesarias y universales.", example:"El <b>racionalismo</b> cartesiano parte de la duda metódica para encontrar en el «cogito» una certeza indubitable sobre la que reconstruir el saber.", completion:"El ______ cartesiano parte de la duda metódica para encontrar en el «cogito» una certeza indubitable sobre la que reconstruir el saber.", answer:"racionalismo"},
+    {id:"dialectica", term:"dialéctica", meaning:"Método de pensamiento que avanza mediante la contraposición de tesis y antítesis, cuya superación genera una síntesis en un nivel superior.", synonym:"Espa&#241;ol para: Método de pensamiento que avanza mediante la contraposición de tesis y antítesis, cuya superación genera una síntesis en un nivel superior.", example:"La <b>dialéctica</b> hegeliana del amo y el esclavo muestra cómo las contradicciones históricas se resuelven transformando la relación entre las partes.", completion:"La ______ hegeliana del amo y el esclavo muestra cómo las contradicciones históricas se resuelven transformando la relación entre las partes.", answer:"dialéctica", accept:["dialectica"]},
+    {id:"positivismo", term:"positivismo", meaning:"Corriente filosófica que limita el conocimiento legítimo al que puede ser verificado mediante métodos científicos y datos empíricos observables.", synonym:"Espa&#241;ol para: Corriente filosófica que limita el conocimiento legítimo al que puede ser verificado mediante métodos científicos y datos empíricos observables.", example:"El <b>positivismo</b> de Comte ordenó las ciencias en una jerarquía que culminaba en la sociología como ciencia suprema de los hechos humanos.", completion:"El ______ de Comte ordenó las ciencias en una jerarquía que culminaba en la sociología como ciencia suprema de los hechos humanos.", answer:"positivismo"},
+    {id:"fenomenologia", term:"fenomenología", meaning:"Método filosófico que describe rigurosamente la estructura de la experiencia consciente tal como se presenta, suspendiendo los supuestos previos.", synonym:"Espa&#241;ol para: Método filosófico que describe rigurosamente la estructura de la experiencia consciente tal como se presenta, suspendiendo los supuestos previos.", example:"La <b>fenomenología</b> de Husserl propone la «epojé» o reducción: poner entre paréntesis el mundo natural para estudiar los actos puros de conciencia.", completion:"La ______ de Husserl propone la «epojé» o reducción: poner entre paréntesis el mundo natural para estudiar los actos puros de conciencia.", answer:"fenomenología", accept:["fenomenologia"]},
+    {id:"existencialismo", term:"existencialismo", meaning:"Corriente filosófica que sitúa la existencia individual concreta como punto de partida y afirma que la esencia humana no está predeterminada.", synonym:"Espa&#241;ol para: Corriente filosófica que sitúa la existencia individual concreta como punto de partida y afirma que la esencia humana no está predeterminada.", example:"El <b>existencialismo</b> sartreano resume su núcleo en «la existencia precede a la esencia»: el ser humano se define por sus elecciones, no por su naturaleza.", completion:"El ______ sartreano resume su núcleo en «la existencia precede a la esencia»: el ser humano se define por sus elecciones, no por su naturaleza.", answer:"existencialismo"},
+    {id:"estructuralismo", term:"estructuralismo", meaning:"Paradigma intelectual que analiza los fenómenos culturales, lingüísticos y sociales en términos de estructuras relacionales subyacentes e impersonales.", synonym:"Espa&#241;ol para: Paradigma intelectual que analiza los fenómenos culturales, lingüísticos y sociales en términos de estructuras relacionales subyacentes e impersonales.", example:"El <b>estructuralismo</b> de Lévi-Strauss aplicó el modelo fonológico saussureano al análisis de los mitos y los sistemas de parentesco.", completion:"El ______ de Lévi-Strauss aplicó el modelo fonológico saussureano al análisis de los mitos y los sistemas de parentesco.", answer:"estructuralismo"}
+  ]
+};
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C2 &middot; Vocabulario</footer>
+</body>
+</html>

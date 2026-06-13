@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Estética y Crítica Cultural — Juego | Espa&#241;ol C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/c2/index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>Estética y Crítica Cultural</strong>
+</div>
+<div class="chapter-num">V12</div>
+<h1>Estética y Crítica Cultural</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="game-root"></div>
+<script>
+window.GAME_DATA = {
+  chapterId: "estetica-critica-cultural",
+  level: "c2",
+  title: "Estética y Crítica Cultural",
+  storageKey: "wordplay_game_es_c2_estetica-critica-cultural",
+  section: 'vocabulary',
+  items: [
+    {id:"industria-cultural", term:"industria cultural", meaning:"sistema capitalista de producción y distribución masiva de bienes culturales que homogeniza y mercantiliza la cultura", synonym:"Espa&#241;ol para: sistema capitalista de producción y distribución masiva de bienes culturales que homogeniza y mercantiliza la cultura", example:"Adorno denunció la <b>industria cultural</b> por convertir el arte en mercancía de consumo.", completion:"Adorno denunció la ______ por convertir el arte en mercancía de consumo.", answer:"industria cultural"},
+    {id:"espectacularizacion", term:"espectacularización", meaning:"proceso por el que la realidad social se transforma en representación mediática consumible", synonym:"Espa&#241;ol para: proceso por el que la realidad social se transforma en representación mediática consumible", example:"Debord denunció la <b>espectacularización</b> como sustitución de la vida real por su imagen.", completion:"Debord denunció la ______ como sustitución de la vida real por su imagen.", answer:"espectacularización", accept:["espectacularizacion"]},
+    {id:"kitsch", term:"kitsch", meaning:"estética de mal gusto que recurre a la imitación barata de formas artísticas y la sentimentalidad fácil", synonym:"Espa&#241;ol para: estética de mal gusto que recurre a la imitación barata de formas artísticas y la sentimentalidad fácil", example:"El <b>kitsch</b> no es involuntario: algunos artistas lo reivindican críticamente.", completion:"El ______ no es involuntario: algunos artistas lo reivindican críticamente.", answer:"kitsch"},
+    {id:"camp", term:"camp", meaning:"sensibilidad estética que celebra lo exagerado, lo artificial y lo teatral como forma de subversión", synonym:"Espa&#241;ol para: sensibilidad estética que celebra lo exagerado, lo artificial y lo teatral como forma de subversión", example:"Susan Sontag definió el <b>camp</b> como amor a lo poco natural, a las técnicas artificiales.", completion:"Susan Sontag definió el ______ como amor a lo poco natural, a las técnicas artificiales.", answer:"camp"},
+    {id:"cultura-de-masas", term:"cultura de masas", meaning:"conjunto de manifestaciones culturales producidas para el consumo de grandes audiencias homogéneas", synonym:"Espa&#241;ol para: conjunto de manifestaciones culturales producidas para el consumo de grandes audiencias homogéneas", example:"La <b>cultura de masas</b> ha democratizado el acceso cultural pero también ha uniformizado el gusto.", completion:"La ______ ha democratizado el acceso cultural pero también ha uniformizado el gusto.", answer:"cultura de masas"},
+    {id:"apropiacion-cultural", term:"apropiación cultural", meaning:"adopción de elementos de una cultura ajena sin el reconocimiento ni el consentimiento de esa comunidad", synonym:"Espa&#241;ol para: adopción de elementos de una cultura ajena sin el reconocimiento ni el consentimiento de esa comunidad", example:"El debate sobre la <b>apropiación cultural</b> cuestiona quién tiene derecho a representar qué identidades.", completion:"El debate sobre la ______ cuestiona quién tiene derecho a representar qué identidades.", answer:"apropiación cultural", accept:["apropiacion cultural"]},
+    {id:"poscolonialismo", term:"poscolonialismo", meaning:"corriente crítica que analiza los legados culturales, políticos e identitarios del colonialismo en las sociedades poscoloniales", synonym:"Espa&#241;ol para: corriente crítica que analiza los legados culturales, políticos e identitarios del colonialismo en las sociedades poscoloniales", example:"Bhabha y Spivak desarrollaron el <b>poscolonialismo</b> como herramienta de descolonización epistémica.", completion:"Bhabha y Spivak desarrollaron el ______ como herramienta de descolonización epistémica.", answer:"poscolonialismo"},
+    {id:"subalternidad", term:"subalternidad", meaning:"condición de los grupos sociales excluidos del poder que no tienen voz en el discurso dominante", synonym:"Espa&#241;ol para: condición de los grupos sociales excluidos del poder que no tienen voz en el discurso dominante", example:"Spivak pregunta si el sujeto <b>subalterno</b> puede hablar dentro de las estructuras que lo excluyen.", completion:"Spivak pregunta si el sujeto ______ puede hablar dentro de las estructuras que lo excluyen.", answer:"subalternidad"}
+  ]
+};
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C2 &middot; Vocabulario</footer>
+</body>
+</html>

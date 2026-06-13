@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Epistemología — Juego | Espa&#241;ol C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/c2/index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>Epistemología</strong>
+</div>
+<div class="chapter-num">V08</div>
+<h1>Epistemología</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="game-root"></div>
+<script>
+window.GAME_DATA = {
+  chapterId: "epistemologia",
+  level: "c2",
+  title: "Epistemología",
+  storageKey: "wordplay_game_es_c2_epistemologia",
+  section: 'vocabulary',
+  items: [
+    {id:"epistemologia", term:"epistemología", meaning:"rama de la filosofía que estudia el origen, la naturaleza y los límites del conocimiento humano", synonym:"Espa&#241;ol para: rama de la filosofía que estudia el origen, la naturaleza y los límites del conocimiento humano", example:"La <b>epistemología</b> kantiana distingue entre el fenómeno y el noúmeno.", completion:"La ______ kantiana distingue entre el fenómeno y el noúmeno.", answer:"epistemología", accept:["epistemologia"]},
+    {id:"fundacionalismo", term:"fundacionalismo", meaning:"doctrina que sostiene que el conocimiento debe basarse en creencias básicas indudables", synonym:"Espa&#241;ol para: doctrina que sostiene que el conocimiento debe basarse en creencias básicas indudables", example:"Descartes es el referente del <b>fundacionalismo</b> con su cogito como primer principio.", completion:"Descartes es el referente del ______ con su cogito como primer principio.", answer:"fundacionalismo"},
+    {id:"coherentismo", term:"coherentismo", meaning:"teoría epistemológica que defiende que una creencia se justifica si encaja con el sistema de creencias del sujeto", synonym:"Espa&#241;ol para: teoría epistemológica que defiende que una creencia se justifica si encaja con el sistema de creencias del sujeto", example:"El <b>coherentismo</b> rechaza que haya verdades básicas independientes del sistema.", completion:"El ______ rechaza que haya verdades básicas independientes del sistema.", answer:"coherentismo"},
+    {id:"falibilismo", term:"falibilismo", meaning:"postura que admite que ningún conocimiento es absolutamente cierto y que toda teoría puede ser revisada", synonym:"Espa&#241;ol para: postura que admite que ningún conocimiento es absolutamente cierto y que toda teoría puede ser revisada", example:"El <b>falibilismo</b> popperiano exige que las teorías científicas sean falsables.", completion:"El ______ popperiano exige que las teorías científicas sean falsables.", answer:"falibilismo"},
+    {id:"relativismo-epistemologico", term:"relativismo epistemológico", meaning:"posición que sostiene que la verdad o el conocimiento depende del sujeto, la cultura o el contexto", synonym:"Espa&#241;ol para: posición que sostiene que la verdad o el conocimiento depende del sujeto, la cultura o el contexto", example:"El <b>relativismo epistemológico</b> cuestiona la posibilidad de una ciencia transcultural.", completion:"El ______ cuestiona la posibilidad de una ciencia transcultural.", answer:"relativismo epistemológico", accept:["relativismo epistemologico"]},
+    {id:"inferencia-a-la-mejor-explicacion", term:"inferencia a la mejor explicación", meaning:"razonamiento que elige la hipótesis que explicaría mejor los datos disponibles", synonym:"Espa&#241;ol para: razonamiento que elige la hipótesis que explicaría mejor los datos disponibles", example:"La detección del virus se apoyó en una <b>inferencia a la mejor explicación</b>.", completion:"La detección del virus se apoyó en una ______.", answer:"inferencia a la mejor explicación", accept:["inferencia a la mejor explicacion"]},
+    {id:"conocimiento-tacito", term:"conocimiento tácito", meaning:"saber no articulable que se adquiere por la práctica y no puede transmitirse solo con palabras", synonym:"Espa&#241;ol para: saber no articulable que se adquiere por la práctica y no puede transmitirse solo con palabras", example:"Polanyi mostró que gran parte del <b>conocimiento tácito</b> es irreductible a reglas explícitas.", completion:"Polanyi mostró que gran parte del ______ es irreductible a reglas explícitas.", answer:"conocimiento tácito", accept:["conocimiento tacito"]},
+    {id:"escepticismo-metodologico", term:"escepticismo metodológico", meaning:"práctica de dudar sistemáticamente de las creencias para asegurar una base sólida de conocimiento", synonym:"Espa&#241;ol para: práctica de dudar sistemáticamente de las creencias para asegurar una base sólida de conocimiento", example:"El <b>escepticismo metodológico</b> cartesiano sirvió para reconstruir el saber sobre fundamentos seguros.", completion:"El ______ cartesiano sirvió para reconstruir el saber sobre fundamentos seguros.", answer:"escepticismo metodológico", accept:["escepticismo metodologico"]}
+  ]
+};
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C2 &middot; Vocabulario</footer>
+</body>
+</html>

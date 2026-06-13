@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Estilística Literaria — Juego | Espa&#241;ol C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/c2/index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>Estilística Literaria</strong>
+</div>
+<div class="chapter-num">V01</div>
+<h1>Estilística Literaria</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="game-root"></div>
+<script>
+window.GAME_DATA = {
+  chapterId: "estilistica-literaria",
+  level: "c2",
+  title: "Estilística Literaria",
+  storageKey: "wordplay_game_es_c2_estilistica-literaria",
+  section: 'vocabulary',
+  items: [
+    {id:"estilistica", term:"estilística", meaning:"Disciplina que estudia los recursos expresivos y el estilo de una obra literaria o de un autor determinado.", synonym:"Espa&#241;ol para: Disciplina que estudia los recursos expresivos y el estilo de una obra literaria o de un autor determinado.", example:"La <b>estilística</b> de Rulfo se caracteriza por una sintaxis fragmentaria que imita el habla rural mexicana.", completion:"La ______ de Rulfo se caracteriza por una sintaxis fragmentaria que imita el habla rural mexicana.", answer:"estilística", accept:["estilistica"]},
+    {id:"voz-narrativa", term:"voz narrativa", meaning:"Instancia enunciadora que relata los hechos en un texto literario, con sus propias características, perspectivas y limitaciones.", synonym:"Espa&#241;ol para: Instancia enunciadora que relata los hechos en un texto literario, con sus propias características, perspectivas y limitaciones.", example:"La <b>voz narrativa</b> de esta novela oscila entre la omnisciencia y la ignorancia deliberada, generando una ambigüedad inquietante.", completion:"La ______ de esta novela oscila entre la omnisciencia y la ignorancia deliberada, generando una ambigüedad inquietante.", answer:"voz narrativa"},
+    {id:"intertextualidad", term:"intertextualidad", meaning:"Relación que mantiene un texto con otros textos anteriores, ya sea por cita explícita, alusión o transformación.", synonym:"Espa&#241;ol para: Relación que mantiene un texto con otros textos anteriores, ya sea por cita explícita, alusión o transformación.", example:"La <b>intertextualidad</b> en la obra de Borges es tan densa que cada cuento parece una red de referencias a la tradición literaria universal.", completion:"La ______ en la obra de Borges es tan densa que cada cuento parece una red de referencias a la tradición literaria universal.", answer:"intertextualidad"},
+    {id:"polifonia", term:"polifonía", meaning:"Presencia de múltiples voces o conciencias independientes dentro de un texto narrativo, sin que ninguna sea subordinada a la del autor.", synonym:"Espa&#241;ol para: Presencia de múltiples voces o conciencias independientes dentro de un texto narrativo, sin que ninguna sea subordinada a la del autor.", example:"Bajtín vio en Dostoievski el modelo de la <b>polifonía</b> novelesca, donde cada personaje habla desde una perspectiva irreductible a las demás.", completion:"Bajtín vio en Dostoievski el modelo de la ______ novelesca, donde cada personaje habla desde una perspectiva irreductible a las demás.", answer:"polifonía", accept:["polifonia"]},
+    {id:"ecfrasis", term:"écfrasis", meaning:"Descripción literaria detallada de una obra de arte visual, que busca traducir en palabras los efectos plásticos de la imagen.", synonym:"Espa&#241;ol para: Descripción literaria detallada de una obra de arte visual, que busca traducir en palabras los efectos plásticos de la imagen.", example:"La <b>écfrasis</b> del escudo de Aquiles en la Ilíada es uno de los ejemplos más celebrados de esta técnica en la literatura occidental.", completion:"La ______ del escudo de Aquiles en la Ilíada es uno de los ejemplos más celebrados de esta técnica en la literatura occidental.", answer:"écfrasis", accept:["ecfrasis"]},
+    {id:"etopeya", term:"etopeya", meaning:"Figura retórica que consiste en la descripción de los rasgos morales, psicológicos y de carácter de una persona o personaje.", synonym:"Espa&#241;ol para: Figura retórica que consiste en la descripción de los rasgos morales, psicológicos y de carácter de una persona o personaje.", example:"La <b>etopeya</b> del protagonista ocupa el segundo capítulo entero, revelando sus contradicciones internas antes de que actúe.", completion:"La ______ del protagonista ocupa el segundo capítulo entero, revelando sus contradicciones internas antes de que actúe.", answer:"etopeya"},
+    {id:"catarsis", term:"catarsis", meaning:"Proceso de purificación o liberación emocional que experimenta el espectador o lector ante la representación de conflictos intensos.", synonym:"Espa&#241;ol para: Proceso de purificación o liberación emocional que experimenta el espectador o lector ante la representación de conflictos intensos.", example:"La escena final produce una <b>catarsis</b> tan poderosa que el público permanece en silencio durante varios minutos tras el telón.", completion:"La escena final produce una ______ tan poderosa que el público permanece en silencio durante varios minutos tras el telón.", answer:"catarsis"},
+    {id:"diegesis", term:"diégesis", meaning:"Universo narrativo interno de una obra; el mundo ficticio donde ocurren los hechos relatados por el narrador.", synonym:"Espa&#241;ol para: Universo narrativo interno de una obra; el mundo ficticio donde ocurren los hechos relatados por el narrador.", example:"El personaje que lee un libro dentro de la novela habita la misma <b>diégesis</b> que los demás, pero su lectura introduce otra capa ficcional.", completion:"El personaje que lee un libro dentro de la novela habita la misma ______ que los demás, pero su lectura introduce otra capa ficcional.", answer:"diégesis", accept:["diegesis"]}
+  ]
+};
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C2 &middot; Vocabulario</footer>
+</body>
+</html>
