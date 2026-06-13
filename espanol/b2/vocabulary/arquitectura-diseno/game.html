@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Arquitectura y Diseño — Juego | Espa&#241;ol B2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/b2/index.html">B2</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>Arquitectura y Diseño</strong>
+</div>
+<div class="chapter-num">V09</div>
+<h1>Arquitectura y Diseño</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="game-root"></div>
+<script>
+window.GAME_DATA = {
+  chapterId: "arquitectura-diseno",
+  level: "b2",
+  title: "Arquitectura y Diseño",
+  storageKey: "wordplay_game_es_b2_arquitectura-diseno",
+  section: 'vocabulary',
+  items: [
+    {id:"plano", term:"plano", meaning:"representación gráfica de un edificio o espacio a escala reducida", synonym:"Espa&#241;ol para: representación gráfica de un edificio o espacio a escala reducida", example:"El arquitecto presentó los <b>planos</b> del nuevo edificio.", completion:"El arquitecto presentó los ______ del nuevo edificio.", answer:"plano"},
+    {id:"fachada", term:"fachada", meaning:"parte exterior y frontal de un edificio", synonym:"Espa&#241;ol para: parte exterior y frontal de un edificio", example:"La <b>fachada</b> del museo fue diseñada por un arquitecto famoso.", completion:"La ______ del museo fue diseñada por un arquitecto famoso.", answer:"fachada"},
+    {id:"estructura", term:"estructura", meaning:"sistema de elementos que sostiene y da forma a una construcción", synonym:"Espa&#241;ol para: sistema de elementos que sostiene y da forma a una construcción", example:"La <b>estructura</b> metálica permite grandes alturas.", completion:"La ______ metálica permite grandes alturas.", answer:"estructura"},
+    {id:"rehabilitacion", term:"rehabilitación", meaning:"proceso de restaurar o reformar un edificio para mejorar su estado", synonym:"Espa&#241;ol para: proceso de restaurar o reformar un edificio para mejorar su estado", example:"La <b>rehabilitación</b> del casco histórico duró tres años.", completion:"La ______ del casco histórico duró tres años.", answer:"rehabilitación", accept:["rehabilitacion"]},
+    {id:"sostenible", term:"sostenible", meaning:"que está diseñado para minimizar el impacto ambiental", synonym:"Espa&#241;ol para: que está diseñado para minimizar el impacto ambiental", example:"Diseñaron un edificio <b>sostenible</b> con energía solar.", completion:"Diseñaron un edificio ______ con energía solar.", answer:"sostenible"},
+    {id:"urbanismo", term:"urbanismo", meaning:"disciplina que planifica la organización de los espacios y servicios en las ciudades", synonym:"Espa&#241;ol para: disciplina que planifica la organización de los espacios y servicios en las ciudades", example:"El <b>urbanismo</b> moderno da prioridad al peatón.", completion:"El ______ moderno da prioridad al peatón.", answer:"urbanismo"},
+    {id:"vanguardia", term:"vanguardia", meaning:"tendencia artística o cultural más innovadora de un período", synonym:"Espa&#241;ol para: tendencia artística o cultural más innovadora de un período", example:"El arquitecto siempre trabaja en la <b>vanguardia</b> del diseño.", completion:"El arquitecto siempre trabaja en la ______ del diseño.", answer:"vanguardia"},
+    {id:"patrimonio", term:"patrimonio", meaning:"conjunto de bienes históricos y culturales que una sociedad preserva", synonym:"Espa&#241;ol para: conjunto de bienes históricos y culturales que una sociedad preserva", example:"El ayuntamiento protege el <b>patrimonio</b> arquitectónico de la ciudad.", completion:"El ayuntamiento protege el ______ arquitectónico de la ciudad.", answer:"patrimonio"}
+  ]
+};
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol B2 &middot; Vocabulario</footer>
+</body>
+</html>

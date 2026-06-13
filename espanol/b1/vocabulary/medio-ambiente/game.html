@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>El Medio Ambiente — Juego | Espa&#241;ol B1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/b1/index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>El Medio Ambiente</strong>
+</div>
+<div class="chapter-num">V03</div>
+<h1>El Medio Ambiente</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="game-root"></div>
+<script>
+window.GAME_DATA = {
+  chapterId: "medio-ambiente",
+  level: "b1",
+  title: "El Medio Ambiente",
+  storageKey: "wordplay_game_es_b1_medio-ambiente",
+  section: 'vocabulary',
+  items: [
+    {id:"cambio-climatico", term:"cambio climático", meaning:"Variación a largo plazo de los patrones climáticos globales, principalmente causada por la actividad humana.", synonym:"Espa&#241;ol para: Variación a largo plazo de los patrones climáticos globales, principalmente causada por la actividad humana.", example:"El <b>cambio climático</b> está provocando fenómenos meteorológicos cada vez más extremos.", completion:"El ______ está provocando fenómenos meteorológicos cada vez más extremos.", answer:"cambio climático", accept:["cambio climatico"]},
+    {id:"contaminacion", term:"contaminación", meaning:"Presencia de sustancias nocivas en el aire, el agua o el suelo que resultan perjudiciales para los seres vivos.", synonym:"Espa&#241;ol para: Presencia de sustancias nocivas en el aire, el agua o el suelo que resultan perjudiciales para los seres vivos.", example:"La <b>contaminación</b> del río ha afectado a muchas especies de peces locales.", completion:"La ______ del río ha afectado a muchas especies de peces locales.", answer:"contaminación", accept:["contaminacion"]},
+    {id:"renovable", term:"renovable", meaning:"Que proviene de fuentes naturales que se reponen de manera continua y no se agotan con el uso.", synonym:"Espa&#241;ol para: Que proviene de fuentes naturales que se reponen de manera continua y no se agotan con el uso.", example:"La energía solar es una fuente <b>renovable</b> que no produce emisiones de carbono.", completion:"La energía solar es una fuente ______ que no produce emisiones de carbono.", answer:"renovable"},
+    {id:"reciclaje", term:"reciclaje", meaning:"Proceso de transformar materiales ya usados en nuevos productos para reducir los residuos.", synonym:"Espa&#241;ol para: Proceso de transformar materiales ya usados en nuevos productos para reducir los residuos.", example:"El <b>reciclaje</b> del papel y del plástico ayuda a reducir la cantidad de basura.", completion:"El ______ del papel y del plástico ayuda a reducir la cantidad de basura.", answer:"reciclaje"},
+    {id:"huella-de-carbono", term:"huella de carbono", meaning:"Cantidad total de gases de efecto invernadero que genera una persona, organización o producto.", synonym:"Espa&#241;ol para: Cantidad total de gases de efecto invernadero que genera una persona, organización o producto.", example:"Podemos reducir nuestra <b>huella de carbono</b> usando el transporte público.", completion:"Podemos reducir nuestra ______ usando el transporte público.", answer:"huella de carbono"},
+    {id:"deforestacion", term:"deforestación", meaning:"Destrucción y eliminación masiva de los árboles de una zona forestal.", synonym:"Espa&#241;ol para: Destrucción y eliminación masiva de los árboles de una zona forestal.", example:"La <b>deforestación</b> en el Amazonas pone en peligro miles de especies animales.", completion:"La ______ en el Amazonas pone en peligro miles de especies animales.", answer:"deforestación", accept:["deforestacion"]},
+    {id:"especie", term:"especie", meaning:"Grupo de seres vivos con características comunes que pueden reproducirse entre sí.", synonym:"Espa&#241;ol para: Grupo de seres vivos con características comunes que pueden reproducirse entre sí.", example:"Varias <b>especies</b> de aves migratorias han desaparecido en las últimas décadas.", completion:"Varias ______ de aves migratorias han desaparecido en las últimas décadas.", answer:"especie"},
+    {id:"sostenible", term:"sostenible", meaning:"Que se puede mantener a largo plazo sin dañar los recursos naturales ni el medio ambiente.", synonym:"Espa&#241;ol para: Que se puede mantener a largo plazo sin dañar los recursos naturales ni el medio ambiente.", example:"Es necesario adoptar un modelo de desarrollo <b>sostenible</b> para proteger el planeta.", completion:"Es necesario adoptar un modelo de desarrollo ______ para proteger el planeta.", answer:"sostenible"}
+  ]
+};
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol B1 &middot; Vocabulario</footer>
+</body>
+</html>

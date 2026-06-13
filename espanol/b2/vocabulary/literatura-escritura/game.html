@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Literatura y Escritura — Juego | Espa&#241;ol B2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/b2/index.html">B2</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>Literatura y Escritura</strong>
+</div>
+<div class="chapter-num">V05</div>
+<h1>Literatura y Escritura</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="game-root"></div>
+<script>
+window.GAME_DATA = {
+  chapterId: "literatura-escritura",
+  level: "b2",
+  title: "Literatura y Escritura",
+  storageKey: "wordplay_game_es_b2_literatura-escritura",
+  section: 'vocabulary',
+  items: [
+    {id:"narrador", term:"narrador", meaning:"voz que cuenta la historia dentro de una obra literaria", synonym:"Espa&#241;ol para: voz que cuenta la historia dentro de una obra literaria", example:"El <b>narrador</b> omnisciente conoce los pensamientos de todos los personajes.", completion:"El ______ omnisciente conoce los pensamientos de todos los personajes.", answer:"narrador"},
+    {id:"protagonista", term:"protagonista", meaning:"personaje principal de una obra literaria o cinematográfica", synonym:"Espa&#241;ol para: personaje principal de una obra literaria o cinematográfica", example:"El <b>protagonista</b> de la novela viaja por toda Europa.", completion:"El ______ de la novela viaja por toda Europa.", answer:"protagonista"},
+    {id:"argumento", term:"argumento", meaning:"secuencia de los hechos principales que ocurren en una obra", synonym:"Espa&#241;ol para: secuencia de los hechos principales que ocurren en una obra", example:"El <b>argumento</b> de la novela es muy original.", completion:"El ______ de la novela es muy original.", answer:"argumento"},
+    {id:"metafora", term:"metáfora", meaning:"figura retórica que describe algo comparándolo con otra cosa diferente", synonym:"Espa&#241;ol para: figura retórica que describe algo comparándolo con otra cosa diferente", example:"«El tiempo es oro» es una <b>metáfora</b> muy conocida.", completion:"«El tiempo es oro» es una ______ muy conocida.", answer:"metáfora", accept:["metafora"]},
+    {id:"ironia", term:"ironía", meaning:"figura retórica que expresa lo contrario de lo que se quiere decir", synonym:"Espa&#241;ol para: figura retórica que expresa lo contrario de lo que se quiere decir", example:"El autor usa la <b>ironía</b> para criticar la sociedad.", completion:"El autor usa la ______ para criticar la sociedad.", answer:"ironía", accept:["ironia"]},
+    {id:"genero-literario", term:"género literario", meaning:"categoría en que se clasifica una obra literaria según su forma y contenido", synonym:"Espa&#241;ol para: categoría en que se clasifica una obra literaria según su forma y contenido", example:"La novela negra es un <b>género literario</b> muy popular.", completion:"La novela negra es un ______ muy popular.", answer:"género literario", accept:["genero literario"]},
+    {id:"estilo", term:"estilo", meaning:"manera propia de un autor de usar el lenguaje", synonym:"Espa&#241;ol para: manera propia de un autor de usar el lenguaje", example:"El <b>estilo</b> de García Márquez es inconfundible.", completion:"El ______ de García Márquez es inconfundible.", answer:"estilo"},
+    {id:"ensayo", term:"ensayo", meaning:"texto en prosa que desarrolla una opinión o análisis sobre un tema", synonym:"Espa&#241;ol para: texto en prosa que desarrolla una opinión o análisis sobre un tema", example:"Escribió un <b>ensayo</b> brillante sobre la identidad nacional.", completion:"Escribió un ______ brillante sobre la identidad nacional.", answer:"ensayo"}
+  ]
+};
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol B2 &middot; Vocabulario</footer>
+</body>
+</html>

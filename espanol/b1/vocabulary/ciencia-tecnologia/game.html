@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Ciencia y Tecnología — Juego | Espa&#241;ol B1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/b1/index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>Ciencia y Tecnología</strong>
+</div>
+<div class="chapter-num">V08</div>
+<h1>Ciencia y Tecnología</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="game-root"></div>
+<script>
+window.GAME_DATA = {
+  chapterId: "ciencia-tecnologia",
+  level: "b1",
+  title: "Ciencia y Tecnología",
+  storageKey: "wordplay_game_es_b1_ciencia-tecnologia",
+  section: 'vocabulary',
+  items: [
+    {id:"experimento", term:"experimento", meaning:"Prueba controlada que se realiza para comprobar o descubrir algo mediante la observación.", synonym:"Espa&#241;ol para: Prueba controlada que se realiza para comprobar o descubrir algo mediante la observación.", example:"Los estudiantes realizaron un <b>experimento</b> en el laboratorio para estudiar la reacción química.", completion:"Los estudiantes realizaron un ______ en el laboratorio para estudiar la reacción química.", answer:"experimento"},
+    {id:"investigacion", term:"investigación", meaning:"Proceso sistemático de búsqueda y análisis de información para ampliar el conocimiento.", synonym:"Espa&#241;ol para: Proceso sistemático de búsqueda y análisis de información para ampliar el conocimiento.", example:"El equipo de <b>investigación</b> lleva años estudiando una posible cura para la enfermedad.", completion:"El equipo de ______ lleva años estudiando una posible cura para la enfermedad.", answer:"investigación", accept:["investigacion"]},
+    {id:"descubrimiento", term:"descubrimiento", meaning:"Hallazgo de algo desconocido o nuevo mediante la observación o el estudio.", synonym:"Espa&#241;ol para: Hallazgo de algo desconocido o nuevo mediante la observación o el estudio.", example:"El <b>descubrimiento</b> de la penicilina cambió para siempre la medicina moderna.", completion:"El ______ de la penicilina cambió para siempre la medicina moderna.", answer:"descubrimiento"},
+    {id:"invento", term:"invento", meaning:"Objeto, proceso o idea creado por primera vez mediante el ingenio y el trabajo.", synonym:"Espa&#241;ol para: Objeto, proceso o idea creado por primera vez mediante el ingenio y el trabajo.", example:"El <b>invento</b> de la imprenta permitió difundir el conocimiento a gran escala.", completion:"El ______ de la imprenta permitió difundir el conocimiento a gran escala.", answer:"invento"},
+    {id:"evolucion", term:"evolución", meaning:"Proceso gradual de cambio y desarrollo de los seres vivos a lo largo del tiempo.", synonym:"Espa&#241;ol para: Proceso gradual de cambio y desarrollo de los seres vivos a lo largo del tiempo.", example:"La teoría de la <b>evolución</b> de Darwin revolucionó la biología en el siglo XIX.", completion:"La teoría de la ______ de Darwin revolucionó la biología en el siglo XIX.", answer:"evolución", accept:["evolucion"]},
+    {id:"atomo", term:"átomo", meaning:"Unidad más pequeña de un elemento químico que conserva sus propiedades.", synonym:"Espa&#241;ol para: Unidad más pequeña de un elemento químico que conserva sus propiedades.", example:"Un <b>átomo</b> está compuesto por un núcleo y una nube de electrones a su alrededor.", completion:"Un ______ está compuesto por un núcleo y una nube de electrones a su alrededor.", answer:"átomo", accept:["atomo"]},
+    {id:"molecula", term:"molécula", meaning:"Agrupación de dos o más átomos unidos mediante enlaces químicos.", synonym:"Espa&#241;ol para: Agrupación de dos o más átomos unidos mediante enlaces químicos.", example:"El agua está formada por una <b>molécula</b> de dos átomos de hidrógeno y uno de oxígeno.", completion:"El agua está formada por una ______ de dos átomos de hidrógeno y uno de oxígeno.", answer:"molécula", accept:["molecula"]},
+    {id:"laboratorio", term:"laboratorio", meaning:"Lugar equipado con instrumentos y materiales para realizar experimentos científicos.", synonym:"Espa&#241;ol para: Lugar equipado con instrumentos y materiales para realizar experimentos científicos.", example:"Los investigadores pasaron toda la semana en el <b>laboratorio</b> analizando las muestras.", completion:"Los investigadores pasaron toda la semana en el ______ analizando las muestras.", answer:"laboratorio"}
+  ]
+};
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol B1 &middot; Vocabulario</footer>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Cultura y Arte — Juego | Espa&#241;ol B1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/b1/index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>Cultura y Arte</strong>
+</div>
+<div class="chapter-num">V04</div>
+<h1>Cultura y Arte</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="game-root"></div>
+<script>
+window.GAME_DATA = {
+  chapterId: "cultura-arte",
+  level: "b1",
+  title: "Cultura y Arte",
+  storageKey: "wordplay_game_es_b1_cultura-arte",
+  section: 'vocabulary',
+  items: [
+    {id:"pintura", term:"pintura", meaning:"Obra de arte creada aplicando pigmentos sobre una superficie, o la técnica usada para crearla.", synonym:"Espa&#241;ol para: Obra de arte creada aplicando pigmentos sobre una superficie, o la técnica usada para crearla.", example:"La <b>pintura</b> de Frida Kahlo refleja su vida personal con gran intensidad.", completion:"La ______ de Frida Kahlo refleja su vida personal con gran intensidad.", answer:"pintura"},
+    {id:"escultura", term:"escultura", meaning:"Obra de arte tridimensional creada moldeando, tallando o ensamblando materiales como piedra, madera o metal.", synonym:"Espa&#241;ol para: Obra de arte tridimensional creada moldeando, tallando o ensamblando materiales como piedra, madera o metal.", example:"La <b>escultura</b> en el centro de la plaza representa a un héroe nacional.", completion:"La ______ en el centro de la plaza representa a un héroe nacional.", answer:"escultura"},
+    {id:"arquitectura", term:"arquitectura", meaning:"Arte y técnica de diseñar y construir edificios y otras estructuras habitables.", synonym:"Espa&#241;ol para: Arte y técnica de diseñar y construir edificios y otras estructuras habitables.", example:"La <b>arquitectura</b> colonial de la ciudad fue declarada Patrimonio de la Humanidad.", completion:"La ______ colonial de la ciudad fue declarada Patrimonio de la Humanidad.", answer:"arquitectura"},
+    {id:"exposicion", term:"exposición", meaning:"Muestra pública de obras de arte, fotografías u objetos en un espacio determinado.", synonym:"Espa&#241;ol para: Muestra pública de obras de arte, fotografías u objetos en un espacio determinado.", example:"La <b>exposición</b> de fotografía contemporánea estuvo abierta durante todo el mes.", completion:"La ______ de fotografía contemporánea estuvo abierta durante todo el mes.", answer:"exposición", accept:["exposicion"]},
+    {id:"museo", term:"museo", meaning:"Institución que conserva, estudia y exhibe colecciones de objetos artísticos, históricos o científicos.", synonym:"Espa&#241;ol para: Institución que conserva, estudia y exhibe colecciones de objetos artísticos, históricos o científicos.", example:"El <b>museo</b> nacional ofrece entrada gratuita los domingos por la mañana.", completion:"El ______ nacional ofrece entrada gratuita los domingos por la mañana.", answer:"museo"},
+    {id:"concierto", term:"concierto", meaning:"Actuación musical en directo ante un público, interpretada por uno o varios músicos.", synonym:"Espa&#241;ol para: Actuación musical en directo ante un público, interpretada por uno o varios músicos.", example:"Asistimos a un <b>concierto</b> de jazz en el auditorio al aire libre.", completion:"Asistimos a un ______ de jazz en el auditorio al aire libre.", answer:"concierto"},
+    {id:"espectaculo", term:"espectáculo", meaning:"Función o representación artística que se presenta ante un público.", synonym:"Espa&#241;ol para: Función o representación artística que se presenta ante un público.", example:"El <b>espectáculo</b> de danza flamenca duró más de dos horas y fue impresionante.", completion:"El ______ de danza flamenca duró más de dos horas y fue impresionante.", answer:"espectáculo", accept:["espectaculo"]},
+    {id:"literatura", term:"literatura", meaning:"Conjunto de obras escritas que tienen valor artístico o cultural, como novelas, poemas y cuentos.", synonym:"Espa&#241;ol para: Conjunto de obras escritas que tienen valor artístico o cultural, como novelas, poemas y cuentos.", example:"La <b>literatura</b> latinoamericana del siglo XX es reconocida en todo el mundo.", completion:"La ______ latinoamericana del siglo XX es reconocida en todo el mundo.", answer:"literatura"}
+  ]
+};
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol B1 &middot; Vocabulario</footer>
+</body>
+</html>

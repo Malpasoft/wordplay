@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Lenguaje y Lingüística — Juego | Espa&#241;ol B2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/b2/index.html">B2</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>Lenguaje y Lingüística</strong>
+</div>
+<div class="chapter-num">V12</div>
+<h1>Lenguaje y Lingüística</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="game-root"></div>
+<script>
+window.GAME_DATA = {
+  chapterId: "lenguaje-linguistica",
+  level: "b2",
+  title: "Lenguaje y Lingüística",
+  storageKey: "wordplay_game_es_b2_lenguaje-linguistica",
+  section: 'vocabulary',
+  items: [
+    {id:"fonema", term:"fonema", meaning:"unidad mínima del sistema sonoro de una lengua que distingue significados", synonym:"Espa&#241;ol para: unidad mínima del sistema sonoro de una lengua que distingue significados", example:"El <b>fonema</b> /p/ distingue «paso» de «baso».", completion:"El ______ /p/ distingue «paso» de «baso».", answer:"fonema"},
+    {id:"morfema", term:"morfema", meaning:"unidad mínima de una lengua que tiene significado gramatical o léxico", synonym:"Espa&#241;ol para: unidad mínima de una lengua que tiene significado gramatical o léxico", example:"El sufijo <em>-ción</em> es un <b>morfema</b> que forma sustantivos.", completion:"El sufijo <em>-ción</em> es un ______ que forma sustantivos.", answer:"morfema"},
+    {id:"sintaxis", term:"sintaxis", meaning:"parte de la gramática que estudia cómo se combinan las palabras para formar oraciones", synonym:"Espa&#241;ol para: parte de la gramática que estudia cómo se combinan las palabras para formar oraciones", example:"La <b>sintaxis</b> del español permite un orden de palabras flexible.", completion:"La ______ del español permite un orden de palabras flexible.", answer:"sintaxis"},
+    {id:"pragmatica", term:"pragmática", meaning:"rama de la lingüística que estudia el uso del lenguaje en contexto", synonym:"Espa&#241;ol para: rama de la lingüística que estudia el uso del lenguaje en contexto", example:"La <b>pragmática</b> explica por qué un mismo enunciado puede tener significados distintos.", completion:"La ______ explica por qué un mismo enunciado puede tener significados distintos.", answer:"pragmática", accept:["pragmatica"]},
+    {id:"semantica", term:"semántica", meaning:"rama de la lingüística que estudia el significado de las palabras", synonym:"Espa&#241;ol para: rama de la lingüística que estudia el significado de las palabras", example:"La <b>semántica</b> analiza las relaciones entre las palabras y los conceptos.", completion:"La ______ analiza las relaciones entre las palabras y los conceptos.", answer:"semántica", accept:["semantica"]},
+    {id:"bilinguismo", term:"bilingüismo", meaning:"capacidad de hablar con fluidez dos lenguas", synonym:"Espa&#241;ol para: capacidad de hablar con fluidez dos lenguas", example:"El <b>bilingüismo</b> desde la infancia favorece el desarrollo cognitivo.", completion:"El ______ desde la infancia favorece el desarrollo cognitivo.", answer:"bilingüismo", accept:["bilinguismo"]},
+    {id:"registro", term:"registro", meaning:"variedad de lengua usada según la situación comunicativa", synonym:"Espa&#241;ol para: variedad de lengua usada según la situación comunicativa", example:"Usa un <b>registro</b> formal en la entrevista de trabajo.", completion:"Usa un ______ formal en la entrevista de trabajo.", answer:"registro"},
+    {id:"dialecto", term:"dialecto", meaning:"variedad regional de una lengua con rasgos propios de fonología, vocabulario y gramática", synonym:"Espa&#241;ol para: variedad regional de una lengua con rasgos propios de fonología, vocabulario y gramática", example:"El <b>dialecto</b> andaluz tiene características fonéticas muy particulares.", completion:"El ______ andaluz tiene características fonéticas muy particulares.", answer:"dialecto"}
+  ]
+};
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol B2 &middot; Vocabulario</footer>
+</body>
+</html>

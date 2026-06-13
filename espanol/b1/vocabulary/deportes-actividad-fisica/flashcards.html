@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Deportes y Actividad Física — Tarjetas | Espa&#241;ol B1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<style>
+.fc-wrap{perspective:800px;margin:0 auto 20px;max-width:480px}
+.fc{width:100%;height:220px;position:relative;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;border-radius:10px}
+.fc.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;border:1px solid var(--hairline)}
+.fc-front,.fc-back{background:var(--paper)}
+.fc-back{transform:rotateY(180deg)}
+.fc-word{font-size:1.8rem;font-weight:700;color:var(--ink);margin-bottom:6px}
+.fc-ipa{font-family:var(--font-sans);font-size:.85rem;color:var(--muted);margin-bottom:8px}
+.fc-def{font-size:.95rem;color:var(--ink);margin-bottom:6px}
+.fc-ex{font-size:.82rem;color:var(--muted);font-style:italic}
+.fc-hint{font-family:var(--font-sans);font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:10px}
+.fc-audio{background:none;border:1px solid var(--hairline);border-radius:4px;padding:5px 12px;font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);cursor:pointer;margin-top:8px}
+.fc-audio:hover{border-color:var(--amber);color:var(--amber)}
+.fc-nav{display:flex;align-items:center;gap:16px;justify-content:center;margin-bottom:20px}
+.fc-btn{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 18px;border-radius:4px;cursor:pointer;border:1.5px solid var(--hairline);background:transparent;color:var(--ink)}
+.fc-btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.fc-counter{font-family:var(--font-sans);font-size:.75rem;color:var(--muted);font-weight:600}
+.mastery-badge{display:inline-block;padding:8px 18px;background:rgba(184,134,11,.12);color:var(--amber);font-family:var(--font-sans);font-size:.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:4px;margin-bottom:16px}
+</style>
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/b1/index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>Deportes y Actividad Física</strong>
+</div>
+<div class="chapter-num">V09</div>
+<h1>Deportes y Actividad Física</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn active">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">&#10003; Tema dominado</span></div>
+<p style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 palabras &middot; pulsa la tarjeta para ver la definici&#243;n</p>
+<div class="fc-nav"><button class="fc-btn" onclick="prevCard()">&#8592; Anterior</button><span class="fc-counter" id="fcCounter">1 / 12</span><button class="fc-btn primary" onclick="nextCard()">Siguiente &#8594;</button></div>
+<div class="fc-wrap"><div class="fc" id="fcCard" onclick="flipCard()"><div class="fc-face fc-front"><div class="fc-word" id="fcWord"></div><div class="fc-ipa" id="fcIpa"></div><div class="fc-hint">Pulsa para ver la definici&#243;n</div></div><div class="fc-face fc-back"><div class="fc-def" id="fcDef"></div><div class="fc-ex" id="fcEx"></div><button class="fc-audio" onclick="event.stopPropagation();speakWord()">&#9654; Escuchar</button></div></div></div>
+<script>
+var WORDS = [{"word": "campeón", "ipa": "kamˈpeon", "def": "Persona o equipo que gana una competición o torneo deportivo.", "ex": "El equipo local se proclamó <b>campeón</b> de la liga nacional por tercer año consecutivo."}, {"word": "competición", "ipa": "kompetˈiθjon", "def": "Enfrentamiento deportivo entre personas o equipos para determinar quién es el mejor.", "ex": "La <b>competición</b> de atletismo reúne a los mejores deportistas de toda la región."}, {"word": "entrenamiento", "ipa": "entrenaˈmjento", "def": "Práctica sistemática y regular de ejercicios para mejorar el rendimiento deportivo.", "ex": "El equipo realiza dos sesiones de <b>entrenamiento</b> al día durante la semana."}, {"word": "equipo", "ipa": "eˈkipo", "def": "Conjunto de personas que compiten juntas bajo un mismo nombre en un deporte.", "ex": "Nuestro <b>equipo</b> ganó el partido gracias a un gol en el último minuto."}, {"word": "árbitro", "ipa": "ˈarβitro", "def": "Persona encargada de hacer cumplir las reglas durante un partido o competición deportiva.", "ex": "El <b>árbitro</b> señaló un penalti que cambió el resultado del partido."}, {"word": "estadio", "ipa": "esˈtaðjo", "def": "Instalación deportiva de grandes dimensiones con graderías para el público.", "ex": "El <b>estadio</b> estaba lleno de aficionados que animaban a su equipo."}, {"word": "marcador", "ipa": "markaˈðor", "def": "Resultado numérico que muestra los puntos o goles obtenidos por cada equipo durante un partido.", "ex": "El <b>marcador</b> al final del partido fue de tres a uno a favor del equipo visitante."}, {"word": "lesión", "ipa": "leˈsjon", "def": "Daño físico sufrido por un deportista que le impide practicar su deporte con normalidad.", "ex": "El delantero sufrió una <b>lesión</b> de rodilla y tendrá que descansar varias semanas."}, {"word": "torneo", "ipa": "torˈneo", "def": "Competición deportiva en la que participan varios equipos o jugadores eliminándose entre sí.", "ex": "El <b>torneo</b> internacional de tenis se celebra todos los años en esta ciudad."}, {"word": "medalla", "ipa": "meˈðaʎa", "def": "Distinción en forma de disco metálico que se otorga al ganador de una competición deportiva.", "ex": "La atleta ganó la <b>medalla</b> de oro en los cien metros lisos de los Juegos Olímpicos."}, {"word": "entrenador", "ipa": "entrenaˈðor", "def": "Persona que dirige y prepara a los deportistas o a un equipo para las competiciones.", "ex": "El <b>entrenador</b> cambió la táctica del equipo en el descanso del partido."}, {"word": "aficionado", "ipa": "afiθjoˈnaðo", "def": "Persona que siente gran interés y entusiasmo por un deporte o equipo sin practicarlo profesionalmente.", "ex": "Los <b>aficionados</b> llenaron el estadio para animar a su equipo en la final."}];
+var STORAGE_KEY = "wordplay_vocab_mastered_es_b1_deportes-actividad-fisica";
+var idx = 0, seen = new Set();
+function showCard() {
+  var w = WORDS[idx];
+  document.getElementById('fcWord').textContent = w.word;
+  document.getElementById('fcIpa').textContent = w.ipa ? '[' + w.ipa + ']' : '';
+  document.getElementById('fcDef').textContent = w.def;
+  document.getElementById('fcEx').innerHTML = w.ex;
+  document.getElementById('fcCard').classList.remove('flipped');
+  document.getElementById('fcCounter').textContent = (idx+1) + ' / ' + WORDS.length;
+  seen.add(idx);
+  if (seen.size === WORDS.length) {
+    var sk = (window.store || localStorage);
+    var prog = JSON.parse(sk.getItem('wordplay_progress') || '{}');
+    prog["b1"] = prog["b1"] || {};
+    prog["b1"][STORAGE_KEY] = {done:true, date:new Date().toISOString().slice(0,10)};
+    sk.setItem('wordplay_progress', JSON.stringify(prog));
+    document.getElementById('masteryBadge').style.display = '';
+  }
+}
+function flipCard() { document.getElementById('fcCard').classList.toggle('flipped'); }
+function nextCard() { idx = (idx + 1) % WORDS.length; showCard(); }
+function prevCard() { idx = (idx - 1 + WORDS.length) % WORDS.length; showCard(); }
+function speakWord() {
+  var u = new SpeechSynthesisUtterance(WORDS[idx].word);
+  u.lang = 'es-ES'; u.rate = 0.85;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(u);
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === ' ') nextCard();
+  if (e.key === 'ArrowLeft') prevCard();
+  if (e.key === 'Enter') flipCard();
+});
+showCard();
+(function checkMastery() {
+  var sk = (window.store || localStorage);
+  var prog = JSON.parse(sk.getItem('wordplay_progress') || '{}');
+  if (prog["b1"] && prog["b1"][STORAGE_KEY] && prog["b1"][STORAGE_KEY].done)
+    document.getElementById('masteryBadge').style.display = '';
+})();
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol B1 &middot; Vocabulario</footer>
+</body>
+</html>

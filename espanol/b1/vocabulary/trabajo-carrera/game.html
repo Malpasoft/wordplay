@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Trabajo y Carrera — Juego | Espa&#241;ol B1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/b1/index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>Trabajo y Carrera</strong>
+</div>
+<div class="chapter-num">V02</div>
+<h1>Trabajo y Carrera</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="game-root"></div>
+<script>
+window.GAME_DATA = {
+  chapterId: "trabajo-carrera",
+  level: "b1",
+  title: "Trabajo y Carrera",
+  storageKey: "wordplay_game_es_b1_trabajo-carrera",
+  section: 'vocabulary',
+  items: [
+    {id:"entrevista", term:"entrevista", meaning:"Conversación formal entre un candidato y un empleador para evaluar si el candidato es adecuado para un puesto.", synonym:"Espa&#241;ol para: Conversación formal entre un candidato y un empleador para evaluar si el candidato es adecuado para un puesto.", example:"Mañana tengo una <b>entrevista</b> de trabajo en una empresa multinacional.", completion:"Mañana tengo una ______ de trabajo en una empresa multinacional.", answer:"entrevista"},
+    {id:"curriculo", term:"currículo", meaning:"Documento que resume la formación académica, la experiencia laboral y las habilidades de una persona.", synonym:"Espa&#241;ol para: Documento que resume la formación académica, la experiencia laboral y las habilidades de una persona.", example:"Actualicé mi <b>currículo</b> antes de enviar las solicitudes de empleo.", completion:"Actualicé mi ______ antes de enviar las solicitudes de empleo.", answer:"currículo", accept:["curriculo"]},
+    {id:"ascenso", term:"ascenso", meaning:"Avance a un puesto de mayor rango o responsabilidad dentro de una empresa.", synonym:"Espa&#241;ol para: Avance a un puesto de mayor rango o responsabilidad dentro de una empresa.", example:"Después de tres años de trabajo excelente, le ofrecieron un <b>ascenso</b>.", completion:"Después de tres años de trabajo excelente, le ofrecieron un ______.", answer:"ascenso"},
+    {id:"colega", term:"colega", meaning:"Persona con quien se trabaja en el mismo lugar o en la misma profesión.", synonym:"Espa&#241;ol para: Persona con quien se trabaja en el mismo lugar o en la misma profesión.", example:"Mi <b>colega</b> me ayudó a terminar el informe antes de la reunión.", completion:"Mi ______ me ayudó a terminar el informe antes de la reunión.", answer:"colega"},
+    {id:"salario", term:"salario", meaning:"Cantidad de dinero que recibe un trabajador a cambio de sus servicios de forma periódica.", synonym:"Espa&#241;ol para: Cantidad de dinero que recibe un trabajador a cambio de sus servicios de forma periódica.", example:"Negocié un <b>salario</b> más alto durante la entrevista con el director.", completion:"Negocié un ______ más alto durante la entrevista con el director.", answer:"salario"},
+    {id:"plazo", term:"plazo", meaning:"Período de tiempo máximo establecido para completar una tarea o entregar un trabajo.", synonym:"Espa&#241;ol para: Período de tiempo máximo establecido para completar una tarea o entregar un trabajo.", example:"El <b>plazo</b> para entregar el proyecto es el próximo viernes por la tarde.", completion:"El ______ para entregar el proyecto es el próximo viernes por la tarde.", answer:"plazo"},
+    {id:"responsabilidad", term:"responsabilidad", meaning:"Obligación de cumplir con las tareas y deberes propios del cargo que se ocupa.", synonym:"Espa&#241;ol para: Obligación de cumplir con las tareas y deberes propios del cargo que se ocupa.", example:"Una de sus principales <b>responsabilidades</b> es supervisar al equipo de ventas.", completion:"Una de sus principales ______ es supervisar al equipo de ventas.", answer:"responsabilidad"},
+    {id:"reunion", term:"reunión", meaning:"Encuentro entre varias personas para tratar asuntos de trabajo o tomar decisiones en común.", synonym:"Espa&#241;ol para: Encuentro entre varias personas para tratar asuntos de trabajo o tomar decisiones en común.", example:"La <b>reunión</b> del departamento empieza a las nueve de la mañana.", completion:"La ______ del departamento empieza a las nueve de la mañana.", answer:"reunión", accept:["reunion"]}
+  ]
+};
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol B1 &middot; Vocabulario</footer>
+</body>
+</html>

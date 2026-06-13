@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>El Medio Ambiente — Tarjetas | Espa&#241;ol B1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<style>
+.fc-wrap{perspective:800px;margin:0 auto 20px;max-width:480px}
+.fc{width:100%;height:220px;position:relative;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;border-radius:10px}
+.fc.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;border:1px solid var(--hairline)}
+.fc-front,.fc-back{background:var(--paper)}
+.fc-back{transform:rotateY(180deg)}
+.fc-word{font-size:1.8rem;font-weight:700;color:var(--ink);margin-bottom:6px}
+.fc-ipa{font-family:var(--font-sans);font-size:.85rem;color:var(--muted);margin-bottom:8px}
+.fc-def{font-size:.95rem;color:var(--ink);margin-bottom:6px}
+.fc-ex{font-size:.82rem;color:var(--muted);font-style:italic}
+.fc-hint{font-family:var(--font-sans);font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:10px}
+.fc-audio{background:none;border:1px solid var(--hairline);border-radius:4px;padding:5px 12px;font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);cursor:pointer;margin-top:8px}
+.fc-audio:hover{border-color:var(--amber);color:var(--amber)}
+.fc-nav{display:flex;align-items:center;gap:16px;justify-content:center;margin-bottom:20px}
+.fc-btn{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 18px;border-radius:4px;cursor:pointer;border:1.5px solid var(--hairline);background:transparent;color:var(--ink)}
+.fc-btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.fc-counter{font-family:var(--font-sans);font-size:.75rem;color:var(--muted);font-weight:600}
+.mastery-badge{display:inline-block;padding:8px 18px;background:rgba(184,134,11,.12);color:var(--amber);font-family:var(--font-sans);font-size:.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:4px;margin-bottom:16px}
+</style>
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atr&#225;s"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../../../espanol/b1/index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulario</a><span>&#8250;</span>
+  <strong>El Medio Ambiente</strong>
+</div>
+<div class="chapter-num">V03</div>
+<h1>El Medio Ambiente</h1>
+<nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn active">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
+<div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">&#10003; Tema dominado</span></div>
+<p style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">12 palabras &middot; pulsa la tarjeta para ver la definici&#243;n</p>
+<div class="fc-nav"><button class="fc-btn" onclick="prevCard()">&#8592; Anterior</button><span class="fc-counter" id="fcCounter">1 / 12</span><button class="fc-btn primary" onclick="nextCard()">Siguiente &#8594;</button></div>
+<div class="fc-wrap"><div class="fc" id="fcCard" onclick="flipCard()"><div class="fc-face fc-front"><div class="fc-word" id="fcWord"></div><div class="fc-ipa" id="fcIpa"></div><div class="fc-hint">Pulsa para ver la definici&#243;n</div></div><div class="fc-face fc-back"><div class="fc-def" id="fcDef"></div><div class="fc-ex" id="fcEx"></div><button class="fc-audio" onclick="event.stopPropagation();speakWord()">&#9654; Escuchar</button></div></div></div>
+<script>
+var WORDS = [{"word": "cambio climático", "ipa": "ˈkam.bjo kli.ˈma.ti.ko", "def": "Variación a largo plazo de los patrones climáticos globales, principalmente causada por la actividad humana.", "ex": "El <b>cambio climático</b> está provocando fenómenos meteorológicos cada vez más extremos."}, {"word": "contaminación", "ipa": "kon.ta.mi.naˈsjon", "def": "Presencia de sustancias nocivas en el aire, el agua o el suelo que resultan perjudiciales para los seres vivos.", "ex": "La <b>contaminación</b> del río ha afectado a muchas especies de peces locales."}, {"word": "renovable", "ipa": "re.no.ˈβa.βle", "def": "Que proviene de fuentes naturales que se reponen de manera continua y no se agotan con el uso.", "ex": "La energía solar es una fuente <b>renovable</b> que no produce emisiones de carbono."}, {"word": "reciclaje", "ipa": "re.si.ˈkla.xe", "def": "Proceso de transformar materiales ya usados en nuevos productos para reducir los residuos.", "ex": "El <b>reciclaje</b> del papel y del plástico ayuda a reducir la cantidad de basura."}, {"word": "huella de carbono", "ipa": "ˈwe.ʎa ðe kar.ˈβo.no", "def": "Cantidad total de gases de efecto invernadero que genera una persona, organización o producto.", "ex": "Podemos reducir nuestra <b>huella de carbono</b> usando el transporte público."}, {"word": "deforestación", "ipa": "de.fo.res.ta.ˈθjon", "def": "Destrucción y eliminación masiva de los árboles de una zona forestal.", "ex": "La <b>deforestación</b> en el Amazonas pone en peligro miles de especies animales."}, {"word": "especie", "ipa": "esˈpe.θje", "def": "Grupo de seres vivos con características comunes que pueden reproducirse entre sí.", "ex": "Varias <b>especies</b> de aves migratorias han desaparecido en las últimas décadas."}, {"word": "sostenible", "ipa": "sos.te.ˈni.βle", "def": "Que se puede mantener a largo plazo sin dañar los recursos naturales ni el medio ambiente.", "ex": "Es necesario adoptar un modelo de desarrollo <b>sostenible</b> para proteger el planeta."}, {"word": "energía", "ipa": "e.nerˈxi.a", "def": "Capacidad para realizar trabajo o producir cambios, obtenida de diversas fuentes naturales o artificiales.", "ex": "La <b>energía</b> eólica generada por los parques de molinos abastece muchos hogares."}, {"word": "invernadero", "ipa": "im.ber.na.ˈðe.ro", "def": "Referido al efecto que producen ciertos gases al retener el calor de la atmósfera terrestre.", "ex": "Los gases de <b>invernadero</b> son los principales responsables del calentamiento global."}, {"word": "biodiversidad", "ipa": "bjo.ði.βer.si.ˈðað", "def": "Variedad de especies vivas que habitan en un ecosistema o en el planeta en general.", "ex": "Los bosques tropicales albergan una enorme <b>biodiversidad</b> que debemos proteger."}, {"word": "ecosistema", "ipa": "e.ko.sisˈte.ma", "def": "Conjunto de seres vivos que interactúan entre sí y con su entorno físico en una zona determinada.", "ex": "La contaminación del mar destruye el <b>ecosistema</b> marino y afecta a muchas especies."}];
+var STORAGE_KEY = "wordplay_vocab_mastered_es_b1_medio-ambiente";
+var idx = 0, seen = new Set();
+function showCard() {
+  var w = WORDS[idx];
+  document.getElementById('fcWord').textContent = w.word;
+  document.getElementById('fcIpa').textContent = w.ipa ? '[' + w.ipa + ']' : '';
+  document.getElementById('fcDef').textContent = w.def;
+  document.getElementById('fcEx').innerHTML = w.ex;
+  document.getElementById('fcCard').classList.remove('flipped');
+  document.getElementById('fcCounter').textContent = (idx+1) + ' / ' + WORDS.length;
+  seen.add(idx);
+  if (seen.size === WORDS.length) {
+    var sk = (window.store || localStorage);
+    var prog = JSON.parse(sk.getItem('wordplay_progress') || '{}');
+    prog["b1"] = prog["b1"] || {};
+    prog["b1"][STORAGE_KEY] = {done:true, date:new Date().toISOString().slice(0,10)};
+    sk.setItem('wordplay_progress', JSON.stringify(prog));
+    document.getElementById('masteryBadge').style.display = '';
+  }
+}
+function flipCard() { document.getElementById('fcCard').classList.toggle('flipped'); }
+function nextCard() { idx = (idx + 1) % WORDS.length; showCard(); }
+function prevCard() { idx = (idx - 1 + WORDS.length) % WORDS.length; showCard(); }
+function speakWord() {
+  var u = new SpeechSynthesisUtterance(WORDS[idx].word);
+  u.lang = 'es-ES'; u.rate = 0.85;
+  window.speechSynthesis.cancel();
+  window.speechSynthesis.speak(u);
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === ' ') nextCard();
+  if (e.key === 'ArrowLeft') prevCard();
+  if (e.key === 'Enter') flipCard();
+});
+showCard();
+(function checkMastery() {
+  var sk = (window.store || localStorage);
+  var prog = JSON.parse(sk.getItem('wordplay_progress') || '{}');
+  if (prog["b1"] && prog["b1"][STORAGE_KEY] && prog["b1"][STORAGE_KEY].done)
+    document.getElementById('masteryBadge').style.display = '';
+})();
+</script>
+</div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol B1 &middot; Vocabulario</footer>
+</body>
+</html>
