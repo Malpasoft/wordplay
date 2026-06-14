@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>PET Mock Exam 1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<style>
+.mock-container{max-width:780px;margin:0 auto;padding:0 16px}
+.timer-bar{position:sticky;top:0;background:var(--ink);color:var(--paper);padding:12px 16px;border-radius:0 0 8px 8px;display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15);margin-bottom:24px}
+.timer-display{font-family:var(--font-sans);font-size:1.1rem;font-weight:700;letter-spacing:.5px}
+.timer-display.warning{color:#FFD700}
+.timer-display.critical{color:#FF6B6B;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.timer-meta{font-family:var(--font-sans);font-size:.72rem;opacity:.85;letter-spacing:1px;text-transform:uppercase}
+.start-screen,.results-screen{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:28px;margin-bottom:24px}
+.start-screen h2,.results-screen h2{font-size:1.4rem;margin:0 0 12px}
+.start-btn{display:inline-block;padding:12px 28px;background:var(--ink);color:var(--paper);border:0;font-family:var(--font-sans);font-size:.82rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer;margin-top:12px}
+.start-btn:hover{opacity:.85}
+.exam-area{display:none}
+.exam-area.active{display:block}
+.part-section{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:24px;margin-bottom:28px}
+.part-header{font-family:var(--font-sans);font-size:.68rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.part-section h2{font-size:1.2rem;margin:0 0 8px;color:var(--ink)}
+.part-section .instructions{font-size:.85rem;color:var(--muted);margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--hairline)}
+.person-row{display:flex;gap:10px;padding:10px 0;border-top:1px solid var(--hairline);font-size:.86rem;align-items:flex-start}
+.person-name{font-family:var(--font-sans);font-weight:800;color:var(--amber);min-width:58px;padding-top:2px}
+.text-box{background:#1A1A1A;color:white;border-radius:6px;padding:10px 14px;margin-bottom:8px;font-size:.84rem;line-height:1.55}
+.text-letter{font-family:var(--font-sans);font-size:.58rem;font-weight:800;letter-spacing:2px;color:var(--amber);margin-bottom:4px}
+.reviewer-box{border:1px solid var(--hairline);border-radius:6px;padding:14px;margin-bottom:10px;font-size:.86rem;line-height:1.65}
+.reviewer-label{font-family:var(--font-sans);font-size:.68rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.statement-row{display:flex;gap:10px;padding:8px 0;border-top:1px solid var(--hairline);font-size:.86rem;align-items:center}
+.s-num{font-family:var(--font-sans);font-weight:800;color:var(--amber);min-width:24px}
+.reading-article{font-size:.9rem;line-height:1.75;color:var(--ink);padding:14px 16px;background:rgba(184,134,11,.04);border:1px solid var(--hairline);border-radius:6px;margin:12px 0}
+.reading-article p{margin:0 0 12px}
+.reading-article p:last-child{margin:0}
+.mc-q{font-size:.9rem;font-weight:700;color:var(--ink);margin:16px 0 8px}
+.mc-row{display:flex;gap:10px;padding:6px 0;font-size:.86rem;align-items:center;border-top:1px solid var(--hairline)}
+.mc-row:first-child{border-top:none}
+.mc-letter{font-family:var(--font-sans);font-weight:800;color:var(--amber);min-width:20px}
+.gap-select{padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-weight:700;background:var(--cream-deep);color:var(--ink);cursor:pointer}
+body.dark .gap-select{background:#1A1A1A;color:#F0F0F0;border-color:rgba(255,255,255,.15)}
+.opt-grid{background:rgba(184,134,11,.04);border:1px solid var(--hairline);border-radius:6px;padding:14px 16px;margin:14px 0}
+.opt-row{display:flex;gap:10px;padding:5px 0;font-size:.84rem;line-height:1.55}
+.opt-letter{font-weight:800;color:var(--amber);min-width:20px}
+.gap-row{display:flex;align-items:center;gap:12px;padding:8px 0;border-top:1px solid var(--hairline);font-size:.86rem}
+.gap-row .g-id{font-weight:800;color:var(--amber);min-width:52px}
+.cloze-box{font-size:.9rem;line-height:1.9;padding:14px 16px;background:rgba(184,134,11,.04);border:1px solid var(--hairline);border-radius:6px;margin:12px 0}
+.cloze-input{width:100px;padding:2px 7px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-size:.82rem;background:var(--cream-deep);color:var(--ink)}
+.cloze-input:focus{outline:none;border-color:var(--amber)}
+body.dark .cloze-input{background:#1A1A1A;color:#F0F0F0;border-color:rgba(255,255,255,.15)}
+.submit-area{background:var(--ink);color:var(--paper);border-radius:8px;padding:20px;text-align:center;margin:32px 0}
+.submit-area p{margin:0 0 12px;opacity:.9;font-size:.9rem}
+.submit-btn-lg{padding:14px 36px;background:var(--amber);color:var(--ink);border:0;font-family:var(--font-sans);font-size:.9rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer}
+.submit-btn-lg:hover{opacity:.9}
+.results-screen{display:none}
+.results-screen.active{display:block}
+.score-big{font-size:3rem;font-weight:800;color:var(--amber);text-align:center;font-family:Georgia,serif}
+.score-label{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:18px}
+.part-breakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:20px 0}
+.part-score{background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px;padding:12px;text-align:center}
+.part-score .name{font-family:var(--font-sans);font-size:.63rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.part-score .val{font-size:1.3rem;font-weight:700;color:var(--ink);margin-top:4px}
+.part-score .pct{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin-top:2px}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Back"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+
+<div class="mock-container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">B1</a><span>›</span><a href="../index.html">PET</a><span>›</span><strong>Mock Exam 1</strong></div>
+
+  <div id="startScreen" class="start-screen">
+    <div class="part-header">PET Mock Exam 1</div>
+    <h2>Mock Exam 1 — Reading</h2>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Duration:</strong> 45 minutes</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Total questions:</strong> 32 across Parts 1–6</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:16px">Once you click <strong>Start</strong>, the timer begins. The exam will auto-submit when time runs out.</p>
+    <button class="start-btn" onclick="startExam(false)">Start exam (timed)</button>
+    <button class="start-btn" onclick="startExam(true)" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Practice mode (no timer)</button>
+  </div>
+
+  <div id="examArea" class="exam-area">
+    <div class="timer-bar">
+      <div class="timer-display" id="timerDisplay">45:00</div>
+      <div class="timer-meta">Time remaining</div>
+    </div>
+
+    <!-- PART 1 -->
+    <div class="part-section">
+      <div class="part-header">Part 1 — Matching</div>
+      <h2>Questions 1–5</h2>
+      <p class="instructions">The people below are all looking for a weekend activity. There are eight activities (A–H). Choose the most suitable activity for each person. There are three activities you do not need.</p>
+
+      <div style="margin-bottom:16px">
+        <div class="person-row"><span class="person-name">1 Maria</span><span>Maria wants to learn a new craft skill alongside other people. She prefers indoor activities.</span><div style="margin-left:auto"><select class="gap-select" data-q="p1"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></div></div>
+        <div class="person-row"><span class="person-name">2 Tom</span><span>Tom is very interested in local history. He loves being outdoors and enjoys walking.</span><div style="margin-left:auto"><select class="gap-select" data-q="p2"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></div></div>
+        <div class="person-row"><span class="person-name">3 Lucia</span><span>Lucia is looking for a fun outdoor activity for her two young children to enjoy at the weekend.</span><div style="margin-left:auto"><select class="gap-select" data-q="p3"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></div></div>
+        <div class="person-row"><span class="person-name">4 James</span><span>James enjoys cooking and would like to improve his skills. He is free on weekday evenings.</span><div style="margin-left:auto"><select class="gap-select" data-q="p4"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></div></div>
+        <div class="person-row"><span class="person-name">5 Aisha</span><span>Aisha wants to do some physical exercise but does not want to spend any money.</span><div style="margin-left:auto"><select class="gap-select" data-q="p5"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></div></div>
+      </div>
+
+      <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">WEEKEND ACTIVITIES</div>
+      <div class="text-box"><div class="text-letter">A</div>A two-hour guided walking tour of the old town. Learn about buildings and landmarks from the last three centuries. Suitable for adults and older children. Runs every Saturday morning. Free of charge.</div>
+      <div class="text-box"><div class="text-letter">B</div>Join our pottery class every Sunday at the community centre. Make your own cups and bowls with help from a professional artist. No experience needed. Small groups only. Fully indoor.</div>
+      <div class="text-box"><div class="text-letter">C</div>Family Fun Day at the park — activities specially designed for children aged 3–10. Games, storytelling, and face painting. Come along from 10 am to 4 pm every Saturday. No booking needed.</div>
+      <div class="text-box"><div class="text-letter">D</div>Learn to prepare authentic Italian dishes in our professional kitchen. Evening cooking classes for adults every Tuesday and Thursday. Book your place in advance to avoid disappointment.</div>
+      <div class="text-box"><div class="text-letter">E</div>Morning yoga sessions at the sports centre. Suitable for all fitness levels. Classes cost £4 per session. Improve your flexibility and strength in a relaxed environment. Weekdays only.</div>
+      <div class="text-box"><div class="text-letter">F</div>All-day photography workshop in the city. Learn to use your camera in different settings with professional guidance. Coffee and lunch included. Price: £75 per person. Saturdays only.</div>
+      <div class="text-box"><div class="text-letter">G</div>Free outdoor swimming every Sunday morning at the lake. Open to all ages and abilities. Lifeguards on duty at all times. Bring your own towel. Last entry at 11 am.</div>
+      <div class="text-box"><div class="text-letter">H</div>Creative writing group meets every Friday evening at the library. Share your stories and poems with others and receive friendly feedback. For adults only. Free to join — no experience needed.</div>
+    </div>
+
+    <!-- PART 2 -->
+    <div class="part-section">
+      <div class="part-header">Part 2 — Matching (detail)</div>
+      <h2>Questions 6–10</h2>
+      <p class="instructions">Four people reviewed the film <em>The Last Summer</em>. For questions 6–10, choose from the reviewers (A–D). The reviewers may be chosen more than once.</p>
+
+      <div class="reviewer-box"><div class="reviewer-label">Reviewer A — Omar</div>I wasn't sure what to expect from this film — the trailer made it look like a typical light comedy. In fact, it was much more emotional than I anticipated. The acting was excellent, especially the two leads. However, the ending felt very rushed and I left the cinema feeling slightly let down overall.</div>
+      <div class="reviewer-box"><div class="reviewer-label">Reviewer B — Sara</div>The storyline was highly original and kept me engaged throughout. I loved the stunning location — the south of France — and the soundtrack was perfectly chosen. This is one of those films that stays with you long after you leave the cinema. I believe it is something everyone should experience at least once.</div>
+      <div class="reviewer-box"><div class="reviewer-label">Reviewer C — Nadia</div>I found the opening of this film far too slow. It takes almost thirty minutes before anything particularly interesting happens. Once the story gets going, it is reasonably enjoyable, but the film is simply too long. I would suggest waiting to see it at home on television rather than paying for a cinema ticket.</div>
+      <div class="reviewer-box"><div class="reviewer-label">Reviewer D — Alex</div>I watched this with my teenage son and we were both impressed. It handles serious subjects in a way that feels genuine rather than forced. The script was undoubtedly the film's greatest strength — every line felt completely natural. I enjoyed it so much that I intend to see it a second time.</div>
+
+      <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin:14px 0 6px">STATEMENTS — Which reviewer mentions this?</div>
+      <div class="statement-row"><span class="s-num">6</span><span style="flex:1">This reviewer was impressed by the quality of the film's dialogue.</span><select class="gap-select" data-q="s1"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+      <div class="statement-row"><span class="s-num">7</span><span style="flex:1">This reviewer was surprised by the type of film it turned out to be.</span><select class="gap-select" data-q="s2"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+      <div class="statement-row"><span class="s-num">8</span><span style="flex:1">This reviewer was impressed by where the film was set.</span><select class="gap-select" data-q="s3"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+      <div class="statement-row"><span class="s-num">9</span><span style="flex:1">This reviewer advises waiting before watching this film.</span><select class="gap-select" data-q="s4"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+      <div class="statement-row"><span class="s-num">10</span><span style="flex:1">This reviewer was disappointed by the way the film ended.</span><select class="gap-select" data-q="s5"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+    </div>
+
+    <!-- PART 3 -->
+    <div class="part-section">
+      <div class="part-header">Part 3 — MC Reading</div>
+      <h2>Questions 11–15</h2>
+      <p class="instructions">Read the article and answer questions 11–15. For each question, choose the correct answer (A, B, C or D).</p>
+
+      <div class="reading-article">
+        <p><strong>The Art of Urban Beekeeping</strong></p>
+        <p>Clara Marsh had always been interested in nature, but it was a particular event that turned her into a beekeeper. Three years ago, she noticed that the bees she used to see visiting the flowers in her garden had almost completely disappeared. Worried about this decline, she signed up for a local beekeeping course — and she has not looked back since.</p>
+        <p>Many people assume that keeping bees in a city must be difficult, but Clara has found quite the opposite. "City bees have a fantastic range of flowers to visit," she explains. "Gardens, parks, and even window boxes mean they can find nectar from far more different plants than bees in a typical rural area." As a result, her urban honey often has a richer, more complex flavour than honey produced in the countryside.</p>
+        <p>The first year was not without its challenges. Clara's neighbours noticed the increased number of bees flying over their gardens and some were unhappy about the situation. Clara responded by visiting each neighbour in person, explaining the importance of bees for the environment, and inviting them to come and look at her rooftop hives. Gradually, most people became enthusiastic supporters of her project.</p>
+        <p>When asked what she would say to anyone thinking of taking up urban beekeeping, Clara does not hesitate. "Start with just one hive in your first year," she advises. "It is very easy to get excited and want several hives immediately, but one gives you the time to truly understand what you are doing without feeling overwhelmed."</p>
+        <p>Looking to the future, Clara has an exciting new goal. A local primary school has invited her to lead a series of lessons on nature and the environment. She plans to make beekeeping the central theme, introducing the children to their first hive and showing them exactly why these remarkable insects are so essential to our food supply.</p>
+      </div>
+
+      <div class="mc-q">11 Why did Clara first decide to take up beekeeping?</div>
+      <div style="margin-bottom:14px">
+        <div class="mc-row"><span class="mc-letter">A</span><span>She saw an advertisement for a beekeeping course.</span></div>
+        <div class="mc-row"><span class="mc-letter">B</span><span>A friend suggested she try it as a new hobby.</span></div>
+        <div class="mc-row"><span class="mc-letter">C</span><span>She was concerned about bees vanishing from her garden.</span></div>
+        <div class="mc-row"><span class="mc-letter">D</span><span>She wanted to produce her own honey at home.</span></div>
+        <div style="margin-top:8px"><select class="gap-select" data-q="q1"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div>
+      </div>
+
+      <div class="mc-q">12 What does Clara say about bees in urban areas compared to the countryside?</div>
+      <div style="margin-bottom:14px">
+        <div class="mc-row"><span class="mc-letter">A</span><span>They produce significantly less honey.</span></div>
+        <div class="mc-row"><span class="mc-letter">B</span><span>They tend to be more difficult to manage.</span></div>
+        <div class="mc-row"><span class="mc-letter">C</span><span>They can feed on a greater variety of plants.</span></div>
+        <div class="mc-row"><span class="mc-letter">D</span><span>They are generally more aggressive towards people.</span></div>
+        <div style="margin-top:8px"><select class="gap-select" data-q="q2"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div>
+      </div>
+
+      <div class="mc-q">13 What difficulty did Clara face in her first year of beekeeping?</div>
+      <div style="margin-bottom:14px">
+        <div class="mc-row"><span class="mc-letter">A</span><span>Some people living nearby objected to the bees.</span></div>
+        <div class="mc-row"><span class="mc-letter">B</span><span>She was unable to find the right equipment.</span></div>
+        <div class="mc-row"><span class="mc-letter">C</span><span>One of her hives was destroyed by bad weather.</span></div>
+        <div class="mc-row"><span class="mc-letter">D</span><span>Her bees did not produce enough honey.</span></div>
+        <div style="margin-top:8px"><select class="gap-select" data-q="q3"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div>
+      </div>
+
+      <div class="mc-q">14 What is Clara's main piece of advice for people new to beekeeping?</div>
+      <div style="margin-bottom:14px">
+        <div class="mc-row"><span class="mc-letter">A</span><span>Begin with a single hive rather than several.</span></div>
+        <div class="mc-row"><span class="mc-letter">B</span><span>Speak to experienced beekeepers before you start.</span></div>
+        <div class="mc-row"><span class="mc-letter">C</span><span>Choose a location away from neighbours if possible.</span></div>
+        <div class="mc-row"><span class="mc-letter">D</span><span>Read as many books on the subject as you can first.</span></div>
+        <div style="margin-top:8px"><select class="gap-select" data-q="q4"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div>
+      </div>
+
+      <div class="mc-q">15 What does Clara intend to do next?</div>
+      <div style="margin-bottom:14px">
+        <div class="mc-row"><span class="mc-letter">A</span><span>Move her hives to a rural location.</span></div>
+        <div class="mc-row"><span class="mc-letter">B</span><span>Give lessons about beekeeping to young pupils.</span></div>
+        <div class="mc-row"><span class="mc-letter">C</span><span>Open a shop selling her own honey.</span></div>
+        <div class="mc-row"><span class="mc-letter">D</span><span>Write a book about urban beekeeping.</span></div>
+        <div style="margin-top:8px"><select class="gap-select" data-q="q5"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></div>
+      </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div class="part-section">
+      <div class="part-header">Part 4 — Gapped Text</div>
+      <h2>Questions 16–20</h2>
+      <p class="instructions">Read the article. Choose the correct sentence (A–H) for each gap. There are three sentences you do not need.</p>
+
+      <div class="reading-article">
+        <p><strong>My First Hiking Trip</strong></p>
+        <p>Last spring, my colleague Anna suggested I join her for a weekend hiking trip in the mountains. <strong style="color:var(--amber)">[Gap 16]</strong> I had never done anything like this before and wasn't sure I would enjoy it. However, Anna assured me the paths were suitable for beginners, so I agreed.</p>
+        <p>The morning we set off, the sky looked grey and overcast. <strong style="color:var(--amber)">[Gap 17]</strong> But Anna said a little rain never stopped a real walker. By the time we reached the first viewpoint, the clouds had cleared and the views were breathtaking.</p>
+        <p>After about three hours of walking, we stopped for lunch beside a small lake. <strong style="color:var(--amber)">[Gap 18]</strong> We sat quietly for a while, just listening to the water and the birds around us. I realised I had not felt so peaceful in months.</p>
+        <p>The path back down was much steeper than I had expected. <strong style="color:var(--amber)">[Gap 19]</strong> I had to take it very slowly and concentrate on every step. Anna patiently waited for me at each turn in the path.</p>
+        <p>We arrived back at the car park just before sunset. <strong style="color:var(--amber)">[Gap 20]</strong> I told Anna that I would definitely come again — but next time I would bring better walking boots.</p>
+      </div>
+
+      <div class="opt-grid">
+        <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1.5px;color:var(--muted);margin-bottom:8px">SENTENCES</div>
+        <div class="opt-row"><span class="opt-letter">A</span><span>I was a little worried that I was not fit enough for such a long walk.</span></div>
+        <div class="opt-row"><span class="opt-letter">B</span><span>The water of the lake was icy cold but perfectly clear.</span></div>
+        <div class="opt-row"><span class="opt-letter">C</span><span>The scenery around us was unlike anything I had ever seen before.</span></div>
+        <div class="opt-row"><span class="opt-letter">D</span><span>I slipped once on a wet rock and almost fell, but managed to stay upright.</span></div>
+        <div class="opt-row"><span class="opt-letter">E</span><span>It felt wonderful to finally reach the end after such a long and tiring day.</span></div>
+        <div class="opt-row"><span class="opt-letter">F</span><span>My legs were aching badly, but I felt a huge sense of achievement.</span></div>
+        <div class="opt-row"><span class="opt-letter">G</span><span>At first, I was not at all keen on the idea.</span></div>
+        <div class="opt-row"><span class="opt-letter">H</span><span>I had hoped it would be sunny and warm for the walk.</span></div>
+      </div>
+
+      <div class="gap-row"><span class="g-id">Gap 16:</span><select class="gap-select" data-q="g1"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></div>
+      <div class="gap-row"><span class="g-id">Gap 17:</span><select class="gap-select" data-q="g2"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></div>
+      <div class="gap-row"><span class="g-id">Gap 18:</span><select class="gap-select" data-q="g3"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></div>
+      <div class="gap-row"><span class="g-id">Gap 19:</span><select class="gap-select" data-q="g4"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></div>
+      <div class="gap-row"><span class="g-id">Gap 20:</span><select class="gap-select" data-q="g5"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></div>
+    </div>
+
+    <!-- PART 5 -->
+    <div class="part-section">
+      <div class="part-header">Part 5 — Open Cloze</div>
+      <h2>Questions 21–26</h2>
+      <p class="instructions">For questions 21–26, read the text and think of the word that best fits each gap. Use only ONE word in each gap.</p>
+      <div class="cloze-box">Keeping a daily diary is <strong style="color:var(--amber)">(21)</strong> <input type="text" class="cloze-input" data-q="oc1" maxlength="12" autocomplete="off" spellcheck="false"> of the simplest ways to improve your mental health. All you <strong style="color:var(--amber)">(22)</strong> <input type="text" class="cloze-input" data-q="oc2" maxlength="12" autocomplete="off" spellcheck="false"> is a notebook and a pen — nothing expensive. Each day, spend a few minutes writing about <strong style="color:var(--amber)">(23)</strong> <input type="text" class="cloze-input" data-q="oc3" maxlength="12" autocomplete="off" spellcheck="false"> your day went. The diary is just <strong style="color:var(--amber)">(24)</strong> <input type="text" class="cloze-input" data-q="oc4" maxlength="12" autocomplete="off" spellcheck="false"> your eyes — nobody else will see it. Writing regularly helps <strong style="color:var(--amber)">(25)</strong> <input type="text" class="cloze-input" data-q="oc5" maxlength="12" autocomplete="off" spellcheck="false"> understand your own emotions better. If you have never tried it before, <strong style="color:var(--amber)">(26)</strong> <input type="text" class="cloze-input" data-q="oc6" maxlength="12" autocomplete="off" spellcheck="false"> it a try for just one week and see what happens.</div>
+    </div>
+
+    <!-- PART 6 -->
+    <div class="part-section">
+      <div class="part-header">Part 6 — Open Cloze (longer text)</div>
+      <h2>Questions 27–32</h2>
+      <p class="instructions">For questions 27–32, read the text and think of the word that best fits each gap. Use only ONE word in each gap.</p>
+      <div class="cloze-box">Social media has become <strong style="color:var(--amber)">(27)</strong> <input type="text" class="cloze-input" data-q="oc7" maxlength="12" autocomplete="off" spellcheck="false"> important part of daily life for millions of people around the world. Whether we use it <strong style="color:var(--amber)">(28)</strong> <input type="text" class="cloze-input" data-q="oc8" maxlength="12" autocomplete="off" spellcheck="false"> stay in touch with friends or to follow the latest news, these platforms have changed the <strong style="color:var(--amber)">(29)</strong> <input type="text" class="cloze-input" data-q="oc9" maxlength="12" autocomplete="off" spellcheck="false"> we communicate. However, many people find that it <strong style="color:var(--amber)">(30)</strong> <input type="text" class="cloze-input" data-q="oc10" maxlength="12" autocomplete="off" spellcheck="false"> easy to spend too much time online, which can affect their sleep and mood. Some experts suggest taking <strong style="color:var(--amber)">(31)</strong> <input type="text" class="cloze-input" data-q="oc11" maxlength="12" autocomplete="off" spellcheck="false"> 'digital break' once a week — a full day with no screens. Research <strong style="color:var(--amber)">(32)</strong> <input type="text" class="cloze-input" data-q="oc12" maxlength="12" autocomplete="off" spellcheck="false"> shown that people who try this regularly feel less stressed and more focused at work or school.</div>
+    </div>
+
+    <div class="submit-area">
+      <p>When you are ready, click below to submit and see your score.</p>
+      <button class="submit-btn-lg" onclick="submitExam(false)">Submit exam</button>
+    </div>
+  </div>
+
+  <div id="resultsScreen" class="results-screen">
+    <h2>Your Results — Mock Exam 1</h2>
+    <div class="score-big" id="scoreFinal">—</div>
+    <div class="score-label">out of 32</div>
+    <div id="timeUsed" style="font-family:var(--font-sans);font-size:.8rem;color:var(--muted);text-align:center;margin-bottom:18px"></div>
+    <div class="part-breakdown" id="partBreakdown"></div>
+    <div style="text-align:center;margin-top:20px">
+      <a href="../index.html" style="display:inline-block;padding:10px 22px;border:1.5px solid var(--hairline);color:var(--ink);font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;border-radius:4px">← Back to PET</a>
+      <a href="../mock-2/index.html" style="display:inline-block;padding:10px 22px;background:var(--amber);color:var(--ink);font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;border-radius:4px;margin-left:8px">Mock 2 →</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script>
+var DURATION_MS=45*60*1000;
+var practiceMode=false;
+var startTime=null;
+var timerInterval=null;
+var submitted=false;
+
+var ANSWERS={
+  part1:{p1:'B',p2:'A',p3:'C',p4:'D',p5:'G'},
+  part2:{s1:'D',s2:'A',s3:'B',s4:'C',s5:'A'},
+  part3:{q1:'C',q2:'C',q3:'A',q4:'A',q5:'B'},
+  part4:{g1:'G',g2:'H',g3:'B',g4:'D',g5:'F'},
+  part5:{oc1:'one',oc2:'need',oc3:'how',oc4:'for',oc5:'you',oc6:'give'},
+  part6:{oc7:'an',oc8:'to',oc9:'way',oc10:'is',oc11:'a',oc12:'has'}
+};
+
+function normalize(s){return(s||'').trim().toLowerCase().replace(/['']/g,"'");}
+
+function getVal(q){var el=document.querySelector('[data-q="'+q+'"]');return el?el.value:'';}
+
+function startExam(practice){
+  practiceMode=practice;
+  document.getElementById('startScreen').style.display='none';
+  document.getElementById('examArea').classList.add('active');
+  startTime=Date.now();
+  if(!practice){timerInterval=setInterval(updateTimer,1000);updateTimer();}
+  else{document.getElementById('timerDisplay').textContent='Practice';}
+  window.scrollTo(0,0);
+}
+
+function updateTimer(){
+  var elapsed=Date.now()-startTime;
+  var remaining=DURATION_MS-elapsed;
+  if(remaining<=0){submitExam(true);return;}
+  var mins=Math.floor(remaining/60000);
+  var secs=Math.floor((remaining%60000)/1000);
+  var el=document.getElementById('timerDisplay');
+  el.textContent=mins+':'+(secs<10?'0':'')+secs;
+  el.classList.toggle('warning',remaining<8*60*1000&&remaining>=2*60*1000);
+  el.classList.toggle('critical',remaining<2*60*1000);
+}
+
+function submitExam(timeUp){
+  if(submitted)return;
+  if(!timeUp&&!confirm('Submit your exam now? You will not be able to change answers.'))return;
+  submitted=true;
+  clearInterval(timerInterval);
+  var elapsedMs=Date.now()-startTime;
+  var elMin=Math.floor(elapsedMs/60000);
+  var elSec=Math.floor((elapsedMs%60000)/1000);
+  document.querySelectorAll('input,select').forEach(function(el){el.disabled=true;});
+  var scores={};
+  var parts={
+    part1:{keys:['p1','p2','p3','p4','p5'],label:'Part 1 · Matching'},
+    part2:{keys:['s1','s2','s3','s4','s5'],label:'Part 2 · Matching (detail)'},
+    part3:{keys:['q1','q2','q3','q4','q5'],label:'Part 3 · MC Reading'},
+    part4:{keys:['g1','g2','g3','g4','g5'],label:'Part 4 · Gapped Text'},
+    part5:{keys:['oc1','oc2','oc3','oc4','oc5','oc6'],label:'Part 5 · Open Cloze'},
+    part6:{keys:['oc7','oc8','oc9','oc10','oc11','oc12'],label:'Part 6 · Open Cloze'}
+  };
+  var totalCorrect=0,totalQs=0;
+  for(var p in parts){
+    var correct=0;
+    var ans=ANSWERS[p];
+    parts[p].keys.forEach(function(k){
+      var v=getVal(k);
+      var a=normalize(ans[k]);
+      if(v&&normalize(v)===a)correct++;
+    });
+    scores[p]={correct:correct,total:parts[p].keys.length,label:parts[p].label};
+    totalCorrect+=correct;totalQs+=parts[p].keys.length;
+  }
+  document.getElementById('scoreFinal').textContent=totalCorrect+' / '+totalQs;
+  document.getElementById('timeUsed').textContent=practiceMode?'Practice mode':('Time used: '+elMin+' min '+elSec+' sec'+(timeUp?' (auto-submit)':''));
+  var bd='';
+  for(var s in scores){
+    var pct=Math.round((scores[s].correct/scores[s].total)*100);
+    bd+='<div class="part-score"><div class="name">'+scores[s].label+'</div><div class="val">'+scores[s].correct+'/'+scores[s].total+'</div><div class="pct">'+pct+'%</div></div>';
+  }
+  document.getElementById('partBreakdown').innerHTML=bd;
+  document.getElementById('resultsScreen').classList.add('active');
+  window.scrollTo(0,document.body.scrollHeight);
+}
+</script>
+</body>
+</html>
