@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>DELE B1 — Simulacro 1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<style>
+.mock-container{max-width:760px;margin:0 auto;padding:0 16px}
+.timer-bar{position:sticky;top:0;background:var(--ink);color:var(--paper);padding:12px 16px;border-radius:0 0 8px 8px;display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15);margin-bottom:24px}
+.timer-display{font-family:var(--font-sans);font-size:1.1rem;font-weight:700;letter-spacing:.5px}
+.timer-display.warning{color:#FFD700}
+.timer-display.critical{color:#FF6B6B;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.timer-meta{font-family:var(--font-sans);font-size:.72rem;opacity:.85;letter-spacing:1px;text-transform:uppercase}
+.start-screen,.results-screen{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:28px;margin-bottom:24px}
+.start-screen h2,.results-screen h2{font-size:1.4rem;margin:0 0 12px}
+.start-btn{display:inline-block;padding:12px 28px;background:var(--ink);color:var(--paper);border:0;font-family:var(--font-sans);font-size:.82rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer;margin-top:12px}
+.start-btn:hover{opacity:.85}
+.exam-area{display:none}
+.exam-area.active{display:block}
+.part-section{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:24px;margin-bottom:28px}
+.part-header{font-family:var(--font-sans);font-size:.68rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.part-section h2{font-size:1.2rem;margin:0 0 8px;color:var(--ink)}
+.part-section .instructions{font-size:.85rem;color:var(--muted);margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--hairline)}
+.text-title{font-weight:700;text-align:center;font-size:1.05rem;margin:12px 0;color:var(--ink)}
+.text-content{font-size:.92rem;line-height:1.7;color:var(--ink);margin-bottom:18px}
+.text-content p{margin:0 0 12px}
+.mc-q{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--hairline)}
+.mc-q .q-num{font-family:var(--font-sans);font-size:.85rem;font-weight:800;color:var(--amber);min-width:28px}
+.mc-q .opts{flex:1;display:flex;flex-direction:column;gap:4px}
+.mc-q .q-text{flex:1;font-size:.9rem;margin-bottom:6px}
+.opt{display:flex;gap:6px;align-items:flex-start;padding:4px 0;cursor:pointer;font-size:.9rem}
+.opt:hover{background:rgba(184,134,11,.05)}
+.opt-letter{font-family:var(--font-sans);font-weight:700;color:var(--amber);min-width:18px}
+.opt input{margin-top:4px}
+.gap-select,.match-select{padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-weight:700;background:var(--cream-deep);color:var(--ink);cursor:pointer}
+.mm-q{display:flex;gap:12px;align-items:center;padding:8px 0;border-top:1px solid var(--hairline);font-size:.88rem}
+.mm-q .q-text{flex:1}
+.mm-text{display:flex;gap:14px;padding:14px 0;border-top:1px solid var(--hairline)}
+.mm-letter{font-family:var(--font-sans);font-weight:800;color:var(--amber);font-size:1rem;min-width:24px}
+.mm-body{flex:1;font-size:.88rem;line-height:1.55}
+.submit-area{background:var(--ink);color:var(--paper);border-radius:8px;padding:20px;text-align:center;margin:32px 0}
+.submit-area p{margin:0 0 12px;opacity:.9}
+.submit-btn{display:inline-block;padding:14px 36px;background:var(--amber);color:var(--ink);border:0;font-family:var(--font-sans);font-size:.9rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer}
+.submit-btn:hover{opacity:.9}
+.results-screen{display:none}
+.results-screen.active{display:block}
+.score-big{font-size:3rem;font-weight:800;color:var(--amber);text-align:center;font-family:Georgia,serif}
+.score-label{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:18px}
+.part-breakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:20px 0}
+.part-score{background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px;padding:12px;text-align:center}
+.part-score .name{font-family:var(--font-sans);font-size:.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.part-score .val{font-size:1.3rem;font-weight:700;color:var(--ink);margin-top:4px}
+.part-score .pct{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin-top:2px}
+.exam-area input:disabled,.exam-area select:disabled{background:rgba(184,134,11,.05)}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atrás"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+
+<div class="mock-container">
+  <div class="breadcrumb"><a href="../../../../index.html">Inicio</a><span>›</span><a href="../../../index.html">Español</a><span>›</span><a href="../../index.html">DELE</a><span>›</span><a href="../index.html">B1</a><span>›</span><strong>Simulacro 1</strong></div>
+
+  <div id="startScreen" class="start-screen">
+    <div class="part-header">DELE B1 · Comprensión de lectura</div>
+    <h2>Simulacro 1</h2>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Duración:</strong> 60 minutos</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Preguntas:</strong> 24 (4 tareas)</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:16px">Al pulsar <strong>Empezar</strong>, el cronómetro se pone en marcha. El simulacro se entrega automáticamente cuando se agota el tiempo.</p>
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:18px">Consejo: reserva unos 15 minutos por tarea. No te detengas demasiado en una sola pregunta.</p>
+    <button class="start-btn" onclick="startExam(false)">Empezar (con cronómetro)</button>
+    <button class="start-btn" onclick="startExam(true)" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Modo práctica (sin cronómetro)</button>
+    <div id="resumeSection" style="display:none;margin-top:18px;padding:14px 16px;background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--amber);margin-bottom:6px">Progreso guardado</div><div id="resumeInfo" style="font-size:.88rem;color:var(--ink);margin-bottom:10px"></div><button class="start-btn" onclick="resumeExam()" style="background:var(--amber);color:var(--ink)">Continuar</button><button class="start-btn" onclick="clearSave()" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Empezar de nuevo</button></div>
+    <div id="prevAttempt" style="display:none;margin-top:12px;font-family:var(--font-sans);font-size:.78rem;color:var(--muted)">Mejor resultado anterior: <strong id="prevScore"></strong></div>
+  </div>
+
+  <div id="examArea" class="exam-area">
+    <div class="timer-bar">
+      <div class="timer-display" id="timerDisplay">60:00</div>
+      <div class="timer-meta">Tiempo restante</div>
+      <button onclick="saveProgress()" style="background:transparent;border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.85);font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border-radius:3px;cursor:pointer">Guardar y salir</button>
+    </div>
+
+    <!-- TAREA 1 -->
+    <div class="part-section">
+      <div class="part-header">Tarea 1</div>
+      <h2>Preguntas 1–6</h2>
+      <p class="instructions">A continuación vas a leer un artículo sobre el teletrabajo en España. Después, debes indicar si los enunciados (1–6) son verdaderos (V), falsos (F) o si la información no aparece en el texto (ND).</p>
+      <div class="text-title">El teletrabajo en España: balance tres años después</div>
+      <div class="text-content">
+        <p>La pandemia de 2020 cambió para siempre la forma de trabajar en España. Antes de ese año, apenas el cinco por ciento de los trabajadores españoles realizaba su actividad desde casa de forma habitual. Hoy, según los datos más recientes, ese porcentaje ha subido hasta el catorce por ciento, una cifra que sitúa a España por encima de la media europea en la adopción del teletrabajo.</p>
+        <p>La distribución del teletrabajo no es uniforme en todo el país. Madrid y Cataluña concentran la mayor parte de los trabajadores a distancia, en parte porque son las comunidades con mayor presencia de empresas tecnológicas y del sector financiero, que son precisamente los sectores donde el teletrabajo está más extendido.</p>
+        <p>Sin embargo, la tendencia no es solo de expansión. Desde 2023, varias empresas grandes han empezado a pedir a sus empleados que vuelvan a la oficina, al menos durante algunos días a la semana. Algunas organizaciones han establecido políticas de presencia obligatoria, argumentando que la colaboración y la cultura de empresa se resienten con el trabajo remoto.</p>
+        <p>Los propios trabajadores tienen opiniones diversas. La mayoría valora positivamente la posibilidad de conciliar mejor la vida laboral y personal, un aspecto que antes del teletrabajo era mucho más difícil de lograr. No obstante, un número significativo de personas también reconoce sentirse más aislada que cuando iba a la oficina todos los días.</p>
+        <p>En cuanto a la productividad, los estudios realizados hasta ahora ofrecen resultados contradictorios. Algunos indican que los trabajadores en remoto son más productivos; otros señalan que la productividad baja en tareas que requieren colaboración inmediata. No existe todavía un consenso claro entre los expertos.</p>
+      </div>
+      <div class="mc-q"><div class="q-num">1</div><div class="opts"><div class="q-text">El porcentaje de teletrabajadores en España era mayor antes de la pandemia.</div><label class="opt"><input type="radio" name="q1" value="V"> <span class="opt-letter">V</span> <span>Verdadero</span></label><label class="opt"><input type="radio" name="q1" value="F"> <span class="opt-letter">F</span> <span>Falso</span></label><label class="opt"><input type="radio" name="q1" value="ND"> <span class="opt-letter">ND</span> <span>No se dice</span></label></div></div>
+      <div class="mc-q"><div class="q-num">2</div><div class="opts"><div class="q-text">Madrid y Cataluña concentran la mayoría de los trabajadores a distancia en España.</div><label class="opt"><input type="radio" name="q2" value="V"> <span class="opt-letter">V</span> <span>Verdadero</span></label><label class="opt"><input type="radio" name="q2" value="F"> <span class="opt-letter">F</span> <span>Falso</span></label><label class="opt"><input type="radio" name="q2" value="ND"> <span class="opt-letter">ND</span> <span>No se dice</span></label></div></div>
+      <div class="mc-q"><div class="q-num">3</div><div class="opts"><div class="q-text">El sector tecnológico y el financiero tienen la mayor presencia de teletrabajadores.</div><label class="opt"><input type="radio" name="q3" value="V"> <span class="opt-letter">V</span> <span>Verdadero</span></label><label class="opt"><input type="radio" name="q3" value="F"> <span class="opt-letter">F</span> <span>Falso</span></label><label class="opt"><input type="radio" name="q3" value="ND"> <span class="opt-letter">ND</span> <span>No se dice</span></label></div></div>
+      <div class="mc-q"><div class="q-num">4</div><div class="opts"><div class="q-text">El gobierno español ha establecido un límite máximo de días de teletrabajo por semana.</div><label class="opt"><input type="radio" name="q4" value="V"> <span class="opt-letter">V</span> <span>Verdadero</span></label><label class="opt"><input type="radio" name="q4" value="F"> <span class="opt-letter">F</span> <span>Falso</span></label><label class="opt"><input type="radio" name="q4" value="ND"> <span class="opt-letter">ND</span> <span>No se dice</span></label></div></div>
+      <div class="mc-q"><div class="q-num">5</div><div class="opts"><div class="q-text">Los estudios demuestran claramente que el teletrabajo aumenta la productividad.</div><label class="opt"><input type="radio" name="q5" value="V"> <span class="opt-letter">V</span> <span>Verdadero</span></label><label class="opt"><input type="radio" name="q5" value="F"> <span class="opt-letter">F</span> <span>Falso</span></label><label class="opt"><input type="radio" name="q5" value="ND"> <span class="opt-letter">ND</span> <span>No se dice</span></label></div></div>
+      <div class="mc-q"><div class="q-num">6</div><div class="opts"><div class="q-text">Algunas empresas han vuelto a exigir la presencia en la oficina desde 2023.</div><label class="opt"><input type="radio" name="q6" value="V"> <span class="opt-letter">V</span> <span>Verdadero</span></label><label class="opt"><input type="radio" name="q6" value="F"> <span class="opt-letter">F</span> <span>Falso</span></label><label class="opt"><input type="radio" name="q6" value="ND"> <span class="opt-letter">ND</span> <span>No se dice</span></label></div></div>
+    </div>
+
+    <!-- TAREA 2 -->
+    <div class="part-section">
+      <div class="part-header">Tarea 2</div>
+      <h2>Preguntas 7–12</h2>
+      <p class="instructions">A continuación vas a leer un texto sobre la dieta mediterránea. Elige la opción correcta (A, B o C) para cada pregunta.</p>
+      <div class="text-title">La dieta mediterránea y la salud</div>
+      <div class="text-content">
+        <p>La dieta mediterránea es mucho más que una forma de comer: es una manera de vivir que combina alimentos saludables con tradiciones culturales de siglos. En 2010, la UNESCO la declaró Patrimonio Cultural Inmaterial de la Humanidad, reconociendo así su valor no solo nutricional sino también histórico y social.</p>
+        <p>Los ingredientes principales de esta dieta son el aceite de oliva, las verduras, las legumbres, el pescado y los cereales integrales. Numerosos estudios científicos han demostrado que seguir este patrón alimentario reduce el riesgo de enfermedades cardiovasculares en un treinta por ciento, además de contribuir a la prevención de la diabetes y algunos tipos de cáncer.</p>
+        <p>Sin embargo, la dieta mediterránea está perdiendo presencia en los países donde nació. Actualmente, se sigue con más fidelidad en las zonas rurales que en las ciudades, donde el ritmo de vida acelerado ha favorecido el consumo de alimentos procesados. Entre los jóvenes españoles, la influencia de la comida rápida ha llevado a un abandono progresivo de los hábitos alimentarios tradicionales.</p>
+        <p>A pesar de esta tendencia, algunos productos emblemáticos siguen teniendo una demanda creciente a nivel internacional. Las exportaciones de aceite de oliva español, por ejemplo, se han triplicado en los últimos veinte años, lo que demuestra que, aunque los propios españoles lo consuman menos en casa, el mundo sigue valorando los productos de esta dieta.</p>
+      </div>
+      <div class="mc-q"><div class="q-num">7</div><div class="q-text">¿Cuándo declaró la UNESCO patrimonio la dieta mediterránea?</div><div class="opts"><label class="opt"><input type="radio" name="q7" value="A"> <span class="opt-letter">A</span> <span>En el año 2000.</span></label><label class="opt"><input type="radio" name="q7" value="B"> <span class="opt-letter">B</span> <span>En el año 2005.</span></label><label class="opt"><input type="radio" name="q7" value="C"> <span class="opt-letter">C</span> <span>En el año 2010.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">8</div><div class="q-text">¿Qué porcentaje de reducción de riesgo cardiovascular muestran los estudios?</div><div class="opts"><label class="opt"><input type="radio" name="q8" value="A"> <span class="opt-letter">A</span> <span>El treinta por ciento.</span></label><label class="opt"><input type="radio" name="q8" value="B"> <span class="opt-letter">B</span> <span>El veinte por ciento.</span></label><label class="opt"><input type="radio" name="q8" value="C"> <span class="opt-letter">C</span> <span>El cincuenta por ciento.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">9</div><div class="q-text">¿Dónde se sigue más la dieta mediterránea actualmente?</div><div class="opts"><label class="opt"><input type="radio" name="q9" value="A"> <span class="opt-letter">A</span> <span>En las ciudades.</span></label><label class="opt"><input type="radio" name="q9" value="B"> <span class="opt-letter">B</span> <span>En las zonas rurales.</span></label><label class="opt"><input type="radio" name="q9" value="C"> <span class="opt-letter">C</span> <span>En los restaurantes.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">10</div><div class="q-text">¿Qué ha influido en el abandono de esta dieta entre los jóvenes?</div><div class="opts"><label class="opt"><input type="radio" name="q10" value="A"> <span class="opt-letter">A</span> <span>El mayor precio de los alimentos.</span></label><label class="opt"><input type="radio" name="q10" value="B"> <span class="opt-letter">B</span> <span>La falta de tiempo.</span></label><label class="opt"><input type="radio" name="q10" value="C"> <span class="opt-letter">C</span> <span>La influencia de la comida rápida.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">11</div><div class="q-text">¿Qué aceite es fundamental en la dieta mediterránea?</div><div class="opts"><label class="opt"><input type="radio" name="q11" value="A"> <span class="opt-letter">A</span> <span>El aceite de oliva.</span></label><label class="opt"><input type="radio" name="q11" value="B"> <span class="opt-letter">B</span> <span>El aceite de girasol.</span></label><label class="opt"><input type="radio" name="q11" value="C"> <span class="opt-letter">C</span> <span>El aceite de coco.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">12</div><div class="q-text">¿Qué ha ocurrido con las exportaciones de aceite de oliva en los últimos veinte años?</div><div class="opts"><label class="opt"><input type="radio" name="q12" value="A"> <span class="opt-letter">A</span> <span>Han bajado.</span></label><label class="opt"><input type="radio" name="q12" value="B"> <span class="opt-letter">B</span> <span>Se han triplicado.</span></label><label class="opt"><input type="radio" name="q12" value="C"> <span class="opt-letter">C</span> <span>Se han estabilizado.</span></label></div></div>
+    </div>
+
+    <!-- TAREA 3 -->
+    <div class="part-section">
+      <div class="part-header">Tarea 3</div>
+      <h2>Preguntas 13–18</h2>
+      <p class="instructions">Lee el siguiente texto y elige la opción (A, B o C) que corresponde a cada hueco.</p>
+      <div class="text-title">Las ciudades españolas y el medioambiente</div>
+      <div class="text-content">
+        <p>Las ciudades españolas han (13) <select class="gap-select" data-q="13"><option value="">—</option><option>A</option><option>B</option><option>C</option></select> importantes cambios en materia medioambiental en los últimos años. La preocupación por el cambio climático y la calidad del aire ha llevado a muchos ayuntamientos a tomar medidas concretas para reducir la contaminación.</p>
+        <p>Madrid y Barcelona han (14) <select class="gap-select" data-q="14"><option value="">—</option><option>A</option><option>B</option><option>C</option></select> zonas de bajas emisiones en sus centros urbanos, donde los vehículos más contaminantes tienen restringido el acceso. Como resultado, el número de vehículos eléctricos ha (15) <select class="gap-select" data-q="15"><option value="">—</option><option>A</option><option>B</option><option>C</option></select> notablemente en las ciudades españolas en los últimos años.</p>
+        <p>Reciclar los residuos es una (16) <select class="gap-select" data-q="16"><option value="">—</option><option>A</option><option>B</option><option>C</option></select> que cada vez más ciudadanos practican a diario. Los contenedores de colores para separar el vidrio, el papel o los envases forman ya parte del paisaje urbano habitual.</p>
+        <p>El objetivo de las ciudades es (17) <select class="gap-select" data-q="17"><option value="">—</option><option>A</option><option>B</option><option>C</option></select> sus emisiones de carbono a la mitad antes de 2030. Para lograrlo, los parques urbanos son (18) <select class="gap-select" data-q="18"><option value="">—</option><option>A</option><option>B</option><option>C</option></select> para mejorar la calidad del aire, ya que los árboles absorben CO₂ y proporcionan sombra y frescor en los meses de verano.</p>
+      </div>
+      <div style="margin-top:16px;padding-top:14px;border-top:2px solid var(--hairline)">
+        <div style="font-family:var(--font-sans);font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Opciones:</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:.88rem">
+          <div><strong style="color:var(--amber)">13.</strong> A) experimentado &nbsp; B) evitado &nbsp; C) negado</div>
+          <div><strong style="color:var(--amber)">14.</strong> A) destruido &nbsp; B) abandonado &nbsp; C) creado</div>
+          <div><strong style="color:var(--amber)">15.</strong> A) bajado &nbsp; B) aumentado &nbsp; C) desaparecido</div>
+          <div><strong style="color:var(--amber)">16.</strong> A) costumbre &nbsp; B) dificultad &nbsp; C) profesión</div>
+          <div><strong style="color:var(--amber)">17.</strong> A) duplicar &nbsp; B) ignorar &nbsp; C) reducir</div>
+          <div><strong style="color:var(--amber)">18.</strong> A) innecesarios &nbsp; B) esenciales &nbsp; C) peligrosos</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAREA 4 -->
+    <div class="part-section">
+      <div class="part-header">Tarea 4</div>
+      <h2>Preguntas 19–24</h2>
+      <p class="instructions">Vas a leer las opiniones de cuatro personas sobre el uso de la tecnología en el trabajo. Relaciona cada enunciado (19–24) con la persona correspondiente. Las personas pueden elegirse más de una vez.</p>
+      <div class="mm-text"><div class="mm-letter">A</div><div class="mm-body"><strong>Sara, 31 años, maestra</strong><br>Uso la tecnología cada día en mi clase: las tabletas y las aplicaciones educativas han cambiado mucho la forma de enseñar. A mis alumnos les resulta más motivador aprender con pantallas interactivas. Eso sí, a veces echo de menos la interacción cara a cara sin dispositivos de por medio. Nadie me formó para todo esto; tuve que aprenderlo sola.</div></div>
+      <div class="mm-text"><div class="mm-letter">B</div><div class="mm-body"><strong>Jorge, 48 años, fontanero</strong><br>Uso el móvil para gestionar mis citas y enviar facturas a los clientes. Antes lo hacía todo en papel y perdía mucho tiempo. Ahora es todo más rápido. Mi hijo me enseñó a usar las aplicaciones. No tengo redes sociales para el trabajo; no me parece necesario en mi sector.</div></div>
+      <div class="mm-text"><div class="mm-letter">C</div><div class="mm-body"><strong>Elena, 25 años, diseñadora gráfica</strong><br>Trabajo completamente en remoto y uso herramientas digitales para absolutamente todo: diseño, comunicación con clientes, presentaciones, facturación. No podría imaginarme trabajar sin tecnología. Tengo clientes en cinco países distintos y gracias a las videollamadas y las plataformas de gestión de proyectos puedo colaborar con todos ellos sin ningún problema.</div></div>
+      <div class="mm-text"><div class="mm-letter">D</div><div class="mm-body"><strong>Ramón, 60 años, agricultor</strong><br>Hace poco empecé a usar una aplicación para controlar el riego y consultar la previsión del tiempo. Al principio era escéptico: pensaba que esas cosas eran para los jóvenes. Mi vecino me enseñó a usarla y ahora estoy convencido de que ha mejorado mi cosecha. No me arrepiento de haberlo intentado.</div></div>
+      <div style="margin-top:20px">
+        <div class="mm-q"><div class="q-num">19</div><div class="q-text">Esta persona usa la tecnología para organizar sus citas y pagos.</div><select class="match-select" data-q="19"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">20</div><div class="q-text">Esta persona empezó a usar tecnología con la ayuda de alguien de su entorno.</div><select class="match-select" data-q="20"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">21</div><div class="q-text">Esta persona utiliza la tecnología con sus alumnos pero echaba de menos otro tipo de interacción.</div><select class="match-select" data-q="21"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">22</div><div class="q-text">Esta persona trabaja con clientes de diferentes países gracias a la tecnología.</div><select class="match-select" data-q="22"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">23</div><div class="q-text">Esta persona no utiliza las redes sociales en su ámbito profesional.</div><select class="match-select" data-q="23"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">24</div><div class="q-text">Esta persona era reticente a la tecnología pero ahora valora sus beneficios.</div><select class="match-select" data-q="24"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+      </div>
+    </div>
+
+    <div class="submit-area">
+      <p>Revisa tus respuestas antes de entregar. No podrás cambiarlas después.</p>
+      <button class="submit-btn" onclick="submitExam(false)">Entregar simulacro</button>
+    </div>
+  </div>
+
+  <div id="resultsScreen" class="results-screen">
+    <div class="part-header">DELE B1 · Simulacro 1 — Resultados</div>
+    <div class="score-big" id="scoreFinal"></div>
+    <div class="score-label">Respuestas correctas</div>
+    <p id="timeUsed" style="text-align:center;font-family:var(--font-sans);font-size:.8rem;color:var(--muted);margin-bottom:16px"></p>
+    <div class="part-breakdown" id="partBreakdown"></div>
+    <div style="text-align:center;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <a href="../index.html" class="start-btn" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);text-decoration:none;display:inline-block">Volver al DELE B1</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">Word Play · DELE B1 · Instituto Cervantes</footer>
+
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+const ANSWERS = {
+  "t1":{"1":"F","2":"V","3":"V","4":"ND","5":"F","6":"V"},
+  "t2":{"7":"C","8":"A","9":"B","10":"C","11":"A","12":"B"},
+  "t3":{"13":"A","14":"C","15":"B","16":"A","17":"C","18":"B"},
+  "t4":{"19":"B","20":"D","21":"A","22":"C","23":"B","24":"D"}
+};
+const DURATION_MS = 60 * 60 * 1000;
+let startTime = null;
+let timerInterval = null;
+let submitted = false;
+const SAVE_KEY = 'wordplay_dele_b1_mock_1';
+const BEST_KEY = 'wordplay_dele_b1_mock_1_best';
+let practiceMode = false;
+
+function startExam(practice) {
+  practiceMode = practice || false;
+  clearSave();
+  _startExam();
+}
+
+function resumeExam() {
+  const saved = getSave();
+  if (!saved) return;
+  _startExam(saved);
+}
+
+function _startExam(saved) {
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('examArea').classList.add('active');
+  if (practiceMode) {
+    document.querySelector('.timer-bar').innerHTML = '<div class="timer-display">Modo práctica — sin cronómetro</div><div class="timer-meta">Responde a tu ritmo</div>';
+    startTime = Date.now();
+  } else {
+    startTime = saved ? saved.startTime : Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+    updateTimer();
+  }
+  if (saved) restoreAnswers(saved.answers);
+  window.scrollTo(0, 0);
+}
+
+function getSave() {
+  try { var s = localStorage.getItem(SAVE_KEY); return s ? JSON.parse(s) : null; } catch(e) { return null; }
+}
+
+function clearSave() {
+  try { localStorage.removeItem(SAVE_KEY); } catch(e) {}
+}
+
+function saveProgress() {
+  if (submitted) return;
+  var answers = collectAnswers();
+  var save = { startTime: startTime, answers: answers, savedAt: Date.now() };
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(save)); } catch(e) {}
+  alert('Progreso guardado. Puedes cerrar la pestaña y continuar más tarde.');
+}
+
+function collectAnswers() {
+  var a = {};
+  document.querySelectorAll('input[type=radio]:checked').forEach(function(r) { a[r.name] = r.value; });
+  document.querySelectorAll('select').forEach(function(s) { if (s.dataset.q) a['s'+s.dataset.q] = s.value; });
+  return a;
+}
+
+function restoreAnswers(answers) {
+  Object.entries(answers).forEach(function(kv) {
+    var k = kv[0], v = kv[1];
+    if (k.startsWith('q')) {
+      var r = document.querySelector('input[name="'+k+'"][value="'+v+'"]');
+      if (r) r.checked = true;
+    } else if (k.startsWith('s')) {
+      var sel = document.querySelector('select[data-q="'+k.slice(1)+'"]');
+      if (sel) sel.value = v;
+    }
+  });
+}
+
+function checkPrevAttempt() {
+  try {
+    var best = localStorage.getItem(BEST_KEY);
+    if (best) { document.getElementById('prevAttempt').style.display = 'block'; document.getElementById('prevScore').textContent = best; }
+    var saved = getSave();
+    if (saved) {
+      var ageMin = Math.round((Date.now() - saved.savedAt) / 60000);
+      document.getElementById('resumeSection').style.display = 'block';
+      document.getElementById('resumeInfo').textContent = 'Guardado hace ' + ageMin + ' minutos';
+    }
+  } catch(e) {}
+}
+checkPrevAttempt();
+
+function updateTimer() {
+  var elapsed = Date.now() - startTime;
+  var remaining = DURATION_MS - elapsed;
+  if (remaining <= 0) { submitExam(true); return; }
+  var mins = Math.floor(remaining / 60000);
+  var secs = Math.floor((remaining % 60000) / 1000);
+  var el = document.getElementById('timerDisplay');
+  el.textContent = mins + ':' + (secs < 10 ? '0' : '') + secs;
+  el.classList.toggle('warning', remaining < 15*60*1000 && remaining >= 3*60*1000);
+  el.classList.toggle('critical', remaining < 3*60*1000);
+}
+
+function getRadioValue(name) {
+  var r = document.querySelector('input[name="'+name+'"]:checked');
+  return r ? r.value : null;
+}
+
+function getSelectValue(q) {
+  var el = document.querySelector('select[data-q="'+q+'"]');
+  return el ? el.value : '';
+}
+
+function submitExam(timeUp) {
+  if (submitted) return;
+  if (!timeUp && !confirm('¿Entregar el simulacro ahora? No podrás cambiar las respuestas.')) return;
+  submitted = true;
+  clearInterval(timerInterval);
+  var elapsedMs = Date.now() - startTime;
+  var elapsedMin = Math.floor(elapsedMs / 60000);
+  var elapsedSec = Math.floor((elapsedMs % 60000) / 1000);
+  document.querySelectorAll('input, select').forEach(function(el) { el.disabled = true; });
+
+  var scores = {};
+
+  scores.t1 = { correct: 0, total: 6 };
+  for (var i = 1; i <= 6; i++) {
+    var v = getRadioValue('q' + i);
+    if (v && v === ANSWERS.t1[i]) scores.t1.correct++;
+  }
+
+  scores.t2 = { correct: 0, total: 6 };
+  for (var i = 7; i <= 12; i++) {
+    var v = getRadioValue('q' + i);
+    if (v && v === ANSWERS.t2[i]) scores.t2.correct++;
+  }
+
+  scores.t3 = { correct: 0, total: 6 };
+  for (var i = 13; i <= 18; i++) {
+    var v = getSelectValue(i);
+    if (v && v === ANSWERS.t3[i]) scores.t3.correct++;
+  }
+
+  scores.t4 = { correct: 0, total: 6 };
+  for (var i = 19; i <= 24; i++) {
+    var v = getSelectValue(i);
+    if (v && v === ANSWERS.t4[i]) scores.t4.correct++;
+  }
+
+  var totalCorrect = Object.values(scores).reduce(function(a, p) { return a + p.correct; }, 0);
+  var pct = Math.round((totalCorrect / 24) * 100);
+
+  document.getElementById('scoreFinal').textContent = totalCorrect + ' / 24';
+  document.getElementById('timeUsed').textContent = 'Tiempo empleado: ' + elapsedMin + ' min ' + elapsedSec + ' s' + (timeUp ? ' (entrega automática)' : '');
+
+  try { localStorage.setItem(BEST_KEY, totalCorrect + '/24 (' + pct + '%)'); } catch(e) {}
+
+  var tareaLabels = {
+    t1:'Tarea 1 · V/F/ND', t2:'Tarea 2 · Comprensión', t3:'Tarea 3 · Léxico', t4:'Tarea 4 · Emparejamiento'
+  };
+  var breakdown = '';
+  Object.entries(scores).forEach(function(kv) {
+    var k = kv[0], v = kv[1];
+    var p = Math.round((v.correct / v.total) * 100);
+    breakdown += '<div class="part-score"><div class="name">' + tareaLabels[k] + '</div><div class="val">' + v.correct + '/' + v.total + '</div><div class="pct">' + p + '%</div></div>';
+  });
+  document.getElementById('partBreakdown').innerHTML = breakdown;
+
+  document.getElementById('resultsScreen').classList.add('active');
+  document.getElementById('resultsScreen').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
