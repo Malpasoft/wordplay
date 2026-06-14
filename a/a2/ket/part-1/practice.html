@@ -1,37 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>KET Matching — Review | Word Play</title>
+<title>KET Part 1 Practice — Matching | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/worksheet.css?v=v106">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<style>
+.gap-select{padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-weight:700;background:var(--cream-deep);color:var(--ink);cursor:pointer}
+.notice-card{background:#1A1A1A;color:white;border-radius:8px;padding:14px 18px;font-size:.88rem;line-height:1.55;margin-bottom:10px}
+.notice-label{font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2px;color:var(--amber);margin-bottom:6px}
+.match-row{display:flex;align-items:center;gap:14px;padding:8px 0;border-top:1px solid var(--hairline);font-size:.88rem}
+.match-row .q-id{font-weight:800;color:var(--amber);min-width:20px}
+.meaning-grid{background:var(--paper);border-radius:8px;padding:16px 18px;margin:20px 0}
+.meaning-row{display:flex;gap:10px;padding:6px 0;font-size:.85rem;line-height:1.5}
+.meaning-letter{font-weight:800;color:var(--amber);min-width:20px}
+</style>
 </head>
 <body>
 <header class="site-header"><div class="site-header-inner">
-<a href="index.html" class="back back-link" aria-label="Back"></a>
-<a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-<button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  <a href="index.html" class="back back-link" aria-label="Back"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
 </div></header>
-<div class="section-page">
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">A2</a><span>›</span><a href="../index.html">KET</a><span>›</span><a href="index.html">Part 1</a><span>›</span><strong>Practice</strong></div>
+  <div class="chapter-num">KET · Part 1</div>
+  <h1>Part 1 Practice — Matching</h1>
+  <p class="chapter-subtitle">Match each notice or sign to its meaning</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Strategy &amp; Tips</a>
+    <a href="practice.html" class="chapter-nav-btn active">Practice</a>
+  </nav>
 
-  <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>›</span>
-    <a href="../../index.html">A2</a><span>›</span>
-    <a href="../index.html">KET</a><span>›</span>
-    <a href="index.html">Matching</a><span>›</span>
-    <strong>Practice</strong>
-  </div>
-  <h1 style="font-family:Georgia,serif;font-size:2rem;font-weight:700;color:var(--ink);margin:0 0 24px">Matching — Practice</h1>
-  <div style="background:#1A1A1A;border-radius:10px;padding:32px;color:white;text-align:center">
-    <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:12px">Coming Soon</div>
-    <p style="color:rgba(255,255,255,.7);font-size:.9rem">Sample questions for this part are in development.</p>
-    <div style="margin-top:24px"><a href="index.html" style="color:var(--amber);text-decoration:none;font-weight:700">Back to strategy</a></div>
+  <form id="worksheet">
+    <section class="exercise" id="ex1">
+      <div class="ex-head">Part 1 — Match each text (1–6) to a meaning (A–H). Two letters are not used.</div>
+
+      <p style="font-size:.82rem;color:var(--muted);margin-bottom:16px">Read the notices and choose the correct meaning for each one.</p>
+
+      <div class="notice-card"><div class="notice-label">TEXT 1</div>Library books may be renewed online up to three times before they must be returned in person.</div>
+      <div class="notice-card"><div class="notice-label">TEXT 2</div>CAFÉ CLOSED — Back at 2 pm. Orders placed before 12 noon will be ready for collection on your return.</div>
+      <div class="notice-card"><div class="notice-label">TEXT 3</div>Cyclists: please dismount and walk through the market area between 10 am and 6 pm.</div>
+      <div class="notice-card"><div class="notice-label">TEXT 4</div>Changing rooms are on the left. Maximum four items at a time. Staff will assist if needed.</div>
+      <div class="notice-card"><div class="notice-label">TEXT 5</div>This car park is for hotel guests only. A permit must be displayed at all times.</div>
+      <div class="notice-card"><div class="notice-label">TEXT 6</div>Swimming lessons for adults start every Monday. Book your place at reception before Friday.</div>
+
+      <div class="meaning-grid">
+        <div style="font-family:var(--font-sans);font-size:.7rem;font-weight:800;letter-spacing:1.5px;color:var(--muted);margin-bottom:10px">MEANINGS</div>
+        <div class="meaning-row"><span class="meaning-letter">A</span><span>You do not need to bring your bike inside this area.</span></div>
+        <div class="meaning-row"><span class="meaning-letter">B</span><span>You can extend the time you keep these without going to the building.</span></div>
+        <div class="meaning-row"><span class="meaning-letter">C</span><span>You must show something to show you have permission to park here.</span></div>
+        <div class="meaning-row"><span class="meaning-letter">D</span><span>You can only try on a limited number of things at once.</span></div>
+        <div class="meaning-row"><span class="meaning-letter">E</span><span>You need to register for this activity before the weekend.</span></div>
+        <div class="meaning-row"><span class="meaning-letter">F</span><span>You can pick up what you ordered when the place reopens.</span></div>
+        <div class="meaning-row"><span class="meaning-letter">G</span><span>You should ask someone for help if you cannot find what you want.</span></div>
+        <div class="meaning-row"><span class="meaning-letter">H</span><span>You can use this service from home to avoid making a trip.</span></div>
+      </div>
+
+      <div class="match-row"><span class="q-id">1</span><span>Text 1 matches meaning:</span><select class="gap-select" data-q="t1"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></div>
+      <div class="match-row"><span class="q-id">2</span><span>Text 2 matches meaning:</span><select class="gap-select" data-q="t2"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></div>
+      <div class="match-row"><span class="q-id">3</span><span>Text 3 matches meaning:</span><select class="gap-select" data-q="t3"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></div>
+      <div class="match-row"><span class="q-id">4</span><span>Text 4 matches meaning:</span><select class="gap-select" data-q="t4"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></div>
+      <div class="match-row"><span class="q-id">5</span><span>Text 5 matches meaning:</span><select class="gap-select" data-q="t5"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></div>
+      <div class="match-row"><span class="q-id">6</span><span>Text 6 matches meaning:</span><select class="gap-select" data-q="t6"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></div>
+    </section>
+    <div class="submit-wrap"><button type="submit" class="submit-btn">Check answers</button></div>
+  </form>
+  <div id="results" class="results-panel">
+    <div class="score-row"><span class="score-label">Score</span><span id="score-got">0</span><span class="score-sep">/</span><span id="score-total">0</span><span class="score-pct-badge" id="score-pct">0%</span></div>
+    <div id="exercise-breakdown"></div><div id="breakdown"></div>
+    <button class="try-again-btn" onclick="tryAgain()">Try again</button>
   </div>
 </div>
 <footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+window.LEVEL='a2';window.CHAPTER_ID='ket-part-1-practice';
+window.TOTAL_POINTS=6;
+window.ANSWERS={"t1":"B","t2":"F","t3":"A","t4":"D","t5":"C","t6":"E"};
+window.EXPLANATIONS={"t1":"Text 1 says books 'may be renewed online' — B says you can extend without going to the building.","t2":"Text 2 says orders 'will be ready for collection on your return' — F says pick up what you ordered when it reopens.","t3":"Text 3 says 'dismount and walk' meaning no cycling — A says you do not need to bring your bike inside.","t4":"Text 4 says 'maximum four items at a time' — D says you can only try on a limited number at once.","t5":"Text 5 says 'a permit must be displayed' — C says you must show permission to park.","t6":"Text 6 says 'Book your place at reception before Friday' — E says register before the weekend."};
+window.EXERCISE_TITLES={ex1:'Part 1 — Matching'};
+</script>
+<script src="../../../../shared/worksheet.js?v=v108"></script>
 </body>
 </html>

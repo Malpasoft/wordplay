@@ -1,37 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>KET Open Writing — Review | Word Play</title>
+<title>KET Part 7 Practice — Open Writing | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<style>
+.task-box{background:#1A1A1A;color:white;border-radius:8px;padding:18px 22px;margin:18px 0}
+.task-label{font-family:var(--font-sans);font-size:.62rem;font-weight:800;letter-spacing:2px;color:var(--amber);margin-bottom:10px}
+.task-prompt{font-size:.9rem;line-height:1.6;margin-bottom:14px}
+.task-points{list-style:none;margin:0;padding:0}
+.task-points li{font-size:.85rem;padding:4px 0 4px 18px;position:relative;color:rgba(255,255,255,.85)}
+.task-points li::before{content:"·";position:absolute;left:4px;color:var(--amber);font-weight:900}
+.writing-area{width:100%;min-height:120px;padding:12px 14px;border:1.5px solid var(--hairline);border-radius:6px;font-family:var(--font-sans);font-size:.92rem;line-height:1.6;background:var(--cream-deep);color:var(--ink);resize:vertical;box-sizing:border-box;margin:16px 0 6px}
+body.dark .writing-area{background:#1A1A1A;color:#F0F0F0;border-color:rgba(255,255,255,.18)}
+.word-count{font-family:var(--font-sans);font-size:.75rem;font-weight:700;color:var(--muted);margin-bottom:18px}
+.word-count .count-num{color:var(--ink);font-size:.9rem}
+body.dark .word-count .count-num{color:#F0F0F0}
+.count-ok{color:#2E7D52!important}
+.reveal-btn{padding:10px 22px;background:transparent;border:1.5px solid var(--amber);color:var(--amber);font-family:var(--font-sans);font-size:.78rem;font-weight:800;letter-spacing:1px;cursor:pointer;border-radius:4px}
+.reveal-btn:hover{background:rgba(184,134,11,.1)}
+.model-box{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:18px 22px;margin-top:18px;display:none}
+.model-box.visible{display:block}
+.model-label{font-family:var(--font-sans);font-size:.62rem;font-weight:800;letter-spacing:2px;color:var(--amber);margin-bottom:10px}
+.model-text{font-size:.92rem;line-height:1.65;color:var(--ink);margin-bottom:16px;padding:12px 14px;background:var(--cream-deep);border-radius:5px;border-left:3px solid var(--amber)}
+body.dark .model-text{background:#111}
+.checklist{list-style:none;margin:0;padding:0}
+.checklist li{display:flex;gap:10px;padding:6px 0;border-top:1px solid var(--hairline);font-size:.85rem;color:var(--ink)}
+.checklist li::before{content:"✓";color:#2E7D52;font-weight:900;flex-shrink:0}
+</style>
 </head>
 <body>
 <header class="site-header"><div class="site-header-inner">
-<a href="index.html" class="back back-link" aria-label="Back"></a>
-<a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-<button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  <a href="index.html" class="back back-link" aria-label="Back"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
 </div></header>
-<div class="section-page">
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">A2</a><span>›</span><a href="../index.html">KET</a><span>›</span><a href="index.html">Part 7</a><span>›</span><strong>Practice</strong></div>
+  <div class="chapter-num">KET · Part 7</div>
+  <h1>Part 7 Practice — Open Writing</h1>
+  <p class="chapter-subtitle">Write a short message covering all three content points</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Strategy &amp; Tips</a>
+    <a href="practice.html" class="chapter-nav-btn active">Practice</a>
+  </nav>
 
-  <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>›</span>
-    <a href="../../index.html">A2</a><span>›</span>
-    <a href="../index.html">KET</a><span>›</span>
-    <a href="index.html">Open Writing</a><span>›</span>
-    <strong>Practice</strong>
+  <div class="task-box">
+    <div class="task-label">YOUR TASK</div>
+    <p class="task-prompt">You want to invite your English friend Sam to your birthday party. Write a note to Sam. Write <strong style="color:var(--amber)">25–35 words</strong>.</p>
+    <p style="font-family:var(--font-sans);font-size:.72rem;font-weight:800;letter-spacing:1.5px;color:var(--amber);margin:0 0 8px">Tell Sam:</p>
+    <ul class="task-points">
+      <li>when the party is</li>
+      <li>where the party is</li>
+      <li>what to bring</li>
+    </ul>
   </div>
-  <h1 style="font-family:Georgia,serif;font-size:2rem;font-weight:700;color:var(--ink);margin:0 0 24px">Open Writing — Practice</h1>
-  <div style="background:#1A1A1A;border-radius:10px;padding:32px;color:white;text-align:center">
-    <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:12px">Coming Soon</div>
-    <p style="color:rgba(255,255,255,.7);font-size:.9rem">Sample questions for this part are in development.</p>
-    <div style="margin-top:24px"><a href="index.html" style="color:var(--amber);text-decoration:none;font-weight:700">Back to strategy</a></div>
+
+  <textarea class="writing-area" id="writing-area" placeholder="Write your note here..."></textarea>
+  <div class="word-count">Words: <span class="count-num" id="wc">0</span> / 25–35</div>
+
+  <button class="reveal-btn" onclick="revealModel()">Show model answer</button>
+
+  <div class="model-box" id="model-box">
+    <div class="model-label">MODEL ANSWER (30 words)</div>
+    <div class="model-text">Hi Sam,<br><br>I'm having a birthday party on Saturday at 7 pm. It's at my house — 15 Park Road. Please bring something to drink. I hope you can come!<br><br>[Your name]</div>
+    <div style="font-family:var(--font-sans);font-size:.72rem;font-weight:800;letter-spacing:1.5px;color:var(--amber);margin:12px 0 6px">CHECK YOUR WORK</div>
+    <ul class="checklist">
+      <li>I included when the party is (day and time).</li>
+      <li>I included where the party is (address or place).</li>
+      <li>I told Sam what to bring.</li>
+      <li>My note is between 25 and 35 words.</li>
+      <li>I used a friendly greeting and sign-off.</li>
+    </ul>
   </div>
+
+  <div style="margin-top:28px"><a href="../index.html" style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;color:var(--amber);text-decoration:none">← Back to KET</a></div>
 </div>
 <footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script>
+function countWords(str){return str.trim().split(/\s+/).filter(function(w){return w.length>0}).length;}
+var area=document.getElementById('writing-area');
+var wc=document.getElementById('wc');
+area.addEventListener('input',function(){
+  var n=countWords(area.value);
+  wc.textContent=n;
+  wc.className='count-num'+(n>=25&&n<=35?' count-ok':'');
+});
+function revealModel(){
+  document.getElementById('model-box').classList.add('visible');
+  document.querySelector('.reveal-btn').style.display='none';
+}
+</script>
 </body>
 </html>
