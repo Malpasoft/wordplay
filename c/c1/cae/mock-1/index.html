@@ -1,36 +1,487 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>CAE — CAE Mock Exam 1 | Word Play</title>
+<title>CAE Mock Exam 1 | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<style>
+.mock-container{max-width:760px;margin:0 auto;padding:0 16px}
+.timer-bar{position:sticky;top:0;background:var(--ink);color:var(--paper);padding:12px 16px;border-radius:0 0 8px 8px;display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15);margin-bottom:24px}
+.timer-display{font-family:var(--font-sans);font-size:1.1rem;font-weight:700;letter-spacing:.5px}
+.timer-display.warning{color:#FFD700}
+.timer-display.critical{color:#FF6B6B;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.timer-meta{font-family:var(--font-sans);font-size:.72rem;opacity:.85;letter-spacing:1px;text-transform:uppercase}
+.start-screen,.results-screen{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:28px;margin-bottom:24px}
+.start-screen h2,.results-screen h2{font-size:1.4rem;margin:0 0 12px}
+.start-btn{display:inline-block;padding:12px 28px;background:var(--ink);color:var(--paper);border:0;font-family:var(--font-sans);font-size:.82rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer;margin-top:12px}
+.start-btn:hover{opacity:.85}
+.exam-area{display:none}
+.exam-area.active{display:block}
+.part-section{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:24px;margin-bottom:28px}
+.part-header{font-family:var(--font-sans);font-size:.68rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.part-section h2{font-size:1.2rem;margin:0 0 8px;color:var(--ink)}
+.part-section .instructions{font-size:.85rem;color:var(--muted);margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--hairline)}
+.text-title{font-weight:700;text-align:center;font-size:1.05rem;margin:12px 0;color:var(--ink)}
+.text-content{font-size:.92rem;line-height:1.7;color:var(--ink);margin-bottom:18px}
+.text-content p{margin:0 0 12px}
+.mc-q{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--hairline)}
+.mc-q .q-num{font-family:var(--font-sans);font-size:.85rem;font-weight:800;color:var(--amber);min-width:28px}
+.mc-q .opts{flex:1;display:flex;flex-direction:column;gap:4px}
+.mc-q .q-text{flex:1;font-size:.9rem;margin-bottom:6px}
+.opt{display:flex;gap:6px;align-items:flex-start;padding:4px 0;cursor:pointer;font-size:.9rem}
+.opt:hover{background:rgba(184,134,11,.05)}
+.opt-letter{font-family:var(--font-sans);font-weight:700;color:var(--amber);min-width:18px}
+.opt input{margin-top:4px}
+.cloze-input{width:110px;padding:2px 8px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-size:.82rem;background:var(--cream-deep)}
+.cloze-input:focus{outline:none;border-color:var(--amber)}
+.kw-input{width:100%;max-width:380px;padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-size:.85rem;background:var(--cream-deep)}
+.word-form-line{display:flex;padding:10px 0;border-top:1px solid var(--hairline);align-items:flex-start;gap:14px}
+.wf-text{flex:1;font-size:.92rem;line-height:1.6}
+.wf-prompt{font-family:var(--font-sans);font-size:.75rem;font-weight:800;letter-spacing:1px;color:var(--muted);padding:4px 10px;border:1px solid var(--hairline);border-radius:3px;min-width:90px;text-align:center}
+.kw-q{display:flex;gap:12px;padding:14px 0;border-top:1px solid var(--hairline)}
+.kw-content{flex:1}
+.kw-content p{margin:0 0 6px;font-size:.9rem}
+.kw-key{font-family:var(--font-sans);font-weight:800;letter-spacing:1px;color:var(--amber)}
+.gap-select,.match-select{padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-weight:700;background:var(--cream-deep);color:var(--ink);cursor:pointer}
+.gap-option{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--hairline);font-size:.88rem;line-height:1.5}
+.mm-q{display:flex;gap:12px;align-items:center;padding:8px 0;border-top:1px solid var(--hairline);font-size:.88rem}
+.mm-q .q-text{flex:1}
+.mm-text{display:flex;gap:14px;padding:14px 0;border-top:1px solid var(--hairline)}
+.mm-letter{font-family:var(--font-sans);font-weight:800;color:var(--amber);font-size:1rem;min-width:24px}
+.mm-body{flex:1;font-size:.88rem;line-height:1.55}
+.submit-area{background:var(--ink);color:var(--paper);border-radius:8px;padding:20px;text-align:center;margin:32px 0}
+.submit-area p{margin:0 0 12px;opacity:.9}
+.submit-btn{display:inline-block;padding:14px 36px;background:var(--amber);color:var(--ink);border:0;font-family:var(--font-sans);font-size:.9rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer}
+.submit-btn:hover{opacity:.9}
+.results-screen{display:none}
+.results-screen.active{display:block}
+.score-big{font-size:3rem;font-weight:800;color:var(--amber);text-align:center;font-family:Georgia,serif}
+.score-label{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:18px}
+.part-breakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:20px 0}
+.part-score{background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px;padding:12px;text-align:center}
+.part-score .name{font-family:var(--font-sans);font-size:.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.part-score .val{font-size:1.3rem;font-weight:700;color:var(--ink);margin-top:4px}
+.part-score .pct{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin-top:2px}
+.exam-area input:disabled,.exam-area select:disabled{background:rgba(184,134,11,.05)}
+.cross-text{background:var(--cream-deep);border-left:3px solid var(--amber);padding:12px 14px;margin-bottom:12px;border-radius:0 4px 4px 0}
+.cross-text-label{font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+</style>
 </head>
 <body>
 <header class="site-header"><div class="site-header-inner">
-<a href="../index.html" class="back back-link" aria-label="Back"></a>
-<a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-<button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  <a href="../index.html" class="back back-link" aria-label="Back"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
 </div></header>
-<div class="section-page">
 
-  <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>›</span>
-    <a href="../../index.html">C1</a><span>›</span>
-    <a href="../index.html">CAE</a><span>›</span>
-    <strong>CAE Mock Exam 1</strong>
+<div class="mock-container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">C1</a><span>›</span><a href="../index.html">CAE</a><span>›</span><strong>Mock Exam 1</strong></div>
+
+  <div id="startScreen" class="start-screen">
+    <div class="part-header">CAE Mock Exam 1</div>
+    <h2>Mock Exam 1 — Reading &amp; Use of English</h2>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Duration:</strong> 90 minutes</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Total questions:</strong> 56 across 8 parts</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:16px">Once you click <strong>Start</strong>, the timer begins. The exam auto-submits when time runs out.</p>
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:18px">Tip: aim to spend roughly 10 minutes per part. Do not dwell on any single question.</p>
+    <button class="start-btn" onclick="startExam(false)">Start exam (timed)</button>
+    <button class="start-btn" onclick="startExam(true)" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Practice mode (no timer)</button>
+    <div id="resumeSection" style="display:none;margin-top:18px;padding:14px 16px;background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--amber);margin-bottom:6px">Saved progress found</div><div id="resumeInfo" style="font-size:.88rem;color:var(--ink);margin-bottom:10px"></div><button class="start-btn" onclick="resumeExam()" style="background:var(--amber);color:var(--ink)">Resume</button><button class="start-btn" onclick="clearSave()" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Start fresh</button></div>
+    <div id="prevAttempt" style="display:none;margin-top:12px;font-family:var(--font-sans);font-size:.78rem;color:var(--muted)">Previous best: <strong id="prevScore"></strong></div>
   </div>
-  <h1 style="font-family:Georgia,serif;font-size:2.2rem;font-weight:700;color:var(--ink);margin:0 0 24px">CAE Mock Exam 1</h1>
-  <div style="background:#1A1A1A;border-radius:10px;padding:28px;color:white;line-height:1.7;font-size:.9rem">
-    <h2>Mock Exam 1 — Coming Soon</h2>
-<p>A full Reading &amp; Use of English mock exam (8 parts · 56 questions · 90 minutes) is in development.</p>
-<p>In the meantime, you can practise per-part using the strategy pages and per-part practice links from the CAE hub.</p>
+
+  <div id="examArea" class="exam-area">
+    <div class="timer-bar">
+      <div class="timer-display" id="timerDisplay">90:00</div>
+      <div class="timer-meta">Time remaining</div>
+      <button onclick="saveProgress()" style="background:transparent;border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.85);font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border-radius:3px;cursor:pointer">Save &amp; quit</button>
+    </div>
+
+    <!-- PART 1 -->
+    <div class="part-section">
+      <div class="part-header">Part 1 — Multiple-choice Cloze</div>
+      <h2>Questions 1–8</h2>
+      <p class="instructions">For questions 1–8, read the text below and decide which answer (A, B, C or D) best fits each gap.</p>
+      <div class="text-title">The economics of attention</div>
+      <div class="text-content"><p>In the digital age, attention has become something of a (1) _____ commodity. Technology companies have (2) _____ enormous resources to understanding precisely how to (3) _____ users on their platforms for as long as possible. What they have (4) _____ upon is a set of psychological mechanisms — notifications, variable rewards, and social (5) _____ — that exploit the brain's (6) _____ for novelty and connection. Critics (7) _____ that this amounts to a form of manipulation, while defenders of the industry (8) _____ that users always retain the freedom to disengage.</p></div>
+      <div class="mc-q"><div class="q-num">1</div><div class="opts"><label class="opt"><input type="radio" name="q1" value="scarce"> <span class="opt-letter">A</span> <span>scarce</span></label><label class="opt"><input type="radio" name="q1" value="precious"> <span class="opt-letter">B</span> <span>precious</span></label><label class="opt"><input type="radio" name="q1" value="valuable"> <span class="opt-letter">C</span> <span>valuable</span></label><label class="opt"><input type="radio" name="q1" value="rare"> <span class="opt-letter">D</span> <span>rare</span></label></div></div>
+      <div class="mc-q"><div class="q-num">2</div><div class="opts"><label class="opt"><input type="radio" name="q2" value="devoted"> <span class="opt-letter">A</span> <span>devoted</span></label><label class="opt"><input type="radio" name="q2" value="directed"> <span class="opt-letter">B</span> <span>directed</span></label><label class="opt"><input type="radio" name="q2" value="assigned"> <span class="opt-letter">C</span> <span>assigned</span></label><label class="opt"><input type="radio" name="q2" value="channelled"> <span class="opt-letter">D</span> <span>channelled</span></label></div></div>
+      <div class="mc-q"><div class="q-num">3</div><div class="opts"><label class="opt"><input type="radio" name="q3" value="retain"> <span class="opt-letter">A</span> <span>retain</span></label><label class="opt"><input type="radio" name="q3" value="keep"> <span class="opt-letter">B</span> <span>keep</span></label><label class="opt"><input type="radio" name="q3" value="hold"> <span class="opt-letter">C</span> <span>hold</span></label><label class="opt"><input type="radio" name="q3" value="maintain"> <span class="opt-letter">D</span> <span>maintain</span></label></div></div>
+      <div class="mc-q"><div class="q-num">4</div><div class="opts"><label class="opt"><input type="radio" name="q4" value="hit"> <span class="opt-letter">A</span> <span>hit</span></label><label class="opt"><input type="radio" name="q4" value="come"> <span class="opt-letter">B</span> <span>come</span></label><label class="opt"><input type="radio" name="q4" value="stumbled"> <span class="opt-letter">C</span> <span>stumbled</span></label><label class="opt"><input type="radio" name="q4" value="landed"> <span class="opt-letter">D</span> <span>landed</span></label></div></div>
+      <div class="mc-q"><div class="q-num">5</div><div class="opts"><label class="opt"><input type="radio" name="q5" value="recognition"> <span class="opt-letter">A</span> <span>recognition</span></label><label class="opt"><input type="radio" name="q5" value="validation"> <span class="opt-letter">B</span> <span>validation</span></label><label class="opt"><input type="radio" name="q5" value="comparison"> <span class="opt-letter">C</span> <span>comparison</span></label><label class="opt"><input type="radio" name="q5" value="judgement"> <span class="opt-letter">D</span> <span>judgement</span></label></div></div>
+      <div class="mc-q"><div class="q-num">6</div><div class="opts"><label class="opt"><input type="radio" name="q6" value="hunger"> <span class="opt-letter">A</span> <span>hunger</span></label><label class="opt"><input type="radio" name="q6" value="appetite"> <span class="opt-letter">B</span> <span>appetite</span></label><label class="opt"><input type="radio" name="q6" value="craving"> <span class="opt-letter">C</span> <span>craving</span></label><label class="opt"><input type="radio" name="q6" value="need"> <span class="opt-letter">D</span> <span>need</span></label></div></div>
+      <div class="mc-q"><div class="q-num">7</div><div class="opts"><label class="opt"><input type="radio" name="q7" value="argue"> <span class="opt-letter">A</span> <span>argue</span></label><label class="opt"><input type="radio" name="q7" value="claim"> <span class="opt-letter">B</span> <span>claim</span></label><label class="opt"><input type="radio" name="q7" value="maintain"> <span class="opt-letter">C</span> <span>maintain</span></label><label class="opt"><input type="radio" name="q7" value="insist"> <span class="opt-letter">D</span> <span>insist</span></label></div></div>
+      <div class="mc-q"><div class="q-num">8</div><div class="opts"><label class="opt"><input type="radio" name="q8" value="counter"> <span class="opt-letter">A</span> <span>counter</span></label><label class="opt"><input type="radio" name="q8" value="respond"> <span class="opt-letter">B</span> <span>respond</span></label><label class="opt"><input type="radio" name="q8" value="reply"> <span class="opt-letter">C</span> <span>reply</span></label><label class="opt"><input type="radio" name="q8" value="answer"> <span class="opt-letter">D</span> <span>answer</span></label></div></div>
+    </div>
+
+    <!-- PART 2 -->
+    <div class="part-section">
+      <div class="part-header">Part 2 — Open Cloze</div>
+      <h2>Questions 9–16</h2>
+      <p class="instructions">For questions 9–16, read the text below and think of the word which best fits each gap. Use only one word in each gap.</p>
+      <div class="text-title">The return of wolves to Scotland</div>
+      <div class="text-content"><p>The proposal to reintroduce wolves to Scotland has (9) <input type="text" class="cloze-input" data-q="9" maxlength="20" autocomplete="off" spellcheck="false"> the subject of intense debate for more (10) <input type="text" class="cloze-input" data-q="10" maxlength="20" autocomplete="off" spellcheck="false"> two decades. Advocates point (11) <input type="text" class="cloze-input" data-q="11" maxlength="20" autocomplete="off" spellcheck="false"> that wolves would help control the red deer population, which has grown (12) <input type="text" class="cloze-input" data-q="12" maxlength="20" autocomplete="off" spellcheck="false"> large that it is now causing significant damage (13) <input type="text" class="cloze-input" data-q="13" maxlength="20" autocomplete="off" spellcheck="false"> native woodland regeneration. Opponents, however, argue that the risks (14) <input type="text" class="cloze-input" data-q="14" maxlength="20" autocomplete="off" spellcheck="false"> farmers and their livestock simply cannot (15) <input type="text" class="cloze-input" data-q="15" maxlength="20" autocomplete="off" spellcheck="false"> underestimated. The question of whether reintroduction would succeed (16) <input type="text" class="cloze-input" data-q="16" maxlength="20" autocomplete="off" spellcheck="false"> depends on whether sufficiently large areas of suitable habitat remain.</p></div>
+    </div>
+
+    <!-- PART 3 -->
+    <div class="part-section">
+      <div class="part-header">Part 3 — Word Formation</div>
+      <h2>Questions 17–24</h2>
+      <p class="instructions">For questions 17–24, read the text below. Use the word given in capitals at the end of some of the lines to form a word that fits in the gap in the same line.</p>
+      <div class="text-title">Science journalism</div>
+      <div class="word-form-line"><div class="wf-text">Science journalism is an increasingly (17) <input type="text" class="cloze-input" data-q="17" maxlength="25" autocomplete="off" spellcheck="false"> field, requiring journalists not just to report discoveries but to interrogate them.</div><div class="wf-prompt">INVESTIGATE</div></div>
+      <div class="word-form-line"><div class="wf-text">The need for (18) <input type="text" class="cloze-input" data-q="18" maxlength="25" autocomplete="off" spellcheck="false"> is paramount, since a single (19) <input type="text" class="cloze-input" data-q="19" maxlength="25" autocomplete="off" spellcheck="false"> headline can fundamentally distort public understanding.</div><div class="wf-prompt">ACCURATE &nbsp;&nbsp; RESPONSIBLE</div></div>
+      <div class="word-form-line"><div class="wf-text">Those who have (20) <input type="text" class="cloze-input" data-q="20" maxlength="25" autocomplete="off" spellcheck="false"> questioned published findings have sometimes uncovered important errors that peer review missed.</div><div class="wf-prompt">PERSIST</div></div>
+      <div class="word-form-line"><div class="wf-text">A (21) <input type="text" class="cloze-input" data-q="21" maxlength="25" autocomplete="off" spellcheck="false"> mindset is therefore as essential as writing ability.</div><div class="wf-prompt">CRITIC</div></div>
+      <div class="word-form-line"><div class="wf-text">The relationship between scientists and the media has become more (22) <input type="text" class="cloze-input" data-q="22" maxlength="25" autocomplete="off" spellcheck="false"> in recent years, as both parties have come to recognise</div><div class="wf-prompt">PRODUCE</div></div>
+      <div class="word-form-line"><div class="wf-text">their mutual (23) <input type="text" class="cloze-input" data-q="23" maxlength="25" autocomplete="off" spellcheck="false">. Ultimately, good science journalism (24) <input type="text" class="cloze-input" data-q="24" maxlength="25" autocomplete="off" spellcheck="false"> public understanding of the world.</div><div class="wf-prompt">DEPEND &nbsp;&nbsp; BROAD</div></div>
+    </div>
+
+    <!-- PART 4 -->
+    <div class="part-section">
+      <div class="part-header">Part 4 — Key Word Transformation</div>
+      <h2>Questions 25–30</h2>
+      <p class="instructions">For questions 25–30, complete the second sentence so that it has a similar meaning to the first sentence, using the word given. Do not change the word given. You must use between two and five words, including the word given.</p>
+      <div class="kw-q"><div class="q-num">25</div><div class="kw-content"><p>It would be a mistake to underestimate the competition.</p><p class="kw-key">WISE</p><p>It <input type="text" class="kw-input" data-q="25" maxlength="60" autocomplete="off" spellcheck="false"> the competition.</p></div></div>
+      <div class="kw-q"><div class="q-num">26</div><div class="kw-content"><p>The meeting was so long that most people lost concentration.</p><p class="kw-key">SUCH</p><p>It was <input type="text" class="kw-input" data-q="26" maxlength="60" autocomplete="off" spellcheck="false"> that most people lost concentration.</p></div></div>
+      <div class="kw-q"><div class="q-num">27</div><div class="kw-content"><p>I regret not learning to drive when I was younger.</p><p class="kw-key">WISH</p><p>I <input type="text" class="kw-input" data-q="27" maxlength="60" autocomplete="off" spellcheck="false"> when I was younger.</p></div></div>
+      <div class="kw-q"><div class="q-num">28</div><div class="kw-content"><p>Many people think the policy has failed.</p><p class="kw-key">CONSIDERED</p><p>The policy <input type="text" class="kw-input" data-q="28" maxlength="60" autocomplete="off" spellcheck="false"> by many people.</p></div></div>
+      <div class="kw-q"><div class="q-num">29</div><div class="kw-content"><p>Although conditions were challenging, she managed to complete the project on time.</p><p class="kw-key">DESPITE</p><p>Despite <input type="text" class="kw-input" data-q="29" maxlength="60" autocomplete="off" spellcheck="false">, she managed to complete the project on time.</p></div></div>
+      <div class="kw-q"><div class="q-num">30</div><div class="kw-content"><p>They say the castle was built in the twelfth century.</p><p class="kw-key">THOUGHT</p><p>The castle <input type="text" class="kw-input" data-q="30" maxlength="60" autocomplete="off" spellcheck="false"> in the twelfth century.</p></div></div>
+    </div>
+
+    <!-- PART 5 -->
+    <div class="part-section">
+      <div class="part-header">Part 5 — Multiple Choice</div>
+      <h2>Questions 31–36</h2>
+      <p class="instructions">For questions 31–36, read the text below and choose the answer (A, B, C or D) which you think fits best according to the text.</p>
+      <div class="text-title">The glaciologist who became a writer</div>
+      <div class="text-content">
+        <p>Dr. Sarah Lindqvist spent twelve years measuring ice cores in Greenland before she wrote a word of prose. Her memoir, <em>What the Ice Holds</em>, now sits improbably on bestseller lists alongside novels and celebrity biographies. For those who know Lindqvist's earlier life, this is not entirely surprising. She was always, her colleagues say, more interested in meaning than in data.</p>
+        <p>"The ice preserves everything," she writes in her opening chapter. "Volcanic ash from Roman forges, lead from medieval smelters, a perfect record of every industrial catastrophe. If you know how to read it, it is the most honest text on earth." It is this quality — the willingness to let evidence speak without embellishment — that gives her prose its restrained, exact authority.</p>
+        <p>What the book is not is a straightforward adventure account. Lindqvist shows little patience for the conventions of the genre. There are no dramatic near-escapes or moments of epiphany on the tundra. Instead, she focuses on the texture of repetitive work: the same measurements taken at the same points each season, the way the body adapts to cold, the strange intimacy that develops between colleagues who cannot easily leave one another's company. The effect is quietly unsettling — a book about extremity that refuses the consolations of drama.</p>
+        <p>The question of climate runs through every page, though Lindqvist is careful never to let it dominate. She is a scientist, she reminds us, not an advocate, and the discipline shows. What she communicates, more powerfully than any statistic could, is a sense of what is at stake: not in geological time, which is beyond human comprehension, but in the short span of a single career, over which she has watched significant and measurable change.</p>
+        <p>The memoir has attracted criticism from some quarters for what is perceived as its emotional detachment. But this misreads the book. Lindqvist's restraint is not coldness; it is precision. She withholds sentiment the way a good scientist withholds premature conclusions — not because she lacks feeling but because she knows how easily feeling can distort. What we are left with is something rarer than passion: an argument, quietly made, that feels entirely irrefutable.</p>
+      </div>
+      <div class="mc-q"><div class="q-num">31</div><div class="q-text">What does the reviewer suggest about Lindqvist's scientific background?</div><div class="opts"><label class="opt"><input type="radio" name="q31" value="A"> <span class="opt-letter">A</span> <span>It made her reluctant to make claims beyond what data could support.</span></label><label class="opt"><input type="radio" name="q31" value="B"> <span class="opt-letter">B</span> <span>It was unusual for someone who went on to write a successful memoir.</span></label><label class="opt"><input type="radio" name="q31" value="C"> <span class="opt-letter">C</span> <span>It shaped the precision and authority that characterises her writing.</span></label><label class="opt"><input type="radio" name="q31" value="D"> <span class="opt-letter">D</span> <span>It prevented her from achieving the recognition she deserved in the field.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">32</div><div class="q-text">What does Lindqvist imply about ice in her opening chapter?</div><div class="opts"><label class="opt"><input type="radio" name="q32" value="A"> <span class="opt-letter">A</span> <span>It is difficult to study without specialist knowledge.</span></label><label class="opt"><input type="radio" name="q32" value="B"> <span class="opt-letter">B</span> <span>It documents the impact of human civilisation more faithfully than other sources.</span></label><label class="opt"><input type="radio" name="q32" value="C"> <span class="opt-letter">C</span> <span>It contains evidence that has surprised even experienced researchers.</span></label><label class="opt"><input type="radio" name="q32" value="D"> <span class="opt-letter">D</span> <span>It is best understood as a record of natural rather than human history.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">33</div><div class="q-text">How does the reviewer describe What the Ice Holds as a piece of writing?</div><div class="opts"><label class="opt"><input type="radio" name="q33" value="A"> <span class="opt-letter">A</span> <span>It deliberately avoids the conventions of the adventure memoir.</span></label><label class="opt"><input type="radio" name="q33" value="B"> <span class="opt-letter">B</span> <span>It is primarily concerned with the experience of physical danger.</span></label><label class="opt"><input type="radio" name="q33" value="C"> <span class="opt-letter">C</span> <span>It is better suited to a scientific than a general audience.</span></label><label class="opt"><input type="radio" name="q33" value="D"> <span class="opt-letter">D</span> <span>It follows the conventional structure of the scientific memoir.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">34</div><div class="q-text">What does the reviewer say about the book's treatment of climate change?</div><div class="opts"><label class="opt"><input type="radio" name="q34" value="A"> <span class="opt-letter">A</span> <span>Lindqvist avoids the subject because she regards it as too contested.</span></label><label class="opt"><input type="radio" name="q34" value="B"> <span class="opt-letter">B</span> <span>It is conveyed through observed change rather than through explicit argument.</span></label><label class="opt"><input type="radio" name="q34" value="C"> <span class="opt-letter">C</span> <span>It overwhelms the more personal dimensions of the narrative.</span></label><label class="opt"><input type="radio" name="q34" value="D"> <span class="opt-letter">D</span> <span>The statistical evidence she presents is difficult for general readers to interpret.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">35</div><div class="q-text">What criticism has the memoir received?</div><div class="opts"><label class="opt"><input type="radio" name="q35" value="A"> <span class="opt-letter">A</span> <span>Its scientific content is inaccessible to a non-specialist audience.</span></label><label class="opt"><input type="radio" name="q35" value="B"> <span class="opt-letter">B</span> <span>It lacks the dramatic incidents that make memoirs engaging.</span></label><label class="opt"><input type="radio" name="q35" value="C"> <span class="opt-letter">C</span> <span>Some readers find it emotionally uninvolving.</span></label><label class="opt"><input type="radio" name="q35" value="D"> <span class="opt-letter">D</span> <span>Its conclusions about climate change are considered overstated.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">36</div><div class="q-text">What does the reviewer mean in the final paragraph?</div><div class="opts"><label class="opt"><input type="radio" name="q36" value="A"> <span class="opt-letter">A</span> <span>The book contains more factual analysis than emotional reflection.</span></label><label class="opt"><input type="radio" name="q36" value="B"> <span class="opt-letter">B</span> <span>Lindqvist's controlled restraint itself constitutes a persuasive argument.</span></label><label class="opt"><input type="radio" name="q36" value="C"> <span class="opt-letter">C</span> <span>The memoir will appeal mainly to readers with scientific backgrounds.</span></label><label class="opt"><input type="radio" name="q36" value="D"> <span class="opt-letter">D</span> <span>The writing is too measured to generate genuine emotional response.</span></label></div></div>
+    </div>
+
+    <!-- PART 6 -->
+    <div class="part-section">
+      <div class="part-header">Part 6 — Cross-text Multiple Matching</div>
+      <h2>Questions 37–40</h2>
+      <p class="instructions">You are going to read four short texts in which different writers comment on automation and employment. For questions 37–40, choose from the texts (A–D). The texts may be chosen more than once.</p>
+      <div class="cross-text"><div class="cross-text-label">Text A — Professor Rachel Tan, economist</div><p style="font-size:.88rem;line-height:1.6;margin:0">Automation has historically created more jobs than it has destroyed. Each wave of technological change — from the printing press to computing — initially generated fears of mass unemployment that ultimately proved unfounded. Productivity gains freed human labour for entirely new industries. I believe the current AI-driven wave will follow the same pattern. The central question is not whether new roles will emerge but whether workers will have acquired the skills to fill them.</p></div>
+      <div class="cross-text"><div class="cross-text-label">Text B — Marco Villanueva, former factory worker and union organiser</div><p style="font-size:.88rem;line-height:1.6;margin:0">Economists who predict positive outcomes from automation tend to work with aggregate figures — total employment, average wages, GDP growth. What these numbers conceal is the reality for specific communities when a factory closes. The jobs that replace those destroyed are rarely in the same location and rarely accessible to the people who most need them. I have spoken with hundreds of workers whose lives were disrupted in ways that no statistic can adequately capture.</p></div>
+      <div class="cross-text"><div class="cross-text-label">Text C — Dr. Lena Fischer, futurist and author</div><p style="font-size:.88rem;line-height:1.6;margin:0">What concerns me most about the automation debate is not unemployment but power. As the capacity to perform skilled tasks becomes concentrated in systems owned by a small number of corporations, we face a profound shift in economic and political influence. Workers of the future may be employed, but they may wield less bargaining power than at any point in the modern era. This is not a problem that retraining programmes alone can solve.</p></div>
+      <div class="cross-text"><div class="cross-text-label">Text D — Isabel Machado, careers counsellor</div><p style="font-size:.88rem;line-height:1.6;margin:0">I work daily with people navigating the transition away from roles that no longer exist. What I observe is not despair but adaptability. The skills that automation most struggles to replicate — empathy, creativity, complex problem-solving in novel contexts — are precisely the capabilities that humans are best positioned to develop. The challenge is to ensure that educational systems prioritise these capacities rather than continuing to train people for roles that machines will perform.</p></div>
+      <div style="margin-top:20px">
+        <div class="mm-q"><div class="q-num">37</div><div class="q-text">Which writer highlights what optimistic accounts of automation fail to show?</div><select class="match-select" data-q="37"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">38</div><div class="q-text">Which writer shares Text A's optimistic view about human adaptability to technological change?</div><select class="match-select" data-q="38"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">39</div><div class="q-text">Which writer is primarily concerned with the distribution of economic power rather than employment levels?</div><select class="match-select" data-q="39"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">40</div><div class="q-text">Which writer draws on direct personal testimony to support their argument?</div><select class="match-select" data-q="40"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+      </div>
+    </div>
+
+    <!-- PART 7 -->
+    <div class="part-section">
+      <div class="part-header">Part 7 — Gapped Text</div>
+      <h2>Questions 41–46</h2>
+      <p class="instructions">You are going to read an article about the slow travel movement. Six sentences have been removed. Choose from the sentences A–G the one which fits each gap. There is one extra sentence you do not need to use.</p>
+      <div class="text-title">The slow travel movement</div>
+      <div class="text-content">
+        <p>The slow travel movement represents a reaction against the relentless optimisation of modern tourism. Rather than visiting as many places as possible within a given time, slow travellers choose to stay longer in fewer locations — often renting apartments rather than hotels, shopping in local markets, and making connections with people who actually live there. <strong style="color:var(--amber)">[41]</strong> <select class="gap-select" data-q="41"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select> The contrast with conventional tourism, in which cities are consumed as efficiently as products, is striking.</p>
+        <p>The movement has no single founder and no manifesto, yet its principles have spread widely, partly through a growing body of travel writing that celebrates depth over breadth. <strong style="color:var(--amber)">[42]</strong> <select class="gap-select" data-q="42"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select> These books share a conviction that meaningful encounter requires time — that you cannot truly understand a place in forty-eight hours, however efficiently you fill them.</p>
+        <p>Not everyone is persuaded. Critics point out that slow travel tends to require both time and money, making it an option available mainly to those with flexible working arrangements and the financial means to fund extended stays. <strong style="color:var(--amber)">[43]</strong> <select class="gap-select" data-q="43"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select> The implicit assumption that unhurried travel is somehow more authentic carries class dimensions that its advocates rarely acknowledge.</p>
+        <p>Advocates respond that the environmental argument, at least, holds regardless of wealth. Slow travel typically involves fewer flights and lower carbon emissions than an equivalent number of rapid city breaks. <strong style="color:var(--amber)">[44]</strong> <select class="gap-select" data-q="44"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select> This does not make it guilt-free — long-haul transport remains a significant emission source — but it does alter the calculation for those already committed to travel.</p>
+        <p>There is also something to be said for the psychological dimension. Several studies have found that people report greater satisfaction from experiences in which they were fully immersed than from those in which they remained spectators. <strong style="color:var(--amber)">[45]</strong> <select class="gap-select" data-q="45"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select> This is not purely a matter of duration: some people achieve genuine immersion in a weekend; others return from months abroad essentially unchanged.</p>
+        <p>The slow travel ideal may, in the end, be less about speed than about attention. <strong style="color:var(--amber)">[46]</strong> <select class="gap-select" data-q="46"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select> How you travel matters more than how many places you visit.</p>
+      </div>
+      <div style="margin-top:16px;padding-top:14px;border-top:2px solid var(--hairline)"><div style="font-family:var(--font-sans);font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Removed sentences (one is extra):</div>
+        <div class="gap-option"><div class="opt-letter">A</div><div>In this sense, slow travel represents a redistribution of experience rather than merely a reduction in pace.</div></div>
+        <div class="gap-option"><div class="opt-letter">B</div><div>There is, however, an important distinction to be drawn between the slowness of the method and the quality of attention it makes possible.</div></div>
+        <div class="gap-option"><div class="opt-letter">C</div><div>Authors such as Alain de Botton and Pico Iyer have given articulate voice to this kind of considered approach to place.</div></div>
+        <div class="gap-option"><div class="opt-letter">D</div><div>These critics note that independent travel in unfamiliar countries has always carried a price, and romanticising it does little to widen access.</div></div>
+        <div class="gap-option"><div class="opt-letter">E</div><div>When it does, the encounters that result — with a neighbourhood, a food culture, a set of daily customs — can be genuinely transformative.</div></div>
+        <div class="gap-option"><div class="opt-letter">F</div><div>The same logic applies when flying less frequently over longer distances rather than making many short-haul trips.</div></div>
+        <div class="gap-option"><div class="opt-letter">G</div><div>It requires, above all, a willingness to be fully present rather than to merely document.</div></div>
+      </div>
+    </div>
+
+    <!-- PART 8 -->
+    <div class="part-section">
+      <div class="part-header">Part 8 — Multiple Matching</div>
+      <h2>Questions 47–56</h2>
+      <p class="instructions">You are going to read about four scientists reflecting on their research careers. For questions 47–56, choose from the sections (A–D). The sections may be chosen more than once.</p>
+      <div class="mm-text"><div class="mm-letter">A</div><div class="mm-body"><strong>Professor Ada Osei, marine biologist</strong><br>I became a marine biologist because I was overwhelmed by the ocean's complexity — the way a single cubic metre of seawater can contain thousands of microorganism species, most of them still unnamed. My research has always been driven by the conviction that we cannot protect what we do not understand, and that genuine understanding requires far more patience than the grant cycle typically allows. I publish less frequently than many colleagues, and I know this has affected my career prospects. But a paper rushed to press before its time does more harm than good — to the field and to the public that relies on it. The moment I am most proud of was not a publication but a conversation: a fishing community in Ghana that began to change its practices on the basis of work we had done together over eight years.</div></div>
+      <div class="mm-text"><div class="mm-letter">B</div><div class="mm-body"><strong>Dr. Hugo Ferrante, climate physicist</strong><br>I was drawn to climate science in my twenties by the belief that understanding complex dynamic systems was the highest intellectual challenge available to me. What I did not anticipate was how political the field would become. Communicating findings without distorting them, responding to bad-faith criticism without being drawn into point-scoring — these are skills that scientific training does not equip you for, and they consume time that would otherwise go to research. My colleagues and I have developed what I call a discipline of clarity: we do not oversimplify, but we do translate. I consider this a moral obligation as much as a professional one. Refusing to engage with the public on the grounds that it is beneath a scientist's dignity has always struck me as a form of professional cowardice.</div></div>
+      <div class="mm-text"><div class="mm-letter">C</div><div class="mm-body"><strong>Professor Li Wei, astrophysicist</strong><br>Most of the questions I work on will not be answered in my lifetime. That does not trouble me. I was always attracted to the fact that science operates on a timescale that has nothing to do with individual careers or ambitions. The universe does not owe us legibility. What we can do is refine our instruments, improve our models, and leave the next generation better positioned to answer questions that presently defeat us. I find the hierarchy of academic publishing — the scramble for priority, the pressure to produce results each quarter — somewhat embarrassing. The best science I know was done in relative obscurity over decades, by researchers whose names most of my students would not recognise.</div></div>
+      <div class="mm-text"><div class="mm-letter">D</div><div class="mm-body"><strong>Dr. Amara Diallo, neuroscientist</strong><br>I work on the molecular basis of memory — specifically, on what occurs at the synapse when a long-term memory forms. It is extraordinarily slow work. A single experimental design can take a year to plan, six months to run, and another six months to analyse properly. I know that some peers prefer to iterate rapidly, publishing incremental findings as they go. I respect that approach, but it is not mine. I believe that premature publication can foreclose possibilities — that you can find what you were looking for before you have looked thoroughly enough. The greatest satisfaction in my work comes not from the experiment that confirms what I expected but from the one that turns out to be entirely wrong, because that is when the field actually advances.</div></div>
+      <div style="margin-top:20px">
+        <div class="mm-q"><div class="q-num">47</div><div class="q-text">Which scientist has found that their work demands skills not provided by scientific training?</div><select class="match-select" data-q="47"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">48</div><div class="q-text">Which scientist measures the value of their research partly by its practical impact on a community?</div><select class="match-select" data-q="48"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">49</div><div class="q-text">Which scientist expresses discomfort with the competitive pace of academic publishing?</div><select class="match-select" data-q="49"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">50</div><div class="q-text">Which scientist finds unexpected negative results more informative than positive confirmation?</div><select class="match-select" data-q="50"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">51</div><div class="q-text">Which scientist explicitly describes public communication as an ethical duty?</div><select class="match-select" data-q="51"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">52</div><div class="q-text">Which scientist has accepted a slower publication rate in order to maintain research standards?</div><select class="match-select" data-q="52"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">53</div><div class="q-text">Which scientist finds motivation in the idea that science operates beyond individual careers?</div><select class="match-select" data-q="53"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">54</div><div class="q-text">Which scientist believes that publishing too soon can narrow the scope of future inquiry?</div><select class="match-select" data-q="54"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">55</div><div class="q-text">Which scientist criticises colleagues who choose not to engage with the general public?</div><select class="match-select" data-q="55"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">56</div><div class="q-text">Which scientist was initially drawn to their field by wonder at its natural complexity?</div><select class="match-select" data-q="56"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+      </div>
+    </div>
+
+    <div class="submit-area">
+      <p>Check your work before submitting. You cannot change answers after submission.</p>
+      <button class="submit-btn" onclick="submitExam(false)">Submit exam</button>
+    </div>
+  </div>
+
+  <div id="resultsScreen" class="results-screen">
+    <div class="part-header">CAE Mock Exam 1 — Results</div>
+    <div class="score-big" id="scoreFinal"></div>
+    <div class="score-label">Questions correct</div>
+    <p id="timeUsed" style="text-align:center;font-family:var(--font-sans);font-size:.8rem;color:var(--muted);margin-bottom:16px"></p>
+    <div class="part-breakdown" id="partBreakdown"></div>
+    <div style="text-align:center;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <a href="../index.html" class="start-btn" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);text-decoration:none;display:inline-block">Back to CAE</a>
+    </div>
   </div>
 </div>
+
 <footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+const ANSWERS = {
+  "part1":{"1":"scarce","2":"devoted","3":"retain","4":"hit","5":"validation","6":"appetite","7":"maintain","8":"counter"},
+  "part2":{"9":{"answer":"been","accept":["BEEN"]},"10":{"answer":"than","accept":["THAN"]},"11":{"answer":"out","accept":["OUT"]},"12":{"answer":"so","accept":["SO"]},"13":{"answer":"to","accept":["TO"]},"14":{"answer":"to","accept":["TO"]},"15":{"answer":"be","accept":["BE"]},"16":{"answer":"also","accept":["ALSO","even","EVEN"]}},
+  "part3":{"17":"investigative","18":"accuracy","19":"irresponsible","20":"persistently","21":"critical","22":"productive","23":"dependence","24":"broadens"},
+  "part4":{"25":{"answer":"would not be wise to underestimate","accept":["would not be wise to underestimate"]},"26":{"answer":"such a long meeting","accept":["such a long meeting"]},"27":{"answer":"wish i had learned to drive","accept":["wish i had learned to drive","wish i had learnt to drive"]},"28":{"answer":"is considered to have failed","accept":["is considered to have failed","is widely considered to have failed"]},"29":{"answer":"the challenging conditions","accept":["the challenging conditions","challenging conditions"]},"30":{"answer":"is thought to have been built","accept":["is thought to have been built","is thought to have been constructed"]}},
+  "part5":{"31":"C","32":"B","33":"A","34":"B","35":"C","36":"B"},
+  "part6":{"37":"B","38":"D","39":"C","40":"B"},
+  "part7":{"41":"E","42":"C","43":"D","44":"F","45":"B","46":"G"},
+  "part8":{"47":"B","48":"A","49":"C","50":"D","51":"B","52":"A","53":"C","54":"D","55":"B","56":"A"}
+};
+const DURATION_MS = 90 * 60 * 1000;
+let startTime = null;
+let timerInterval = null;
+let submitted = false;
+const SAVE_KEY = 'wordplay_cae_mock_1';
+const BEST_KEY = 'wordplay_cae_mock_1_best';
+let practiceMode = false;
+
+function startExam(practice) {
+  practiceMode = practice || false;
+  clearSave();
+  _startExam();
+}
+
+function resumeExam() {
+  const saved = getSave();
+  if (!saved) return;
+  _startExam(saved);
+}
+
+function _startExam(saved) {
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('examArea').classList.add('active');
+  if (practiceMode) {
+    document.querySelector('.timer-bar').innerHTML = '<div class="timer-display">Practice mode — no timer</div><div class="timer-meta">Answer at your own pace</div>';
+    startTime = Date.now();
+  } else {
+    startTime = saved ? saved.startTime : Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+    updateTimer();
+  }
+  if (saved) restoreAnswers(saved.answers);
+  window.scrollTo(0, 0);
+}
+
+function getSave() {
+  try { var s = localStorage.getItem(SAVE_KEY); return s ? JSON.parse(s) : null; } catch(e) { return null; }
+}
+
+function clearSave() {
+  try { localStorage.removeItem(SAVE_KEY); } catch(e) {}
+}
+
+function saveProgress() {
+  if (submitted) return;
+  var answers = collectAnswers();
+  var save = { startTime: startTime, answers: answers, savedAt: Date.now() };
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(save)); } catch(e) {}
+  alert('Progress saved. You can close the tab and resume later.');
+}
+
+function collectAnswers() {
+  var a = {};
+  document.querySelectorAll('input[type=radio]:checked').forEach(function(r) { a[r.name] = r.value; });
+  document.querySelectorAll('input[type=text]').forEach(function(i) { if (i.dataset.q) a['t'+i.dataset.q] = i.value; });
+  document.querySelectorAll('select').forEach(function(s) { if (s.dataset.q) a['s'+s.dataset.q] = s.value; });
+  return a;
+}
+
+function restoreAnswers(answers) {
+  Object.entries(answers).forEach(function(kv) {
+    var k = kv[0], v = kv[1];
+    if (k.startsWith('q')) {
+      var r = document.querySelector('input[name="'+k+'"][value="'+v+'"]');
+      if (r) r.checked = true;
+    } else if (k.startsWith('t')) {
+      var inp = document.querySelector('input[data-q="'+k.slice(1)+'"]');
+      if (inp) inp.value = v;
+    } else if (k.startsWith('s')) {
+      var sel = document.querySelector('select[data-q="'+k.slice(1)+'"]');
+      if (sel) sel.value = v;
+    }
+  });
+}
+
+function checkPrevAttempt() {
+  try {
+    var best = localStorage.getItem(BEST_KEY);
+    if (best) { document.getElementById('prevAttempt').style.display = 'block'; document.getElementById('prevScore').textContent = best; }
+    var saved = getSave();
+    if (saved) {
+      var ageMin = Math.round((Date.now() - saved.savedAt) / 60000);
+      document.getElementById('resumeSection').style.display = 'block';
+      document.getElementById('resumeInfo').textContent = 'Saved ' + ageMin + ' minutes ago';
+    }
+  } catch(e) {}
+}
+checkPrevAttempt();
+
+function updateTimer() {
+  var elapsed = Date.now() - startTime;
+  var remaining = DURATION_MS - elapsed;
+  if (remaining <= 0) { submitExam(true); return; }
+  var mins = Math.floor(remaining / 60000);
+  var secs = Math.floor((remaining % 60000) / 1000);
+  var el = document.getElementById('timerDisplay');
+  el.textContent = mins + ':' + (secs < 10 ? '0' : '') + secs;
+  el.classList.toggle('warning', remaining < 15*60*1000 && remaining >= 3*60*1000);
+  el.classList.toggle('critical', remaining < 3*60*1000);
+}
+
+function normalize(s) {
+  return (s || '').trim().toLowerCase().replace(/[‘’]/g, "'");
+}
+
+function getRadioValue(name) {
+  var r = document.querySelector('input[name="'+name+'"]:checked');
+  return r ? r.value : null;
+}
+
+function getInputValue(q) {
+  var el = document.querySelector('input[data-q="'+q+'"], select[data-q="'+q+'"]');
+  return el ? el.value : '';
+}
+
+function checkAnswer(part, qNum, userValue) {
+  var ans = ANSWERS[part][qNum];
+  if (typeof ans === 'string') return normalize(userValue) === normalize(ans);
+  var target = normalize(ans.answer);
+  var userN = normalize(userValue);
+  if (userN === target) return true;
+  if (ans.accept && ans.accept.some(function(a) { return normalize(a) === userN; })) return true;
+  return false;
+}
+
+function submitExam(timeUp) {
+  if (submitted) return;
+  if (!timeUp && !confirm('Submit your exam now? You will not be able to change answers.')) return;
+  submitted = true;
+  clearInterval(timerInterval);
+  var elapsedMs = Date.now() - startTime;
+  var elapsedMin = Math.floor(elapsedMs / 60000);
+  var elapsedSec = Math.floor((elapsedMs % 60000) / 1000);
+  document.querySelectorAll('input, select').forEach(function(el) { el.disabled = true; });
+
+  var scores = {};
+
+  scores.part1 = { correct: 0, total: 8 };
+  for (var i = 1; i <= 8; i++) {
+    var v = getRadioValue('q' + i);
+    if (v && checkAnswer('part1', i, v)) scores.part1.correct++;
+  }
+
+  scores.part2 = { correct: 0, total: 8 };
+  for (var i = 9; i <= 16; i++) {
+    var v = getInputValue(i);
+    if (v && checkAnswer('part2', i, v)) scores.part2.correct++;
+  }
+
+  scores.part3 = { correct: 0, total: 8 };
+  for (var i = 17; i <= 24; i++) {
+    var v = getInputValue(i);
+    if (v && checkAnswer('part3', i, v)) scores.part3.correct++;
+  }
+
+  scores.part4 = { correct: 0, total: 6 };
+  for (var i = 25; i <= 30; i++) {
+    var v = getInputValue(i);
+    if (v && checkAnswer('part4', i, v)) scores.part4.correct++;
+  }
+
+  scores.part5 = { correct: 0, total: 6 };
+  for (var i = 31; i <= 36; i++) {
+    var v = getRadioValue('q' + i);
+    if (v && v === ANSWERS.part5[i]) scores.part5.correct++;
+  }
+
+  scores.part6 = { correct: 0, total: 4 };
+  for (var i = 37; i <= 40; i++) {
+    var v = getInputValue(i);
+    if (v && v === ANSWERS.part6[i]) scores.part6.correct++;
+  }
+
+  scores.part7 = { correct: 0, total: 6 };
+  for (var i = 41; i <= 46; i++) {
+    var v = getInputValue(i);
+    if (v && v === ANSWERS.part7[i]) scores.part7.correct++;
+  }
+
+  scores.part8 = { correct: 0, total: 10 };
+  for (var i = 47; i <= 56; i++) {
+    var v = getInputValue(i);
+    if (v && v === ANSWERS.part8[i]) scores.part8.correct++;
+  }
+
+  var totalCorrect = Object.values(scores).reduce(function(a, p) { return a + p.correct; }, 0);
+  var pct = Math.round((totalCorrect / 56) * 100);
+
+  document.getElementById('scoreFinal').textContent = totalCorrect + ' / 56';
+  document.getElementById('timeUsed').textContent = 'Time used: ' + elapsedMin + ' min ' + elapsedSec + ' sec' + (timeUp ? ' (auto-submit)' : '');
+
+  try { localStorage.setItem(BEST_KEY, totalCorrect + '/56 (' + pct + '%)'); } catch(e) {}
+
+  var partLabels = {
+    part1:'Part 1 · MC Cloze', part2:'Part 2 · Open Cloze', part3:'Part 3 · Word Form',
+    part4:'Part 4 · Transform', part5:'Part 5 · Multi-choice', part6:'Part 6 · Cross-text',
+    part7:'Part 7 · Gapped Text', part8:'Part 8 · Multi-match'
+  };
+  var breakdown = '';
+  Object.entries(scores).forEach(function(kv) {
+    var k = kv[0], v = kv[1];
+    var p = Math.round((v.correct / v.total) * 100);
+    breakdown += '<div class="part-score"><div class="name">' + partLabels[k] + '</div><div class="val">' + v.correct + '/' + v.total + '</div><div class="pct">' + p + '%</div></div>';
+  });
+  document.getElementById('partBreakdown').innerHTML = breakdown;
+
+  document.getElementById('resultsScreen').classList.add('active');
+  document.getElementById('resultsScreen').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
 </body>
 </html>
