@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>DELE A2 — Simulacro 1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<style>
+.mock-container{max-width:760px;margin:0 auto;padding:0 16px}
+.timer-bar{position:sticky;top:0;background:var(--ink);color:var(--paper);padding:12px 16px;border-radius:0 0 8px 8px;display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15);margin-bottom:24px}
+.timer-display{font-family:var(--font-sans);font-size:1.1rem;font-weight:700;letter-spacing:.5px}
+.timer-display.warning{color:#FFD700}
+.timer-display.critical{color:#FF6B6B;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.timer-meta{font-family:var(--font-sans);font-size:.72rem;opacity:.85;letter-spacing:1px;text-transform:uppercase}
+.start-screen,.results-screen{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:28px;margin-bottom:24px}
+.start-screen h2,.results-screen h2{font-size:1.4rem;margin:0 0 12px}
+.start-btn{display:inline-block;padding:12px 28px;background:var(--ink);color:var(--paper);border:0;font-family:var(--font-sans);font-size:.82rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer;margin-top:12px}
+.start-btn:hover{opacity:.85}
+.exam-area{display:none}
+.exam-area.active{display:block}
+.part-section{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:24px;margin-bottom:28px}
+.part-header{font-family:var(--font-sans);font-size:.68rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.part-section h2{font-size:1.2rem;margin:0 0 8px;color:var(--ink)}
+.part-section .instructions{font-size:.85rem;color:var(--muted);margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--hairline)}
+.text-title{font-weight:700;text-align:center;font-size:1.05rem;margin:12px 0;color:var(--ink)}
+.text-content{font-size:.92rem;line-height:1.7;color:var(--ink);margin-bottom:18px}
+.text-content p{margin:0 0 12px}
+.mc-q{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--hairline)}
+.mc-q .q-num{font-family:var(--font-sans);font-size:.85rem;font-weight:800;color:var(--amber);min-width:28px}
+.mc-q .opts{flex:1;display:flex;flex-direction:column;gap:4px}
+.mc-q .q-text{flex:1;font-size:.9rem;margin-bottom:6px}
+.opt{display:flex;gap:6px;align-items:flex-start;padding:4px 0;cursor:pointer;font-size:.9rem}
+.opt:hover{background:rgba(184,134,11,.05)}
+.opt-letter{font-family:var(--font-sans);font-weight:700;color:var(--amber);min-width:18px}
+.opt input{margin-top:4px}
+.cloze-input{width:130px;padding:2px 8px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-size:.82rem;background:var(--cream-deep)}
+.cloze-input:focus{outline:none;border-color:var(--amber)}
+.gap-select,.match-select{padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-weight:700;background:var(--cream-deep);color:var(--ink);cursor:pointer}
+.mm-q{display:flex;gap:12px;align-items:center;padding:8px 0;border-top:1px solid var(--hairline);font-size:.88rem}
+.mm-q .q-text{flex:1}
+.mm-text{display:flex;gap:14px;padding:14px 0;border-top:1px solid var(--hairline)}
+.mm-letter{font-family:var(--font-sans);font-weight:800;color:var(--amber);font-size:1rem;min-width:24px}
+.mm-body{flex:1;font-size:.88rem;line-height:1.55}
+.submit-area{background:var(--ink);color:var(--paper);border-radius:8px;padding:20px;text-align:center;margin:32px 0}
+.submit-area p{margin:0 0 12px;opacity:.9}
+.submit-btn{display:inline-block;padding:14px 36px;background:var(--amber);color:var(--ink);border:0;font-family:var(--font-sans);font-size:.9rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer}
+.submit-btn:hover{opacity:.9}
+.results-screen{display:none}
+.results-screen.active{display:block}
+.score-big{font-size:3rem;font-weight:800;color:var(--amber);text-align:center;font-family:Georgia,serif}
+.score-label{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:18px}
+.part-breakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:20px 0}
+.part-score{background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px;padding:12px;text-align:center}
+.part-score .name{font-family:var(--font-sans);font-size:.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.part-score .val{font-size:1.3rem;font-weight:700;color:var(--ink);margin-top:4px}
+.part-score .pct{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin-top:2px}
+.exam-area input:disabled,.exam-area select:disabled{background:rgba(184,134,11,.05)}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atrás"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+
+<div class="mock-container">
+  <div class="breadcrumb"><a href="../../../../index.html">Inicio</a><span>›</span><a href="../../../index.html">Español</a><span>›</span><a href="../../index.html">DELE</a><span>›</span><a href="../index.html">A2</a><span>›</span><strong>Simulacro 1</strong></div>
+
+  <div id="startScreen" class="start-screen">
+    <div class="part-header">DELE A2 · Comprensión de lectura</div>
+    <h2>Simulacro 1</h2>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Duración:</strong> 60 minutos</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Preguntas:</strong> 24 (4 tareas)</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:16px">Al pulsar <strong>Empezar</strong>, el cronómetro se pone en marcha. El simulacro se entrega automáticamente cuando se agota el tiempo.</p>
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:18px">Consejo: reserva unos 15 minutos por tarea. No te detengas demasiado en una sola pregunta.</p>
+    <button class="start-btn" onclick="startExam(false)">Empezar (con cronómetro)</button>
+    <button class="start-btn" onclick="startExam(true)" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Modo práctica (sin cronómetro)</button>
+    <div id="resumeSection" style="display:none;margin-top:18px;padding:14px 16px;background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--amber);margin-bottom:6px">Progreso guardado</div><div id="resumeInfo" style="font-size:.88rem;color:var(--ink);margin-bottom:10px"></div><button class="start-btn" onclick="resumeExam()" style="background:var(--amber);color:var(--ink)">Continuar</button><button class="start-btn" onclick="clearSave()" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Empezar de nuevo</button></div>
+    <div id="prevAttempt" style="display:none;margin-top:12px;font-family:var(--font-sans);font-size:.78rem;color:var(--muted)">Mejor resultado anterior: <strong id="prevScore"></strong></div>
+  </div>
+
+  <div id="examArea" class="exam-area">
+    <div class="timer-bar">
+      <div class="timer-display" id="timerDisplay">60:00</div>
+      <div class="timer-meta">Tiempo restante</div>
+      <button onclick="saveProgress()" style="background:transparent;border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.85);font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border-radius:3px;cursor:pointer">Guardar y salir</button>
+    </div>
+
+    <!-- TAREA 1 -->
+    <div class="part-section">
+      <div class="part-header">Tarea 1</div>
+      <h2>Preguntas 1–6</h2>
+      <p class="instructions">A continuación vas a leer un texto sobre el mercado de San Miguel en Madrid. Indica si los enunciados (1–6) son verdaderos (V), falsos (F) o si la información no aparece en el texto (ND).</p>
+      <div class="text-title">El Mercado de San Miguel: un lugar especial en Madrid</div>
+      <div class="text-content">
+        <p>El Mercado de San Miguel está situado en el centro de Madrid, muy cerca de la Plaza Mayor. Es un edificio histórico construido en 1916 con hierro y cristal, típico de la arquitectura de principios del siglo veinte.</p>
+        <p>El mercado abre todos los días de la semana, desde las diez de la mañana hasta la medianoche. Dentro hay más de treinta puestos donde puedes comprar y comer una gran variedad de alimentos y bebidas: tapas, quesos, vinos, mariscos y mucho más.</p>
+        <p>El Mercado de San Miguel es muy popular tanto entre los turistas que visitan Madrid como entre los propios madrileños. Es un lugar donde la gente va a comer, a tomar algo con amigos o simplemente a pasear y ver los productos.</p>
+        <p>En 2009, el mercado fue completamente reformado para modernizar sus instalaciones y mejorar la experiencia de los visitantes. Hoy es uno de los mercados gastronómicos más conocidos de España. Además, los fines de semana el mercado organiza talleres de cocina donde los participantes aprenden a preparar platos tradicionales españoles.</p>
+      </div>
+      <div class="mc-q"><div class="q-num">1</div><div class="opts"><div class="q-text">El mercado se encuentra cerca de la Plaza Mayor de Madrid.</div><label class="opt"><input type="radio" name="q1" value="V"> <span class="opt-letter">V</span> <span>Verdadero</span></label><label class="opt"><input type="radio" name="q1" value="F"> <span class="opt-letter">F</span> <span>Falso</span></label><label class="opt"><input type="radio" name="q1" value="ND"> <span class="opt-letter">ND</span> <span>No se dice</span></label></div></div>
+      <div class="mc-q"><div class="q-num">2</div><div class="opts"><div class="q-text">El mercado abre todos los días de la semana.</div><label class="opt"><input type="radio" name="q2" value="V"> <span class="opt-letter">V</span> <span>Verdadero</span></label><label class="opt"><input type="radio" name="q2" value="F"> <span class="opt-letter">F</span> <span>Falso</span></label><label class="opt"><input type="radio" name="q2" value="ND"> <span class="opt-letter">ND</span> <span>No se dice</span></label></div></div>
+      <div class="mc-q"><div class="q-num">3</div><div class="opts"><div class="q-text">El mercado tiene más de cincuenta puestos de comida y bebida.</div><label class="opt"><input type="radio" name="q3" value="V"> <span class="opt-letter">V</span> <span>Verdadero</span></label><label class="opt"><input type="radio" name="q3" value="F"> <span class="opt-letter">F</span> <span>Falso</span></label><label class="opt"><input type="radio" name="q3" value="ND"> <span class="opt-letter">ND</span> <span>No se dice</span></label></div></div>
+      <div class="mc-q"><div class="q-num">4</div><div class="opts"><div class="q-text">El mercado pertenece al Ayuntamiento de Madrid.</div><label class="opt"><input type="radio" name="q4" value="V"> <span class="opt-letter">V</span> <span>Verdadero</span></label><label class="opt"><input type="radio" name="q4" value="F"> <span class="opt-letter">F</span> <span>Falso</span></label><label class="opt"><input type="radio" name="q4" value="ND"> <span class="opt-letter">ND</span> <span>No se dice</span></label></div></div>
+      <div class="mc-q"><div class="q-num">5</div><div class="opts"><div class="q-text">Los fines de semana hay actividades de cocina en el mercado.</div><label class="opt"><input type="radio" name="q5" value="V"> <span class="opt-letter">V</span> <span>Verdadero</span></label><label class="opt"><input type="radio" name="q5" value="F"> <span class="opt-letter">F</span> <span>Falso</span></label><label class="opt"><input type="radio" name="q5" value="ND"> <span class="opt-letter">ND</span> <span>No se dice</span></label></div></div>
+      <div class="mc-q"><div class="q-num">6</div><div class="opts"><div class="q-text">El edificio del mercado se construyó en el siglo veinte, después de la Guerra Civil.</div><label class="opt"><input type="radio" name="q6" value="V"> <span class="opt-letter">V</span> <span>Verdadero</span></label><label class="opt"><input type="radio" name="q6" value="F"> <span class="opt-letter">F</span> <span>Falso</span></label><label class="opt"><input type="radio" name="q6" value="ND"> <span class="opt-letter">ND</span> <span>No se dice</span></label></div></div>
+    </div>
+
+    <!-- TAREA 2 -->
+    <div class="part-section">
+      <div class="part-header">Tarea 2</div>
+      <h2>Preguntas 7–12</h2>
+      <p class="instructions">Vas a leer un texto sobre los hábitos de los jóvenes españoles en su tiempo libre. Elige la opción correcta (A, B o C) para cada pregunta.</p>
+      <div class="text-title">¿Cómo pasan el tiempo libre los jóvenes en España?</div>
+      <div class="text-content">
+        <p>Los jóvenes españoles tienen muchas formas de pasar su tiempo libre. La actividad más común es quedar con los amigos: el 85% de los jóvenes lo hace de forma regular. Salir a comer, ir al parque o simplemente charlar son actividades muy populares entre este grupo de edad.</p>
+        <p>El uso de internet también ocupa una parte importante del día. Los jóvenes pasan una media de cuatro horas diarias conectados, navegando por las redes sociales, viendo vídeos o jugando a videojuegos. Precisamente las redes sociales han impulsado una nueva tendencia: cocinar. Especialmente entre los jóvenes de 18 a 25 años, cocinar en casa se ha convertido en una actividad de moda, inspirada por los contenidos que ven en sus teléfonos.</p>
+        <p>El deporte es otra actividad habitual. El 60% de los jóvenes practica algún deporte, aunque solo el 20% lo hace dentro de un club organizado. La mayoría prefiere salir a correr, ir al gimnasio o practicar deporte con amigos de manera informal.</p>
+        <p>La lectura ha perdido popularidad en comparación con hace diez años, aunque los audiolibros están creciendo entre los más jóvenes. En cuanto al cine, la asistencia ha bajado un 30% en los últimos cinco años debido al aumento del streaming, que permite ver películas y series desde casa a cualquier hora.</p>
+      </div>
+      <div class="mc-q"><div class="q-num">7</div><div class="q-text">¿Cuántas horas al día pasan los jóvenes en internet?</div><div class="opts"><label class="opt"><input type="radio" name="q7" value="A"> <span class="opt-letter">A</span> <span>Dos horas</span></label><label class="opt"><input type="radio" name="q7" value="B"> <span class="opt-letter">B</span> <span>Cuatro horas</span></label><label class="opt"><input type="radio" name="q7" value="C"> <span class="opt-letter">C</span> <span>Seis horas</span></label></div></div>
+      <div class="mc-q"><div class="q-num">8</div><div class="q-text">¿Qué actividad hacen la mayoría de los jóvenes regularmente?</div><div class="opts"><label class="opt"><input type="radio" name="q8" value="A"> <span class="opt-letter">A</span> <span>Quedar con amigos</span></label><label class="opt"><input type="radio" name="q8" value="B"> <span class="opt-letter">B</span> <span>Hacer deporte</span></label><label class="opt"><input type="radio" name="q8" value="C"> <span class="opt-letter">C</span> <span>Leer libros</span></label></div></div>
+      <div class="mc-q"><div class="q-num">9</div><div class="q-text">¿Por qué ha bajado la asistencia al cine?</div><div class="opts"><label class="opt"><input type="radio" name="q9" value="A"> <span class="opt-letter">A</span> <span>Por el alto precio de las entradas</span></label><label class="opt"><input type="radio" name="q9" value="B"> <span class="opt-letter">B</span> <span>Por falta de películas interesantes</span></label><label class="opt"><input type="radio" name="q9" value="C"> <span class="opt-letter">C</span> <span>Por el aumento del streaming</span></label></div></div>
+      <div class="mc-q"><div class="q-num">10</div><div class="q-text">¿Qué porcentaje de jóvenes practica deporte?</div><div class="opts"><label class="opt"><input type="radio" name="q10" value="A"> <span class="opt-letter">A</span> <span>El veinte por ciento</span></label><label class="opt"><input type="radio" name="q10" value="B"> <span class="opt-letter">B</span> <span>El sesenta por ciento</span></label><label class="opt"><input type="radio" name="q10" value="C"> <span class="opt-letter">C</span> <span>El ochenta y cinco por ciento</span></label></div></div>
+      <div class="mc-q"><div class="q-num">11</div><div class="q-text">¿Qué está creciendo en el sector de la lectura?</div><div class="opts"><label class="opt"><input type="radio" name="q11" value="A"> <span class="opt-letter">A</span> <span>Los audiolibros</span></label><label class="opt"><input type="radio" name="q11" value="B"> <span class="opt-letter">B</span> <span>Las novelas de papel</span></label><label class="opt"><input type="radio" name="q11" value="C"> <span class="opt-letter">C</span> <span>Los cómics</span></label></div></div>
+      <div class="mc-q"><div class="q-num">12</div><div class="q-text">¿Qué ha impulsado la tendencia de cocinar entre los jóvenes?</div><div class="opts"><label class="opt"><input type="radio" name="q12" value="A"> <span class="opt-letter">A</span> <span>La televisión tradicional</span></label><label class="opt"><input type="radio" name="q12" value="B"> <span class="opt-letter">B</span> <span>Los programas de radio</span></label><label class="opt"><input type="radio" name="q12" value="C"> <span class="opt-letter">C</span> <span>Las redes sociales</span></label></div></div>
+    </div>
+
+    <!-- TAREA 3 -->
+    <div class="part-section">
+      <div class="part-header">Tarea 3</div>
+      <h2>Preguntas 13–18</h2>
+      <p class="instructions">Lee el siguiente texto y elige la opción (A, B o C) que corresponde a cada hueco.</p>
+      <div class="text-title">El transporte público en las ciudades españolas</div>
+      <div class="text-content">
+        <p>España tiene una red de metro (13) <select class="gap-select" data-q="13"><option value="">—</option><option>A</option><option>B</option><option>C</option></select> en ciudades como Madrid y Barcelona. Miles de personas utilizan el metro cada día para ir al trabajo, a la universidad o a hacer la compra.</p>
+        <p>En las ciudades más pequeñas, el autobús es el (14) <select class="gap-select" data-q="14"><option value="">—</option><option>A</option><option>B</option><option>C</option></select> medio de transporte público. Los autobuses urbanos conectan los distintos barrios y facilitan la movilidad de los ciudadanos sin coche.</p>
+        <p>En los últimos años, el uso de la bicicleta ha (15) <select class="gap-select" data-q="15"><option value="">—</option><option>A</option><option>B</option><option>C</option></select> mucho en las ciudades españolas. Muchos municipios han construido nuevos carriles bici y sistemas de alquiler de bicicletas para fomentar este tipo de transporte sostenible.</p>
+        <p>El metro de Madrid tiene más de trescientos kilómetros de (16) <select class="gap-select" data-q="16"><option value="">—</option><option>A</option><option>B</option><option>C</option></select> y es uno de los más extensos de Europa. Gracias a esta infraestructura, los madrileños pueden desplazarse por toda la ciudad de forma rápida y cómoda.</p>
+        <p>Usar el transporte público es más (17) <select class="gap-select" data-q="17"><option value="">—</option><option>A</option><option>B</option><option>C</option></select> para el medio ambiente que ir en coche. Por eso, muchas ciudades promueven campañas para animar a los ciudadanos a dejar el coche en casa.</p>
+        <p>Muchas personas (18) <select class="gap-select" data-q="18"><option value="">—</option><option>A</option><option>B</option><option>C</option></select> el metro o el autobús para ir al trabajo cada día porque es más económico y evitan los problemas de aparcamiento en el centro de la ciudad.</p>
+      </div>
+      <div style="margin-top:16px;padding-top:14px;border-top:2px solid var(--hairline)">
+        <div style="font-family:var(--font-sans);font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Opciones:</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:.88rem">
+          <div><strong style="color:var(--amber)">13.</strong> A) escasa &nbsp; B) extensa &nbsp; C) antigua</div>
+          <div><strong style="color:var(--amber)">14.</strong> A) último &nbsp; B) primero &nbsp; C) principal</div>
+          <div><strong style="color:var(--amber)">15.</strong> A) crecido &nbsp; B) bajado &nbsp; C) desaparecido</div>
+          <div><strong style="color:var(--amber)">16.</strong> A) calles &nbsp; B) autobuses &nbsp; C) vías</div>
+          <div><strong style="color:var(--amber)">17.</strong> A) caro &nbsp; B) beneficioso &nbsp; C) rápido</div>
+          <div><strong style="color:var(--amber)">18.</strong> A) usan &nbsp; B) conducen &nbsp; C) construyen</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAREA 4 -->
+    <div class="part-section">
+      <div class="part-header">Tarea 4</div>
+      <h2>Preguntas 19–24</h2>
+      <p class="instructions">Vas a leer las descripciones de cuatro personas sobre sus vacaciones. Relaciona cada enunciado (19–24) con la persona correspondiente. Las personas pueden elegirse más de una vez.</p>
+      <div class="mm-text"><div class="mm-letter">A</div><div class="mm-body"><strong>Inés, 28 años</strong><br>En agosto fui a la playa con unas amigas. Nos alojamos en un hotel pequeño muy cerca del mar. Todas las mañanas me levantaba temprano para nadar antes de que llegara mucha gente. Por las noches íbamos a cenar a los restaurantes del puerto. Me encantó la comida, especialmente el marisco: las gambas, los mejillones y las almejas eran deliciosos. Fue unas vacaciones perfectas.</div></div>
+      <div class="mm-text"><div class="mm-letter">B</div><div class="mm-body"><strong>Raúl, 45 años</strong><br>Este verano fui al pueblo de mis padres en Extremadura. Mis padres tienen un campo con olivos y tomates, y los ayudé con la recolección durante varios días. Fue un trabajo duro pero muy satisfactorio. Por las noches dormía muy bien porque el campo es tranquilo y el aire es limpio. A veces echo de menos esa vida tan tranquila cuando vuelvo a la ciudad.</div></div>
+      <div class="mm-text"><div class="mm-letter">C</div><div class="mm-body"><strong>Carmen, 19 años</strong><br>Viajé a Londres con mi clase de inglés durante dos semanas. Visitamos muchos museos, como el Museo Británico y la Tate Modern. Pero lo mejor fue que pude practicar el inglés con personas nativas en tiendas, cafeterías y el transporte público. Mi inglés mejoró mucho. El año que viene quiero volver para seguir practicando el idioma y conocer más lugares de la ciudad.</div></div>
+      <div class="mm-text"><div class="mm-letter">D</div><div class="mm-body"><strong>Tomás, 62 años</strong><br>Hice un crucero por el Mediterráneo con mi mujer. En diez días visitamos cinco países: Italia, Grecia, Croacia, Montenegro y Turquía. A mí no me gustan especialmente las playas, pero me encanta visitar ciudades históricas y hacer fotos de los monumentos y la arquitectura. Fue un viaje muy intenso pero increíble. Saqué más de quinientas fotos en total.</div></div>
+      <div style="margin-top:20px">
+        <div class="mm-q"><div class="q-num">19</div><div class="q-text">Esta persona viajó para mejorar un idioma extranjero.</div><select class="match-select" data-q="19"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">20</div><div class="q-text">Esta persona nadaba regularmente durante sus vacaciones.</div><select class="match-select" data-q="20"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">21</div><div class="q-text">Esta persona ayudó a trabajar durante sus vacaciones.</div><select class="match-select" data-q="21"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">22</div><div class="q-text">Esta persona visitó varios países en poco tiempo.</div><select class="match-select" data-q="22"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">23</div><div class="q-text">Esta persona quiere repetir el viaje el año que viene.</div><select class="match-select" data-q="23"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">24</div><div class="q-text">Esta persona comió mucho marisco durante sus vacaciones.</div><select class="match-select" data-q="24"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+      </div>
+    </div>
+
+    <div class="submit-area">
+      <p>Revisa tus respuestas antes de entregar. No podrás cambiarlas después.</p>
+      <button class="submit-btn" onclick="submitExam(false)">Entregar simulacro</button>
+    </div>
+  </div>
+
+  <div id="resultsScreen" class="results-screen">
+    <div class="part-header">DELE A2 · Simulacro 1 — Resultados</div>
+    <div class="score-big" id="scoreFinal"></div>
+    <div class="score-label">Respuestas correctas</div>
+    <p id="timeUsed" style="text-align:center;font-family:var(--font-sans);font-size:.8rem;color:var(--muted);margin-bottom:16px"></p>
+    <div class="part-breakdown" id="partBreakdown"></div>
+    <div style="text-align:center;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <a href="../index.html" class="start-btn" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);text-decoration:none;display:inline-block">Volver al DELE A2</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">Word Play · DELE A2 · Instituto Cervantes</footer>
+
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+const ANSWERS = {
+  "t1":{"1":"V","2":"V","3":"F","4":"ND","5":"V","6":"F"},
+  "t2":{"7":"B","8":"A","9":"C","10":"B","11":"A","12":"C"},
+  "t3":{"13":"B","14":"C","15":"A","16":"C","17":"B","18":"A"},
+  "t4":{"19":"C","20":"A","21":"B","22":"D","23":"C","24":"A"}
+};
+const DURATION_MS = 60 * 60 * 1000;
+let startTime = null;
+let timerInterval = null;
+let submitted = false;
+const SAVE_KEY = 'wordplay_dele_a2_mock_1';
+const BEST_KEY = 'wordplay_dele_a2_mock_1_best';
+let practiceMode = false;
+
+function startExam(practice) {
+  practiceMode = practice || false;
+  clearSave();
+  _startExam();
+}
+
+function resumeExam() {
+  const saved = getSave();
+  if (!saved) return;
+  _startExam(saved);
+}
+
+function _startExam(saved) {
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('examArea').classList.add('active');
+  if (practiceMode) {
+    document.querySelector('.timer-bar').innerHTML = '<div class="timer-display">Modo práctica — sin cronómetro</div><div class="timer-meta">Responde a tu ritmo</div>';
+    startTime = Date.now();
+  } else {
+    startTime = saved ? saved.startTime : Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+    updateTimer();
+  }
+  if (saved) restoreAnswers(saved.answers);
+  window.scrollTo(0, 0);
+}
+
+function getSave() {
+  try { var s = localStorage.getItem(SAVE_KEY); return s ? JSON.parse(s) : null; } catch(e) { return null; }
+}
+
+function clearSave() {
+  try { localStorage.removeItem(SAVE_KEY); } catch(e) {}
+}
+
+function saveProgress() {
+  if (submitted) return;
+  var answers = collectAnswers();
+  var save = { startTime: startTime, answers: answers, savedAt: Date.now() };
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(save)); } catch(e) {}
+  alert('Progreso guardado. Puedes cerrar la pestaña y continuar más tarde.');
+}
+
+function collectAnswers() {
+  var a = {};
+  document.querySelectorAll('input[type=radio]:checked').forEach(function(r) { a[r.name] = r.value; });
+  document.querySelectorAll('select').forEach(function(s) { if (s.dataset.q) a['s'+s.dataset.q] = s.value; });
+  return a;
+}
+
+function restoreAnswers(answers) {
+  Object.entries(answers).forEach(function(kv) {
+    var k = kv[0], v = kv[1];
+    if (k.startsWith('q')) {
+      var r = document.querySelector('input[name="'+k+'"][value="'+v+'"]');
+      if (r) r.checked = true;
+    } else if (k.startsWith('s')) {
+      var sel = document.querySelector('select[data-q="'+k.slice(1)+'"]');
+      if (sel) sel.value = v;
+    }
+  });
+}
+
+function checkPrevAttempt() {
+  try {
+    var best = localStorage.getItem(BEST_KEY);
+    if (best) { document.getElementById('prevAttempt').style.display = 'block'; document.getElementById('prevScore').textContent = best; }
+    var saved = getSave();
+    if (saved) {
+      var ageMin = Math.round((Date.now() - saved.savedAt) / 60000);
+      document.getElementById('resumeSection').style.display = 'block';
+      document.getElementById('resumeInfo').textContent = 'Guardado hace ' + ageMin + ' minutos';
+    }
+  } catch(e) {}
+}
+checkPrevAttempt();
+
+function updateTimer() {
+  var elapsed = Date.now() - startTime;
+  var remaining = DURATION_MS - elapsed;
+  if (remaining <= 0) { submitExam(true); return; }
+  var mins = Math.floor(remaining / 60000);
+  var secs = Math.floor((remaining % 60000) / 1000);
+  var el = document.getElementById('timerDisplay');
+  el.textContent = mins + ':' + (secs < 10 ? '0' : '') + secs;
+  el.classList.toggle('warning', remaining < 15*60*1000 && remaining >= 3*60*1000);
+  el.classList.toggle('critical', remaining < 3*60*1000);
+}
+
+function getRadioValue(name) {
+  var r = document.querySelector('input[name="'+name+'"]:checked');
+  return r ? r.value : null;
+}
+
+function getSelectValue(q) {
+  var el = document.querySelector('select[data-q="'+q+'"]');
+  return el ? el.value : '';
+}
+
+function submitExam(timeUp) {
+  if (submitted) return;
+  if (!timeUp && !confirm('¿Entregar el simulacro ahora? No podrás cambiar las respuestas.')) return;
+  submitted = true;
+  clearInterval(timerInterval);
+  var elapsedMs = Date.now() - startTime;
+  var elapsedMin = Math.floor(elapsedMs / 60000);
+  var elapsedSec = Math.floor((elapsedMs % 60000) / 1000);
+  document.querySelectorAll('input, select').forEach(function(el) { el.disabled = true; });
+
+  var scores = {};
+
+  scores.t1 = { correct: 0, total: 6 };
+  for (var i = 1; i <= 6; i++) {
+    var v = getRadioValue('q' + i);
+    if (v && v === ANSWERS.t1[i]) scores.t1.correct++;
+  }
+
+  scores.t2 = { correct: 0, total: 6 };
+  for (var i = 7; i <= 12; i++) {
+    var v = getRadioValue('q' + i);
+    if (v && v === ANSWERS.t2[i]) scores.t2.correct++;
+  }
+
+  scores.t3 = { correct: 0, total: 6 };
+  for (var i = 13; i <= 18; i++) {
+    var v = getSelectValue(i);
+    if (v && v === ANSWERS.t3[i]) scores.t3.correct++;
+  }
+
+  scores.t4 = { correct: 0, total: 6 };
+  for (var i = 19; i <= 24; i++) {
+    var v = getSelectValue(i);
+    if (v && v === ANSWERS.t4[i]) scores.t4.correct++;
+  }
+
+  var totalCorrect = Object.values(scores).reduce(function(a, p) { return a + p.correct; }, 0);
+  var pct = Math.round((totalCorrect / 24) * 100);
+
+  document.getElementById('scoreFinal').textContent = totalCorrect + ' / 24';
+  document.getElementById('timeUsed').textContent = 'Tiempo empleado: ' + elapsedMin + ' min ' + elapsedSec + ' s' + (timeUp ? ' (entrega automática)' : '');
+
+  try { localStorage.setItem(BEST_KEY, totalCorrect + '/24 (' + pct + '%)'); } catch(e) {}
+
+  var tareaLabels = {
+    t1:'Tarea 1 · V/F/ND', t2:'Tarea 2 · Comprensión', t3:'Tarea 3 · Léxico', t4:'Tarea 4 · Emparejamiento'
+  };
+  var breakdown = '';
+  Object.entries(scores).forEach(function(kv) {
+    var k = kv[0], v = kv[1];
+    var p = Math.round((v.correct / v.total) * 100);
+    breakdown += '<div class="part-score"><div class="name">' + tareaLabels[k] + '</div><div class="val">' + v.correct + '/' + v.total + '</div><div class="pct">' + p + '%</div></div>';
+  });
+  document.getElementById('partBreakdown').innerHTML = breakdown;
+
+  document.getElementById('resultsScreen').classList.add('active');
+  document.getElementById('resultsScreen').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
