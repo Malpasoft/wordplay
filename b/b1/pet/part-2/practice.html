@@ -1,37 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>PET Matching (detail) — Review | Word Play</title>
+<title>PET Part 2 Practice — Matching Detail | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/worksheet.css?v=v106">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<style>
+.gap-select{padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-weight:700;background:var(--cream-deep);color:var(--ink);cursor:pointer}
+body.dark .gap-select{background:#1A1A1A;color:#F0F0F0;border-color:rgba(255,255,255,.15)}
+.reviewer-block{background:var(--paper);border-radius:8px;padding:16px 18px;margin:20px 0}
+.reviewer-row{display:flex;gap:14px;padding:10px 0;border-top:1px solid var(--hairline);font-size:.85rem;line-height:1.6}
+.reviewer-row:first-of-type{border-top:none}
+.reviewer-letter{font-family:var(--font-sans);font-weight:800;color:var(--amber);min-width:72px;flex-shrink:0}
+.stmt-row{display:flex;align-items:center;gap:14px;padding:9px 0;border-top:1px solid var(--hairline);font-size:.88rem}
+.stmt-row .q-id{font-weight:800;color:var(--amber);min-width:22px;flex-shrink:0}
+.stmt-text{flex:1}
+</style>
 </head>
 <body>
 <header class="site-header"><div class="site-header-inner">
-<a href="index.html" class="back back-link" aria-label="Back"></a>
-<a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-<button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  <a href="index.html" class="back back-link" aria-label="Back"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
 </div></header>
-<div class="section-page">
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">B1</a><span>›</span><a href="../index.html">PET</a><span>›</span><a href="index.html">Part 2</a><span>›</span><strong>Practice</strong></div>
+  <div class="chapter-num">PET · Part 2</div>
+  <h1>Part 2 Practice — Matching Detail</h1>
+  <p class="chapter-subtitle">Match each statement to the person who said it</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Strategy &amp; Tips</a>
+    <a href="practice.html" class="chapter-nav-btn active">Practice</a>
+  </nav>
 
-  <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>›</span>
-    <a href="../../index.html">B1</a><span>›</span>
-    <a href="../index.html">PET</a><span>›</span>
-    <a href="index.html">Matching (detail)</a><span>›</span>
-    <strong>Practice</strong>
-  </div>
-  <h1 style="font-family:Georgia,serif;font-size:2rem;font-weight:700;color:var(--ink);margin:0 0 24px">Matching (detail) — Practice</h1>
-  <div style="background:#1A1A1A;border-radius:10px;padding:32px;color:white;text-align:center">
-    <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:12px">Coming Soon</div>
-    <p style="color:rgba(255,255,255,.7);font-size:.9rem">Sample questions for this part are in development.</p>
-    <div style="margin-top:24px"><a href="index.html" style="color:var(--amber);text-decoration:none;font-weight:700">Back to strategy</a></div>
+  <form id="worksheet">
+    <section class="exercise" id="ex1">
+      <div class="ex-head">Part 2 — Four people describe their visit to a new science museum. For questions 1–5, choose the correct person (A–D). You may choose any letter more than once.</div>
+
+      <div class="reviewer-block">
+        <div style="font-family:var(--font-sans);font-size:.7rem;font-weight:800;letter-spacing:1.5px;color:var(--muted);margin-bottom:8px">REVIEWS</div>
+        <div class="reviewer-row">
+          <span class="reviewer-letter">A — Tom</span>
+          <span>The exhibition was spectacular, but I left feeling slightly overwhelmed. There was simply too much to take in during a single visit. I definitely plan to return and will prepare a plan of what to see beforehand.</span>
+        </div>
+        <div class="reviewer-row">
+          <span class="reviewer-letter">B — Sara</span>
+          <span>I brought my children hoping they would enjoy the interactive exhibits, and they absolutely loved it. They spent over an hour at the volcano model alone. It was a brilliant day out for the whole family.</span>
+        </div>
+        <div class="reviewer-row">
+          <span class="reviewer-letter">C — Nadia</span>
+          <span>I was disappointed by the lack of support for younger visitors. The text panels assumed a high level of scientific knowledge, which made it very difficult for my children to follow along and stay engaged.</span>
+        </div>
+        <div class="reviewer-row">
+          <span class="reviewer-letter">D — Alex</span>
+          <span>I went mainly for the space section, which exceeded my expectations. The new planetarium show was absolutely stunning. I was less impressed by the history of science rooms, which felt dated and in need of updating.</span>
+        </div>
+      </div>
+
+      <p style="font-size:.82rem;color:var(--muted);margin-bottom:8px">Which person …</p>
+      <div class="stmt-row"><span class="q-id">1</span><div class="stmt-text">says one part of the museum needs to be modernised?</div><select class="gap-select" data-q="s1"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+      <div class="stmt-row"><span class="q-id">2</span><div class="stmt-text">plans to visit the museum again?</div><select class="gap-select" data-q="s2"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+      <div class="stmt-row"><span class="q-id">3</span><div class="stmt-text">says children particularly enjoyed the hands-on activities?</div><select class="gap-select" data-q="s3"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+      <div class="stmt-row"><span class="q-id">4</span><div class="stmt-text">felt that the written information was too complex for general visitors?</div><select class="gap-select" data-q="s4"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+      <div class="stmt-row"><span class="q-id">5</span><div class="stmt-text">was particularly impressed by one specific attraction?</div><select class="gap-select" data-q="s5"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+    </section>
+    <div class="submit-wrap"><button type="submit" class="submit-btn">Check answers</button></div>
+  </form>
+  <div id="results" class="results-panel">
+    <div class="score-row"><span class="score-label">Score</span><span id="score-got">0</span><span class="score-sep">/</span><span id="score-total">0</span><span class="score-pct-badge" id="score-pct">0%</span></div>
+    <div id="exercise-breakdown"></div><div id="breakdown"></div>
+    <button class="try-again-btn" onclick="tryAgain()">Try again</button>
   </div>
 </div>
 <footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+window.LEVEL='b1';window.CHAPTER_ID='pet-part-2-practice';
+window.TOTAL_POINTS=5;
+window.ANSWERS={"s1":"D","s2":"A","s3":"B","s4":"C","s5":"D"};
+window.EXPLANATIONS={"s1":"D (Alex) — says the history of science rooms 'felt dated and in need of updating'. No other reviewer mentions a section needing renovation.","s2":"A (Tom) — explicitly says 'I definitely plan to return'. He felt overwhelmed but not put off — he wants to come back prepared.","s3":"B (Sara) — her children 'loved the interactive exhibits' and 'spent over an hour at the volcano model'. Note: C (Nadia) is a trap — her children did NOT enjoy things because the explanations were too hard.","s4":"C (Nadia) — says the 'text panels assumed a high level of scientific knowledge', making it hard for non-specialists (her children). Tom was overwhelmed but does not mention text difficulty.","s5":"D (Alex) — says the planetarium show was 'absolutely stunning' and the space section 'exceeded my expectations'. One attraction (the planetarium) stood out specifically."};
+window.EXERCISE_TITLES={ex1:'Part 2 — Matching Detail'};
+</script>
+<script src="../../../../shared/worksheet.js?v=v108"></script>
 </body>
 </html>

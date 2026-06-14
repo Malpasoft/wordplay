@@ -1,37 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>PET MC Reading — Review | Word Play</title>
+<title>PET Part 3 Practice — MC Reading | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/worksheet.css?v=v106">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<style>
+.gap-select{padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-weight:700;background:var(--cream-deep);color:var(--ink);cursor:pointer}
+body.dark .gap-select{background:#1A1A1A;color:#F0F0F0;border-color:rgba(255,255,255,.15)}
+.reading-text{font-size:.9rem;line-height:1.8;padding:18px 20px;background:var(--paper);border-radius:8px;margin:16px 0;border:1px solid var(--hairline)}
+.reading-title{font-family:Georgia,serif;font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:10px}
+.mc-row{padding:12px 0;border-top:1px solid var(--hairline)}
+.mc-q{font-size:.88rem;font-weight:700;color:var(--ink);margin-bottom:10px;display:flex;gap:10px}
+.mc-q .q-num{color:var(--amber);min-width:22px;flex-shrink:0}
+.mc-options{display:grid;grid-template-columns:1fr 1fr;gap:6px;max-width:520px}
+.mc-option{display:flex;gap:8px;align-items:flex-start;font-size:.85rem;color:var(--ink);line-height:1.4}
+.mc-option .opt-letter{font-family:var(--font-sans);font-weight:800;color:var(--amber);min-width:18px}
+</style>
 </head>
 <body>
 <header class="site-header"><div class="site-header-inner">
-<a href="index.html" class="back back-link" aria-label="Back"></a>
-<a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-<button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  <a href="index.html" class="back back-link" aria-label="Back"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
 </div></header>
-<div class="section-page">
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">B1</a><span>›</span><a href="../index.html">PET</a><span>›</span><a href="index.html">Part 3</a><span>›</span><strong>Practice</strong></div>
+  <div class="chapter-num">PET · Part 3</div>
+  <h1>Part 3 Practice — MC Reading</h1>
+  <p class="chapter-subtitle">Read the article and choose the best answer (A, B, C or D)</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Strategy &amp; Tips</a>
+    <a href="practice.html" class="chapter-nav-btn active">Practice</a>
+  </nav>
 
-  <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>›</span>
-    <a href="../../index.html">B1</a><span>›</span>
-    <a href="../index.html">PET</a><span>›</span>
-    <a href="index.html">MC Reading</a><span>›</span>
-    <strong>Practice</strong>
-  </div>
-  <h1 style="font-family:Georgia,serif;font-size:2rem;font-weight:700;color:var(--ink);margin:0 0 24px">MC Reading — Practice</h1>
-  <div style="background:#1A1A1A;border-radius:10px;padding:32px;color:white;text-align:center">
-    <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:12px">Coming Soon</div>
-    <p style="color:rgba(255,255,255,.7);font-size:.9rem">Sample questions for this part are in development.</p>
-    <div style="margin-top:24px"><a href="index.html" style="color:var(--amber);text-decoration:none;font-weight:700">Back to strategy</a></div>
+  <form id="worksheet">
+    <section class="exercise" id="ex1">
+      <div class="ex-head">Part 3 — Read the article. For questions 1–5, choose the answer (A, B, C or D) which you think fits best.</div>
+
+      <div class="reading-text">
+        <div class="reading-title">The Urban Farm Revolution</div>
+        <p>In cities around the world, a quiet revolution is taking place on rooftops, in car parks, and in converted warehouses. Urban farming — the practice of growing food in city spaces — has grown enormously over the past decade, driven partly by concerns about where our food comes from and partly by the desire of city-dwellers to connect with nature.</p>
+        <p>Maya Okafor, who runs a rooftop farm in central London, explains why she became involved. "I'd spent years working in an office with no windows," she says, "and I realised I had completely lost touch with the seasons. I didn't know when strawberries were in season or how long it takes for a lettuce to grow." After attending a community gardening workshop, she decided to convert the unused roof of her building into a small farm.</p>
+        <p>The results were more significant than she expected. Maya now sells her produce to three local restaurants and provides vegetables to a food bank. She also runs weekend workshops for children, which she describes as the most rewarding part of the project. "Most of the children have never seen soil before," she says. "Watching them understand where food comes from is extraordinary."</p>
+        <p>Experts argue that urban farms offer more than just food. Research suggests that green spaces in cities reduce stress, improve air quality, and encourage communities to come together. However, challenges remain. Space is expensive, water use is high, and it can be difficult to make urban farming commercially profitable. Critics point out that the yields from city farms are unlikely to make a meaningful contribution to feeding large populations.</p>
+        <p>Despite these concerns, interest in urban farming continues to grow. For Maya, the benefits go beyond food production. "This farm has changed my relationship with this city," she says. "I feel part of something now."</p>
+      </div>
+
+      <div class="mc-row">
+        <div class="mc-q"><span class="q-num">1</span><span>What does the article say has caused urban farming to grow?</span></div>
+        <div class="mc-options">
+          <div class="mc-option"><span class="opt-letter">A</span><span>Falling food prices in cities</span></div>
+          <div class="mc-option"><span class="opt-letter">B</span><span>A shortage of food in urban areas</span></div>
+          <div class="mc-option"><span class="opt-letter">C</span><span>Worries about food origins and wanting nature</span></div>
+          <div class="mc-option"><span class="opt-letter">D</span><span>Government investment in green projects</span></div>
+        </div>
+        <div style="margin-top:10px"><select class="gap-select" data-q="q1"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+      </div>
+
+      <div class="mc-row">
+        <div class="mc-q"><span class="q-num">2</span><span>Why did Maya originally decide to start farming?</span></div>
+        <div class="mc-options">
+          <div class="mc-option"><span class="opt-letter">A</span><span>She wanted to make more money</span></div>
+          <div class="mc-option"><span class="opt-letter">B</span><span>She felt disconnected from the natural world</span></div>
+          <div class="mc-option"><span class="opt-letter">C</span><span>She was given the roof space for free</span></div>
+          <div class="mc-option"><span class="opt-letter">D</span><span>She had studied agriculture at university</span></div>
+        </div>
+        <div style="margin-top:10px"><select class="gap-select" data-q="q2"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+      </div>
+
+      <div class="mc-row">
+        <div class="mc-q"><span class="q-num">3</span><span>Which part of the project does Maya find most satisfying?</span></div>
+        <div class="mc-options">
+          <div class="mc-option"><span class="opt-letter">A</span><span>Selling produce to restaurants</span></div>
+          <div class="mc-option"><span class="opt-letter">B</span><span>Supplying the local food bank</span></div>
+          <div class="mc-option"><span class="opt-letter">C</span><span>Teaching children about food</span></div>
+          <div class="mc-option"><span class="opt-letter">D</span><span>Managing the farm each day</span></div>
+        </div>
+        <div style="margin-top:10px"><select class="gap-select" data-q="q3"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+      </div>
+
+      <div class="mc-row">
+        <div class="mc-q"><span class="q-num">4</span><span>What criticism does the article mention about urban farming?</span></div>
+        <div class="mc-options">
+          <div class="mc-option"><span class="opt-letter">A</span><span>It damages the environment</span></div>
+          <div class="mc-option"><span class="opt-letter">B</span><span>The produce is often low quality</span></div>
+          <div class="mc-option"><span class="opt-letter">C</span><span>It cannot produce enough food to matter</span></div>
+          <div class="mc-option"><span class="opt-letter">D</span><span>City people lack the skills needed</span></div>
+        </div>
+        <div style="margin-top:10px"><select class="gap-select" data-q="q4"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+      </div>
+
+      <div class="mc-row">
+        <div class="mc-q"><span class="q-num">5</span><span>What does Maya suggest is the main personal benefit of running the farm?</span></div>
+        <div class="mc-options">
+          <div class="mc-option"><span class="opt-letter">A</span><span>It has made her financially independent</span></div>
+          <div class="mc-option"><span class="opt-letter">B</span><span>She feels more connected to where she lives</span></div>
+          <div class="mc-option"><span class="opt-letter">C</span><span>She has become famous in the local area</span></div>
+          <div class="mc-option"><span class="opt-letter">D</span><span>It has given her better physical health</span></div>
+        </div>
+        <div style="margin-top:10px"><select class="gap-select" data-q="q5"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+      </div>
+    </section>
+    <div class="submit-wrap"><button type="submit" class="submit-btn">Check answers</button></div>
+  </form>
+  <div id="results" class="results-panel">
+    <div class="score-row"><span class="score-label">Score</span><span id="score-got">0</span><span class="score-sep">/</span><span id="score-total">0</span><span class="score-pct-badge" id="score-pct">0%</span></div>
+    <div id="exercise-breakdown"></div><div id="breakdown"></div>
+    <button class="try-again-btn" onclick="tryAgain()">Try again</button>
   </div>
 </div>
 <footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+window.LEVEL='b1';window.CHAPTER_ID='pet-part-3-practice';
+window.TOTAL_POINTS=5;
+window.ANSWERS={"q1":"C","q2":"B","q3":"C","q4":"C","q5":"B"};
+window.EXPLANATIONS={"q1":"C — paragraph 1 says urban farming grew 'partly by concerns about where our food comes from and partly by the desire of city-dwellers to connect with nature'. A, B, D are not mentioned.","q2":"B — Maya 'realised I had completely lost touch with the seasons' — she felt disconnected from nature. A (money) and D (university) are not mentioned. C is wrong — she had to convert the roof herself.","q3":"C — Maya says the weekend workshops for children are 'the most rewarding part of the project'. A and B (restaurants, food bank) are things she does but not what she finds most satisfying.","q4":"C — 'the yields from city farms are unlikely to make a meaningful contribution to feeding large populations'. A (damages environment) is not stated; B and D are not mentioned.","q5":"B — Maya says 'This farm has changed my relationship with this city. I feel part of something now.' — she feels more connected to where she lives. A, C, D are not supported by the text."};
+window.EXERCISE_TITLES={ex1:'Part 3 — MC Reading'};
+</script>
+<script src="../../../../shared/worksheet.js?v=v108"></script>
 </body>
 </html>

@@ -1,37 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
-<title>PET Gapped Text — Review | Word Play</title>
+<title>PET Part 4 Practice — Gapped Text | Word Play</title>
 <link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/worksheet.css?v=v106">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<style>
+.gap-select{padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-weight:700;background:var(--cream-deep);color:var(--ink);cursor:pointer}
+body.dark .gap-select{background:#1A1A1A;color:#F0F0F0;border-color:rgba(255,255,255,.15)}
+.reading-text{font-size:.9rem;line-height:1.9;padding:18px 20px;background:var(--paper);border-radius:8px;margin:16px 0;border:1px solid var(--hairline)}
+.reading-title{font-family:Georgia,serif;font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:10px}
+.gap-inline{display:inline-block;margin:0 4px}
+.sent-grid{background:var(--paper);border-radius:8px;padding:16px 18px;margin:20px 0}
+.sent-row{display:flex;gap:12px;padding:7px 0;border-top:1px solid var(--hairline);font-size:.85rem;line-height:1.5}
+.sent-letter{font-weight:800;color:var(--amber);min-width:22px;flex-shrink:0}
+.match-row{display:flex;align-items:center;gap:14px;padding:8px 0;border-top:1px solid var(--hairline);font-size:.88rem}
+.match-row .q-id{font-weight:800;color:var(--amber);min-width:22px}
+</style>
 </head>
 <body>
 <header class="site-header"><div class="site-header-inner">
-<a href="index.html" class="back back-link" aria-label="Back"></a>
-<a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
-<button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+  <a href="index.html" class="back back-link" aria-label="Back"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
 </div></header>
-<div class="section-page">
+<div class="container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">B1</a><span>›</span><a href="../index.html">PET</a><span>›</span><a href="index.html">Part 4</a><span>›</span><strong>Practice</strong></div>
+  <div class="chapter-num">PET · Part 4</div>
+  <h1>Part 4 Practice — Gapped Text</h1>
+  <p class="chapter-subtitle">Choose the sentence that fits each gap in the article</p>
+  <nav class="chapter-nav">
+    <a href="index.html" class="chapter-nav-btn">Strategy &amp; Tips</a>
+    <a href="practice.html" class="chapter-nav-btn active">Practice</a>
+  </nav>
 
-  <div class="breadcrumb">
-    <a href="../../../../index.html">Home</a><span>›</span>
-    <a href="../../index.html">B1</a><span>›</span>
-    <a href="../index.html">PET</a><span>›</span>
-    <a href="index.html">Gapped Text</a><span>›</span>
-    <strong>Practice</strong>
-  </div>
-  <h1 style="font-family:Georgia,serif;font-size:2rem;font-weight:700;color:var(--ink);margin:0 0 24px">Gapped Text — Practice</h1>
-  <div style="background:#1A1A1A;border-radius:10px;padding:32px;color:white;text-align:center">
-    <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--amber);margin-bottom:12px">Coming Soon</div>
-    <p style="color:rgba(255,255,255,.7);font-size:.9rem">Sample questions for this part are in development.</p>
-    <div style="margin-top:24px"><a href="index.html" style="color:var(--amber);text-decoration:none;font-weight:700">Back to strategy</a></div>
+  <form id="worksheet">
+    <section class="exercise" id="ex1">
+      <div class="ex-head">Part 4 — Five sentences have been removed from the article. Choose from sentences A–H the one that fits each gap. There are three extra sentences you do not need.</div>
+
+      <div class="reading-text">
+        <div class="reading-title">Learning to Sail</div>
+        <p>When my friend suggested we take a sailing course together last spring, I laughed. I had always thought of sailing as something for wealthy people with a lot of free time. <strong style="color:var(--amber)">[1]</strong> <span class="gap-inline"><select class="gap-select" data-q="g1"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></span></p>
+        <p>The course ran over five weekends at a sailing centre near the coast. On the first morning, the instructor — a calm, patient woman called Diane — explained the basics of how a sail catches the wind. <strong style="color:var(--amber)">[2]</strong> <span class="gap-inline"><select class="gap-select" data-q="g2"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></span> By the end of the morning, I was surprised by how much I had understood.</p>
+        <p>The first time I actually steered the boat myself, I was terrified. The wind changed direction suddenly, and I nearly capsized. <strong style="color:var(--amber)">[3]</strong> <span class="gap-inline"><select class="gap-select" data-q="g3"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></span> She reminded me to breathe, checked that I was safe, and calmly told me what to do next.</p>
+        <p>By the third weekend, something shifted. I began to feel the rhythm of the water and understand how small adjustments to the sail made a big difference to speed. <strong style="color:var(--amber)">[4]</strong> <span class="gap-inline"><select class="gap-select" data-q="g4"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></span></p>
+        <p>Now, several months later, I go sailing most weekends. I have even bought my own small boat. <strong style="color:var(--amber)">[5]</strong> <span class="gap-inline"><select class="gap-select" data-q="g5"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></span> If my friend hadn't pushed me to try it, I might never have discovered something I love so much.</p>
+      </div>
+
+      <div class="sent-grid">
+        <div style="font-family:var(--font-sans);font-size:.7rem;font-weight:800;letter-spacing:1.5px;color:var(--muted);margin-bottom:10px">SENTENCES</div>
+        <div class="sent-row"><span class="sent-letter">A</span><span>The theory was straightforward, but putting it into practice on the water was another matter entirely.</span></div>
+        <div class="sent-row"><span class="sent-letter">B</span><span>What I didn't expect was how much confidence it would give me in other areas of my life too.</span></div>
+        <div class="sent-row"><span class="sent-letter">C</span><span>However, she persuaded me to give it a try, pointing out that it was cheaper than I imagined.</span></div>
+        <div class="sent-row"><span class="sent-letter">D</span><span>Diane reacted immediately and jumped into the boat to help me regain control.</span></div>
+        <div class="sent-row"><span class="sent-letter">E</span><span>Suddenly, sailing felt less like a skill and more like a conversation with the sea.</span></div>
+        <div class="sent-row"><span class="sent-letter">F</span><span>The other students on the course were just as nervous as me, which was reassuring.</span></div>
+        <div class="sent-row"><span class="sent-letter">G</span><span>I had also decided to enter a local race before the end of the year.</span></div>
+        <div class="sent-row"><span class="sent-letter">H</span><span>I had never even been on a boat before, and the sea made me nervous.</span></div>
+      </div>
+    </section>
+    <div class="submit-wrap"><button type="submit" class="submit-btn">Check answers</button></div>
+  </form>
+  <div id="results" class="results-panel">
+    <div class="score-row"><span class="score-label">Score</span><span id="score-got">0</span><span class="score-sep">/</span><span id="score-total">0</span><span class="score-pct-badge" id="score-pct">0%</span></div>
+    <div id="exercise-breakdown"></div><div id="breakdown"></div>
+    <button class="try-again-btn" onclick="tryAgain()">Try again</button>
   </div>
 </div>
 <footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+window.LEVEL='b1';window.CHAPTER_ID='pet-part-4-practice';
+window.TOTAL_POINTS=5;
+window.ANSWERS={"g1":"C","g2":"A","g3":"D","g4":"E","g5":"B"};
+window.EXPLANATIONS={"g1":"C — 'However, she persuaded me to give it a try...' — this follows logically from 'I laughed' and explains why the writer actually agreed. H is a trap (no boat / nervous) but comes before [1], not after the friend's suggestion.","g2":"A — 'The theory was straightforward, but putting it into practice on the water was another matter entirely.' — this comes after Diane explained the theory, and leads into 'By the end of the morning, I was surprised how much I had understood.'","g3":"D — 'Diane reacted immediately and jumped into the boat to help me regain control.' — this follows 'I nearly capsized' and is followed by 'She reminded me to breathe...' F (other students nervous) does not fit here.","g4":"E — 'Suddenly, sailing felt less like a skill and more like a conversation with the sea.' — this captures the feeling shift described ('something shifted') in a poetic, fitting conclusion to paragraph 4. B is a trap but fits better later (confidence).","g5":"B — 'What I didn't expect was how much confidence it would give me in other areas of my life too.' — fits the concluding paragraph reflecting on the unexpected personal impact. G (entering a race) was already mentioned implicitly; B is the more reflective/emotional ending."};
+window.EXERCISE_TITLES={ex1:'Part 4 — Gapped Text'};
+</script>
+<script src="../../../../shared/worksheet.js?v=v108"></script>
 </body>
 </html>
