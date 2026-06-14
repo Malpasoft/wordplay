@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>CAE Mock Exam 2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<style>
+.mock-container{max-width:760px;margin:0 auto;padding:0 16px}
+.timer-bar{position:sticky;top:0;background:var(--ink);color:var(--paper);padding:12px 16px;border-radius:0 0 8px 8px;display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15);margin-bottom:24px}
+.timer-display{font-family:var(--font-sans);font-size:1.1rem;font-weight:700;letter-spacing:.5px}
+.timer-display.warning{color:#FFD700}
+.timer-display.critical{color:#FF6B6B;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.timer-meta{font-family:var(--font-sans);font-size:.72rem;opacity:.85;letter-spacing:1px;text-transform:uppercase}
+.start-screen,.results-screen{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:28px;margin-bottom:24px}
+.start-screen h2,.results-screen h2{font-size:1.4rem;margin:0 0 12px}
+.start-btn{display:inline-block;padding:12px 28px;background:var(--ink);color:var(--paper);border:0;font-family:var(--font-sans);font-size:.82rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer;margin-top:12px}
+.start-btn:hover{opacity:.85}
+.exam-area{display:none}
+.exam-area.active{display:block}
+.part-section{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:24px;margin-bottom:28px}
+.part-header{font-family:var(--font-sans);font-size:.68rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.part-section h2{font-size:1.2rem;margin:0 0 8px;color:var(--ink)}
+.part-section .instructions{font-size:.85rem;color:var(--muted);margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--hairline)}
+.text-title{font-weight:700;text-align:center;font-size:1.05rem;margin:12px 0;color:var(--ink)}
+.text-content{font-size:.92rem;line-height:1.7;color:var(--ink);margin-bottom:18px}
+.text-content p{margin:0 0 12px}
+.mc-q{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--hairline)}
+.mc-q .q-num{font-family:var(--font-sans);font-size:.85rem;font-weight:800;color:var(--amber);min-width:28px}
+.mc-q .opts{flex:1;display:flex;flex-direction:column;gap:4px}
+.mc-q .q-text{flex:1;font-size:.9rem;margin-bottom:6px}
+.opt{display:flex;gap:6px;align-items:flex-start;padding:4px 0;cursor:pointer;font-size:.9rem}
+.opt:hover{background:rgba(184,134,11,.05)}
+.opt-letter{font-family:var(--font-sans);font-weight:700;color:var(--amber);min-width:18px}
+.opt input{margin-top:4px}
+.cloze-input{width:110px;padding:2px 8px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-size:.82rem;background:var(--cream-deep)}
+.cloze-input:focus{outline:none;border-color:var(--amber)}
+.kw-input{width:100%;max-width:380px;padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-size:.85rem;background:var(--cream-deep)}
+.word-form-line{display:flex;padding:10px 0;border-top:1px solid var(--hairline);align-items:flex-start;gap:14px}
+.wf-text{flex:1;font-size:.92rem;line-height:1.6}
+.wf-prompt{font-family:var(--font-sans);font-size:.75rem;font-weight:800;letter-spacing:1px;color:var(--muted);padding:4px 10px;border:1px solid var(--hairline);border-radius:3px;min-width:90px;text-align:center}
+.kw-q{display:flex;gap:12px;padding:14px 0;border-top:1px solid var(--hairline)}
+.kw-content{flex:1}
+.kw-content p{margin:0 0 6px;font-size:.9rem}
+.kw-key{font-family:var(--font-sans);font-weight:800;letter-spacing:1px;color:var(--amber)}
+.gap-select,.match-select{padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-weight:700;background:var(--cream-deep);color:var(--ink);cursor:pointer}
+.gap-option{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--hairline);font-size:.88rem;line-height:1.5}
+.mm-q{display:flex;gap:12px;align-items:center;padding:8px 0;border-top:1px solid var(--hairline);font-size:.88rem}
+.mm-q .q-text{flex:1}
+.mm-text{display:flex;gap:14px;padding:14px 0;border-top:1px solid var(--hairline)}
+.mm-letter{font-family:var(--font-sans);font-weight:800;color:var(--amber);font-size:1rem;min-width:24px}
+.mm-body{flex:1;font-size:.88rem;line-height:1.55}
+.submit-area{background:var(--ink);color:var(--paper);border-radius:8px;padding:20px;text-align:center;margin:32px 0}
+.submit-area p{margin:0 0 12px;opacity:.9}
+.submit-btn{display:inline-block;padding:14px 36px;background:var(--amber);color:var(--ink);border:0;font-family:var(--font-sans);font-size:.9rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer}
+.submit-btn:hover{opacity:.9}
+.results-screen{display:none}
+.results-screen.active{display:block}
+.score-big{font-size:3rem;font-weight:800;color:var(--amber);text-align:center;font-family:Georgia,serif}
+.score-label{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:18px}
+.part-breakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:20px 0}
+.part-score{background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px;padding:12px;text-align:center}
+.part-score .name{font-family:var(--font-sans);font-size:.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.part-score .val{font-size:1.3rem;font-weight:700;color:var(--ink);margin-top:4px}
+.part-score .pct{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin-top:2px}
+.exam-area input:disabled,.exam-area select:disabled{background:rgba(184,134,11,.05)}
+.cross-text{background:var(--cream-deep);border-left:3px solid var(--amber);padding:12px 14px;margin-bottom:12px;border-radius:0 4px 4px 0}
+.cross-text-label{font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Back"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+
+<div class="mock-container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">C1</a><span>›</span><a href="../index.html">CAE</a><span>›</span><strong>Mock Exam 2</strong></div>
+
+  <div id="startScreen" class="start-screen">
+    <div class="part-header">CAE Mock Exam 2</div>
+    <h2>Mock Exam 2 — Reading &amp; Use of English</h2>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Duration:</strong> 90 minutes</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Total questions:</strong> 56 across 8 parts</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:16px">Once you click <strong>Start</strong>, the timer begins. The exam auto-submits when time runs out.</p>
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:18px">Tip: aim to spend roughly 10 minutes per part. Do not dwell on any single question.</p>
+    <button class="start-btn" onclick="startExam(false)">Start exam (timed)</button>
+    <button class="start-btn" onclick="startExam(true)" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Practice mode (no timer)</button>
+    <div id="resumeSection" style="display:none;margin-top:18px;padding:14px 16px;background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--amber);margin-bottom:6px">Saved progress found</div><div id="resumeInfo" style="font-size:.88rem;color:var(--ink);margin-bottom:10px"></div><button class="start-btn" onclick="resumeExam()" style="background:var(--amber);color:var(--ink)">Resume</button><button class="start-btn" onclick="clearSave()" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Start fresh</button></div>
+    <div id="prevAttempt" style="display:none;margin-top:12px;font-family:var(--font-sans);font-size:.78rem;color:var(--muted)">Previous best: <strong id="prevScore"></strong></div>
+  </div>
+
+  <div id="examArea" class="exam-area">
+    <div class="timer-bar">
+      <div class="timer-display" id="timerDisplay">90:00</div>
+      <div class="timer-meta">Time remaining</div>
+      <button onclick="saveProgress()" style="background:transparent;border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.85);font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border-radius:3px;cursor:pointer">Save &amp; quit</button>
+    </div>
+
+    <!-- PART 1 -->
+    <div class="part-section">
+      <div class="part-header">Part 1 — Multiple-choice Cloze</div>
+      <h2>Questions 1–8</h2>
+      <p class="instructions">For questions 1–8, read the text below and decide which answer (A, B, C or D) best fits each gap.</p>
+      <div class="text-title">The art of creative failure</div>
+      <div class="text-content"><p>Many of history's most significant artistic breakthroughs have (1) _____ from what were initially considered failures. Artists working at the (2) _____ of their chosen medium frequently (3) _____ with techniques that their contemporaries regarded as flawed or unfinished. The Impressionists, (4) _____ their name from a critic's dismissive remark, produced work that was (5) _____ from the Paris Salon repeatedly before achieving worldwide acclaim. What (6) _____ these figures apart was not technical perfection but a willingness to (7) _____ convention in pursuit of something more truthful. Creativity, it seems, depends less on avoiding failure than on knowing how to (8) _____ something meaningful from it.</p></div>
+      <div class="mc-q"><div class="q-num">1</div><div class="opts"><label class="opt"><input type="radio" name="q1" value="emerged"> <span class="opt-letter">A</span> <span>emerged</span></label><label class="opt"><input type="radio" name="q1" value="resulted"> <span class="opt-letter">B</span> <span>resulted</span></label><label class="opt"><input type="radio" name="q1" value="stemmed"> <span class="opt-letter">C</span> <span>stemmed</span></label><label class="opt"><input type="radio" name="q1" value="originated"> <span class="opt-letter">D</span> <span>originated</span></label></div></div>
+      <div class="mc-q"><div class="q-num">2</div><div class="opts"><label class="opt"><input type="radio" name="q2" value="frontier"> <span class="opt-letter">A</span> <span>frontier</span></label><label class="opt"><input type="radio" name="q2" value="boundary"> <span class="opt-letter">B</span> <span>boundary</span></label><label class="opt"><input type="radio" name="q2" value="limits"> <span class="opt-letter">C</span> <span>limits</span></label><label class="opt"><input type="radio" name="q2" value="edge"> <span class="opt-letter">D</span> <span>edge</span></label></div></div>
+      <div class="mc-q"><div class="q-num">3</div><div class="opts"><label class="opt"><input type="radio" name="q3" value="experimented"> <span class="opt-letter">A</span> <span>experimented</span></label><label class="opt"><input type="radio" name="q3" value="tried"> <span class="opt-letter">B</span> <span>tried</span></label><label class="opt"><input type="radio" name="q3" value="attempted"> <span class="opt-letter">C</span> <span>attempted</span></label><label class="opt"><input type="radio" name="q3" value="tested"> <span class="opt-letter">D</span> <span>tested</span></label></div></div>
+      <div class="mc-q"><div class="q-num">4</div><div class="opts"><label class="opt"><input type="radio" name="q4" value="taking"> <span class="opt-letter">A</span> <span>taking</span></label><label class="opt"><input type="radio" name="q4" value="deriving"> <span class="opt-letter">B</span> <span>deriving</span></label><label class="opt"><input type="radio" name="q4" value="drawing"> <span class="opt-letter">C</span> <span>drawing</span></label><label class="opt"><input type="radio" name="q4" value="gaining"> <span class="opt-letter">D</span> <span>gaining</span></label></div></div>
+      <div class="mc-q"><div class="q-num">5</div><div class="opts"><label class="opt"><input type="radio" name="q5" value="refused"> <span class="opt-letter">A</span> <span>refused</span></label><label class="opt"><input type="radio" name="q5" value="excluded"> <span class="opt-letter">B</span> <span>excluded</span></label><label class="opt"><input type="radio" name="q5" value="rejected"> <span class="opt-letter">C</span> <span>rejected</span></label><label class="opt"><input type="radio" name="q5" value="barred"> <span class="opt-letter">D</span> <span>barred</span></label></div></div>
+      <div class="mc-q"><div class="q-num">6</div><div class="opts"><label class="opt"><input type="radio" name="q6" value="marked"> <span class="opt-letter">A</span> <span>marked</span></label><label class="opt"><input type="radio" name="q6" value="distinguished"> <span class="opt-letter">B</span> <span>distinguished</span></label><label class="opt"><input type="radio" name="q6" value="separated"> <span class="opt-letter">C</span> <span>separated</span></label><label class="opt"><input type="radio" name="q6" value="set"> <span class="opt-letter">D</span> <span>set</span></label></div></div>
+      <div class="mc-q"><div class="q-num">7</div><div class="opts"><label class="opt"><input type="radio" name="q7" value="challenge"> <span class="opt-letter">A</span> <span>challenge</span></label><label class="opt"><input type="radio" name="q7" value="break"> <span class="opt-letter">B</span> <span>break</span></label><label class="opt"><input type="radio" name="q7" value="defy"> <span class="opt-letter">C</span> <span>defy</span></label><label class="opt"><input type="radio" name="q7" value="resist"> <span class="opt-letter">D</span> <span>resist</span></label></div></div>
+      <div class="mc-q"><div class="q-num">8</div><div class="opts"><label class="opt"><input type="radio" name="q8" value="extract"> <span class="opt-letter">A</span> <span>extract</span></label><label class="opt"><input type="radio" name="q8" value="derive"> <span class="opt-letter">B</span> <span>derive</span></label><label class="opt"><input type="radio" name="q8" value="draw"> <span class="opt-letter">C</span> <span>draw</span></label><label class="opt"><input type="radio" name="q8" value="produce"> <span class="opt-letter">D</span> <span>produce</span></label></div></div>
+    </div>
+
+    <!-- PART 2 -->
+    <div class="part-section">
+      <div class="part-header">Part 2 — Open Cloze</div>
+      <h2>Questions 9–16</h2>
+      <p class="instructions">For questions 9–16, read the text below and think of the word which best fits each gap. Use only one word in each gap.</p>
+      <div class="text-title">Urban community gardens</div>
+      <div class="text-content"><p>Community gardens have (9) <input type="text" class="cloze-input" data-q="9" maxlength="20" autocomplete="off" spellcheck="false"> an increasingly visible presence in cities across the world. (10) <input type="text" class="cloze-input" data-q="10" maxlength="20" autocomplete="off" spellcheck="false"> well as providing fresh produce, these shared green spaces offer residents a rare opportunity to connect (11) <input type="text" class="cloze-input" data-q="11" maxlength="20" autocomplete="off" spellcheck="false"> their neighbours. Research suggests that people who take part (12) <input type="text" class="cloze-input" data-q="12" maxlength="20" autocomplete="off" spellcheck="false"> community gardening projects report higher levels of wellbeing than (13) <input type="text" class="cloze-input" data-q="13" maxlength="20" autocomplete="off" spellcheck="false"> who do not. The gardens also serve (14) <input type="text" class="cloze-input" data-q="14" maxlength="20" autocomplete="off" spellcheck="false"> informal gathering points where communities can organise and debate local issues, giving residents a stronger sense (15) <input type="text" class="cloze-input" data-q="15" maxlength="20" autocomplete="off" spellcheck="false"> belonging. Despite their obvious social value, (16) <input type="text" class="cloze-input" data-q="16" maxlength="20" autocomplete="off" spellcheck="false"> gardens frequently face the threat of redevelopment, as demand for urban land continues to grow.</p></div>
+    </div>
+
+    <!-- PART 3 -->
+    <div class="part-section">
+      <div class="part-header">Part 3 — Word Formation</div>
+      <h2>Questions 17–24</h2>
+      <p class="instructions">For questions 17–24, read the text below. Use the word given in capitals at the end of some of the lines to form a word that fits in the gap in the same line.</p>
+      <div class="text-title">Understanding consumer behaviour</div>
+      <div class="word-form-line"><div class="wf-text">Modern retailers invest heavily in the (17) <input type="text" class="cloze-input" data-q="17" maxlength="25" autocomplete="off" spellcheck="false"> of consumer behaviour, using data gathered from online activity to predict purchasing decisions.</div><div class="wf-prompt">ANALYSE</div></div>
+      <div class="word-form-line"><div class="wf-text">The growth of targeted advertising has been (18) <input type="text" class="cloze-input" data-q="18" maxlength="25" autocomplete="off" spellcheck="false"> rapid, with personalised promotions now reaching consumers across every digital platform.</div><div class="wf-prompt">REMARK</div></div>
+      <div class="word-form-line"><div class="wf-text">Critics argue that such practices are (19) <input type="text" class="cloze-input" data-q="19" maxlength="25" autocomplete="off" spellcheck="false">, since consumers are often unaware of the degree to which their choices are being shaped.</div><div class="wf-prompt">MANIPULATE</div></div>
+      <div class="word-form-line"><div class="wf-text">Some researchers have documented a tendency towards (20) <input type="text" class="cloze-input" data-q="20" maxlength="25" autocomplete="off" spellcheck="false"> purchasing — buying goods not out of genuine need but to signal status.</div><div class="wf-prompt">ASPIRE</div></div>
+      <div class="word-form-line"><div class="wf-text">The (21) <input type="text" class="cloze-input" data-q="21" maxlength="25" autocomplete="off" spellcheck="false"> of sustainable brands has created a new category of consumer who weighs environmental impact alongside price and convenience.</div><div class="wf-prompt">EMERGE</div></div>
+      <div class="word-form-line"><div class="wf-text">However, there remains a notable gap between (22) <input type="text" class="cloze-input" data-q="22" maxlength="25" autocomplete="off" spellcheck="false"> intention and actual behaviour, with many shoppers reverting to cheaper, less ethical options at the point of purchase.</div><div class="wf-prompt">ENVIRONMENT</div></div>
+      <div class="word-form-line"><div class="wf-text">Building long-term (23) <input type="text" class="cloze-input" data-q="23" maxlength="25" autocomplete="off" spellcheck="false"> therefore requires more than simply offering a quality product; it demands a consistent and authentic brand identity.</div><div class="wf-prompt">LOYAL</div></div>
+      <div class="word-form-line"><div class="wf-text">Ultimately, a deeper (24) <input type="text" class="cloze-input" data-q="24" maxlength="25" autocomplete="off" spellcheck="false"> of consumer psychology offers businesses significant competitive advantages in an increasingly crowded marketplace.</div><div class="wf-prompt">UNDERSTAND</div></div>
+    </div>
+
+    <!-- PART 4 -->
+    <div class="part-section">
+      <div class="part-header">Part 4 — Key Word Transformation</div>
+      <h2>Questions 25–30</h2>
+      <p class="instructions">For questions 25–30, complete the second sentence so that it has a similar meaning to the first sentence, using the word given. Do not change the word given. You must use between two and five words, including the word given.</p>
+      <div class="kw-q"><div class="q-num">25</div><div class="kw-content"><p>The renovation of the old library took three years.</p><p class="kw-key">TOOK</p><p>Three years <input type="text" class="kw-input" data-q="25" maxlength="60" autocomplete="off" spellcheck="false"> the old library.</p></div></div>
+      <div class="kw-q"><div class="q-num">26</div><div class="kw-content"><p>People say that the director resigned because of pressure from investors.</p><p class="kw-key">SAID</p><p>The director <input type="text" class="kw-input" data-q="26" maxlength="60" autocomplete="off" spellcheck="false"> because of pressure from investors.</p></div></div>
+      <div class="kw-q"><div class="q-num">27</div><div class="kw-content"><p>She was so exhausted that she fell asleep on the train.</p><p class="kw-key">SUCH</p><p>She was in <input type="text" class="kw-input" data-q="27" maxlength="60" autocomplete="off" spellcheck="false"> she fell asleep on the train.</p></div></div>
+      <div class="kw-q"><div class="q-num">28</div><div class="kw-content"><p>I had no idea that the conference had been cancelled.</p><p class="kw-key">AWARE</p><p>I was <input type="text" class="kw-input" data-q="28" maxlength="60" autocomplete="off" spellcheck="false"> the conference had been cancelled.</p></div></div>
+      <div class="kw-q"><div class="q-num">29</div><div class="kw-content"><p>You should not have sent that email without checking with me first.</p><p class="kw-key">OUGHT</p><p>You <input type="text" class="kw-input" data-q="29" maxlength="60" autocomplete="off" spellcheck="false"> that email without checking with me first.</p></div></div>
+      <div class="kw-q"><div class="q-num">30</div><div class="kw-content"><p>The new policy is considerably stricter than the previous one.</p><p class="kw-key">NOTHING</p><p>The previous policy was <input type="text" class="kw-input" data-q="30" maxlength="60" autocomplete="off" spellcheck="false"> the new one in terms of strictness.</p></div></div>
+    </div>
+
+    <!-- PART 5 -->
+    <div class="part-section">
+      <div class="part-header">Part 5 — Multiple Choice</div>
+      <h2>Questions 31–36</h2>
+      <p class="instructions">For questions 31–36, read the text below and choose the answer (A, B, C or D) which you think fits best according to the text.</p>
+      <div class="text-title">The late runner</div>
+      <div class="text-content">
+        <p>Margaret Okafor did not run her first marathon until she was sixty-two. This is a fact she mentions without drama, as though starting distance running in the seventh decade of one's life were the kind of thing any sensible person might do. She took up the sport at sixty, on a recommendation from her cardiologist and with what she describes as "a complete absence of expectation." The expectation, like the mileage, accumulated later.</p>
+        <p>What strikes you immediately about Margaret's account of those first months is not the difficulty but the silence. She had retired from teaching eighteen months earlier, and her days, previously governed by a rigid institutional rhythm, had become shapeless in a way she found quietly alarming. Running gave the mornings back to her. "It wasn't about fitness at the beginning," she says. "It was about having somewhere to be at six o'clock." The route became familiar; the dark became less frightening; the solitude, once oppressive, began to feel like a gift.</p>
+        <p>Her first race was a half-marathon in her home city of Bristol, which she completed in two hours and forty-four minutes and cried for the entirety of the final kilometre. She had not anticipated the emotion. "I think it was the crowd," she says. "They knew I was old. They were very kind." She ran the full Bristol Marathon fourteen months later, finishing in the middle of the field and ahead of several people who looked considerably younger than she did.</p>
+        <p>The question she is asked most often is whether she intends to stop. She finds this faintly insulting. The implicit assumption, she suspects, is that running is an activity that ageing bodies should eventually relinquish — that at some point the sensible thing is to take up something gentler. She disputes this with characteristic precision. "The research suggests that cardiovascular capacity declines more slowly in people who remain active. The question is not whether I should stop but why I should stop."</p>
+        <p>What running has given Margaret, she says, is not primarily physical. It has given her a relationship with time that she did not expect to find. Distance running demands patience in a way that few activities do: you cannot hurry a long run, and the attempt to do so is invariably punished. She has learned — in her seventh decade, which she finds only mildly amusing — what it means to accept the pace that her body can sustain. "That is not a small thing to learn," she says, "at any age."</p>
+      </div>
+      <div class="mc-q"><div class="q-num">31</div><div class="q-text">What does the writer suggest about Margaret's initial attitude to running?</div><div class="opts"><label class="opt"><input type="radio" name="q31" value="A"> <span class="opt-letter">A</span> <span>She approached it as a serious athletic challenge from the outset.</span></label><label class="opt"><input type="radio" name="q31" value="B"> <span class="opt-letter">B</span> <span>She began without any particular ambition about what it might lead to.</span></label><label class="opt"><input type="radio" name="q31" value="C"> <span class="opt-letter">C</span> <span>She was reluctant to follow her doctor's advice.</span></label><label class="opt"><input type="radio" name="q31" value="D"> <span class="opt-letter">D</span> <span>She was motivated primarily by the health benefits she hoped to gain.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">32</div><div class="q-text">According to the second paragraph, why did running matter to Margaret in the early months?</div><div class="opts"><label class="opt"><input type="radio" name="q32" value="A"> <span class="opt-letter">A</span> <span>It restored a sense of daily structure to her life after retirement.</span></label><label class="opt"><input type="radio" name="q32" value="B"> <span class="opt-letter">B</span> <span>It helped her overcome her fear of exercising alone.</span></label><label class="opt"><input type="radio" name="q32" value="C"> <span class="opt-letter">C</span> <span>It reconnected her with the discipline she had developed as a teacher.</span></label><label class="opt"><input type="radio" name="q32" value="D"> <span class="opt-letter">D</span> <span>It gave her a sense of achievement she had not felt since retiring.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">33</div><div class="q-text">What does Margaret's reaction at the end of her first race suggest?</div><div class="opts"><label class="opt"><input type="radio" name="q33" value="A"> <span class="opt-letter">A</span> <span>She had underestimated how physically demanding the race would be.</span></label><label class="opt"><input type="radio" name="q33" value="B"> <span class="opt-letter">B</span> <span>She was moved by the emotional significance of what she had accomplished.</span></label><label class="opt"><input type="radio" name="q33" value="C"> <span class="opt-letter">C</span> <span>She had not expected the crowd to respond positively to an older runner.</span></label><label class="opt"><input type="radio" name="q33" value="D"> <span class="opt-letter">D</span> <span>She was relieved that the race had gone better than she had feared.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">34</div><div class="q-text">How does Margaret respond to people who ask whether she plans to stop running?</div><div class="opts"><label class="opt"><input type="radio" name="q34" value="A"> <span class="opt-letter">A</span> <span>She accepts that there will eventually come a point when she must give up.</span></label><label class="opt"><input type="radio" name="q34" value="B"> <span class="opt-letter">B</span> <span>She finds the question offensive because it reveals assumptions about age.</span></label><label class="opt"><input type="radio" name="q34" value="C"> <span class="opt-letter">C</span> <span>She feels that the scientific evidence on ageing is widely misunderstood.</span></label><label class="opt"><input type="radio" name="q34" value="D"> <span class="opt-letter">D</span> <span>She is reluctant to discuss the question in public.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">35</div><div class="q-text">What does the writer mean by the phrase "invariably punished" in the final paragraph?</div><div class="opts"><label class="opt"><input type="radio" name="q35" value="A"> <span class="opt-letter">A</span> <span>Runners who ignore their bodies' limitations tend to suffer injuries.</span></label><label class="opt"><input type="radio" name="q35" value="B"> <span class="opt-letter">B</span> <span>Attempting to run faster than one's pace allows always leads to poor results.</span></label><label class="opt"><input type="radio" name="q35" value="C"> <span class="opt-letter">C</span> <span>The desire to finish quickly undermines the mental benefits of long runs.</span></label><label class="opt"><input type="radio" name="q35" value="D"> <span class="opt-letter">D</span> <span>Training without a coach makes it hard to improve one's performance.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">36</div><div class="q-text">What is the writer's main purpose in the final paragraph?</div><div class="opts"><label class="opt"><input type="radio" name="q36" value="A"> <span class="opt-letter">A</span> <span>To argue that older people derive more benefit from exercise than younger people.</span></label><label class="opt"><input type="radio" name="q36" value="B"> <span class="opt-letter">B</span> <span>To show that Margaret's physical achievements have had unexpected personal value.</span></label><label class="opt"><input type="radio" name="q36" value="C"> <span class="opt-letter">C</span> <span>To suggest that distance running is more psychologically demanding than other sports.</span></label><label class="opt"><input type="radio" name="q36" value="D"> <span class="opt-letter">D</span> <span>To illustrate that patience is a quality that can only be learned through physical activity.</span></label></div></div>
+    </div>
+
+    <!-- PART 6 -->
+    <div class="part-section">
+      <div class="part-header">Part 6 — Cross-text Multiple Matching</div>
+      <h2>Questions 37–40</h2>
+      <p class="instructions">You are going to read four short texts in which different academics comment on the future of work and employment. For questions 37–40, choose from the texts (A–D). The texts may be chosen more than once.</p>
+      <div class="cross-text"><div class="cross-text-label">Text A — Dr. Yusuf Adebayo, economist</div><p style="font-size:.88rem;line-height:1.6;margin:0">The most striking feature of current labour market projections is their divergence. Optimistic scenarios envisage an economy that generates high-skill, high-wage roles as quickly as automation displaces routine ones. Pessimistic projections see a widening chasm between a small highly-paid professional class and a large, precarious service sector. My own reading of the data is cautiously positive, but I would not underestimate the risk that adjustment periods — the years or decades between displacement and replacement — will impose severe costs on specific populations. Policy needs to focus precisely there.</p></div>
+      <div class="cross-text"><div class="cross-text-label">Text B — Professor Camille Bertrand, sociologist</div><p style="font-size:.88rem;line-height:1.6;margin:0">Work is not simply an economic transaction; it is a primary source of identity, social belonging, and daily structure for most adults. Discussions of automation tend to focus narrowly on income — whether displaced workers will find equivalent earnings elsewhere. But the loss of meaningful occupation has consequences that wage subsidies and retraining schemes cannot easily address. When a community loses its dominant employer, what disappears along with the jobs is a shared culture, a sense of collective purpose, and a reason for young people to remain.</p></div>
+      <div class="cross-text"><div class="cross-text-label">Text C — Dr. Priya Mehta, HR director and management consultant</div><p style="font-size:.88rem;line-height:1.6;margin:0">Organisations that frame automation as a replacement strategy — machines displacing headcount — tend to perform worse in the medium term than those that treat it as an augmentation opportunity. The most effective deployments of AI I have seen in practice involve freeing skilled professionals from low-value repetitive tasks so they can focus on judgement, relationships, and creative problem-solving. Resistance from employees is far lower when they experience the technology as something that reduces drudgery rather than threatens their position.</p></div>
+      <div class="cross-text"><div class="cross-text-label">Text D — Professor Elin Johansson, philosopher of work</div><p style="font-size:.88rem;line-height:1.6;margin:0">We would do well to question the assumption that full employment is the correct goal. The idea that every adult should define themselves primarily through paid labour is historically specific and arguably becoming obsolete. If automation can perform many tasks more efficiently than people, perhaps the appropriate response is not to invent new work but to redistribute the time that automation liberates. Leisure, care, community participation, and creative activity have intrinsic value. A society that produces sufficient goods need not compel its citizens to manufacture artificial busyness.</p></div>
+      <div style="margin-top:20px">
+        <div class="mm-q"><div class="q-num">37</div><div class="q-text">Which writer argues that the social consequences of job loss extend beyond financial hardship?</div><select class="match-select" data-q="37"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">38</div><div class="q-text">Which writer challenges a widely-held assumption about what economies should be aiming to achieve?</div><select class="match-select" data-q="38"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">39</div><div class="q-text">Which writer shares Text A's view that the transition period between displacement and re-employment deserves particular attention?</div><select class="match-select" data-q="39"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">40</div><div class="q-text">Which writer draws on observed workplace evidence rather than broader social or economic theory?</div><select class="match-select" data-q="40"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+      </div>
+    </div>
+
+    <!-- PART 7 -->
+    <div class="part-section">
+      <div class="part-header">Part 7 — Gapped Text</div>
+      <h2>Questions 41–46</h2>
+      <p class="instructions">You are going to read an article about language and identity. Six sentences have been removed. Choose from the sentences A–G the one which fits each gap. There is one extra sentence you do not need to use.</p>
+      <div class="text-title">The language inside you</div>
+      <div class="text-content">
+        <p>The language we speak first is rarely something we choose. It arrives before memory, before any sense of self that might have preferences or make decisions. <strong style="color:var(--amber)">[41]</strong> <select class="gap-select" data-q="41"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select> In this way, language is less like a tool than a habitat — something we inhabit rather than use.</p>
+        <p>This becomes apparent when people relocate to a country where a different language dominates. The practical challenges of navigating a second language are well documented. Less examined is what happens to a sense of self during this process. <strong style="color:var(--amber)">[42]</strong> <select class="gap-select" data-q="42"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select> A person who is articulate, humorous, and precise in their mother tongue may feel reduced to the level of a child in the new one, struggling to express nuance or irony.</p>
+        <p>Linguists have long noted that bilingual speakers often report experiencing their languages as associated with distinct emotional registers. <strong style="color:var(--amber)">[43]</strong> <select class="gap-select" data-q="43"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select> For many, the first language remains the language of feeling, while the second operates at a cooler, more analytical distance.</p>
+        <p>The relationship between language and cultural identity is particularly complex for communities whose historical languages were suppressed. <strong style="color:var(--amber)">[44]</strong> <select class="gap-select" data-q="44"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select> Efforts to revive these languages are therefore never merely linguistic; they are acts of cultural reconstruction.</p>
+        <p>For those who grow up speaking two languages from birth, the experience is different again. Rather than feeling divided, many report a kind of doubling — as though the languages open onto slightly different versions of the world, each with its own textures and associations. <strong style="color:var(--amber)">[45]</strong> <select class="gap-select" data-q="45"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select> This is the experience that novelist Samuel Beckett described, writing in French to escape the emotional weight of his native English.</p>
+        <p>What all of this suggests is that language shapes the interior life in ways that go far beyond vocabulary or grammar. <strong style="color:var(--amber)">[46]</strong> <select class="gap-select" data-q="46"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select> To speak differently is, in some small but real sense, to be different.</p>
+      </div>
+      <div style="margin-top:16px;padding-top:14px;border-top:2px solid var(--hairline)"><div style="font-family:var(--font-sans);font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Removed sentences (one is extra):</div>
+        <div class="gap-option"><div class="opt-letter">A</div><div>It shapes what can be felt, what can be remembered, and what can be understood about oneself.</div></div>
+        <div class="gap-option"><div class="opt-letter">B</div><div>When a colonial power prohibited the use of an indigenous tongue, it attacked not only communication but memory, ceremony, and a community's means of passing on values.</div></div>
+        <div class="gap-option"><div class="opt-letter">C</div><div>Switching between them can feel less like translation and more like a subtle shift in perspective.</div></div>
+        <div class="gap-option"><div class="opt-letter">D</div><div>It becomes part of the way the world is categorised, felt, and made sense of before conscious thought begins.</div></div>
+        <div class="gap-option"><div class="opt-letter">E</div><div>Some speakers find that the second language allows emotional distance that the mother tongue makes impossible.</div></div>
+        <div class="gap-option"><div class="opt-letter">F</div><div>The process can be disorienting in ways that go beyond the practical inconveniences of miscommunication.</div></div>
+        <div class="gap-option"><div class="opt-letter">G</div><div>Anger, grief, and joy, research indicates, are experienced with different intensities depending on the language in which they are expressed.</div></div>
+      </div>
+    </div>
+
+    <!-- PART 8 -->
+    <div class="part-section">
+      <div class="part-header">Part 8 — Multiple Matching</div>
+      <h2>Questions 47–56</h2>
+      <p class="instructions">You are going to read four entrepreneurs reflecting on professional mistakes. For questions 47–56, choose from the sections (A–D). The sections may be chosen more than once.</p>
+      <div class="mm-text"><div class="mm-letter">A</div><div class="mm-body"><strong>Natalia Voss, founder of an ethical clothing brand</strong><br>The mistake I made in our second year was scaling too quickly. We had received a wave of positive press coverage, and I interpreted that as a signal to expand production immediately. I hired twenty new staff and signed two-year contracts with three additional manufacturers — all within the space of four months. When the initial surge in demand levelled off, as it inevitably does after media attention, we were left with significant fixed costs and no short-term revenue growth to cover them. It took us eighteen months to stabilise. What I learned was not to confuse noise with signal. Visibility is not the same as demand, and acting as though it were nearly sank us. I now wait for sustained sales data across at least three consecutive quarters before making any major capacity decisions.</div></div>
+      <div class="mm-text"><div class="mm-letter">B</div><div class="mm-body"><strong>Desmond Okonkwo, co-founder of a logistics technology firm</strong><br>My biggest professional mistake was one I did not recognise as a mistake at the time: I let the strongest member of my founding team leave without making any serious effort to retain him. He had raised a legitimate concern about our direction, and I had dismissed it as unnecessarily cautious. Within a year, he had founded a competing company that is now considerably larger than ours. I do not regret the direction we chose — I still believe it was right — but I deeply regret the manner in which I handled the disagreement. I was so convinced of my own judgment that I treated his perspective as an obstacle rather than a resource. A co-founder who challenges you rigorously is worth more than one who agrees with everything.</div></div>
+      <div class="mm-text"><div class="mm-letter">C</div><div class="mm-body"><strong>Saoirse Flanagan, entrepreneur and business school lecturer</strong><br>I spent the first three years of my startup delaying the moment at which I would approach investors. I was convinced I needed to wait until the product was perfect — that showing anything imperfect to people whose opinion mattered would damage the company irreparably. This was both wrong and expensive. The feedback I eventually received when I did approach investors was invaluable and would have saved us considerable time and resource had I sought it earlier. More significantly, I wasted three years on features that the market turned out not to want. I now advise my students that perfectionism at the early stage is almost always a form of fear dressed up as diligence, and that getting real-world feedback is the only reliable way to know whether you are solving the right problem.</div></div>
+      <div class="mm-text"><div class="mm-letter">D</div><div class="mm-body"><strong>Marcus Thiele, former restaurant owner, now food industry consultant</strong><br>I opened my second restaurant in a location that every instinct told me was wrong. The rent was attractive, the space was beautiful, and a property agent I had known for years was enthusiastic. I ignored the fact that the surrounding area had insufficient foot traffic for the kind of dining experience I was offering. The restaurant lasted twenty months. In retrospect, I allowed myself to be persuaded by factors that were visible and tangible — the look of the room, the cost of the lease, a trusted contact's confidence — and I discounted the evidence that was harder to quantify but ultimately decisive. I had done the same thing with my first restaurant, which had worked through luck rather than judgement. The second time, the luck ran out. I now do six months of independent observation before signing any new lease.</div></div>
+      <div style="margin-top:20px">
+        <div class="mm-q"><div class="q-num">47</div><div class="q-text">Which entrepreneur admits to having repeated a flawed approach on more than one occasion?</div><select class="match-select" data-q="47"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">48</div><div class="q-text">Which entrepreneur describes a mistake that stemmed from excessive self-confidence in their own judgement?</div><select class="match-select" data-q="48"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">49</div><div class="q-text">Which entrepreneur now uses a specific waiting period before committing to major decisions?</div><select class="match-select" data-q="49"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">50</div><div class="q-text">Which entrepreneur says their mistake was caused by prioritising easily observable factors over less tangible evidence?</div><select class="match-select" data-q="50"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">51</div><div class="q-text">Which entrepreneur acknowledges that the person who challenged them turned out to have been correct?</div><select class="match-select" data-q="51"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">52</div><div class="q-text">Which entrepreneur now passes on the lessons from their mistake to others in a professional context?</div><select class="match-select" data-q="52"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">53</div><div class="q-text">Which entrepreneur made a mistake that resulted in taking on financial commitments they could not sustain?</div><select class="match-select" data-q="53"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">54</div><div class="q-text">Which entrepreneur suggests that their apparent caution was actually concealing a deeper anxiety?</div><select class="match-select" data-q="54"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">55</div><div class="q-text">Which entrepreneur says that the initial positive reaction to their work did not accurately reflect longer-term demand?</div><select class="match-select" data-q="55"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">56</div><div class="q-text">Which entrepreneur regrets the way a professional disagreement was handled more than the decision itself?</div><select class="match-select" data-q="56"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+      </div>
+    </div>
+
+    <div class="submit-area">
+      <p>Check your work before submitting. You cannot change answers after submission.</p>
+      <button class="submit-btn" onclick="submitExam(false)">Submit exam</button>
+    </div>
+  </div>
+
+  <div id="resultsScreen" class="results-screen">
+    <div class="part-header">CAE Mock Exam 2 — Results</div>
+    <div class="score-big" id="scoreFinal"></div>
+    <div class="score-label">Questions correct</div>
+    <p id="timeUsed" style="text-align:center;font-family:var(--font-sans);font-size:.8rem;color:var(--muted);margin-bottom:16px"></p>
+    <div class="part-breakdown" id="partBreakdown"></div>
+    <div style="text-align:center;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <a href="../index.html" class="start-btn" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);text-decoration:none;display:inline-block">Back to CAE</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">Word Play · Cambridge English A1&rarr;C2</footer>
+
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+const ANSWERS = {
+  "part1":{"1":"emerged","2":"edge","3":"experimented","4":"taking","5":"rejected","6":"set","7":"defy","8":"draw"},
+  "part2":{9:{"answer":"become","accept":["BECOME","been","BEEN"]},10:{"answer":"as","accept":["AS"]},11:{"answer":"with","accept":["WITH"]},12:{"answer":"in","accept":["IN"]},13:{"answer":"those","accept":["THOSE"]},14:{"answer":"as","accept":["AS"]},15:{"answer":"of","accept":["OF"]},16:{"answer":"such","accept":["SUCH","these","THESE","the","THE"]}},
+  "part3":{"17":"analysis","18":"remarkably","19":"manipulative","20":"aspirational","21":"emergence","22":"environmental","23":"loyalty","24":"understanding"},
+  "part4":{"25":{"answer":"were taken to renovate","accept":["were taken to renovate","were taken up by the renovation of","were taken renovating"]},"26":{"answer":"is said to have resigned","accept":["is said to have resigned"]},"27":{"answer":"such a state of exhaustion that","accept":["such a state of exhaustion that","such exhaustion that"]},"28":{"answer":"not aware that","accept":["not aware that","unaware that"]},"29":{"answer":"ought not to have sent","accept":["ought not to have sent","ought not have sent"]},"30":{"answer":"nothing like as strict as","accept":["nothing like as strict as","nothing nearly as strict as"]}},
+  "part5":{"31":"B","32":"A","33":"B","34":"B","35":"B","36":"B"},
+  "part6":{"37":"B","38":"D","39":"B","40":"C"},
+  "part7":{"41":"D","42":"F","43":"G","44":"B","45":"C","46":"A"},
+  "part8":{"47":"D","48":"B","49":"A","50":"D","51":"B","52":"C","53":"A","54":"C","55":"A","56":"B"}
+};
+const DURATION_MS = 90 * 60 * 1000;
+let startTime = null;
+let timerInterval = null;
+let submitted = false;
+const SAVE_KEY = 'wordplay_cae_mock_2';
+const BEST_KEY = 'wordplay_cae_mock_2_best';
+let practiceMode = false;
+
+function startExam(practice) {
+  practiceMode = practice || false;
+  clearSave();
+  _startExam();
+}
+
+function resumeExam() {
+  const saved = getSave();
+  if (!saved) return;
+  _startExam(saved);
+}
+
+function _startExam(saved) {
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('examArea').classList.add('active');
+  if (practiceMode) {
+    document.querySelector('.timer-bar').innerHTML = '<div class="timer-display">Practice mode — no timer</div><div class="timer-meta">Answer at your own pace</div>';
+    startTime = Date.now();
+  } else {
+    startTime = saved ? saved.startTime : Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+    updateTimer();
+  }
+  if (saved) restoreAnswers(saved.answers);
+  window.scrollTo(0, 0);
+}
+
+function getSave() {
+  try { var s = localStorage.getItem(SAVE_KEY); return s ? JSON.parse(s) : null; } catch(e) { return null; }
+}
+
+function clearSave() {
+  try { localStorage.removeItem(SAVE_KEY); } catch(e) {}
+}
+
+function saveProgress() {
+  if (submitted) return;
+  var answers = collectAnswers();
+  var save = { startTime: startTime, answers: answers, savedAt: Date.now() };
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(save)); } catch(e) {}
+  alert('Progress saved. You can close the tab and resume later.');
+}
+
+function collectAnswers() {
+  var a = {};
+  document.querySelectorAll('input[type=radio]:checked').forEach(function(r) { a[r.name] = r.value; });
+  document.querySelectorAll('input[type=text]').forEach(function(i) { if (i.dataset.q) a['t'+i.dataset.q] = i.value; });
+  document.querySelectorAll('select').forEach(function(s) { if (s.dataset.q) a['s'+s.dataset.q] = s.value; });
+  return a;
+}
+
+function restoreAnswers(answers) {
+  Object.entries(answers).forEach(function(kv) {
+    var k = kv[0], v = kv[1];
+    if (k.startsWith('q')) {
+      var r = document.querySelector('input[name="'+k+'"][value="'+v+'"]');
+      if (r) r.checked = true;
+    } else if (k.startsWith('t')) {
+      var inp = document.querySelector('input[data-q="'+k.slice(1)+'"]');
+      if (inp) inp.value = v;
+    } else if (k.startsWith('s')) {
+      var sel = document.querySelector('select[data-q="'+k.slice(1)+'"]');
+      if (sel) sel.value = v;
+    }
+  });
+}
+
+function checkPrevAttempt() {
+  try {
+    var best = localStorage.getItem(BEST_KEY);
+    if (best) { document.getElementById('prevAttempt').style.display = 'block'; document.getElementById('prevScore').textContent = best; }
+    var saved = getSave();
+    if (saved) {
+      var ageMin = Math.round((Date.now() - saved.savedAt) / 60000);
+      document.getElementById('resumeSection').style.display = 'block';
+      document.getElementById('resumeInfo').textContent = 'Saved ' + ageMin + ' minutes ago';
+    }
+  } catch(e) {}
+}
+checkPrevAttempt();
+
+function updateTimer() {
+  var elapsed = Date.now() - startTime;
+  var remaining = DURATION_MS - elapsed;
+  if (remaining <= 0) { submitExam(true); return; }
+  var mins = Math.floor(remaining / 60000);
+  var secs = Math.floor((remaining % 60000) / 1000);
+  var el = document.getElementById('timerDisplay');
+  el.textContent = mins + ':' + (secs < 10 ? '0' : '') + secs;
+  el.classList.toggle('warning', remaining < 15*60*1000 && remaining >= 3*60*1000);
+  el.classList.toggle('critical', remaining < 3*60*1000);
+}
+
+function normalize(s) {
+  return (s || '').trim().toLowerCase().replace(/['']/g, "'");
+}
+
+function getRadioValue(name) {
+  var r = document.querySelector('input[name="'+name+'"]:checked');
+  return r ? r.value : null;
+}
+
+function getInputValue(q) {
+  var el = document.querySelector('input[data-q="'+q+'"], select[data-q="'+q+'"]');
+  return el ? el.value : '';
+}
+
+function checkAnswer(part, qNum, userValue) {
+  var ans = ANSWERS[part][qNum];
+  if (typeof ans === 'string') return normalize(userValue) === normalize(ans);
+  var target = normalize(ans.answer);
+  var userN = normalize(userValue);
+  if (userN === target) return true;
+  if (ans.accept && ans.accept.some(function(a) { return normalize(a) === userN; })) return true;
+  return false;
+}
+
+function submitExam(timeUp) {
+  if (submitted) return;
+  if (!timeUp && !confirm('Submit your exam now? You will not be able to change answers.')) return;
+  submitted = true;
+  clearInterval(timerInterval);
+  var elapsedMs = Date.now() - startTime;
+  var elapsedMin = Math.floor(elapsedMs / 60000);
+  var elapsedSec = Math.floor((elapsedMs % 60000) / 1000);
+  document.querySelectorAll('input, select').forEach(function(el) { el.disabled = true; });
+
+  var scores = {};
+
+  scores.part1 = { correct: 0, total: 8 };
+  for (var i = 1; i <= 8; i++) {
+    var v = getRadioValue('q' + i);
+    if (v && checkAnswer('part1', i, v)) scores.part1.correct++;
+  }
+
+  scores.part2 = { correct: 0, total: 8 };
+  for (var i = 9; i <= 16; i++) {
+    var v = getInputValue(i);
+    if (v && checkAnswer('part2', i, v)) scores.part2.correct++;
+  }
+
+  scores.part3 = { correct: 0, total: 8 };
+  for (var i = 17; i <= 24; i++) {
+    var v = getInputValue(i);
+    if (v && checkAnswer('part3', i, v)) scores.part3.correct++;
+  }
+
+  scores.part4 = { correct: 0, total: 6 };
+  for (var i = 25; i <= 30; i++) {
+    var v = getInputValue(i);
+    if (v && checkAnswer('part4', i, v)) scores.part4.correct++;
+  }
+
+  scores.part5 = { correct: 0, total: 6 };
+  for (var i = 31; i <= 36; i++) {
+    var v = getRadioValue('q' + i);
+    if (v && v === ANSWERS.part5[i]) scores.part5.correct++;
+  }
+
+  scores.part6 = { correct: 0, total: 4 };
+  for (var i = 37; i <= 40; i++) {
+    var v = getInputValue(i);
+    if (v && v === ANSWERS.part6[i]) scores.part6.correct++;
+  }
+
+  scores.part7 = { correct: 0, total: 6 };
+  for (var i = 41; i <= 46; i++) {
+    var v = getInputValue(i);
+    if (v && v === ANSWERS.part7[i]) scores.part7.correct++;
+  }
+
+  scores.part8 = { correct: 0, total: 10 };
+  for (var i = 47; i <= 56; i++) {
+    var v = getInputValue(i);
+    if (v && v === ANSWERS.part8[i]) scores.part8.correct++;
+  }
+
+  var totalCorrect = Object.values(scores).reduce(function(a, p) { return a + p.correct; }, 0);
+  var pct = Math.round((totalCorrect / 56) * 100);
+
+  document.getElementById('scoreFinal').textContent = totalCorrect + ' / 56';
+  document.getElementById('timeUsed').textContent = 'Time used: ' + elapsedMin + ' min ' + elapsedSec + ' sec' + (timeUp ? ' (auto-submit)' : '');
+
+  try { localStorage.setItem(BEST_KEY, totalCorrect + '/56 (' + pct + '%)'); } catch(e) {}
+
+  var partLabels = {
+    part1:'Part 1 · MC Cloze', part2:'Part 2 · Open Cloze', part3:'Part 3 · Word Form',
+    part4:'Part 4 · Transform', part5:'Part 5 · Multi-choice', part6:'Part 6 · Cross-text',
+    part7:'Part 7 · Gapped Text', part8:'Part 8 · Multi-match'
+  };
+  var breakdown = '';
+  Object.entries(scores).forEach(function(kv) {
+    var k = kv[0], v = kv[1];
+    var p = Math.round((v.correct / v.total) * 100);
+    breakdown += '<div class="part-score"><div class="name">' + partLabels[k] + '</div><div class="val">' + v.correct + '/' + v.total + '</div><div class="pct">' + p + '%</div></div>';
+  });
+  document.getElementById('partBreakdown').innerHTML = breakdown;
+
+  document.getElementById('resultsScreen').classList.add('active');
+  document.getElementById('resultsScreen').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

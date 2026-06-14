@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>CAE Mock Exam 3 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<style>
+.mock-container{max-width:760px;margin:0 auto;padding:0 16px}
+.timer-bar{position:sticky;top:0;background:var(--ink);color:var(--paper);padding:12px 16px;border-radius:0 0 8px 8px;display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15);margin-bottom:24px}
+.timer-display{font-family:var(--font-sans);font-size:1.1rem;font-weight:700;letter-spacing:.5px}
+.timer-display.warning{color:#FFD700}
+.timer-display.critical{color:#FF6B6B;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.timer-meta{font-family:var(--font-sans);font-size:.72rem;opacity:.85;letter-spacing:1px;text-transform:uppercase}
+.start-screen,.results-screen{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:28px;margin-bottom:24px}
+.start-screen h2,.results-screen h2{font-size:1.4rem;margin:0 0 12px}
+.start-btn{display:inline-block;padding:12px 28px;background:var(--ink);color:var(--paper);border:0;font-family:var(--font-sans);font-size:.82rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer;margin-top:12px}
+.start-btn:hover{opacity:.85}
+.exam-area{display:none}
+.exam-area.active{display:block}
+.part-section{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:24px;margin-bottom:28px}
+.part-header{font-family:var(--font-sans);font-size:.68rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.part-section h2{font-size:1.2rem;margin:0 0 8px;color:var(--ink)}
+.part-section .instructions{font-size:.85rem;color:var(--muted);margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--hairline)}
+.text-title{font-weight:700;text-align:center;font-size:1.05rem;margin:12px 0;color:var(--ink)}
+.text-content{font-size:.92rem;line-height:1.7;color:var(--ink);margin-bottom:18px}
+.text-content p{margin:0 0 12px}
+.mc-q{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--hairline)}
+.mc-q .q-num{font-family:var(--font-sans);font-size:.85rem;font-weight:800;color:var(--amber);min-width:28px}
+.mc-q .opts{flex:1;display:flex;flex-direction:column;gap:4px}
+.mc-q .q-text{flex:1;font-size:.9rem;margin-bottom:6px}
+.opt{display:flex;gap:6px;align-items:flex-start;padding:4px 0;cursor:pointer;font-size:.9rem}
+.opt:hover{background:rgba(184,134,11,.05)}
+.opt-letter{font-family:var(--font-sans);font-weight:700;color:var(--amber);min-width:18px}
+.opt input{margin-top:4px}
+.cloze-input{width:110px;padding:2px 8px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-size:.82rem;background:var(--cream-deep)}
+.cloze-input:focus{outline:none;border-color:var(--amber)}
+.kw-input{width:100%;max-width:380px;padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-size:.85rem;background:var(--cream-deep)}
+.word-form-line{display:flex;padding:10px 0;border-top:1px solid var(--hairline);align-items:flex-start;gap:14px}
+.wf-text{flex:1;font-size:.92rem;line-height:1.6}
+.wf-prompt{font-family:var(--font-sans);font-size:.75rem;font-weight:800;letter-spacing:1px;color:var(--muted);padding:4px 10px;border:1px solid var(--hairline);border-radius:3px;min-width:90px;text-align:center}
+.kw-q{display:flex;gap:12px;padding:14px 0;border-top:1px solid var(--hairline)}
+.kw-content{flex:1}
+.kw-content p{margin:0 0 6px;font-size:.9rem}
+.kw-key{font-family:var(--font-sans);font-weight:800;letter-spacing:1px;color:var(--amber)}
+.gap-select,.match-select{padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-weight:700;background:var(--cream-deep);color:var(--ink);cursor:pointer}
+.gap-option{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--hairline);font-size:.88rem;line-height:1.5}
+.mm-q{display:flex;gap:12px;align-items:center;padding:8px 0;border-top:1px solid var(--hairline);font-size:.88rem}
+.mm-q .q-text{flex:1}
+.mm-text{display:flex;gap:14px;padding:14px 0;border-top:1px solid var(--hairline)}
+.mm-letter{font-family:var(--font-sans);font-weight:800;color:var(--amber);font-size:1rem;min-width:24px}
+.mm-body{flex:1;font-size:.88rem;line-height:1.55}
+.submit-area{background:var(--ink);color:var(--paper);border-radius:8px;padding:20px;text-align:center;margin:32px 0}
+.submit-area p{margin:0 0 12px;opacity:.9}
+.submit-btn{display:inline-block;padding:14px 36px;background:var(--amber);color:var(--ink);border:0;font-family:var(--font-sans);font-size:.9rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer}
+.submit-btn:hover{opacity:.9}
+.results-screen{display:none}
+.results-screen.active{display:block}
+.score-big{font-size:3rem;font-weight:800;color:var(--amber);text-align:center;font-family:Georgia,serif}
+.score-label{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:18px}
+.part-breakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:20px 0}
+.part-score{background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px;padding:12px;text-align:center}
+.part-score .name{font-family:var(--font-sans);font-size:.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.part-score .val{font-size:1.3rem;font-weight:700;color:var(--ink);margin-top:4px}
+.part-score .pct{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin-top:2px}
+.exam-area input:disabled,.exam-area select:disabled{background:rgba(184,134,11,.05)}
+.cross-text{background:var(--cream-deep);border-left:3px solid var(--amber);padding:12px 14px;margin-bottom:12px;border-radius:0 4px 4px 0}
+.cross-text-label{font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Back"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+
+<div class="mock-container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>&#8250;</span><a href="../../index.html">C1</a><span>&#8250;</span><a href="../index.html">CAE</a><span>&#8250;</span><strong>Mock Exam 3</strong></div>
+
+  <div id="startScreen" class="start-screen">
+    <div class="part-header">CAE Mock Exam 3</div>
+    <h2>Mock Exam 3 — Reading &amp; Use of English</h2>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Duration:</strong> 90 minutes</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Total questions:</strong> 56 across 8 parts</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:16px">Once you click <strong>Start</strong>, the timer begins. The exam auto-submits when time runs out.</p>
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:18px">Tip: aim to spend roughly 10 minutes per part. Do not dwell on any single question.</p>
+    <button class="start-btn" onclick="startExam(false)">Start exam (timed)</button>
+    <button class="start-btn" onclick="startExam(true)" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Practice mode (no timer)</button>
+    <div id="resumeSection" style="display:none;margin-top:18px;padding:14px 16px;background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--amber);margin-bottom:6px">Saved progress found</div><div id="resumeInfo" style="font-size:.88rem;color:var(--ink);margin-bottom:10px"></div><button class="start-btn" onclick="resumeExam()" style="background:var(--amber);color:var(--ink)">Resume</button><button class="start-btn" onclick="clearSave()" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Start fresh</button></div>
+    <div id="prevAttempt" style="display:none;margin-top:12px;font-family:var(--font-sans);font-size:.78rem;color:var(--muted)">Previous best: <strong id="prevScore"></strong></div>
+  </div>
+
+  <div id="examArea" class="exam-area">
+    <div class="timer-bar">
+      <div class="timer-display" id="timerDisplay">90:00</div>
+      <div class="timer-meta">Time remaining</div>
+      <button onclick="saveProgress()" style="background:transparent;border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.85);font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border-radius:3px;cursor:pointer">Save &amp; quit</button>
+    </div>
+
+    <!-- PART 1 -->
+    <div class="part-section">
+      <div class="part-header">Part 1 — Multiple-choice Cloze</div>
+      <h2>Questions 1–8</h2>
+      <p class="instructions">For questions 1–8, read the text below and decide which answer (A, B, C or D) best fits each gap.</p>
+      <div class="text-title">Urban heat islands</div>
+      <div class="text-content"><p>Cities are significantly warmer than the rural areas that (1) _____ them — a phenomenon known as the urban heat island effect. This (2) _____ arises because buildings, roads and pavements absorb solar radiation during the day and (3) _____ it as heat at night, while the (4) _____ of trees and vegetation means there is little natural cooling. The effect is (5) _____ by the waste heat generated by vehicles, industry and air-conditioning units. In response, urban planners are increasingly (6) _____ green infrastructure: rooftop gardens, tree-lined streets and reflective surfaces that (7) _____ solar gain. Some cities have gone further, (8) _____ entire districts according to ecological principles that prioritise thermal comfort.</p></div>
+      <div class="mc-q"><div class="q-num">1</div><div class="opts"><label class="opt"><input type="radio" name="q1" value="encircle"> <span class="opt-letter">A</span> <span>encircle</span></label><label class="opt"><input type="radio" name="q1" value="surround"> <span class="opt-letter">B</span> <span>surround</span></label><label class="opt"><input type="radio" name="q1" value="enclose"> <span class="opt-letter">C</span> <span>enclose</span></label><label class="opt"><input type="radio" name="q1" value="border"> <span class="opt-letter">D</span> <span>border</span></label></div></div>
+      <div class="mc-q"><div class="q-num">2</div><div class="opts"><label class="opt"><input type="radio" name="q2" value="situation"> <span class="opt-letter">A</span> <span>situation</span></label><label class="opt"><input type="radio" name="q2" value="circumstance"> <span class="opt-letter">B</span> <span>circumstance</span></label><label class="opt"><input type="radio" name="q2" value="condition"> <span class="opt-letter">C</span> <span>condition</span></label><label class="opt"><input type="radio" name="q2" value="effect"> <span class="opt-letter">D</span> <span>effect</span></label></div></div>
+      <div class="mc-q"><div class="q-num">3</div><div class="opts"><label class="opt"><input type="radio" name="q3" value="emit"> <span class="opt-letter">A</span> <span>emit</span></label><label class="opt"><input type="radio" name="q3" value="release"> <span class="opt-letter">B</span> <span>release</span></label><label class="opt"><input type="radio" name="q3" value="discharge"> <span class="opt-letter">C</span> <span>discharge</span></label><label class="opt"><input type="radio" name="q3" value="radiate"> <span class="opt-letter">D</span> <span>radiate</span></label></div></div>
+      <div class="mc-q"><div class="q-num">4</div><div class="opts"><label class="opt"><input type="radio" name="q4" value="absence"> <span class="opt-letter">A</span> <span>absence</span></label><label class="opt"><input type="radio" name="q4" value="shortage"> <span class="opt-letter">B</span> <span>shortage</span></label><label class="opt"><input type="radio" name="q4" value="lack"> <span class="opt-letter">C</span> <span>lack</span></label><label class="opt"><input type="radio" name="q4" value="deficit"> <span class="opt-letter">D</span> <span>deficit</span></label></div></div>
+      <div class="mc-q"><div class="q-num">5</div><div class="opts"><label class="opt"><input type="radio" name="q5" value="strengthened"> <span class="opt-letter">A</span> <span>strengthened</span></label><label class="opt"><input type="radio" name="q5" value="compounded"> <span class="opt-letter">B</span> <span>compounded</span></label><label class="opt"><input type="radio" name="q5" value="intensified"> <span class="opt-letter">C</span> <span>intensified</span></label><label class="opt"><input type="radio" name="q5" value="reinforced"> <span class="opt-letter">D</span> <span>reinforced</span></label></div></div>
+      <div class="mc-q"><div class="q-num">6</div><div class="opts"><label class="opt"><input type="radio" name="q6" value="adopting"> <span class="opt-letter">A</span> <span>adopting</span></label><label class="opt"><input type="radio" name="q6" value="implementing"> <span class="opt-letter">B</span> <span>implementing</span></label><label class="opt"><input type="radio" name="q6" value="embracing"> <span class="opt-letter">C</span> <span>embracing</span></label><label class="opt"><input type="radio" name="q6" value="installing"> <span class="opt-letter">D</span> <span>installing</span></label></div></div>
+      <div class="mc-q"><div class="q-num">7</div><div class="opts"><label class="opt"><input type="radio" name="q7" value="cut"> <span class="opt-letter">A</span> <span>cut</span></label><label class="opt"><input type="radio" name="q7" value="limit"> <span class="opt-letter">B</span> <span>limit</span></label><label class="opt"><input type="radio" name="q7" value="reduce"> <span class="opt-letter">C</span> <span>reduce</span></label><label class="opt"><input type="radio" name="q7" value="minimise"> <span class="opt-letter">D</span> <span>minimise</span></label></div></div>
+      <div class="mc-q"><div class="q-num">8</div><div class="opts"><label class="opt"><input type="radio" name="q8" value="redesigning"> <span class="opt-letter">A</span> <span>redesigning</span></label><label class="opt"><input type="radio" name="q8" value="reorganising"> <span class="opt-letter">B</span> <span>reorganising</span></label><label class="opt"><input type="radio" name="q8" value="remodelling"> <span class="opt-letter">C</span> <span>remodelling</span></label><label class="opt"><input type="radio" name="q8" value="rebuilding"> <span class="opt-letter">D</span> <span>rebuilding</span></label></div></div>
+    </div>
+
+    <!-- PART 2 -->
+    <div class="part-section">
+      <div class="part-header">Part 2 — Open Cloze</div>
+      <h2>Questions 9–16</h2>
+      <p class="instructions">For questions 9–16, read the text below and think of the word which best fits each gap. Use only one word in each gap.</p>
+      <div class="text-title">The revival of craft industries</div>
+      <div class="text-content"><p>Traditional craft skills — bookbinding, ceramics, hand-printing, woodworking — (9) <input type="text" class="cloze-input" data-q="9" maxlength="20" autocomplete="off" spellcheck="false"> long been considered remnants of a pre-industrial past, (10) <input type="text" class="cloze-input" data-q="10" maxlength="20" autocomplete="off" spellcheck="false"> in recent decades a remarkable reversal has (11) <input type="text" class="cloze-input" data-q="11" maxlength="20" autocomplete="off" spellcheck="false"> place. Far from disappearing (12) <input type="text" class="cloze-input" data-q="12" maxlength="20" autocomplete="off" spellcheck="false"> the advance of mass production, craft has found a new audience (13) <input type="text" class="cloze-input" data-q="13" maxlength="20" autocomplete="off" spellcheck="false"> precisely because of digital culture. Many people, (14) <input type="text" class="cloze-input" data-q="14" maxlength="20" autocomplete="off" spellcheck="false"> work is increasingly screen-based and intangible, are drawn to the satisfying physicality of making something (15) <input type="text" class="cloze-input" data-q="15" maxlength="20" autocomplete="off" spellcheck="false"> their own hands. Online platforms have proved invaluable in (16) <input type="text" class="cloze-input" data-q="16" maxlength="20" autocomplete="off" spellcheck="false"> independent craftspeople to connect with buyers worldwide.</p></div>
+    </div>
+
+    <!-- PART 3 -->
+    <div class="part-section">
+      <div class="part-header">Part 3 — Word Formation</div>
+      <h2>Questions 17–24</h2>
+      <p class="instructions">For questions 17–24, read the text below. Use the word given in capitals at the end of some of the lines to form a word that fits in the gap in the same line.</p>
+      <div class="text-title">Adapting to a changing climate</div>
+      <div class="word-form-line"><div class="wf-text">Climate adaptation requires communities to develop (17) <input type="text" class="cloze-input" data-q="17" maxlength="25" autocomplete="off" spellcheck="false"> responses to a range of environmental challenges that were largely (18) <input type="text" class="cloze-input" data-q="18" maxlength="25" autocomplete="off" spellcheck="false"> a generation ago.</div><div class="wf-prompt">INNOVATE &nbsp;&nbsp; FORESEE</div></div>
+      <div class="word-form-line"><div class="wf-text">Coastal settlements face particular (19) <input type="text" class="cloze-input" data-q="19" maxlength="25" autocomplete="off" spellcheck="false">, as rising sea levels make existing (20) <input type="text" class="cloze-input" data-q="20" maxlength="25" autocomplete="off" spellcheck="false"> infrastructure increasingly inadequate.</div><div class="wf-prompt">VULNERABLE &nbsp;&nbsp; PROTECT</div></div>
+      <div class="word-form-line"><div class="wf-text">Planners argue that the (21) <input type="text" class="cloze-input" data-q="21" maxlength="25" autocomplete="off" spellcheck="false"> of natural systems — wetlands, forests, river floodplains — offers the most (22) <input type="text" class="cloze-input" data-q="22" maxlength="25" autocomplete="off" spellcheck="false"> form of long-term flood defence.</div><div class="wf-prompt">RESTORE &nbsp;&nbsp; SUSTAIN</div></div>
+      <div class="word-form-line"><div class="wf-text">Critics contend that adaptation measures are (23) <input type="text" class="cloze-input" data-q="23" maxlength="25" autocomplete="off" spellcheck="false"> funded, and that without (24) <input type="text" class="cloze-input" data-q="24" maxlength="25" autocomplete="off" spellcheck="false"> investment, even the best-designed strategies will fall short.</div><div class="wf-prompt">ADEQUATE &nbsp;&nbsp; SUBSTANCE</div></div>
+    </div>
+
+    <!-- PART 4 -->
+    <div class="part-section">
+      <div class="part-header">Part 4 — Key Word Transformation</div>
+      <h2>Questions 25–30</h2>
+      <p class="instructions">For questions 25–30, complete the second sentence so that it has a similar meaning to the first sentence, using the word given. Do not change the word given. You must use between two and five words, including the word given.</p>
+      <div class="kw-q"><div class="q-num">25</div><div class="kw-content"><p>"I didn't take the documents," the accountant said.</p><p class="kw-key">DENIED</p><p>The accountant <input type="text" class="kw-input" data-q="25" maxlength="60" autocomplete="off" spellcheck="false"> the documents.</p></div></div>
+      <div class="kw-q"><div class="q-num">26</div><div class="kw-content"><p>It is not necessary for you to attend the full session.</p><p class="kw-key">NEED</p><p>You <input type="text" class="kw-input" data-q="26" maxlength="60" autocomplete="off" spellcheck="false"> the full session.</p></div></div>
+      <div class="kw-q"><div class="q-num">27</div><div class="kw-content"><p>The project succeeded mainly because of her leadership.</p><p class="kw-key">LARGELY</p><p>Her leadership <input type="text" class="kw-input" data-q="27" maxlength="60" autocomplete="off" spellcheck="false"> the project's success.</p></div></div>
+      <div class="kw-q"><div class="q-num">28</div><div class="kw-content"><p>No other building in the city is as tall as the new tower.</p><p class="kw-key">TALLEST</p><p>The new tower is <input type="text" class="kw-input" data-q="28" maxlength="60" autocomplete="off" spellcheck="false"> in the city.</p></div></div>
+      <div class="kw-q"><div class="q-num">29</div><div class="kw-content"><p>They will announce the results only after all votes have been counted.</p><p class="kw-key">UNTIL</p><p>The results <input type="text" class="kw-input" data-q="29" maxlength="60" autocomplete="off" spellcheck="false"> all votes have been counted.</p></div></div>
+      <div class="kw-q"><div class="q-num">30</div><div class="kw-content"><p>It is said that the composer wrote the symphony in three weeks.</p><p class="kw-key">SUPPOSED</p><p>The composer <input type="text" class="kw-input" data-q="30" maxlength="60" autocomplete="off" spellcheck="false"> the symphony in three weeks.</p></div></div>
+    </div>
+
+    <!-- PART 5 -->
+    <div class="part-section">
+      <div class="part-header">Part 5 — Multiple Choice</div>
+      <h2>Questions 31–36</h2>
+      <p class="instructions">For questions 31–36, read the text below and choose the answer (A, B, C or D) which you think fits best according to the text.</p>
+      <div class="text-title">The organ restorer</div>
+      <div class="text-content">
+        <p>Thomas Hargreaves first heard the organ at St Cuthbert's when he was eleven years old. It had been silent for thirty-two years by then — pipes clogged with decades of accumulated grime, bellows rotted, the action mechanism reduced to a tangle of dried leather and snapped trackers. His father, a retired music teacher, took him to see what remained of the instrument, and Hargreaves remembers the visit as the moment something in him became fixed. He did not yet understand what restoration meant. He understood only that the silence in that cold nave felt wrong.</p>
+        <p>He trained as a musician first, at the Royal College of Music, where his teachers found him technically gifted but temperamentally unsuited to the competitive pressures of a performance career. He was too absorbed by old instruments, too willing to disappear for months into archives, too uninterested in the professional networks that sustain a concert pianist's reputation. After graduating, he worked for a decade as assistant to Edmund Blaine, a veteran organ builder in York who taught him the disciplines of the craft with a rigour that Hargreaves says he has never encountered since. It was Blaine who first suggested that St Cuthbert's might be viable.</p>
+        <p>The restoration took eleven years. Hargreaves has written about the process with the meticulous clarity of a craftsman and the observational alertness of a novelist. The early years were largely diagnostic: documenting the original specification, tracing surviving pipes to workshops in Germany and the Netherlands where they had been sent for repair, sourcing period-appropriate materials. He found that the organ, built in 1887 by the Lancashire firm of William Whitworth, was more complete than initial surveys had suggested. Certain ranks of pipes, believed lost, had simply been stored in the church tower.</p>
+        <p>What he was not prepared for was the effect of completion. When the organ sounded for the first time in full voice, on a rainy Tuesday morning with only the church warden and two volunteers present, Hargreaves wept. He describes the moment with characteristic precision: not the emotion, which he declines to analyse, but the acoustic fact of the sound filling a space that had held only silence for longer than he had been alive. The community's response, when the restored instrument was finally heard at a public concert, was something he describes as disproportionate to the scale of the achievement — but he says this without false modesty.</p>
+        <p>The organ at St Cuthbert's is not the largest, nor the most historically significant, instrument to have been restored in Britain in recent decades. What distinguishes it, critics and listeners agree, is an acoustic quality — a particular warmth and fullness of tone — that Hargreaves attributes to the wood and leather he sourced with exceptional specificity. He spent three years identifying suppliers whose materials matched the original as closely as modern commerce permits. This is, he says, not perfectionism for its own sake but fidelity to the instrument's original intention. The difference, he insists, can be heard.</p>
+      </div>
+      <div class="mc-q"><div class="q-num">31</div><div class="q-text">What do we learn about Hargreaves's childhood visit to St Cuthbert's?</div><div class="opts"><label class="opt"><input type="radio" name="q31" value="A"> <span class="opt-letter">A</span> <span>He immediately resolved to restore the organ himself.</span></label><label class="opt"><input type="radio" name="q31" value="B"> <span class="opt-letter">B</span> <span>He was more affected by the organ's absence of sound than by its physical state.</span></label><label class="opt"><input type="radio" name="q31" value="C"> <span class="opt-letter">C</span> <span>He already had sufficient knowledge to understand what restoration would involve.</span></label><label class="opt"><input type="radio" name="q31" value="D"> <span class="opt-letter">D</span> <span>He was taken there in order to develop an interest in music.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">32</div><div class="q-text">What does the writer suggest about Hargreaves's time at the Royal College of Music?</div><div class="opts"><label class="opt"><input type="radio" name="q32" value="A"> <span class="opt-letter">A</span> <span>His academic performance was disappointing.</span></label><label class="opt"><input type="radio" name="q32" value="B"> <span class="opt-letter">B</span> <span>His interests made him unsuitable for the career the training was designed to produce.</span></label><label class="opt"><input type="radio" name="q32" value="C"> <span class="opt-letter">C</span> <span>He lacked the technical skills needed to succeed as a performer.</span></label><label class="opt"><input type="radio" name="q32" value="D"> <span class="opt-letter">D</span> <span>He was discouraged by his teachers from pursuing restoration work.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">33</div><div class="q-text">What surprising discovery did Hargreaves make during the restoration?</div><div class="opts"><label class="opt"><input type="radio" name="q33" value="A"> <span class="opt-letter">A</span> <span>The organ had been built by a firm not previously associated with church instruments.</span></label><label class="opt"><input type="radio" name="q33" value="B"> <span class="opt-letter">B</span> <span>Some components thought to have been lost were still on the premises.</span></label><label class="opt"><input type="radio" name="q33" value="C"> <span class="opt-letter">C</span> <span>The original pipes were of higher quality than comparable instruments of the period.</span></label><label class="opt"><input type="radio" name="q33" value="D"> <span class="opt-letter">D</span> <span>Records of the organ's original specification had survived intact in a German archive.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">34</div><div class="q-text">How does the writer characterise Hargreaves's account of the moment the organ first sounded?</div><div class="opts"><label class="opt"><input type="radio" name="q34" value="A"> <span class="opt-letter">A</span> <span>He is more willing to describe the sound than to explore his own reaction to it.</span></label><label class="opt"><input type="radio" name="q34" value="B"> <span class="opt-letter">B</span> <span>He focuses on the community's response rather than his personal experience.</span></label><label class="opt"><input type="radio" name="q34" value="C"> <span class="opt-letter">C</span> <span>He describes the occasion in terms that emphasise the smallness of his audience.</span></label><label class="opt"><input type="radio" name="q34" value="D"> <span class="opt-letter">D</span> <span>He regrets that so few people were present to witness the achievement.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">35</div><div class="q-text">What does Hargreaves say about his search for authentic materials?</div><div class="opts"><label class="opt"><input type="radio" name="q35" value="A"> <span class="opt-letter">A</span> <span>It was motivated by a desire for professional recognition rather than artistic principle.</span></label><label class="opt"><input type="radio" name="q35" value="B"> <span class="opt-letter">B</span> <span>He regards the pursuit of exact authenticity as the defining feature of the whole project.</span></label><label class="opt"><input type="radio" name="q35" value="C"> <span class="opt-letter">C</span> <span>It was not merely a personal preference but a commitment to what the instrument required.</span></label><label class="opt"><input type="radio" name="q35" value="D"> <span class="opt-letter">D</span> <span>Modern materials proved adequate for most purposes despite initial doubts.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">36</div><div class="q-text">What is the overall impression of Hargreaves given in the passage?</div><div class="opts"><label class="opt"><input type="radio" name="q36" value="A"> <span class="opt-letter">A</span> <span>A performer who abandoned a promising career out of stubbornness.</span></label><label class="opt"><input type="radio" name="q36" value="B"> <span class="opt-letter">B</span> <span>A craftsman whose emotional depth is evident beneath a measured, precise exterior.</span></label><label class="opt"><input type="radio" name="q36" value="C"> <span class="opt-letter">C</span> <span>An academic whose scholarly approach prevented him from engaging fully with the craft.</span></label><label class="opt"><input type="radio" name="q36" value="D"> <span class="opt-letter">D</span> <span>A perfectionist whose standards ultimately compromised the project's success.</span></label></div></div>
+    </div>
+
+    <!-- PART 6 -->
+    <div class="part-section">
+      <div class="part-header">Part 6 — Cross-text Multiple Matching</div>
+      <h2>Questions 37–40</h2>
+      <p class="instructions">You are going to read four short texts in which different writers comment on social media and wellbeing. For questions 37–40, choose from the texts (A–D). The texts may be chosen more than once.</p>
+      <div class="cross-text"><div class="cross-text-label">Text A — Miriam Stokes, journalist</div><p style="font-size:.88rem;line-height:1.6;margin:0">The conversation about social media and mental health has become almost entirely negative, and I think this distorts reality. For every study linking heavy use to anxiety or depression, there is another suggesting that for isolated individuals — the elderly, the disabled, those in geographically remote communities — platforms provide connection that would otherwise not exist. Responsible coverage should distinguish between types of use, types of user, and types of platform, rather than collapsing all of it into a single warning.</p></div>
+      <div class="cross-text"><div class="cross-text-label">Text B — Dr. Priya Menon, research psychologist</div><p style="font-size:.88rem;line-height:1.6;margin:0">The research picture is more nuanced than popular accounts suggest, but the nuance tends to cut in one direction. Passive consumption — scrolling without interacting — is consistently associated with lower wellbeing, while active, reciprocal engagement shows neutral or modestly positive effects. The problem is that the architecture of most platforms is designed to maximise passive consumption, because that is what generates the most advertising revenue. The wellbeing cost is not incidental; it is structurally embedded in the business model.</p></div>
+      <div class="cross-text"><div class="cross-text-label">Text C — Jade, 17, secondary school student</div><p style="font-size:.88rem;line-height:1.6;margin:0">Everyone talks about social media like it's automatically bad for young people, but they never actually ask us. For me and most of my friends, it's where we make plans, support each other, find out about things we care about. Yes, there are horrible aspects — comparison culture, comments sections, some of the influencer stuff — but we know how to manage that. Adults treat us as if we have no critical awareness whatsoever, which is pretty insulting when you think about it.</p></div>
+      <div class="cross-text"><div class="cross-text-label">Text D — Professor Antony Walsh, digital sociology</div><p style="font-size:.88rem;line-height:1.6;margin:0">What is missing from most discussions of social media and mental health is a structural analysis. We debate screen time and comparison as though they were purely individual problems, but the platforms themselves are designed by teams of engineers whose sole metric is engagement. The question is not whether young people use social media wisely, but whether the systems they are using are designed with their interests in mind. They are not. Regulation that changes platform incentives, rather than advice to users, is the only meaningful response.</p></div>
+      <div style="margin-top:20px">
+        <div class="mm-q"><div class="q-num">37</div><div class="q-text">Which writer argues that the design of social media platforms is itself the root of the problem?</div><select class="match-select" data-q="37"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">38</div><div class="q-text">Which writer shares Text A's view that social media can have genuinely positive effects for some users?</div><select class="match-select" data-q="38"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">39</div><div class="q-text">Which writer explicitly criticises the way adults perceive young people's relationship with social media?</div><select class="match-select" data-q="39"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">40</div><div class="q-text">Which writer agrees with Text D that the behaviour of individual users is less important than systemic factors?</div><select class="match-select" data-q="40"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+      </div>
+    </div>
+
+    <!-- PART 7 -->
+    <div class="part-section">
+      <div class="part-header">Part 7 — Gapped Text</div>
+      <h2>Questions 41–46</h2>
+      <p class="instructions">You are going to read an article about citizen science. Six sentences have been removed. Choose from the sentences A–G the one which fits each gap. There is one extra sentence you do not need to use.</p>
+      <div class="text-title">Science by the people</div>
+      <div class="text-content">
+        <p>Citizen science — the involvement of non-professional volunteers in scientific research — is not a new concept, but digital technology has transformed its scale and ambition. Hundreds of projects now rely on contributions from ordinary members of the public, ranging from identifying galaxies in telescope images to recording the first appearance of wildflowers in spring. <strong style="color:var(--amber)">[41]</strong> <select class="gap-select" data-q="41"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select> The result is a research capacity that no professional team could replicate.</p>
+        <p>The benefits for science are considerable. Some tasks — mapping every plant species in a country, monitoring bird populations across an entire continent — are simply impossible without distributed human effort. <strong style="color:var(--amber)">[42]</strong> <select class="gap-select" data-q="42"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select> Data of this volume and geographic spread could not be gathered by any other means.</p>
+        <p>There are, however, recognised challenges. Data quality is the most frequently cited concern among professional researchers. Volunteers may misidentify species, record observations inconsistently, or introduce biases by concentrating their efforts in easily accessible locations. <strong style="color:var(--amber)">[43]</strong> <select class="gap-select" data-q="43"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select> These techniques have been shown to bring citizen science data quality close to, and in some cases equal to, that of professional surveys.</p>
+        <p>Less discussed but equally important are the benefits to the volunteers themselves. Research consistently shows that participation in citizen science projects improves scientific literacy and increases confidence in engaging with data. <strong style="color:var(--amber)">[44]</strong> <select class="gap-select" data-q="44"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select> For many participants, the project becomes an ongoing commitment rather than a casual activity.</p>
+        <p>The relationship between professional researchers and citizen volunteers is not always straightforward. Scientists sometimes resist the involvement of non-experts, fearing methodological compromise, while volunteers may feel that their contributions are not sufficiently valued or acknowledged. <strong style="color:var(--amber)">[45]</strong> <select class="gap-select" data-q="45"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select> Projects that invest in this relationship consistently produce better data and retain volunteers for longer.</p>
+        <p>Looking ahead, the potential of citizen science to address large-scale environmental challenges seems considerable. <strong style="color:var(--amber)">[46]</strong> <select class="gap-select" data-q="46"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option></select> What remains to be seen is whether scientific institutions will embrace this partnership fully, or continue to regard it with the residual suspicion that has historically limited its impact.</p>
+      </div>
+      <div style="margin-top:16px;padding-top:14px;border-top:2px solid var(--hairline)"><div style="font-family:var(--font-sans);font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Removed sentences (one is extra):</div>
+        <div class="gap-option"><div class="opt-letter">A</div><div>The evidence for this has become compelling enough that some research councils now fund projects partly on the basis of their public engagement value.</div></div>
+        <div class="gap-option"><div class="opt-letter">B</div><div>The eBird project, for instance, has accumulated more than a billion bird sightings submitted by volunteers across two hundred countries.</div></div>
+        <div class="gap-option"><div class="opt-letter">C</div><div>Monitoring biodiversity responses to climate change, for example, requires the kind of continuous, geographically distributed observation that only a large volunteer network can provide.</div></div>
+        <div class="gap-option"><div class="opt-letter">D</div><div>Methodologists have responded by developing statistical protocols specifically designed to detect and correct for these errors.</div></div>
+        <div class="gap-option"><div class="opt-letter">E</div><div>Clear communication about what volunteers' data will be used for, and prompt feedback when results are published, goes a long way towards resolving this tension.</div></div>
+        <div class="gap-option"><div class="opt-letter">F</div><div>In some projects, tens of thousands of people contribute observations in a single weekend, generating datasets of extraordinary richness.</div></div>
+        <div class="gap-option"><div class="opt-letter">G</div><div>Some participants also report a stronger sense of connection to the natural world and a greater motivation to support conservation efforts.</div></div>
+      </div>
+    </div>
+
+    <!-- PART 8 -->
+    <div class="part-section">
+      <div class="part-header">Part 8 — Multiple Matching</div>
+      <h2>Questions 47–56</h2>
+      <p class="instructions">You are going to read about four architects discussing how buildings and spaces affect mental health. For questions 47–56, choose from the sections (A–D). The sections may be chosen more than once.</p>
+      <div class="mm-text"><div class="mm-letter">A</div><div class="mm-body"><strong>Elena Sorokina, residential architect</strong><br>The single most underestimated factor in residential design is natural light. I have surveyed occupants across projects in five countries, and the findings are consistent: people who have access to daylight in their main living and working spaces report significantly higher levels of wellbeing than those who do not, regardless of square footage. A large, well-lit room of modest proportions consistently outperforms a larger space with inadequate glazing. My practice now treats daylighting as a primary constraint from the earliest design stage rather than an afterthought addressed in the detail phase. This has occasionally created conflict with developers focused on maximising lettable floor area, but I regard it as a non-negotiable principle.</div></div>
+      <div class="mm-text"><div class="mm-letter">B</div><div class="mm-body"><strong>Marcus Adeyemi, public space designer</strong><br>Most architectural thinking about mental health focuses on the interior — the private home, the hospital ward, the workplace. I am more interested in the spaces between buildings: streets, squares, parks, the thresholds and in-between zones that determine how people move through the city and whether they encounter each other in the process. Research on loneliness consistently identifies the quality of incidental social contact — meeting neighbours, passing strangers, the minor rituals of shared urban life — as a significant protective factor. Architects and planners who design for flow and efficiency, rather than for encounter, are inadvertently contributing to the epidemic of social isolation that characterises modern urban life.</div></div>
+      <div class="mm-text"><div class="mm-letter">C</div><div class="mm-body"><strong>Dr. Yuki Tanaka, healthcare architect</strong><br>My work focuses on therapeutic environments: psychiatric wards, rehabilitation centres, spaces in which people spend time in acute distress. The evidence base for what works is stronger than most architects acknowledge. Biophilic design — incorporating natural materials, planting, views of natural landscapes — reduces anxiety measurably in clinical settings. Noise reduction matters enormously: chronic exposure to unpredictable noise is one of the most reliable predictors of psychological distress, yet acoustic design remains poorly integrated into most healthcare building briefs. I have spent twenty years arguing for standard acoustic specifications in mental health facilities, with limited success. The resistance is almost always financial, which is to say, short-sighted.</div></div>
+      <div class="mm-text"><div class="mm-letter">D</div><div class="mm-body"><strong>Fatima Al-Hassan, urban planner and architect</strong><br>The link between housing quality and mental health is well-established, but the policy response remains inadequate. The most damaging environments I encounter are those that combine overcrowding, disrepair, and lack of access to outdoor space. Each of these factors is stressful in isolation; in combination, they create conditions that are almost impossible to cope with over time. What strikes me most forcefully is that the communities most affected are consistently those with the least political influence. The mental health consequences of poor housing are disproportionately borne by people who have the fewest resources to address them. This is not a design problem; it is a justice problem.</div></div>
+      <div style="margin-top:20px">
+        <div class="mm-q"><div class="q-num">47</div><div class="q-text">Which architect has encountered resistance from clients or commissioners with financial priorities?</div><select class="match-select" data-q="47"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">48</div><div class="q-text">Which architect frames the problem primarily as a question of social inequality rather than design?</div><select class="match-select" data-q="48"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">49</div><div class="q-text">Which architect argues that their field undervalues a particular aspect of design that affects wellbeing?</div><select class="match-select" data-q="49"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">50</div><div class="q-text">Which architect draws on their own research data to support their argument?</div><select class="match-select" data-q="50"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">51</div><div class="q-text">Which architect believes that spaces for social interaction are as important as enclosed buildings?</div><select class="match-select" data-q="51"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">52</div><div class="q-text">Which architect mentions that the harmful effects of poor design are worsened when multiple factors combine?</div><select class="match-select" data-q="52"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">53</div><div class="q-text">Which architect has made a sustained effort to improve standards in a specific building type?</div><select class="match-select" data-q="53"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">54</div><div class="q-text">Which architect believes that conventional priorities in their profession harm people's wellbeing?</div><select class="match-select" data-q="54"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">55</div><div class="q-text">Which architect works primarily with buildings designed for people in psychological distress?</div><select class="match-select" data-q="55"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">56</div><div class="q-text">Which architect has established a principle in their practice that they refuse to compromise on?</div><select class="match-select" data-q="56"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+      </div>
+    </div>
+
+    <div class="submit-area">
+      <p>Check your work before submitting. You cannot change answers after submission.</p>
+      <button class="submit-btn" onclick="submitExam(false)">Submit exam</button>
+    </div>
+  </div>
+
+  <div id="resultsScreen" class="results-screen">
+    <div class="part-header">CAE Mock Exam 3 — Results</div>
+    <div class="score-big" id="scoreFinal"></div>
+    <div class="score-label">Questions correct</div>
+    <p id="timeUsed" style="text-align:center;font-family:var(--font-sans);font-size:.8rem;color:var(--muted);margin-bottom:16px"></p>
+    <div class="part-breakdown" id="partBreakdown"></div>
+    <div style="text-align:center;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <a href="../index.html" class="start-btn" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);text-decoration:none;display:inline-block">Back to CAE</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">Word Play · Cambridge English A1&#8594;C2</footer>
+
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+const ANSWERS = {
+  "part1":{"1":"surround","2":"effect","3":"release","4":"absence","5":"compounded","6":"embracing","7":"reduce","8":"redesigning"},
+  "part2":{"9":{"answer":"have","accept":["HAVE"]},"10":{"answer":"but","accept":["BUT"]},"11":{"answer":"taken","accept":["TAKEN"]},"12":{"answer":"in","accept":["IN"]},"13":{"answer":"partly","accept":["PARTLY","precisely","PRECISELY"]},"14":{"answer":"whose","accept":["WHOSE"]},"15":{"answer":"with","accept":["WITH"]},"16":{"answer":"helping","accept":["HELPING","enabling","ENABLING","allowing","ALLOWING"]}},
+  "part3":{"17":"innovative","18":"unforeseeable","19":"vulnerability","20":"protective","21":"restoration","22":"sustainable","23":"inadequately","24":"substantial"},
+  "part4":{"25":{"answer":"denied taking","accept":["denied taking","denied having taken"]},"26":{"answer":"don't need to attend","accept":["don't need to attend","do not need to attend","need not attend"]},"27":{"answer":"was largely responsible for","accept":["was largely responsible for"]},"28":{"answer":"the tallest building","accept":["the tallest building"]},"29":{"answer":"will not be announced until","accept":["will not be announced until","won't be announced until"]},"30":{"answer":"is supposed to have written","accept":["is supposed to have written","is supposed to have composed"]}},
+  "part5":{"31":"B","32":"B","33":"B","34":"A","35":"C","36":"B"},
+  "part6":{"37":"D","38":"C","39":"C","40":"B"},
+  "part7":{"41":"F","42":"B","43":"D","44":"G","45":"E","46":"C"},
+  "part8":{"47":"A","48":"D","49":"A","50":"A","51":"B","52":"D","53":"C","54":"B","55":"C","56":"A"}
+};
+const DURATION_MS = 90 * 60 * 1000;
+let startTime = null;
+let timerInterval = null;
+let submitted = false;
+const SAVE_KEY = 'wordplay_cae_mock_3';
+const BEST_KEY = 'wordplay_cae_mock_3_best';
+let practiceMode = false;
+
+function startExam(practice) {
+  practiceMode = practice || false;
+  clearSave();
+  _startExam();
+}
+
+function resumeExam() {
+  const saved = getSave();
+  if (!saved) return;
+  _startExam(saved);
+}
+
+function _startExam(saved) {
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('examArea').classList.add('active');
+  if (practiceMode) {
+    document.querySelector('.timer-bar').innerHTML = '<div class="timer-display">Practice mode — no timer</div><div class="timer-meta">Answer at your own pace</div>';
+    startTime = Date.now();
+  } else {
+    startTime = saved ? saved.startTime : Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+    updateTimer();
+  }
+  if (saved) restoreAnswers(saved.answers);
+  window.scrollTo(0, 0);
+}
+
+function getSave() {
+  try { var s = localStorage.getItem(SAVE_KEY); return s ? JSON.parse(s) : null; } catch(e) { return null; }
+}
+
+function clearSave() {
+  try { localStorage.removeItem(SAVE_KEY); } catch(e) {}
+}
+
+function saveProgress() {
+  if (submitted) return;
+  var answers = collectAnswers();
+  var save = { startTime: startTime, answers: answers, savedAt: Date.now() };
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(save)); } catch(e) {}
+  alert('Progress saved. You can close the tab and resume later.');
+}
+
+function collectAnswers() {
+  var a = {};
+  document.querySelectorAll('input[type=radio]:checked').forEach(function(r) { a[r.name] = r.value; });
+  document.querySelectorAll('input[type=text]').forEach(function(i) { if (i.dataset.q) a['t'+i.dataset.q] = i.value; });
+  document.querySelectorAll('select').forEach(function(s) { if (s.dataset.q) a['s'+s.dataset.q] = s.value; });
+  return a;
+}
+
+function restoreAnswers(answers) {
+  Object.entries(answers).forEach(function(kv) {
+    var k = kv[0], v = kv[1];
+    if (k.startsWith('q')) {
+      var r = document.querySelector('input[name="'+k+'"][value="'+v+'"]');
+      if (r) r.checked = true;
+    } else if (k.startsWith('t')) {
+      var inp = document.querySelector('input[data-q="'+k.slice(1)+'"]');
+      if (inp) inp.value = v;
+    } else if (k.startsWith('s')) {
+      var sel = document.querySelector('select[data-q="'+k.slice(1)+'"]');
+      if (sel) sel.value = v;
+    }
+  });
+}
+
+function checkPrevAttempt() {
+  try {
+    var best = localStorage.getItem(BEST_KEY);
+    if (best) { document.getElementById('prevAttempt').style.display = 'block'; document.getElementById('prevScore').textContent = best; }
+    var saved = getSave();
+    if (saved) {
+      var ageMin = Math.round((Date.now() - saved.savedAt) / 60000);
+      document.getElementById('resumeSection').style.display = 'block';
+      document.getElementById('resumeInfo').textContent = 'Saved ' + ageMin + ' minutes ago';
+    }
+  } catch(e) {}
+}
+checkPrevAttempt();
+
+function updateTimer() {
+  var elapsed = Date.now() - startTime;
+  var remaining = DURATION_MS - elapsed;
+  if (remaining <= 0) { submitExam(true); return; }
+  var mins = Math.floor(remaining / 60000);
+  var secs = Math.floor((remaining % 60000) / 1000);
+  var el = document.getElementById('timerDisplay');
+  el.textContent = mins + ':' + (secs < 10 ? '0' : '') + secs;
+  el.classList.toggle('warning', remaining < 15*60*1000 && remaining >= 3*60*1000);
+  el.classList.toggle('critical', remaining < 3*60*1000);
+}
+
+function normalize(s) {
+  return (s || '').trim().toLowerCase().replace(/['']/g, "'");
+}
+
+function getRadioValue(name) {
+  var r = document.querySelector('input[name="'+name+'"]:checked');
+  return r ? r.value : null;
+}
+
+function getInputValue(q) {
+  var el = document.querySelector('input[data-q="'+q+'"], select[data-q="'+q+'"]');
+  return el ? el.value : '';
+}
+
+function checkAnswer(part, qNum, userValue) {
+  var ans = ANSWERS[part][qNum];
+  if (typeof ans === 'string') return normalize(userValue) === normalize(ans);
+  var target = normalize(ans.answer);
+  var userN = normalize(userValue);
+  if (userN === target) return true;
+  if (ans.accept && ans.accept.some(function(a) { return normalize(a) === userN; })) return true;
+  return false;
+}
+
+function submitExam(timeUp) {
+  if (submitted) return;
+  if (!timeUp && !confirm('Submit your exam now? You will not be able to change answers.')) return;
+  submitted = true;
+  clearInterval(timerInterval);
+  var elapsedMs = Date.now() - startTime;
+  var elapsedMin = Math.floor(elapsedMs / 60000);
+  var elapsedSec = Math.floor((elapsedMs % 60000) / 1000);
+  document.querySelectorAll('input, select').forEach(function(el) { el.disabled = true; });
+
+  var scores = {};
+
+  scores.part1 = { correct: 0, total: 8 };
+  for (var i = 1; i <= 8; i++) {
+    var v = getRadioValue('q' + i);
+    if (v && checkAnswer('part1', i, v)) scores.part1.correct++;
+  }
+
+  scores.part2 = { correct: 0, total: 8 };
+  for (var i = 9; i <= 16; i++) {
+    var v = getInputValue(i);
+    if (v && checkAnswer('part2', i, v)) scores.part2.correct++;
+  }
+
+  scores.part3 = { correct: 0, total: 8 };
+  for (var i = 17; i <= 24; i++) {
+    var v = getInputValue(i);
+    if (v && checkAnswer('part3', i, v)) scores.part3.correct++;
+  }
+
+  scores.part4 = { correct: 0, total: 6 };
+  for (var i = 25; i <= 30; i++) {
+    var v = getInputValue(i);
+    if (v && checkAnswer('part4', i, v)) scores.part4.correct++;
+  }
+
+  scores.part5 = { correct: 0, total: 6 };
+  for (var i = 31; i <= 36; i++) {
+    var v = getRadioValue('q' + i);
+    if (v && v === ANSWERS.part5[i]) scores.part5.correct++;
+  }
+
+  scores.part6 = { correct: 0, total: 4 };
+  for (var i = 37; i <= 40; i++) {
+    var v = getInputValue(i);
+    if (v && v === ANSWERS.part6[i]) scores.part6.correct++;
+  }
+
+  scores.part7 = { correct: 0, total: 6 };
+  for (var i = 41; i <= 46; i++) {
+    var v = getInputValue(i);
+    if (v && v === ANSWERS.part7[i]) scores.part7.correct++;
+  }
+
+  scores.part8 = { correct: 0, total: 10 };
+  for (var i = 47; i <= 56; i++) {
+    var v = getInputValue(i);
+    if (v && v === ANSWERS.part8[i]) scores.part8.correct++;
+  }
+
+  var totalCorrect = Object.values(scores).reduce(function(a, p) { return a + p.correct; }, 0);
+  var pct = Math.round((totalCorrect / 56) * 100);
+
+  document.getElementById('scoreFinal').textContent = totalCorrect + ' / 56';
+  document.getElementById('timeUsed').textContent = 'Time used: ' + elapsedMin + ' min ' + elapsedSec + ' sec' + (timeUp ? ' (auto-submit)' : '');
+
+  try { localStorage.setItem(BEST_KEY, totalCorrect + '/56 (' + pct + '%)'); } catch(e) {}
+
+  var partLabels = {
+    part1:'Part 1 · MC Cloze', part2:'Part 2 · Open Cloze', part3:'Part 3 · Word Form',
+    part4:'Part 4 · Transform', part5:'Part 5 · Multi-choice', part6:'Part 6 · Cross-text',
+    part7:'Part 7 · Gapped Text', part8:'Part 8 · Multi-match'
+  };
+  var breakdown = '';
+  Object.entries(scores).forEach(function(kv) {
+    var k = kv[0], v = kv[1];
+    var p = Math.round((v.correct / v.total) * 100);
+    breakdown += '<div class="part-score"><div class="name">' + partLabels[k] + '</div><div class="val">' + v.correct + '/' + v.total + '</div><div class="pct">' + p + '%</div></div>';
+  });
+  document.getElementById('partBreakdown').innerHTML = breakdown;
+
+  document.getElementById('resultsScreen').classList.add('active');
+  document.getElementById('resultsScreen').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
