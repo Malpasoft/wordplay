@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>CPE Mock Exam 3 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<style>
+.mock-container{max-width:760px;margin:0 auto;padding:0 16px}
+.timer-bar{position:sticky;top:0;background:var(--ink);color:var(--paper);padding:12px 16px;border-radius:0 0 8px 8px;display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15);margin-bottom:24px}
+.timer-display{font-family:var(--font-sans);font-size:1.1rem;font-weight:700;letter-spacing:.5px}
+.timer-display.warning{color:#FFD700}
+.timer-display.critical{color:#FF6B6B;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.timer-meta{font-family:var(--font-sans);font-size:.72rem;opacity:.85;letter-spacing:1px;text-transform:uppercase}
+.start-screen,.results-screen{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:28px;margin-bottom:24px}
+.start-screen h2,.results-screen h2{font-size:1.4rem;margin:0 0 12px}
+.start-btn{display:inline-block;padding:12px 28px;background:var(--ink);color:var(--paper);border:0;font-family:var(--font-sans);font-size:.82rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer;margin-top:12px}
+.start-btn:hover{opacity:.85}
+.exam-area{display:none}
+.exam-area.active{display:block}
+.part-section{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:24px;margin-bottom:28px}
+.part-header{font-family:var(--font-sans);font-size:.68rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.part-section h2{font-size:1.2rem;margin:0 0 8px;color:var(--ink)}
+.part-section .instructions{font-size:.85rem;color:var(--muted);margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--hairline)}
+.text-title{font-weight:700;text-align:center;font-size:1.05rem;margin:12px 0;color:var(--ink)}
+.text-content{font-size:.92rem;line-height:1.7;color:var(--ink);margin-bottom:18px}
+.text-content p{margin:0 0 12px}
+.mc-q{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--hairline)}
+.mc-q .q-num{font-family:var(--font-sans);font-size:.85rem;font-weight:800;color:var(--amber);min-width:28px}
+.mc-q .opts{flex:1;display:flex;flex-direction:column;gap:4px}
+.mc-q .q-text{flex:1;font-size:.9rem;margin-bottom:6px}
+.opt{display:flex;gap:6px;align-items:flex-start;padding:4px 0;cursor:pointer;font-size:.9rem}
+.opt:hover{background:rgba(184,134,11,.05)}
+.opt-letter{font-family:var(--font-sans);font-weight:700;color:var(--amber);min-width:18px}
+.opt input{margin-top:4px}
+.cloze-input{width:110px;padding:2px 8px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-size:.82rem;background:var(--cream-deep)}
+.cloze-input:focus{outline:none;border-color:var(--amber)}
+.kw-input{width:100%;max-width:380px;padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-size:.85rem;background:var(--cream-deep)}
+.word-form-line{display:flex;padding:10px 0;border-top:1px solid var(--hairline);align-items:flex-start;gap:14px}
+.wf-text{flex:1;font-size:.92rem;line-height:1.6}
+.wf-prompt{font-family:var(--font-sans);font-size:.75rem;font-weight:800;letter-spacing:1px;color:var(--muted);padding:4px 10px;border:1px solid var(--hairline);border-radius:3px;min-width:90px;text-align:center}
+.kw-q{display:flex;gap:12px;padding:14px 0;border-top:1px solid var(--hairline)}
+.kw-content{flex:1}
+.kw-content p{margin:0 0 6px;font-size:.9rem}
+.kw-key{font-family:var(--font-sans);font-weight:800;letter-spacing:1px;color:var(--amber)}
+.gap-select,.match-select{padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-weight:700;background:var(--cream-deep);color:var(--ink);cursor:pointer}
+.gap-option{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--hairline);font-size:.88rem;line-height:1.5}
+.mm-q{display:flex;gap:12px;align-items:center;padding:8px 0;border-top:1px solid var(--hairline);font-size:.88rem}
+.mm-q .q-text{flex:1}
+.mm-text{display:flex;gap:14px;padding:14px 0;border-top:1px solid var(--hairline)}
+.mm-letter{font-family:var(--font-sans);font-weight:800;color:var(--amber);font-size:1rem;min-width:24px}
+.mm-body{flex:1;font-size:.88rem;line-height:1.55}
+.submit-area{background:var(--ink);color:var(--paper);border-radius:8px;padding:20px;text-align:center;margin:32px 0}
+.submit-area p{margin:0 0 12px;opacity:.9}
+.submit-btn{display:inline-block;padding:14px 36px;background:var(--amber);color:var(--ink);border:0;font-family:var(--font-sans);font-size:.9rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer}
+.submit-btn:hover{opacity:.9}
+.results-screen{display:none}
+.results-screen.active{display:block}
+.score-big{font-size:3rem;font-weight:800;color:var(--amber);text-align:center;font-family:Georgia,serif}
+.score-label{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:18px}
+.part-breakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:20px 0}
+.part-score{background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px;padding:12px;text-align:center}
+.part-score .name{font-family:var(--font-sans);font-size:.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.part-score .val{font-size:1.3rem;font-weight:700;color:var(--ink);margin-top:4px}
+.part-score .pct{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin-top:2px}
+.exam-area input:disabled,.exam-area select:disabled{background:rgba(184,134,11,.05)}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Back"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+
+<div class="mock-container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>&#8250;</span><a href="../../index.html">C2</a><span>&#8250;</span><a href="../index.html">CPE</a><span>&#8250;</span><strong>Mock Exam 3</strong></div>
+
+  <div id="startScreen" class="start-screen">
+    <div class="part-header">CPE Mock Exam 3</div>
+    <h2>Mock Exam 3 &#8212; Reading &amp; Use of English</h2>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Duration:</strong> 90 minutes</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Total questions:</strong> 53 across 7 parts</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:16px">Once you click <strong>Start</strong>, the timer begins. The exam auto-submits when time runs out.</p>
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:18px">Tip: aim to spend roughly 12 minutes per part. Do not dwell on any single question.</p>
+    <button class="start-btn" onclick="startExam(false)">Start exam (timed)</button>
+    <button class="start-btn" onclick="startExam(true)" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Practice mode (no timer)</button>
+    <div id="resumeSection" style="display:none;margin-top:18px;padding:14px 16px;background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--amber);margin-bottom:6px">Saved progress found</div><div id="resumeInfo" style="font-size:.88rem;color:var(--ink);margin-bottom:10px"></div><button class="start-btn" onclick="resumeExam()" style="background:var(--amber);color:var(--ink)">Resume</button><button class="start-btn" onclick="clearSave()" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Start fresh</button></div>
+    <div id="prevAttempt" style="display:none;margin-top:12px;font-family:var(--font-sans);font-size:.78rem;color:var(--muted)">Previous best: <strong id="prevScore"></strong></div>
+  </div>
+
+  <div id="examArea" class="exam-area">
+    <div class="timer-bar">
+      <div class="timer-display" id="timerDisplay">90:00</div>
+      <div class="timer-meta">Time remaining</div>
+      <button onclick="saveProgress()" style="background:transparent;border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.85);font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border-radius:3px;cursor:pointer">Save &amp; quit</button>
+    </div>
+
+    <!-- PART 1 -->
+    <div class="part-section">
+      <div class="part-header">Part 1 &#8212; Multiple-choice Cloze</div>
+      <h2>Questions 1&#8211;8</h2>
+      <p class="instructions">For questions 1&#8211;8, read the text below and decide which answer (A, B, C or D) best fits each gap.</p>
+      <div class="text-title">The philosophy of sport</div>
+      <div class="text-content"><p>The question of what sport means for human beings (1) _____ whenever philosophers consider the relationship between the body and the competitive instinct. The answer, it is often argued, (2) _____ in the way that organised competition (3) _____ out both the best and worst in human character. Those who object to sport's excesses typically ask us to (4) _____ aside such arguments and focus instead on the inequalities produced by elite sporting culture. Defenders of competition (5) _____ broader questions: does rivalry serve human flourishing, or does it inevitably distort it? Thoughtful coaches have learnt to (6) _____ into the intrinsic motivation that makes athletes perform beyond expectation. To (7) _____ into question the value of competition is, for many, to attack something fundamental. What remains clear is that sport's meaning does not (8) _____ on any single interpretation but shifts depending on who is watching and why.</p></div>
+      <div class="mc-q"><div class="q-num">1</div><div class="opts"><label class="opt"><input type="radio" name="q1" value="arises"> <span class="opt-letter">A</span> <span>arises</span></label><label class="opt"><input type="radio" name="q1" value="emerges"> <span class="opt-letter">B</span> <span>emerges</span></label><label class="opt"><input type="radio" name="q1" value="appears"> <span class="opt-letter">C</span> <span>appears</span></label><label class="opt"><input type="radio" name="q1" value="derives"> <span class="opt-letter">D</span> <span>derives</span></label></div></div>
+      <div class="mc-q"><div class="q-num">2</div><div class="opts"><label class="opt"><input type="radio" name="q2" value="lies"> <span class="opt-letter">A</span> <span>lies</span></label><label class="opt"><input type="radio" name="q2" value="rests"> <span class="opt-letter">B</span> <span>rests</span></label><label class="opt"><input type="radio" name="q2" value="sits"> <span class="opt-letter">C</span> <span>sits</span></label><label class="opt"><input type="radio" name="q2" value="stands"> <span class="opt-letter">D</span> <span>stands</span></label></div></div>
+      <div class="mc-q"><div class="q-num">3</div><div class="opts"><label class="opt"><input type="radio" name="q3" value="brings"> <span class="opt-letter">A</span> <span>brings</span></label><label class="opt"><input type="radio" name="q3" value="puts"> <span class="opt-letter">B</span> <span>puts</span></label><label class="opt"><input type="radio" name="q3" value="takes"> <span class="opt-letter">C</span> <span>takes</span></label><label class="opt"><input type="radio" name="q3" value="carries"> <span class="opt-letter">D</span> <span>carries</span></label></div></div>
+      <div class="mc-q"><div class="q-num">4</div><div class="opts"><label class="opt"><input type="radio" name="q4" value="set"> <span class="opt-letter">A</span> <span>set</span></label><label class="opt"><input type="radio" name="q4" value="put"> <span class="opt-letter">B</span> <span>put</span></label><label class="opt"><input type="radio" name="q4" value="place"> <span class="opt-letter">C</span> <span>place</span></label><label class="opt"><input type="radio" name="q4" value="lay"> <span class="opt-letter">D</span> <span>lay</span></label></div></div>
+      <div class="mc-q"><div class="q-num">5</div><div class="opts"><label class="opt"><input type="radio" name="q5" value="raise"> <span class="opt-letter">A</span> <span>raise</span></label><label class="opt"><input type="radio" name="q5" value="lift"> <span class="opt-letter">B</span> <span>lift</span></label><label class="opt"><input type="radio" name="q5" value="bring"> <span class="opt-letter">C</span> <span>bring</span></label><label class="opt"><input type="radio" name="q5" value="put"> <span class="opt-letter">D</span> <span>put</span></label></div></div>
+      <div class="mc-q"><div class="q-num">6</div><div class="opts"><label class="opt"><input type="radio" name="q6" value="tap"> <span class="opt-letter">A</span> <span>tap</span></label><label class="opt"><input type="radio" name="q6" value="draw"> <span class="opt-letter">B</span> <span>draw</span></label><label class="opt"><input type="radio" name="q6" value="access"> <span class="opt-letter">C</span> <span>access</span></label><label class="opt"><input type="radio" name="q6" value="exploit"> <span class="opt-letter">D</span> <span>exploit</span></label></div></div>
+      <div class="mc-q"><div class="q-num">7</div><div class="opts"><label class="opt"><input type="radio" name="q7" value="call"> <span class="opt-letter">A</span> <span>call</span></label><label class="opt"><input type="radio" name="q7" value="bring"> <span class="opt-letter">B</span> <span>bring</span></label><label class="opt"><input type="radio" name="q7" value="put"> <span class="opt-letter">C</span> <span>put</span></label><label class="opt"><input type="radio" name="q7" value="draw"> <span class="opt-letter">D</span> <span>draw</span></label></div></div>
+      <div class="mc-q"><div class="q-num">8</div><div class="opts"><label class="opt"><input type="radio" name="q8" value="rest"> <span class="opt-letter">A</span> <span>rest</span></label><label class="opt"><input type="radio" name="q8" value="lie"> <span class="opt-letter">B</span> <span>lie</span></label><label class="opt"><input type="radio" name="q8" value="sit"> <span class="opt-letter">C</span> <span>sit</span></label><label class="opt"><input type="radio" name="q8" value="depend"> <span class="opt-letter">D</span> <span>depend</span></label></div></div>
+    </div>
+
+    <!-- PART 2 -->
+    <div class="part-section">
+      <div class="part-header">Part 2 &#8212; Open Cloze</div>
+      <h2>Questions 9&#8211;16</h2>
+      <p class="instructions">For questions 9&#8211;16, read the text below and think of the word which best fits each gap. Use only one word in each gap.</p>
+      <div class="text-title">The language of colour</div>
+      <div class="text-content"><p>The relationship between language and perception is one (9) <input type="text" class="cloze-input" data-q="9" maxlength="20" autocomplete="off" spellcheck="false"> linguists have debated for well over a century. (10) <input type="text" class="cloze-input" data-q="10" maxlength="20" autocomplete="off" spellcheck="false"> widespread scepticism, the idea that the words available in a language shape what speakers can easily perceive has gained renewed support in recent decades. Colour is often cited (11) <input type="text" class="cloze-input" data-q="11" maxlength="20" autocomplete="off" spellcheck="false"> the clearest test case: languages vary considerably in how they divide the colour spectrum into named categories. Research has (12) <input type="text" class="cloze-input" data-q="12" maxlength="20" autocomplete="off" spellcheck="false"> conducted showing that speakers (13) <input type="text" class="cloze-input" data-q="13" maxlength="20" autocomplete="off" spellcheck="false"> languages with more colour terms are faster at discriminating colours that fall near category boundaries. There is (14) <input type="text" class="cloze-input" data-q="14" maxlength="20" autocomplete="off" spellcheck="false"> consensus, however, on (15) <input type="text" class="cloze-input" data-q="15" maxlength="20" autocomplete="off" spellcheck="false"> such effects reflect a deep cognitive influence or simply a task-specific bias. Neuroscientists and linguists who might once (16) <input type="text" class="cloze-input" data-q="16" maxlength="20" autocomplete="off" spellcheck="false"> dismissed the question now recognise it as genuinely unresolved.</p></div>
+    </div>
+
+    <!-- PART 3 -->
+    <div class="part-section">
+      <div class="part-header">Part 3 &#8212; Word Formation</div>
+      <h2>Questions 17&#8211;24</h2>
+      <p class="instructions">For questions 17&#8211;24, read the text below. Use the word given in capitals at the end of some of the lines to form a word that fits in the gap in the same line.</p>
+      <div class="text-title">The future of work</div>
+      <div class="word-form-line"><div class="wf-text">Discussions about the future of employment have been (17) <input type="text" class="cloze-input" data-q="17" maxlength="25" autocomplete="off" spellcheck="false"> focused on the threat of automation, to the relative neglect of its potential benefits.</div><div class="wf-prompt">PREDOMINATE</div></div>
+      <div class="word-form-line"><div class="wf-text">Economists disagree about whether technological (18) <input type="text" class="cloze-input" data-q="18" maxlength="25" autocomplete="off" spellcheck="false"> of workers will outpace the creation of new roles, as has historically been the case.</div><div class="wf-prompt">DISPLACE</div></div>
+      <div class="word-form-line"><div class="wf-text">Some structural changes in employment patterns appear (19) <input type="text" class="cloze-input" data-q="19" maxlength="25" autocomplete="off" spellcheck="false">, particularly in sectors where automation has already transformed the nature of routine tasks.</div><div class="wf-prompt">REVERSE</div></div>
+      <div class="word-form-line"><div class="wf-text">The pace of change is (20) <input type="text" class="cloze-input" data-q="20" maxlength="25" autocomplete="off" spellcheck="false"> rapid in fields such as logistics and financial services, where algorithmic decision-making has taken hold.</div><div class="wf-prompt">INCREASE</div></div>
+      <div class="word-form-line"><div class="wf-text">What is (21) <input type="text" class="cloze-input" data-q="21" maxlength="25" autocomplete="off" spellcheck="false"> about these transitions is the speed at which skills considered valuable a decade ago can become redundant.</div><div class="wf-prompt">REMARK</div></div>
+      <div class="word-form-line"><div class="wf-text">Workers who demonstrate strong (22) <input type="text" class="cloze-input" data-q="22" maxlength="25" autocomplete="off" spellcheck="false"> are, according to most forecasts, better placed to navigate a labour market in which the specific demands of any given role may shift substantially over a career.</div><div class="wf-prompt">ADAPT</div></div>
+      <div class="word-form-line"><div class="wf-text">The (23) <input type="text" class="cloze-input" data-q="23" maxlength="25" autocomplete="off" spellcheck="false"> change driving these shifts is not merely a matter of faster machines; it involves a fundamental reorganisation of how knowledge is stored, accessed, and applied.</div><div class="wf-prompt">TECHNOLOGY</div></div>
+      <div class="word-form-line"><div class="wf-text">For the (24) <input type="text" class="cloze-input" data-q="24" maxlength="25" autocomplete="off" spellcheck="false"> future, the most consistent advice offered to workers and institutions alike is to invest in capacities that complement, rather than compete with, the emerging generation of automated systems.</div><div class="wf-prompt">FORESEE</div></div>
+    </div>
+
+    <!-- PART 4 -->
+    <div class="part-section">
+      <div class="part-header">Part 4 &#8212; Key Word Transformation</div>
+      <h2>Questions 25&#8211;30</h2>
+      <p class="instructions">For questions 25&#8211;30, complete the second sentence so that it has a similar meaning to the first sentence, using the word given. Do not change the word given. You must use between three and eight words, including the word given.</p>
+      <div class="kw-q"><div class="q-num">25</div><div class="kw-content"><p>People believe the manuscript was written in the twelfth century.</p><p class="kw-key">BELIEVED</p><p>The manuscript <input type="text" class="kw-input" data-q="25" maxlength="80" autocomplete="off" spellcheck="false"> in the twelfth century.</p></div></div>
+      <div class="kw-q"><div class="q-num">26</div><div class="kw-content"><p>The announcement was made and investors immediately began to sell their shares.</p><p class="kw-key">HARDLY</p><p><input type="text" class="kw-input" data-q="26" maxlength="80" autocomplete="off" spellcheck="false"> been made when investors immediately began to sell their shares.</p></div></div>
+      <div class="kw-q"><div class="q-num">27</div><div class="kw-content"><p>If there is an emergency, you should contact the duty manager immediately.</p><p class="kw-key">EVENT</p><p><input type="text" class="kw-input" data-q="27" maxlength="80" autocomplete="off" spellcheck="false"> an emergency, you should contact the duty manager immediately.</p></div></div>
+      <div class="kw-q"><div class="q-num">28</div><div class="kw-content"><p>This approach is far less effective than the one we used previously.</p><p class="kw-key">NEARLY</p><p>This approach is <input type="text" class="kw-input" data-q="28" maxlength="80" autocomplete="off" spellcheck="false"> the one we used previously.</p></div></div>
+      <div class="kw-q"><div class="q-num">29</div><div class="kw-content"><p>We will proceed with the plan only if the deadline is extended.</p><p class="kw-key">PROVIDED</p><p>We will proceed with the plan <input type="text" class="kw-input" data-q="29" maxlength="80" autocomplete="off" spellcheck="false"> is extended.</p></div></div>
+      <div class="kw-q"><div class="q-num">30</div><div class="kw-content"><p>The project was delayed because of the unexpected shortage of materials.</p><p class="kw-key">OWING</p><p>The project was delayed <input type="text" class="kw-input" data-q="30" maxlength="80" autocomplete="off" spellcheck="false"> that there was an unexpected shortage of materials.</p></div></div>
+    </div>
+
+    <!-- PART 5 -->
+    <div class="part-section">
+      <div class="part-header">Part 5 &#8212; Multiple Choice</div>
+      <h2>Questions 31&#8211;36</h2>
+      <p class="instructions">For questions 31&#8211;36, read the text below and choose the answer (A, B, C or D) which you think fits best according to the text.</p>
+      <div class="text-title">The cartoonist's art</div>
+      <div class="text-content">
+        <p>Mira Okonkwo began drawing cartoons at the age of nine, filling the margins of her school exercise books with figures that her teachers alternately found charming and distracting. By her late twenties, she had developed a style so distinctive &#8212; its combination of clean linework, compressed narrative, and a quality of moral attentiveness that critics struggled to name &#8212; that her work was identifiable from across a room. She has spoken candidly about the years she spent trying to decide whether cartooning was a proper vocation or a guilty pleasure, and about the moment she realised the distinction was meaningless. "A form is only as serious as the intelligence brought to it," she has said. "I spent too many years apologising for what I was doing before I understood that."</p>
+        <p>What sets Okonkwo's cartoons apart is not primarily their wit, though they are consistently funny, but the quality of observation they bring to ordinary social experience. Her recurring characters inhabit recognisable worlds &#8212; offices, families, public transport &#8212; and their predicaments are rarely exotic. The comedy arises from close attention to the gap between what people say and what they mean, between how institutions present themselves and how they actually function. Several critics have noted that Okonkwo's work belongs to a tradition of social satire that includes writers and artists more commonly discussed in literary than in visual art contexts, and that the cartoon form suits this tradition particularly well because of the speed with which it can shift between the literal and the figurative.</p>
+        <p>Okonkwo herself is resistant to the category of "satirist," at least in its more combative sense. She does not, she insists, set out to expose or to attack. Her interest is in what she calls "the comedy of good faith" &#8212; the ways in which people who are genuinely trying to behave well nevertheless produce outcomes that are ridiculous, unfair, or painful. This is a more nuanced position than straightforward satire, and it accounts for the warmth that characterises her work even at its most critical. Her characters are rarely villains; they are, more often, people in over their heads.</p>
+        <p>Critics who have tried to situate Okonkwo within art history have found the exercise frustrating in a productive way. She draws on a broad range of visual traditions without being fully assimilable to any of them. There are echoes of mid-century American newspaper cartooning in her linework, traces of European graphic novel traditions in her page composition, and something in her rendering of facial expression that invites comparison with the caricaturists of the eighteenth and nineteenth centuries. She is aware of these connections and discusses them with genuine enthusiasm, but she is also clear that the synthesis is hers and that the pursuit of a single origin story would misrepresent what her work actually is.</p>
+        <p>It would be a mistake to read Okonkwo's lightness of touch as a form of evasion. The social questions her cartoons address &#8212; institutional failure, the performance of identity, the comedy of professional life &#8212; are not trivial. What she has achieved is a mode of engagement that makes these questions accessible without making them easy. She has said that she is "suspicious of work that makes the reader feel they have fully understood something," and this suspicion animates her practice: the cartoons reward repeated reading in the way that the best literary work does, yielding layers of implication that a first encounter leaves unexamined.</p>
+      </div>
+      <div class="mc-q"><div class="q-num">31</div><div class="q-text">What does Okonkwo's comment "A form is only as serious as the intelligence brought to it" suggest about her attitude to cartooning?</div><div class="opts"><label class="opt"><input type="radio" name="q31" value="A"> <span class="opt-letter">A</span> <span>She came to believe that cartooning was inherently more serious than other art forms.</span></label><label class="opt"><input type="radio" name="q31" value="B"> <span class="opt-letter">B</span> <span>She realised that the status of any art form depends on how it is practised, not what it is.</span></label><label class="opt"><input type="radio" name="q31" value="C"> <span class="opt-letter">C</span> <span>She felt that critics had been wrong to dismiss cartooning in favour of literary forms.</span></label><label class="opt"><input type="radio" name="q31" value="D"> <span class="opt-letter">D</span> <span>She argued that intelligence alone was sufficient to transform any art form into serious work.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">32</div><div class="q-text">According to paragraph 2, the comedy in Okonkwo's work chiefly comes from...</div><div class="opts"><label class="opt"><input type="radio" name="q32" value="A"> <span class="opt-letter">A</span> <span>the unusual and exotic situations her characters find themselves in.</span></label><label class="opt"><input type="radio" name="q32" value="B"> <span class="opt-letter">B</span> <span>a rapid alternation between serious and light-hearted subject matter.</span></label><label class="opt"><input type="radio" name="q32" value="C"> <span class="opt-letter">C</span> <span>the contrast between how people and institutions present themselves and how they really are.</span></label><label class="opt"><input type="radio" name="q32" value="D"> <span class="opt-letter">D</span> <span>the way her recurring characters behave outrageously in ordinary settings.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">33</div><div class="q-text">Okonkwo's distinction between her approach and "straightforward satire" suggests that her work...</div><div class="opts"><label class="opt"><input type="radio" name="q33" value="A"> <span class="opt-letter">A</span> <span>avoids addressing social issues in favour of purely personal subjects.</span></label><label class="opt"><input type="radio" name="q33" value="B"> <span class="opt-letter">B</span> <span>finds comedy in the failures of well-intentioned people rather than in deliberate wrongdoing.</span></label><label class="opt"><input type="radio" name="q33" value="C"> <span class="opt-letter">C</span> <span>treats its subjects with irony rather than with the warmth more typical of her earlier cartoons.</span></label><label class="opt"><input type="radio" name="q33" value="D"> <span class="opt-letter">D</span> <span>challenges its readers to make their own moral judgements about the characters it depicts.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">34</div><div class="q-text">Why does the writer say that critics found situating Okonkwo in art history "frustrating in a productive way"?</div><div class="opts"><label class="opt"><input type="radio" name="q34" value="A"> <span class="opt-letter">A</span> <span>Because her work combines elements from different traditions without belonging fully to any one of them.</span></label><label class="opt"><input type="radio" name="q34" value="B"> <span class="opt-letter">B</span> <span>Because she refuses to discuss her artistic influences in interviews.</span></label><label class="opt"><input type="radio" name="q34" value="C"> <span class="opt-letter">C</span> <span>Because her work changed so significantly over her career that different periods require different frameworks.</span></label><label class="opt"><input type="radio" name="q34" value="D"> <span class="opt-letter">D</span> <span>Because she works in a form that has historically been excluded from art history.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">35</div><div class="q-text">Okonkwo's stated suspicion of work that makes readers feel they "have fully understood something" indicates that she values...</div><div class="opts"><label class="opt"><input type="radio" name="q35" value="A"> <span class="opt-letter">A</span> <span>work that challenges readers but ultimately delivers a clear, satisfying conclusion.</span></label><label class="opt"><input type="radio" name="q35" value="B"> <span class="opt-letter">B</span> <span>work that conceals its intentions so effectively that readers cannot form any response at all.</span></label><label class="opt"><input type="radio" name="q35" value="C"> <span class="opt-letter">C</span> <span>work that retains layers of meaning beyond what any single reading can exhaust.</span></label><label class="opt"><input type="radio" name="q35" value="D"> <span class="opt-letter">D</span> <span>work that prioritises emotional impact over intellectual engagement.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">36</div><div class="q-text">Which of the following best describes the writer's overall assessment of Okonkwo's work?</div><div class="opts"><label class="opt"><input type="radio" name="q36" value="A"> <span class="opt-letter">A</span> <span>It achieves comic effect at the cost of the depth that more serious art forms can offer.</span></label><label class="opt"><input type="radio" name="q36" value="B"> <span class="opt-letter">B</span> <span>It uses a light approach to engage seriously with complex social and human questions.</span></label><label class="opt"><input type="radio" name="q36" value="C"> <span class="opt-letter">C</span> <span>Its visual sophistication is more impressive than its intellectual content.</span></label><label class="opt"><input type="radio" name="q36" value="D"> <span class="opt-letter">D</span> <span>Its ambition exceeds what the cartoon form is ultimately capable of delivering.</span></label></div></div>
+    </div>
+
+    <!-- PART 6 -->
+    <div class="part-section">
+      <div class="part-header">Part 6 &#8212; Gapped Text</div>
+      <h2>Questions 37&#8211;43</h2>
+      <p class="instructions">You are going to read an article about the psychology of risk. Seven sentences have been removed. Choose from the sentences A&#8211;H the one which fits each gap. There is one extra sentence you do not need to use.</p>
+      <div class="text-title">The psychology of risk</div>
+      <div class="text-content">
+        <p>How people assess risk is one of the most consequential questions in psychology. <strong style="color:var(--amber)">[37]</strong> <select class="gap-select" data-q="37"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select> Faced with probabilistic choices, individuals consistently exhibit patterns of judgement that deviate sharply from those a purely rational actor would make.</p>
+        <p>The formal study of such deviations has a relatively short history. <strong style="color:var(--amber)">[38]</strong> <select class="gap-select" data-q="38"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select> This work provided the first systematic account of how and why people depart from normative rationality when confronted with choices involving gains and losses.</p>
+        <p>One of the central concepts in this tradition is loss aversion: the finding that losses loom larger, psychologically, than equivalent gains. <strong style="color:var(--amber)">[39]</strong> <select class="gap-select" data-q="39"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select> The discovery has proved enormously influential, informing research in finance, medicine, and public communication alike.</p>
+        <p>Risk perception is further complicated by the role of framing. <strong style="color:var(--amber)">[40]</strong> <select class="gap-select" data-q="40"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select> A surgical procedure described as having a ninety percent survival rate is rated more favourably than one described as having a ten percent mortality rate, despite these formulations being logically equivalent.</p>
+        <p>The early literature on risk psychology was not without significant limitations. <strong style="color:var(--amber)">[41]</strong> <select class="gap-select" data-q="41"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select> The extension of this work into social risks, health risks, and the risks of everyday decision-making required a different set of experimental designs and a broader conception of what counted as a relevant outcome.</p>
+        <p>More recent research has revealed that risk-taking behaviour varies substantially across individuals and contexts, in ways that have important implications for how we design institutions and policies. <strong style="color:var(--amber)">[42]</strong> <select class="gap-select" data-q="42"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select> The assumption that individuals reliably pursue their own rational self-interest, once a cornerstone of economic modelling, has had to be substantially revised in light of the accumulated evidence.</p>
+        <p>The full significance of this body of research remains a matter of active debate. <strong style="color:var(--amber)">[43]</strong> <select class="gap-select" data-q="43"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select> How far psychological insights about individual risk judgement can be translated into reliable recommendations for the design of markets, healthcare systems, or democratic governance remains genuinely contested.</p>
+      </div>
+      <div style="margin-top:16px;padding-top:14px;border-top:2px solid var(--hairline)"><div style="font-family:var(--font-sans);font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Removed sentences (one is extra):</div>
+        <div class="gap-option"><div class="opt-letter">A</div><div>This finding challenged the assumption that risk-taking is primarily a rational process.</div></div>
+        <div class="gap-option"><div class="opt-letter">B</div><div>The implications extend well beyond individual psychology into the fields of economics and public policy.</div></div>
+        <div class="gap-option"><div class="opt-letter">C</div><div>Psychologists have long observed that human beings are notably poor at assessing probability.</div></div>
+        <div class="gap-option"><div class="opt-letter">D</div><div>This asymmetry &#8212; the greater emotional weight given to losses than to equivalent gains &#8212; has been consistently replicated across cultures.</div></div>
+        <div class="gap-option"><div class="opt-letter">E</div><div>Early research focused almost exclusively on situations in which the risks were financial.</div></div>
+        <div class="gap-option"><div class="opt-letter">F</div><div>A key breakthrough came with the development of prospect theory by Kahneman and Tversky in the 1970s.</div></div>
+        <div class="gap-option"><div class="opt-letter">G</div><div>Subsequent work showed that risk perception is also powerfully affected by how a choice is framed.</div></div>
+        <div class="gap-option"><div class="opt-letter">H</div><div>The neuroscience of risk-taking has revealed that different brain regions are activated depending on whether potential gains or losses are the focus.</div></div>
+      </div>
+    </div>
+
+    <!-- PART 7 -->
+    <div class="part-section">
+      <div class="part-header">Part 7 &#8212; Multiple Matching</div>
+      <h2>Questions 44&#8211;53</h2>
+      <p class="instructions">You are going to read about four people reflecting on their experience of reading. For questions 44&#8211;53, choose from the sections (A&#8211;D). The sections may be chosen more than once.</p>
+      <div class="mm-text"><div class="mm-letter">A</div><div class="mm-body"><strong>Professor Amara Osei, literary scholar</strong><br>I came to literature through a single novel, read at the age of thirteen, that I can only describe as an ethical shock. The world it depicted was entirely foreign to my own experience, and yet something in its moral texture felt more precise than anything I had encountered in my immediate surroundings. That experience formed my conviction &#8212; which I hold more strongly now than I did then &#8212; that sustained reading of literary fiction is one of the few activities that can genuinely cultivate the capacity to inhabit a perspective other than one's own. I regard this as more than an aesthetic achievement: it is a moral one. I have spent my career arguing, sometimes against considerable scepticism, that literary study is not a luxury discipline but a form of ethical education. Reading fiction, I believe, makes us less certain and, in that way, wiser.</br></div></div>
+      <div class="mm-text"><div class="mm-letter">B</div><div class="mm-body"><strong>Tomas Reyes, novelist</strong><br>People sometimes ask me what books I read while I am working on a novel, and the honest answer is: as many as possible, and as varied as possible. Reading is not separate from my practice as a writer &#8212; it is part of it, and I think of it as such deliberately. But the reading I do as a writer has changed how I think about what happens between a book and its reader. I used to imagine that the author was in control: that meaning was deposited in the text and retrieved by the reader. I no longer believe this. A book is incomplete until it is read, and what the reader brings &#8212; their expectations, their history, their resistances &#8212; is not noise in the signal but part of the signal. Writing and reading are, in my view, a single act performed by two people at different times.</div></div>
+      <div class="mm-text"><div class="mm-letter">C</div><div class="mm-body"><strong>Dr. Sarah Kim, cognitive scientist</strong><br>My research focuses on what happens in the brain when people read narrative fiction, and some of what we have found has genuinely changed my view of what reading is for. We know, for instance, that reading fiction activates theory-of-mind networks &#8212; the systems the brain uses to model other people's mental states &#8212; in ways that non-fiction does not, at least not to the same degree. This is experimental evidence for something literary critics have long claimed intuitively: that fiction uniquely trains the capacity to imagine what it is like to be someone else. I should add that my own reading habits have shifted as a result of this work. I used to read primarily non-fiction, regarding fiction as enjoyable but not particularly instructive. The research has persuaded me otherwise, and I now read novels with a professional seriousness I did not previously bring to them.</div></div>
+      <div class="mm-text"><div class="mm-letter">D</div><div class="mm-body"><strong>Fatima Al-Rashid, secondary school teacher</strong><br>The most important lesson I have learnt in fifteen years of teaching English is that you cannot predict which books will reach which students. I had a class three years ago that entirely refused to engage with the novel I had chosen for them &#8212; a book I loved and had taught successfully many times. I tried everything before eventually abandoning it and giving the students a choice from a short list. The book they chose was one I had hesitated to include; I worried it was too slight. They read it with an intensity that the other text had never generated. That experience changed how I select and present texts. The time I have available for literature is being squeezed by other curriculum demands, and this frustrates me deeply: I believe that the space for unhurried, exploratory reading is precisely what many of my students need and are not getting elsewhere.</div></div>
+      <div style="margin-top:20px">
+        <div class="mm-q"><div class="q-num">44</div><div class="q-text">Which person changed their approach to teaching after seeing how students responded?</div><select class="match-select" data-q="44"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">45</div><div class="q-text">Which person describes reading as a collaborative process involving both the writer and the reader?</div><select class="match-select" data-q="45"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">46</div><div class="q-text">Which person uses experimental research findings to support a claim about what reading fiction does?</div><select class="match-select" data-q="46"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">47</div><div class="q-text">Which person argues that reading literary fiction develops the capacity for moral understanding?</div><select class="match-select" data-q="47"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">48</div><div class="q-text">Which person describes a specific difficulty in encouraging reading within their professional context?</div><select class="match-select" data-q="48"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">49</div><div class="q-text">Which person suggests that reading fiction specifically develops a cognitive skill?</div><select class="match-select" data-q="49"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">50</div><div class="q-text">Which person describes their reading as an integral part of their professional work?</div><select class="match-select" data-q="50"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">51</div><div class="q-text">Which person traces their professional interest in literature to a specific early experience?</div><select class="match-select" data-q="51"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">52</div><div class="q-text">Which person expresses frustration that their subject is receiving less time than they believe it deserves?</div><select class="match-select" data-q="52"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">53</div><div class="q-text">Which person describes changing their own view about what counts as valuable reading material?</div><select class="match-select" data-q="53"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+      </div>
+    </div>
+
+    <div class="submit-area">
+      <p>Check your work before submitting. You cannot change answers after submission.</p>
+      <button class="submit-btn" onclick="submitExam(false)">Submit exam</button>
+    </div>
+  </div>
+
+  <div id="resultsScreen" class="results-screen">
+    <div class="part-header">CPE Mock Exam 3 &#8212; Results</div>
+    <div class="score-big" id="scoreFinal"></div>
+    <div class="score-label">Questions correct</div>
+    <p id="timeUsed" style="text-align:center;font-family:var(--font-sans);font-size:.8rem;color:var(--muted);margin-bottom:16px"></p>
+    <div class="part-breakdown" id="partBreakdown"></div>
+    <div style="text-align:center;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <a href="../index.html" class="start-btn" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);text-decoration:none;display:inline-block">Back to CPE</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">Word Play &middot; Cambridge English A1&rarr;C2</footer>
+
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+const ANSWERS = {
+  "part1":{"1":"arises","2":"lies","3":"brings","4":"set","5":"raise","6":"tap","7":"call","8":"rest"},
+  "part2":{"9":{"answer":"which","accept":["WHICH"]},"10":{"answer":"despite","accept":["DESPITE"]},"11":{"answer":"as","accept":["AS"]},"12":{"answer":"been","accept":["BEEN"]},"13":{"answer":"of","accept":["OF"]},"14":{"answer":"no","accept":["NO"]},"15":{"answer":"whether","accept":["WHETHER"]},"16":{"answer":"have","accept":["HAVE"]}},
+  "part3":{"17":"predominantly","18":"displacement","19":"irreversible","20":"increasingly","21":"remarkable","22":"adaptability","23":"technological","24":"foreseeable"},
+  "part4":{"25":{"answer":"is believed to have been","accept":["is believed to have been"]},"26":{"answer":"hardly had the announcement","accept":["hardly had the announcement"]},"27":{"answer":"in the event of","accept":["in the event of"]},"28":{"answer":"not nearly as effective as","accept":["not nearly as effective as","not nearly as efficient as"]},"29":{"answer":"provided that the deadline","accept":["provided that the deadline","on condition that the deadline"]},"30":{"answer":"owing to the fact","accept":["owing to the fact"]}},
+  "part5":{"31":"B","32":"C","33":"B","34":"A","35":"C","36":"B"},
+  "part6":{"37":"C","38":"F","39":"D","40":"G","41":"E","42":"A","43":"B"},
+  "part7":{"44":"D","45":"B","46":"C","47":"A","48":"D","49":"C","50":"B","51":"A","52":"D","53":"C"}
+};
+const DURATION_MS = 90 * 60 * 1000;
+let startTime = null;
+let timerInterval = null;
+let submitted = false;
+const SAVE_KEY = 'wordplay_cpe_mock_3';
+const BEST_KEY = 'wordplay_cpe_mock_3_best';
+let practiceMode = false;
+
+function startExam(practice) {
+  practiceMode = practice || false;
+  clearSave();
+  _startExam();
+}
+
+function resumeExam() {
+  var saved = getSave();
+  if (!saved) return;
+  _startExam(saved);
+}
+
+function _startExam(saved) {
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('examArea').classList.add('active');
+  if (practiceMode) {
+    document.querySelector('.timer-bar').innerHTML = '<div class="timer-display">Practice mode — no timer</div><div class="timer-meta">Answer at your own pace</div>';
+    startTime = Date.now();
+  } else {
+    startTime = saved ? saved.startTime : Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+    updateTimer();
+  }
+  if (saved) restoreAnswers(saved.answers);
+  window.scrollTo(0, 0);
+}
+
+function getSave() {
+  try { var s = localStorage.getItem(SAVE_KEY); return s ? JSON.parse(s) : null; } catch(e) { return null; }
+}
+
+function clearSave() {
+  try { localStorage.removeItem(SAVE_KEY); } catch(e) {}
+}
+
+function saveProgress() {
+  if (submitted) return;
+  var answers = collectAnswers();
+  var save = { startTime: startTime, answers: answers, savedAt: Date.now() };
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(save)); } catch(e) {}
+  alert('Progress saved. You can close the tab and resume later.');
+}
+
+function collectAnswers() {
+  var a = {};
+  document.querySelectorAll('input[type=radio]:checked').forEach(function(r) { a[r.name] = r.value; });
+  document.querySelectorAll('input[type=text]').forEach(function(i) { if (i.dataset.q) a['t'+i.dataset.q] = i.value; });
+  document.querySelectorAll('select').forEach(function(s) { if (s.dataset.q) a['s'+s.dataset.q] = s.value; });
+  return a;
+}
+
+function restoreAnswers(answers) {
+  Object.entries(answers).forEach(function(kv) {
+    var k = kv[0], v = kv[1];
+    if (k.startsWith('q')) {
+      var r = document.querySelector('input[name="'+k+'"][value="'+v+'"]');
+      if (r) r.checked = true;
+    } else if (k.startsWith('t')) {
+      var inp = document.querySelector('input[data-q="'+k.slice(1)+'"]');
+      if (inp) inp.value = v;
+    } else if (k.startsWith('s')) {
+      var sel = document.querySelector('select[data-q="'+k.slice(1)+'"]');
+      if (sel) sel.value = v;
+    }
+  });
+}
+
+function checkPrevAttempt() {
+  try {
+    var best = localStorage.getItem(BEST_KEY);
+    if (best) { document.getElementById('prevAttempt').style.display = 'block'; document.getElementById('prevScore').textContent = best; }
+    var saved = getSave();
+    if (saved) {
+      var ageMin = Math.round((Date.now() - saved.savedAt) / 60000);
+      document.getElementById('resumeSection').style.display = 'block';
+      document.getElementById('resumeInfo').textContent = 'Saved ' + ageMin + ' minutes ago';
+    }
+  } catch(e) {}
+}
+checkPrevAttempt();
+
+function updateTimer() {
+  var elapsed = Date.now() - startTime;
+  var remaining = DURATION_MS - elapsed;
+  if (remaining <= 0) { submitExam(true); return; }
+  var mins = Math.floor(remaining / 60000);
+  var secs = Math.floor((remaining % 60000) / 1000);
+  var el = document.getElementById('timerDisplay');
+  el.textContent = mins + ':' + (secs < 10 ? '0' : '') + secs;
+  el.classList.toggle('warning', remaining < 15*60*1000 && remaining >= 3*60*1000);
+  el.classList.toggle('critical', remaining < 3*60*1000);
+}
+
+function normalize(s) {
+  return (s || '').trim().toLowerCase().replace(/['']/g, "'");
+}
+
+function getRadioValue(name) {
+  var r = document.querySelector('input[name="'+name+'"]:checked');
+  return r ? r.value : null;
+}
+
+function getInputValue(q) {
+  var el = document.querySelector('input[data-q="'+q+'"], select[data-q="'+q+'"]');
+  return el ? el.value : '';
+}
+
+function checkAnswer(part, qNum, userValue) {
+  var ans = ANSWERS[part][qNum];
+  if (typeof ans === 'string') return normalize(userValue) === normalize(ans);
+  var target = normalize(ans.answer);
+  var userN = normalize(userValue);
+  if (userN === target) return true;
+  if (ans.accept && ans.accept.some(function(a) { return normalize(a) === userN; })) return true;
+  return false;
+}
+
+function submitExam(timeUp) {
+  if (submitted) return;
+  if (!timeUp && !confirm('Submit your exam now? You will not be able to change answers.')) return;
+  submitted = true;
+  clearInterval(timerInterval);
+  var elapsedMs = Date.now() - startTime;
+  var elapsedMin = Math.floor(elapsedMs / 60000);
+  var elapsedSec = Math.floor((elapsedMs % 60000) / 1000);
+  document.querySelectorAll('input, select').forEach(function(el) { el.disabled = true; });
+
+  var scores = {};
+
+  scores.part1 = { correct: 0, total: 8 };
+  for (var i = 1; i <= 8; i++) {
+    var v = getRadioValue('q' + i);
+    if (v && checkAnswer('part1', i, v)) scores.part1.correct++;
+  }
+
+  scores.part2 = { correct: 0, total: 8 };
+  for (var i = 9; i <= 16; i++) {
+    var v = getInputValue(i);
+    if (v && checkAnswer('part2', i, v)) scores.part2.correct++;
+  }
+
+  scores.part3 = { correct: 0, total: 8 };
+  for (var i = 17; i <= 24; i++) {
+    var v = getInputValue(i);
+    if (v && checkAnswer('part3', i, v)) scores.part3.correct++;
+  }
+
+  scores.part4 = { correct: 0, total: 6 };
+  for (var i = 25; i <= 30; i++) {
+    var v = getInputValue(i);
+    if (v && checkAnswer('part4', i, v)) scores.part4.correct++;
+  }
+
+  scores.part5 = { correct: 0, total: 6 };
+  for (var i = 31; i <= 36; i++) {
+    var v = getRadioValue('q' + i);
+    if (v && v === ANSWERS.part5[i]) scores.part5.correct++;
+  }
+
+  scores.part6 = { correct: 0, total: 7 };
+  for (var i = 37; i <= 43; i++) {
+    var v = getInputValue(i);
+    if (v && v === ANSWERS.part6[i]) scores.part6.correct++;
+  }
+
+  scores.part7 = { correct: 0, total: 10 };
+  for (var i = 44; i <= 53; i++) {
+    var v = getInputValue(i);
+    if (v && v === ANSWERS.part7[i]) scores.part7.correct++;
+  }
+
+  var totalCorrect = Object.values(scores).reduce(function(a, p) { return a + p.correct; }, 0);
+  var pct = Math.round((totalCorrect / 53) * 100);
+
+  document.getElementById('scoreFinal').textContent = totalCorrect + ' / 53';
+  document.getElementById('timeUsed').textContent = 'Time used: ' + elapsedMin + ' min ' + elapsedSec + ' sec' + (timeUp ? ' (auto-submit)' : '');
+
+  try { localStorage.setItem(BEST_KEY, totalCorrect + '/53 (' + pct + '%)'); } catch(e) {}
+
+  var partLabels = {
+    part1:'Part 1 · MC Cloze', part2:'Part 2 · Open Cloze', part3:'Part 3 · Word Form',
+    part4:'Part 4 · Transform', part5:'Part 5 · Multi-choice', part6:'Part 6 · Gapped Text',
+    part7:'Part 7 · Multi-match'
+  };
+  var breakdown = '';
+  Object.entries(scores).forEach(function(kv) {
+    var k = kv[0], v = kv[1];
+    var p = Math.round((v.correct / v.total) * 100);
+    breakdown += '<div class="part-score"><div class="name">' + partLabels[k] + '</div><div class="val">' + v.correct + '/' + v.total + '</div><div class="pct">' + p + '%</div></div>';
+  });
+  document.getElementById('partBreakdown').innerHTML = breakdown;
+
+  document.getElementById('resultsScreen').classList.add('active');
+  document.getElementById('resultsScreen').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>CPE Mock Exam 2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<style>
+.mock-container{max-width:760px;margin:0 auto;padding:0 16px}
+.timer-bar{position:sticky;top:0;background:var(--ink);color:var(--paper);padding:12px 16px;border-radius:0 0 8px 8px;display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15);margin-bottom:24px}
+.timer-display{font-family:var(--font-sans);font-size:1.1rem;font-weight:700;letter-spacing:.5px}
+.timer-display.warning{color:#FFD700}
+.timer-display.critical{color:#FF6B6B;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.timer-meta{font-family:var(--font-sans);font-size:.72rem;opacity:.85;letter-spacing:1px;text-transform:uppercase}
+.start-screen,.results-screen{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:28px;margin-bottom:24px}
+.start-screen h2,.results-screen h2{font-size:1.4rem;margin:0 0 12px}
+.start-btn{display:inline-block;padding:12px 28px;background:var(--ink);color:var(--paper);border:0;font-family:var(--font-sans);font-size:.82rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer;margin-top:12px}
+.start-btn:hover{opacity:.85}
+.exam-area{display:none}
+.exam-area.active{display:block}
+.part-section{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:24px;margin-bottom:28px}
+.part-header{font-family:var(--font-sans);font-size:.68rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.part-section h2{font-size:1.2rem;margin:0 0 8px;color:var(--ink)}
+.part-section .instructions{font-size:.85rem;color:var(--muted);margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--hairline)}
+.text-title{font-weight:700;text-align:center;font-size:1.05rem;margin:12px 0;color:var(--ink)}
+.text-content{font-size:.92rem;line-height:1.7;color:var(--ink);margin-bottom:18px}
+.text-content p{margin:0 0 12px}
+.mc-q{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--hairline)}
+.mc-q .q-num{font-family:var(--font-sans);font-size:.85rem;font-weight:800;color:var(--amber);min-width:28px}
+.mc-q .opts{flex:1;display:flex;flex-direction:column;gap:4px}
+.mc-q .q-text{flex:1;font-size:.9rem;margin-bottom:6px}
+.opt{display:flex;gap:6px;align-items:flex-start;padding:4px 0;cursor:pointer;font-size:.9rem}
+.opt:hover{background:rgba(184,134,11,.05)}
+.opt-letter{font-family:var(--font-sans);font-weight:700;color:var(--amber);min-width:18px}
+.opt input{margin-top:4px}
+.cloze-input{width:110px;padding:2px 8px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-size:.82rem;background:var(--cream-deep)}
+.cloze-input:focus{outline:none;border-color:var(--amber)}
+.kw-input{width:100%;max-width:380px;padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-size:.85rem;background:var(--cream-deep)}
+.word-form-line{display:flex;padding:10px 0;border-top:1px solid var(--hairline);align-items:flex-start;gap:14px}
+.wf-text{flex:1;font-size:.92rem;line-height:1.6}
+.wf-prompt{font-family:var(--font-sans);font-size:.75rem;font-weight:800;letter-spacing:1px;color:var(--muted);padding:4px 10px;border:1px solid var(--hairline);border-radius:3px;min-width:90px;text-align:center}
+.kw-q{display:flex;gap:12px;padding:14px 0;border-top:1px solid var(--hairline)}
+.kw-content{flex:1}
+.kw-content p{margin:0 0 6px;font-size:.9rem}
+.kw-key{font-family:var(--font-sans);font-weight:800;letter-spacing:1px;color:var(--amber)}
+.gap-select,.match-select{padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-weight:700;background:var(--cream-deep);color:var(--ink);cursor:pointer}
+.gap-option{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--hairline);font-size:.88rem;line-height:1.5}
+.mm-q{display:flex;gap:12px;align-items:center;padding:8px 0;border-top:1px solid var(--hairline);font-size:.88rem}
+.mm-q .q-text{flex:1}
+.mm-text{display:flex;gap:14px;padding:14px 0;border-top:1px solid var(--hairline)}
+.mm-letter{font-family:var(--font-sans);font-weight:800;color:var(--amber);font-size:1rem;min-width:24px}
+.mm-body{flex:1;font-size:.88rem;line-height:1.55}
+.submit-area{background:var(--ink);color:var(--paper);border-radius:8px;padding:20px;text-align:center;margin:32px 0}
+.submit-area p{margin:0 0 12px;opacity:.9}
+.submit-btn{display:inline-block;padding:14px 36px;background:var(--amber);color:var(--ink);border:0;font-family:var(--font-sans);font-size:.9rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer}
+.submit-btn:hover{opacity:.9}
+.results-screen{display:none}
+.results-screen.active{display:block}
+.score-big{font-size:3rem;font-weight:800;color:var(--amber);text-align:center;font-family:Georgia,serif}
+.score-label{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:18px}
+.part-breakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:20px 0}
+.part-score{background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px;padding:12px;text-align:center}
+.part-score .name{font-family:var(--font-sans);font-size:.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.part-score .val{font-size:1.3rem;font-weight:700;color:var(--ink);margin-top:4px}
+.part-score .pct{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin-top:2px}
+.exam-area input:disabled,.exam-area select:disabled{background:rgba(184,134,11,.05)}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Back"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+
+<div class="mock-container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>&#8250;</span><a href="../../index.html">C2</a><span>&#8250;</span><a href="../index.html">CPE</a><span>&#8250;</span><strong>Mock Exam 2</strong></div>
+
+  <div id="startScreen" class="start-screen">
+    <div class="part-header">CPE Mock Exam 2</div>
+    <h2>Mock Exam 2 &#8212; Reading &amp; Use of English</h2>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Duration:</strong> 90 minutes</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Total questions:</strong> 53 across 7 parts</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:16px">Once you click <strong>Start</strong>, the timer begins. The exam auto-submits when time runs out.</p>
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:18px">Tip: aim to spend roughly 12 minutes per part. Do not dwell on any single question.</p>
+    <button class="start-btn" onclick="startExam(false)">Start exam (timed)</button>
+    <button class="start-btn" onclick="startExam(true)" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Practice mode (no timer)</button>
+    <div id="resumeSection" style="display:none;margin-top:18px;padding:14px 16px;background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--amber);margin-bottom:6px">Saved progress found</div><div id="resumeInfo" style="font-size:.88rem;color:var(--ink);margin-bottom:10px"></div><button class="start-btn" onclick="resumeExam()" style="background:var(--amber);color:var(--ink)">Resume</button><button class="start-btn" onclick="clearSave()" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Start fresh</button></div>
+    <div id="prevAttempt" style="display:none;margin-top:12px;font-family:var(--font-sans);font-size:.78rem;color:var(--muted)">Previous best: <strong id="prevScore"></strong></div>
+  </div>
+
+  <div id="examArea" class="exam-area">
+    <div class="timer-bar">
+      <div class="timer-display" id="timerDisplay">90:00</div>
+      <div class="timer-meta">Time remaining</div>
+      <button onclick="saveProgress()" style="background:transparent;border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.85);font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border-radius:3px;cursor:pointer">Save &amp; quit</button>
+    </div>
+
+    <!-- PART 1 -->
+    <div class="part-section">
+      <div class="part-header">Part 1 &#8212; Multiple-choice Cloze</div>
+      <h2>Questions 1&#8211;8</h2>
+      <p class="instructions">For questions 1&#8211;8, read the text below and decide which answer (A, B, C or D) best fits each gap.</p>
+      <div class="text-title">The craft of biography</div>
+      <div class="text-content"><p>The biographer's task is to (1) _____ the essence of a life in words &#8212; a feat that requires both scholarly rigour and imaginative sympathy. Any responsible biographer must (2) _____ every claim against available evidence, yet the sources are rarely complete. Where evidence is ambiguous, the biographer must (3) _____ on a range of interpretations and weigh each against the others. Even so, the final portrait inevitably (4) _____ short of full objectivity, because selection itself implies judgement. The biographer must (5) _____ witness to the complexity of a human life without reducing it to a thesis. It would (6) _____ doubt on the entire enterprise to ignore contradictions or flatten inconvenient details. A good biography seeks instead to (7) _____ light on what drove a particular individual through their particular moment in history, and to (8) _____ a balance between the intimate and the universal.</p></div>
+      <div class="mc-q"><div class="q-num">1</div><div class="opts"><label class="opt"><input type="radio" name="q1" value="capture"> <span class="opt-letter">A</span> <span>capture</span></label><label class="opt"><input type="radio" name="q1" value="record"> <span class="opt-letter">B</span> <span>record</span></label><label class="opt"><input type="radio" name="q1" value="document"> <span class="opt-letter">C</span> <span>document</span></label><label class="opt"><input type="radio" name="q1" value="portray"> <span class="opt-letter">D</span> <span>portray</span></label></div></div>
+      <div class="mc-q"><div class="q-num">2</div><div class="opts"><label class="opt"><input type="radio" name="q2" value="verify"> <span class="opt-letter">A</span> <span>verify</span></label><label class="opt"><input type="radio" name="q2" value="confirm"> <span class="opt-letter">B</span> <span>confirm</span></label><label class="opt"><input type="radio" name="q2" value="validate"> <span class="opt-letter">C</span> <span>validate</span></label><label class="opt"><input type="radio" name="q2" value="establish"> <span class="opt-letter">D</span> <span>establish</span></label></div></div>
+      <div class="mc-q"><div class="q-num">3</div><div class="opts"><label class="opt"><input type="radio" name="q3" value="draw"> <span class="opt-letter">A</span> <span>draw</span></label><label class="opt"><input type="radio" name="q3" value="reach"> <span class="opt-letter">B</span> <span>reach</span></label><label class="opt"><input type="radio" name="q3" value="come"> <span class="opt-letter">C</span> <span>come</span></label><label class="opt"><input type="radio" name="q3" value="arrive"> <span class="opt-letter">D</span> <span>arrive</span></label></div></div>
+      <div class="mc-q"><div class="q-num">4</div><div class="opts"><label class="opt"><input type="radio" name="q4" value="falls"> <span class="opt-letter">A</span> <span>falls</span></label><label class="opt"><input type="radio" name="q4" value="lies"> <span class="opt-letter">B</span> <span>lies</span></label><label class="opt"><input type="radio" name="q4" value="rests"> <span class="opt-letter">C</span> <span>rests</span></label><label class="opt"><input type="radio" name="q4" value="stands"> <span class="opt-letter">D</span> <span>stands</span></label></div></div>
+      <div class="mc-q"><div class="q-num">5</div><div class="opts"><label class="opt"><input type="radio" name="q5" value="bear"> <span class="opt-letter">A</span> <span>bear</span></label><label class="opt"><input type="radio" name="q5" value="carry"> <span class="opt-letter">B</span> <span>carry</span></label><label class="opt"><input type="radio" name="q5" value="hold"> <span class="opt-letter">C</span> <span>hold</span></label><label class="opt"><input type="radio" name="q5" value="take"> <span class="opt-letter">D</span> <span>take</span></label></div></div>
+      <div class="mc-q"><div class="q-num">6</div><div class="opts"><label class="opt"><input type="radio" name="q6" value="cast"> <span class="opt-letter">A</span> <span>cast</span></label><label class="opt"><input type="radio" name="q6" value="throw"> <span class="opt-letter">B</span> <span>throw</span></label><label class="opt"><input type="radio" name="q6" value="shed"> <span class="opt-letter">C</span> <span>shed</span></label><label class="opt"><input type="radio" name="q6" value="put"> <span class="opt-letter">D</span> <span>put</span></label></div></div>
+      <div class="mc-q"><div class="q-num">7</div><div class="opts"><label class="opt"><input type="radio" name="q7" value="shed"> <span class="opt-letter">A</span> <span>shed</span></label><label class="opt"><input type="radio" name="q7" value="throw"> <span class="opt-letter">B</span> <span>throw</span></label><label class="opt"><input type="radio" name="q7" value="cast"> <span class="opt-letter">C</span> <span>cast</span></label><label class="opt"><input type="radio" name="q7" value="direct"> <span class="opt-letter">D</span> <span>direct</span></label></div></div>
+      <div class="mc-q"><div class="q-num">8</div><div class="opts"><label class="opt"><input type="radio" name="q8" value="strike"> <span class="opt-letter">A</span> <span>strike</span></label><label class="opt"><input type="radio" name="q8" value="hit"> <span class="opt-letter">B</span> <span>hit</span></label><label class="opt"><input type="radio" name="q8" value="reach"> <span class="opt-letter">C</span> <span>reach</span></label><label class="opt"><input type="radio" name="q8" value="find"> <span class="opt-letter">D</span> <span>find</span></label></div></div>
+    </div>
+
+    <!-- PART 2 -->
+    <div class="part-section">
+      <div class="part-header">Part 2 &#8212; Open Cloze</div>
+      <h2>Questions 9&#8211;16</h2>
+      <p class="instructions">For questions 9&#8211;16, read the text below and think of the word which best fits each gap. Use only one word in each gap.</p>
+      <div class="text-title">The economics of attention</div>
+      <div class="text-content"><p>It has long (9) <input type="text" class="cloze-input" data-q="9" maxlength="20" autocomplete="off" spellcheck="false"> argued that our most valuable resource is not money but time. Today, some economists insist the question of (10) <input type="text" class="cloze-input" data-q="10" maxlength="20" autocomplete="off" spellcheck="false"> digital attention is a resource that can be owned or sold remains unresolved. The challenge is compounded (11) <input type="text" class="cloze-input" data-q="11" maxlength="20" autocomplete="off" spellcheck="false"> the fact that online platforms have grown (12) <input type="text" class="cloze-input" data-q="12" maxlength="20" autocomplete="off" spellcheck="false"> rapidly that regulators struggle to keep pace. It is often unclear (13) <input type="text" class="cloze-input" data-q="13" maxlength="20" autocomplete="off" spellcheck="false"> constitutes genuine engagement and what amounts to passive scrolling. Some proposed interventions are so (14) <input type="text" class="cloze-input" data-q="14" maxlength="20" autocomplete="off" spellcheck="false"> as to require international coordination, ranging (15) <input type="text" class="cloze-input" data-q="15" maxlength="20" autocomplete="off" spellcheck="false"> binding legislation to voluntary industry codes. Critics argue that the attention economy has embedded itself in social behaviour in such a way (16) <input type="text" class="cloze-input" data-q="16" maxlength="20" autocomplete="off" spellcheck="false"> it cannot easily be reversed without significant disruption.</p></div>
+    </div>
+
+    <!-- PART 3 -->
+    <div class="part-section">
+      <div class="part-header">Part 3 &#8212; Word Formation</div>
+      <h2>Questions 17&#8211;24</h2>
+      <p class="instructions">For questions 17&#8211;24, read the text below. Use the word given in capitals at the end of some of the lines to form a word that fits in the gap in the same line.</p>
+      <div class="text-title">Sustainable architecture</div>
+      <div class="word-form-line"><div class="wf-text">Modern architects are expected to design (17) <input type="text" class="cloze-input" data-q="17" maxlength="25" autocomplete="off" spellcheck="false"> conscious buildings that minimise impact on the surrounding ecosystem.</div><div class="wf-prompt">ENVIRONMENT</div></div>
+      <div class="word-form-line"><div class="wf-text">The most (18) <input type="text" class="cloze-input" data-q="18" maxlength="25" autocomplete="off" spellcheck="false"> designs incorporate passive solar heating and green roofing systems that significantly reduce energy demands.</div><div class="wf-prompt">INNOVATE</div></div>
+      <div class="word-form-line"><div class="wf-text">Reducing energy (19) <input type="text" class="cloze-input" data-q="19" maxlength="25" autocomplete="off" spellcheck="false"> remains the central goal of any building certified to international sustainability standards.</div><div class="wf-prompt">CONSUME</div></div>
+      <div class="word-form-line"><div class="wf-text">Architects prize structural (20) <input type="text" class="cloze-input" data-q="20" maxlength="25" autocomplete="off" spellcheck="false">, as buildings that can be adapted over time are far less likely to be demolished and rebuilt.</div><div class="wf-prompt">FLEXIBLE</div></div>
+      <div class="word-form-line"><div class="wf-text">Residents of early experimental green buildings sometimes found conditions (21) <input type="text" class="cloze-input" data-q="21" maxlength="25" autocomplete="off" spellcheck="false">, particularly in winter when ventilation systems were insufficiently calibrated.</div><div class="wf-prompt">COMFORT</div></div>
+      <div class="word-form-line"><div class="wf-text">Clients are (22) <input type="text" class="cloze-input" data-q="22" maxlength="25" autocomplete="off" spellcheck="false"> willing to invest the higher upfront costs associated with sustainable materials, as long-term savings become better understood.</div><div class="wf-prompt">INCREASE</div></div>
+      <div class="word-form-line"><div class="wf-text">One risk identified by critics is excessive (23) <input type="text" class="cloze-input" data-q="23" maxlength="25" autocomplete="off" spellcheck="false"> on a single energy source, which can leave buildings vulnerable when supply is interrupted.</div><div class="wf-prompt">DEPEND</div></div>
+      <div class="word-form-line"><div class="wf-text">The (24) <input type="text" class="cloze-input" data-q="24" maxlength="25" autocomplete="off" spellcheck="false"> of urban spaces into zero-carbon districts requires the co-operation of local authorities, developers, and residents alike.</div><div class="wf-prompt">TRANSFORM</div></div>
+    </div>
+
+    <!-- PART 4 -->
+    <div class="part-section">
+      <div class="part-header">Part 4 &#8212; Key Word Transformation</div>
+      <h2>Questions 25&#8211;30</h2>
+      <p class="instructions">For questions 25&#8211;30, complete the second sentence so that it has a similar meaning to the first sentence, using the word given. Do not change the word given. You must use between three and eight words, including the word given.</p>
+      <div class="kw-q"><div class="q-num">25</div><div class="kw-content"><p>People think the tradition originated in the fifteenth century.</p><p class="kw-key">THOUGHT</p><p>The tradition <input type="text" class="kw-input" data-q="25" maxlength="80" autocomplete="off" spellcheck="false"> in the fifteenth century.</p></div></div>
+      <div class="kw-q"><div class="q-num">26</div><div class="kw-content"><p>The project was so challenging that many experts doubted it would succeed.</p><p class="kw-key">SUCH</p><p>It was <input type="text" class="kw-input" data-q="26" maxlength="80" autocomplete="off" spellcheck="false"> that many experts doubted it would succeed.</p></div></div>
+      <div class="kw-q"><div class="q-num">27</div><div class="kw-content"><p>If she hadn't intervened, the situation would have become critical.</p><p class="kw-key">HAD</p><p><input type="text" class="kw-input" data-q="27" maxlength="80" autocomplete="off" spellcheck="false">, the situation would have become critical.</p></div></div>
+      <div class="kw-q"><div class="q-num">28</div><div class="kw-content"><p>The results were published and the debate immediately intensified.</p><p class="kw-key">SOONER</p><p><input type="text" class="kw-input" data-q="28" maxlength="80" autocomplete="off" spellcheck="false"> been published than the debate immediately intensified.</p></div></div>
+      <div class="kw-q"><div class="q-num">29</div><div class="kw-content"><p>Even though she was exhausted, she continued working.</p><p class="kw-key">SPITE</p><p>She continued working <input type="text" class="kw-input" data-q="29" maxlength="80" autocomplete="off" spellcheck="false"> exhausted.</p></div></div>
+      <div class="kw-q"><div class="q-num">30</div><div class="kw-content"><p>It would be worth reconsidering this approach.</p><p class="kw-key">WORTH</p><p>This approach <input type="text" class="kw-input" data-q="30" maxlength="80" autocomplete="off" spellcheck="false">.</p></div></div>
+    </div>
+
+    <!-- PART 5 -->
+    <div class="part-section">
+      <div class="part-header">Part 5 &#8212; Multiple Choice</div>
+      <h2>Questions 31&#8211;36</h2>
+      <p class="instructions">For questions 31&#8211;36, read the text below and choose the answer (A, B, C or D) which you think fits best according to the text.</p>
+      <div class="text-title">The architecture of memory</div>
+      <div class="text-content">
+        <p>Alejandro Vega never set out to become a theorist. He trained as a civil engineer in the 1960s, working on infrastructure projects in cities that were expanding faster than their institutions could manage. It was only after a chance encounter with a historian studying urban displacement that Vega began to think about what buildings remember &#8212; and what they are made to forget. His first attempt at what he called "memorial architecture" was a modest community centre in a neighbourhood that had been partially demolished under a slum clearance programme. The building incorporated fragments of the demolished structures into its own fabric: a door frame here, a section of tiled floor there. Critics were largely indifferent at the time, but the community it served responded with an attachment that surprised even Vega himself.</p>
+        <p>The theoretical framework Vega developed over the following decade drew heavily on the work of French historians who argued that memory is embedded not only in documents but in physical space. He was less interested, however, in the idea of grand monuments than in what he called "the texture of ordinary life." His most celebrated building, the Civic Archive completed in 1979, appears at first glance to be a conventional administrative structure. Only on closer inspection does one notice the subtle incorporation of salvaged materials from the site's previous uses &#8212; a textile mill, a communal bathhouse &#8212; worked into the walls in ways that reward attentive looking. Vega insisted that such details should be discoverable rather than announced, holding that the most durable memorials are those that require effort to read.</p>
+        <p>His position was not without its critics. Some argued that an architecture legible only to those already in the know risked becoming merely self-congratulatory &#8212; an insider gesture that excluded the very communities it claimed to honour. Vega's response was characteristically forthright: he maintained that communities were more than capable of reading the spaces they inhabited, and that the assumption of illegibility said more about the critics than about the residents. He also pointed out that the meaning of a building shifts over time as the community that uses it changes, and that this openness to reinterpretation was a feature rather than a flaw.</p>
+        <p>Late in his career, Vega turned increasingly to writing, producing a series of essays that set out his convictions in direct and sometimes polemical prose. He was dismissive of what he called "the heritage industry" &#8212; the tendency to freeze the past in carefully managed tourist sites rather than allowing it to remain part of lived urban experience. For Vega, genuine memory required friction: it had to be encountered unexpectedly, in the middle of daily life, rather than sought out at a designated site. The museum, in his view, was the death of memory. Whether one agrees or not, the clarity of this position gave his writing an energy that purely architectural arguments rarely achieve.</p>
+        <p>Vega died in 2004, leaving behind a body of work that resists easy categorisation. He was neither a preservationist nor a straightforwardly modernist architect; his allegiances were to a particular way of thinking about time and community rather than to any stylistic programme. His legacy is most clearly visible not in the few large public buildings that bear his name but in the attitude he modelled &#8212; an insistence that buildings should carry their histories openly, and that the people who use them deserve to know where they stand.</p>
+      </div>
+      <div class="mc-q"><div class="q-num">31</div><div class="q-text">What was the initial reaction to Vega's first "memorial architecture" project?</div><div class="opts"><label class="opt"><input type="radio" name="q31" value="A"> <span class="opt-letter">A</span> <span>It was widely praised by architectural critics.</span></label><label class="opt"><input type="radio" name="q31" value="B"> <span class="opt-letter">B</span> <span>It attracted immediate interest from historians of urban space.</span></label><label class="opt"><input type="radio" name="q31" value="C"> <span class="opt-letter">C</span> <span>Critics showed little interest, though the local community embraced it.</span></label><label class="opt"><input type="radio" name="q31" value="D"> <span class="opt-letter">D</span> <span>It was condemned for its use of salvaged materials from demolished buildings.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">32</div><div class="q-text">What does the writer suggest about Vega's Civic Archive?</div><div class="opts"><label class="opt"><input type="radio" name="q32" value="A"> <span class="opt-letter">A</span> <span>Its historical references are immediately obvious to any visitor.</span></label><label class="opt"><input type="radio" name="q32" value="B"> <span class="opt-letter">B</span> <span>Its design was heavily influenced by French architectural theory.</span></label><label class="opt"><input type="radio" name="q32" value="C"> <span class="opt-letter">C</span> <span>Its embedded historical details are intended to be found rather than displayed.</span></label><label class="opt"><input type="radio" name="q32" value="D"> <span class="opt-letter">D</span> <span>Its construction was widely celebrated as a breakthrough in public architecture.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">33</div><div class="q-text">How did Vega respond to critics who felt his architecture was too difficult to read?</div><div class="opts"><label class="opt"><input type="radio" name="q33" value="A"> <span class="opt-letter">A</span> <span>He acknowledged the problem and simplified his later designs as a result.</span></label><label class="opt"><input type="radio" name="q33" value="B"> <span class="opt-letter">B</span> <span>He argued that the criticism underestimated people's ability to interpret their own spaces.</span></label><label class="opt"><input type="radio" name="q33" value="C"> <span class="opt-letter">C</span> <span>He suggested that specialist guides should be provided at each building.</span></label><label class="opt"><input type="radio" name="q33" value="D"> <span class="opt-letter">D</span> <span>He dismissed the objection as irrelevant to his architectural practice.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">34</div><div class="q-text">What did Vega mean by saying that memory required "friction"?</div><div class="opts"><label class="opt"><input type="radio" name="q34" value="A"> <span class="opt-letter">A</span> <span>He believed the past should be encountered as part of ordinary experience, not set apart for contemplation.</span></label><label class="opt"><input type="radio" name="q34" value="B"> <span class="opt-letter">B</span> <span>He thought the process of remembering should be emotionally painful.</span></label><label class="opt"><input type="radio" name="q34" value="C"> <span class="opt-letter">C</span> <span>He felt that communities should debate the meaning of historical sites openly.</span></label><label class="opt"><input type="radio" name="q34" value="D"> <span class="opt-letter">D</span> <span>He argued that official heritage designations were necessary to protect memory.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">35</div><div class="q-text">The writer describes Vega's theoretical position as giving his writing "an energy that purely architectural arguments rarely achieve." What does this suggest?</div><div class="opts"><label class="opt"><input type="radio" name="q35" value="A"> <span class="opt-letter">A</span> <span>His essays contained technical arguments that were difficult for non-specialists to follow.</span></label><label class="opt"><input type="radio" name="q35" value="B"> <span class="opt-letter">B</span> <span>His writing was more poetic than analytical, relying on metaphor rather than evidence.</span></label><label class="opt"><input type="radio" name="q35" value="C"> <span class="opt-letter">C</span> <span>The clarity and conviction of his opinions made his prose more compelling than most architectural writing.</span></label><label class="opt"><input type="radio" name="q35" value="D"> <span class="opt-letter">D</span> <span>He deliberately avoided complex theoretical language in order to reach a wider audience.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">36</div><div class="q-text">According to the final paragraph, where is Vega's legacy most clearly seen?</div><div class="opts"><label class="opt"><input type="radio" name="q36" value="A"> <span class="opt-letter">A</span> <span>In the large public buildings he designed throughout his career.</span></label><label class="opt"><input type="radio" name="q36" value="B"> <span class="opt-letter">B</span> <span>In the approach to buildings and history that he demonstrated through his practice.</span></label><label class="opt"><input type="radio" name="q36" value="C"> <span class="opt-letter">C</span> <span>In the theoretical texts he produced late in his career.</span></label><label class="opt"><input type="radio" name="q36" value="D"> <span class="opt-letter">D</span> <span>In the influence he had on a generation of preservationist architects.</span></label></div></div>
+    </div>
+
+    <!-- PART 6 -->
+    <div class="part-section">
+      <div class="part-header">Part 6 &#8212; Gapped Text</div>
+      <h2>Questions 37&#8211;43</h2>
+      <p class="instructions">You are going to read an article about the science of sleep. Seven sentences have been removed. Choose from the sentences A&#8211;H the one which fits each gap. There is one extra sentence you do not need to use.</p>
+      <div class="text-title">The science of sleep</div>
+      <div class="text-content">
+        <p>Sleep is among the most universal of biological experiences, yet it remains one of the least understood. <strong style="color:var(--amber)">[37]</strong> <select class="gap-select" data-q="37"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select> Modern research has overturned this view decisively, revealing sleep to be a state of intense biological activity.</p>
+        <p>The discovery that sleep plays a central role in consolidating newly acquired memories was among the most significant advances in twentieth-century neuroscience. <strong style="color:var(--amber)">[38]</strong> <select class="gap-select" data-q="38"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select> Experiments have shown that subjects who sleep between learning and testing consistently outperform those who remain awake, an effect that has now been documented across a wide range of cognitive tasks.</p>
+        <p>Sleep is divided into distinct stages that cycle across the night, alternating between periods of rapid eye movement (REM) sleep and non-REM sleep. <strong style="color:var(--amber)">[39]</strong> <select class="gap-select" data-q="39"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select> Deep non-REM sleep, for instance, appears particularly important for the consolidation of factual knowledge, while REM sleep is associated with emotional processing and procedural learning.</p>
+        <p>Among the more counterintuitive findings to emerge from recent research is that sleep deprivation impairs not only performance but also the ability to recognise that performance has been impaired. <strong style="color:var(--amber)">[40]</strong> <select class="gap-select" data-q="40"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select> Sleep-deprived individuals consistently rate their own alertness as higher than objective measures indicate, a bias that persists even after multiple nights of insufficient sleep.</p>
+        <p>The societal consequences of chronic sleep deprivation are substantial, encompassing increased rates of cardiovascular disease, metabolic disorder, and impaired immune function. <strong style="color:var(--amber)">[41]</strong> <select class="gap-select" data-q="41"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select> School start times, working hours, and the design of shift-work schedules are all areas where sleep science offers clear recommendations that have yet to be consistently adopted.</p>
+        <p>Part of the difficulty in translating sleep research into policy is that poor sleep is both a cause and a consequence of stress. <strong style="color:var(--amber)">[42]</strong> <select class="gap-select" data-q="42"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select> Disentangling the direction of causation in individual cases is therefore extremely difficult, which complicates efforts to design effective public health interventions.</p>
+        <p>What is clear is that sleep cannot be dismissed as a passive luxury. Its contributions to physical health, cognitive performance, and emotional resilience are each well established in the scientific literature. <strong style="color:var(--amber)">[43]</strong> <select class="gap-select" data-q="43"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></p>
+      </div>
+      <div style="margin-top:16px;padding-top:14px;border-top:2px solid var(--hairline)"><div style="font-family:var(--font-sans);font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:8px">Removed sentences (one is extra):</div>
+        <div class="gap-option"><div class="opt-letter">A</div><div>This discovery upended decades of conventional thinking about the role of sleep in memory.</div></div>
+        <div class="gap-option"><div class="opt-letter">B</div><div>For most of human history, sleep was regarded as a passive state during which the body simply waited for waking life to resume.</div></div>
+        <div class="gap-option"><div class="opt-letter">C</div><div>It is this combination of cognitive and physical benefits that makes adequate sleep so difficult to replace with any other intervention.</div></div>
+        <div class="gap-option"><div class="opt-letter">D</div><div>The implications for public health policy are significant, even if the political will to act on them has been slow to materialise.</div></div>
+        <div class="gap-option"><div class="opt-letter">E</div><div>More recently, researchers have documented its role in emotional regulation, specifically in the processing of aversive experiences.</div></div>
+        <div class="gap-option"><div class="opt-letter">F</div><div>This is partly because the pressures of modern working life make chronic sleep deprivation a near-universal experience in industrialised societies.</div></div>
+        <div class="gap-option"><div class="opt-letter">G</div><div>These cycles, which typically repeat four to five times per night, are not random but are carefully sequenced to serve different biological purposes.</div></div>
+        <div class="gap-option"><div class="opt-letter">H</div><div>The history of sleep research is, in many ways, a history of scientists gradually realising how little they understood.</div></div>
+      </div>
+    </div>
+
+    <!-- PART 7 -->
+    <div class="part-section">
+      <div class="part-header">Part 7 &#8212; Multiple Matching</div>
+      <h2>Questions 44&#8211;53</h2>
+      <p class="instructions">You are going to read about four scientists reflecting on communicating science to the public. For questions 44&#8211;53, choose from the sections (A&#8211;D). The sections may be chosen more than once.</p>
+      <div class="mm-text"><div class="mm-letter">A</div><div class="mm-body"><strong>Dr. Elena Sousa, geneticist</strong><br>When I first started giving public talks about genetics, I presented the science exactly as I would to a graduate seminar. Audience feedback &#8212; some of it quite pointed &#8212; made it clear that this approach was not working. I began rethinking every talk from the audience's perspective: what did they actually need to know, and in what order? The tension between simplification and accuracy is one I have never fully resolved. Every time I make a concept more accessible, I worry I am sacrificing precision. And yet I believe strongly that scientists have a professional responsibility to communicate what they know; it is not optional. Staying entirely within the specialist literature, while personally comfortable, is a form of abdication. The public funds much of this research, and they are entitled to understand its implications.</div></div>
+      <div class="mm-text"><div class="mm-letter">B</div><div class="mm-body"><strong>Professor Kwame Asante, climate scientist</strong><br>The response to my first attempt at public science writing genuinely took me aback. I had expected polite interest at best; what I received instead was a level of personal engagement from readers that I found both moving and, frankly, somewhat overwhelming. People wrote to describe how reading about climate systems had changed the way they thought about their own lives. That experience made me realise I needed a different kind of language &#8212; not simpler, exactly, but more human. I now make a point of beginning with examples drawn from my own fieldwork: a particular glacier I visited, a specific rainfall pattern I have watched change over twenty years. It took several years to develop this voice, and I am still refining it. Communicating science is a craft, and it requires the same sustained practice as any other.</div></div>
+      <div class="mm-text"><div class="mm-letter">C</div><div class="mm-body"><strong>Dr. Ingrid Larsson, neuroscientist</strong><br>The field of neuroscience has a problem with popular representation that is, in my view, more severe than in almost any other discipline. Concepts such as neuroplasticity and left-brain versus right-brain thinking have entered common speech in forms that bear little relationship to what the research actually demonstrates. I find this deeply frustrating, not least because distorted neuroscience is regularly used to justify educational programmes and therapeutic interventions that have no evidence base. My response has been to engage directly with the institutions that perpetuate these myths: I have partnered with schools, teacher-training programmes, and several media organisations to provide what I hope is more accurate framing. The work is slow and sometimes discouraging, but I believe it is necessary.</div></div>
+      <div class="mm-text"><div class="mm-letter">D</div><div class="mm-body"><strong>Marcus Webb, science journalist turned researcher</strong><br>I spent fifteen years writing about science before I became a scientist myself, which gives me a perspective on the communication problem that is perhaps unusual. My doctoral research drew on methods from both journalism and sociology, and I came to science already convinced of the value of the questions that non-experts ask. Specialists often dismiss these questions as naive, but I have found that the most productive challenges to established thinking frequently come from people who are not yet committed to the existing framework. I genuinely enjoy the process of being questioned by audiences who have no investment in the answer being a particular thing. That openness, which outsiders bring naturally and insiders often have to work to recover, strikes me as one of the most valuable resources in any research environment.</div></div>
+      <div style="margin-top:20px">
+        <div class="mm-q"><div class="q-num">44</div><div class="q-text">Which scientist was surprised by the public's reaction to their communication work?</div><select class="match-select" data-q="44"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">45</div><div class="q-text">Which scientist changed the way they present their subject in response to audience feedback?</div><select class="match-select" data-q="45"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">46</div><div class="q-text">Which scientist came to research from a different professional background?</div><select class="match-select" data-q="46"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">47</div><div class="q-text">Which scientist is concerned that their field is regularly misrepresented in public discussion?</div><select class="match-select" data-q="47"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">48</div><div class="q-text">Which scientist uses examples from their own fieldwork to illustrate their findings?</div><select class="match-select" data-q="48"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">49</div><div class="q-text">Which scientist acknowledges an unresolved tension between making science accessible and keeping it accurate?</div><select class="match-select" data-q="49"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">50</div><div class="q-text">Which scientist values the perspective that people outside a field bring to research questions?</div><select class="match-select" data-q="50"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">51</div><div class="q-text">Which scientist has worked with educational and media organisations to address misinformation?</div><select class="match-select" data-q="51"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">52</div><div class="q-text">Which scientist describes developing their own distinctive communication style over time?</div><select class="match-select" data-q="52"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">53</div><div class="q-text">Which scientist states that communicating research is a professional duty for scientists?</div><select class="match-select" data-q="53"><option value="">&#8212;</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+      </div>
+    </div>
+
+    <div class="submit-area">
+      <p>Check your work before submitting. You cannot change answers after submission.</p>
+      <button class="submit-btn" onclick="submitExam(false)">Submit exam</button>
+    </div>
+  </div>
+
+  <div id="resultsScreen" class="results-screen">
+    <div class="part-header">CPE Mock Exam 2 &#8212; Results</div>
+    <div class="score-big" id="scoreFinal"></div>
+    <div class="score-label">Questions correct</div>
+    <p id="timeUsed" style="text-align:center;font-family:var(--font-sans);font-size:.8rem;color:var(--muted);margin-bottom:16px"></p>
+    <div class="part-breakdown" id="partBreakdown"></div>
+    <div style="text-align:center;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <a href="../index.html" class="start-btn" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);text-decoration:none;display:inline-block">Back to CPE</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">Word Play &middot; Cambridge English A1&rarr;C2</footer>
+
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+const ANSWERS = {
+  "part1":{"1":"capture","2":"verify","3":"draw","4":"falls","5":"bear","6":"cast","7":"shed","8":"strike"},
+  "part2":{"9":{"answer":"been","accept":["BEEN"]},"10":{"answer":"whether","accept":["WHETHER"]},"11":{"answer":"by","accept":["BY"]},"12":{"answer":"so","accept":["SO"]},"13":{"answer":"what","accept":["WHAT"]},"14":{"answer":"far","accept":["FAR"]},"15":{"answer":"from","accept":["FROM"]},"16":{"answer":"that","accept":["THAT"]}},
+  "part3":{"17":"environmentally","18":"innovative","19":"consumption","20":"flexibility","21":"uncomfortable","22":"increasingly","23":"dependence","24":"transformation"},
+  "part4":{"25":{"answer":"is thought to have originated","accept":["is thought to have originated","is thought to have come"]},"26":{"answer":"such a challenging project","accept":["such a challenging project","such a difficult project"]},"27":{"answer":"had she not intervened","accept":["had she not intervened"]},"28":{"answer":"no sooner had the results","accept":["no sooner had the results"]},"29":{"answer":"in spite of having","accept":["in spite of having"]},"30":{"answer":"is worth reconsidering","accept":["is worth reconsidering","is worth re-examining"]}},
+  "part5":{"31":"C","32":"C","33":"B","34":"A","35":"C","36":"B"},
+  "part6":{"37":"B","38":"E","39":"G","40":"A","41":"D","42":"F","43":"C"},
+  "part7":{"44":"B","45":"A","46":"D","47":"C","48":"B","49":"A","50":"D","51":"C","52":"B","53":"A"}
+};
+const DURATION_MS = 90 * 60 * 1000;
+let startTime = null;
+let timerInterval = null;
+let submitted = false;
+const SAVE_KEY = 'wordplay_cpe_mock_2';
+const BEST_KEY = 'wordplay_cpe_mock_2_best';
+let practiceMode = false;
+
+function startExam(practice) {
+  practiceMode = practice || false;
+  clearSave();
+  _startExam();
+}
+
+function resumeExam() {
+  var saved = getSave();
+  if (!saved) return;
+  _startExam(saved);
+}
+
+function _startExam(saved) {
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('examArea').classList.add('active');
+  if (practiceMode) {
+    document.querySelector('.timer-bar').innerHTML = '<div class="timer-display">Practice mode — no timer</div><div class="timer-meta">Answer at your own pace</div>';
+    startTime = Date.now();
+  } else {
+    startTime = saved ? saved.startTime : Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+    updateTimer();
+  }
+  if (saved) restoreAnswers(saved.answers);
+  window.scrollTo(0, 0);
+}
+
+function getSave() {
+  try { var s = localStorage.getItem(SAVE_KEY); return s ? JSON.parse(s) : null; } catch(e) { return null; }
+}
+
+function clearSave() {
+  try { localStorage.removeItem(SAVE_KEY); } catch(e) {}
+}
+
+function saveProgress() {
+  if (submitted) return;
+  var answers = collectAnswers();
+  var save = { startTime: startTime, answers: answers, savedAt: Date.now() };
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(save)); } catch(e) {}
+  alert('Progress saved. You can close the tab and resume later.');
+}
+
+function collectAnswers() {
+  var a = {};
+  document.querySelectorAll('input[type=radio]:checked').forEach(function(r) { a[r.name] = r.value; });
+  document.querySelectorAll('input[type=text]').forEach(function(i) { if (i.dataset.q) a['t'+i.dataset.q] = i.value; });
+  document.querySelectorAll('select').forEach(function(s) { if (s.dataset.q) a['s'+s.dataset.q] = s.value; });
+  return a;
+}
+
+function restoreAnswers(answers) {
+  Object.entries(answers).forEach(function(kv) {
+    var k = kv[0], v = kv[1];
+    if (k.startsWith('q')) {
+      var r = document.querySelector('input[name="'+k+'"][value="'+v+'"]');
+      if (r) r.checked = true;
+    } else if (k.startsWith('t')) {
+      var inp = document.querySelector('input[data-q="'+k.slice(1)+'"]');
+      if (inp) inp.value = v;
+    } else if (k.startsWith('s')) {
+      var sel = document.querySelector('select[data-q="'+k.slice(1)+'"]');
+      if (sel) sel.value = v;
+    }
+  });
+}
+
+function checkPrevAttempt() {
+  try {
+    var best = localStorage.getItem(BEST_KEY);
+    if (best) { document.getElementById('prevAttempt').style.display = 'block'; document.getElementById('prevScore').textContent = best; }
+    var saved = getSave();
+    if (saved) {
+      var ageMin = Math.round((Date.now() - saved.savedAt) / 60000);
+      document.getElementById('resumeSection').style.display = 'block';
+      document.getElementById('resumeInfo').textContent = 'Saved ' + ageMin + ' minutes ago';
+    }
+  } catch(e) {}
+}
+checkPrevAttempt();
+
+function updateTimer() {
+  var elapsed = Date.now() - startTime;
+  var remaining = DURATION_MS - elapsed;
+  if (remaining <= 0) { submitExam(true); return; }
+  var mins = Math.floor(remaining / 60000);
+  var secs = Math.floor((remaining % 60000) / 1000);
+  var el = document.getElementById('timerDisplay');
+  el.textContent = mins + ':' + (secs < 10 ? '0' : '') + secs;
+  el.classList.toggle('warning', remaining < 15*60*1000 && remaining >= 3*60*1000);
+  el.classList.toggle('critical', remaining < 3*60*1000);
+}
+
+function normalize(s) {
+  return (s || '').trim().toLowerCase().replace(/['']/g, "'");
+}
+
+function getRadioValue(name) {
+  var r = document.querySelector('input[name="'+name+'"]:checked');
+  return r ? r.value : null;
+}
+
+function getInputValue(q) {
+  var el = document.querySelector('input[data-q="'+q+'"], select[data-q="'+q+'"]');
+  return el ? el.value : '';
+}
+
+function checkAnswer(part, qNum, userValue) {
+  var ans = ANSWERS[part][qNum];
+  if (typeof ans === 'string') return normalize(userValue) === normalize(ans);
+  var target = normalize(ans.answer);
+  var userN = normalize(userValue);
+  if (userN === target) return true;
+  if (ans.accept && ans.accept.some(function(a) { return normalize(a) === userN; })) return true;
+  return false;
+}
+
+function submitExam(timeUp) {
+  if (submitted) return;
+  if (!timeUp && !confirm('Submit your exam now? You will not be able to change answers.')) return;
+  submitted = true;
+  clearInterval(timerInterval);
+  var elapsedMs = Date.now() - startTime;
+  var elapsedMin = Math.floor(elapsedMs / 60000);
+  var elapsedSec = Math.floor((elapsedMs % 60000) / 1000);
+  document.querySelectorAll('input, select').forEach(function(el) { el.disabled = true; });
+
+  var scores = {};
+
+  scores.part1 = { correct: 0, total: 8 };
+  for (var i = 1; i <= 8; i++) {
+    var v = getRadioValue('q' + i);
+    if (v && checkAnswer('part1', i, v)) scores.part1.correct++;
+  }
+
+  scores.part2 = { correct: 0, total: 8 };
+  for (var i = 9; i <= 16; i++) {
+    var v = getInputValue(i);
+    if (v && checkAnswer('part2', i, v)) scores.part2.correct++;
+  }
+
+  scores.part3 = { correct: 0, total: 8 };
+  for (var i = 17; i <= 24; i++) {
+    var v = getInputValue(i);
+    if (v && checkAnswer('part3', i, v)) scores.part3.correct++;
+  }
+
+  scores.part4 = { correct: 0, total: 6 };
+  for (var i = 25; i <= 30; i++) {
+    var v = getInputValue(i);
+    if (v && checkAnswer('part4', i, v)) scores.part4.correct++;
+  }
+
+  scores.part5 = { correct: 0, total: 6 };
+  for (var i = 31; i <= 36; i++) {
+    var v = getRadioValue('q' + i);
+    if (v && v === ANSWERS.part5[i]) scores.part5.correct++;
+  }
+
+  scores.part6 = { correct: 0, total: 7 };
+  for (var i = 37; i <= 43; i++) {
+    var v = getInputValue(i);
+    if (v && v === ANSWERS.part6[i]) scores.part6.correct++;
+  }
+
+  scores.part7 = { correct: 0, total: 10 };
+  for (var i = 44; i <= 53; i++) {
+    var v = getInputValue(i);
+    if (v && v === ANSWERS.part7[i]) scores.part7.correct++;
+  }
+
+  var totalCorrect = Object.values(scores).reduce(function(a, p) { return a + p.correct; }, 0);
+  var pct = Math.round((totalCorrect / 53) * 100);
+
+  document.getElementById('scoreFinal').textContent = totalCorrect + ' / 53';
+  document.getElementById('timeUsed').textContent = 'Time used: ' + elapsedMin + ' min ' + elapsedSec + ' sec' + (timeUp ? ' (auto-submit)' : '');
+
+  try { localStorage.setItem(BEST_KEY, totalCorrect + '/53 (' + pct + '%)'); } catch(e) {}
+
+  var partLabels = {
+    part1:'Part 1 · MC Cloze', part2:'Part 2 · Open Cloze', part3:'Part 3 · Word Form',
+    part4:'Part 4 · Transform', part5:'Part 5 · Multi-choice', part6:'Part 6 · Gapped Text',
+    part7:'Part 7 · Multi-match'
+  };
+  var breakdown = '';
+  Object.entries(scores).forEach(function(kv) {
+    var k = kv[0], v = kv[1];
+    var p = Math.round((v.correct / v.total) * 100);
+    breakdown += '<div class="part-score"><div class="name">' + partLabels[k] + '</div><div class="val">' + v.correct + '/' + v.total + '</div><div class="pct">' + p + '%</div></div>';
+  });
+  document.getElementById('partBreakdown').innerHTML = breakdown;
+
+  document.getElementById('resultsScreen').classList.add('active');
+  document.getElementById('resultsScreen').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
