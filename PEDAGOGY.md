@@ -54,7 +54,7 @@ All worksheet grading is automatic. Students never grade their own open producti
 
 ## 7. Progress Is Visible and Rewarded
 
-Completion is tracked in localStorage and shown as ✓ badges on nav tabs. Games fire confetti on mastery. The dashboard shows total progress per level. Students always know where they stand.
+Completion is tracked in localStorage (and synced to the D1 backend for signed-in users) and shown as ✓ badges on nav tabs. Games fire confetti on mastery. The dashboard shows total progress per level. Students always know where they stand.
 
 **Check:** Every `slides.html` has the progress badge script. Every `game.html` loads `game.js` (which fires confetti).
 

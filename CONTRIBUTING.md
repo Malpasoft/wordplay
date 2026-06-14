@@ -67,12 +67,15 @@ No emojis in commit messages.
 
 ## File conventions
 
-- **Static site only** — vanilla HTML/CSS/JS, no build step, no npm
-- **~2,372 HTML pages** — prefer targeted `Edit` calls over batch scripts
+- **Vanilla frontend, no build step, no npm** — but there *is* a backend: Cloudflare Pages
+  Functions (`functions/api/**`) over a D1 database (accounts, auth, progress sync). See
+  CLAUDE.md → *Architecture & Backend* before touching anything under `functions/` or `migrations/`.
+- **≈2.5k HTML pages** — prefer targeted `Edit` calls over batch scripts
 - **Two flashcard templates** — never mix them:
   - Old (A1 vocab): `STORAGE_KEY`, `WORDS[{word, definition, example, pronunciation}]`, `renderCard()`
   - New (A2–C2): `MASTERY_KEY`, `SLUG`, `LEVEL`, `WORDS[{word, ipa, def, ex}]`, `showCard()`
-- **Progress storage**: `wordplay_progress → { a1: { slug: {score,pct,date} } }` in localStorage
+- **Progress storage**: cached in localStorage (`wordplay_progress`) and synced to D1 for
+  signed-in users; logged-out use works localStorage-only. Full schema in CLAUDE.md.
 - **MCP config** goes in `.mcp.json` at project root — not in `.claude/settings.json`
 
 ---

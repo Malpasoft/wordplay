@@ -1,22 +1,35 @@
 # Word Play — Project Guide
 
-> **This file is the single source of truth for project rules.** Design system, git
-> workflow, conventions, and pedagogy live here. Other docs (AI_HANDOVER.md,
-> SESSION_CONTEXT.md, CONTRIBUTING.md) link back to this file instead of restating
-> rules — so there is only ever one place to update.
+> **This file is the single source of truth.** Project rules, architecture, backend, design
+> system, git workflow, conventions, engine contracts, and pedagogy all live here — there is
+> only ever one place to update. The only other living docs are: `CONTRIBUTING.md` (branch/PR
+> workflow), `PEDAGOGY.md` (learning-design rules + checks), `SYLLABUS.md` (Cambridge mapping),
+> `CLOUDFLARE_SETUP.md` (one-time D1 setup), and `TECH_DEBT.md` (open debt register).
 >
-> **Known technical debt is tracked in `TECH_DEBT.md`** — check it before large refactors.
+> **Check `TECH_DEBT.md` before large refactors.**
+
+## Who you're working with
+
+**Em** — freelance English teacher in Catalunya, Spain. Works via GitHub + Claude Code (remote
+sessions). Does not run local code, has no IDE. Direct, brief, no filler, no flattery; pushes
+back on padded responses. Values: clean minimal formatting (no decorative emoji), amber-only
+accent, finishing/polishing existing content over new features, constructive pushback when
+she's wrong. Annoyed by: AI over-explaining instead of doing, silent drift from established
+patterns, and Spanish-specific content leaking into the main English course.
 
 ## Project
 
-Static multi-language course site (English, Spanish, French) on Cloudflare Pages.
-Vanilla HTML/CSS/JS, no build system, no backend. All student progress lives in browser
-localStorage. Teacher tools (calendar, profiles, dev-hub, builder, coverage) at root level.
+Multi-language language-learning site (English, Spanish, French) on Cloudflare Pages.
+Vanilla HTML/CSS/JS frontend, no build system — **but it is not a pure static site.** It is
+backed by **Cloudflare Pages Functions + a D1 (SQLite) database** providing user accounts,
+token auth, and cross-device progress sync (see *Architecture & Backend* below). localStorage
+is a write-through cache, not the system of record. Teacher tools (calendar, profiles, dev-hub,
+builder, coverage) live at root level. ≈2.5k HTML pages — see `coverage.html` for the live map.
 
-**Repo:** `malpasoft/wordplay`
-**Orientation:** read `AI_HANDOVER.md` after this file for who the project is for and its current state.
+**Repo:** `malpasoft/wordplay` · **Live:** `https://wordplay-38t.pages.dev` (Pages project
+`wordplay-38t`) → auto-deploys from `main`.
 
-### Course architecture (June 2026)
+### Course architecture
 
 Homepage = 3 language cards → language hub → courses for that language.
 
@@ -30,9 +43,9 @@ Homepage = 3 language cards → language hub → courses for that language.
 | `/francais/` | Main French | `francais/` | fr | A1–C2 (planned) | DELF/DALF |
 | `/francais/` | French for EN / ES speakers | `francais-en/ francais-es/` | en / es | A1–B2 (planned) | — |
 
-**Rule: L1-mediated courses run A1–B2 only.** At C1+, learners continue in the main
-course taught in the target language (each L1 landing page has a handoff card).
-es/ and espanol-en/ C1+C2 were deleted June 2026; `_redirects` covers old URLs.
+**Rule: L1-mediated courses run A1–B2 only.** At C1+, learners continue in the main course
+taught in the target language (each L1 landing page has a handoff card). es/ and espanol-en/
+C1+C2 were deleted June 2026; `_redirects` covers old URLs.
 
 ### Per-chapter standard
 
@@ -41,6 +54,66 @@ es/ and espanol-en/ C1+C2 were deleted June 2026; `_redirects` covers old URLs.
 - **Writing**: index · slides · worksheet · game · printables
 - Exam prep follows the FCE model (`b/b2/fce/`): about · strategy · writing-overview ·
   part-N (index + graded practice) · mock-1..3 (timed).
+
+### Content state (high level)
+
+- **English (`a/ b/ c/`)** — complete A1–C2 (grammar, vocab, writing all enriched). Two
+  intentional "applied-grammar" vocab chapters (c1, c2) have no flashcards by design.
+- **`es/`** — grammar (107 `gramatica/` chapters) ✅, writing (26) ✅, vocab flashcards ✅;
+  es/ vocab `game.html` files are still placeholder stubs.
+- **`espanol-en/`** — A1 + A2 complete; B1+B2 complete (June 2026). C1/C2 removed (L1 rule).
+- **`fr/`** — French-mediated B1+B2 complete; A1+A2 planned.
+- **`espanol/`, `francais/`, `francais-en/`, `francais-es/`** — planned (see roadmap docs).
+- **Exam prep** — KET (a2) and PET (b1) fully rebuilt (graded parts + writing-overview +
+  3 mocks each); FCE complete; CAE/CPE have graded parts + 1 mock (mocks 2–3 pending).
+
+---
+
+## Architecture & Backend
+
+The frontend is static vanilla HTML/CSS/JS. The backend is **Cloudflare Pages Functions**
+(`functions/api/**`) over a **D1 SQLite** database. Source of truth for these facts is the
+code itself: `wrangler.jsonc`, `migrations/*.sql`, `functions/api/`, `shared/store.js`,
+`shared/auth.js` — read those before changing anything here.
+
+- **D1 binding:** `DB` → database `wordplay_db` (id in `wrangler.jsonc`). Schema lives in
+  `migrations/*.sql` (apply via the Cloudflare dashboard console or `wrangler d1 execute`;
+  always `CREATE TABLE IF NOT EXISTS` so re-runs are safe). Core tables: `users`,
+  `auth_tokens`, `chapter_results`, `user_xp`, `students`, `classes`, `class_enrollments`,
+  `lessons`, `invite_codes`, `rate_limit_log`, plus the legacy `teacher_profiles`.
+- **Auth (`shared/auth.js`, loaded as `/shared/auth.js?v=1`):** email + password accounts.
+  Passwords stored as PBKDF2 `hash:salt` in `users.password_hash`. Login/signup issue a
+  7-day **bearer token** persisted in `auth_tokens`. Client caches token + user in
+  localStorage keys `wp_token` / `wp_user`. Helpers: `getAuthToken`, `getCurrentUser`,
+  `isLoggedIn`, `isAdmin/isTeacher/isStudent`, `setAuthState`, `clearAuthState`,
+  `authenticatedFetch` (adds `Authorization: Bearer …`), `requireAuth`/`requireRole`, `logout`.
+  Roles: `admin` · `teacher` · `student`.
+- **Progress sync (`shared/store.js`):** localStorage is a write-through cache. Every result
+  writes `wordplay_progress` locally, then a debounced (~1.5s) push plus a `pagehide` flush
+  send progress to the API. On page load, signed-in users auto-pull and merge. Conflict
+  resolution is last-write-wins by newer timestamp / higher pct / max XP+streak. If the user
+  isn't logged in (or D1 is unreachable), everything still works localStorage-only.
+
+### API contracts (`functions/api/**`)
+
+All non-auth routes require `Authorization: Bearer <token>`. JSON in/out.
+
+| Method · Path | Purpose |
+|---|---|
+| `POST /api/auth/signup` | Create account (email, password, level); PBKDF2 hash; returns token + user. Rate-limited per IP. |
+| `POST /api/auth/login` | Verify password; returns token + `{user_id,email,role}`. |
+| `POST /api/auth/logout` | Revoke the bearer token. |
+| `GET·POST /api/student/progress` | Pull / push normalized progress (chapter_results + user_xp). Preferred sync route. |
+| `GET·POST /api/progress/[user_id]` | Legacy per-user progress (array or nested object). |
+| `GET·POST /api/teacher/students` · `DELETE /api/teacher/students/[id]` | Teacher's student roster. |
+| `POST /api/teacher/invite-code` · `POST /api/student/join-teacher` | Invite-code enrolment. |
+| `GET·POST /api/classes` · `GET·PUT /api/classes/[id]` · `GET /api/classes/[id]/invite-code` | Class management. |
+| `POST /api/lessons` · `GET·PUT·DELETE /api/lessons/[id]` | Lesson calendar events. |
+| `GET /api/analytics/class/[teacher_id]` | Teacher analytics dashboard. |
+| `GET /api/admin/users` · `POST /api/admin/migrate-progress` · `POST /api/setup` | Admin / one-time setup. |
+| `GET·POST /api/profiles/[code]` · `/api/lessons/[code]` | Legacy passphrase-era teacher sync (superseded by token auth). |
+
+One-time D1 provisioning (dashboard binding, migrations, verify) is in `CLOUDFLARE_SETUP.md`.
 
 ---
 
@@ -65,6 +138,16 @@ es/ and espanol-en/ C1+C2 were deleted June 2026; `_redirects` covers old URLs.
 - **`class="deck-body"`** on the `<body>` of every `slides.html` lesson page.
 - **`class="sect-card"`** for section cards on level hub pages — never inline
   `onmouseover`/`onmouseout`.
+
+**Design tokens (`base.css`):**
+```css
+--amber:   #B8860B (light) / #C9A050 (dark)   /* only accent — always var(--amber) */
+--paper:   #F7F3EE (light) / #0E0E0E (dark)   /* background */
+--ink:     #1A1A1A (light) / #F0F0F0 (dark)   /* text */
+--cream:   #F0EBE0 (light) / #1A1A1A (dark)   /* card backgrounds */
+--hairline:#E0D8CC (light) / #2E2E2E (dark)   /* borders */
+--muted:   #6B6560 (light) / #9A9590 (dark)   /* secondary text */
+```
 
 ---
 
@@ -92,7 +175,7 @@ the ONLY way to force a cache refresh.
 **When a shared file changes:**
 
 1. **Identify the file** — e.g., `shared/store.js`, `shared/base.css`
-2. **Bump its version** — increment `?v=vNN` to the next number across all ~2,479 HTML files
+2. **Bump its version** — increment `?v=vNN` to the next number across all HTML files
    - Use: `python3 bump-versions.py` (automates all HTML updates)
    - OR use `/ship` skill (safer, but slower)
    - Manual edits: prone to missing files — avoid
@@ -100,7 +183,7 @@ the ONLY way to force a cache refresh.
 4. **The pre-commit hook enforces this** — commits are blocked if shared files are modified
    without version bumps
 
-**Current versions (kept in sync by hook):**
+**Current versions (this list is canonical; kept in sync by the hook):**
 - `base.css`: v124
 - `dark-init.js`: v112
 - `store.js`: v107
@@ -116,6 +199,7 @@ the ONLY way to force a cache refresh.
 - `print.css`: v102
 - `i18n.js`: v124
 - `print.js`: v102
+- `auth.js`: v1
 
 **Mascot assets** (added Q2 2026):
 - `shared/mascot.css` — sprite animation rules (versions with `index.html`)
@@ -127,7 +211,7 @@ the ONLY way to force a cache refresh.
 ```
 fix: sanitize innerHTML in game.js to prevent XSS
 
-Bump game.js version from v110 to v111 across all ~2,479 HTML files.
+Bump game.js version from v110 to v111 across all HTML files.
 Updated via bump-versions.py to ensure Cloudflare cache refresh.
 ```
 
@@ -153,42 +237,76 @@ Updated via bump-versions.py to ensure Cloudflare cache refresh.
   before calling them done.
 - Never claim a value/state is "already correct" from memory — re-read the actual source
   line (and show a screenshot when it's a rendering question) before concluding.
-
----
-
-## Two Flashcard Templates — Never Mix Them
-
-**Old template (A1 vocab only):**
-`STORAGE_KEY`, `WORDS[{word, definition, example, pronunciation}]`, `renderCard()`, `markMastered()`
-
-**New template (A2–C2 vocab):**
-`MASTERY_KEY`, `SLUG`, `LEVEL`, `WORDS[{word, ipa, def, ex}]`, `showCard()`, `markMastered()`
-
----
-
-## Progress / localStorage
-
-```
-wordplay_progress → { a1: { 'vocab_mastered_{slug}': {done,date}, 'wordplay_game_{slug}': {pct} } }
-wordplay_dark = "1" | "0"
-```
-
-Dashboard reads `lv['vocab_mastered_' + slug].done`. Full schema: see SESSION_CONTEXT.md.
+- `python3 scripts/pedagogy_check.py` must stay at 0 failures before pushing; run
+  `scripts/validate_inline_js.py` on touched HTML and `scripts/check_links.py` after nav changes.
 
 ---
 
 ## Pedagogy Principles (non-negotiable)
+
+Full rules + automated checks are in `PEDAGOGY.md`. In short:
 
 - Every worksheet question has an EXPLANATION — no exceptions.
 - Grading is deterministic — never ask students to self-assess open production.
 - Audio pronunciation on all vocab flashcards (Web Speech API, `lang='en-GB'`, `rate=0.9`).
 - Flashcards auto-complete after viewing all cards.
 - **Dominio Mastery Game (game.js):** 4 key items × 3 question types (significado/meaning, contexto/context, produccion/production). Score toward 100 points. Win = score ≥ 100 AND all 4 items correct. Correct answer = 10 pts (+5 same-item run bonus, +3 cross-item streak bonus). Wrong = -3 pts, requeue. Grading: significado/contexto = MC exact match; produccion = norm'd text match or item.accept[] aliases. See game.js JSDoc for full algorithm.
-- Match game (match.html): 3 lives, each word must be matched to its definition twice to win. Mastery saved to localStorage on win.
-- `python3 scripts/pedagogy_check.py` must stay at 0 failures before pushing.
+- Match game (match.html): 3 lives, each word must be matched to its definition twice to win. Mastery saved to localStorage (and synced to D1 for signed-in users) on win.
 
 ---
 
 ## MCP Configuration
 
 - MCP servers go in `.mcp.json` at the project root — **not** in `.claude/settings.json`.
+
+---
+
+## Appendix — Engine contracts (`shared/`)
+
+Engines have no dependencies/imports; pages link them with independent `?v=vNN` versions.
+Roles: `base.css` layout+tokens+dark · `slides.css`+`deck.js` lesson decks · `game.css`+
+`game.js` 4-stage mastery · `store.js` progress/XP wrapper + D1 sync · `worksheet.js`
+auto-grader · `auth.js` accounts/tokens · `print.js` print modal · `dark-init.js` dark toggle.
+
+**Lesson (`slides.html`)** — `<body class="deck-body">`, then:
+```html
+<script>window.LEVEL="a1"; window.CHAPTER_ID="animals";</script>
+<script src="…/shared/store.js?v=v107"></script>
+<script src="…/shared/deck.js?v=v114"></script>
+```
+
+**Worksheet (`worksheet.html`)** — every `ANSWERS` key must also be in `EXPLANATIONS`:
+```html
+<script>
+window.CHAPTER_ID="slug"; window.LEVEL="a2"; window.TOTAL_POINTS=N;
+window.ANSWERS      = { q1:"answer", … };
+window.EXPLANATIONS = { q1:"reason", … };
+</script>
+```
+
+**Game (`game.html`)** — `window.GAME_DATA = { chapterId, level, title, storageKey:
+"wordplay_game_<level>_<slug>", items:[{id,term,meaning,synonym,example,completion,answer}] }`
+(8–12 items).
+
+**Two flashcard templates — never mix them:**
+- *Old (A1 vocab only):* `STORAGE_KEY='wordplay_vocab_a1_<slug>_mastered'`,
+  `WORDS=[{word,definition,example,pronunciation}]`, `renderCard()`, `markMastered()`.
+- *New (A2–C2):* `MASTERY_KEY='wordplay_vocab_<level>_<slug>_mastered'`, `SLUG`, `LEVEL`,
+  `WORDS=[{word,ipa,def,ex}]`, `showCard()`, `markMastered()`.
+
+**Match (`match.html`):** `MASTERY_KEY`, `PROG_KEY=<level>`, `SLUG`,
+`TOTAL_NEEDED=WORDS.length*2` (each word matched twice), 3 lives. Generated by
+`builder.html` (`generateMatch`) or `scripts/gen_match.py` in bulk.
+
+**localStorage schema (write-through cache; mirrored to D1 for signed-in users):**
+```
+wordplay_progress = { a1: {
+  'slides_<chapterId>':        {done,date},
+  '<chapterId>':               {pct,done},        // worksheet
+  'wordplay_game_<chapterId>': {pct},             // game score
+  'vocab_mastered_<topic>':    {done,date},       // flashcard mastery
+}, a2:{…}, … }
+wordplay_dark = "1" | "0"
+wp_token, wp_user                                 // auth (see shared/auth.js)
+```
+Dashboard counts vocab mastered per level via `lv['vocab_mastered_'+slug].done`.

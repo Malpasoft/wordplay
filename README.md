@@ -1,39 +1,38 @@
 # Word Play — Project Root
 
-A complete Cambridge English course (A1–C2) as a static website on Cloudflare Pages. Vanilla HTML/CSS/JS, no build system, ~2,479 HTML pages. Tracks: English (main), Spanish-explained (`/es/`), Spanish-for-English-speakers (`/espanol-en/`), French support in builder (`/fr/`).
+A multi-language Cambridge/CEFR course site (A1–C2) on Cloudflare Pages. Vanilla HTML/CSS/JS
+frontend with **no build system**, backed by **Cloudflare Pages Functions + a D1 SQLite
+database** for user accounts, token auth, and cross-device progress sync. Tracks: English
+(main `a/ b/ c/`), English-for-Spanish-speakers (`es/`), English-for-French-speakers (`fr/`),
+Spanish-for-English-speakers (`espanol-en/`), plus planned Spanish (`espanol/`) and French
+(`francais/`) main courses. ≈2.5k HTML pages — see `coverage.html` for the live map.
 
-## Top-level files and directories
+## Read first
 
-- **CLAUDE.md** — Single source of truth for all project rules. Read this first.
-- **AI_HANDOVER.md** — Orientation for a new AI/developer session: content state, shared engines, localStorage schema.
-- **SESSION_CONTEXT.md** — Deep technical reference: JS contracts, current content counts, next steps.
-- **CONTRIBUTING.md** — Branch naming, PR workflow, design rules checklist.
-- **PEDAGOGY.md** — Learning design principles that every chapter must follow.
-- **SYLLABUS.md** — Cambridge syllabus → site structure mapping reference.
-- **CLOUDFLARE_SETUP.md** — One-time Cloudflare D1 setup for calendar + profile cross-device sync (database, migrations, binding, verification).
-- **AUTH_PROPOSAL.md** — Future user-account implementation proposal (not yet built).
-- **404.html** — Custom error page.
-- **a/** — CEFR A1 and A2 (Beginner / Elementary).
-- **b/** — CEFR B1 and B2 (Pre-Intermediate / Upper-Intermediate, FCE exam prep).
-- **c/** — CEFR C1 and C2 (Advanced / Proficiency, CAE and CPE exam prep).
-- **es/** — Spanish-explained track. A1–C2: 107 grammar chapters (`gramatica/`) fully built with Spanish-English contrastive notes, 26 writing chapters complete, 78 vocab chapters (21/78 complete: A1=8/12, A2=11/12, B1=1/12, B2=1/16, C1=0/14, C2=0/12). Total 992 HTML files.
-- **espanol-en/** — Spanish course for English speakers. A1: vocabulary (12/12✅), grammar (25-chapter framework), writing (3-chapter framework); A2–C2: stub hubs ready for population.
-- **shared/** — CSS and JS engines shared across all ~2,479 pages.
-- **teacher.html** — Teacher hub: calendar, profiles, dev-hub, builder, coverage, AI prompts.
-- **calendar.html** — Full lesson calendar with D1 cloud sync.
-- **profile.html** — Student profiles with D1 cloud sync.
-- **builder.html** — Tokenless content creator: fill data in browser, download file, push to git.
-- **dev-hub.html** — AI prompt generator for content tasks (use with DeepSeek/Gemini free tier).
-- **coverage.html** — Static content coverage map per level/section.
-- **scripts/** — Python generation and maintenance scripts. `fill_chapter.py` + `scripts/content/` hold content-fill tooling.
+- **CLAUDE.md** — the single source of truth: rules, architecture/backend, design system, git
+  workflow, cache-busting, engine contracts, and pedagogy. **Start here.**
+- **CONTRIBUTING.md** — branch naming, PR workflow, design-rule checklist.
+- **PEDAGOGY.md** — learning-design principles every chapter must follow (+ automated checks).
+- **SYLLABUS.md** — Cambridge syllabus → site-structure mapping reference.
+- **CLOUDFLARE_SETUP.md** — one-time D1 database provisioning + how to verify it's live.
+- **TECH_DEBT.md** — open technical-debt register.
 
----
+## Top-level layout
+
+- **a/ b/ c/** — main English, CEFR A1–A2 / B1–B2 (FCE) / C1–C2 (CAE, CPE).
+- **es/** — English explained in Spanish (A1–B2). **espanol-en/** — Spanish for English
+  speakers (A1–B2). **fr/** — English for French speakers (A1–B2). **espanol/ francais/** —
+  planned main Spanish / French courses.
+- **shared/** — CSS + JS engines shared across all pages (see CLAUDE.md → Engine contracts).
+- **functions/api/** — Cloudflare Pages Functions (auth, progress, classes, lessons, analytics).
+- **migrations/** — D1 SQL schema. **wrangler.jsonc** — D1 binding config.
+- **Teacher tools (root):** `teacher.html` (hub), `calendar.html`, `profile.html`,
+  `builder.html`, `dev-hub.html`, `coverage.html`, `dashboard.html`, `login.html`.
+- **scripts/** — Python generation + maintenance tooling (`pedagogy_check.py`,
+  `check_links.py`, `validate_inline_js.py`, `gen_*`, `fill_chapter.py`, `content/`).
 
 ## For contributors & AI sessions
 
-Start with **CLAUDE.md** (rules), then **AI_HANDOVER.md** (orientation). PR and branch conventions are in **CONTRIBUTING.md**.
-
-All student progress lives in browser localStorage — no backend, no accounts (yet).
-
----
-_Last updated: June 2026_
+Start with **CLAUDE.md** (rules + architecture), then **CONTRIBUTING.md** (branch/PR
+conventions). Student progress is cached in browser localStorage and synced to the D1 backend
+for signed-in users; logged-out use still works localStorage-only.

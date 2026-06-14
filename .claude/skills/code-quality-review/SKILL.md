@@ -13,11 +13,14 @@ You are the Engineering Lead for Word Play. Your expertise spans web standards (
 ## Audit Instructions
 
 ### 1. Shared Engines Health Check
-- **base.css (v123):** Is the CSS variable system (`--amber`, `--paper`, etc.) fully leveraged?
-- **deck.js (v113):** Are slide navigation and progress logic clean? Any console errors?
-- **game.js (v110):** Is the 4-stage mastery engine easy to follow? Are state transitions clear?
-- **store.js (v105):** Is localStorage handling robust (parse errors, quota checks)?
-- **worksheet.js (v107):** Does auto-grading handle edge cases (empty answers, special chars)?
+(Current asset versions are listed canonically in CLAUDE.md — don't hardcode them here.)
+- **base.css:** Is the CSS variable system (`--amber`, `--paper`, etc.) fully leveraged?
+- **deck.js:** Are slide navigation and progress logic clean? Any console errors?
+- **game.js:** Is the 4-stage mastery engine easy to follow? Are state transitions clear?
+- **store.js:** Is localStorage handling robust (parse errors, quota checks)? Is the D1 sync
+  (debounced push, `pagehide` flush, load-time pull/merge) resilient to network/auth failure?
+- **auth.js:** Are bearer-token handling and `authenticatedFetch` safe (no token leakage)?
+- **worksheet.js:** Does auto-grading handle edge cases (empty answers, special chars)?
 
 Check for:
 - Dead code or unused functions

@@ -1,8 +1,11 @@
 # Word Play — Cloudflare D1 Setup
 
-The teacher tools (`calendar.html`, `profile.html`) sync across devices through a
-Cloudflare D1 database. **This is a one-time setup.** Until it is done, the tools still
-work — they fall back to localStorage-only (single browser, no cross-device sync).
+A single Cloudflare D1 database (`wordplay_db`, binding `DB`) backs the whole app: user
+accounts + token auth, student progress sync, classes/lessons/invite codes, and the teacher
+tools (`calendar.html`, `profile.html`). **This is a one-time setup.** Until it is done — or
+for logged-out users — the site still works, falling back to localStorage-only (single
+browser, no cross-device sync). The full table list and API contracts are in **CLAUDE.md →
+Architecture & Backend**; this file covers provisioning and verification.
 
 > **Status: UNVERIFIED in code.** Whether the D1 database is actually created and bound
 > lives in the Cloudflare dashboard, not the repo (there is no `wrangler.toml`). If
@@ -23,9 +26,10 @@ work — they fall back to localStorage-only (single browser, no cross-device sy
 - **Database name expected:** `wordplay_db`
 - **Binding name expected:** `DB` (functions call `env.DB`)
 - Both tables live in the **same** D1 database — one binding serves both.
-- Auth on each route is the shared passphrase (`wordplay_sync_code`, 8–64 chars) stored
-  in the browser. No accounts yet — the `user_id` column is reserved for the future auth
-  upgrade.
+- The legacy profiles/lessons routes (`/api/profiles/:code`, `/api/lessons/:code`) authenticate
+  with a shared passphrase (`wordplay_sync_code`, 8–64 chars) stored in the browser. The newer
+  account system (signup/login → 7-day bearer tokens, see CLAUDE.md) supersedes this for student
+  progress; the `user_id` columns link passphrase-era rows to real accounts.
 
 ---
 
@@ -104,6 +108,6 @@ so re-running is safe.
 
 ---
 
-*Reserved for the future auth upgrade (AUTH_PROPOSAL.md Phase 3): the same D1 DB will gain
-`users`, `credentials`, `progress` tables; the `user_id` columns already present link
-passphrase-era rows to real accounts.*
+*The account system is already live: the same D1 DB holds `users`, `auth_tokens`,
+`chapter_results`, `user_xp`, and the class/lesson/invite tables (see `migrations/*.sql` and
+CLAUDE.md → Architecture & Backend). The `user_id` columns link passphrase-era rows to accounts.*

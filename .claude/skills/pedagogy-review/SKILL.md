@@ -41,7 +41,7 @@ Spot-check chapters for adherence to PEDAGOGY.md:
 
 **Principle 4: Flashcards auto-complete**
 - Check flashcards.html logic: when a student has viewed all cards, does "Mastered" button enable?
-- Is mastery saved to localStorage (`wordplay_progress`)?
+- Is mastery saved to localStorage (`wordplay_progress`) and synced to D1 for signed-in users?
 
 **Principle 5: Match game: 3 lives, match twice**
 - Audit `match.html` (animals/A1 is the template)
