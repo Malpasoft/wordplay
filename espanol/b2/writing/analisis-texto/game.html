@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>El Análisis de Texto — Juego B2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../index.html">B2</a><span>&#8250;</span>
+  <a href="../index.html">Escritura</a><span>&#8250;</span>
+  <a href="index.html">El Análisis de Texto</a><span>&#8250;</span>
+  <strong>Juego</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="container">
+  <h1>El Análisis de Texto — Juego de Dominio</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>Practica las técnicas del análisis textual en español.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos del mismo concepto y rachas entre conceptos a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominados</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todos los elementos de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominados</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="worksheet.html" class="game-btn secondary">Ejercicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol B2 &middot; Juego</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "analisis-texto",
+  level: "b2",
+  title: "El Análisis de Texto",
+  storageKey: "wordplay_game_es_b2_analisis-texto",
+  items: [
+    {id:"tema", term:"tema", meaning:"asunto central sobre el que trata un texto", synonym:"asunto", example:"El ______ del artículo es el impacto de las redes sociales en los adolescentes.", completion:"tem", answer:"tema"},
+    {id:"idea-principal", term:"idea principal", meaning:"afirmación más importante que el autor hace sobre el tema del texto", synonym:"tesis central", example:"La ______ resume en una oración el mensaje esencial del texto.", completion:"idea", answer:"idea principal"},
+    {id:"estructura", term:"estructura", meaning:"manera en que un texto organiza y distribuye sus partes e ideas", synonym:"organización", example:"La ______ del texto es deductiva: la tesis aparece en el primer párrafo.", completion:"estruct", answer:"estructura"},
+    {id:"metafora", term:"metáfora", meaning:"figura retórica que identifica dos elementos sin usar «como» ni «cual»", synonym:"imagen", example:"La ______ «la vida es un camino» compara la existencia con un viaje.", completion:"metáf", answer:"metáfora"},
+    {id:"comparacion", term:"comparación", meaning:"figura que establece una semejanza entre dos elementos con «como» o «cual»", synonym:"símil", example:"La ______ «corre como el viento» ilustra la rapidez del personaje.", completion:"compar", answer:"comparación"},
+    {id:"ironia", term:"ironía", meaning:"recurso que expresa lo contrario de lo que dicen las palabras de manera deliberada", synonym:"antífrasis", example:"La ______ se detecta cuando el significado real contradice el sentido literal.", completion:"iron", answer:"ironía"},
+    {id:"intencion", term:"intención del autor", meaning:"propósito comunicativo que el escritor quiere alcanzar con su texto", synonym:"propósito", example:"La ______ del autor es persuadir al lector de que el cambio climático es urgente.", completion:"intenc", answer:"intención del autor"},
+    {id:"cita", term:"cita textual", meaning:"fragmento literal del texto que se reproduce entre comillas para apoyar un análisis", synonym:"referencia directa", example:"Usa una ______ para respaldar tu interpretación: «como se aprecia en la línea 3».", completion:"cita", answer:"cita textual"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

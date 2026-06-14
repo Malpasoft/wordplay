@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>La Carta Informal — Juego B1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Escritura</a><span>&#8250;</span>
+  <a href="index.html">La Carta Informal</a><span>&#8250;</span>
+  <strong>Juego</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="container">
+  <h1>La Carta Informal — Juego de Dominio</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>Practica las fórmulas y estructuras de la carta informal en español.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos del mismo concepto y rachas entre conceptos a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominados</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todos los elementos de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominados</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="worksheet.html" class="game-btn secondary">Ejercicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol B1 &middot; Juego</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "carta-informal",
+  level: "b1",
+  title: "La Carta Informal — Escribir a Amigos y Familia",
+  storageKey: "wordplay_game_es_b1_carta-informal",
+  items: [
+    {id:"carta-informal", term:"carta informal", meaning:"texto escrito y generalmente manuscrito que se dirige a personas de confianza con un tono cercano", synonym:"carta personal", example:"Una ______ comienza con el lugar y la fecha arriba a la derecha.", completion:"carta", answer:"carta informal"},
+    {id:"querido", term:"querido/a", meaning:"fórmula de saludo afectuoso que abre una carta informal y concuerda con el género del destinatario", synonym:"estimado/a (informal)", example:"«______ Pablo:» abre una carta a un amigo; «______ María:» a una amiga.", completion:"querid", answer:"querido/a"},
+    {id:"pd", term:"P.D.", meaning:"nota añadida al final de la carta después de la firma para incluir algo olvidado", synonym:"postdata", example:"La ______ va después de la firma y empieza con «Se me olvidaba decirte...»", completion:"PD", answer:"P.D."},
+    {id:"apertura-carta", term:"apertura", meaning:"primera frase de la carta que agradece la carta recibida o explica el motivo de escribir", synonym:"inicio de la carta", example:"«Gracias por tu carta» es una ______ típica de la carta informal.", completion:"apert", answer:"apertura"},
+    {id:"referirse", term:"referirse a", meaning:"mencionar o aludir a algo que el destinatario ha escrito en su carta anterior", synonym:"hacer referencia", example:"«En cuanto a lo que me comentas...» sirve para ______ al contenido de la carta recibida.", completion:"refer", answer:"referirse a"},
+    {id:"postdata", term:"postdata", meaning:"nota breve que se añade después de la firma para incluir información olvidada", synonym:"nota final", example:"La ______ (P.D.) va siempre después de la firma.", completion:"postd", answer:"postdata"},
+    {id:"fecha-carta", term:"fecha en la carta", meaning:"indicación del lugar y la fecha en que se escribe la carta, situada arriba a la derecha", synonym:"datación", example:"La ______ se escribe como «Madrid, 14 de junio de 2026».", completion:"fecha", answer:"fecha en la carta"},
+    {id:"tuteo", term:"tuteo", meaning:"uso del pronombre tú para dirigirse al interlocutor, propio del registro informal", synonym:"tratamiento informal", example:"Las cartas informales usan el ______ : «espero que estés bien».", completion:"tute", answer:"tuteo"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

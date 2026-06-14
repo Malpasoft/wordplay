@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>El Artículo de Opinión — Juego B2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../index.html">B2</a><span>&#8250;</span>
+  <a href="../index.html">Escritura</a><span>&#8250;</span>
+  <a href="index.html">El Artículo de Opinión</a><span>&#8250;</span>
+  <strong>Juego</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="container">
+  <h1>El Artículo de Opinión — Juego de Dominio</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>Practica el género del artículo de opinión en español.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos del mismo concepto y rachas entre conceptos a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominados</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todos los elementos de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominados</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="worksheet.html" class="game-btn secondary">Ejercicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol B2 &middot; Juego</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "articulo-opinion",
+  level: "b2",
+  title: "El Artículo de Opinión",
+  storageKey: "wordplay_game_es_b2_articulo-opinion",
+  items: [
+    {id:"editorial", term:"artículo de opinión", meaning:"texto periodístico en el que el autor defiende su punto de vista sobre un tema de actualidad", synonym:"columna de opinión", example:"El ______ del domingo abordaba la crisis del sistema sanitario público.", completion:"artículo", answer:"artículo de opinión"},
+    {id:"titular", term:"titular", meaning:"frase breve e impactante que encabeza un artículo y resume su posición o tema", synonym:"encabezado", example:"Un buen ______ despierta la curiosidad del lector y anticipa la tesis del autor.", completion:"titul", answer:"titular"},
+    {id:"pregunta-retorica", term:"pregunta retórica", meaning:"pregunta que no espera respuesta directa sino que invita al lector a reflexionar", synonym:"interrogación retórica", example:"La ______ «¿Hasta cuándo seguiremos callados?» apela a la conciencia del lector.", completion:"pregunta", answer:"pregunta retórica"},
+    {id:"ironia", term:"ironía", meaning:"recurso que elogia algo negativo o critica con tono de alabanza para denunciar una situación", synonym:"antífrasis", example:"El autor usa la ______ al decir «qué maravillosa gestión» sobre el caos del aeropuerto.", completion:"iron", answer:"ironía"},
+    {id:"voz-personal", term:"voz personal", meaning:"uso de la primera persona para expresar la posición y el estilo propios del columnista", synonym:"primera persona", example:"La ______ del articulista se manifiesta en el uso de «considero» y «defiendo».", completion:"voz", answer:"voz personal"},
+    {id:"actualidad", term:"actualidad", meaning:"vigencia o relevancia de un tema en el momento en que se escribe el artículo", synonym:"vigencia", example:"Un artículo de opinión trata temas de ______ que interesan al lector de hoy.", completion:"actual", answer:"actualidad"},
+    {id:"paradoja", term:"paradoja", meaning:"afirmación aparentemente contradictoria que encierra una verdad profunda", synonym:"contradicción aparente", example:"La ______ «somos ricos en pobreza» critica la desigualdad con una imagen impactante.", completion:"parad", answer:"paradoja"},
+    {id:"llamada-accion", term:"llamada a la acción", meaning:"cierre que invita al lector a hacer algo o a cambiar su actitud", synonym:"apelación", example:"La ______ «es hora de que actuemos» cierra el artículo con energía movilizadora.", completion:"llamada", answer:"llamada a la acción"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

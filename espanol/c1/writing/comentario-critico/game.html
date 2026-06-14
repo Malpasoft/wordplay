@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>El Comentario Crítico — Juego C1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../index.html">C1</a><span>&#8250;</span>
+  <a href="../index.html">Escritura</a><span>&#8250;</span>
+  <a href="index.html">El Comentario Crítico</a><span>&#8250;</span>
+  <strong>Juego</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="container">
+  <h1>El Comentario Crítico — Juego de Dominio</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>Practica el comentario crítico integrado en español C1.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos del mismo concepto y rachas entre conceptos a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominados</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todos los elementos de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominados</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="worksheet.html" class="game-btn secondary">Ejercicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C1 &middot; Juego</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "comentario-critico",
+  level: "c1",
+  title: "El Comentario Crítico de Texto",
+  storageKey: "wordplay_game_es_c1_comentario-critico",
+  items: [
+    {id:"comentario-critico", term:"comentario crítico", meaning:"género textual que integra análisis, interpretación y valoración de un texto de forma entrelazada", synonym:"análisis valorativo", example:"El ______ va más allá del resumen: interpreta y evalúa los argumentos y recursos del texto.", completion:"coment", answer:"comentario crítico"},
+    {id:"contextualizacion", term:"contextualización", meaning:"proceso de situar el texto en su marco histórico, cultural o ideológico para enriquecer la interpretación", synonym:"encuadre", example:"La ______ indica el debate o el momento histórico en que se inscribe el texto.", completion:"context", answer:"contextualización"},
+    {id:"interpretacion", term:"interpretación", meaning:"explicación del significado profundo y las implicaciones de los argumentos y recursos del texto", synonym:"lectura profunda", example:"La ______ va más allá de describir el recurso: explica qué sugiere o implica.", completion:"interpret", answer:"interpretación"},
+    {id:"valoracion-retorica", term:"valoración retórica", meaning:"juicio sobre la eficacia de los recursos persuasivos usados por el autor del texto", synonym:"evaluación persuasiva", example:"La ______ identifica qué recursos funcionan bien y cuáles debilitan el argumento.", completion:"valor", answer:"valoración retórica"},
+    {id:"eficacia-persuasiva", term:"eficacia persuasiva", meaning:"medida en que el texto logra convencer al lector mediante argumentos y recursos retóricos", synonym:"poder de convicción", example:"La ______ del texto depende de la solidez de los argumentos y del registro elegido.", completion:"eficac", answer:"eficacia persuasiva"},
+    {id:"presupuesto", term:"presupuesto ideológico", meaning:"idea o valor que el texto da por sentado sin justificarlo explícitamente", synonym:"idea implícita", example:"El texto presupone que el crecimiento económico es siempre deseable, sin cuestionarlo.", completion:"presup", answer:"presupuesto ideológico"},
+    {id:"síntesis-comentario", term:"síntesis del comentario", meaning:"conclusión que integra el análisis, la interpretación y la valoración en una evaluación global", synonym:"cierre valorativo", example:"La ______ del comentario evalúa el texto globalmente sin limitarse a resumirlo.", completion:"síntesis", answer:"síntesis del comentario"},
+    {id:"perspectiva-critica", term:"perspectiva crítica", meaning:"punto de vista desde el que se evalúa el texto, que puede ser ideológico, cultural o teórico", synonym:"ángulo de análisis", example:"Adoptar una ______ feminista sobre el texto ilumina aspectos que el autor no menciona.", completion:"perspect", answer:"perspectiva crítica"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

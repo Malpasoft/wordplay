@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>La Escritura Creativa — Juego C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Escritura</a><span>&#8250;</span>
+  <a href="index.html">La Escritura Creativa</a><span>&#8250;</span>
+  <strong>Juego</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="container">
+  <h1>La Escritura Creativa — Juego de Dominio</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>Practica la escritura creativa con dominio estilístico en español C2.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos del mismo concepto y rachas entre conceptos a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominados</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todos los elementos de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominados</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="worksheet.html" class="game-btn secondary">Ejercicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C2 &middot; Juego</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "escritura-creativa",
+  level: "c2",
+  title: "La Escritura Creativa C2",
+  storageKey: "wordplay_game_es_c2_escritura-creativa",
+  items: [
+    {id:"voz-literaria", term:"voz literaria", meaning:"conjunto de elecciones estilísticas (registro, ritmo, vocabulario, perspectiva) que definen la escritura de un autor", synonym:"estilo personal", example:"La ______ de un escritor es reconocible incluso sin que aparezca su nombre.", completion:"voz", answer:"voz literaria"},
+    {id:"elipsis-narrativa", term:"elipsis narrativa", meaning:"salto temporal en el relato que omite un período de tiempo sin narrarlo explícitamente", synonym:"salto temporal", example:"La ______ «tres años después» condensa el paso del tiempo en tres palabras.", completion:"elipsis", answer:"elipsis narrativa"},
+    {id:"economia-narrativa", term:"economía narrativa", meaning:"principio estilístico según el cual cada palabra debe justificar su presencia en el texto", synonym:"principio de economía", example:"La ______ dicta eliminar los adjetivos ornamentales y los adverbios innecesarios.", completion:"econom", answer:"economía narrativa"},
+    {id:"mostrar-no-decir", term:"mostrar, no decir", meaning:"principio de escritura creativa que expresa las emociones mediante gestos e imágenes concretas en lugar de nombrarlas", synonym:"show, don't tell", example:"El principio «______» prefiere «apoyó la frente en el cristal» a «sentía tristeza».", completion:"mostrar", answer:"mostrar, no decir"},
+    {id:"distancia-narrativa", term:"distancia narrativa", meaning:"grado de proximidad entre el narrador y la conciencia de los personajes, que determina el tono del texto", synonym:"perspectiva narrativa", example:"La ______ máxima es el flujo de conciencia; la mínima, el narrador frío y periodístico.", completion:"distan", answer:"distancia narrativa"},
+    {id:"flujo-conciencia", term:"flujo de conciencia", meaning:"técnica narrativa que reproduce el pensamiento del personaje en su forma más directa e ininterrumpida", synonym:"monólogo interior", example:"El ______ de Joyce en el Ulises imita la asociación libre del pensamiento humano.", completion:"flujo", answer:"flujo de conciencia"},
+    {id:"revision", term:"revisión creativa", meaning:"proceso de reescritura que aplica los principios de economía, ritmo y coherencia de voz al texto inicial", synonym:"reescritura", example:"La ______ elimina la mitad de los adjetivos y comprueba que cada frase gana su lugar.", completion:"revis", answer:"revisión creativa"},
+    {id:"imagen-central", term:"imagen central", meaning:"detalle concreto y preciso que condensa el significado de una escena o de todo el relato", synonym:"imagen nuclear", example:"La ______ «la escarcha en los cristales» crea más atmósfera que varios adjetivos vagos.", completion:"imagen", answer:"imagen central"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

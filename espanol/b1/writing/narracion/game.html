@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>La Narración — Juego B1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Escritura</a><span>&#8250;</span>
+  <a href="index.html">La Narración</a><span>&#8250;</span>
+  <strong>Juego</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="container">
+  <h1>La Narración — Juego de Dominio</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>Practica los elementos clave de la narración en español.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos del mismo concepto y rachas entre conceptos a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominados</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todos los elementos de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominados</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="worksheet.html" class="game-btn secondary">Ejercicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol B1 &middot; Juego</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "narracion",
+  level: "b1",
+  title: "La Narración — Contar una Historia",
+  storageKey: "wordplay_game_es_b1_narracion",
+  items: [
+    {id:"narracion", term:"narración", meaning:"texto que cuenta hechos reales o ficticios siguiendo un orden temporal", synonym:"relato", example:"Una ______ bien construida tiene introducción, nudo y desenlace.", completion:"narr", answer:"narración"},
+    {id:"indefinido", term:"pretérito indefinido", meaning:"tiempo verbal del pasado para acciones concretas y terminadas que hacen avanzar el relato", synonym:"pasado simple", example:"La acción que hace avanzar la historia usa el ______.", completion:"pret. indef", answer:"pretérito indefinido"},
+    {id:"imperfecto", term:"pretérito imperfecto", meaning:"tiempo verbal del pasado para descripciones, estados y acciones habituales en un relato", synonym:"copretérito", example:"El escenario y la descripción de los personajes usan el ______.", completion:"pret. imperf", answer:"pretérito imperfecto"},
+    {id:"nudo", term:"nudo", meaning:"parte central del relato donde surge el conflicto o la complicación principal", synonym:"conflicto", example:"El ______ es el momento en que aparece el problema que el protagonista debe resolver.", completion:"nud", answer:"nudo"},
+    {id:"desenlace", term:"desenlace", meaning:"parte final del relato donde el conflicto se resuelve", synonym:"resolución", example:"El ______ puede ser esperado, sorprendente o abierto.", completion:"deseñ", answer:"desenlace"},
+    {id:"de-repente", term:"de repente", meaning:"marcador temporal que introduce un giro o acontecimiento inesperado en la narración", synonym:"de pronto", example:"«______ , sonó el teléfono» introduce un cambio brusco en la historia.", completion:"de rep", answer:"de repente"},
+    {id:"marcador", term:"marcador temporal", meaning:"expresión que indica el orden o el momento de los hechos en una narración", synonym:"conector de tiempo", example:"«Primero», «luego» y «al final» son ______ temporales.", completion:"marc", answer:"marcador temporal"},
+    {id:"escenario", term:"escenario", meaning:"descripción del lugar y el ambiente donde transcurre la acción del relato", synonym:"ambientación", example:"El ______ se describe con el imperfecto al inicio del relato.", completion:"escen", answer:"escenario"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

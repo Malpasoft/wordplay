@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>El Análisis Literario — Juego C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Escritura</a><span>&#8250;</span>
+  <a href="index.html">El Análisis Literario</a><span>&#8250;</span>
+  <strong>Juego</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="container">
+  <h1>El Análisis Literario — Juego de Dominio</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>Practica el análisis literario avanzado en español C2.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos del mismo concepto y rachas entre conceptos a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominados</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todos los elementos de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominados</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="worksheet.html" class="game-btn secondary">Ejercicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C2 &middot; Juego</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "analisis-literario",
+  level: "c2",
+  title: "El Análisis Literario C2",
+  storageKey: "wordplay_game_es_c2_analisis-literario",
+  items: [
+    {id:"ironia-dramatica", term:"ironía dramática", meaning:"recurso por el que el lector conoce información que el personaje ignora, creando distancia y tensión", synonym:"ironía situacional", example:"La ______ revela al lector el engaño del protagonista antes de que este lo descubra.", completion:"ironía", answer:"ironía dramática"},
+    {id:"narrador-no-fiable", term:"narrador no fiable", meaning:"narrador cuya perspectiva está distorsionada por su psicología, sus intereses o su limitado conocimiento", synonym:"narrador sesgado", example:"El ______ presenta su fracaso como un éxito, lo que el lector atento detecta.", completion:"narr", answer:"narrador no fiable"},
+    {id:"ambiguedad-literaria", term:"ambigüedad literaria", meaning:"característica de un texto que admite dos o más lecturas igualmente válidas sin que una cancele a la otra", synonym:"polisemia textual", example:"La ______ del final del cuento no es un defecto; es la fuente de su riqueza interpretativa.", completion:"ambig", answer:"ambigüedad literaria"},
+    {id:"palimpsesto", term:"palimpsesto", meaning:"texto que se escribe «sobre» otro anterior, cuya huella sigue siendo visible en la reescritura", synonym:"reescritura", example:"La novela es un ______ del Quijote: reescribe el mito del héroe con ironía posmoderna.", completion:"palim", answer:"palimpsesto"},
+    {id:"perspectiva-teorica", term:"perspectiva teórica", meaning:"marco interpretativo (feminismo, marxismo, poscolonialismo) que ilumina aspectos específicos del texto", synonym:"enfoque crítico", example:"Una ______ feminista del texto revela cómo el silencio de la protagonista es resistencia.", completion:"perspect", answer:"perspectiva teórica"},
+    {id:"nivel-ideologico", term:"nivel ideológico", meaning:"dimensión del análisis que examina qué valores, poder e ideología construye o reproduce el texto", synonym:"capa ideológica", example:"El ______ del texto revela cómo la novela naturaliza la jerarquía de clases.", completion:"nivel", answer:"nivel ideológico"},
+    {id:"alusión", term:"alusión literaria", meaning:"referencia implícita a otra obra o figura que enriquece el significado sin nombrarse explícitamente", synonym:"referencia velada", example:"La ______ a Penélope evoca la espera y la fidelidad sin necesidad de citar a Homero.", completion:"alus", answer:"alusión literaria"},
+    {id:"corriente-literaria", term:"corriente literaria", meaning:"movimiento o tendencia estética compartida por un grupo de autores en una época determinada", synonym:"movimiento literario", example:"El texto se inscribe en el realismo mágico, ______ asociada a la narrativa latinoamericana del siglo XX.", completion:"corriente", answer:"corriente literaria"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

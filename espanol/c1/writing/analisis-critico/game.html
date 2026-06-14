@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>El Análisis Crítico — Juego C1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Atrás"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Inicio</a><span>&#8250;</span>
+  <a href="../../../../espanol/index.html">Espa&#241;ol</a><span>&#8250;</span>
+  <a href="../../index.html">C1</a><span>&#8250;</span>
+  <a href="../index.html">Escritura</a><span>&#8250;</span>
+  <a href="index.html">El Análisis Crítico</a><span>&#8250;</span>
+  <strong>Juego</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Ejercicios</a>
+  <a href="game.html" class="chapter-nav-btn active">Juego</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimibles</a>
+</nav>
+<div class="container">
+  <h1>El Análisis Crítico — Juego de Dominio</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>Practica las técnicas del análisis crítico en español C1.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos del mismo concepto y rachas entre conceptos a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominados</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todos los elementos de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominados</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="worksheet.html" class="game-btn secondary">Ejercicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Espa&#241;ol C1 &middot; Juego</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "analisis-critico",
+  level: "c1",
+  title: "El Análisis Crítico de Textos",
+  storageKey: "wordplay_game_es_c1_analisis-critico",
+  items: [
+    {id:"falacia", term:"falacia", meaning:"error en el razonamiento que puede parecer convincente pero que no es lógicamente válido", synonym:"sofisma", example:"La ______ del falso dilema presenta solo dos opciones cuando hay más posibilidades.", completion:"falac", answer:"falacia"},
+    {id:"ad-hominem", term:"ad hominem", meaning:"falacia que consiste en atacar a la persona que argumenta en lugar de refutar su argumento", synonym:"ataque personal", example:"Decir «no le creas porque es político» es una falacia ______.", completion:"ad hom", answer:"ad hominem"},
+    {id:"eufemismo", term:"eufemismo", meaning:"expresión suavizada que sustituye a otra más directa o negativa para minimizar su impacto", synonym:"atenuación", example:"El término «ajuste de plantilla» es un ______ que evita la palabra despido.", completion:"eufem", answer:"eufemismo"},
+    {id:"disfemismo", term:"disfemismo", meaning:"expresión que intensifica la connotación negativa de algo para provocar rechazo", synonym:"intensificador negativo", example:"Llamar «purga» a una reorganización de personal es un ______ deliberado.", completion:"disfem", answer:"disfemismo"},
+    {id:"premisa", term:"premisa", meaning:"afirmación de la que parte un argumento y que debe ser cierta para que la conclusión sea válida", synonym:"proposición base", example:"Si la ______ es falsa, el argumento entero se derrumba aunque la lógica sea correcta.", completion:"prem", answer:"premisa"},
+    {id:"generalizacion", term:"generalización precipitada", meaning:"falacia que extrae una conclusión universal a partir de un número insuficiente de casos", synonym:"generalización indebida", example:"La ______ «todos los inmigrantes...» es un error lógico frecuente en el discurso populista.", completion:"general", answer:"generalización precipitada"},
+    {id:"falso-dilema", term:"falso dilema", meaning:"falacia que reduce un problema a dos opciones excluyentes ignorando las alternativas", synonym:"disyunción falsa", example:"«O estás a favor o estás en contra» es un ______ que elimina las posiciones intermedias.", completion:"falso", answer:"falso dilema"},
+    {id:"apelacion-emocion", term:"apelación a la emoción", meaning:"falacia que usa el miedo, la compasión o la indignación en lugar de argumentos racionales", synonym:"argumento emocional", example:"Usar imágenes de niños sufriendo para justificar una política económica es una ______.", completion:"apelac", answer:"apelación a la emoción"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
