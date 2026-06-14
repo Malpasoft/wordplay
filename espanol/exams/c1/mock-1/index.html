@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>DELE C1 — Simulacro 1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<style>
+.mock-container{max-width:760px;margin:0 auto;padding:0 16px}
+.timer-bar{position:sticky;top:0;background:var(--ink);color:var(--paper);padding:12px 16px;border-radius:0 0 8px 8px;display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15);margin-bottom:24px}
+.timer-display{font-family:var(--font-sans);font-size:1.1rem;font-weight:700;letter-spacing:.5px}
+.timer-display.warning{color:#FFD700}
+.timer-display.critical{color:#FF6B6B;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.timer-meta{font-family:var(--font-sans);font-size:.72rem;opacity:.85;letter-spacing:1px;text-transform:uppercase}
+.start-screen,.results-screen{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:28px;margin-bottom:24px}
+.start-screen h2,.results-screen h2{font-size:1.4rem;margin:0 0 12px}
+.start-btn{display:inline-block;padding:12px 28px;background:var(--ink);color:var(--paper);border:0;font-family:var(--font-sans);font-size:.82rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer;margin-top:12px}
+.start-btn:hover{opacity:.85}
+.exam-area{display:none}
+.exam-area.active{display:block}
+.part-section{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:24px;margin-bottom:28px}
+.part-header{font-family:var(--font-sans);font-size:.68rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.part-section h2{font-size:1.2rem;margin:0 0 8px;color:var(--ink)}
+.part-section .instructions{font-size:.85rem;color:var(--muted);margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--hairline)}
+.text-title{font-weight:700;text-align:center;font-size:1.05rem;margin:12px 0;color:var(--ink)}
+.text-content{font-size:.92rem;line-height:1.7;color:var(--ink);margin-bottom:18px}
+.text-content p{margin:0 0 12px}
+.mc-q{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--hairline)}
+.mc-q .q-num{font-family:var(--font-sans);font-size:.85rem;font-weight:800;color:var(--amber);min-width:28px}
+.mc-q .opts{flex:1;display:flex;flex-direction:column;gap:4px}
+.mc-q .q-text{flex:1;font-size:.9rem;margin-bottom:6px}
+.opt{display:flex;gap:6px;align-items:flex-start;padding:4px 0;cursor:pointer;font-size:.9rem}
+.opt:hover{background:rgba(184,134,11,.05)}
+.opt-letter{font-family:var(--font-sans);font-weight:700;color:var(--amber);min-width:18px}
+.opt input{margin-top:4px}
+.cloze-input{width:130px;padding:2px 8px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-size:.82rem;background:var(--cream-deep)}
+.cloze-input:focus{outline:none;border-color:var(--amber)}
+.gap-select,.match-select{padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-weight:700;background:var(--cream-deep);color:var(--ink);cursor:pointer}
+.mm-q{display:flex;gap:12px;align-items:center;padding:8px 0;border-top:1px solid var(--hairline);font-size:.88rem}
+.mm-q .q-text{flex:1}
+.mm-text{display:flex;gap:14px;padding:14px 0;border-top:1px solid var(--hairline)}
+.mm-letter{font-family:var(--font-sans);font-weight:800;color:var(--amber);font-size:1rem;min-width:24px}
+.mm-body{flex:1;font-size:.88rem;line-height:1.55}
+.submit-area{background:var(--ink);color:var(--paper);border-radius:8px;padding:20px;text-align:center;margin:32px 0}
+.submit-area p{margin:0 0 12px;opacity:.9}
+.submit-btn{display:inline-block;padding:14px 36px;background:var(--amber);color:var(--ink);border:0;font-family:var(--font-sans);font-size:.9rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer}
+.submit-btn:hover{opacity:.9}
+.results-screen{display:none}
+.results-screen.active{display:block}
+.score-big{font-size:3rem;font-weight:800;color:var(--amber);text-align:center;font-family:Georgia,serif}
+.score-label{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:18px}
+.part-breakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:20px 0}
+.part-score{background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px;padding:12px;text-align:center}
+.part-score .name{font-family:var(--font-sans);font-size:.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.part-score .val{font-size:1.3rem;font-weight:700;color:var(--ink);margin-top:4px}
+.part-score .pct{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin-top:2px}
+.exam-area input:disabled,.exam-area select:disabled{background:rgba(184,134,11,.05)}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Atrás"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Modo oscuro" onclick="toggleDark()">&#9680; Oscuro</button>
+</div></header>
+
+<div class="mock-container">
+  <div class="breadcrumb"><a href="../../../../index.html">Inicio</a><span>›</span><a href="../../../index.html">Español</a><span>›</span><a href="../../index.html">DELE</a><span>›</span><a href="../index.html">C1</a><span>›</span><strong>Simulacro 1</strong></div>
+
+  <div id="startScreen" class="start-screen">
+    <div class="part-header">DELE C1 · Comprensión de lectura</div>
+    <h2>Simulacro 1</h2>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Duración:</strong> 70 minutos</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Preguntas:</strong> 24 (4 tareas)</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:16px">Al pulsar <strong>Empezar</strong>, el cronómetro se pone en marcha. El simulacro se entrega automáticamente cuando se agota el tiempo.</p>
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:18px">Consejo: reserva unos 17 minutos por tarea. No te detengas demasiado en una sola pregunta.</p>
+    <button class="start-btn" onclick="startExam(false)">Empezar (con cronómetro)</button>
+    <button class="start-btn" onclick="startExam(true)" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Modo práctica (sin cronómetro)</button>
+    <div id="resumeSection" style="display:none;margin-top:18px;padding:14px 16px;background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--amber);margin-bottom:6px">Progreso guardado</div><div id="resumeInfo" style="font-size:.88rem;color:var(--ink);margin-bottom:10px"></div><button class="start-btn" onclick="resumeExam()" style="background:var(--amber);color:var(--ink)">Continuar</button><button class="start-btn" onclick="clearSave()" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Empezar de nuevo</button></div>
+    <div id="prevAttempt" style="display:none;margin-top:12px;font-family:var(--font-sans);font-size:.78rem;color:var(--muted)">Mejor resultado anterior: <strong id="prevScore"></strong></div>
+  </div>
+
+  <div id="examArea" class="exam-area">
+    <div class="timer-bar">
+      <div class="timer-display" id="timerDisplay">70:00</div>
+      <div class="timer-meta">Tiempo restante</div>
+      <button onclick="saveProgress()" style="background:transparent;border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.85);font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border-radius:3px;cursor:pointer">Guardar y salir</button>
+    </div>
+
+    <!-- TAREA 1 -->
+    <div class="part-section">
+      <div class="part-header">Tarea 1</div>
+      <h2>Preguntas 1–6</h2>
+      <p class="instructions">A continuación vas a leer un artículo sobre el español en el mundo. Después, debes indicar si los enunciados (1–6) son verdaderos (V), falsos (F) o si la información no aparece en el texto (ND).</p>
+      <div class="text-title">El español en el mundo: presente y futuro de una lengua global</div>
+      <div class="text-content">
+        <p>El español es, en la actualidad, la segunda lengua del mundo por número de hablantes nativos, con aproximadamente 480 millones de personas que la tienen como lengua materna. Solo el chino mandarín supera esta cifra si se consideran exclusivamente los hablantes nativos, aunque el inglés mantiene su posición dominante como lengua franca internacional.</p>
+        <p>Las proyecciones demográficas apuntan a un crecimiento sostenido del español en las próximas décadas. Según el Instituto Cervantes, para el año 2060 el número total de hispanohablantes —incluyendo hablantes de segunda lengua y estudiantes— podría alcanzar los 750 millones. Este crecimiento se debe fundamentalmente a la dinámica demográfica de América Latina y al imparable ascenso de la población hispana en los Estados Unidos.</p>
+        <p>El caso de Estados Unidos resulta especialmente revelador. Con más de 58 millones de hispanohablantes, el país norteamericano alberga más personas que hablan español que la propia España, que ronda los 47 millones de hablantes nativos. Además, el español es la lengua extranjera más estudiada tanto en Estados Unidos como en Brasil, lo que garantiza su proyección futura en el continente americano.</p>
+        <p>En el ámbito empresarial, la influencia del español no deja de crecer. Sectores como la energía, la banca y las telecomunicaciones han visto multiplicarse las transacciones en español, particularmente en los mercados latinoamericanos. Grandes corporaciones internacionales han convertido el dominio del español en un requisito valorado a la hora de contratar directivos para sus operaciones en América.</p>
+        <p>No obstante, algunos lingüistas expresan preocupación por la posible fragmentación del español en variedades regionales que podrían dificultar la comprensión mutua entre hablantes de distintas zonas geográficas. Otros expertos, sin embargo, consideran que esta diversificación es simplemente el proceso natural de evolución de cualquier lengua viva, y que la riqueza dialectal es precisamente uno de los rasgos más valiosos del español. La Historia muestra que el latín se fragmentó en distintas lenguas romances, pero el español ha mantenido una unidad notable durante siglos gracias a una tradición literaria y normativa compartida.</p>
+      </div>
+      <div class="mc-q"><div class="q-num">1</div><div class="opts"><div class="q-text">El español es la segunda lengua con más hablantes nativos del mundo.</div><label class="opt"><input type="radio" name="q1" value="V"> <span class="opt-letter">V</span> <span>Verdadero</span></label><label class="opt"><input type="radio" name="q1" value="F"> <span class="opt-letter">F</span> <span>Falso</span></label><label class="opt"><input type="radio" name="q1" value="ND"> <span class="opt-letter">ND</span> <span>No se dice</span></label></div></div>
+      <div class="mc-q"><div class="q-num">2</div><div class="opts"><div class="q-text">El Instituto Cervantes ha abierto centros en los cincuenta estados de EE.UU.</div><label class="opt"><input type="radio" name="q2" value="V"> <span class="opt-letter">V</span> <span>Verdadero</span></label><label class="opt"><input type="radio" name="q2" value="F"> <span class="opt-letter">F</span> <span>Falso</span></label><label class="opt"><input type="radio" name="q2" value="ND"> <span class="opt-letter">ND</span> <span>No se dice</span></label></div></div>
+      <div class="mc-q"><div class="q-num">3</div><div class="opts"><div class="q-text">La fragmentación en variedades regionales es considerada un problema por la mayoría de los lingüistas.</div><label class="opt"><input type="radio" name="q3" value="V"> <span class="opt-letter">V</span> <span>Verdadero</span></label><label class="opt"><input type="radio" name="q3" value="F"> <span class="opt-letter">F</span> <span>Falso</span></label><label class="opt"><input type="radio" name="q3" value="ND"> <span class="opt-letter">ND</span> <span>No se dice</span></label></div></div>
+      <div class="mc-q"><div class="q-num">4</div><div class="opts"><div class="q-text">Los Estados Unidos tienen más hispanohablantes que España.</div><label class="opt"><input type="radio" name="q4" value="V"> <span class="opt-letter">V</span> <span>Verdadero</span></label><label class="opt"><input type="radio" name="q4" value="F"> <span class="opt-letter">F</span> <span>Falso</span></label><label class="opt"><input type="radio" name="q4" value="ND"> <span class="opt-letter">ND</span> <span>No se dice</span></label></div></div>
+      <div class="mc-q"><div class="q-num">5</div><div class="opts"><div class="q-text">El crecimiento del español en el mundo se debe principalmente a Europa.</div><label class="opt"><input type="radio" name="q5" value="V"> <span class="opt-letter">V</span> <span>Verdadero</span></label><label class="opt"><input type="radio" name="q5" value="F"> <span class="opt-letter">F</span> <span>Falso</span></label><label class="opt"><input type="radio" name="q5" value="ND"> <span class="opt-letter">ND</span> <span>No se dice</span></label></div></div>
+      <div class="mc-q"><div class="q-num">6</div><div class="opts"><div class="q-text">El español tiene cada vez más importancia en el ámbito empresarial internacional.</div><label class="opt"><input type="radio" name="q6" value="V"> <span class="opt-letter">V</span> <span>Verdadero</span></label><label class="opt"><input type="radio" name="q6" value="F"> <span class="opt-letter">F</span> <span>Falso</span></label><label class="opt"><input type="radio" name="q6" value="ND"> <span class="opt-letter">ND</span> <span>No se dice</span></label></div></div>
+    </div>
+
+    <!-- TAREA 2 -->
+    <div class="part-section">
+      <div class="part-header">Tarea 2</div>
+      <h2>Preguntas 7–12</h2>
+      <p class="instructions">A continuación vas a leer un texto sobre la inteligencia artificial y la creatividad. Elige la opción correcta (A, B o C) para cada pregunta.</p>
+      <div class="text-title">Inteligencia artificial y creatividad: ¿pueden las máquinas crear arte?</div>
+      <div class="text-content">
+        <p>En los últimos años, los sistemas de inteligencia artificial han demostrado una capacidad sorprendente para generar música, crear obras visuales e incluso redactar textos literarios de calidad reconocible. Aplicaciones como Midjourney, DALL·E o los modelos de lenguaje de última generación han producido obras que en más de una ocasión han confundido a expertos humanos. Ante este fenómeno, el debate sobre si las máquinas pueden «crear» en sentido pleno se ha intensificado en los círculos artísticos, filosóficos y jurídicos.</p>
+        <p>Los artistas no presentan un frente unido ante la irrupción de la IA creativa. Mientras algunos la integran como una herramienta más en su proceso de trabajo —como en su día lo fueron la fotografía o la edición digital—, otros la perciben como una amenaza directa a su modo de vida, pues los sistemas de IA pueden producir en segundos imágenes o textos que a un profesional le llevarían horas. Esta división refleja no tanto una postura ideológica homogénea como una respuesta pragmática a circunstancias laborales muy distintas.</p>
+        <p>El debate filosófico gira en torno a una pregunta central: ¿puede una máquina crear, o simplemente recombina patrones aprendidos de obras humanas preexistentes? Los críticos más radicales sostienen que el arte auténtico requiere consciencia, intencionalidad y experiencia vivida, cualidades de las que la IA carece por definición. Sus defensores contraargumentan que la creatividad humana no es más que una recombinación sofisticada de influencias, referencias y patrones absorbidos a lo largo de la vida —en esencia, el mismo proceso que realiza una red neuronal artificial.</p>
+        <p>En el plano jurídico, la controversia adquiere contornos más concretos. Numerosos artistas han denunciado que sus obras han sido utilizadas sin permiso para entrenar sistemas de IA, vulnerando así sus derechos de autor. La UNESCO ha llamado a la comunidad internacional a establecer marcos regulatorios claros que protejan tanto la propiedad intelectual de los creadores humanos como el potencial innovador de la tecnología.</p>
+        <p>El debate dista mucho de estar resuelto. A medida que la tecnología avanza, las fronteras entre creación humana y generación artificial se vuelven cada vez más difusas, planteando preguntas que la filosofía, el derecho y la estética todavía no han sabido responder de forma definitiva.</p>
+      </div>
+      <div class="mc-q"><div class="q-num">7</div><div class="q-text">Según el texto, la postura de los artistas ante la inteligencia artificial es...</div><div class="opts"><label class="opt"><input type="radio" name="q7" value="A"> <span class="opt-letter">A</span> <span>uniformemente negativa.</span></label><label class="opt"><input type="radio" name="q7" value="B"> <span class="opt-letter">B</span> <span>variada y dividida.</span></label><label class="opt"><input type="radio" name="q7" value="C"> <span class="opt-letter">C</span> <span>mayoritariamente positiva.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">8</div><div class="q-text">El argumento de quienes niegan que la IA pueda crear arte se basa en...</div><div class="opts"><label class="opt"><input type="radio" name="q8" value="A"> <span class="opt-letter">A</span> <span>la falta de velocidad de la IA.</span></label><label class="opt"><input type="radio" name="q8" value="B"> <span class="opt-letter">B</span> <span>los problemas de derechos de autor.</span></label><label class="opt"><input type="radio" name="q8" value="C"> <span class="opt-letter">C</span> <span>la ausencia de conciencia e intencionalidad.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">9</div><div class="q-text">¿Qué organismo internacional ha pedido regulación sobre la IA y el arte?</div><div class="opts"><label class="opt"><input type="radio" name="q9" value="A"> <span class="opt-letter">A</span> <span>La UNESCO.</span></label><label class="opt"><input type="radio" name="q9" value="B"> <span class="opt-letter">B</span> <span>La ONU.</span></label><label class="opt"><input type="radio" name="q9" value="C"> <span class="opt-letter">C</span> <span>La Unión Europea.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">10</div><div class="q-text">Según los defensores de la IA creativa, la creatividad humana se asemeja a la de la IA porque...</div><div class="opts"><label class="opt"><input type="radio" name="q10" value="A"> <span class="opt-letter">A</span> <span>ambas requieren consciencia.</span></label><label class="opt"><input type="radio" name="q10" value="B"> <span class="opt-letter">B</span> <span>ambas combinan patrones existentes.</span></label><label class="opt"><input type="radio" name="q10" value="C"> <span class="opt-letter">C</span> <span>ambas dependen de bases de datos.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">11</div><div class="q-text">La cuestión legal que plantea el texto tiene que ver con...</div><div class="opts"><label class="opt"><input type="radio" name="q11" value="A"> <span class="opt-letter">A</span> <span>los beneficios económicos de la IA.</span></label><label class="opt"><input type="radio" name="q11" value="B"> <span class="opt-letter">B</span> <span>la velocidad de producción artística.</span></label><label class="opt"><input type="radio" name="q11" value="C"> <span class="opt-letter">C</span> <span>el uso de obras humanas para entrenar a la IA sin permiso.</span></label></div></div>
+      <div class="mc-q"><div class="q-num">12</div><div class="q-text">El texto presenta el debate sobre IA y creatividad como...</div><div class="opts"><label class="opt"><input type="radio" name="q12" value="A"> <span class="opt-letter">A</span> <span>un asunto aún sin resolver.</span></label><label class="opt"><input type="radio" name="q12" value="B"> <span class="opt-letter">B</span> <span>una polémica ya superada.</span></label><label class="opt"><input type="radio" name="q12" value="C"> <span class="opt-letter">C</span> <span>una cuestión principalmente técnica.</span></label></div></div>
+    </div>
+
+    <!-- TAREA 3 -->
+    <div class="part-section">
+      <div class="part-header">Tarea 3</div>
+      <h2>Preguntas 13–18</h2>
+      <p class="instructions">Lee el siguiente texto y elige la opción (A, B o C) que corresponde a cada hueco.</p>
+      <div class="text-title">La España vaciada: el reto demográfico del siglo XXI</div>
+      <div class="text-content">
+        <p>El fenómeno de la (13) <select class="gap-select" data-q="13"><option value="">—</option><option>A</option><option>B</option><option>C</option></select> de las zonas rurales constituye uno de los mayores desafíos demográficos de España en el siglo XXI. Durante décadas, el éxodo del campo a la ciudad ha ido vaciando de habitantes pueblos y municipios del interior peninsular, en un proceso que se ha acelerado notablemente desde la crisis económica de 2008.</p>
+        <p>Muchos municipios del interior peninsular están al (14) <select class="gap-select" data-q="14"><option value="">—</option><option>A</option><option>B</option><option>C</option></select> de desaparecer como entidades administrativas autónomas, pues su población ha caído por debajo del umbral mínimo legalmente establecido. En algunos casos, los últimos habitantes son personas de avanzada edad que han visto partir a sus hijos y nietos en busca de oportunidades laborales.</p>
+        <p>Los gobiernos autonómicos han (15) <select class="gap-select" data-q="15"><option value="">—</option><option>A</option><option>B</option><option>C</option></select> distintas medidas para frenar el éxodo rural, desde ayudas directas para el establecimiento de nuevos residentes hasta incentivos fiscales para empresas que instalen actividades productivas en municipios en riesgo de despoblación. Los resultados, sin embargo, han sido desiguales.</p>
+        <p>La falta de servicios básicos como hospitales, escuelas y conexión a internet de calidad (16) <select class="gap-select" data-q="16"><option value="">—</option><option>A</option><option>B</option><option>C</option></select> el abandono del campo, pues sin estos recursos resulta muy difícil atraer a familias jóvenes dispuestas a instalarse en zonas rurales. Es un círculo vicioso difícil de romper.</p>
+        <p>El teletrabajo se ha señalado como una posible (17) <select class="gap-select" data-q="17"><option value="">—</option><option>A</option><option>B</option><option>C</option></select> para atraer a jóvenes profesionales a zonas rurales, aprovechando la calidad de vida que el campo puede ofrecer frente a las ciudades saturadas. La pandemia demostró que muchas profesiones pueden ejercerse desde cualquier lugar con buena conectividad.</p>
+        <p>Revertir esta tendencia requiere una (18) <select class="gap-select" data-q="18"><option value="">—</option><option>A</option><option>B</option><option>C</option></select> a largo plazo que combine incentivos económicos y mejora de infraestructuras, pero también un cambio cultural que reivindique el valor de lo rural frente al predominio histórico de lo urbano.</p>
+      </div>
+      <div style="margin-top:16px;padding-top:14px;border-top:2px solid var(--hairline)">
+        <div style="font-family:var(--font-sans);font-size:.7rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Opciones:</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:.88rem">
+          <div><strong style="color:var(--amber)">13.</strong> A) urbanización &nbsp; B) modernización &nbsp; C) despoblación</div>
+          <div><strong style="color:var(--amber)">14.</strong> A) borde &nbsp; B) centro &nbsp; C) inicio</div>
+          <div><strong style="color:var(--amber)">15.</strong> A) ignorado &nbsp; B) adoptado &nbsp; C) rechazado</div>
+          <div><strong style="color:var(--amber)">16.</strong> A) evita &nbsp; B) soluciona &nbsp; C) agrava</div>
+          <div><strong style="color:var(--amber)">17.</strong> A) solución &nbsp; B) dificultad &nbsp; C) excusa</div>
+          <div><strong style="color:var(--amber)">18.</strong> A) retirada &nbsp; B) estrategia &nbsp; C) victoria</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAREA 4 -->
+    <div class="part-section">
+      <div class="part-header">Tarea 4</div>
+      <h2>Preguntas 19–24</h2>
+      <p class="instructions">Vas a leer fragmentos de opinión de cuatro especialistas sobre la reforma educativa en España. Relaciona cada enunciado (19–24) con el especialista correspondiente. Los especialistas pueden elegirse más de una vez.</p>
+      <div class="mm-text"><div class="mm-letter">A</div><div class="mm-body"><strong>Profesora Lourdes Vidal, pedagoga</strong><br>El sistema educativo actual sigue apostando por la memorización y la reproducción de contenidos cuando el mercado laboral exige, cada vez más, personas capaces de pensar de forma crítica, resolver problemas complejos y adaptarse a entornos cambiantes. Los datos de comparativas europeas sitúan al alumnado español por debajo de la media de la UE en métricas de creatividad y pensamiento divergente. Necesitamos una escuela que enseñe a aprender, no solo qué aprender. El aprendizaje basado en proyectos reales, en el que los estudiantes investigan, debaten y producen, ha demostrado resultados superiores en múltiples contextos.</div></div>
+      <div class="mm-text"><div class="mm-letter">B</div><div class="mm-body"><strong>Rodrigo Peña, economista educativo</strong><br>Llevamos décadas debatiendo sobre metodologías y currículos sin abordar el problema estructural: la desigualdad de recursos entre centros públicos y concertados reproduce las desigualdades socioeconómicas de partida. El origen familiar del alumno sigue siendo el predictor más potente de su rendimiento académico final, por encima del talento individual o del esfuerzo. Cualquier reforma curricular que no aborde esta brecha de financiación será, en el mejor de los casos, cosmética. La evidencia internacional es clara: los sistemas educativos más equitativos son también los más eficaces.</div></div>
+      <div class="mm-text"><div class="mm-letter">C</div><div class="mm-body"><strong>Dra. Marta Solís, neuróloga</strong><br>La neurociencia lleva años proporcionando datos que la práctica educativa tarda en incorporar. Sabemos que el cerebro adolescente tiene ritmos circadianos distintos a los del adulto, lo que hace desaconsejable el inicio de clases a las ocho de la mañana para este grupo de edad. Sabemos también que los descansos frecuentes mejoran la concentración y que la consolidación de la memoria durante el sueño es fundamental. Y sin embargo, seguimos reduciendo el recreo y cargando a los alumnos de deberes para llevar a casa. No podemos permitirnos seguir tomando decisiones educativas basadas en la tradición en lugar de en la evidencia científica.</div></div>
+      <div class="mm-text"><div class="mm-letter">D</div><div class="mm-body"><strong>Carlos Ruiz, director de instituto</strong><br>En treinta años de docencia he visto pasar cinco leyes educativas. Cada nueva reforma llega cargada de promesas y obliga a los centros a reorganizar sus programaciones, formar al profesorado en nuevas metodologías y actualizar los materiales. Cuando por fin los docentes han asimilado los cambios, llega un nuevo gobierno con una nueva ley. Lo que la escuela necesita no es otra revolución, sino estabilidad y confianza en los profesionales que trabajan en ella. Los pequeños ajustes continuos, construidos desde la práctica docente real, producen mejoras más duraderas que las grandes reformas diseñadas desde los despachos ministeriales.</div></div>
+      <div style="margin-top:20px">
+        <div class="mm-q"><div class="q-num">19</div><div class="q-text">Considera que los constantes cambios normativos son más perjudiciales que beneficiosos.</div><select class="match-select" data-q="19"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">20</div><div class="q-text">Defiende un aprendizaje basado en proyectos en lugar de la memorización.</div><select class="match-select" data-q="20"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">21</div><div class="q-text">Apoya los cambios en el horario escolar por razones relacionadas con el funcionamiento del cerebro.</div><select class="match-select" data-q="21"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">22</div><div class="q-text">Sostiene que el origen socioeconómico del alumno es el factor más determinante en su rendimiento.</div><select class="match-select" data-q="22"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">23</div><div class="q-text">Valora la estabilidad y la confianza en el profesorado por encima de las grandes reformas.</div><select class="match-select" data-q="23"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+        <div class="mm-q"><div class="q-num">24</div><div class="q-text">Critica que el sistema actual no desarrolla adecuadamente el pensamiento crítico.</div><select class="match-select" data-q="24"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+      </div>
+    </div>
+
+    <div class="submit-area">
+      <p>Revisa tus respuestas antes de entregar. No podrás cambiarlas después.</p>
+      <button class="submit-btn" onclick="submitExam(false)">Entregar simulacro</button>
+    </div>
+  </div>
+
+  <div id="resultsScreen" class="results-screen">
+    <div class="part-header">DELE C1 · Simulacro 1 — Resultados</div>
+    <div class="score-big" id="scoreFinal"></div>
+    <div class="score-label">Respuestas correctas</div>
+    <p id="timeUsed" style="text-align:center;font-family:var(--font-sans);font-size:.8rem;color:var(--muted);margin-bottom:16px"></p>
+    <div class="part-breakdown" id="partBreakdown"></div>
+    <div style="text-align:center;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <a href="../index.html" class="start-btn" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);text-decoration:none;display:inline-block">Volver al DELE C1</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">Word Play · DELE C1 · Instituto Cervantes</footer>
+
+<script src="../../../../shared/store.js?v=v107"></script>
+<script>
+const ANSWERS = {
+  "t1":{"1":"V","2":"ND","3":"F","4":"V","5":"F","6":"V"},
+  "t2":{"7":"B","8":"C","9":"A","10":"B","11":"C","12":"A"},
+  "t3":{"13":"C","14":"A","15":"B","16":"C","17":"A","18":"B"},
+  "t4":{"19":"D","20":"A","21":"C","22":"B","23":"D","24":"A"}
+};
+const DURATION_MS = 70 * 60 * 1000;
+let startTime = null;
+let timerInterval = null;
+let submitted = false;
+const SAVE_KEY = 'wordplay_dele_c1_mock_1';
+const BEST_KEY = 'wordplay_dele_c1_mock_1_best';
+let practiceMode = false;
+
+function startExam(practice) {
+  practiceMode = practice || false;
+  clearSave();
+  _startExam();
+}
+
+function resumeExam() {
+  const saved = getSave();
+  if (!saved) return;
+  _startExam(saved);
+}
+
+function _startExam(saved) {
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('examArea').classList.add('active');
+  if (practiceMode) {
+    document.querySelector('.timer-bar').innerHTML = '<div class="timer-display">Modo práctica — sin cronómetro</div><div class="timer-meta">Responde a tu ritmo</div>';
+    startTime = Date.now();
+  } else {
+    startTime = saved ? saved.startTime : Date.now();
+    timerInterval = setInterval(updateTimer, 1000);
+    updateTimer();
+  }
+  if (saved) restoreAnswers(saved.answers);
+  window.scrollTo(0, 0);
+}
+
+function getSave() {
+  try { var s = localStorage.getItem(SAVE_KEY); return s ? JSON.parse(s) : null; } catch(e) { return null; }
+}
+
+function clearSave() {
+  try { localStorage.removeItem(SAVE_KEY); } catch(e) {}
+}
+
+function saveProgress() {
+  if (submitted) return;
+  var answers = collectAnswers();
+  var save = { startTime: startTime, answers: answers, savedAt: Date.now() };
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(save)); } catch(e) {}
+  alert('Progreso guardado. Puedes cerrar la pestaña y continuar más tarde.');
+}
+
+function collectAnswers() {
+  var a = {};
+  document.querySelectorAll('input[type=radio]:checked').forEach(function(r) { a[r.name] = r.value; });
+  document.querySelectorAll('select').forEach(function(s) { if (s.dataset.q) a['s'+s.dataset.q] = s.value; });
+  return a;
+}
+
+function restoreAnswers(answers) {
+  Object.entries(answers).forEach(function(kv) {
+    var k = kv[0], v = kv[1];
+    if (k.startsWith('q')) {
+      var r = document.querySelector('input[name="'+k+'"][value="'+v+'"]');
+      if (r) r.checked = true;
+    } else if (k.startsWith('s')) {
+      var sel = document.querySelector('select[data-q="'+k.slice(1)+'"]');
+      if (sel) sel.value = v;
+    }
+  });
+}
+
+function checkPrevAttempt() {
+  try {
+    var best = localStorage.getItem(BEST_KEY);
+    if (best) { document.getElementById('prevAttempt').style.display = 'block'; document.getElementById('prevScore').textContent = best; }
+    var saved = getSave();
+    if (saved) {
+      var ageMin = Math.round((Date.now() - saved.savedAt) / 60000);
+      document.getElementById('resumeSection').style.display = 'block';
+      document.getElementById('resumeInfo').textContent = 'Guardado hace ' + ageMin + ' minutos';
+    }
+  } catch(e) {}
+}
+checkPrevAttempt();
+
+function updateTimer() {
+  var elapsed = Date.now() - startTime;
+  var remaining = DURATION_MS - elapsed;
+  if (remaining <= 0) { submitExam(true); return; }
+  var mins = Math.floor(remaining / 60000);
+  var secs = Math.floor((remaining % 60000) / 1000);
+  var el = document.getElementById('timerDisplay');
+  el.textContent = mins + ':' + (secs < 10 ? '0' : '') + secs;
+  el.classList.toggle('warning', remaining < 15*60*1000 && remaining >= 3*60*1000);
+  el.classList.toggle('critical', remaining < 3*60*1000);
+}
+
+function getRadioValue(name) {
+  var r = document.querySelector('input[name="'+name+'"]:checked');
+  return r ? r.value : null;
+}
+
+function getSelectValue(q) {
+  var el = document.querySelector('select[data-q="'+q+'"]');
+  return el ? el.value : '';
+}
+
+function submitExam(timeUp) {
+  if (submitted) return;
+  if (!timeUp && !confirm('¿Entregar el simulacro ahora? No podrás cambiar las respuestas.')) return;
+  submitted = true;
+  clearInterval(timerInterval);
+  var elapsedMs = Date.now() - startTime;
+  var elapsedMin = Math.floor(elapsedMs / 60000);
+  var elapsedSec = Math.floor((elapsedMs % 60000) / 1000);
+  document.querySelectorAll('input, select').forEach(function(el) { el.disabled = true; });
+
+  var scores = {};
+
+  scores.t1 = { correct: 0, total: 6 };
+  for (var i = 1; i <= 6; i++) {
+    var v = getRadioValue('q' + i);
+    if (v && v === ANSWERS.t1[i]) scores.t1.correct++;
+  }
+
+  scores.t2 = { correct: 0, total: 6 };
+  for (var i = 7; i <= 12; i++) {
+    var v = getRadioValue('q' + i);
+    if (v && v === ANSWERS.t2[i]) scores.t2.correct++;
+  }
+
+  scores.t3 = { correct: 0, total: 6 };
+  for (var i = 13; i <= 18; i++) {
+    var v = getSelectValue(i);
+    if (v && v === ANSWERS.t3[i]) scores.t3.correct++;
+  }
+
+  scores.t4 = { correct: 0, total: 6 };
+  for (var i = 19; i <= 24; i++) {
+    var v = getSelectValue(i);
+    if (v && v === ANSWERS.t4[i]) scores.t4.correct++;
+  }
+
+  var totalCorrect = Object.values(scores).reduce(function(a, p) { return a + p.correct; }, 0);
+  var pct = Math.round((totalCorrect / 24) * 100);
+
+  document.getElementById('scoreFinal').textContent = totalCorrect + ' / 24';
+  document.getElementById('timeUsed').textContent = 'Tiempo empleado: ' + elapsedMin + ' min ' + elapsedSec + ' s' + (timeUp ? ' (entrega automática)' : '');
+
+  try { localStorage.setItem(BEST_KEY, totalCorrect + '/24 (' + pct + '%)'); } catch(e) {}
+
+  var tareaLabels = {
+    t1:'Tarea 1 · V/F/ND', t2:'Tarea 2 · Comprensión', t3:'Tarea 3 · Léxico', t4:'Tarea 4 · Emparejamiento'
+  };
+  var breakdown = '';
+  Object.entries(scores).forEach(function(kv) {
+    var k = kv[0], v = kv[1];
+    var p = Math.round((v.correct / v.total) * 100);
+    breakdown += '<div class="part-score"><div class="name">' + tareaLabels[k] + '</div><div class="val">' + v.correct + '/' + v.total + '</div><div class="pct">' + p + '%</div></div>';
+  });
+  document.getElementById('partBreakdown').innerHTML = breakdown;
+
+  document.getElementById('resultsScreen').classList.add('active');
+  document.getElementById('resultsScreen').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
