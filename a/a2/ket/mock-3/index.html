@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>KET Mock Exam 3 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<style>
+.mock-container{max-width:760px;margin:0 auto;padding:0 16px}
+.timer-bar{position:sticky;top:0;background:var(--ink);color:var(--paper);padding:12px 16px;border-radius:0 0 8px 8px;display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15);margin-bottom:24px}
+.timer-display{font-family:var(--font-sans);font-size:1.1rem;font-weight:700;letter-spacing:.5px}
+.timer-display.warning{color:#FFD700}
+.timer-display.critical{color:#FF6B6B;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.timer-meta{font-family:var(--font-sans);font-size:.72rem;opacity:.85;letter-spacing:1px;text-transform:uppercase}
+.start-screen,.results-screen{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:28px;margin-bottom:24px}
+.start-screen h2,.results-screen h2{font-size:1.4rem;margin:0 0 12px}
+.start-btn{display:inline-block;padding:12px 28px;background:var(--ink);color:var(--paper);border:0;font-family:var(--font-sans);font-size:.82rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer;margin-top:12px}
+.start-btn:hover{opacity:.85}
+.exam-area{display:none}
+.exam-area.active{display:block}
+.part-section{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:24px;margin-bottom:28px}
+.part-header{font-family:var(--font-sans);font-size:.68rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.part-section h2{font-size:1.2rem;margin:0 0 8px;color:var(--ink)}
+.part-section .instructions{font-size:.85rem;color:var(--muted);margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--hairline)}
+.notice-card{background:#1A1A1A;color:white;border-radius:6px;padding:12px 16px;margin-bottom:8px;font-size:.86rem;line-height:1.55}
+.notice-label{font-family:var(--font-sans);font-size:.58rem;font-weight:800;letter-spacing:2px;color:var(--amber);margin-bottom:5px}
+.opt-grid{background:rgba(184,134,11,.04);border:1px solid var(--hairline);border-radius:6px;padding:14px 16px;margin:16px 0}
+.opt-row{display:flex;gap:10px;padding:5px 0;font-size:.84rem;line-height:1.45}
+.opt-letter{font-weight:800;color:var(--amber);min-width:20px}
+.match-row{display:flex;align-items:center;gap:12px;padding:7px 0;border-top:1px solid var(--hairline);font-size:.86rem}
+.match-row .q-id{font-weight:800;color:var(--amber);min-width:20px}
+.gap-select{padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-weight:700;background:var(--cream-deep);color:var(--ink);cursor:pointer}
+body.dark .gap-select{background:#1A1A1A;color:#F0F0F0;border-color:rgba(255,255,255,.15)}
+.convo-line{display:flex;gap:10px;padding:7px 0;border-top:1px solid var(--hairline);font-size:.86rem;line-height:1.55;align-items:baseline}
+.convo-line:first-child{border-top:none}
+.speaker{font-family:var(--font-sans);font-weight:800;color:var(--amber);min-width:48px;flex-shrink:0}
+.cloze-box{font-size:.9rem;line-height:1.9;padding:14px 16px;background:rgba(184,134,11,.04);border:1px solid var(--hairline);border-radius:6px;margin:12px 0}
+.cloze-input{width:100px;padding:2px 7px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-size:.82rem;background:var(--cream-deep);color:var(--ink)}
+.cloze-input:focus{outline:none;border-color:var(--amber)}
+body.dark .cloze-input{background:#1A1A1A;color:#F0F0F0;border-color:rgba(255,255,255,.15)}
+.wc-row{display:flex;gap:12px;padding:14px 0;border-top:1px solid var(--hairline);align-items:flex-start}
+.wc-num{font-family:var(--font-sans);font-weight:800;color:var(--amber);min-width:20px;padding-top:2px}
+.wc-body{flex:1}
+.wc-pattern{font-family:var(--font-sans);font-size:.78rem;font-weight:800;letter-spacing:4px;color:var(--amber);margin-bottom:6px}
+.wc-def{font-size:.88rem;color:var(--ink);margin-bottom:8px;line-height:1.5}
+.writing-task{background:#1A1A1A;color:white;border-radius:8px;padding:16px 20px;margin:12px 0 16px}
+.writing-task .task-label{font-family:var(--font-sans);font-size:.6rem;font-weight:800;letter-spacing:2px;color:var(--amber);margin-bottom:8px}
+.writing-task .task-pts{font-family:var(--font-sans);font-size:.7rem;font-weight:800;letter-spacing:1.5px;color:var(--amber);margin:10px 0 5px}
+.writing-area{width:100%;min-height:100px;padding:10px 12px;border:1.5px solid var(--hairline);border-radius:5px;font-family:var(--font-sans);font-size:.9rem;line-height:1.6;background:var(--cream-deep);color:var(--ink);resize:vertical;box-sizing:border-box}
+body.dark .writing-area{background:#1A1A1A;color:#F0F0F0;border-color:rgba(255,255,255,.18)}
+.word-ct{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin-top:5px}
+.word-ct .ct-n{color:var(--ink);font-weight:700}
+.ct-ok{color:#2E7D52!important}
+.submit-area{background:var(--ink);color:var(--paper);border-radius:8px;padding:20px;text-align:center;margin:32px 0}
+.submit-area p{margin:0 0 12px;opacity:.9;font-size:.9rem}
+.submit-btn-lg{padding:14px 36px;background:var(--amber);color:var(--ink);border:0;font-family:var(--font-sans);font-size:.9rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer}
+.submit-btn-lg:hover{opacity:.9}
+.results-screen{display:none}
+.results-screen.active{display:block}
+.score-big{font-size:3rem;font-weight:800;color:var(--amber);text-align:center;font-family:Georgia,serif}
+.score-label{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:18px}
+.part-breakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:20px 0}
+.part-score{background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px;padding:12px;text-align:center}
+.part-score .name{font-family:var(--font-sans);font-size:.63rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.part-score .val{font-size:1.3rem;font-weight:700;color:var(--ink);margin-top:4px}
+.part-score .pct{font-family:var(--font-sans);font-size:.72rem;color:var(--muted);margin-top:2px}
+</style>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Back"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+</div></header>
+
+<div class="mock-container">
+  <div class="breadcrumb"><a href="../../../../index.html">Home</a><span>›</span><a href="../../index.html">A2</a><span>›</span><a href="../index.html">KET</a><span>›</span><strong>Mock Exam 3</strong></div>
+
+  <div id="startScreen" class="start-screen">
+    <div class="part-header">KET Mock Exam 3</div>
+    <h2>Mock Exam 3 — Reading &amp; Writing</h2>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Duration:</strong> 60 minutes</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Total questions:</strong> 34 across Parts 1–6 (Part 7 is guided writing practice)</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:16px">Once you click <strong>Start</strong>, the timer begins. The exam will auto-submit when time runs out.</p>
+    <button class="start-btn" onclick="startExam(false)">Start exam (timed)</button>
+    <button class="start-btn" onclick="startExam(true)" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Practice mode (no timer)</button>
+  </div>
+
+  <div id="examArea" class="exam-area">
+    <div class="timer-bar">
+      <div class="timer-display" id="timerDisplay">60:00</div>
+      <div class="timer-meta">Time remaining</div>
+    </div>
+
+    <!-- PART 1 -->
+    <div class="part-section">
+      <div class="part-header">Part 1 — Matching</div>
+      <h2>Questions 1–6</h2>
+      <p class="instructions">For questions 1–6, read the notices or signs. Choose the correct meaning (A–H) for each one. There are two letters you do not need.</p>
+      <div class="notice-card"><div class="notice-label">TEXT 1</div>Gym members: book your class online at least 12 hours in advance. Walk-ins are not accepted.</div>
+      <div class="notice-card"><div class="notice-label">TEXT 2</div>This changing room is closed for cleaning from 9:00 am to 9:30 am on weekdays only.</div>
+      <div class="notice-card"><div class="notice-label">TEXT 3</div>Do not use your mobile phone while operating this equipment. Read all safety instructions first.</div>
+      <div class="notice-card"><div class="notice-label">TEXT 4</div>Entrance to this exhibition is free on Sundays. All other days: £6 adults, £3 children.</div>
+      <div class="notice-card"><div class="notice-label">TEXT 5</div>Lost property must be collected within 14 days. After this time, unclaimed items will be donated to charity.</div>
+      <div class="notice-card"><div class="notice-label">TEXT 6</div>Staff only beyond this point. All visitors must remain in the reception area.</div>
+      <div class="opt-grid">
+        <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1.5px;color:var(--muted);margin-bottom:8px">MEANINGS</div>
+        <div class="opt-row"><span class="opt-letter">A</span><span>You must arrange your place here before you come.</span></div>
+        <div class="opt-row"><span class="opt-letter">B</span><span>You need to read the information before you start using something.</span></div>
+        <div class="opt-row"><span class="opt-letter">C</span><span>This area is not open to members of the public.</span></div>
+        <div class="opt-row"><span class="opt-letter">D</span><span>You will not be able to keep your belongings here for an unlimited time.</span></div>
+        <div class="opt-row"><span class="opt-letter">E</span><span>There is no charge to enter on one specific day of the week.</span></div>
+        <div class="opt-row"><span class="opt-letter">F</span><span>A part of this facility cannot be used for a short time in the morning.</span></div>
+        <div class="opt-row"><span class="opt-letter">G</span><span>You must show your membership card at the entrance.</span></div>
+        <div class="opt-row"><span class="opt-letter">H</span><span>You should contact staff if you cannot keep your scheduled time.</span></div>
+      </div>
+      <div class="match-row"><span class="q-id">1</span><span>Text 1 matches meaning:</span><select class="gap-select" data-q="m1"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></div>
+      <div class="match-row"><span class="q-id">2</span><span>Text 2 matches meaning:</span><select class="gap-select" data-q="m2"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></div>
+      <div class="match-row"><span class="q-id">3</span><span>Text 3 matches meaning:</span><select class="gap-select" data-q="m3"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></div>
+      <div class="match-row"><span class="q-id">4</span><span>Text 4 matches meaning:</span><select class="gap-select" data-q="m4"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></div>
+      <div class="match-row"><span class="q-id">5</span><span>Text 5 matches meaning:</span><select class="gap-select" data-q="m5"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></div>
+      <div class="match-row"><span class="q-id">6</span><span>Text 6 matches meaning:</span><select class="gap-select" data-q="m6"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></div>
+    </div>
+
+    <!-- PART 2 -->
+    <div class="part-section">
+      <div class="part-header">Part 2 — Fill the Gap</div>
+      <h2>Questions 7–12</h2>
+      <p class="instructions">For questions 7–12, choose the best word (A, B or C) to fill each gap.</p>
+      <div class="match-row"><span class="q-id">7</span><div style="flex:1"><span>She has been working at the hospital _____ three years.</span><div style="margin-top:6px"><select class="gap-select" data-q="f7"><option value="">—</option><option value="A">A — since</option><option value="B">B — for</option><option value="C">C — during</option></select></div></div></div>
+      <div class="match-row"><span class="q-id">8</span><div style="flex:1"><span>The children were too _____ to go to sleep after the party.</span><div style="margin-top:6px"><select class="gap-select" data-q="f8"><option value="">—</option><option value="A">A — excited</option><option value="B">B — excite</option><option value="C">C — exciting</option></select></div></div></div>
+      <div class="match-row"><span class="q-id">9</span><div style="flex:1"><span>_____ the weather was terrible, we enjoyed the trip anyway.</span><div style="margin-top:6px"><select class="gap-select" data-q="f9"><option value="">—</option><option value="A">A — Although</option><option value="B">B — Because</option><option value="C">C — So</option></select></div></div></div>
+      <div class="match-row"><span class="q-id">10</span><div style="flex:1"><span>He _____ never been to France before this trip.</span><div style="margin-top:6px"><select class="gap-select" data-q="f10"><option value="">—</option><option value="A">A — is</option><option value="B">B — has</option><option value="C">C — was</option></select></div></div></div>
+      <div class="match-row"><span class="q-id">11</span><div style="flex:1"><span>We arrived _____ the station just five minutes before the train left.</span><div style="margin-top:6px"><select class="gap-select" data-q="f11"><option value="">—</option><option value="A">A — in</option><option value="B">B — to</option><option value="C">C — at</option></select></div></div></div>
+      <div class="match-row"><span class="q-id">12</span><div style="flex:1"><span>The film starts _____ the evening, around eight o'clock.</span><div style="margin-top:6px"><select class="gap-select" data-q="f12"><option value="">—</option><option value="A">A — on</option><option value="B">B — at</option><option value="C">C — in</option></select></div></div></div>
+    </div>
+
+    <!-- PART 3 -->
+    <div class="part-section">
+      <div class="part-header">Part 3 — Conversation Gaps</div>
+      <h2>Questions 13–17</h2>
+      <p class="instructions">For questions 13–17, complete the conversation. Choose the best response (A–H) for each gap. There are three letters you do not need.</p>
+      <div style="background:var(--paper);border:1px solid var(--hairline);border-radius:6px;padding:14px 16px;margin:12px 0">
+        <div class="convo-line"><span class="speaker">Emma:</span><span>Did you hear we're going on a school trip to the science museum next month?</span></div>
+        <div class="convo-line"><span class="speaker">Rob:</span><span><strong style="color:var(--amber)">(13)</strong> <select class="gap-select" data-q="c13"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></span></div>
+        <div class="convo-line"><span class="speaker">Emma:</span><span>The whole day — from nine in the morning until four.</span></div>
+        <div class="convo-line"><span class="speaker">Rob:</span><span><strong style="color:var(--amber)">(14)</strong> <select class="gap-select" data-q="c14"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></span></div>
+        <div class="convo-line"><span class="speaker">Emma:</span><span>Yes, there's a café inside. And we can bring our own sandwiches too.</span></div>
+        <div class="convo-line"><span class="speaker">Rob:</span><span><strong style="color:var(--amber)">(15)</strong> <select class="gap-select" data-q="c15"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></span></div>
+        <div class="convo-line"><span class="speaker">Emma:</span><span>I'm not sure exactly, but there's a new one about space exploration.</span></div>
+        <div class="convo-line"><span class="speaker">Rob:</span><span><strong style="color:var(--amber)">(16)</strong> <select class="gap-select" data-q="c16"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></span></div>
+        <div class="convo-line"><span class="speaker">Emma:</span><span>Me too. You should sign up quickly — there are only thirty places.</span></div>
+        <div class="convo-line"><span class="speaker">Rob:</span><span><strong style="color:var(--amber)">(17)</strong> <select class="gap-select" data-q="c17"><option value="">—</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option><option>G</option><option>H</option></select></span></div>
+        <div class="convo-line"><span class="speaker">Emma:</span><span>Great — I'll see you there!</span></div>
+      </div>
+      <div class="opt-grid">
+        <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1.5px;color:var(--muted);margin-bottom:8px">OPTIONS</div>
+        <div class="opt-row"><span class="opt-letter">A</span><span>That sounds great! Will we have time for lunch?</span></div>
+        <div class="opt-row"><span class="opt-letter">B</span><span>That's exactly the kind of thing I love!</span></div>
+        <div class="opt-row"><span class="opt-letter">C</span><span>I went there last year with my family.</span></div>
+        <div class="opt-row"><span class="opt-letter">D</span><span>Yes! How long are we going to be there?</span></div>
+        <div class="opt-row"><span class="opt-letter">E</span><span>I'll do it as soon as I get home.</span></div>
+        <div class="opt-row"><span class="opt-letter">F</span><span>What exhibitions are they showing at the moment?</span></div>
+        <div class="opt-row"><span class="opt-letter">G</span><span>Is the museum far from school?</span></div>
+        <div class="opt-row"><span class="opt-letter">H</span><span>I don't really enjoy science.</span></div>
+      </div>
+    </div>
+
+    <!-- PART 4 -->
+    <div class="part-section">
+      <div class="part-header">Part 4 — Cloze</div>
+      <h2>Questions 18–23</h2>
+      <p class="instructions">For questions 18–23, read the text. Choose the best word (A, B or C) for each gap.</p>
+      <div class="cloze-box">My name is Priya and I want to tell you <strong style="color:var(--amber)">(18)</strong> <select class="gap-select" data-q="cl18"><option value="">—</option><option value="A">A — about</option><option value="B">B — of</option><option value="C">C — for</option></select> my new hobby — cooking. Last autumn, I <strong style="color:var(--amber)">(19)</strong> <select class="gap-select" data-q="cl19"><option value="">—</option><option value="A">A — have started</option><option value="B">B — started</option><option value="C">C — was starting</option></select> attending cooking classes. My parents suggested <strong style="color:var(--amber)">(20)</strong> <select class="gap-select" data-q="cl20"><option value="">—</option><option value="A">A — a</option><option value="B">B — the</option><option value="C">C — this</option></select> idea when they saw a poster in the library. At first, I found everything difficult, but my teacher was very <strong style="color:var(--amber)">(21)</strong> <select class="gap-select" data-q="cl21"><option value="">—</option><option value="A">A — patient</option><option value="B">B — patience</option><option value="C">C — patiently</option></select> with me. Now I can <strong style="color:var(--amber)">(22)</strong> <select class="gap-select" data-q="cl22"><option value="">—</option><option value="A">A — make</option><option value="B">B — made</option><option value="C">C — making</option></select> simple meals completely on my own. Last Saturday, I <strong style="color:var(--amber)">(23)</strong> <select class="gap-select" data-q="cl23"><option value="">—</option><option value="A">A — have cooked</option><option value="B">B — cooked</option><option value="C">C — am cooking</option></select> a whole dinner for my family and everyone asked for more!</div>
+    </div>
+
+    <!-- PART 5 -->
+    <div class="part-section">
+      <div class="part-header">Part 5 — Open Cloze</div>
+      <h2>Questions 24–29</h2>
+      <p class="instructions">For questions 24–29, read the text and write ONE word in each gap.</p>
+      <div class="cloze-box">Hi Dan! I am writing to tell you <strong style="color:var(--amber)">(24)</strong> <input type="text" class="cloze-input" data-q="oc24" maxlength="12" autocomplete="off" spellcheck="false"> my weekend in Edinburgh. My sister and I <strong style="color:var(--amber)">(25)</strong> <input type="text" class="cloze-input" data-q="oc25" maxlength="12" autocomplete="off" spellcheck="false"> there by bus on Friday evening. We stayed in a small guesthouse that <strong style="color:var(--amber)">(26)</strong> <input type="text" class="cloze-input" data-q="oc26" maxlength="12" autocomplete="off" spellcheck="false"> very comfortable. On Saturday morning, we walked to the castle and took lots of photos. I <strong style="color:var(--amber)">(27)</strong> <input type="text" class="cloze-input" data-q="oc27" maxlength="12" autocomplete="off" spellcheck="false"> never been to Scotland before, so everything was new and exciting. We bought <strong style="color:var(--amber)">(28)</strong> <input type="text" class="cloze-input" data-q="oc28" maxlength="12" autocomplete="off" spellcheck="false"> gifts for our family in a small shop. I really wish you <strong style="color:var(--amber)">(29)</strong> <input type="text" class="cloze-input" data-q="oc29" maxlength="12" autocomplete="off" spellcheck="false"> been there with me!</div>
+    </div>
+
+    <!-- PART 6 -->
+    <div class="part-section">
+      <div class="part-header">Part 6 — Word Completion</div>
+      <h2>Questions 30–34</h2>
+      <p class="instructions">For questions 30–34, read the definition and complete the word using the first letter given.</p>
+      <div class="wc-row"><span class="wc-num">30</span><div class="wc-body"><div class="wc-pattern">B _ _ _ _ _ _</div><div class="wc-def">A soft, warm covering that you put on a bed or use to keep yourself warm.</div><input type="text" class="cloze-input" data-q="wc30" maxlength="15" autocomplete="off" spellcheck="false" placeholder="Type the word..."></div></div>
+      <div class="wc-row"><span class="wc-num">31</span><div class="wc-body"><div class="wc-pattern">C _ _ _ _ _ _</div><div class="wc-def">A piece of fabric that hangs over a window to keep out light or give privacy.</div><input type="text" class="cloze-input" data-q="wc31" maxlength="15" autocomplete="off" spellcheck="false" placeholder="Type the word..."></div></div>
+      <div class="wc-row"><span class="wc-num">32</span><div class="wc-body"><div class="wc-pattern">T _ _ _ _ _ _</div><div class="wc-def">A person who visits interesting places in another town or country for pleasure.</div><input type="text" class="cloze-input" data-q="wc32" maxlength="15" autocomplete="off" spellcheck="false" placeholder="Type the word..."></div></div>
+      <div class="wc-row"><span class="wc-num">33</span><div class="wc-body"><div class="wc-pattern">M _ _ _ _ _</div><div class="wc-def">A building where important historical, scientific, or artistic objects are kept and shown to the public.</div><input type="text" class="cloze-input" data-q="wc33" maxlength="15" autocomplete="off" spellcheck="false" placeholder="Type the word..."></div></div>
+      <div class="wc-row"><span class="wc-num">34</span><div class="wc-body"><div class="wc-pattern">S _ _ _ _ _ _ _</div><div class="wc-def">A food made by putting cheese, meat, or other fillings between two pieces of bread.</div><input type="text" class="cloze-input" data-q="wc34" maxlength="15" autocomplete="off" spellcheck="false" placeholder="Type the word..."></div></div>
+    </div>
+
+    <!-- PART 7 -->
+    <div class="part-section">
+      <div class="part-header">Part 7 — Open Writing (not graded)</div>
+      <h2>Writing Task</h2>
+      <p class="instructions">For Part 7, write a short message covering all three content points. Aim for 25–35 words.</p>
+      <div class="writing-task">
+        <div class="task-label">YOUR TASK</div>
+        <p style="font-size:.88rem;line-height:1.6;margin:0 0 10px">Your English friend Kim is coming to stay with you for a weekend. Write a note to Kim. Write <strong style="color:var(--amber)">25–35 words</strong>.</p>
+        <div class="task-pts">Tell Kim:</div>
+        <ul style="margin:0;padding-left:18px;font-size:.84rem;color:rgba(255,255,255,.85);line-height:1.7">
+          <li>what you are going to do on Saturday</li>
+          <li>where you will have lunch</li>
+          <li>what to bring</li>
+        </ul>
+      </div>
+      <textarea class="writing-area" id="writingArea" placeholder="Write your note here..."></textarea>
+      <div class="word-ct">Words: <span class="ct-n" id="writingWc">0</span> / 25–35</div>
+    </div>
+
+    <div class="submit-area">
+      <p>When you are ready, click below to submit and see your score for Parts 1–6.</p>
+      <button class="submit-btn-lg" onclick="submitExam(false)">Submit exam</button>
+    </div>
+  </div>
+
+  <div id="resultsScreen" class="results-screen">
+    <h2>Your Results — Mock Exam 3</h2>
+    <div class="score-big" id="scoreFinal">—</div>
+    <div class="score-label">out of 34 (Parts 1–6)</div>
+    <div id="timeUsed" style="font-family:var(--font-sans);font-size:.8rem;color:var(--muted);text-align:center;margin-bottom:18px"></div>
+    <div class="part-breakdown" id="partBreakdown"></div>
+    <div style="background:rgba(184,134,11,.08);border-left:3px solid var(--amber);padding:12px 16px;border-radius:4px;margin:16px 0">
+      <div style="font-family:var(--font-sans);font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber);margin-bottom:4px">Model answer — Part 7</div>
+      <div style="font-size:.88rem;color:var(--ink);line-height:1.6">"Hi Kim! On Saturday, we'll visit the city centre and the old market. We're having lunch at a café near the square. Please bring comfortable shoes and a light jacket!"<br><span style="font-size:.78rem;color:var(--muted)">(30 words — covers: Saturday plan, lunch location, what to bring)</span></div>
+    </div>
+    <div style="text-align:center;margin-top:20px">
+      <a href="../mock-2/index.html" style="display:inline-block;padding:10px 22px;border:1.5px solid var(--hairline);color:var(--ink);font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;border-radius:4px">← Mock 2</a>
+      <a href="../index.html" style="display:inline-block;padding:10px 22px;background:var(--amber);color:var(--ink);font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;border-radius:4px;margin-left:8px">Back to KET →</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">Word Play · Cambridge English A1→C2</footer>
+<script>
+var DURATION_MS=60*60*1000;
+var practiceMode=false;
+var startTime=null;
+var timerInterval=null;
+var submitted=false;
+
+var ANSWERS={
+  part1:{m1:'A',m2:'F',m3:'B',m4:'E',m5:'D',m6:'C'},
+  part2:{f7:'B',f8:'A',f9:'A',f10:'B',f11:'C',f12:'C'},
+  part3:{c13:'D',c14:'A',c15:'F',c16:'B',c17:'E'},
+  part4:{cl18:'A',cl19:'B',cl20:'B',cl21:'A',cl22:'A',cl23:'B'},
+  part5:{oc24:'about',oc25:'went',oc26:'was',oc27:'had',oc28:'some',oc29:'had'},
+  part6:{wc30:'blanket',wc31:'curtain',wc32:'tourist',wc33:'museum',wc34:'sandwich'}
+};
+
+function normalize(s){return(s||'').trim().toLowerCase().replace(/['']/g,"'");}
+
+function getVal(q){var el=document.querySelector('[data-q="'+q+'"]');return el?el.value:'';}
+
+function startExam(practice){
+  practiceMode=practice;
+  document.getElementById('startScreen').style.display='none';
+  document.getElementById('examArea').classList.add('active');
+  startTime=Date.now();
+  if(!practice){timerInterval=setInterval(updateTimer,1000);updateTimer();}
+  else{document.getElementById('timerDisplay').textContent='Practice';}
+  window.scrollTo(0,0);
+}
+
+function updateTimer(){
+  var elapsed=Date.now()-startTime;
+  var remaining=DURATION_MS-elapsed;
+  if(remaining<=0){submitExam(true);return;}
+  var mins=Math.floor(remaining/60000);
+  var secs=Math.floor((remaining%60000)/1000);
+  var el=document.getElementById('timerDisplay');
+  el.textContent=mins+':'+(secs<10?'0':'')+secs;
+  el.classList.toggle('warning',remaining<10*60*1000&&remaining>=2*60*1000);
+  el.classList.toggle('critical',remaining<2*60*1000);
+}
+
+function submitExam(timeUp){
+  if(submitted)return;
+  if(!timeUp&&!confirm('Submit your exam now? You will not be able to change answers.'))return;
+  submitted=true;
+  clearInterval(timerInterval);
+  var elapsedMs=Date.now()-startTime;
+  var elMin=Math.floor(elapsedMs/60000);
+  var elSec=Math.floor((elapsedMs%60000)/1000);
+  document.querySelectorAll('input,select').forEach(function(el){el.disabled=true;});
+  var scores={};
+  var parts={
+    part1:{keys:['m1','m2','m3','m4','m5','m6'],label:'Part 1 · Matching'},
+    part2:{keys:['f7','f8','f9','f10','f11','f12'],label:'Part 2 · Fill the Gap'},
+    part3:{keys:['c13','c14','c15','c16','c17'],label:'Part 3 · Conv. Gaps'},
+    part4:{keys:['cl18','cl19','cl20','cl21','cl22','cl23'],label:'Part 4 · Cloze'},
+    part5:{keys:['oc24','oc25','oc26','oc27','oc28','oc29'],label:'Part 5 · Open Cloze'},
+    part6:{keys:['wc30','wc31','wc32','wc33','wc34'],label:'Part 6 · Word Comp.'}
+  };
+  var totalCorrect=0,totalQs=0;
+  for(var p in parts){
+    var correct=0;
+    var ans=ANSWERS[p];
+    parts[p].keys.forEach(function(k){
+      var v=getVal(k);
+      var a=normalize(ans[k]);
+      if(v&&normalize(v)===a)correct++;
+    });
+    scores[p]={correct:correct,total:parts[p].keys.length,label:parts[p].label};
+    totalCorrect+=correct;totalQs+=parts[p].keys.length;
+  }
+  document.getElementById('scoreFinal').textContent=totalCorrect+' / '+totalQs;
+  document.getElementById('timeUsed').textContent=practiceMode?'Practice mode':('Time used: '+elMin+' min '+elSec+' sec'+(timeUp?' (auto-submit)':''));
+  var bd='';
+  for(var s in scores){
+    var pct=Math.round((scores[s].correct/scores[s].total)*100);
+    bd+='<div class="part-score"><div class="name">'+scores[s].label+'</div><div class="val">'+scores[s].correct+'/'+scores[s].total+'</div><div class="pct">'+pct+'%</div></div>';
+  }
+  document.getElementById('partBreakdown').innerHTML=bd;
+  document.getElementById('resultsScreen').classList.add('active');
+  window.scrollTo(0,document.body.scrollHeight);
+}
+
+var wa=document.getElementById('writingArea');
+var wc=document.getElementById('writingWc');
+wa.addEventListener('input',function(){
+  var n=wa.value.trim().split(/\s+/).filter(function(w){return w.length>0;}).length;
+  wc.textContent=n;wc.className='ct-n'+(n>=25&&n<=35?' ct-ok':'');
+});
+</script>
+</body>
+</html>
