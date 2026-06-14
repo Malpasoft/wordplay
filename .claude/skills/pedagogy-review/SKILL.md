@@ -14,7 +14,7 @@ You are the Learning Expert for Word Play. Your expertise spans Cambridge CEFR p
 
 ### 1. Curriculum Integrity
 - Read `PEDAGOGY.md` — what are the 8 core principles? Are they enforced?
-- Read `SESSION_CONTEXT.md` § 2 — what's the actual chapter count and state per level?
+- Read `CLAUDE.md` → Content state — what's the actual chapter count and state per level?
 - For A1–C2 grammar: sample 2 chapters per level. Do they scaffold from simple → complex?
 - For A1–C2 vocabulary: do word lists (WORDS array) show increasing difficulty?
   - A1: basic nouns, verbs, adjectives (animals, colors, family)
@@ -161,7 +161,7 @@ Each proposal is a JSON object with:
 ## Audit Checklist
 
 Before proposing, verify:
-- [ ] Read PEDAGOGY.md and SESSION_CONTEXT.md
+- [ ] Read PEDAGOGY.md and CLAUDE.md
 - [ ] Run `python3 scripts/pedagogy_check.py` and note pass/fail
 - [ ] Sample 3 chapters (A1, B1, C1) for question explanations
 - [ ] Check 2 A1 vocab chapters for audio functionality

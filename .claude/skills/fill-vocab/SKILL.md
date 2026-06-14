@@ -103,7 +103,7 @@ keyed by `'<level>/<slug>'`. Find the entry for this chapter (search for the slu
 replace the placeholder `WORDS` list with the generated list. Use the Edit tool — never sed/awk.
 
 Confirm the pinned version dict `V = dict(base='v123', slides='v115', ...)` still matches the
-current shared-asset versions in SESSION_CONTEXT before writing.
+current shared-asset versions in CLAUDE.md (Cache-Busting) before writing.
 
 **ES track:** use `scripts/fill_chapter.py`. Run it pointed at the target chapter directory.
 
