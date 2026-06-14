@@ -99,7 +99,7 @@
         <div class="fc-face fc-front">
           <div class="fc-word" id="fcWord"></div>
           <div class="fc-ipa" id="fcIpa"></div>
-          <div class="fc-hint">tap to reveal definition</div>
+          <div class="fc-hint">appuyez pour afficher la définition</div>
           <button class="fc-audio-btn" onclick="speakWord(event)">&#9654; Pronounce</button>
         </div>
         <div class="fc-face fc-back">
@@ -111,7 +111,7 @@
     <div class="fc-nav">
       <button class="fc-btn" onclick="fcPrev()">&#9664; Prev</button>
       <span class="fc-counter" id="fcCounter"></span>
-      <button class="fc-btn" onclick="fcNext()">Next &#9654;</button>
+      <button class="fc-btn" onclick="fcNext()">Suivant &#9654;</button>
     </div>
     <div style="text-align:center">
       <button class="fc-btn primary" onclick="markMastered()" id="btnMastered">Marquer le thème comme maîtrisé</button>
@@ -198,7 +198,7 @@ function markMastered() {
       localStorage.setItem('wordplay_progress', JSON.stringify(_pd));
     } catch(_e) {} } catch(e) {}
   document.getElementById('masteryBadge').style.display = 'block';
-  document.getElementById('btnMastered').textContent = 'Mastered!';
+  document.getElementById('btnMastered').textContent = 'Maîtrisé !';
   document.getElementById('btnMastered').disabled = true;
 }
 
@@ -206,7 +206,7 @@ function checkMastered() {
   try {
     if (localStorage.getItem(MASTERY_KEY) === '1') {
       document.getElementById('masteryBadge').style.display = 'block';
-      document.getElementById('btnMastered').textContent = 'Mastered!';
+      document.getElementById('btnMastered').textContent = 'Maîtrisé !';
       document.getElementById('btnMastered').disabled = true;
     }
   } catch(e) {}
