@@ -1,0 +1,81 @@
+"""Français A1 — Vocabulaire batch 3: V05 La Maison · V06 Les Aliments."""
+
+CHAPTERS = {
+
+# ── V05 La Maison ──────────────────────────────────────────────────────────
+'la-maison': {
+    'level':   'a1',
+    'section': 'vocabulaire',
+    'num':     'V05',
+    'short':   'La Maison',
+    'title':   'La Maison — Les Pièces et Les Meubles',
+    'subtitle': 'Les pièces de la maison et le mobilier de base',
+    'game_desc': 'Apprenez le vocabulaire de la maison en français !',
+    'words': [
+        {'word': 'la maison',      'ipa': '/la mɛ.zɔ̃/',    'def': 'the house',                'ex': 'J\'habite dans une grande maison.'},
+        {'word': 'l\'appartement', 'ipa': '/la.paʁ.tə.mɑ̃/', 'def': 'the flat / apartment',   'ex': 'Mon appartement est au troisième étage.'},
+        {'word': 'la chambre',     'ipa': '/la ʃɑ̃bʁ/',     'def': 'the bedroom',              'ex': 'Ma chambre est petite mais confortable.'},
+        {'word': 'la cuisine',     'ipa': '/la kɥi.zin/',   'def': 'the kitchen',              'ex': 'Je fais la cuisine tous les soirs.'},
+        {'word': 'le salon',       'ipa': '/lə sa.lɔ̃/',     'def': 'the living room',          'ex': 'On regarde la télé dans le salon.'},
+        {'word': 'la salle de bains', 'ipa': '/la sal də bɛ̃/', 'def': 'the bathroom',        'ex': 'La salle de bains est à côté de la chambre.'},
+        {'word': 'les toilettes',  'ipa': '/le twa.lɛt/',   'def': 'the toilet / WC',          'ex': 'Les toilettes sont au fond du couloir.'},
+        {'word': 'le couloir',     'ipa': '/lə ku.lwaʁ/',   'def': 'the hallway / corridor',   'ex': 'Le couloir est long et étroit.'},
+        {'word': 'le lit',         'ipa': '/lə li/',         'def': 'the bed',                  'ex': 'Je dors dans un grand lit.'},
+        {'word': 'la table',       'ipa': '/la tabl/',       'def': 'the table',                'ex': 'On mange à la table de la cuisine.'},
+        {'word': 'la chaise',      'ipa': '/la ʃɛz/',        'def': 'the chair',                'ex': 'Il y a quatre chaises autour de la table.'},
+        {'word': 'le canapé',      'ipa': '/lə ka.na.pe/',   'def': 'the sofa / couch',         'ex': 'Le chat dort sur le canapé.'},
+        {'word': 'la fenêtre',     'ipa': '/la fə.nɛtʁ/',   'def': 'the window',               'ex': 'La fenêtre donne sur le jardin.'},
+        {'word': 'la porte',       'ipa': '/la pɔʁt/',       'def': 'the door',                 'ex': 'Ferme la porte, s\'il te plaît !'},
+        {'word': 'le jardin',      'ipa': '/lə ʒaʁ.dɛ̃/',   'def': 'the garden',               'ex': 'Nous avons un petit jardin derrière la maison.'},
+    ],
+    'items': [
+        ('mais-01', 'la chambre',  'the bedroom',    'pièce', 'Ma chambre est petite mais confortable.', 'Ma ______ est petite mais confortable.', 'chambre'),
+        ('mais-02', 'la cuisine',  'the kitchen',    'pièce', 'Je fais la cuisine tous les soirs.',      'Je fais la ______ tous les soirs.',     'cuisine'),
+        ('mais-03', 'le salon',    'the living room','pièce', 'On regarde la télé dans le salon.',       'On regarde la télé dans le ______.',    'salon'),
+        ('mais-04', 'le lit',      'the bed',        'meuble','Je dors dans un grand lit.',              'Je dors dans un grand ______.',         'lit'),
+        ('mais-05', 'la table',    'the table',      'meuble','On mange à la table de la cuisine.',      'On mange à la ______ de la cuisine.',   'table'),
+        ('mais-06', 'la fenêtre',  'the window',     'pièce', 'La fenêtre donne sur le jardin.',         'La ______ donne sur le jardin.',        'fenêtre'),
+        ('mais-07', 'la porte',    'the door',       'pièce', 'Ferme la porte, s\'il te plaît !',        'Ferme la ______, s\'il te plaît !',     'porte'),
+        ('mais-08', 'le jardin',   'the garden',     'extér.','Nous avons un petit jardin derrière la maison.', 'Nous avons un petit ______ derrière la maison.', 'jardin'),
+    ],
+},
+
+# ── V06 Les Aliments ───────────────────────────────────────────────────────
+'les-aliments': {
+    'level':   'a1',
+    'section': 'vocabulaire',
+    'num':     'V06',
+    'short':   'Les Aliments',
+    'title':   'Les Aliments — Manger et Boire',
+    'subtitle': 'Les aliments et boissons du quotidien en français',
+    'game_desc': 'Apprenez le vocabulaire des aliments en français !',
+    'words': [
+        {'word': 'le pain',        'ipa': '/lə pɛ̃/',        'def': 'the bread',                'ex': 'Je mange du pain avec du beurre.'},
+        {'word': 'le fromage',     'ipa': '/lə fʁo.maʒ/',   'def': 'the cheese',               'ex': 'La France est célèbre pour son fromage.'},
+        {'word': 'le beurre',      'ipa': '/lə bœʁ/',        'def': 'the butter',               'ex': 'Je mets du beurre sur ma tartine.'},
+        {'word': 'l\'œuf',         'ipa': '/lœf/',           'def': 'the egg',                  'ex': 'Je mange deux œufs le matin.'},
+        {'word': 'le lait',        'ipa': '/lə lɛ/',          'def': 'the milk',                 'ex': 'Je prends du lait dans mon café.'},
+        {'word': 'le café',        'ipa': '/lə ka.fe/',      'def': 'the coffee',               'ex': 'Je bois un café le matin.'},
+        {'word': 'le thé',         'ipa': '/lə te/',          'def': 'the tea',                  'ex': 'Elle préfère le thé au café.'},
+        {'word': 'l\'eau',         'ipa': '/lo/',             'def': 'the water',                'ex': 'Je bois beaucoup d\'eau chaque jour.'},
+        {'word': 'le jus d\'orange', 'ipa': '/lə ʒy dɔ.ʁɑ̃ʒ/', 'def': 'the orange juice',    'ex': 'Je prends un jus d\'orange au petit déjeuner.'},
+        {'word': 'la viande',      'ipa': '/la vjɑ̃d/',      'def': 'the meat',                 'ex': 'Il mange de la viande deux fois par semaine.'},
+        {'word': 'le poisson',     'ipa': '/lə pwa.sɔ̃/',    'def': 'the fish',                 'ex': 'On mange du poisson le vendredi.'},
+        {'word': 'les légumes',    'ipa': '/le le.ɡym/',     'def': 'the vegetables',           'ex': 'Les légumes sont bons pour la santé.'},
+        {'word': 'les fruits',     'ipa': '/le fʁɥi/',       'def': 'the fruit(s)',             'ex': 'Je mange des fruits chaque matin.'},
+        {'word': 'le sucre',       'ipa': '/lə sykʁ/',       'def': 'the sugar',                'ex': 'Tu veux du sucre dans ton café ?'},
+        {'word': 'le sel',         'ipa': '/lə sɛl/',         'def': 'the salt',                 'ex': 'Passe-moi le sel, s\'il te plaît.'},
+    ],
+    'items': [
+        ('alim-01', 'le pain',      'the bread',      'aliment', 'Je mange du pain avec du beurre.',        'Je mange du ______ avec du beurre.',       'pain'),
+        ('alim-02', 'le fromage',   'the cheese',     'aliment', 'La France est célèbre pour son fromage.', 'La France est célèbre pour son ______.',    'fromage'),
+        ('alim-03', 'le café',      'the coffee',     'boisson', 'Je bois un café le matin.',               'Je bois un ______ le matin.',              'café'),
+        ('alim-04', 'l\'eau',       'the water',      'boisson', 'Je bois beaucoup d\'eau chaque jour.',    'Je bois beaucoup d\'______ chaque jour.',   'eau'),
+        ('alim-05', 'les légumes',  'the vegetables', 'aliment', 'Les légumes sont bons pour la santé.',    'Les ______ sont bons pour la santé.',       'légumes'),
+        ('alim-06', 'les fruits',   'the fruit(s)',   'aliment', 'Je mange des fruits chaque matin.',       'Je mange des ______ chaque matin.',         'fruits'),
+        ('alim-07', 'la viande',    'the meat',       'aliment', 'Il mange de la viande deux fois par semaine.', 'Il mange de la ______ deux fois par semaine.', 'viande'),
+        ('alim-08', 'le sel',       'the salt',       'aliment', 'Passe-moi le sel, s\'il te plaît.',       'Passe-moi le ______, s\'il te plaît.',      'sel'),
+    ],
+},
+
+}
