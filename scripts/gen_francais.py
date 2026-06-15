@@ -801,6 +801,9 @@ def normalize_ex_mc(ex):
                 a = opts[a]
             normalized.append((text, opts, a, expl))
         return (title, instruct, normalized)
+    # flat single-question dict: {q, opts, ans, exp}
+    if 'q' in ex:
+        return ('', '', [(ex['q'], ex['opts'], ex['ans'], ex['exp'])])
     title = ex['title']
     instruct = ex.get('instruct', '')
     qs = []
@@ -823,6 +826,9 @@ def normalize_ex_typed(ex):
                 text, answer, expl = q
             normalized.append((text, answer, expl))
         return (title, instruct, normalized)
+    # flat single-question dict: {q, ans, exp, accept?}
+    if 'q' in ex:
+        return ('', '', [(ex['q'], ex['ans'], ex['exp'])])
     title = ex['title']
     instruct = ex.get('instruct', '')
     qs = []
@@ -852,8 +858,44 @@ def normalize_items(items, slug):
     return items
 
 
+def normalize_slides(slides):
+    """Accept 2-tuple (heading, html) or 3-tuple (heading, sub, html)."""
+    result = []
+    for s in slides:
+        if len(s) == 2:
+            result.append((s[0], None, s[1]))
+        else:
+            result.append(s)
+    return result
+
+
+def normalize_traps(traps):
+    """Accept 2-tuple (label, explanation) or 3-tuple (wrong, right, note)."""
+    result = []
+    for t in traps:
+        if len(t) == 2:
+            result.append((t[0], '', t[1]))
+        else:
+            result.append(t)
+    return result
+
+
+def normalize_summary(summary):
+    """Accept list of strings or list of 3-tuples (label, form, example)."""
+    result = []
+    for s in summary:
+        if isinstance(s, str):
+            result.append((s, '', ''))
+        else:
+            result.append(s)
+    return result
+
+
 def normalize_chapter(d, slug):
     d = dict(d)
+    d['slides'] = normalize_slides(d['slides'])
+    d['traps'] = normalize_traps(d['traps'])
+    d['summary'] = normalize_summary(d['summary'])
     if d.get('section') != 'vocabulaire':
         d['ex1'] = normalize_ex_mc(d['ex1'])
         d['ex2'] = normalize_ex_typed(d['ex2'])

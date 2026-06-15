@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Le Plus-que-parfait — Jeu B1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>
+  <a href="../../index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">Le Plus-que-parfait</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Le&#231;on</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimables</a>
+</nav>
+<div class="container">
+  <h1>Le Plus-que-parfait — Jeu de Ma&#238;trise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Ma&#238;trise</h2>
+        <p>Plus-que-parfait — formation et emploi</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Les r&#233;ponses cons&#233;cutives sur le m&#234;me concept et les s&#233;ries entre concepts rapportent des points bonus.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Vous avez une partie sauvegard&#233;e.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">D&#233;marrer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; R&#233;f&#233;rence — tous les concepts</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Ma&#238;trise atteinte !</h2>
+        <p>Vous avez compl&#233;t&#233; tous les &#233;l&#233;ments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure s&#233;rie</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Fran&#231;ais B1 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "le-plus-que-parfait",
+  level: "b1",
+  title: "Le Plus-que-parfait",
+  storageKey: "wordplay_game_fr_b1_le-plus-que-parfait",
+  items: [
+    {id:"pqp-def", term:"Le plus-que-parfait", meaning:"Temps exprimant une action accomplie avant une autre action passée", synonym:"le temps de l'antériorité passée", example:"Quand tu as appelé, j'avais déjà mangé.", completion:"PQP exprime l'antériorité dans le passé", answer:"le temps de l'antériorité passée"},
+    {id:"pqp-form", term:"Formation du PQP", meaning:"Auxiliaire (être/avoir) à l'imparfait + participe passé", synonym:"imparfait de l'auxiliaire + participe passé", example:"Ils avaient compris la leçon.", completion:"l'imparfait + le participe passé", answer:"imparfait de l'auxiliaire + participe passé"},
+    {id:"pqp-avoir", term:"PQP avec avoir", meaning:"j'avais mangé, tu avais pris, il avait compris", synonym:"j'avais + participe passé", example:"J'avais déjà vu ce film.", completion:"avais + participe passé", answer:"j'avais + participe passé"},
+    {id:"pqp-etre", term:"PQP avec être", meaning:"j'étais parti(e), tu étais allé(e), il était venu", synonym:"j'étais + participe passé accordé", example:"Elle était déjà arrivée.", completion:"étais/était + participe accordé", answer:"j'étais + participe passé accordé"},
+    {id:"pqp-deja", term:"Déjà au PQP", meaning:"Se place entre l'auxiliaire et le participe", synonym:"entre l'auxiliaire et le participe", example:"J'avais déjà mangé.", completion:"entre l'auxiliaire et le participe", answer:"entre l'auxiliaire et le participe"},
+    {id:"pqp-si", term:"Si + PQP", meaning:"Condition irréelle dans le passé → conditionnel passé dans la principale", synonym:"condition impossible dans le passé", example:"Si j'avais su, j'aurais agi.", completion:"condition passée irréelle", answer:"condition impossible dans le passé"},
+    {id:"pqp-accord", term:"Accord participe (PQP)", meaning:"Avec être : accord sujet. Avec avoir : accord COD placé avant.", synonym:"accord identique au PC", example:"Les clés qu'il avait perdues.", completion:"même accord qu'au PC", answer:"accord identique au PC"},
+    {id:"pqp-vs-cond", term:"PQP vs conditionnel passé", meaning:"PQP : avait mangé. Conditionnel passé : aurait mangé.", synonym:"imparfait vs conditionnel de l'auxiliaire", example:"Il aurait fini si… / Il avait fini quand…", completion:"imparfait ou conditionnel de l'auxiliaire", answer:"imparfait vs conditionnel de l'auxiliaire"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
