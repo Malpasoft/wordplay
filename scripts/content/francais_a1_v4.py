@@ -1,0 +1,81 @@
+"""Français A1 — Vocabulaire batch 4: V07 Les Vêtements · V08 Les Transports."""
+
+CHAPTERS = {
+
+# ── V07 Les Vêtements ──────────────────────────────────────────────────────
+'les-vetements': {
+    'level':   'a1',
+    'section': 'vocabulaire',
+    'num':     'V07',
+    'short':   'Les Vêtements',
+    'title':   'Les Vêtements — S\'habiller en Français',
+    'subtitle': 'Les vêtements du quotidien et les accessoires essentiels',
+    'game_desc': 'Apprenez le vocabulaire des vêtements en français !',
+    'words': [
+        {'word': 'le t-shirt',      'ipa': '/lə ti.ʃœʁt/',   'def': 'the T-shirt',              'ex': 'Je porte un t-shirt blanc.'},
+        {'word': 'la chemise',      'ipa': '/la ʃə.miz/',    'def': 'the shirt',                'ex': 'Il porte une chemise bleue au bureau.'},
+        {'word': 'le pantalon',     'ipa': '/lə pɑ̃.ta.lɔ̃/', 'def': 'the trousers / pants',    'ex': 'Elle porte un pantalon noir.'},
+        {'word': 'le jean',         'ipa': '/lə dʒin/',       'def': 'the jeans',                'ex': 'Je mets mon jean pour sortir.'},
+        {'word': 'la jupe',         'ipa': '/la ʒyp/',        'def': 'the skirt',                'ex': 'Elle porte une jupe rouge.'},
+        {'word': 'la robe',         'ipa': '/la ʁɔb/',        'def': 'the dress',                'ex': 'Elle porte une belle robe verte.'},
+        {'word': 'le pull',         'ipa': '/lə pyl/',        'def': 'the jumper / sweater',     'ex': 'Il fait froid, mets un pull !'},
+        {'word': 'le manteau',      'ipa': '/lə mɑ̃.to/',     'def': 'the coat',                 'ex': 'Je mets mon manteau en hiver.'},
+        {'word': 'la veste',        'ipa': '/la vɛst/',       'def': 'the jacket',               'ex': 'Il porte une veste grise.'},
+        {'word': 'les chaussures',  'ipa': '/le ʃo.syʁ/',    'def': 'the shoes',                'ex': 'Ces chaussures sont très confortables.'},
+        {'word': 'les chaussettes', 'ipa': '/le ʃo.sɛt/',    'def': 'the socks',                'ex': 'Je porte des chaussettes blanches.'},
+        {'word': 'le chapeau',      'ipa': '/lə ʃa.po/',      'def': 'the hat',                  'ex': 'Elle porte un chapeau en été.'},
+        {'word': 'l\'écharpe',      'ipa': '/le.ʃaʁp/',      'def': 'the scarf',                'ex': 'Je mets une écharpe quand il fait froid.'},
+        {'word': 'les gants',       'ipa': '/le ɡɑ̃/',        'def': 'the gloves',               'ex': 'Il met des gants en hiver.'},
+        {'word': 'porter',          'ipa': '/pɔʁ.te/',        'def': 'to wear / to carry',       'ex': 'Qu\'est-ce que tu portes aujourd\'hui ?'},
+    ],
+    'items': [
+        ('vet-01', 'la chemise',   'the shirt',       'vêtement', 'Il porte une chemise bleue au bureau.',     'Il porte une ______ bleue au bureau.',      'chemise'),
+        ('vet-02', 'le pantalon',  'the trousers',    'vêtement', 'Elle porte un pantalon noir.',              'Elle porte un ______ noir.',                'pantalon'),
+        ('vet-03', 'la robe',      'the dress',       'vêtement', 'Elle porte une belle robe verte.',          'Elle porte une belle ______ verte.',         'robe'),
+        ('vet-04', 'le pull',      'the jumper',      'vêtement', 'Il fait froid, mets un pull !',             'Il fait froid, mets un ______ !',           'pull'),
+        ('vet-05', 'le manteau',   'the coat',        'vêtement', 'Je mets mon manteau en hiver.',             'Je mets mon ______ en hiver.',              'manteau'),
+        ('vet-06', 'les chaussures','the shoes',      'vêtement', 'Ces chaussures sont très confortables.',    'Ces ______ sont très confortables.',         'chaussures'),
+        ('vet-07', 'le chapeau',   'the hat',         'accessoire','Elle porte un chapeau en été.',             'Elle porte un ______ en été.',              'chapeau'),
+        ('vet-08', 'porter',       'to wear/carry',   'verbe',    'Qu\'est-ce que tu portes aujourd\'hui ?',   'Qu\'est-ce que tu ______ aujourd\'hui ?',    'portes'),
+    ],
+},
+
+# ── V08 Les Transports ─────────────────────────────────────────────────────
+'les-transports': {
+    'level':   'a1',
+    'section': 'vocabulaire',
+    'num':     'V08',
+    'short':   'Les Transports',
+    'title':   'Les Transports — Se Déplacer en Français',
+    'subtitle': 'Les moyens de transport et les verbes de déplacement',
+    'game_desc': 'Apprenez le vocabulaire des transports en français !',
+    'words': [
+        {'word': 'le bus',          'ipa': '/lə bys/',        'def': 'the bus',                  'ex': 'Je prends le bus pour aller au travail.'},
+        {'word': 'le métro',        'ipa': '/lə me.tʁo/',     'def': 'the underground / metro',  'ex': 'Le métro est rapide à Paris.'},
+        {'word': 'le train',        'ipa': '/lə tʁɛ̃/',       'def': 'the train',                'ex': 'Je prends le train pour aller à Lyon.'},
+        {'word': 'l\'avion',        'ipa': '/la.vjɔ̃/',       'def': 'the plane',                'ex': 'Nous prenons l\'avion pour aller à Madrid.'},
+        {'word': 'la voiture',      'ipa': '/la vwa.tyʁ/',   'def': 'the car',                  'ex': 'Mon père a une voiture rouge.'},
+        {'word': 'le vélo',         'ipa': '/lə ve.lo/',      'def': 'the bicycle / bike',       'ex': 'Je vais au parc en vélo.'},
+        {'word': 'la moto',         'ipa': '/la mo.to/',      'def': 'the motorbike',            'ex': 'Il préfère aller au travail en moto.'},
+        {'word': 'à pied',          'ipa': '/a pje/',         'def': 'on foot',                  'ex': 'J\'habite près de l\'école, je vais à pied.'},
+        {'word': 'la gare',         'ipa': '/la ɡaʁ/',        'def': 'the (train) station',      'ex': 'Le train part de la gare à huit heures.'},
+        {'word': 'l\'aéroport',     'ipa': '/la.e.ʁo.pɔʁ/',  'def': 'the airport',              'ex': 'L\'aéroport est à trente kilomètres.'},
+        {'word': 'l\'arrêt de bus', 'ipa': '/la.ʁɛ də bys/', 'def': 'the bus stop',             'ex': 'Je t\'attends à l\'arrêt de bus.'},
+        {'word': 'prendre',         'ipa': '/pʁɑ̃dʁ/',        'def': 'to take (transport)',      'ex': 'Je prends le bus numéro douze.'},
+        {'word': 'aller',           'ipa': '/a.le/',          'def': 'to go',                    'ex': 'Je vais au travail en métro.'},
+        {'word': 'le ticket',       'ipa': '/lə ti.kɛ/',      'def': 'the ticket',               'ex': 'N\'oublie pas ton ticket de bus !'},
+        {'word': 'combien de temps ?', 'ipa': '/kɔ̃.bjɛ̃ də tɑ̃/', 'def': 'how long?',          'ex': 'Combien de temps dure le trajet ?'},
+    ],
+    'items': [
+        ('trans-01', 'le bus',     'the bus',         'transport', 'Je prends le bus pour aller au travail.',  'Je prends le ______ pour aller au travail.', 'bus'),
+        ('trans-02', 'le métro',   'the metro',       'transport', 'Le métro est rapide à Paris.',             'Le ______ est rapide à Paris.',              'métro'),
+        ('trans-03', 'le train',   'the train',       'transport', 'Je prends le train pour aller à Lyon.',    'Je prends le ______ pour aller à Lyon.',     'train'),
+        ('trans-04', 'la voiture', 'the car',         'transport', 'Mon père a une voiture rouge.',            'Mon père a une ______ rouge.',               'voiture'),
+        ('trans-05', 'le vélo',    'the bicycle',     'transport', 'Je vais au parc en vélo.',                 'Je vais au parc en ______.',                 'vélo'),
+        ('trans-06', 'à pied',     'on foot',         'déplacement','J\'habite près de l\'école, je vais à pied.','J\'habite près de l\'école, je vais à ______.',  'pied'),
+        ('trans-07', 'la gare',    'the train station','lieu',     'Le train part de la gare à huit heures.',  'Le train part de la ______ à huit heures.',  'gare'),
+        ('trans-08', 'prendre',    'to take',         'verbe',     'Je prends le bus numéro douze.',           'Je ______ le bus numéro douze.',             'prends'),
+    ],
+},
+
+}
