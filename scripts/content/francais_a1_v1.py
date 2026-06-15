@@ -1,0 +1,81 @@
+"""Français A1 — Vocabulaire batch 1: V01 Les Salutations · V02 La Famille."""
+
+CHAPTERS = {
+
+# ── V01 Les Salutations ────────────────────────────────────────────────────
+'les-salutations': {
+    'level':   'a1',
+    'section': 'vocabulaire',
+    'num':     'V01',
+    'short':   'Les Salutations',
+    'title':   'Les Salutations — Bonjour, Bonsoir, Au Revoir',
+    'subtitle': 'Les formules essentielles pour saluer et prendre congé en français',
+    'game_desc': 'Maîtrisez les salutations françaises !',
+    'words': [
+        {'word': 'bonjour',        'ipa': '/bɔ̃.ʒuʁ/',     'def': 'hello / good morning',               'ex': 'Bonjour, je m\'appelle Marie.'},
+        {'word': 'bonsoir',        'ipa': '/bɔ̃.swaʁ/',    'def': 'good evening',                        'ex': 'Bonsoir ! Comment allez-vous ?'},
+        {'word': 'bonne nuit',     'ipa': '/bɔn nɥi/',     'def': 'good night',                          'ex': 'Bonne nuit, dors bien !'},
+        {'word': 'salut',          'ipa': '/sa.ly/',        'def': 'hi / bye (informal)',                  'ex': 'Salut Thomas, ça va ?'},
+        {'word': 'au revoir',      'ipa': '/o ʁə.vwaʁ/',   'def': 'goodbye',                             'ex': 'Au revoir, à demain !'},
+        {'word': 'à bientôt',      'ipa': '/a bjɛ̃.to/',   'def': 'see you soon',                        'ex': 'À bientôt, bonne journée !'},
+        {'word': 'à demain',       'ipa': '/a də.mɛ̃/',    'def': 'see you tomorrow',                    'ex': 'À demain, Marc !'},
+        {'word': 'ça va ?',        'ipa': '/sa va/',        'def': 'how are you? / are you OK?',          'ex': 'Ça va ? — Oui, ça va bien, merci.'},
+        {'word': 'comment allez-vous ?', 'ipa': '/kɔ.mɑ̃ a.le vu/',  'def': 'how are you? (formal)', 'ex': 'Comment allez-vous, Madame Dupont ?'},
+        {'word': 'très bien',      'ipa': '/tʁɛ bjɛ̃/',    'def': 'very well',                           'ex': 'Je vais très bien, merci !'},
+        {'word': 'pas mal',        'ipa': '/pɑ mal/',       'def': 'not bad',                             'ex': 'Pas mal, et toi ?'},
+        {'word': 'merci',          'ipa': '/mɛʁ.si/',       'def': 'thank you',                          'ex': 'Merci beaucoup, c\'est gentil !'},
+        {'word': 's\'il vous plaît', 'ipa': '/sil vu plɛ/', 'def': 'please (formal)',                   'ex': 'Un café, s\'il vous plaît.'},
+        {'word': 'de rien',        'ipa': '/də ʁjɛ̃/',     'def': 'you\'re welcome',                    'ex': 'Merci ! — De rien !'},
+        {'word': 'excusez-moi',    'ipa': '/ɛk.sky.ze mwa/', 'def': 'excuse me (formal)',               'ex': 'Excusez-moi, où est la gare ?'},
+    ],
+    'items': [
+        ('sal-01', 'bonjour',      'hello / good morning',  'salutation',    'Bonjour, je m\'appelle Marie.',            'Bonjour, je m\'appelle ______.',   'Marie'),
+        ('sal-02', 'au revoir',    'goodbye',               'prendre congé', 'Au revoir, à demain !',                   '______ revoir, à demain !',        'Au'),
+        ('sal-03', 'ça va ?',      'how are you? (casual)', 'question',      'Ça va ? — Oui, ça va bien, merci.',       '______ va ? — Oui, ça va bien.',   'Ça'),
+        ('sal-04', 'merci',        'thank you',             'politesse',     'Merci beaucoup, c\'est gentil !',         'Merci ______, c\'est gentil !',    'beaucoup'),
+        ('sal-05', 'bonsoir',      'good evening',          'salutation soir', 'Bonsoir ! Comment allez-vous ?',        '______ ! Comment allez-vous ?',    'Bonsoir'),
+        ('sal-06', 'à bientôt',    'see you soon',          'au revoir',     'À bientôt, bonne journée !',              'À ______, bonne journée !',        'bientôt'),
+        ('sal-07', 'très bien',    'very well',             'état',          'Je vais très bien, merci !',              'Je vais très ______, merci !',     'bien'),
+        ('sal-08', 'de rien',      'you\'re welcome',       'réponse merci', 'Merci ! — De rien !',                    'Merci ! — De ______ !',            'rien'),
+    ],
+},
+
+# ── V02 La Famille ─────────────────────────────────────────────────────────
+'la-famille': {
+    'level':   'a1',
+    'section': 'vocabulaire',
+    'num':     'V02',
+    'short':   'La Famille',
+    'title':   'La Famille — Les Membres et Les Relations',
+    'subtitle': 'Le vocabulaire de la famille proche et élargie',
+    'game_desc': 'Apprenez le vocabulaire de la famille en français !',
+    'words': [
+        {'word': 'la mère',        'ipa': '/la mɛʁ/',        'def': 'the mother',               'ex': 'Ma mère s\'appelle Claire.'},
+        {'word': 'le père',        'ipa': '/lə pɛʁ/',        'def': 'the father',               'ex': 'Mon père travaille à Paris.'},
+        {'word': 'la sœur',        'ipa': '/la sœʁ/',        'def': 'the sister',               'ex': 'J\'ai une sœur qui s\'appelle Emma.'},
+        {'word': 'le frère',       'ipa': '/lə fʁɛʁ/',       'def': 'the brother',              'ex': 'Mon frère a seize ans.'},
+        {'word': 'les parents',    'ipa': '/le pa.ʁɑ̃/',     'def': 'the parents',              'ex': 'Mes parents habitent à Lyon.'},
+        {'word': 'les enfants',    'ipa': '/lez ɑ̃.fɑ̃/',    'def': 'the children',             'ex': 'Ils ont deux enfants.'},
+        {'word': 'le fils',        'ipa': '/lə fis/',         'def': 'the son',                  'ex': 'Leur fils a dix ans.'},
+        {'word': 'la fille',       'ipa': '/la fij/',         'def': 'the daughter',             'ex': 'Ma fille s\'appelle Sophie.'},
+        {'word': 'le grand-père',  'ipa': '/lə ɡʁɑ̃.pɛʁ/',  'def': 'the grandfather',          'ex': 'Mon grand-père a soixante-dix ans.'},
+        {'word': 'la grand-mère',  'ipa': '/la ɡʁɑ̃.mɛʁ/',  'def': 'the grandmother',          'ex': 'Ma grand-mère fait de très bons gâteaux.'},
+        {'word': 'l\'oncle',       'ipa': '/lɔ̃kl/',         'def': 'the uncle',                'ex': 'Mon oncle habite à Bordeaux.'},
+        {'word': 'la tante',       'ipa': '/la tɑ̃t/',       'def': 'the aunt',                 'ex': 'Ma tante est médecin.'},
+        {'word': 'le cousin',      'ipa': '/lə ku.zɛ̃/',     'def': 'the (male) cousin',        'ex': 'Mon cousin joue au football.'},
+        {'word': 'le mari',        'ipa': '/lə ma.ʁi/',      'def': 'the husband',              'ex': 'Son mari est professeur.'},
+        {'word': 'la femme',       'ipa': '/la fam/',         'def': 'the wife / woman',         'ex': 'Sa femme est avocate.'},
+    ],
+    'items': [
+        ('fam-01', 'la mère',      'the mother',    'famille',   'Ma mère s\'appelle Claire.',             'Ma ______ s\'appelle Claire.',     'mère'),
+        ('fam-02', 'le père',      'the father',    'famille',   'Mon père travaille à Paris.',           'Mon ______ travaille à Paris.',    'père'),
+        ('fam-03', 'la sœur',      'the sister',    'famille',   'J\'ai une sœur qui s\'appelle Emma.',   'J\'ai une ______ qui s\'appelle Emma.', 'sœur'),
+        ('fam-04', 'le frère',     'the brother',   'famille',   'Mon frère a seize ans.',                'Mon ______ a seize ans.',          'frère'),
+        ('fam-05', 'les parents',  'the parents',   'famille',   'Mes parents habitent à Lyon.',          'Mes ______ habitent à Lyon.',      'parents'),
+        ('fam-06', 'le fils',      'the son',       'famille',   'Leur fils a dix ans.',                  'Leur ______ a dix ans.',           'fils'),
+        ('fam-07', 'la fille',     'the daughter',  'famille',   'Ma fille s\'appelle Sophie.',           'Ma ______ s\'appelle Sophie.',     'fille'),
+        ('fam-08', 'le mari',      'the husband',   'couple',    'Son mari est professeur.',              'Son ______ est professeur.',       'mari'),
+    ],
+},
+
+}

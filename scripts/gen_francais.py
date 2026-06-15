@@ -432,18 +432,358 @@ def render_hub(d, slug):
     return s
 
 
+VOCAB_FC_CSS = ('<style>\n'
+'.fc-wrap{perspective:800px;margin:0 auto 20px;max-width:480px}\n'
+'.fc{width:100%;height:220px;position:relative;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;border-radius:10px}\n'
+'.fc.flipped{transform:rotateY(180deg)}\n'
+'.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;border:1px solid var(--hairline)}\n'
+'.fc-front,.fc-back{background:var(--paper)}\n'
+'.fc-back{transform:rotateY(180deg)}\n'
+'.fc-word{font-size:1.8rem;font-weight:700;color:var(--ink);margin-bottom:6px}\n'
+'.fc-ipa{font-family:var(--font-sans);font-size:.85rem;color:var(--muted);margin-bottom:8px}\n'
+'.fc-def{font-size:.95rem;color:var(--ink);margin-bottom:6px}\n'
+'.fc-ex{font-size:.82rem;color:var(--muted);font-style:italic}\n'
+'.fc-hint{font-family:var(--font-sans);font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:10px}\n'
+'.fc-audio{background:none;border:1px solid var(--hairline);border-radius:4px;padding:5px 12px;font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);cursor:pointer;margin-top:8px}\n'
+'.fc-audio:hover{border-color:var(--amber);color:var(--amber)}\n'
+'.fc-nav{display:flex;align-items:center;gap:16px;justify-content:center;margin-bottom:20px}\n'
+'.fc-btn{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 18px;border-radius:4px;cursor:pointer;border:1.5px solid var(--hairline);background:transparent;color:var(--ink)}\n'
+'.fc-btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}\n'
+'.fc-counter{font-family:var(--font-sans);font-size:.75rem;color:var(--muted);font-weight:600}\n'
+'.mastery-badge{display:inline-block;padding:8px 18px;background:rgba(184,134,11,.12);color:var(--amber);font-family:var(--font-sans);font-size:.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:4px;margin-bottom:16px}\n'
+'.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}\n'
+'.match-col{display:flex;flex-direction:column;gap:8px}\n'
+'.match-item{padding:12px 14px;border:1.5px solid var(--hairline);border-radius:6px;cursor:pointer;font-size:.9rem;color:var(--ink);transition:border-color .15s,background .15s;user-select:none;min-height:48px;display:flex;align-items:center}\n'
+'.match-item.selected{border-color:var(--amber);background:rgba(184,134,11,.08)}\n'
+'.match-item.correct{border-color:var(--green,#2E7D52);background:rgba(46,125,82,.08);pointer-events:none;color:var(--muted)}\n'
+'.match-item.wrong{border-color:var(--red,#C03A2B);background:rgba(192,57,43,.08)}\n'
+'.match-status{font-family:var(--font-sans);font-size:.85rem;color:var(--muted);text-align:center;margin-bottom:16px}\n'
+'.heart-row{display:flex;gap:6px;justify-content:center;margin-bottom:12px}\n'
+'.heart-svg{width:22px;height:22px}\n'
+'</style>\n')
+
+VOCAB_FC_JS = r"""<script>
+var idx = 0, seen = new Set(), allDone = false;
+function showCard() {
+  var w = WORDS[idx];
+  document.getElementById('fcWord').textContent = w.word;
+  document.getElementById('fcIpa').textContent = w.ipa || '';
+  document.getElementById('fcDef').innerHTML = w.def;
+  document.getElementById('fcEx').innerHTML = w.ex || '';
+  document.getElementById('fcCard').classList.remove('flipped');
+  document.getElementById('fcCounter').textContent = (idx+1) + ' / ' + WORDS.length;
+  seen.add(idx);
+  if (seen.size === WORDS.length && !allDone) { allDone = true; saveMastery(); }
+}
+function flipCard() { document.getElementById('fcCard').classList.toggle('flipped'); }
+function prevCard() { idx = (idx - 1 + WORDS.length) % WORDS.length; showCard(); }
+function nextCard() { idx = (idx + 1) % WORDS.length; showCard(); }
+function speakWord() {
+  var u = new SpeechSynthesisUtterance(WORDS[idx].word);
+  u.lang = 'fr-FR'; u.rate = 0.85; speechSynthesis.speak(u);
+}
+function saveMastery() {
+  var prog = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+  if (!prog[LEVEL]) prog[LEVEL] = {};
+  prog[LEVEL][STORAGE_KEY] = {done: true, date: new Date().toISOString()};
+  localStorage.setItem('wordplay_progress', JSON.stringify(prog));
+  if (window.store && store.pushProgress) store.pushProgress();
+  document.getElementById('masteryBadge').style.display = 'block';
+}
+(function init() {
+  var prog = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+  var lv = prog[LEVEL] || {};
+  if (lv[STORAGE_KEY] && lv[STORAGE_KEY].done) {
+    allDone = true;
+    document.getElementById('masteryBadge').style.display = 'block';
+  }
+  showCard();
+})();
+</script>"""
+
+VOCAB_MATCH_JS = r"""<script>
+var lives = 3, matched = 0, selected = null, round = 0;
+function heartSVG(f) {
+  return '<svg class="heart-svg" viewBox="0 0 24 24"><path fill="'+(f?'var(--amber)':'var(--hairline)')+'" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
+}
+function updateHearts() {
+  document.getElementById('heartRow').innerHTML = heartSVG(lives>=1)+heartSVG(lives>=2)+heartSVG(lives>=3);
+}
+function shuffle(a) { for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]; } return a; }
+function buildRound() {
+  var pairs = round === 0 ? PAIRS.slice(0, Math.min(8, PAIRS.length)) : PAIRS.slice(0, Math.min(8, PAIRS.length));
+  var words = shuffle(pairs.map(function(p,i){return {idx:i,text:p[0],type:'w'};}));
+  var defs = shuffle(pairs.map(function(p,i){return {idx:i,text:p[1],type:'d'};}));
+  document.getElementById('colWords').innerHTML = words.map(function(w){
+    return '<div class="match-item" data-idx="'+w.idx+'" data-type="w" onclick="pick(this)">'+w.text+'</div>';
+  }).join('');
+  document.getElementById('colDefs').innerHTML = defs.map(function(d){
+    return '<div class="match-item" data-idx="'+d.idx+'" data-type="d" onclick="pick(this)">'+d.text+'</div>';
+  }).join('');
+  matched = 0; selected = null;
+  document.getElementById('matchStatus').textContent = 'Relie chaque mot à sa définition';
+}
+function pick(el) {
+  if (el.classList.contains('correct') || el.classList.contains('wrong')) return;
+  if (selected === el) { el.classList.remove('selected'); selected = null; return; }
+  if (!selected) { el.classList.add('selected'); selected = el; return; }
+  if (selected.dataset.type === el.dataset.type) {
+    selected.classList.remove('selected'); el.classList.add('selected'); selected = el; return;
+  }
+  var a = selected, b = el;
+  a.classList.remove('selected'); selected = null;
+  if (a.dataset.idx === b.dataset.idx) {
+    a.classList.add('correct'); b.classList.add('correct'); matched++;
+    if (matched === document.getElementById('colWords').children.length) {
+      round++;
+      if (round >= 2) { saveMastery(); return; }
+      setTimeout(buildRound, 600);
+    }
+  } else {
+    a.classList.add('wrong'); b.classList.add('wrong');
+    lives--; updateHearts();
+    setTimeout(function(){ a.classList.remove('wrong'); b.classList.remove('wrong'); }, 700);
+    if (lives <= 0) { document.getElementById('matchStatus').textContent = 'Plus de vies — réessaie !'; setTimeout(restart, 1200); }
+  }
+}
+function saveMastery() {
+  var prog = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+  if (!prog[LEVEL]) prog[LEVEL] = {};
+  prog[LEVEL][MATCH_KEY] = {done: true, date: new Date().toISOString()};
+  localStorage.setItem('wordplay_progress', JSON.stringify(prog));
+  if (window.store && store.pushProgress) store.pushProgress();
+  document.getElementById('matchStatus').textContent = '✔ Maîtrisé !';
+  document.getElementById('masteryBadge').style.display = 'block';
+}
+function restart() { lives = 3; round = 0; updateHearts(); buildRound(); }
+(function init() {
+  var prog = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+  var lv = prog[LEVEL] || {};
+  if (lv[MATCH_KEY] && lv[MATCH_KEY].done) document.getElementById('masteryBadge').style.display = 'block';
+  updateHearts(); buildRound();
+})();
+</script>"""
+
+
+def vocab_nav(active):
+    tabs = [('flashcards.html', 'Cartes'), ('slides.html', 'Le&#231;on'),
+            ('game.html', 'Jeu'), ('match.html', 'Relier')]
+    btns = ''.join(
+        f'  <a href="{h}" class="chapter-nav-btn{" active" if h == active else ""}">{l}</a>\n'
+        for h, l in tabs)
+    return f'<nav class="chapter-nav">\n{btns}</nav>\n'
+
+
+def render_vocab_flashcards(d, slug):
+    lv = d['level'].upper()
+    storage_key = f'wordplay_vocab_mastered_fr_{d["level"]}_{slug}'
+    words_js = json.dumps(d['words'], ensure_ascii=False)
+    n = len(d['words'])
+    s = HEAD.format(title=f'{d["short"]} — Cartes | Fran&#231;ais {lv} | Word Play',
+                    extra_css=VOCAB_FC_CSS)
+    s = s.replace('href="index.html" class="back', 'href="../index.html" class="back')
+    s += '<body>\n' + HEADER.replace('href="index.html" class="back', 'href="../index.html" class="back')
+    s += ('<div class="container">\n'
+          '<div class="breadcrumb">\n'
+          '  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>\n'
+          '  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>\n'
+          f'  <a href="../../index.html">{lv}</a><span>&#8250;</span>\n'
+          '  <a href="../index.html">Vocabulaire</a><span>&#8250;</span>\n'
+          f'  <strong>{d["short"]}</strong>\n</div>\n'
+          f'<div class="chapter-num">{d["num"]}</div>\n'
+          f'<h1>{d["short"]}</h1>\n'
+          + vocab_nav('flashcards.html') +
+          '<div id="masteryBadge" style="margin:12px 0;display:none">'
+          '<span class="mastery-badge">&#10003; Ma&#238;tris&#233;</span></div>\n'
+          f'<p style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;'
+          f'text-transform:uppercase;color:var(--muted);margin-bottom:16px">'
+          f'{n} mots &middot; appuyez sur la carte pour voir la d&#233;finition</p>\n'
+          '<div class="fc-nav">'
+          '<button class="fc-btn" onclick="prevCard()">&#8592; Pr&#233;c.</button>'
+          '<span class="fc-counter" id="fcCounter">1 / ' + str(n) + '</span>'
+          '<button class="fc-btn primary" onclick="nextCard()">Suivant &#8594;</button></div>\n'
+          '<div class="fc-wrap"><div class="fc" id="fcCard" onclick="flipCard()">'
+          '<div class="fc-face fc-front">'
+          '<div class="fc-word" id="fcWord"></div>'
+          '<div class="fc-ipa" id="fcIpa"></div>'
+          '<div class="fc-hint">Appuyez pour voir la d&#233;finition</div>'
+          '</div>'
+          '<div class="fc-face fc-back">'
+          '<div class="fc-def" id="fcDef"></div>'
+          '<div class="fc-ex" id="fcEx"></div>'
+          '<button class="fc-audio" onclick="event.stopPropagation();speakWord()">&#9654; &#201;couter</button>'
+          '</div></div></div>\n'
+          f'<script>\nvar WORDS = {words_js};\n'
+          f'var STORAGE_KEY = {jd(storage_key)};\n'
+          f'var LEVEL = {jd(d["level"])};\n'
+          '</script>\n'
+          + VOCAB_FC_JS +
+          f'<footer class="site-footer">Word Play &middot; Fran&#231;ais {lv} &middot; Vocabulaire</footer>\n'
+          '</div></body>\n</html>\n')
+    return s
+
+
+def render_vocab_slides_list(d, slug):
+    lv = d['level'].upper()
+    chunk_size = 4
+    slides_html = ''
+    words = d['words']
+    for i in range(0, len(words), chunk_size):
+        chunk = words[i:i + chunk_size]
+        start, end = i + 1, i + len(chunk)
+        label = f'Mots {start}–{end}' if len(chunk) > 1 else f'Mot {start}'
+        rows = ''.join(
+            f'<div style="padding:10px 0;border-bottom:1px solid var(--hairline)">'
+            f'<div style="font-size:1.1rem;font-weight:700;color:var(--ink)">{w["word"]}'
+            + (f' <span style="font-size:.78rem;color:var(--muted);font-weight:400">[{w["ipa"]}]</span>' if w.get('ipa') else '') +
+            f'</div>'
+            f'<div style="font-size:.88rem;color:var(--muted);margin-top:3px">{w["def"]}</div>'
+            + (f'<div style="font-size:.82rem;color:var(--muted);font-style:italic;margin-top:3px">{w["ex"]}</div>' if w.get('ex') else '') +
+            f'</div>'
+            for w in chunk)
+        slides_html += (f'\n<div class="slide"><div class="slide-card">\n'
+                        f'  <div class="slide-header"><h2>{label}</h2></div>\n'
+                        f'  <div style="margin-top:8px">{rows}</div>\n'
+                        f'</div></div>\n')
+
+    s = HEAD.format(title=f'{d["short"]} — Le&#231;on {lv} | Word Play',
+                    extra_css='<link rel="stylesheet" href="../../../../shared/slides.css?v=v115">\n')
+    s += ('<body class="deck-body">\n'
+          '<div class="deck-progress"><div class="deck-progress-fill" id="deck-progress-fill"></div></div>\n')
+    s = s.replace('href="index.html" class="back', 'href="../index.html" class="back')
+    s += HEADER.replace('href="index.html" class="back', 'href="../index.html" class="back')
+    s += ('<div class="breadcrumb">\n'
+          '  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>\n'
+          '  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>\n'
+          f'  <a href="../../index.html">{lv}</a><span>&#8250;</span>\n'
+          '  <a href="../index.html">Vocabulaire</a><span>&#8250;</span>\n'
+          f'  <a href="index.html">{d["short"]}</a><span>&#8250;</span>\n'
+          '  <strong>Le&#231;on</strong>\n</div>\n'
+          + vocab_nav('slides.html') +
+          f'<div class="chapter-num">{d["num"]} &middot; Vocabulaire</div>\n'
+          f'<h1>{d["title"]}</h1>\n'
+          f'<p class="chapter-subtitle">{d["subtitle"]}</p>\n'
+          f'<div class="slide-deck" id="slide-deck">\n{slides_html}\n</div>\n'
+          '<div class="deck-nav">'
+          '<button class="deck-btn" id="deck-prev" aria-label="Diapositive pr&#233;c&#233;dente">&#9664; Pr&#233;c.</button>'
+          '<div class="counter" id="slide-counter"></div>'
+          '<button class="deck-btn" id="deck-next" aria-label="Diapositive suivante">Suiv. &#9654;</button>'
+          '</div>\n'
+          f'<script>window.CHAPTER_ID={jd(slug)};window.LEVEL={jd(d["level"])};window.SECTION="vocabulary";</script>\n'
+          '<script src="../../../../shared/store.js?v=v107"></script>\n'
+          '<script src="../../../../shared/deck.js?v=v114"></script>\n'
+          f'<footer class="site-footer">Word Play &middot; Fran&#231;ais {lv} &middot; Vocabulaire</footer>\n'
+          '</body>\n</html>\n')
+    return s
+
+
+def render_vocab_match(d, slug):
+    lv = d['level'].upper()
+    match_key = f'wordplay_match_fr_{d["level"]}_{slug}'
+    pairs = [[w['word'], w['def'][:70]] for w in d['words'][:8]]
+    pairs_js = json.dumps(pairs, ensure_ascii=False)
+    s = HEAD.format(title=f'{d["short"]} — Relier | Fran&#231;ais {lv} | Word Play',
+                    extra_css=VOCAB_FC_CSS)
+    s = s.replace('href="index.html" class="back', 'href="../index.html" class="back')
+    s += '<body>\n' + HEADER.replace('href="index.html" class="back', 'href="../index.html" class="back')
+    s += ('<div class="container">\n'
+          '<div class="breadcrumb">\n'
+          '  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>\n'
+          '  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>\n'
+          f'  <a href="../../index.html">{lv}</a><span>&#8250;</span>\n'
+          '  <a href="../index.html">Vocabulaire</a><span>&#8250;</span>\n'
+          f'  <strong>{d["short"]}</strong>\n</div>\n'
+          f'<div class="chapter-num">{d["num"]}</div>\n'
+          f'<h1>{d["short"]}</h1>\n'
+          + vocab_nav('match.html') +
+          '<div id="masteryBadge" style="margin:12px 0;display:none">'
+          '<span class="mastery-badge">&#10003; Ma&#238;tris&#233;</span></div>\n'
+          '<div class="match-status" id="matchStatus">Relie chaque mot &#224; sa d&#233;finition</div>\n'
+          '<div class="heart-row" id="heartRow"></div>\n'
+          '<div class="match-grid"><div class="match-col" id="colWords"></div>'
+          '<div class="match-col" id="colDefs"></div></div>\n'
+          '<div style="text-align:center;margin-top:12px">'
+          '<button class="fc-btn" onclick="restart()">Recommencer</button></div>\n'
+          f'<script>\nvar PAIRS = {pairs_js};\n'
+          f'var MATCH_KEY = {jd(match_key)};\n'
+          f'var LEVEL = {jd(d["level"])};\n'
+          '</script>\n'
+          + VOCAB_MATCH_JS +
+          '<script src="../../../../shared/store.js?v=v107"></script>\n'
+          f'<footer class="site-footer">Word Play &middot; Fran&#231;ais {lv} &middot; Vocabulaire</footer>\n'
+          '</div></body>\n</html>\n')
+    return s
+
+
+def render_vocab_hub(d, slug):
+    lv = d['level'].upper()
+    fc_key = f'wordplay_vocab_mastered_fr_{d["level"]}_{slug}'
+    game_key = f'wordplay_game_fr_{d["level"]}_{slug}'
+    match_key = f'wordplay_match_fr_{d["level"]}_{slug}'
+    n = len(d['words'])
+    s = HEAD.format(title=f'{d["short"]} | Vocabulaire {lv} | Word Play', extra_css='')
+    s = s.replace('href="index.html" class="back', 'href="../index.html" class="back')
+    s += '<body>\n' + HEADER.replace('href="index.html" class="back', 'href="../index.html" class="back')
+    s += ('<div class="container">\n'
+          '<div class="breadcrumb">\n'
+          '  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>\n'
+          '  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>\n'
+          f'  <a href="../../index.html">{lv}</a><span>&#8250;</span>\n'
+          '  <a href="../index.html">Vocabulaire</a><span>&#8250;</span>\n'
+          f'  <strong>{d["short"]}</strong>\n</div>\n'
+          f'<div class="chapter-num">{d["num"]}</div>\n'
+          f'<h1>{d["short"]}</h1>\n'
+          f'<p class="chapter-subtitle">{d["subtitle"]}</p>\n'
+          '<div class="act-grid">\n'
+          '<a href="flashcards.html" class="act-card" style="--ac-color:var(--amber)">\n'
+          '  <div class="act-title">Cartes</div>\n'
+          f'  <div class="act-desc">{n} mots &middot; cartes interactives</div>\n'
+          '  <span class="act-cta">Aller &#8594;</span>\n</a>\n'
+          '<a href="slides.html" class="act-card" style="--ac-color:var(--amber)">\n'
+          '  <div class="act-title">Le&#231;on</div>\n'
+          '  <div class="act-desc">Liste compl&#232;te avec d&#233;finitions et exemples</div>\n'
+          '  <span class="act-cta">Aller &#8594;</span>\n</a>\n'
+          '<a href="game.html" class="act-card" style="--ac-color:#2E7D52">\n'
+          '  <div class="act-title">Jeu de Ma&#238;trise</div>\n'
+          '  <div class="act-desc">Jeu interactif pour dominer le vocabulaire</div>\n'
+          '  <span class="act-cta">Aller &#8594;</span>\n</a>\n'
+          '<a href="match.html" class="act-card" style="--ac-color:#2E7D52">\n'
+          '  <div class="act-title">Relier</div>\n'
+          '  <div class="act-desc">Relie les mots &#224; leurs d&#233;finitions</div>\n'
+          '  <span class="act-cta">Aller &#8594;</span>\n</a>\n'
+          '</div>\n'
+          '<script>\n(function(){\n'
+          f'  var prog=JSON.parse(localStorage.getItem("wordplay_progress")||"{{}}");\n'
+          f'  var lv=prog[{jd(d["level"])}]||{{}};\n'
+          f'  if(lv[{jd(fc_key)}]&&lv[{jd(fc_key)}].done)document.querySelector(\'[href="flashcards.html"]\').classList.add("done");\n'
+          f'  if(lv[{jd(game_key)}]&&lv[{jd(game_key)}].pct>=100)document.querySelector(\'[href="game.html"]\').classList.add("done");\n'
+          f'  if(lv[{jd(match_key)}]&&lv[{jd(match_key)}].done)document.querySelector(\'[href="match.html"]\').classList.add("done");\n'
+          '})();\n</script>\n'
+          '<script src="../../../../shared/store.js?v=v107"></script>\n'
+          f'<footer class="site-footer">Word Play &middot; Fran&#231;ais {lv} &middot; Vocabulaire</footer>\n'
+          '</div></body>\n</html>\n')
+    return s
+
+
 def render(slug, d):
     section_dir = d['section']
     out_dir = os.path.join(ROOT, 'francais', d['level'], section_dir, slug)
     os.makedirs(out_dir, exist_ok=True)
-    open(os.path.join(out_dir, 'slides.html'), 'w', encoding='utf-8').write(render_slides(d, slug))
-    open(os.path.join(out_dir, 'worksheet.html'), 'w', encoding='utf-8').write(render_worksheet(d, slug))
-    open(os.path.join(out_dir, 'game.html'), 'w', encoding='utf-8').write(render_game(d, slug))
-    open(os.path.join(out_dir, 'index.html'), 'w', encoding='utf-8').write(render_hub(d, slug))
-    if d['section'] in ('grammaire', 'redaction'):
-        open(os.path.join(out_dir, 'printables.html'), 'w', encoding='utf-8').write(render_printables(d, slug))
-    files = [os.path.join(out_dir, f) for f in
-             ('slides.html', 'worksheet.html', 'game.html', 'index.html')]
+    if section_dir == 'vocabulaire':
+        open(os.path.join(out_dir, 'flashcards.html'), 'w', encoding='utf-8').write(render_vocab_flashcards(d, slug))
+        open(os.path.join(out_dir, 'slides.html'), 'w', encoding='utf-8').write(render_vocab_slides_list(d, slug))
+        open(os.path.join(out_dir, 'game.html'), 'w', encoding='utf-8').write(render_game(d, slug))
+        open(os.path.join(out_dir, 'match.html'), 'w', encoding='utf-8').write(render_vocab_match(d, slug))
+        open(os.path.join(out_dir, 'index.html'), 'w', encoding='utf-8').write(render_vocab_hub(d, slug))
+        files = [os.path.join(out_dir, f) for f in ('flashcards.html', 'slides.html', 'game.html', 'match.html', 'index.html')]
+    else:
+        open(os.path.join(out_dir, 'slides.html'), 'w', encoding='utf-8').write(render_slides(d, slug))
+        open(os.path.join(out_dir, 'worksheet.html'), 'w', encoding='utf-8').write(render_worksheet(d, slug))
+        open(os.path.join(out_dir, 'game.html'), 'w', encoding='utf-8').write(render_game(d, slug))
+        open(os.path.join(out_dir, 'index.html'), 'w', encoding='utf-8').write(render_hub(d, slug))
+        if section_dir in ('grammaire', 'redaction'):
+            open(os.path.join(out_dir, 'printables.html'), 'w', encoding='utf-8').write(render_printables(d, slug))
+        files = [os.path.join(out_dir, f) for f in ('slides.html', 'worksheet.html', 'game.html', 'index.html')]
     r = subprocess.run(['python3', os.path.join(ROOT, 'scripts/validate_inline_js.py')] + files,
                        capture_output=True, text=True)
     status = 'OK' if r.returncode == 0 else 'FAIL\n' + r.stdout
@@ -514,9 +854,10 @@ def normalize_items(items, slug):
 
 def normalize_chapter(d, slug):
     d = dict(d)
-    d['ex1'] = normalize_ex_mc(d['ex1'])
-    d['ex2'] = normalize_ex_typed(d['ex2'])
-    d['ex3'] = normalize_ex_mc(d['ex3'])
+    if d.get('section') != 'vocabulaire':
+        d['ex1'] = normalize_ex_mc(d['ex1'])
+        d['ex2'] = normalize_ex_typed(d['ex2'])
+        d['ex3'] = normalize_ex_mc(d['ex3'])
     d['items'] = normalize_items(d['items'], slug)
     return d
 
