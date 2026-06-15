@@ -1,0 +1,81 @@
+"""Français A1 — Vocabulaire batch 5: V09 Le Corps · V10 La Météo."""
+
+CHAPTERS = {
+
+# ── V09 Le Corps ───────────────────────────────────────────────────────────
+'le-corps': {
+    'level':   'a1',
+    'section': 'vocabulaire',
+    'num':     'V09',
+    'short':   'Le Corps',
+    'title':   'Le Corps — Les Parties du Corps',
+    'subtitle': 'Les parties du corps humain et les expressions de santé',
+    'game_desc': 'Apprenez les parties du corps en français !',
+    'words': [
+        {'word': 'la tête',        'ipa': '/la tɛt/',        'def': 'the head',                 'ex': 'J\'ai mal à la tête.'},
+        {'word': 'le visage',      'ipa': '/lə vi.zaʒ/',     'def': 'the face',                 'ex': 'Elle a un beau visage.'},
+        {'word': 'les yeux',       'ipa': '/lez jø/',        'def': 'the eyes',                 'ex': 'Elle a les yeux bleus.'},
+        {'word': 'le nez',         'ipa': '/lə ne/',          'def': 'the nose',                 'ex': 'Il a le nez rouge.'},
+        {'word': 'la bouche',      'ipa': '/la buʃ/',        'def': 'the mouth',                'ex': 'Ouvre la bouche chez le dentiste.'},
+        {'word': 'l\'oreille',     'ipa': '/lɔ.ʁɛj/',       'def': 'the ear',                  'ex': 'J\'ai mal à l\'oreille droite.'},
+        {'word': 'le cou',         'ipa': '/lə ku/',          'def': 'the neck',                 'ex': 'Elle porte un collier autour du cou.'},
+        {'word': 'l\'épaule',      'ipa': '/le.pol/',        'def': 'the shoulder',             'ex': 'Il a mal à l\'épaule gauche.'},
+        {'word': 'le bras',        'ipa': '/lə bʁɑ/',        'def': 'the arm',                  'ex': 'Elle porte un sac sur le bras.'},
+        {'word': 'la main',        'ipa': '/la mɛ̃/',        'def': 'the hand',                 'ex': 'Donne-moi la main !'},
+        {'word': 'le ventre',      'ipa': '/lə vɑ̃tʁ/',      'def': 'the stomach / belly',      'ex': 'J\'ai mal au ventre.'},
+        {'word': 'la jambe',       'ipa': '/la ʒɑ̃b/',       'def': 'the leg',                  'ex': 'Il s\'est cassé la jambe.'},
+        {'word': 'le pied',        'ipa': '/lə pje/',         'def': 'the foot',                 'ex': 'J\'ai mal au pied droit.'},
+        {'word': 'avoir mal à',    'ipa': '/a.vwaʁ mal a/',  'def': 'to have pain in / to hurt','ex': 'J\'ai mal à la gorge.'},
+        {'word': 'le dos',         'ipa': '/lə do/',          'def': 'the back',                 'ex': 'Il a mal au dos depuis lundi.'},
+    ],
+    'items': [
+        ('corps-01', 'la tête',    'the head',    'corps', 'J\'ai mal à la tête.',             'J\'ai mal à la ______.',            'tête'),
+        ('corps-02', 'les yeux',   'the eyes',    'corps', 'Elle a les yeux bleus.',            'Elle a les ______ bleus.',          'yeux'),
+        ('corps-03', 'la bouche',  'the mouth',   'corps', 'Ouvre la bouche chez le dentiste.', 'Ouvre la ______ chez le dentiste.', 'bouche'),
+        ('corps-04', 'le bras',    'the arm',     'corps', 'Elle porte un sac sur le bras.',    'Elle porte un sac sur le ______.',  'bras'),
+        ('corps-05', 'la main',    'the hand',    'corps', 'Donne-moi la main !',               'Donne-moi la ______ !',             'main'),
+        ('corps-06', 'la jambe',   'the leg',     'corps', 'Il s\'est cassé la jambe.',         'Il s\'est cassé la ______.',        'jambe'),
+        ('corps-07', 'le pied',    'the foot',    'corps', 'J\'ai mal au pied droit.',          'J\'ai mal au ______ droit.',        'pied'),
+        ('corps-08', 'avoir mal à','to hurt/ache','santé',  'J\'ai mal à la gorge.',             'J\'ai ______ à la gorge.',          'mal'),
+    ],
+},
+
+# ── V10 La Météo ───────────────────────────────────────────────────────────
+'la-meteo': {
+    'level':   'a1',
+    'section': 'vocabulaire',
+    'num':     'V10',
+    'short':   'La Météo',
+    'title':   'La Météo — Le Temps et Les Saisons',
+    'subtitle': 'Parler de la météo et des quatre saisons en français',
+    'game_desc': 'Parlez de la météo en français !',
+    'words': [
+        {'word': 'il fait beau',    'ipa': '/il fɛ bo/',      'def': 'it is nice / sunny',       'ex': 'Il fait beau aujourd\'hui, allons au parc !'},
+        {'word': 'il fait chaud',   'ipa': '/il fɛ ʃo/',      'def': 'it is hot',                'ex': 'Il fait très chaud en juillet.'},
+        {'word': 'il fait froid',   'ipa': '/il fɛ fʁwa/',    'def': 'it is cold',               'ex': 'Il fait froid ce matin, mets un manteau.'},
+        {'word': 'il pleut',        'ipa': '/il plø/',        'def': 'it is raining',            'ex': 'Il pleut, prends ton parapluie !'},
+        {'word': 'il neige',        'ipa': '/il nɛʒ/',        'def': 'it is snowing',            'ex': 'Il neige en décembre dans les Alpes.'},
+        {'word': 'il y a du vent',  'ipa': '/il ja dy vɑ̃/',  'def': 'it is windy',              'ex': 'Il y a du vent, ferme la fenêtre.'},
+        {'word': 'il y a des nuages','ipa': '/il ja de nɥaʒ/','def': 'it is cloudy',             'ex': 'Il y a des nuages mais pas de pluie.'},
+        {'word': 'le soleil',       'ipa': '/lə so.lɛj/',     'def': 'the sun',                  'ex': 'Le soleil brille aujourd\'hui.'},
+        {'word': 'la pluie',        'ipa': '/la plɥi/',       'def': 'the rain',                 'ex': 'J\'aime marcher sous la pluie.'},
+        {'word': 'la neige',        'ipa': '/la nɛʒ/',        'def': 'the snow',                 'ex': 'Les enfants jouent dans la neige.'},
+        {'word': 'le printemps',    'ipa': '/lə pʁɛ̃.tɑ̃/',   'def': 'spring',                   'ex': 'Le printemps commence en mars.'},
+        {'word': 'l\'été',          'ipa': '/le.te/',         'def': 'summer',                   'ex': 'En été, il fait chaud et beau.'},
+        {'word': 'l\'automne',      'ipa': '/lo.tɔn/',        'def': 'autumn / fall',            'ex': 'En automne, les feuilles tombent.'},
+        {'word': 'l\'hiver',        'ipa': '/li.vɛʁ/',        'def': 'winter',                   'ex': 'En hiver, il fait froid et il neige.'},
+        {'word': 'quel temps fait-il ?', 'ipa': '/kɛl tɑ̃ fɛ til/', 'def': 'what is the weather like?', 'ex': 'Quel temps fait-il à Paris aujourd\'hui ?'},
+    ],
+    'items': [
+        ('met-01', 'il fait beau',  'it is nice',   'météo',  'Il fait beau aujourd\'hui, allons au parc !',  'Il ______ beau aujourd\'hui, allons au parc !', 'fait'),
+        ('met-02', 'il fait chaud', 'it is hot',    'météo',  'Il fait très chaud en juillet.',               'Il fait très ______ en juillet.',               'chaud'),
+        ('met-03', 'il fait froid', 'it is cold',   'météo',  'Il fait froid ce matin, mets un manteau.',     'Il fait ______ ce matin, mets un manteau.',     'froid'),
+        ('met-04', 'il pleut',      'it is raining','météo',  'Il pleut, prends ton parapluie !',             'Il ______, prends ton parapluie !',             'pleut'),
+        ('met-05', 'le soleil',     'the sun',      'météo',  'Le soleil brille aujourd\'hui.',                'Le ______ brille aujourd\'hui.',                'soleil'),
+        ('met-06', 'l\'été',        'summer',       'saison', 'En été, il fait chaud et beau.',               'En ______, il fait chaud et beau.',             'été'),
+        ('met-07', 'l\'hiver',      'winter',       'saison', 'En hiver, il fait froid et il neige.',         'En ______, il fait froid et il neige.',         'hiver'),
+        ('met-08', 'l\'automne',    'autumn',       'saison', 'En automne, les feuilles tombent.',            'En ______, les feuilles tombent.',              'automne'),
+    ],
+},
+
+}
