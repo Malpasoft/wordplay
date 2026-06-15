@@ -8,18 +8,20 @@ The three Spanish-related tracks are easy to confuse — kept distinct throughou
 
 | Track | What it is | State |
 |-------|-----------|-------|
-| `es/` | English course **explained in Spanish** | grammar (107 `gramatica/`) ✅, vocab flashcards ✅, writing (26) ✅; A1–B2 only (C1/C2 removed per L1 rule). **Open:** vocab `game.html` are placeholder stubs. |
-| `espanol-en/` | Spanish course for English speakers | A1+A2 ✅, B1+B2 ✅ (June 2026); A1–B2 only. |
-| `espanol/` | Main Spanish course (taught in Spanish) | scaffolds only — Phase 5, planned. |
+| `es/` | English course **explained in Spanish** | grammar ✅, vocab flashcards ✅, games ✅, writing ✅; A1–B2 only. |
+| `espanol-en/` | Spanish course for English speakers | A1+A2 ✅, B1+B2 ✅; A1–B2 only. |
+| `espanol/` | Main Spanish course (taught in Spanish) | A1–C2 ✅; DELE A1–C2 exam prep ✅. |
 
 ---
 
 ## Open debt
 
-### D1 — `es/` vocab `game.html` are placeholder stubs
-All `es/` vocabulary `game.html` files still contain placeholder `GAME_DATA` items even though
-their flashcards are complete. Derive items from each chapter's `WORDS` array (pattern proven in
-`scripts/gen_esen_a2_vocab.py`) and regenerate; Spanish UI comes from i18n on `<html lang="es">`.
+### D1 — `fr/` vocab slides use English-only descriptions (not bilingual)
+47 `slides.html` files in `fr/a1/vocabulaire/` and `fr/a2/vocabulaire/` use an
+`overview-row/overview-desc` layout with English definitions only. They should use the same
+bilingual `bi-block` layout as `es/` (French word → English word + IPA). The French words are
+available in each chapter's flashcard `WORDS[].def` field (before the ` — ` separator).
+Fix: script to extract L1 words from flashcard data and regenerate slides with `bi-row` markup.
 
 ### D2 — `design-check.sh` doesn't catch inline `--ac-color:#hex`
 The design hook flags emoji and off-palette colours but misses hardcoded `--ac-color:#hex` in

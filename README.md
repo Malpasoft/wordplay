@@ -4,8 +4,8 @@ A multi-language Cambridge/CEFR course site (A1–C2) on Cloudflare Pages. Vanil
 frontend with **no build system**, backed by **Cloudflare Pages Functions + a D1 SQLite
 database** for user accounts, token auth, and cross-device progress sync. Tracks: English
 (main `a/ b/ c/`), English-for-Spanish-speakers (`es/`), English-for-French-speakers (`fr/`),
-Spanish-for-English-speakers (`espanol-en/`), plus planned Spanish (`espanol/`) and French
-(`francais/`) main courses. ≈2.5k HTML pages — see `coverage.html` for the live map.
+Spanish-for-English-speakers (`espanol-en/`), main Spanish course (`espanol/`, A1–C2 + DELE
+prep), and planned French (`francais/`) main course. ≈2.5k HTML pages — see `coverage.html`.
 
 ## Read first
 
@@ -21,8 +21,8 @@ Spanish-for-English-speakers (`espanol-en/`), plus planned Spanish (`espanol/`) 
 
 - **a/ b/ c/** — main English, CEFR A1–A2 / B1–B2 (FCE) / C1–C2 (CAE, CPE).
 - **es/** — English explained in Spanish (A1–B2). **espanol-en/** — Spanish for English
-  speakers (A1–B2). **fr/** — English for French speakers (A1–B2). **espanol/ francais/** —
-  planned main Spanish / French courses.
+  speakers (A1–B2). **fr/** — English for French speakers (A1–B2). **espanol/** — main
+  Spanish course A1–C2 + DELE exam prep. **francais/** — planned main French course.
 - **shared/** — CSS + JS engines shared across all pages (see CLAUDE.md → Engine contracts).
 - **functions/api/** — Cloudflare Pages Functions (auth, progress, classes, lessons, analytics).
 - **migrations/** — D1 SQL schema. **wrangler.jsonc** — D1 binding config.

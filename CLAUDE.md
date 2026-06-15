@@ -38,7 +38,7 @@ Homepage = 3 language cards → language hub → courses for that language.
 | `/english/` | Main English | `a/ b/ c/` | en | A1–C2 | KET PET FCE CAE CPE |
 | `/english/` | English for Spanish speakers | `es/` | es | A1–B2 | — |
 | `/english/` | English for French speakers | `fr/` | fr | A1–B2 | — |
-| `/espanol/` | Main Spanish | `espanol/` | es | A1–C2 (building) | DELE |
+| `/espanol/` | Main Spanish | `espanol/` | es | A1–C2 ✅ | DELE ✅ |
 | `/espanol/` | Spanish for English speakers | `espanol-en/` | en | A1–B2 | — |
 | `/francais/` | Main French | `francais/` | fr | A1–C2 (planned) | DELF/DALF |
 | `/francais/` | French for EN / ES speakers | `francais-en/ francais-es/` | en / es | A1–B2 (planned) | — |
@@ -59,13 +59,15 @@ C1+C2 were deleted June 2026; `_redirects` covers old URLs.
 
 - **English (`a/ b/ c/`)** — complete A1–C2 (grammar, vocab, writing all enriched). Two
   intentional "applied-grammar" vocab chapters (c1, c2) have no flashcards by design.
-- **`es/`** — grammar (107 `gramatica/` chapters) ✅, writing (26) ✅, vocab flashcards ✅;
-  es/ vocab `game.html` files are still placeholder stubs.
+- **`es/`** — grammar (107 `gramatica/` chapters) ✅, writing (26) ✅, vocab flashcards ✅,
+  vocab games ✅.
 - **`espanol-en/`** — A1 + A2 complete; B1+B2 complete (June 2026). C1/C2 removed (L1 rule).
-- **`fr/`** — French-mediated B1+B2 complete; A1+A2 planned.
-- **`espanol/`, `francais/`, `francais-en/`, `francais-es/`** — planned (see roadmap docs).
+- **`fr/`** — A1+A2+B1+B2 complete. Vocab slides use English-only descriptions (not yet
+  bilingual like `es/`) — tracked in TECH_DEBT.md.
+- **`espanol/`** — A1–C2 complete ✅; DELE exam prep A1–C2 (hub + about + mock-1 each) ✅.
+- **`francais/`, `francais-en/`, `francais-es/`** — planned (see roadmap in plan docs).
 - **Exam prep** — KET (a2) and PET (b1) fully rebuilt (graded parts + writing-overview +
-  3 mocks each); FCE complete; CAE/CPE have graded parts + 1 mock (mocks 2–3 pending).
+  3 mocks each); FCE complete; CAE/CPE mocks 1–3 complete ✅; DELE A1–C2 complete ✅.
 
 ---
 
