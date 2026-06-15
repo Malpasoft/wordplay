@@ -1,0 +1,81 @@
+"""Français A1 — Vocabulaire batch 2: V03 Les Couleurs · V04 Les Nombres."""
+
+CHAPTERS = {
+
+# ── V03 Les Couleurs ───────────────────────────────────────────────────────
+'les-couleurs': {
+    'level':   'a1',
+    'section': 'vocabulaire',
+    'num':     'V03',
+    'short':   'Les Couleurs',
+    'title':   'Les Couleurs — Rouge, Bleu, Vert et Plus',
+    'subtitle': 'Les couleurs essentielles et leur accord en genre',
+    'game_desc': 'Maîtrisez les couleurs en français !',
+    'words': [
+        {'word': 'rouge',          'ipa': '/ʁuʒ/',          'def': 'red',                      'ex': 'Elle porte une robe rouge.'},
+        {'word': 'bleu / bleue',   'ipa': '/blø/',          'def': 'blue',                     'ex': 'Le ciel est bleu.'},
+        {'word': 'vert / verte',   'ipa': '/vɛʁ/ /vɛʁt/',  'def': 'green',                    'ex': 'J\'aime les légumes verts.'},
+        {'word': 'jaune',          'ipa': '/ʒon/',          'def': 'yellow',                   'ex': 'Le soleil est jaune.'},
+        {'word': 'noir / noire',   'ipa': '/nwaʁ/',         'def': 'black',                    'ex': 'Il porte un manteau noir.'},
+        {'word': 'blanc / blanche', 'ipa': '/blɑ̃/ /blɑ̃ʃ/', 'def': 'white',                  'ex': 'La neige est blanche.'},
+        {'word': 'gris / grise',   'ipa': '/ɡʁi/ /ɡʁiz/',  'def': 'grey',                    'ex': 'Le ciel est gris aujourd\'hui.'},
+        {'word': 'rose',           'ipa': '/ʁoz/',          'def': 'pink',                     'ex': 'Elle a une chemise rose.'},
+        {'word': 'orange',         'ipa': '/ɔ.ʁɑ̃ʒ/',       'def': 'orange',                   'ex': 'Les oranges sont orange.'},
+        {'word': 'violet / violette', 'ipa': '/vjɔ.lɛ/ /vjɔ.lɛt/', 'def': 'purple',          'ex': 'J\'ai un stylo violet.'},
+        {'word': 'marron',         'ipa': '/ma.ʁɔ̃/',       'def': 'brown (invariable)',       'ex': 'Ses yeux sont marron.'},
+        {'word': 'beige',          'ipa': '/bɛʒ/',          'def': 'beige (invariable)',       'ex': 'Il porte un pantalon beige.'},
+        {'word': 'clair / claire', 'ipa': '/klɛʁ/',         'def': 'light (shade)',            'ex': 'Elle préfère le bleu clair.'},
+        {'word': 'foncé / foncée', 'ipa': '/fɔ̃.se/',       'def': 'dark (shade)',             'ex': 'Il aime le vert foncé.'},
+        {'word': 'de quelle couleur ?', 'ipa': '/də kɛl ku.lœʁ/', 'def': 'what colour?',    'ex': 'De quelle couleur est ta voiture ?'},
+    ],
+    'items': [
+        ('coul-01', 'rouge',    'red',    'couleur', 'Elle porte une robe rouge.',        'Elle porte une robe ______.',     'rouge'),
+        ('coul-02', 'bleu',     'blue',   'couleur', 'Le ciel est bleu.',                 'Le ciel est ______.',             'bleu'),
+        ('coul-03', 'vert',     'green',  'couleur', 'J\'aime les légumes verts.',        'J\'aime les légumes ______.',     'verts'),
+        ('coul-04', 'jaune',    'yellow', 'couleur', 'Le soleil est jaune.',              'Le soleil est ______.',           'jaune'),
+        ('coul-05', 'noir',     'black',  'couleur', 'Il porte un manteau noir.',         'Il porte un manteau ______.',     'noir'),
+        ('coul-06', 'blanc',    'white',  'couleur', 'La neige est blanche.',             'La neige est ______.',            'blanche'),
+        ('coul-07', 'rose',     'pink',   'couleur', 'Elle a une chemise rose.',          'Elle a une chemise ______.',      'rose'),
+        ('coul-08', 'violet',   'purple', 'couleur', 'J\'ai un stylo violet.',            'J\'ai un stylo ______.',          'violet'),
+    ],
+},
+
+# ── V04 Les Nombres ────────────────────────────────────────────────────────
+'les-nombres': {
+    'level':   'a1',
+    'section': 'vocabulaire',
+    'num':     'V04',
+    'short':   'Les Nombres',
+    'title':   'Les Nombres — Compter de 0 à 100',
+    'subtitle': 'Les nombres cardinaux et leur usage au quotidien',
+    'game_desc': 'Comptez en français comme un pro !',
+    'words': [
+        {'word': 'zéro',           'ipa': '/ze.ʁo/',        'def': 'zero (0)',                 'ex': 'Il y a zéro problème !'},
+        {'word': 'un / une',       'ipa': '/œ̃/ /yn/',       'def': 'one (1)',                  'ex': 'J\'ai un frère et une sœur.'},
+        {'word': 'cinq',           'ipa': '/sɛ̃k/',          'def': 'five (5)',                 'ex': 'J\'ai cinq doigts à chaque main.'},
+        {'word': 'dix',            'ipa': '/dis/',           'def': 'ten (10)',                 'ex': 'Il y a dix élèves dans la classe.'},
+        {'word': 'quinze',         'ipa': '/kɛ̃z/',          'def': 'fifteen (15)',             'ex': 'Le cours commence à quinze heures.'},
+        {'word': 'vingt',          'ipa': '/vɛ̃/',           'def': 'twenty (20)',              'ex': 'Il y a vingt jours de vacances.'},
+        {'word': 'trente',         'ipa': '/tʁɑ̃t/',         'def': 'thirty (30)',              'ex': 'Elle a trente ans.'},
+        {'word': 'quarante',       'ipa': '/ka.ʁɑ̃t/',       'def': 'forty (40)',               'ex': 'Le trajet dure quarante minutes.'},
+        {'word': 'cinquante',      'ipa': '/sɛ̃.kɑ̃t/',      'def': 'fifty (50)',               'ex': 'Il y a cinquante États aux États-Unis.'},
+        {'word': 'soixante',       'ipa': '/swa.sɑ̃t/',      'def': 'sixty (60)',               'ex': 'Une heure a soixante minutes.'},
+        {'word': 'soixante-dix',   'ipa': '/swa.sɑ̃t dis/',  'def': 'seventy (70)',             'ex': 'Mon grand-père a soixante-dix ans.'},
+        {'word': 'quatre-vingts',  'ipa': '/katʁ vɛ̃/',      'def': 'eighty (80)',              'ex': 'Il y a quatre-vingts centimes dans cette somme.'},
+        {'word': 'quatre-vingt-dix', 'ipa': '/katʁ vɛ̃ dis/', 'def': 'ninety (90)',           'ex': 'Le score est quatre-vingt-dix pour cent.'},
+        {'word': 'cent',           'ipa': '/sɑ̃/',           'def': 'one hundred (100)',        'ex': 'Le t-shirt coûte cent euros.'},
+        {'word': 'combien ?',      'ipa': '/kɔ̃.bjɛ̃/',      'def': 'how many / how much?',    'ex': 'Combien d\'élèves y a-t-il ?'},
+    ],
+    'items': [
+        ('nb-01', 'vingt',          'twenty (20)',   'nombre', 'Il y a vingt jours de vacances.',       'Il y a ______ jours de vacances.',      'vingt'),
+        ('nb-02', 'trente',         'thirty (30)',   'nombre', 'Elle a trente ans.',                    'Elle a ______ ans.',                    'trente'),
+        ('nb-03', 'cinquante',      'fifty (50)',    'nombre', 'Il y a cinquante États aux États-Unis.','Il y a ______ États aux États-Unis.',   'cinquante'),
+        ('nb-04', 'soixante',       'sixty (60)',    'nombre', 'Une heure a soixante minutes.',         'Une heure a ______ minutes.',           'soixante'),
+        ('nb-05', 'soixante-dix',   'seventy (70)',  'nombre', 'Mon grand-père a soixante-dix ans.',   'Mon grand-père a ______ ans.',          'soixante-dix'),
+        ('nb-06', 'quatre-vingts',  'eighty (80)',   'nombre', 'Il y a quatre-vingts centimes.',        'Il y a ______ centimes.',               'quatre-vingts'),
+        ('nb-07', 'cent',           'hundred (100)', 'nombre', 'Le t-shirt coûte cent euros.',          'Le t-shirt coûte ______ euros.',        'cent'),
+        ('nb-08', 'combien ?',      'how many/much?','question','Combien d\'élèves y a-t-il ?',         'Combien d\'élèves y ______-il ?',       'a-t'),
+    ],
+},
+
+}
