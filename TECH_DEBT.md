@@ -16,13 +16,6 @@ The three Spanish-related tracks are easy to confuse — kept distinct throughou
 
 ## Open debt
 
-### D1 — `fr/` vocab slides use English-only descriptions (not bilingual)
-47 `slides.html` files in `fr/a1/vocabulaire/` and `fr/a2/vocabulaire/` use an
-`overview-row/overview-desc` layout with English definitions only. They should use the same
-bilingual `bi-block` layout as `es/` (French word → English word + IPA). The French words are
-available in each chapter's flashcard `WORDS[].def` field (before the ` — ` separator).
-Fix: script to extract L1 words from flashcard data and regenerate slides with `bi-row` markup.
-
 ### D2 — `design-check.sh` doesn't catch inline `--ac-color:#hex`
 The design hook flags emoji and off-palette colours but misses hardcoded `--ac-color:#hex` in
 inline styles. Low priority (the one historical batch of hardcoded amber is already fixed), but
