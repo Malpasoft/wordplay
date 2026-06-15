@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Les Pronoms Sujets — Jeu A1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>
+  <a href="../../index.html">A1</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">Les Pronoms Sujets</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Le&#231;on</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimables</a>
+</nav>
+<div class="container">
+  <h1>Les Pronoms Sujets — Jeu de Ma&#238;trise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Ma&#238;trise</h2>
+        <p>Entraîne-toi sur les pronoms sujets du français.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Les r&#233;ponses cons&#233;cutives sur le m&#234;me concept et les s&#233;ries entre concepts rapportent des points bonus.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Vous avez une partie sauvegard&#233;e.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">D&#233;marrer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; R&#233;f&#233;rence — tous les concepts</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Ma&#238;trise atteinte !</h2>
+        <p>Vous avez compl&#233;t&#233; tous les &#233;l&#233;ments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure s&#233;rie</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Fran&#231;ais A1 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "les-pronoms-sujets",
+  level: "a1",
+  title: "Les Pronoms Sujets — Je, Tu, Il, Elle...",
+  storageKey: "wordplay_game_fr_a1_les-pronoms-sujets",
+  items: [
+    {id:"pron-01", term:"je", meaning:"pronom sujet 1re personne singulier", synonym:"1re sg.", example:"Je parle français.", completion:"______ parle français.", answer:"Je"},
+    {id:"pron-02", term:"tu", meaning:"pronom sujet 2e personne singulier (familier)", synonym:"2e sg. fam.", example:"Tu es étudiant.", completion:"______ es étudiant.", answer:"Tu"},
+    {id:"pron-03", term:"il", meaning:"pronom sujet masculin 3e personne singulier", synonym:"3e sg. masc.", example:"Il habite à Bordeaux.", completion:"______ habite à Bordeaux.", answer:"Il"},
+    {id:"pron-04", term:"elle", meaning:"pronom sujet féminin 3e personne singulier", synonym:"3e sg. fém.", example:"Elle travaille à Lyon.", completion:"______ travaille à Lyon.", answer:"Elle"},
+    {id:"pron-05", term:"on", meaning:"pronom indéfini = nous (informel) ou les gens en général", synonym:"indéf.", example:"On va au cinéma ce soir.", completion:"______ va au cinéma ce soir.", answer:"On"},
+    {id:"pron-06", term:"nous", meaning:"pronom sujet 1re personne pluriel", synonym:"1re pl.", example:"Nous sommes en vacances.", completion:"______ sommes en vacances.", answer:"Nous"},
+    {id:"pron-07", term:"vous", meaning:"pronom sujet 2e personne pluriel ou politesse", synonym:"2e pl. / pol.", example:"Vous parlez très bien français.", completion:"______ parlez très bien français.", answer:"Vous"},
+    {id:"pron-08", term:"ils / elles", meaning:"pronom sujet 3e personne pluriel (masc. / fém.)", synonym:"3e pl.", example:"Elles chantent dans la chorale.", completion:"______ chantent dans la chorale.", answer:"Elles"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
