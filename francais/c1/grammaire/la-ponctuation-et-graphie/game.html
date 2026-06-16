@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Ponctuation et Graphie Avanc&eacute;es — Jeu C1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>
+  <a href="../../index.html">C1</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">Ponctuation et Graphie Avanc&eacute;es</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Le&#231;on</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimables</a>
+</nav>
+<div class="container">
+  <h1>Ponctuation et Graphie Avanc&eacute;es — Jeu de Ma&#238;trise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Ma&#238;trise</h2>
+        <p>Maîtrisez la ponctuation française avancée et les accords complexes</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Les r&#233;ponses cons&#233;cutives sur le m&#234;me concept et les s&#233;ries entre concepts rapportent des points bonus.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Vous avez une partie sauvegard&#233;e.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">D&#233;marrer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; R&#233;f&#233;rence — tous les concepts</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Ma&#238;trise atteinte !</h2>
+        <p>Vous avez compl&#233;t&#233; tous les &#233;l&#233;ments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure s&#233;rie</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Fran&#231;ais C1 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "la-ponctuation-et-graphie",
+  level: "c1",
+  title: "Ponctuation et Graphie Avanc&eacute;es",
+  storageKey: "wordplay_game_fr_c1_la-ponctuation-et-graphie",
+  items: [
+    {id:"c1g12-tiret-cadratin", term:"le tiret cadratin (—)", meaning:"tiret long pour les dialogues, insertions et ruptures syntaxiques", synonym:"dialogue · insertion · rupture", example:"— Je pars — dit-il — sans me retourner. Tiret cadratin dans le dialogue.", completion:"tiret cadratin = — (long) pour dialogues et insertions", answer:"tiret long pour les dialogues et insertions explicatives"},
+    {id:"c1g12-guillemets-fr", term:"les guillemets français", meaning:"«&nbsp;» avec espace insécable — typographie française", synonym:"«&nbsp;» · citation · discours direct", example:"«&nbsp;Je pars&nbsp;» — guillemets français avec espace insécable.", completion:"guillemets fr. = «&nbsp;» avec espaces insécables", answer:"guillemets français avec espace insécable"},
+    {id:"c1g12-pp-avoir", term:"PP avec avoir (accord)", meaning:"le PP s'accorde avec le COD si celui-ci précède le verbe", synonym:"COD · antéposé · accord", example:"Les lettres qu'il a écrites — COD féminin pluriel antéposé → accord.", completion:"PP avoir = accord si COD avant le verbe", answer:"accord du PP avec le COD antéposé dans avoir"},
+    {id:"c1g12-pp-pronominal", term:"PP des pronominaux", meaning:"accord selon la position du COD : se lavée vs se lavé les mains", synonym:"COD · position · se", example:"Elle s'est lavée (se = COD) vs elle s'est lavé les mains (COD après).", completion:"PP pronominal = accord si COD antéposé", answer:"accord du PP pronominal selon la position du COD"},
+    {id:"c1g12-quoique", term:"quoique vs quoi que", meaning:"quoique = bien que (1 mot) ; quoi que = quelle chose que (2 mots)", synonym:"bien que · confusion · homophones", example:"Quoique fatigué, il continua (bien que). Quoi qu'il fasse, il réussit (quelle chose).", completion:"quoique = bien que ; quoi que = quelle chose", answer:"distinction orthographique entre quoique et quoi que"},
+    {id:"c1g12-peut-etre", term:"peut-être (adverbe)", meaning:"adverbe de doute toujours avec trait d'union", synonym:"trait d'union · adverbe · doute", example:"Il viendra peut-être — adverbe avec trait d'union obligatoire.", completion:"peut-être = adverbe avec trait d'union", answer:"orthographe de l'adverbe peut-être"},
+    {id:"c1g12-point-virgule", term:"le point-virgule", meaning:"sépare deux propositions indépendantes mais liées sémantiquement", synonym:"séparation · idées liées · coordination", example:"Il pleuvait ; nous décidâmes de rester — idées liées par le point-virgule.", completion:"point-virgule = propositions liées mais distinctes", answer:"ponctuation séparant des idées indépendantes mais liées"},
+    {id:"c1g12-majuscule-nat", term:"majuscule / minuscule nationalités", meaning:"nom de nationalité en maj. ; adjectif en minusc.", synonym:"Français · français · typographie", example:"Un Français (nom) parle français (adjectif) — majuscule vs minuscule.", completion:"nationalité : nom = Majusc., adj. = minusc.", answer:"règle des majuscules pour les noms et adjectifs de nationalité"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>La Proposition Participiale — Jeu C1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>
+  <a href="../../index.html">C1</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">La Proposition Participiale</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Le&#231;on</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimables</a>
+</nav>
+<div class="container">
+  <h1>La Proposition Participiale — Jeu de Ma&#238;trise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Ma&#238;trise</h2>
+        <p>Ma&icirc;trisez la proposition participiale et ses valeurs s&eacute;mantiques</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Les r&#233;ponses cons&#233;cutives sur le m&#234;me concept et les s&#233;ries entre concepts rapportent des points bonus.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Vous avez une partie sauvegard&#233;e.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">D&#233;marrer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; R&#233;f&#233;rence — tous les concepts</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Ma&#238;trise atteinte !</h2>
+        <p>Vous avez compl&#233;t&#233; tous les &#233;l&#233;ments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure s&#233;rie</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Fran&#231;ais C1 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "la-proposition-participiale",
+  level: "c1",
+  title: "La Proposition Participiale",
+  storageKey: "wordplay_game_fr_c1_la-proposition-participiale",
+  items: [
+    {id:"c1g02-participiale", term:"la proposition participiale", meaning:"proposition avec participe et sujet propre diff&eacute;rent du principal", synonym:"sujet propre · participe · soutenu", example:"La nuit &eacute;tant tomb&eacute;e, nous avons rentré — <em>la nuit</em> est le sujet propre de la participiale.", completion:"participiale = sujet propre + participe", answer:"proposition avec participe et sujet propre distinct du principal"},
+    {id:"c1g02-sujet-propre", term:"le sujet propre", meaning:"sujet de la participiale, diff&eacute;rent du sujet principal", synonym:"distinct · participe · accord", example:"Le sujet propre de la participiale doit &ecirc;tre exprim&eacute; pour &eacute;viter le participe pendant.", completion:"sujet propre = sujet diff&eacute;rent dans la participiale", answer:"sujet de la participiale distinct du sujet de la principale"},
+    {id:"c1g02-part-pendant", term:"le participe pendant", meaning:"faute de construction : participiale sans sujet exprim&eacute;", synonym:"faute · ambigu&iuml;t&eacute; · &eacute;viter", example:"* &Eacute;tant fatigu&eacute;, la pluie tomba — faute car les sujets ne se rapportent pas.", completion:"participe pendant = faute de construction participiale", answer:"participiale mal construite sans sujet exprim&eacute;"},
+    {id:"c1g02-gerondif-diff", term:"la diff&eacute;rence g&eacute;rondif/participiale", meaning:"g&eacute;rondif = m&ecirc;me sujet ; participiale = sujet propre", synonym:"en + participe · sujet · distinction", example:"En partant, il salua tout le monde (g&eacute;rondif, m&ecirc;me sujet) vs Lui parti, tout changea (participiale).", completion:"g&eacute;rondif = m&ecirc;me sujet ; participiale = sujet propre", answer:"distinction fondamentale entre g&eacute;rondif et participiale"},
+    {id:"c1g02-valeur-cause", term:"la valeur causale", meaning:"la participiale exprimant la cause", synonym:"cause · parce que · &agrave; cause de", example:"La pluie tombant &agrave; verse, nous rest&acirc;mes — cause implicite dans la participiale.", completion:"participiale causale = parce que + proposition", answer:"la participiale exprimant une relation de cause"},
+    {id:"c1g02-valeur-temps", term:"la valeur temporelle", meaning:"la participiale exprimant la simultan&eacute;it&eacute; ou ant&eacute;riorit&eacute;", synonym:"temps · quand · apr&egrave;s que", example:"Le repas termin&eacute;, ils partirent — la participiale exprime l'ant&eacute;riorit&eacute; temporelle.", completion:"participiale temporelle = quand + proposition", answer:"la participiale exprimant un rapport de temps"},
+    {id:"c1g02-absolue", term:"la participiale absolue", meaning:"expression gel&eacute;e sans sujet exprim&eacute;", synonym:"gel&eacute; · connecteur · cela dit", example:"Cela dit, ce faisant, tout bien consid&eacute;r&eacute; — exemples de participiales absolues.", completion:"participiale absolue = expression figée", answer:"forme fig&eacute;e sans sujet exprim&eacute;, connect discursif"},
+    {id:"c1g02-accord", term:"l'accord du participe pass&eacute;", meaning:"le PP s'accorde avec le sujet propre de la participiale", synonym:"accord · sujet · genre/nombre", example:"Ses bagages pr&eacute;par&eacute;s (masculin pluriel), elle &eacute;tait prête — accord avec <em>bagages</em>.", completion:"PP dans participiale = accord avec son sujet propre", answer:"accord du participe pass&eacute; avec le sujet de la participiale"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
