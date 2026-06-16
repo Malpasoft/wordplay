@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Philosophie Morale — Jeu C1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>
+  <a href="../../index.html">C1</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulaire</a><span>&#8250;</span>
+  <a href="index.html">Philosophie Morale</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Le&#231;on</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+</nav>
+<div class="container">
+  <h1>Philosophie Morale — Jeu de Ma&#238;trise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Ma&#238;trise</h2>
+        <p>Maîtrisez le vocabulaire de la philosophie morale</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Les r&#233;ponses cons&#233;cutives sur le m&#234;me concept et les s&#233;ries entre concepts rapportent des points bonus.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Vous avez une partie sauvegard&#233;e.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">D&#233;marrer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; R&#233;f&#233;rence — tous les concepts</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Ma&#238;trise atteinte !</h2>
+        <p>Vous avez compl&#233;t&#233; tous les &#233;l&#233;ments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure s&#233;rie</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Fran&#231;ais C1 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "la-philosophie-morale",
+  level: "c1",
+  title: "La Philosophie Morale",
+  storageKey: "wordplay_game_fr_c1_la-philosophie-morale",
+  items: [
+    {id:"phi-deontologie", term:"l'éthique déontologique", meaning:"théorie morale fondée sur des règles ou devoirs absolus", synonym:"le devoir moral · l'impératif · Kant", example:"L'éthique déontologique juge l'action selon son intention, non ses conséquences.", completion:"éthique déontologique = morale fondée sur des devoirs absolus", answer:"théorie morale fondée sur des règles ou devoirs absolus"},
+    {id:"phi-utilitarisme", term:"l'utilitarisme", meaning:"doctrine qui maximise le bonheur du plus grand nombre", synonym:"le conséquentialisme · Bentham/Mill · l'utilité collective", example:"L'utilitarisme de Bentham évalue les actes par leur utilité collective.", completion:"utilitarisme = maximiser le bonheur du plus grand nombre", answer:"doctrine qui maximise le bonheur du plus grand nombre"},
+    {id:"phi-libre-arbitre", term:"le libre arbitre", meaning:"capacité de choisir librement ses actes, indépendamment de toute contrainte", synonym:"la liberté de choix · l'autodétermination · la volonté libre", example:"Le débat sur le libre arbitre oppose déterminisme et responsabilité morale.", completion:"libre arbitre = capacité de choisir librement ses actes", answer:"capacité de choisir librement ses actes"},
+    {id:"phi-dignite", term:"la dignité humaine", meaning:"valeur intrinsèque de chaque être humain, fondement des droits de l'homme", synonym:"la valeur inaliénable · le respect de la personne · les droits fondamentaux", example:"La dignité humaine est inaliénable : elle ne peut être ni cédée ni supprimée.", completion:"dignité humaine = valeur intrinsèque de chaque être humain", answer:"valeur intrinsèque de chaque être humain"},
+    {id:"phi-vertu", term:"la vertu", meaning:"disposition durable à agir bien, au cœur de l'éthique aristotélicienne", synonym:"la qualité morale · l'excellence éthique · le juste milieu", example:"Aristote considère la vertu comme un juste milieu entre deux extrêmes.", completion:"vertu = disposition durable à agir bien (Aristote)", answer:"disposition durable à agir bien"},
+    {id:"phi-consequentialisme", term:"le conséquentialisme", meaning:"théorie selon laquelle la valeur morale d'un acte dépend uniquement de ses conséquences", synonym:"l'utilitarisme · les résultats · l'évaluation par les effets", example:"Pour le conséquentialisme, une bonne fin peut justifier des moyens discutables.", completion:"conséquentialisme = valeur morale déterminée par les conséquences", answer:"théorie dont la valeur morale dépend des conséquences"},
+    {id:"phi-autonomie", term:"l'autonomie morale", meaning:"capacité de se donner à soi-même sa propre loi morale par la raison", synonym:"la législation de soi · la raison pratique · l'auto-législation", example:"Kant fait de l'autonomie morale le fondement de la dignité humaine.", completion:"autonomie morale = capacité de se donner sa propre loi par la raison", answer:"capacité de se donner sa propre loi morale par la raison"},
+    {id:"phi-bien-commun", term:"le bien commun", meaning:"conditions sociales permettant l'épanouissement de chacun", synonym:"l'intérêt général · le bien public · le bien collectif", example:"Les politiques publiques doivent viser le bien commun plutôt que les intérêts particuliers.", completion:"bien commun = conditions permettant l'épanouissement de chacun", answer:"conditions sociales permettant l'épanouissement de chacun"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

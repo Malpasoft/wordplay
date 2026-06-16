@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Sciences Sociales — Jeu C1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>
+  <a href="../../index.html">C1</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulaire</a><span>&#8250;</span>
+  <a href="index.html">Sciences Sociales</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Le&#231;on</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+</nav>
+<div class="container">
+  <h1>Sciences Sociales — Jeu de Ma&#238;trise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Ma&#238;trise</h2>
+        <p>Maîtrisez le vocabulaire des sciences sociales avancées</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Les r&#233;ponses cons&#233;cutives sur le m&#234;me concept et les s&#233;ries entre concepts rapportent des points bonus.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Vous avez une partie sauvegard&#233;e.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">D&#233;marrer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; R&#233;f&#233;rence — tous les concepts</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Ma&#238;trise atteinte !</h2>
+        <p>Vous avez compl&#233;t&#233; tous les &#233;l&#233;ments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure s&#233;rie</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Fran&#231;ais C1 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "les-sciences-sociales",
+  level: "c1",
+  title: "Les Sciences Sociales",
+  storageKey: "wordplay_game_fr_c1_les-sciences-sociales",
+  items: [
+    {id:"soc-stratification", term:"la stratification sociale", meaning:"hiérarchisation de la société en groupes de statuts différents", synonym:"la hiérarchie sociale · les classes · l'inégalité structurelle", example:"La stratification sociale détermine l'accès aux ressources et aux opportunités.", completion:"stratification sociale = hiérarchisation de la société en groupes", answer:"hiérarchisation de la société en groupes de statuts différents"},
+    {id:"soc-capital-culturel", term:"le capital culturel", meaning:"ensemble de connaissances et compétences valorisées socialement", synonym:"les ressources symboliques · le bagage culturel · Bourdieu", example:"Le capital culturel se transmet principalement par la famille et l'école.", completion:"capital culturel = connaissances et compétences valorisées socialement", answer:"connaissances et compétences valorisées socialement"},
+    {id:"soc-habitus", term:"l'habitus", meaning:"dispositions durables acquises par socialisation (Bourdieu)", synonym:"les dispositions acquises · le comportement incorporé · les schèmes", example:"L'habitus guide nos choix de manière inconsciente mais cohérente.", completion:"habitus = dispositions durables acquises par socialisation", answer:"dispositions durables acquises par socialisation"},
+    {id:"soc-deviance", term:"la déviance", meaning:"comportement qui transgresse les normes d'un groupe social", synonym:"la transgression des normes · le non-conformisme · l'infraction sociale", example:"La sociologie étudie la déviance pour comprendre les mécanismes de contrôle social.", completion:"déviance = comportement qui transgresse les normes sociales", answer:"comportement qui transgresse les normes d'un groupe social"},
+    {id:"soc-acculturation", term:"l'acculturation", meaning:"processus par lequel un individu ou un groupe adopte des éléments d'une autre culture", synonym:"l'adaptation culturelle · l'intégration culturelle · le brassage", example:"L'acculturation peut mener à l'intégration ou à la marginalisation culturelle.", completion:"acculturation = adoption d'éléments d'une autre culture", answer:"adoption d'éléments d'une autre culture"},
+    {id:"soc-mobilite", term:"la mobilité sociale", meaning:"déplacement d'un individu entre différentes positions dans la hiérarchie sociale", synonym:"l'ascension sociale · la promotion sociale · le déclassement", example:"La mobilité sociale ascendante était plus fréquente aux Trente Glorieuses.", completion:"mobilité sociale = déplacement dans la hiérarchie sociale", answer:"déplacement entre différentes positions dans la hiérarchie sociale"},
+    {id:"soc-reproduction", term:"la reproduction sociale", meaning:"mécanisme par lequel les inégalités sociales se perpétuent de génération en génération", synonym:"la transmission des inégalités · la perpétuation des classes · le déterminisme", example:"La reproduction sociale explique pourquoi la mobilité sociale reste limitée.", completion:"reproduction sociale = perpétuation des inégalités entre générations", answer:"perpétuation des inégalités de génération en génération"},
+    {id:"soc-cohesion", term:"la cohésion sociale", meaning:"force d'intégration qui maintient ensemble les membres d'une société", synonym:"le lien collectif · la solidarité · l'unité sociale", example:"Les inégalités croissantes menacent la cohésion sociale dans de nombreux pays.", completion:"cohésion sociale = force qui maintient les membres d'une société ensemble", answer:"force d'intégration qui maintient les membres d'une société"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

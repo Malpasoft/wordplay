@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>L'Histoire et la Mémoire — Cartes | Fran&#231;ais C1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<style>
+.fc-wrap{perspective:800px;margin:0 auto 20px;max-width:480px}
+.fc{width:100%;height:220px;position:relative;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;border-radius:10px}
+.fc.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;border:1px solid var(--hairline)}
+.fc-front,.fc-back{background:var(--paper)}
+.fc-back{transform:rotateY(180deg)}
+.fc-word{font-size:1.8rem;font-weight:700;color:var(--ink);margin-bottom:6px}
+.fc-ipa{font-family:var(--font-sans);font-size:.85rem;color:var(--muted);margin-bottom:8px}
+.fc-def{font-size:.95rem;color:var(--ink);margin-bottom:6px}
+.fc-ex{font-size:.82rem;color:var(--muted);font-style:italic}
+.fc-hint{font-family:var(--font-sans);font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:10px}
+.fc-audio{background:none;border:1px solid var(--hairline);border-radius:4px;padding:5px 12px;font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);cursor:pointer;margin-top:8px}
+.fc-audio:hover{border-color:var(--amber);color:var(--amber)}
+.fc-nav{display:flex;align-items:center;gap:16px;justify-content:center;margin-bottom:20px}
+.fc-btn{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 18px;border-radius:4px;cursor:pointer;border:1.5px solid var(--hairline);background:transparent;color:var(--ink)}
+.fc-btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.fc-counter{font-family:var(--font-sans);font-size:.75rem;color:var(--muted);font-weight:600}
+.mastery-badge{display:inline-block;padding:8px 18px;background:rgba(184,134,11,.12);color:var(--amber);font-family:var(--font-sans);font-size:.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:4px;margin-bottom:16px}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.match-col{display:flex;flex-direction:column;gap:8px}
+.match-item{padding:12px 14px;border:1.5px solid var(--hairline);border-radius:6px;cursor:pointer;font-size:.9rem;color:var(--ink);transition:border-color .15s,background .15s;user-select:none;min-height:48px;display:flex;align-items:center}
+.match-item.selected{border-color:var(--amber);background:rgba(184,134,11,.08)}
+.match-item.correct{border-color:var(--green,#2E7D52);background:rgba(46,125,82,.08);pointer-events:none;color:var(--muted)}
+.match-item.wrong{border-color:var(--red,#C03A2B);background:rgba(192,57,43,.08)}
+.match-status{font-family:var(--font-sans);font-size:.85rem;color:var(--muted);text-align:center;margin-bottom:16px}
+.heart-row{display:flex;gap:6px;justify-content:center;margin-bottom:12px}
+.heart-svg{width:22px;height:22px}
+</style>
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="../index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>
+  <a href="../../index.html">C1</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulaire</a><span>&#8250;</span>
+  <strong>L'Histoire et la Mémoire</strong>
+</div>
+<div class="chapter-num">V04</div>
+<h1>L'Histoire et la Mémoire</h1>
+<nav class="chapter-nav">
+  <a href="flashcards.html" class="chapter-nav-btn active">Cartes</a>
+  <a href="slides.html" class="chapter-nav-btn">Le&#231;on</a>
+  <a href="game.html" class="chapter-nav-btn">Jeu</a>
+  <a href="match.html" class="chapter-nav-btn">Relier</a>
+</nav>
+<div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">&#10003; Ma&#238;tris&#233;</span></div>
+<p style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">15 mots &middot; appuyez sur la carte pour voir la d&#233;finition</p>
+<div class="fc-nav"><button class="fc-btn" onclick="prevCard()">&#8592; Pr&#233;c.</button><span class="fc-counter" id="fcCounter">1 / 15</span><button class="fc-btn primary" onclick="nextCard()">Suivant &#8594;</button></div>
+<div class="fc-wrap"><div class="fc" id="fcCard" onclick="flipCard()"><div class="fc-face fc-front"><div class="fc-word" id="fcWord"></div><div class="fc-ipa" id="fcIpa"></div><div class="fc-hint">Appuyez pour voir la d&#233;finition</div></div><div class="fc-face fc-back"><div class="fc-def" id="fcDef"></div><div class="fc-ex" id="fcEx"></div><button class="fc-audio" onclick="event.stopPropagation();speakWord()">&#9654; &#201;couter</button></div></div></div>
+<script>
+var WORDS = [{"word": "l'historiographie (f)", "ipa": "/is.tɔ.ʁjɔ.ɡʁa.fi/", "def": "étude des méthodes et des approches utilisées par les historiens", "ex": "L'historiographie des Annales a révolutionné la façon d'écrire l'histoire en France."}, {"word": "la mémoire collective", "ipa": "/me.mwaʁ kɔ.lɛk.tiv/", "def": "ensemble des souvenirs partagés par un groupe social ou une nation", "ex": "La mémoire collective de la Shoah est transmise par les commémorations et les témoignages."}, {"word": "le devoir de mémoire", "ipa": "/də.vwaʁ də me.mwaʁ/", "def": "obligation morale de ne pas oublier les crimes historiques majeurs", "ex": "Le devoir de mémoire envers les victimes de l'esclavage est inscrit dans la loi Taubira."}, {"word": "la révision historique", "ipa": "/ʁe.vi.zjɔ̃ is.tɔ.ʁik/", "def": "réexamen légitime des faits historiques à la lumière de nouveaux documents", "ex": "La révision historique saine s'appuie sur des archives, contrairement au négationnisme."}, {"word": "le négationnisme", "ipa": "/ne.ɡa.sjɔ.nism/", "def": "négation de faits historiques établis, notamment des génocides", "ex": "Le négationnisme de la Shoah est un délit en France depuis la loi Gayssot de 1990."}, {"word": "le lieu de mémoire", "ipa": "/ljø də me.mwaʁ/", "def": "site symbolique où se cristallise la mémoire d'une communauté (Pierre Nora)", "ex": "Verdun, le Mémorial de la Shoah, le Mont-Saint-Michel sont des lieux de mémoire français."}, {"word": "la commémoration", "ipa": "/kɔ.me.mɔ.ʁa.sjɔ̃/", "def": "cérémonie officielle rappelant un événement historique", "ex": "La commémoration du 8 mai réunit chaque année anciens combattants et représentants de l'État."}, {"word": "l'anachronisme historique (m)", "ipa": "/a.na.kʁɔ.nism is.tɔ.ʁik/", "def": "erreur consistant à appliquer des catégories actuelles à des situations passées", "ex": "Parler de 'droits de l'homme' au Moyen Âge serait un anachronisme historique."}, {"word": "la longue durée", "ipa": "/lɔ̃ɡ dy.ʁe/", "def": "concept de l'école des Annales désignant les structures historiques lentes", "ex": "Fernand Braudel a théorisé la longue durée pour décrire les permanences géographiques et économiques."}, {"word": "le témoignage", "ipa": "/te.mwa.ɲaʒ/", "def": "récit personnel d'un événement vécu, source première de l'histoire orale", "ex": "Les témoignages des survivants constituent une source irremplaçable pour les historiens."}, {"word": "la patrimonialisation", "ipa": "/pat.ʁi.mɔ.nja.li.za.sjɔ̃/", "def": "processus par lequel un objet culturel ou naturel est reconnu comme patrimoine", "ex": "La patrimonialisation du centre historique de Lyon lui a valu l'inscription à l'UNESCO."}, {"word": "la prosopographie", "ipa": "/pʁɔ.sɔ.pɔ.ɡʁa.fi/", "def": "méthode historique étudiant les caractéristiques d'un groupe d'individus du passé", "ex": "La prosopographie des sénateurs romains a permis d'établir leur profil social."}, {"word": "le présentisme", "ipa": "/pʁe.zɑ̃.tism/", "def": "tendance à interpréter le passé avec des valeurs et catégories du présent", "ex": "Juger les pères fondateurs à l'aune des valeurs actuelles relève du présentisme."}, {"word": "la rupture épistémologique", "ipa": "/ʁyp.tyʁ e.pis.te.mɔ.lɔ.ʒik/", "def": "changement radical de paradigme dans la manière de produire le savoir", "ex": "La révolution copernicienne est une rupture épistémologique majeure de la science moderne."}, {"word": "l'histoire des mentalités (f)", "ipa": "/is.twaʁ de mɑ̃.ta.li.te/", "def": "étude des représentations, croyances et valeurs collectives d'une époque", "ex": "L'histoire des mentalités s'intéresse aux peurs, aux croyances et aux valeurs du passé."}];
+var STORAGE_KEY = "wordplay_vocab_mastered_fr_c1_l-histoire-et-memoire";
+var LEVEL = "c1";
+</script>
+<script>
+var idx = 0, seen = new Set(), allDone = false;
+function showCard() {
+  var w = WORDS[idx];
+  document.getElementById('fcWord').textContent = w.word;
+  document.getElementById('fcIpa').textContent = w.ipa || '';
+  document.getElementById('fcDef').innerHTML = w.def;
+  document.getElementById('fcEx').innerHTML = w.ex || '';
+  document.getElementById('fcCard').classList.remove('flipped');
+  document.getElementById('fcCounter').textContent = (idx+1) + ' / ' + WORDS.length;
+  seen.add(idx);
+  if (seen.size === WORDS.length && !allDone) { allDone = true; saveMastery(); }
+}
+function flipCard() { document.getElementById('fcCard').classList.toggle('flipped'); }
+function prevCard() { idx = (idx - 1 + WORDS.length) % WORDS.length; showCard(); }
+function nextCard() { idx = (idx + 1) % WORDS.length; showCard(); }
+function speakWord() {
+  var u = new SpeechSynthesisUtterance(WORDS[idx].word);
+  u.lang = 'fr-FR'; u.rate = 0.85; speechSynthesis.speak(u);
+}
+function saveMastery() {
+  var prog = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+  if (!prog[LEVEL]) prog[LEVEL] = {};
+  prog[LEVEL][STORAGE_KEY] = {done: true, date: new Date().toISOString()};
+  localStorage.setItem('wordplay_progress', JSON.stringify(prog));
+  if (window.store && store.pushProgress) store.pushProgress();
+  document.getElementById('masteryBadge').style.display = 'block';
+}
+(function init() {
+  var prog = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+  var lv = prog[LEVEL] || {};
+  if (lv[STORAGE_KEY] && lv[STORAGE_KEY].done) {
+    allDone = true;
+    document.getElementById('masteryBadge').style.display = 'block';
+  }
+  showCard();
+})();
+</script><footer class="site-footer">Word Play &middot; Fran&#231;ais C1 &middot; Vocabulaire</footer>
+</div></body>
+</html>

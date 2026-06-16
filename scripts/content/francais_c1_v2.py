@@ -1,0 +1,163 @@
+"""
+francais_c1_v2.py — French C1 Vocabulary chapters V05–V08
+V05 Les Sciences Sociales
+V06 La Philosophie Morale
+V07 La Politique et le Droit International
+V08 La Communication et les Médias
+"""
+
+CHAPTERS = {
+
+# ── V05 Les Sciences Sociales ─────────────────────────────────────────────
+"les-sciences-sociales": {
+    "level": "c1",
+    "section": "vocabulaire",
+    "num": "V05",
+    "short": "Sciences Sociales",
+    "title": "Les Sciences Sociales",
+    "subtitle": "Sociologie, anthropologie et sciences humaines avancées",
+    "game_desc": "Maîtrisez le vocabulaire des sciences sociales avancées",
+    "words": [
+        {"word": "la stratification sociale",  "ipa": "/stʁatifikasjɔ̃ sɔsjal/",   "def": "hiérarchisation de la société en groupes de statuts différents", "ex": "La stratification sociale détermine l'accès aux ressources et aux opportunités."},
+        {"word": "le capital culturel",        "ipa": "/kapital kyltɥʁɛl/",         "def": "ensemble de connaissances et compétences valorisées socialement (Bourdieu)", "ex": "Le capital culturel se transmet principalement par la famille et l'école."},
+        {"word": "la reproduction sociale",    "ipa": "/ʁəpʁɔdyksjɔ̃ sɔsjal/",     "def": "mécanisme par lequel les inégalités sociales se perpétuent de génération en génération", "ex": "La reproduction sociale explique pourquoi la mobilité sociale reste limitée."},
+        {"word": "le lien social",             "ipa": "/ljɛ̃ sɔsjal/",              "def": "ensemble des relations qui unissent les individus dans une société", "ex": "Le bénévolat renforce le lien social dans les quartiers défavorisés."},
+        {"word": "la norme sociale",           "ipa": "/nɔʁm sɔsjal/",             "def": "règle de comportement implicite ou explicite acceptée dans un groupe", "ex": "Les normes sociales varient considérablement d'une culture à l'autre."},
+        {"word": "la déviance",                "ipa": "/devjɑ̃s/",                  "def": "comportement qui transgresse les normes d'un groupe social", "ex": "La sociologie étudie la déviance pour comprendre les mécanismes de contrôle social."},
+        {"word": "l'ethnicité",                "ipa": "/etnisite/",                 "def": "sentiment d'appartenance à un groupe partageant une culture et une histoire communes", "ex": "L'ethnicité est une construction sociale autant qu'une réalité vécue."},
+        {"word": "l'acculturation",            "ipa": "/akyltyʁasjɔ̃/",             "def": "processus par lequel un individu ou un groupe adopte des éléments d'une autre culture", "ex": "L'acculturation peut mener à l'intégration ou à la marginalisation culturelle."},
+        {"word": "le paradigme",               "ipa": "/paʁadiɡm/",                "def": "cadre conceptuel dominant qui structure la pensée scientifique d'une époque", "ex": "Kuhn a montré que la science progresse par révolutions de paradigme."},
+        {"word": "la mobilité sociale",        "ipa": "/mɔbilite sɔsjal/",         "def": "déplacement d'un individu entre différentes positions dans la hiérarchie sociale", "ex": "La mobilité sociale ascendante était plus fréquente aux Trente Glorieuses."},
+        {"word": "le déterminisme social",     "ipa": "/detɛʁminism sɔsjal/",      "def": "théorie selon laquelle les comportements humains sont conditionnés par le milieu social", "ex": "Le déterminisme social est nuancé par l'étude des trajectoires individuelles."},
+        {"word": "l'habitus",                  "ipa": "/abitys/",                   "def": "ensemble de dispositions durables acquises par socialisation (Bourdieu)", "ex": "L'habitus guide nos choix de manière inconsciente mais cohérente."},
+        {"word": "la cohésion sociale",        "ipa": "/koezjɔ̃ sɔsjal/",          "def": "force d'intégration qui maintient ensemble les membres d'une société", "ex": "Les inégalités croissantes menacent la cohésion sociale dans de nombreux pays."},
+        {"word": "l'interactionnisme",         "ipa": "/ɛ̃tɛʁaksjɔnism/",          "def": "courant sociologique centré sur les interactions entre individus pour expliquer la société", "ex": "L'interactionnisme symbolique analyse le sens que les acteurs donnent à leurs actions."},
+        {"word": "la socialisation",           "ipa": "/sɔsjalizasjɔ̃/",            "def": "processus d'intégration des normes, valeurs et savoirs d'une société", "ex": "La socialisation primaire s'effectue principalement au sein de la famille."},
+    ],
+    "items": [
+        ("soc-stratification", "la stratification sociale", "hiérarchisation de la société en groupes de statuts différents", "la hiérarchie sociale · les classes · l'inégalité structurelle", "La stratification sociale détermine l'accès aux ressources et aux opportunités.", "stratification sociale = hiérarchisation de la société en groupes", "hiérarchisation de la société en groupes de statuts différents"),
+        ("soc-capital-culturel", "le capital culturel", "ensemble de connaissances et compétences valorisées socialement", "les ressources symboliques · le bagage culturel · Bourdieu", "Le capital culturel se transmet principalement par la famille et l'école.", "capital culturel = connaissances et compétences valorisées socialement", "connaissances et compétences valorisées socialement"),
+        ("soc-habitus", "l'habitus", "dispositions durables acquises par socialisation (Bourdieu)", "les dispositions acquises · le comportement incorporé · les schèmes", "L'habitus guide nos choix de manière inconsciente mais cohérente.", "habitus = dispositions durables acquises par socialisation", "dispositions durables acquises par socialisation"),
+        ("soc-deviance", "la déviance", "comportement qui transgresse les normes d'un groupe social", "la transgression des normes · le non-conformisme · l'infraction sociale", "La sociologie étudie la déviance pour comprendre les mécanismes de contrôle social.", "déviance = comportement qui transgresse les normes sociales", "comportement qui transgresse les normes d'un groupe social"),
+        ("soc-acculturation", "l'acculturation", "processus par lequel un individu ou un groupe adopte des éléments d'une autre culture", "l'adaptation culturelle · l'intégration culturelle · le brassage", "L'acculturation peut mener à l'intégration ou à la marginalisation culturelle.", "acculturation = adoption d'éléments d'une autre culture", "adoption d'éléments d'une autre culture"),
+        ("soc-mobilite", "la mobilité sociale", "déplacement d'un individu entre différentes positions dans la hiérarchie sociale", "l'ascension sociale · la promotion sociale · le déclassement", "La mobilité sociale ascendante était plus fréquente aux Trente Glorieuses.", "mobilité sociale = déplacement dans la hiérarchie sociale", "déplacement entre différentes positions dans la hiérarchie sociale"),
+        ("soc-reproduction", "la reproduction sociale", "mécanisme par lequel les inégalités sociales se perpétuent de génération en génération", "la transmission des inégalités · la perpétuation des classes · le déterminisme", "La reproduction sociale explique pourquoi la mobilité sociale reste limitée.", "reproduction sociale = perpétuation des inégalités entre générations", "perpétuation des inégalités de génération en génération"),
+        ("soc-cohesion", "la cohésion sociale", "force d'intégration qui maintient ensemble les membres d'une société", "le lien collectif · la solidarité · l'unité sociale", "Les inégalités croissantes menacent la cohésion sociale dans de nombreux pays.", "cohésion sociale = force qui maintient les membres d'une société ensemble", "force d'intégration qui maintient les membres d'une société"),
+    ],
+},
+
+# ── V06 La Philosophie Morale ─────────────────────────────────────────────
+"la-philosophie-morale": {
+    "level": "c1",
+    "section": "vocabulaire",
+    "num": "V06",
+    "short": "Philosophie Morale",
+    "title": "La Philosophie Morale",
+    "subtitle": "Éthique, valeurs et fondements de l'action humaine",
+    "game_desc": "Maîtrisez le vocabulaire de la philosophie morale",
+    "words": [
+        {"word": "l'éthique déontologique",   "ipa": "/etik deɔ̃tɔlɔʒik/",        "def": "théorie morale fondée sur des règles ou devoirs absolus (Kant)", "ex": "L'éthique déontologique juge l'action selon son intention, non ses conséquences."},
+        {"word": "l'utilitarisme",             "ipa": "/ytilitaʁism/",              "def": "doctrine selon laquelle est moralement bon ce qui maximise le bonheur du plus grand nombre", "ex": "L'utilitarisme de Bentham évalue les actes par leur utilité collective."},
+        {"word": "l'impératif catégorique",    "ipa": "/ɛ̃peʁatif kateɡɔʁik/",     "def": "commandement moral inconditionnel valable pour tous, chez Kant", "ex": "L'impératif catégorique exige d'agir selon une maxime universalisable."},
+        {"word": "la vertu",                   "ipa": "/vɛʁty/",                    "def": "disposition durable à agir bien, au cœur de l'éthique aristotélicienne", "ex": "Aristote considère la vertu comme un juste milieu entre deux extrêmes."},
+        {"word": "le relativisme moral",       "ipa": "/ʁelativism mɔʁal/",        "def": "position selon laquelle les valeurs morales varient selon les cultures ou individus", "ex": "Le relativisme moral interroge l'existence de valeurs éthiques universelles."},
+        {"word": "l'altruisme",                "ipa": "/altʁɥism/",                 "def": "disposition à se préoccuper du bien d'autrui au détriment de son propre intérêt", "ex": "L'altruisme efficace cherche à maximiser l'impact de nos actions bienveillantes."},
+        {"word": "le libre arbitre",           "ipa": "/libʁ aʁbitʁ/",             "def": "capacité de choisir librement ses actes, indépendamment de toute contrainte", "ex": "Le débat sur le libre arbitre oppose déterminisme et responsabilité morale."},
+        {"word": "la responsabilité morale",   "ipa": "/ʁɛspɔ̃sabilite mɔʁal/",    "def": "obligation de répondre de ses actes en raison de sa capacité à choisir", "ex": "La responsabilité morale présuppose que l'agent aurait pu agir autrement."},
+        {"word": "le bien commun",             "ipa": "/bjɛ̃ kɔmœ̃/",               "def": "ensemble des conditions sociales permettant l'épanouissement de chacun", "ex": "Les politiques publiques doivent viser le bien commun plutôt que les intérêts particuliers."},
+        {"word": "la dignité humaine",         "ipa": "/diɲite ymɛn/",             "def": "valeur intrinsèque de chaque être humain, fondement des droits de l'homme", "ex": "La dignité humaine est inaliénable : elle ne peut être ni cédée ni supprimée."},
+        {"word": "l'éthique des vertus",       "ipa": "/etik de vɛʁty/",           "def": "approche morale centrée sur le caractère et les qualités de l'agent plutôt que sur les règles", "ex": "L'éthique des vertus demande 'quel type de personne dois-je être ?'"},
+        {"word": "le contractualisme",         "ipa": "/kɔ̃tʁaktɥalism/",           "def": "théorie morale fondant les obligations sur un contrat hypothétique entre individus rationnels", "ex": "Le contractualisme de Rawls génère des principes de justice acceptables pour tous."},
+        {"word": "le conséquentialisme",       "ipa": "/kɔ̃sekɑ̃sjalism/",          "def": "théorie selon laquelle la valeur morale d'un acte dépend uniquement de ses conséquences", "ex": "Pour le conséquentialisme, une bonne fin peut justifier des moyens discutables."},
+        {"word": "l'autonomie morale",         "ipa": "/otɔnɔmi mɔʁal/",           "def": "capacité de se donner à soi-même sa propre loi morale par la raison", "ex": "Kant fait de l'autonomie morale le fondement de la dignité humaine."},
+        {"word": "l'éthique du care",          "ipa": "/etik dy kɛʁ/",             "def": "approche morale privilégiant la sollicitude, la relation et la responsabilité envers autrui", "ex": "L'éthique du care, développée par Gilligan, critique l'impartialité abstraite des théories universalistes."},
+    ],
+    "items": [
+        ("phi-deontologie", "l'éthique déontologique", "théorie morale fondée sur des règles ou devoirs absolus", "le devoir moral · l'impératif · Kant", "L'éthique déontologique juge l'action selon son intention, non ses conséquences.", "éthique déontologique = morale fondée sur des devoirs absolus", "théorie morale fondée sur des règles ou devoirs absolus"),
+        ("phi-utilitarisme", "l'utilitarisme", "doctrine qui maximise le bonheur du plus grand nombre", "le conséquentialisme · Bentham/Mill · l'utilité collective", "L'utilitarisme de Bentham évalue les actes par leur utilité collective.", "utilitarisme = maximiser le bonheur du plus grand nombre", "doctrine qui maximise le bonheur du plus grand nombre"),
+        ("phi-libre-arbitre", "le libre arbitre", "capacité de choisir librement ses actes, indépendamment de toute contrainte", "la liberté de choix · l'autodétermination · la volonté libre", "Le débat sur le libre arbitre oppose déterminisme et responsabilité morale.", "libre arbitre = capacité de choisir librement ses actes", "capacité de choisir librement ses actes"),
+        ("phi-dignite", "la dignité humaine", "valeur intrinsèque de chaque être humain, fondement des droits de l'homme", "la valeur inaliénable · le respect de la personne · les droits fondamentaux", "La dignité humaine est inaliénable : elle ne peut être ni cédée ni supprimée.", "dignité humaine = valeur intrinsèque de chaque être humain", "valeur intrinsèque de chaque être humain"),
+        ("phi-vertu", "la vertu", "disposition durable à agir bien, au cœur de l'éthique aristotélicienne", "la qualité morale · l'excellence éthique · le juste milieu", "Aristote considère la vertu comme un juste milieu entre deux extrêmes.", "vertu = disposition durable à agir bien (Aristote)", "disposition durable à agir bien"),
+        ("phi-consequentialisme", "le conséquentialisme", "théorie selon laquelle la valeur morale d'un acte dépend uniquement de ses conséquences", "l'utilitarisme · les résultats · l'évaluation par les effets", "Pour le conséquentialisme, une bonne fin peut justifier des moyens discutables.", "conséquentialisme = valeur morale déterminée par les conséquences", "théorie dont la valeur morale dépend des conséquences"),
+        ("phi-autonomie", "l'autonomie morale", "capacité de se donner à soi-même sa propre loi morale par la raison", "la législation de soi · la raison pratique · l'auto-législation", "Kant fait de l'autonomie morale le fondement de la dignité humaine.", "autonomie morale = capacité de se donner sa propre loi par la raison", "capacité de se donner sa propre loi morale par la raison"),
+        ("phi-bien-commun", "le bien commun", "conditions sociales permettant l'épanouissement de chacun", "l'intérêt général · le bien public · le bien collectif", "Les politiques publiques doivent viser le bien commun plutôt que les intérêts particuliers.", "bien commun = conditions permettant l'épanouissement de chacun", "conditions sociales permettant l'épanouissement de chacun"),
+    ],
+},
+
+# ── V07 La Politique et le Droit International ───────────────────────────
+"la-politique-et-droit-international": {
+    "level": "c1",
+    "section": "vocabulaire",
+    "num": "V07",
+    "short": "Politique Internationale",
+    "title": "La Politique et le Droit International",
+    "subtitle": "Relations internationales, géopolitique et droit des gens",
+    "game_desc": "Maîtrisez le vocabulaire de la politique internationale",
+    "words": [
+        {"word": "la souveraineté",            "ipa": "/suvʁɛnte/",                "def": "pouvoir suprême d'un État sur son territoire et sa population, sans ingérence extérieure", "ex": "La souveraineté nationale est un principe fondamental du droit international."},
+        {"word": "le droit international humanitaire", "ipa": "/dʁwa ɛ̃tɛʁnasjɔnal ymanitɛʁ/", "def": "ensemble des règles limitant les effets des conflits armés sur les personnes et les biens", "ex": "Le droit international humanitaire interdit les attaques délibérées contre les civils."},
+        {"word": "la diplomatie",               "ipa": "/diplomasi/",               "def": "conduite des relations entre États par voie de négociation et représentation officielle", "ex": "La diplomatie multilatérale se pratique au sein d'organisations comme l'ONU."},
+        {"word": "le multilatéralisme",         "ipa": "/myltilateʁalism/",         "def": "approche de gouvernance internationale fondée sur la coopération entre plusieurs États", "ex": "Le multilatéralisme est mis à l'épreuve par la montée des nationalismes."},
+        {"word": "la géopolitique",             "ipa": "/ʒeɔpɔlitik/",             "def": "étude des relations entre la géographie, le pouvoir et les stratégies des États", "ex": "La géopolitique de l'Arctique prend de l'importance avec la fonte des glaces."},
+        {"word": "le droit de veto",            "ipa": "/dʁwa də veto/",            "def": "pouvoir d'un membre permanent du Conseil de sécurité de l'ONU de bloquer une résolution", "ex": "Le droit de veto des cinq membres permanents paralyse souvent le Conseil de sécurité."},
+        {"word": "le droit d'ingérence",        "ipa": "/dʁwa dɛ̃ʒeʁɑ̃s/",          "def": "droit reconnu à la communauté internationale d'intervenir dans un État pour protéger les civils", "ex": "Le droit d'ingérence humanitaire reste controversé au regard de la souveraineté."},
+        {"word": "la responsabilité de protéger", "ipa": "/ʁɛspɔ̃sabilite də pʁɔteʒe/", "def": "principe onusien selon lequel la communauté internationale peut intervenir si un État faillit à protéger ses citoyens", "ex": "La responsabilité de protéger a été invoquée lors de la crise en Libye en 2011."},
+        {"word": "le soft power",               "ipa": "/sɔft pawɛʁ/",             "def": "influence d'un État par la culture, les valeurs et la diplomatie plutôt que par la coercition", "ex": "La France exerce son soft power grâce à la langue française et à sa culture."},
+        {"word": "la mondialisation",           "ipa": "/mɔ̃djalizasjɔ̃/",          "def": "processus d'intégration croissante des économies, cultures et sociétés à l'échelle planétaire", "ex": "La mondialisation a accru les interdépendances tout en exacerbant les inégalités."},
+        {"word": "le rapport de force",         "ipa": "/ʁapɔʁ də fɔʁs/",          "def": "équilibre ou déséquilibre de puissance entre acteurs sur la scène internationale ou sociale", "ex": "Les négociations commerciales reflètent le rapport de force entre blocs économiques."},
+        {"word": "le tribunal pénal international", "ipa": "/tʁibynɑl penal ɛ̃tɛʁnasjɔnal/", "def": "juridiction internationale chargée de juger les crimes de guerre, crimes contre l'humanité et génocides", "ex": "Le tribunal pénal international a compétence pour juger les crimes les plus graves."},
+        {"word": "le consensus",                "ipa": "/kɔ̃sɑ̃sys/",               "def": "accord général atteint sans vote formel, par convergence progressive des positions", "ex": "Les décisions de l'OMC sont en général prises par consensus entre ses membres."},
+        {"word": "l'hégémonie",                 "ipa": "/eʒemɔni/",                "def": "domination politique, économique ou culturelle d'un État ou d'un bloc sur les autres", "ex": "L'hégémonie américaine du XXe siècle est contestée par la montée en puissance de la Chine."},
+        {"word": "la coopération décentralisée", "ipa": "/kɔɔpeʁasjɔ̃ desɑ̃tʁalize/", "def": "partenariats de développement établis directement entre collectivités locales de pays différents", "ex": "La coopération décentralisée permet aux villes de partager des solutions concrètes."},
+    ],
+    "items": [
+        ("pol-souverainete", "la souveraineté", "pouvoir suprême d'un État sur son territoire, sans ingérence extérieure", "l'indépendance nationale · l'autonomie d'État · le pouvoir suprême", "La souveraineté nationale est un principe fondamental du droit international.", "souveraineté = pouvoir suprême d'un État sur son territoire", "pouvoir suprême d'un État sur son territoire sans ingérence"),
+        ("pol-diplomatie", "la diplomatie", "conduite des relations entre États par voie de négociation officielle", "les relations internationales · la négociation · la représentation", "La diplomatie multilatérale se pratique au sein d'organisations comme l'ONU.", "diplomatie = conduite des relations entre États par négociation", "conduite des relations entre États par voie de négociation"),
+        ("pol-soft-power", "le soft power", "influence d'un État par la culture et les valeurs plutôt que par la coercition", "la puissance douce · l'influence culturelle · la diplomatie culturelle", "La France exerce son soft power grâce à la langue française et à sa culture.", "soft power = influence par la culture et les valeurs, sans coercition", "influence d'un État par la culture et les valeurs"),
+        ("pol-hegemonie", "l'hégémonie", "domination d'un État ou d'un bloc sur les autres, politique, économique ou culturelle", "la suprématie · la domination · la prépondérance", "L'hégémonie américaine du XXe siècle est contestée par la montée en puissance de la Chine.", "hégémonie = domination d'un État ou bloc sur les autres", "domination politique, économique ou culturelle d'un État sur les autres"),
+        ("pol-multilatéralisme", "le multilatéralisme", "approche de gouvernance fondée sur la coopération entre plusieurs États", "la coopération internationale · le bilatéralisme · l'unilatéralisme (opposés)", "Le multilatéralisme est mis à l'épreuve par la montée des nationalismes.", "multilatéralisme = gouvernance par coopération entre plusieurs États", "approche de gouvernance fondée sur la coopération entre États"),
+        ("pol-responsabilite", "la responsabilité de protéger", "principe selon lequel la communauté internationale peut intervenir si un État faillit à protéger ses citoyens", "l'ingérence humanitaire · R2P · la protection des civils", "La responsabilité de protéger a été invoquée lors de la crise en Libye en 2011.", "responsabilité de protéger = droit d'intervenir si un État faillit à protéger ses citoyens", "droit d'intervention si un État faillit à protéger ses citoyens"),
+        ("pol-geopolitique", "la géopolitique", "étude des relations entre la géographie, le pouvoir et les stratégies des États", "les enjeux territoriaux · la stratégie internationale · les équilibres de puissance", "La géopolitique de l'Arctique prend de l'importance avec la fonte des glaces.", "géopolitique = étude des relations entre géographie et pouvoir des États", "étude des relations entre géographie, pouvoir et stratégies des États"),
+        ("pol-mondialisation", "la mondialisation", "processus d'intégration des économies, cultures et sociétés à l'échelle planétaire", "la globalisation · les échanges mondiaux · l'interdépendance", "La mondialisation a accru les interdépendances tout en exacerbant les inégalités.", "mondialisation = intégration des économies et sociétés à l'échelle planétaire", "intégration des économies, cultures et sociétés à l'échelle planétaire"),
+    ],
+},
+
+# ── V08 La Communication et les Médias ───────────────────────────────────
+"la-communication-et-medias": {
+    "level": "c1",
+    "section": "vocabulaire",
+    "num": "V08",
+    "short": "Communication et Médias",
+    "title": "La Communication et les Médias",
+    "subtitle": "Théories de la communication, médias et espace public",
+    "game_desc": "Maîtrisez le vocabulaire de la communication et des médias",
+    "words": [
+        {"word": "l'espace public",            "ipa": "/ɛspas pyblik/",            "def": "sphère de débat social où les citoyens forment une opinion publique (Habermas)", "ex": "Internet a transformé l'espace public en multipliant les lieux de débat."},
+        {"word": "la sphère médiatique",        "ipa": "/sfɛʁ medja tik/",          "def": "ensemble des médias et des acteurs qui produisent et diffusent l'information", "ex": "La concentration de la sphère médiatique entre quelques groupes pose des questions de pluralisme."},
+        {"word": "l'agenda setting",            "ipa": "/aʒɛ̃da sɛtiŋ/",            "def": "capacité des médias à hiérarchiser les sujets et à orienter l'attention du public", "ex": "L'agenda setting influence ce que le public considère important, sinon ce qu'il en pense."},
+        {"word": "la désinformation",           "ipa": "/dezɛ̃fɔʁmasjɔ̃/",          "def": "diffusion intentionnelle de fausses informations pour manipuler l'opinion", "ex": "La désinformation s'est amplifiée avec les réseaux sociaux et les algorithmes de recommandation."},
+        {"word": "la chambre d'écho",           "ipa": "/ʃɑ̃bʁ deko/",              "def": "environnement médiatique où un individu n'est exposé qu'à des opinions qui confirment les siennes", "ex": "Les algorithmes de personnalisation créent des chambres d'écho qui renforcent les préjugés."},
+        {"word": "la rhétorique médiatique",    "ipa": "/ʁetɔʁik medjatik/",        "def": "ensemble des procédés rhétoriques propres aux discours médiatiques pour capter et convaincre", "ex": "La rhétorique médiatique recourt souvent à l'émotion plutôt qu'à l'argumentation rationnelle."},
+        {"word": "le cadrage",                  "ipa": "/kadʁaʒ/",                  "def": "manière dont un media présente un sujet, influençant la perception du public", "ex": "Le cadrage médiatique d'un conflit conditionne la sympathie ou l'hostilité du public."},
+        {"word": "l'opinion publique",          "ipa": "/ɔpinjɔ̃ pyblik/",          "def": "ensemble des attitudes et convictions partagées par une population sur des sujets d'intérêt commun", "ex": "Les sondages tentent de mesurer l'opinion publique, mais peuvent aussi la façonner."},
+        {"word": "le pluralisme médiatique",    "ipa": "/plyʁalism medjatik/",      "def": "diversité des propriétaires, des lignes éditoriales et des points de vue dans les médias", "ex": "Le pluralisme médiatique est une condition essentielle de la démocratie."},
+        {"word": "la communication non verbale", "ipa": "/kɔmynikasjɔ̃ nɔ̃ vɛʁbal/", "def": "ensemble des messages transmis sans mots : gestes, posture, regard, intonation", "ex": "La communication non verbale représente une part majeure de tout échange en face à face."},
+        {"word": "le discours dominant",        "ipa": "/diskuʁ dɔminɑ̃/",          "def": "ensemble des représentations et valeurs imposées par les groupes qui détiennent le pouvoir", "ex": "Les médias alternatifs cherchent à contester le discours dominant."},
+        {"word": "la liberté de la presse",     "ipa": "/libɛʁte də la pʁɛs/",     "def": "droit des journalistes et médias de publier sans censure gouvernementale", "ex": "La liberté de la presse est un indicateur de l'état démocratique d'un pays."},
+        {"word": "le fact-checking",            "ipa": "/fakt tʃɛkiŋ/",             "def": "vérification systématique des faits avancés par des personnalités ou des médias", "ex": "Le fact-checking est devenu indispensable face à la prolifération des fake news."},
+        {"word": "l'éthique journalistique",    "ipa": "/etik ʒuʁnalistik/",        "def": "ensemble de principes guidant le travail des journalistes : vérité, impartialité, indépendance", "ex": "L'éthique journalistique exige de séparer les faits des opinions dans les articles d'information."},
+        {"word": "le gatekeeping",              "ipa": "/ɡɛtkipiŋ/",               "def": "processus par lequel les médias sélectionnent quelles informations seront publiées ou diffusées", "ex": "Le gatekeeping traditionnel des rédactions est bouleversé par les réseaux sociaux."},
+    ],
+    "items": [
+        ("med-espace-public", "l'espace public", "sphère de débat où les citoyens forment une opinion publique (Habermas)", "la sphère publique · le débat démocratique · l'agora contemporaine", "Internet a transformé l'espace public en multipliant les lieux de débat.", "espace public = sphère de débat où se forme l'opinion publique", "sphère de débat où les citoyens forment une opinion publique"),
+        ("med-agenda-setting", "l'agenda setting", "capacité des médias à hiérarchiser les sujets et orienter l'attention du public", "la mise à l'ordre du jour · la hiérarchisation de l'information · la sélection des sujets", "L'agenda setting influence ce que le public considère important, sinon ce qu'il en pense.", "agenda setting = capacité des médias à orienter l'attention du public", "capacité des médias à hiérarchiser les sujets et orienter l'attention"),
+        ("med-desinformation", "la désinformation", "diffusion intentionnelle de fausses informations pour manipuler l'opinion", "les fake news · la propagande · la manipulation informationnelle", "La désinformation s'est amplifiée avec les réseaux sociaux et les algorithmes de recommandation.", "désinformation = diffusion intentionnelle de fausses informations", "diffusion intentionnelle de fausses informations pour manipuler l'opinion"),
+        ("med-chambre-echo", "la chambre d'écho", "environnement médiatique où on n'est exposé qu'à des opinions qui confirment les siennes", "la bulle informationnelle · le filtre algorithmique · la polarisation", "Les algorithmes de personnalisation créent des chambres d'écho qui renforcent les préjugés.", "chambre d'écho = environnement où on n'entend que ce qui confirme ses opinions", "environnement où on n'est exposé qu'à des opinions confirmant les siennes"),
+        ("med-cadrage", "le cadrage", "manière dont un média présente un sujet, influençant la perception du public", "le framing · l'angle journalistique · la mise en scène de l'info", "Le cadrage médiatique d'un conflit conditionne la sympathie ou l'hostilité du public.", "cadrage = manière dont un média présente un sujet pour influencer la perception", "manière dont un média présente un sujet en influençant la perception"),
+        ("med-pluralisme", "le pluralisme médiatique", "diversité des propriétaires, lignes éditoriales et points de vue dans les médias", "la diversité des médias · l'indépendance éditoriale · la pluralité des voix", "Le pluralisme médiatique est une condition essentielle de la démocratie.", "pluralisme médiatique = diversité des propriétaires et lignes éditoriales", "diversité des propriétaires, lignes éditoriales et points de vue dans les médias"),
+        ("med-gatekeeping", "le gatekeeping", "processus par lequel les médias sélectionnent quelles informations seront publiées", "la sélection de l'information · le filtrage éditorial · la hiérarchisation", "Le gatekeeping traditionnel des rédactions est bouleversé par les réseaux sociaux.", "gatekeeping = sélection par les médias des informations à publier", "processus de sélection des informations à publier ou diffuser"),
+        ("med-liberte-presse", "la liberté de la presse", "droit des journalistes et médias de publier sans censure gouvernementale", "la liberté d'expression · l'indépendance éditoriale · la presse libre", "La liberté de la presse est un indicateur de l'état démocratique d'un pays.", "liberté de la presse = droit de publier sans censure gouvernementale", "droit des journalistes de publier sans censure gouvernementale"),
+    ],
+},
+
+}
