@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>les-enjeux-mondiaux — Game B2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>&#8250;</span>
+  <a href="../../../../francais-en/index.html">French for English speakers</a><span>&#8250;</span>
+  <a href="../../index.html">B2</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulary</a><span>&#8250;</span>
+  <a href="index.html">les-enjeux-mondiaux</a><span>&#8250;</span>
+  <strong>Game</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercises</a>
+  <a href="game.html" class="chapter-nav-btn active">Game</a>
+</nav>
+<div class="container">
+  <h1>les-enjeux-mondiaux — Mastery Game</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Mastery Game</h2>
+        <p>Essential vocabulary for discussing global issues, the climate crisis and international relations</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved game.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You've completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercises</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; French B2 &middot; Game</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "les-enjeux-mondiaux",
+  level: "b2",
+  title: "Les Enjeux Mondiaux",
+  storageKey: "wordplay_game_b2_les-enjeux-mondiaux",
+  items: [
+    {id:"crise-climatique", term:"la crise climatique", meaning:"climate crisis", synonym:"climate emergency", example:"La ___ oblige les États à repenser en profondeur leurs modèles de production et de consommation.", completion:"crise climatique", answer:"crise climatique"},
+    {id:"geopolitique", term:"la géopolitique", meaning:"geopolitics", synonym:"global power dynamics", example:"La ___ de la région est devenue extrêmement instable depuis l'effondrement des accords de paix.", completion:"géopolitique", answer:"géopolitique"},
+    {id:"securite-alimentaire", term:"la sécurité alimentaire", meaning:"food security", synonym:"access to food", example:"La ___ de millions d'habitants dépend désormais des importations de céréales en provenance d'Ukraine.", completion:"sécurité alimentaire", answer:"sécurité alimentaire"},
+    {id:"transition-energetique", term:"la transition énergétique", meaning:"energy transition", synonym:"shift to renewables", example:"La ___ implique de sortir progressivement des énergies fossiles au profit des énergies renouvelables.", completion:"transition énergétique", answer:"transition énergétique"},
+    {id:"developpement-durable", term:"le développement durable", meaning:"sustainable development", synonym:"green development", example:"Le ___ repose sur trois piliers indissociables : l'économie, le social et l'environnement.", completion:"développement durable", answer:"développement durable"},
+    {id:"neutralite-carbone", term:"la neutralité carbone", meaning:"carbon neutrality", synonym:"net zero emissions", example:"Atteindre la ___ d'ici 2050 exige une transformation radicale de nos systèmes énergétiques et industriels.", completion:"neutralité carbone", answer:"neutralité carbone"},
+    {id:"biodiversite", term:"la biodiversité", meaning:"biodiversity", synonym:"variety of life forms", example:"La destruction des forêts tropicales entraîne une perte irréversible de ___ à une échelle alarmante.", completion:"biodiversité", answer:"biodiversité"},
+    {id:"aide-humanitaire", term:"l'aide humanitaire", meaning:"humanitarian aid", synonym:"emergency relief", example:"L'___ acheminée vers les zones sinistrées a permis de sauver des milliers de vies en quelques semaines.", completion:"aide humanitaire", answer:"aide humanitaire"}
+  ]
+};
+</script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
