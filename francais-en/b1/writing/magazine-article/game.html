@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>magazine-article — Game B1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>&#8250;</span>
+  <a href="../../../../francais-en/index.html">French for English speakers</a><span>&#8250;</span>
+  <a href="../../index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Writing</a><span>&#8250;</span>
+  <a href="index.html">magazine-article</a><span>&#8250;</span>
+  <strong>Game</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercises</a>
+  <a href="game.html" class="chapter-nav-btn active">Game</a>
+</nav>
+<div class="container">
+  <h1>magazine-article — Mastery Game</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Mastery Game</h2>
+        <p>Master the vocabulary, structures, and techniques of engaging French magazine writing</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved game.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You've completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercises</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; French B1 &middot; Game</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "magazine-article",
+  level: "b1",
+  title: "Magazine Article — Article de Magazine",
+  storageKey: "wordplay_game_b1_magazine-article",
+  items: [
+    {id:"ma01", term:"l'accroche", meaning:"the hook (opening)", synonym:"the attention-grabber", example:"Une bonne accroche capte l'attention du lecteur dès la première phrase.", completion:"Une bonne ___ capte l'attention du lecteur dès la première phrase.", answer:"accroche"},
+    {id:"ma02", term:"saviez-vous que", meaning:"did you know that", synonym:"were you aware that", example:"Saviez-vous que la France est le pays le plus visité au monde ?", completion:"___ la France est le pays le plus visité au monde ?", answer:"Saviez-vous que"},
+    {id:"ma03", term:"prenons l'exemple de", meaning:"let us take the example of", synonym:"consider the case of", example:"Prenons l'exemple de Berlin, qui a misé sur les énergies renouvelables.", completion:"___ Berlin, qui a misé sur les énergies renouvelables.", answer:"Prenons l'exemple de"},
+    {id:"ma04", term:"force est de constater que", meaning:"one cannot deny that", synonym:"it is undeniable that", example:"Force est de constater que les inégalités n'ont pas diminué.", completion:"___ les inégalités n'ont pas diminué.", answer:"Force est de constater que"},
+    {id:"ma05", term:"notamment", meaning:"notably / in particular", synonym:"especially", example:"De nombreuses villes, notamment Lyon et Bordeaux, ont adopté ce système.", completion:"De nombreuses villes, ___ Lyon et Bordeaux, ont adopté ce système.", answer:"notamment"},
+    {id:"ma06", term:"il est temps de", meaning:"it is time to", synonym:"the time has come to", example:"Il est temps de repenser notre rapport à la technologie.", completion:"___ repenser notre rapport à la technologie.", answer:"Il est temps de"},
+    {id:"ma07", term:"bondir", meaning:"to soar / to leap (figures)", synonym:"to shoot up", example:"Les ventes de vélos ont bondi de 40 % en un an.", completion:"Les ventes de vélos ont ___ de 40 % en un an.", answer:"bondi"},
+    {id:"ma08", term:"le lecteur", meaning:"the reader", synonym:"the audience", example:"Un bon article doit captiver le lecteur du début à la fin.", completion:"Un bon article doit captiver ___ du début à la fin.", answer:"le lecteur"}
+  ]
+};
+</script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
