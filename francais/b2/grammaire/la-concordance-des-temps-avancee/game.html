@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Concordance des Temps Avancée — Jeu B2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>
+  <a href="../../index.html">B2</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">Concordance des Temps Avancée</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Le&#231;on</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimables</a>
+</nav>
+<div class="container">
+  <h1>Concordance des Temps Avancée — Jeu de Ma&#238;trise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Ma&#238;trise</h2>
+        <p>Concordance des temps — subordonnées et modes</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Les r&#233;ponses cons&#233;cutives sur le m&#234;me concept et les s&#233;ries entre concepts rapportent des points bonus.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Vous avez une partie sauvegard&#233;e.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">D&#233;marrer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; R&#233;f&#233;rence — tous les concepts</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Ma&#238;trise atteinte !</h2>
+        <p>Vous avez compl&#233;t&#233; tous les &#233;l&#233;ments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure s&#233;rie</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Fran&#231;ais B2 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "la-concordance-des-temps-avancee",
+  level: "b2",
+  title: "Concordance des Temps Avancée",
+  storageKey: "wordplay_game_fr_b2_la-concordance-des-temps-avancee",
+  items: [
+    {id:"conc-quand-futur", term:"Quand + futur", meaning:"Après quand/dès que + action future → futur simple ou antérieur", synonym:"quand + futur = futur (pas présent)", example:"Quand il arrivera, appelle-moi.", completion:"quand + futur = futur obligatoire", answer:"quand + futur = futur (pas présent)"},
+    {id:"conc-si-imp", term:"Si + imparfait", meaning:"Hypothèse actuelle : si + imparfait → conditionnel présent", synonym:"si + imparfait → cond. présent", example:"Si tu venais, je serais content.", completion:"si + imparfait = cond. présent", answer:"hypothèse actuelle"},
+    {id:"conc-si-pqp", term:"Si + PQP", meaning:"Hypothèse passée : si + PQP → conditionnel passé", synonym:"si + PQP → cond. passé", example:"Si tu étais venu, j'aurais été content.", completion:"si + PQP = cond. passé", answer:"hypothèse passée"},
+    {id:"conc-avant-que", term:"Avant que + subjonctif", meaning:"La subordonnée avec 'avant que' prend toujours le subjonctif", synonym:"avant que + subjonctif", example:"Avant qu'il parte, parle-lui.", completion:"avant que = subjonctif obligatoire", answer:"avant que + subjonctif"},
+    {id:"conc-apres-que", term:"Après que + indicatif", meaning:"La subordonnée avec 'après que' prend l'indicatif (pas le subjonctif)", synonym:"après que + indicatif (pas subj.)", example:"Après qu'il est parti, j'ai réfléchi.", completion:"après que = indicatif (erreur fréquente)", answer:"après que + indicatif (pas le subjonctif)"},
+    {id:"conc-bien-que", term:"Bien que + subjonctif", meaning:"La concession avec 'bien que' exige toujours le subjonctif", synonym:"bien que = subjonctif obligatoire", example:"Bien qu'il soit fatigué, il travaille.", completion:"bien que = subjonctif", answer:"bien que + subjonctif"},
+    {id:"conc-meme-si", term:"Même si + indicatif", meaning:"La concession avec 'même si' prend l'indicatif", synonym:"même si = indicatif (pas subjonctif)", example:"Même s'il est fatigué, il travaille.", completion:"même si = indicatif", answer:"même si + indicatif"},
+    {id:"conc-jusqua", term:"Jusqu'à ce que + subjonctif", meaning:"Durée jusqu'à un événement futur → subjonctif obligatoire", synonym:"jusqu'à ce que = subjonctif", example:"J'attendrai jusqu'à ce qu'il arrive.", completion:"jusqu'à ce que = subjonctif", answer:"durée jusqu'à un événement futur → subjonctif"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Les Connecteurs Avancés — Jeu B2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>
+  <a href="../../index.html">B2</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">Les Connecteurs Avancés</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Le&#231;on</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimables</a>
+</nav>
+<div class="container">
+  <h1>Les Connecteurs Avancés — Jeu de Ma&#238;trise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Ma&#238;trise</h2>
+        <p>Connecteurs avancés — cohésion et registre soutenu</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Les r&#233;ponses cons&#233;cutives sur le m&#234;me concept et les s&#233;ries entre concepts rapportent des points bonus.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Vous avez une partie sauvegard&#233;e.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">D&#233;marrer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; R&#233;f&#233;rence — tous les concepts</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Ma&#238;trise atteinte !</h2>
+        <p>Vous avez compl&#233;t&#233; tous les &#233;l&#233;ments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure s&#233;rie</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Fran&#231;ais B2 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "les-connecteurs-avances",
+  level: "b2",
+  title: "Les Connecteurs Avancés",
+  storageKey: "wordplay_game_fr_b2_les-connecteurs-avances",
+  items: [
+    {id:"con-au-point", term:"Au point que", meaning:"Conséquence marquant un degré élevé", synonym:"conséquence intense = au point que", example:"Il a tellement travaillé au point qu'il est épuisé.", completion:"au point que = conséquence intense", answer:"conséquence marquant un degré élevé"},
+    {id:"con-si-bien", term:"Si bien que", meaning:"Conséquence logique d'une situation", synonym:"conséquence logique = si bien que + ind.", example:"Il a expliqué clairement, si bien qu'on a compris.", completion:"si bien que = conséquence", answer:"conséquence logique d'une situation"},
+    {id:"con-quoi-que", term:"Quoi que + subjonctif", meaning:"Concession généralisée : quelle que soit la chose que", synonym:"quoi que = quelle que soit la chose + subj.", example:"Quoi qu'il fasse, je l'admire.", completion:"quoi que + subjonctif = concession totale", answer:"concession généralisée"},
+    {id:"con-quel-que", term:"Quel que soit + subjonctif", meaning:"Concession sur un nom : quelle que soit + nom + subjonctif de être", synonym:"quel que soit + accord + subj.", example:"Quelle que soit la raison, je comprends.", completion:"quel que soit = accordé + subjonctif", answer:"concession sur un nom accordé"},
+    {id:"con-d-autant", term:"D'autant que", meaning:"Renforcer une cause déjà évoquée", synonym:"renforcer la cause = d'autant que", example:"Je suis fatigué, d'autant que je n'ai pas dormi.", completion:"d'autant que = cause renforcée", answer:"renforcer une cause déjà évoquée"},
+    {id:"con-cest-pourquoi", term:"C'est la raison pour laquelle", meaning:"Transition formelle de conséquence", synonym:"conséquence formelle = c'est la raison pour laquelle", example:"C'est la raison pour laquelle j'ai démissionné.", completion:"c'est la raison pour laquelle = donc formel", answer:"transition formelle de conséquence"},
+    {id:"con-quant-a", term:"Quant à", meaning:"Changer de thème ou introduire un aspect particulier", synonym:"changer de thème = quant à", example:"Quant à moi, je reste neutre.", completion:"quant à = pour ce qui est de", answer:"changer de thème ou introduire un aspect"},
+    {id:"con-autrement-dit", term:"Autrement dit", meaning:"Reformuler ce qui vient d'être dit pour clarifier", synonym:"reformuler = autrement dit", example:"Il est parti. Autrement dit, c'est fini.", completion:"autrement dit = en d'autres termes", answer:"reformuler pour clarifier"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
