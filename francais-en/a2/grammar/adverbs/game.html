@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Adverbs — Game A2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>&#8250;</span>
+  <a href="../../../../francais-en/index.html">French for English speakers</a><span>&#8250;</span>
+  <a href="../../index.html">A2</a><span>&#8250;</span>
+  <a href="../index.html">Grammar</a><span>&#8250;</span>
+  <a href="index.html">Adverbs</a><span>&#8250;</span>
+  <strong>Game</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercises</a>
+  <a href="game.html" class="chapter-nav-btn active">Game</a>
+</nav>
+<div class="container">
+  <h1>Adverbs — Mastery Game</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Mastery Game</h2>
+        <p>Master French adverb formation and position in the sentence</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved game.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You've completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercises</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; French A2 &middot; Game</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "adverbs",
+  level: "a2",
+  title: "Adverbs — Les Adverbes",
+  storageKey: "wordplay_game_a2_adverbs",
+  items: [
+    {id:"ment-rule", term:"adj. (f.) + -ment", meaning:"standard rule for forming adverbs from adjectives", synonym:"-ment suffix", example:"lente → lentement, heureuse → heureusement", completion:"adverb = feminine adj. + -ment", answer:"lentement"},
+    {id:"amment", term:"-ant → -amment", meaning:"adjectives ending in -ant form adverbs with -amment", synonym:"-amment", example:"courant → couramment, élégant → élégamment", completion:"-ant adjectives → -amment", answer:"couramment"},
+    {id:"emment", term:"-ent → -emment", meaning:"adjectives ending in -ent form adverbs with -emment", synonym:"-emment", example:"évident → évidemment, fréquent → fréquemment", completion:"-ent adjectives → -emment", answer:"évidemment"},
+    {id:"bien", term:"bien", meaning:"well (irregular adverb — not bienment)", synonym:"well", example:"Il parle bien français. (He speaks French well.)", completion:"bien = well (irregular)", answer:"bien"},
+    {id:"mal", term:"mal", meaning:"badly / poorly (irregular adverb — not malament)", synonym:"badly", example:"Elle chante mal. (She sings badly.)", completion:"mal = badly (irregular)", answer:"mal"},
+    {id:"vite", term:"vite", meaning:"quickly / fast (irregular adverb)", synonym:"fast", example:"Tu marches vite! (You walk fast!)", completion:"vite = quickly/fast (irregular)", answer:"vite"},
+    {id:"tot-tard", term:"tôt / tard", meaning:"early / late (irregular adverbs)", synonym:"early/late", example:"Je me lève tôt. Il rentre tard.", completion:"tôt = early, tard = late (irregular)", answer:"tôt"},
+    {id:"position", term:"après le verbe", meaning:"adverbs of manner come after the conjugated verb (simple) or before the participle (short adverbs in PC)", synonym:"after verb", example:"Elle parle lentement. / Il a bien mangé.", completion:"adverb position: after conjugated verb", answer:"lentement"}
+  ]
+};
+</script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

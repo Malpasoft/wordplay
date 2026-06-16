@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Time Expressions — Game A2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>&#8250;</span>
+  <a href="../../../../francais-en/index.html">French for English speakers</a><span>&#8250;</span>
+  <a href="../../index.html">A2</a><span>&#8250;</span>
+  <a href="../index.html">Grammar</a><span>&#8250;</span>
+  <a href="index.html">Time Expressions</a><span>&#8250;</span>
+  <strong>Game</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercises</a>
+  <a href="game.html" class="chapter-nav-btn active">Game</a>
+</nav>
+<div class="container">
+  <h1>Time Expressions — Mastery Game</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Mastery Game</h2>
+        <p>Master depuis, pendant, and il y a for expressing time in French</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved game.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You've completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercises</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; French A2 &middot; Game</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "depuis-pendant-il-y-a",
+  level: "a2",
+  title: "Time Expressions — Depuis, Pendant, Il y a",
+  storageKey: "wordplay_game_a2_depuis-pendant-il-y-a",
+  items: [
+    {id:"depuis-ongoing", term:"depuis", meaning:"for/since — ongoing action still happening now, used with present tense", synonym:"since/for (now)", example:"J'habite ici depuis trois ans. (I've lived here for three years.)", completion:"depuis + present = ongoing duration", answer:"depuis"},
+    {id:"pendant-completed", term:"pendant", meaning:"for — completed duration, used with past or future tense", synonym:"for (done)", example:"J'ai dormi pendant huit heures. (I slept for eight hours.)", completion:"pendant + PC = completed duration", answer:"pendant"},
+    {id:"il-y-a", term:"il y a", meaning:"ago — indicates when something happened in the past", synonym:"ago", example:"Il a appelé il y a une heure. (He called an hour ago.)", completion:"il y a = ago (with PC)", answer:"il y a"},
+    {id:"ca-fait-que", term:"ça fait…que", meaning:"it's been… since — alternative to depuis for ongoing situations", synonym:"it's been", example:"Ça fait six mois que j'apprends le français.", completion:"ça fait + time + que = it's been (ongoing)", answer:"ça fait"},
+    {id:"present-avec-depuis", term:"présent + depuis", meaning:"key rule: ongoing action = present tense + depuis (NOT passé composé)", synonym:"present ongoing", example:"J'attends depuis 20 minutes. (I've been waiting for 20 min.)", completion:"ongoing since/for → présent + depuis", answer:"j'attends"},
+    {id:"il-y-a-vs-depuis", term:"il y a vs depuis", meaning:"il y a = ago (completed point); depuis = since/for (ongoing)", synonym:"ago vs since", example:"Il est parti il y a 2 ans. / Il est là depuis 2 ans.", completion:"il y a = ago; depuis = still now", answer:"il y a"},
+    {id:"combien-depuis", term:"depuis combien de temps", meaning:"question: how long have you been doing X? (ongoing)", synonym:"how long?", example:"Depuis combien de temps tu travailles ici?", completion:"depuis combien de temps = how long? (ongoing)", answer:"depuis combien"},
+    {id:"ca-fait-combien", term:"ça fait combien de temps que", meaning:"question: how long has it been? (alternative form)", synonym:"how long? (alt.)", example:"Ça fait combien de temps que tu attends?", completion:"ça fait combien de temps que = how long? (alt.)", answer:"ça fait combien"}
+  ]
+};
+</script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

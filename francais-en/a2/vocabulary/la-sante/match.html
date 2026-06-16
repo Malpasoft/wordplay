@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Health — Match | French A2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<style>
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.match-col{display:flex;flex-direction:column;gap:8px}
+.match-item{padding:12px 14px;border:1.5px solid var(--hairline);border-radius:6px;cursor:pointer;font-size:.9rem;color:var(--ink);transition:border-color .15s,background .15s;user-select:none;min-height:48px;display:flex;align-items:center}
+.match-item.selected{border-color:var(--amber);background:rgba(184,134,11,.08)}
+.match-item.correct{border-color:#2E7D52;background:rgba(46,125,82,.08);pointer-events:none;color:var(--muted)}
+.match-item.wrong{border-color:#C03A2B;background:rgba(192,57,43,.08)}
+.match-status{font-family:var(--font-sans);font-size:.85rem;color:var(--muted);text-align:center;margin-bottom:16px}
+.heart-row{display:flex;gap:6px;justify-content:center;margin-bottom:12px}
+.heart-svg{width:22px;height:22px}
+</style>
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>&#8250;</span>
+  <a href="../../../../francais-en/index.html">French for English speakers</a><span>&#8250;</span>
+  <a href="../../index.html">A2</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulary</a><span>&#8250;</span>
+  <a href="index.html">Health</a><span>&#8250;</span>
+  <strong>Match</strong>
+</div>
+<div class="chapter-num">V06</div>
+<h1>Health — Match</h1>
+<nav class="chapter-nav">
+  <a href="flashcards.html" class="chapter-nav-btn">Flashcards</a>
+  <a href="game.html" class="chapter-nav-btn">Mastery Game</a>
+  <a href="match.html" class="chapter-nav-btn active">Match</a>
+</nav>
+<div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">&#10003; Mastered</span></div>
+<div class="heart-row" id="heartRow"></div>
+<div class="match-status" id="matchStatus">Match the French word to its English meaning</div>
+<div class="match-grid">
+  <div class="match-col" id="colFr"></div>
+  <div class="match-col" id="colEn"></div>
+</div>
+<div style="text-align:center;margin-top:20px;display:none" id="winMsg">
+  <div style="font-size:1.4rem;font-weight:700;color:var(--amber);margin-bottom:12px">Well done!</div>
+  <a href="game.html" style="display:inline-block;padding:12px 28px;background:var(--ink);color:var(--paper);font-family:var(--font-sans);font-size:.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:4px;text-decoration:none">Mastery Game &#8594;</a>
+</div>
+</div>
+<footer class="site-footer">Word Play &middot; French A2 &middot; Match</footer>
+<script>
+const MASTERY_KEY = "wordplay_vocab_a2_la-sante_mastered";
+const SLUG = "la-sante";
+const LEVEL = "a2";
+const PAIRS = [
+  {
+    "fr": "avoir mal à",
+    "en": "to have pain in / … hurts"
+  },
+  {
+    "fr": "être malade",
+    "en": "to be ill / sick"
+  },
+  {
+    "fr": "la fièvre",
+    "en": "fever / temperature"
+  },
+  {
+    "fr": "la toux",
+    "en": "cough"
+  },
+  {
+    "fr": "le rhume",
+    "en": "cold (illness)"
+  },
+  {
+    "fr": "la grippe",
+    "en": "flu"
+  },
+  {
+    "fr": "le médicament",
+    "en": "medicine / medication"
+  },
+  {
+    "fr": "l'ordonnance",
+    "en": "prescription"
+  },
+  {
+    "fr": "prendre rendez-vous",
+    "en": "to make an appointment"
+  },
+  {
+    "fr": "la salle d'attente",
+    "en": "waiting room"
+  }
+];
+const TOTAL_NEEDED = 20;
+const LIVES = 3;
+let lives = LIVES, matched = 0, round = 0, selFr = null, selEn = null;
+function heartSVG(full) {
+  return '<svg class="heart-svg" viewBox="0 0 24 24"><path d="' + (full
+    ? "M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"
+    : "M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z")
+    + '" fill="' + (full ? "currentColor" : "none") + '" stroke="currentColor" stroke-width="1.5"/></svg>';
+}
+function renderHearts() {
+  const r = document.getElementById("heartRow");
+  r.innerHTML = "";
+  for (let i = 0; i < LIVES; i++) r.innerHTML += heartSVG(i < lives);
+}
+function shuffle(a) { for (let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function buildRound() {
+  const fr = document.getElementById("colFr");
+  const en = document.getElementById("colEn");
+  fr.innerHTML = ""; en.innerHTML = "";
+  const items = shuffle([...PAIRS]);
+  const defs = shuffle(items.map(p => p.en));
+  items.forEach((p,i) => {
+    const bf = document.createElement("div");
+    bf.className = "match-item"; bf.dataset.id = p.fr; bf.dataset.type = "fr";
+    bf.textContent = p.fr; bf.onclick = () => selectItem(bf);
+    fr.appendChild(bf);
+    const be = document.createElement("div");
+    be.className = "match-item"; be.dataset.id = defs[i]; be.dataset.type = "en";
+    be.textContent = defs[i]; be.onclick = () => selectItem(be);
+    en.appendChild(be);
+  });
+  selFr = null; selEn = null;
+}
+function selectItem(el) {
+  if (el.classList.contains("correct")) return;
+  if (el.dataset.type === "fr") { if (selFr) selFr.classList.remove("selected"); selFr = el; }
+  else { if (selEn) selEn.classList.remove("selected"); selEn = el; }
+  el.classList.add("selected");
+  if (selFr && selEn) checkMatch();
+}
+function findEnDef(frWord) {
+  const p = PAIRS.find(p => p.fr === frWord);
+  return p ? p.en : null;
+}
+function checkMatch() {
+  const correct = findEnDef(selFr.dataset.id) === selEn.dataset.id;
+  if (correct) {
+    selFr.classList.remove("selected"); selFr.classList.add("correct");
+    selEn.classList.remove("selected"); selEn.classList.add("correct");
+    matched++;
+    if (matched >= TOTAL_NEEDED) { winGame(); return; }
+    if (document.querySelectorAll(".match-item:not(.correct)").length === 0) {
+      round++; buildRound();
+    }
+  } else {
+    lives--; renderHearts();
+    selFr.classList.add("wrong"); selEn.classList.add("wrong");
+    setTimeout(() => { selFr.classList.remove("wrong","selected"); selEn.classList.remove("wrong","selected"); selFr=null; selEn=null; }, 600);
+    if (lives <= 0) { document.getElementById("matchStatus").textContent = "Game over — try again!"; setTimeout(resetGame, 1200); return; }
+  }
+  selFr = null; selEn = null;
+}
+function winGame() {
+  const prog = JSON.parse(localStorage.getItem("wordplay_progress") || "{}");
+  if (!prog[LEVEL]) prog[LEVEL] = {};
+  prog[LEVEL]["vocab_mastered_" + SLUG] = { done: true, date: new Date().toISOString() };
+  localStorage.setItem("wordplay_progress", JSON.stringify(prog));
+  document.getElementById("masteryBadge").style.display = "block";
+  document.getElementById("winMsg").style.display = "block";
+  document.getElementById("matchStatus").textContent = "All matched!";
+  if (typeof pushProgress === "function") pushProgress();
+}
+function resetGame() { lives = LIVES; matched = 0; round = 0; renderHearts(); buildRound(); document.getElementById("matchStatus").textContent = "Match the French word to its English meaning"; }
+renderHearts(); buildRound();
+</script>
+<script src="../../../../shared/store.js?v=v107"></script>
+</body>
+</html>

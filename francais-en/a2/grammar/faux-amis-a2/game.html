@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Faux Amis — A2 — Game A2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>&#8250;</span>
+  <a href="../../../../francais-en/index.html">French for English speakers</a><span>&#8250;</span>
+  <a href="../../index.html">A2</a><span>&#8250;</span>
+  <a href="../index.html">Grammar</a><span>&#8250;</span>
+  <a href="index.html">Faux Amis — A2</a><span>&#8250;</span>
+  <strong>Game</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercises</a>
+  <a href="game.html" class="chapter-nav-btn active">Game</a>
+</nav>
+<div class="container">
+  <h1>Faux Amis — A2 — Mastery Game</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Mastery Game</h2>
+        <p>Test your knowledge of A2-level false friends — words that look English but aren't.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved game.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You've completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercises</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; French A2 &middot; Game</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "faux-amis-a2",
+  level: "a2",
+  title: "Faux Amis — False Friends at A2",
+  storageKey: "wordplay_game_a2_faux-amis-a2",
+  items: [
+    {id:"fa1", term:"sensible", meaning:"sensitive (not sensible)", synonym:"sensitive", example:"Elle est très sensible aux critiques.", completion:"sensible = sensitive (NOT ___)", answer:"sensible (en)"},
+    {id:"fa2", term:"sympathique", meaning:"friendly / nice (not sympathetic)", synonym:"friendly", example:"Il est sympathique et toujours de bonne humeur.", completion:"sympathique = nice (NOT ___)", answer:"sympathetic"},
+    {id:"fa3", term:"décevoir", meaning:"to disappoint (not deceive)", synonym:"to disappoint", example:"Ce film m'a vraiment déçu.", completion:"décevoir = to disappoint (NOT to ___)", answer:"deceive"},
+    {id:"fa4", term:"demander", meaning:"to ask (not demand)", synonym:"to ask", example:"Je lui ai demandé son numéro.", completion:"demander = to ask (NOT to ___)", answer:"demand"},
+    {id:"fa5", term:"éventuellement", meaning:"possibly (not eventually)", synonym:"possibly", example:"Je pourrai éventuellement venir.", completion:"éventuellement = possibly (NOT ___)", answer:"eventually"},
+    {id:"fa6", term:"large", meaning:"wide (not large/big)", synonym:"wide", example:"La rue est très large à cet endroit.", completion:"large = wide (NOT ___)", answer:"large/big"},
+    {id:"fa7", term:"prétendre", meaning:"to claim (not pretend)", synonym:"to claim", example:"Il prétend avoir raison, mais je ne crois pas.", completion:"prétendre = to claim (NOT to ___)", answer:"pretend"},
+    {id:"fa8", term:"réaliser", meaning:"to carry out / achieve (not realise)", synonym:"to achieve", example:"Elle a réalisé son rêve.", completion:"réaliser = to achieve (NOT to ___)", answer:"realise"}
+  ]
+};
+</script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
