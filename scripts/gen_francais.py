@@ -893,10 +893,10 @@ def normalize_summary(summary):
 
 def normalize_chapter(d, slug):
     d = dict(d)
-    d['slides'] = normalize_slides(d['slides'])
-    d['traps'] = normalize_traps(d['traps'])
-    d['summary'] = normalize_summary(d['summary'])
     if d.get('section') != 'vocabulaire':
+        d['slides'] = normalize_slides(d['slides'])
+        d['traps'] = normalize_traps(d['traps'])
+        d['summary'] = normalize_summary(d['summary'])
         d['ex1'] = normalize_ex_mc(d['ex1'])
         d['ex2'] = normalize_ex_typed(d['ex2'])
         d['ex3'] = normalize_ex_mc(d['ex3'])

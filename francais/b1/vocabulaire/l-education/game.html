@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>L'Éducation — Jeu B1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>
+  <a href="../../index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulaire</a><span>&#8250;</span>
+  <a href="index.html">L'Éducation</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Le&#231;on</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+</nav>
+<div class="container">
+  <h1>L'Éducation — Jeu de Ma&#238;trise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Ma&#238;trise</h2>
+        <p>L'Éducation — apprentissage et parcours scolaire</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Les r&#233;ponses cons&#233;cutives sur le m&#234;me concept et les s&#233;ries entre concepts rapportent des points bonus.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Vous avez une partie sauvegard&#233;e.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">D&#233;marrer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; R&#233;f&#233;rence — tous les concepts</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Ma&#238;trise atteinte !</h2>
+        <p>Vous avez compl&#233;t&#233; tous les &#233;l&#233;ments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure s&#233;rie</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Fran&#231;ais B1 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "l-education",
+  level: "b1",
+  title: "L'Éducation",
+  storageKey: "wordplay_game_fr_b1_l-education",
+  items: [
+    {id:"edu-enseignement", term:"l'enseignement", meaning:"transmission du savoir par un professeur", synonym:"apprendre aux élèves", example:"L'enseignement public est gratuit.", completion:"enseignement = enseigner aux élèves", answer:"apprendre aux élèves"},
+    {id:"edu-apprentissage", term:"l'apprentissage", meaning:"processus d'acquisition de nouvelles connaissances", synonym:"apprendre quelque chose de nouveau", example:"L'apprentissage d'une langue prend du temps.", completion:"apprentissage = processus d'apprendre", answer:"apprendre quelque chose de nouveau"},
+    {id:"edu-diplome", term:"le diplôme", meaning:"titre officiel attestant des études réussies", synonym:"titre à la fin des études", example:"Elle a son diplôme en poche.", completion:"diplôme = titre de fin d'études", answer:"titre à la fin des études"},
+    {id:"edu-bourse", term:"la bourse", meaning:"aide financière pour les études", synonym:"argent pour payer les études", example:"La bourse couvre les frais d'inscription.", completion:"bourse = aide financière pour étudier", answer:"argent pour payer les études"},
+    {id:"edu-competence", term:"la compétence", meaning:"capacité à effectuer une tâche efficacement", synonym:"savoir-faire dans un domaine", example:"Les compétences numériques sont requises.", completion:"compétence = capacité à faire qqch bien", answer:"savoir-faire dans un domaine"},
+    {id:"edu-reussite", term:"la réussite", meaning:"fait d'atteindre ses objectifs avec succès", synonym:"succès dans les études ou le travail", example:"La réussite demande de la persévérance.", completion:"réussite = succès", answer:"succès dans les études ou le travail"},
+    {id:"edu-concours", term:"le concours", meaning:"examen compétitif avec nombre limité de places", synonym:"examen très sélectif", example:"Le concours est difficile.", completion:"concours = examen sélectif", answer:"examen très sélectif"},
+    {id:"edu-stage", term:"le stage", meaning:"période de travail en entreprise pour apprendre", synonym:"expérience professionnelle temporaire", example:"Son stage dure trois mois.", completion:"stage = expérience en entreprise", answer:"expérience professionnelle temporaire"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

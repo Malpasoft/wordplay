@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>L'Éducation | Vocabulaire B1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="../index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>
+  <a href="../../index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulaire</a><span>&#8250;</span>
+  <strong>L'Éducation</strong>
+</div>
+<div class="chapter-num">V07</div>
+<h1>L'Éducation</h1>
+<p class="chapter-subtitle">École, université, apprentissage et formation</p>
+<div class="act-grid">
+<a href="flashcards.html" class="act-card" style="--ac-color:var(--amber)">
+  <div class="act-title">Cartes</div>
+  <div class="act-desc">15 mots &middot; cartes interactives</div>
+  <span class="act-cta">Aller &#8594;</span>
+</a>
+<a href="slides.html" class="act-card" style="--ac-color:var(--amber)">
+  <div class="act-title">Le&#231;on</div>
+  <div class="act-desc">Liste compl&#232;te avec d&#233;finitions et exemples</div>
+  <span class="act-cta">Aller &#8594;</span>
+</a>
+<a href="game.html" class="act-card" style="--ac-color:#2E7D52">
+  <div class="act-title">Jeu de Ma&#238;trise</div>
+  <div class="act-desc">Jeu interactif pour dominer le vocabulaire</div>
+  <span class="act-cta">Aller &#8594;</span>
+</a>
+<a href="match.html" class="act-card" style="--ac-color:#2E7D52">
+  <div class="act-title">Relier</div>
+  <div class="act-desc">Relie les mots &#224; leurs d&#233;finitions</div>
+  <span class="act-cta">Aller &#8594;</span>
+</a>
+</div>
+<script>
+(function(){
+  var prog=JSON.parse(localStorage.getItem("wordplay_progress")||"{}");
+  var lv=prog["b1"]||{};
+  if(lv["wordplay_vocab_mastered_fr_b1_l-education"]&&lv["wordplay_vocab_mastered_fr_b1_l-education"].done)document.querySelector('[href="flashcards.html"]').classList.add("done");
+  if(lv["wordplay_game_fr_b1_l-education"]&&lv["wordplay_game_fr_b1_l-education"].pct>=100)document.querySelector('[href="game.html"]').classList.add("done");
+  if(lv["wordplay_match_fr_b1_l-education"]&&lv["wordplay_match_fr_b1_l-education"].done)document.querySelector('[href="match.html"]').classList.add("done");
+})();
+</script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<footer class="site-footer">Word Play &middot; Fran&#231;ais B1 &middot; Vocabulaire</footer>
+</div></body>
+</html>

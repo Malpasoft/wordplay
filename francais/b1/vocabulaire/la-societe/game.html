@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>La Société — Jeu B1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>
+  <a href="../../index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulaire</a><span>&#8250;</span>
+  <a href="index.html">La Société</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Le&#231;on</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+</nav>
+<div class="container">
+  <h1>La Société — Jeu de Ma&#238;trise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Ma&#238;trise</h2>
+        <p>La Société — vocabulaire civique et social</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Les r&#233;ponses cons&#233;cutives sur le m&#234;me concept et les s&#233;ries entre concepts rapportent des points bonus.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Vous avez une partie sauvegard&#233;e.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">D&#233;marrer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; R&#233;f&#233;rence — tous les concepts</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Ma&#238;trise atteinte !</h2>
+        <p>Vous avez compl&#233;t&#233; tous les &#233;l&#233;ments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure s&#233;rie</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Fran&#231;ais B1 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "la-societe",
+  level: "b1",
+  title: "La Société",
+  storageKey: "wordplay_game_fr_b1_la-societe",
+  items: [
+    {id:"soc-citoyen", term:"le citoyen", meaning:"personne avec droits et devoirs dans un pays", synonym:"habitant avec droits civiques", example:"Chaque citoyen a le droit de voter.", completion:"citoyen = habitant avec droits civiques", answer:"habitant avec droits civiques"},
+    {id:"soc-egalite", term:"l'égalité", meaning:"même traitement et mêmes droits pour tous", synonym:"même droits pour tous", example:"L'égalité est une valeur républicaine.", completion:"égalité = même droits pour tous", answer:"même droits pour tous"},
+    {id:"soc-loi", term:"la loi", meaning:"règle de l'État qui s'applique à tous", synonym:"règle juridique obligatoire", example:"Cette loi protège les travailleurs.", completion:"loi = règle obligatoire de l'État", answer:"règle juridique obligatoire"},
+    {id:"soc-democratie", term:"la démocratie", meaning:"système où les citoyens choisissent leurs gouvernants", synonym:"gouvernement élu par le peuple", example:"La démocratie repose sur le vote.", completion:"démocratie = gouvernement élu", answer:"gouvernement élu par le peuple"},
+    {id:"soc-inegalite", term:"l'inégalité", meaning:"différence injuste dans les droits ou les conditions de vie", synonym:"traitement différent et injuste", example:"Les inégalités sociales sont importantes.", completion:"inégalité = traitement injuste", answer:"traitement différent et injuste"},
+    {id:"soc-solidarite", term:"la solidarité", meaning:"aide mutuelle au sein d'une communauté", synonym:"entraide entre membres d'un groupe", example:"La solidarité aide les plus vulnérables.", completion:"solidarité = entraide", answer:"entraide entre membres d'un groupe"},
+    {id:"soc-discrimination", term:"la discrimination", meaning:"traitement inégal basé sur des caractéristiques personnelles", synonym:"traitement injuste selon origine ou sexe", example:"La discrimination est illégale.", completion:"discrimination = traitement inégal injuste", answer:"traitement injuste selon origine ou sexe"},
+    {id:"soc-benevolat", term:"le bénévolat", meaning:"travail volontaire non rémunéré pour une cause", synonym:"travail gratuit pour aider les autres", example:"Il fait du bénévolat chaque weekend.", completion:"bénévolat = travail volontaire gratuit", answer:"travail gratuit pour aider les autres"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

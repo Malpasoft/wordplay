@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Lettre de Réclamation — Jeu B1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>
+  <a href="../../index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">R&#233;daction</a><span>&#8250;</span>
+  <a href="index.html">Lettre de Réclamation</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Le&#231;on</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimables</a>
+</nav>
+<div class="container">
+  <h1>Lettre de Réclamation — Jeu de Ma&#238;trise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Ma&#238;trise</h2>
+        <p>Lettre de réclamation — structure et formules formelles</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Les r&#233;ponses cons&#233;cutives sur le m&#234;me concept et les s&#233;ries entre concepts rapportent des points bonus.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Vous avez une partie sauvegard&#233;e.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">D&#233;marrer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; R&#233;f&#233;rence — tous les concepts</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Ma&#238;trise atteinte !</h2>
+        <p>Vous avez compl&#233;t&#233; tous les &#233;l&#233;ments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure s&#233;rie</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Fran&#231;ais B1 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "ecrire-une-lettre-de-reclamation",
+  level: "b1",
+  title: "Écrire une Lettre de Réclamation",
+  storageKey: "wordplay_game_fr_b1_ecrire-une-lettre-de-reclamation",
+  items: [
+    {id:"rec-objet", term:"L'Objet", meaning:"Ligne résumant le sujet de la lettre avant le corps", synonym:"résumé du sujet en quelques mots", example:"Objet : Réclamation commande n°1234.", completion:"Objet = résumé de la lettre", answer:"résumé du sujet en quelques mots"},
+    {id:"rec-appel", term:"Madame, Monsieur", meaning:"Formule d'appel neutre quand on ne connaît pas le nom du destinataire", synonym:"appel formel sans nom", example:"Madame, Monsieur,", completion:"Madame, Monsieur = appel formel", answer:"appel formel sans nom"},
+    {id:"rec-exposer", term:"Je me permets de vous contacter", meaning:"Formule pour introduire poliment le problème", synonym:"introduire le problème poliment", example:"Je me permets de vous contacter au sujet de…", completion:"formule d'introduction formelle", answer:"introduire le problème poliment"},
+    {id:"rec-constater", term:"Je constate que / j'ai constaté que", meaning:"Formule neutre pour décrire le problème observé", synonym:"décrire le problème observément", example:"J'ai constaté que le produit était endommagé.", completion:"constater = décrire le problème", answer:"décrire le problème observément"},
+    {id:"rec-demande", term:"Je vous serais reconnaissant(e) de", meaning:"Formule de demande polie au conditionnel + infinitif", synonym:"demande polie formelle", example:"Je vous serais reconnaissante de procéder au remboursement.", completion:"je vous serais reconnaissant(e) de + inf.", answer:"demande polie formelle"},
+    {id:"rec-attente", term:"Dans l'attente de votre réponse", meaning:"Formule qui précède la clôture de la lettre", synonym:"transition vers la formule finale", example:"Dans l'attente de votre réponse, je vous…", completion:"dans l'attente = avant la clôture", answer:"transition vers la formule finale"},
+    {id:"rec-cloture", term:"Veuillez agréer mes salutations distinguées", meaning:"Formule de politesse finale d'une lettre formelle", synonym:"formule de clôture formelle", example:"Veuillez agréer, Madame, l'expression de mes salutations distinguées.", completion:"formule finale formelle", answer:"formule de clôture formelle"},
+    {id:"rec-ton", term:"Ton formel dans une réclamation", meaning:"Rester poli et factuel même en cas de mécontentement", synonym:"calme et factuel, pas agressif", example:"Je regrette de devoir signaler ce problème.", completion:"ton = formel et factuel", answer:"calme et factuel, pas agressif"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
