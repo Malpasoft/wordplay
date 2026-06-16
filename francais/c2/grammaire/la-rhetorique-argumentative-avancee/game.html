@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Rhétorique avancée — Jeu C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>
+  <a href="../../index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">Rhétorique avancée</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Le&#231;on</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimables</a>
+</nav>
+<div class="container">
+  <h1>Rhétorique avancée — Jeu de Ma&#238;trise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Ma&#238;trise</h2>
+        <p>Maîtrisez la rhétorique argumentative avancée au niveau C2</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Les r&#233;ponses cons&#233;cutives sur le m&#234;me concept et les s&#233;ries entre concepts rapportent des points bonus.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Vous avez une partie sauvegard&#233;e.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">D&#233;marrer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; R&#233;f&#233;rence — tous les concepts</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Ma&#238;trise atteinte !</h2>
+        <p>Vous avez compl&#233;t&#233; tous les &#233;l&#233;ments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure s&#233;rie</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Fran&#231;ais C2 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "la-rhetorique-argumentative-avancee",
+  level: "c2",
+  title: "La Rhétorique Argumentative Avancée",
+  storageKey: "wordplay_game_fr_c2_la-rhetorique-argumentative-avancee",
+  items: [
+    {id:"g7-enthymeme", term:"l'enthymème", meaning:"syllogisme rhétorique avec une prémisse implicite, jugée évidente ou partagée", synonym:"le syllogisme incomplet · la prémisse implicite · le raisonnement court", example:"'Il est philosophe, donc il cherche la vérité.' — prémisse implicite : 'tout philosophe cherche la vérité'.", completion:"enthymème = syllogisme avec prémisse implicite que le lecteur complète", answer:"syllogisme rhétorique dont une prémisse reste implicite"},
+    {id:"g7-pretention", term:"la prétérition", meaning:"figure disant ce qu'on prétend ne pas dire, pour en souligner l'importance tout en affectant la discrétion", synonym:"mentionner par déni · dire sans dire · l'affectation de silence", example:"'Je ne mentionnerai pas ses scandales…' — la prétérition mentionne en feignant de ne pas le faire.", completion:"prétérition = dire ce qu'on prétend ne pas dire", answer:"figure consistant à mentionner ce qu'on prétend vouloir taire"},
+    {id:"g7-hypotypose", term:"l'hypotypose", meaning:"description si vive qu'elle rend la scène présente aux yeux du lecteur", synonym:"l'enargeia · la description vive · la scène présente", example:"Une hypotypose de bataille : sons, odeurs, cris, confusion — le lecteur y est.", completion:"hypotypose = description si vive qu'elle rend la scène présente", answer:"description si vive qu'elle rend la scène présente aux yeux du lecteur"},
+    {id:"g7-apostrophe", term:"l'apostrophe rhétorique", meaning:"interpellation directe d'une personne absente, d'un objet ou d'une abstraction", synonym:"l'adresse à l'absent · la personnification par apostrophe · Ô liberté", example:"'Ô liberté, que de crimes on commet en ton nom !' — apostrophe à une abstraction.", completion:"apostrophe = interpellation directe d'une personne absente ou d'une abstraction", answer:"interpellation directe d'une personne absente, d'un objet ou d'une abstraction"},
+    {id:"g7-concession-avancee", term:"la concession rhétorique avancée", meaning:"stratégie accordant généreusement l'antithèse pour mieux la réfuter et renforcer l'ethos", synonym:"pro-concession · accorder pour mieux réfuter · la générosité tactique", example:"Concéder tout ce qu'on peut concéder, puis pivot : 'cependant, cette concession révèle que…'", completion:"concession avancée = accorder généreusement l'antithèse pour mieux la réfuter", answer:"stratégie accordant généreusement l'antithèse pour mieux la réfuter"},
+    {id:"g7-topos", term:"le topos argumentatif", meaning:"argument type récurrent applicable à de nombreuses situations dans l'argumentation rhétorique", synonym:"le lieu rhétorique · le lieu commun · l'argument-type", example:"Topos du plus/moins : si X vaut pour le cas majeur, il vaut a fortiori pour le cas mineur.", completion:"topos = argument type récurrent applicable à de nombreuses situations", answer:"argument type récurrent applicable à de nombreuses situations argumentatives"},
+    {id:"g7-ironie-systemique", term:"l'ironie systémique", meaning:"ironie qui traverse tout un texte par des registres inadéquats et des décalages persistants", synonym:"l'ironie de registre · le décalage total · le texte ironique", example:"Voltaire dans Candide : ironie systémique par le narratif naïf face aux horreurs vécues.", completion:"ironie systémique = ironie traversant tout un texte par décalages persistants", answer:"ironie traversant tout un texte par des registres inadéquats persistants"},
+    {id:"g7-gradation-thematique", term:"la gradation thématique", meaning:"organisation des arguments du plus faible au plus fort pour un effet argumentatif croissant", synonym:"l'argument ultime · la montée argumentative · le climax logique", example:"Placer l'argument le plus englobant et le plus fondamental en dernier.", completion:"gradation thématique = arguments du plus faible au plus fort", answer:"organisation des arguments du plus faible au plus fort pour un effet croissant"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

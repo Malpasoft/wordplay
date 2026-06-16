@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Constructions détachées — Jeu C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>
+  <a href="../../index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">Constructions détachées</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Le&#231;on</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimables</a>
+</nav>
+<div class="container">
+  <h1>Constructions détachées — Jeu de Ma&#238;trise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Ma&#238;trise</h2>
+        <p>Maîtrisez les constructions détachées et l'apposition au niveau C2</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Les r&#233;ponses cons&#233;cutives sur le m&#234;me concept et les s&#233;ries entre concepts rapportent des points bonus.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Vous avez une partie sauvegard&#233;e.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">D&#233;marrer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; R&#233;f&#233;rence — tous les concepts</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Ma&#238;trise atteinte !</h2>
+        <p>Vous avez compl&#233;t&#233; tous les &#233;l&#233;ments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure s&#233;rie</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Fran&#231;ais C2 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "les-constructions-detachees-et-apposition",
+  level: "c2",
+  title: "Les Constructions Détachées et l'Apposition",
+  storageKey: "wordplay_game_fr_c2_les-constructions-detachees-et-apposition",
+  items: [
+    {id:"g5-apposition", term:"l'apposition", meaning:"groupe nominal séparé par virgule se référant à un autre GN pour le préciser ou reformuler", synonym:"la reformulation nominale · le GN juxtaposé · la précision sans verbe", example:"'Camus, écrivain algérien, a reçu le Nobel.' — apposition intercalée.", completion:"apposition = GN séparé par virgule précisant ou reformulant un autre GN", answer:"groupe nominal séparé par virgule précisant ou reformulant un autre GN"},
+    {id:"g5-participe-detache", term:"le participe détaché", meaning:"participe (présent ou passé) séparé par virgule équivalant à une circonstancielle", synonym:"l'épithète détachée participiale · la subordonnée condensée · le participe en apposition", example:"'Épuisé par la marche, il s'assit.' — participe passé détaché à valeur causale.", completion:"participe détaché = participe séparé équivalant à une circonstancielle", answer:"participe séparé par virgule équivalant à une subordonnée circonstancielle"},
+    {id:"g5-participiale-abs", term:"la participiale absolue", meaning:"participe avec son propre sujet différent du sujet principal de la phrase", synonym:"la proposition participiale · le sujet propre · la construction absolue", example:"'Le soleil se couchant, les oiseaux se turent.' — sujet du participe = le soleil ≠ les oiseaux.", completion:"participiale absolue = participe avec sujet propre différent du sujet principal", answer:"participe avec son propre sujet différent du sujet principal"},
+    {id:"g5-dislocation", term:"la dislocation (gauche et droite)", meaning:"mise en relief d'un élément en le détachant en tête (gauche) ou en finale (droite) avec reprise pronominale", synonym:"la topicalisation · la mise en saillance · thème/rhème", example:"'Ce roman, je l'adore.' (gauche) / 'Je l'adore, ce roman.' (droite) — dislocation pour emphase.", completion:"dislocation = élément détaché en tête ou finale avec reprise pronominale", answer:"mise en relief par détachement en tête ou finale avec reprise pronominale"},
+    {id:"g5-adj-detache", term:"l'adjectif détaché", meaning:"adjectif séparé par virgule, en tête (cadrage/cause) ou en finale (résultat/description)", synonym:"l'épithète détachée · l'adjectif prédicatif détaché · la valeur circonstancielle", example:"'Silencieuse, elle entra.' (cause/état) vs 'Elle entra, silencieuse.' (résultat/description).", completion:"adjectif détaché = adjectif en apposition exprimant cause (tête) ou résultat (finale)", answer:"adjectif séparé par virgule exprimant cause en tête ou résultat en finale"},
+    {id:"g5-dangling", term:"le dangling participle", meaning:"erreur : participe détaché dont le référent implicite n'est pas le sujet de la principale", synonym:"le participe sans référent · la mauvaise coréférence · l'erreur de détachement", example:"*'Arrivé à la gare, le train était parti.' — 'arrivé' réfère à qui ? Faute de coréférence.", completion:"dangling participle = participe détaché sans coréférence au sujet principal", answer:"participe dont le référent implicite n'est pas le sujet de la principale"},
+    {id:"g5-incise", term:"l'incise", meaning:"proposition parenthétique indiquant le locuteur ou le mode d'énonciation dans le discours rapporté", synonym:"dit-il · reprit-elle · la proposition intercalée", example:"'Je partirai demain, dit-il, sans se retourner.' — incise indiquant locuteur et mode.", completion:"incise = proposition parenthétique indiquant locuteur ou mode dans le discours rapporté", answer:"proposition parenthétique indiquant le locuteur ou le mode d'énonciation"},
+    {id:"g5-incidente", term:"l'incidente", meaning:"proposition parenthétique ajoutant une précision explicative, sans rapport avec le discours rapporté", synonym:"la parenthèse explicative · les tirets cadratins · la précision intercalée", example:"Ce phénomène — les chercheurs l'ont confirmé — est en progression. (incidente entre tirets)", completion:"incidente = parenthèse explicative intercalée sans rapport avec le discours rapporté", answer:"proposition parenthétique ajoutant une précision explicative"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

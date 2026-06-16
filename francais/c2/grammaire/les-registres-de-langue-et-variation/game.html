@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Registres de langue — Jeu C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>
+  <a href="../../index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">Registres de langue</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Le&#231;on</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimables</a>
+</nav>
+<div class="container">
+  <h1>Registres de langue — Jeu de Ma&#238;trise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Ma&#238;trise</h2>
+        <p>Maîtrisez les registres de langue et la variation stylistique au C2</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Les r&#233;ponses cons&#233;cutives sur le m&#234;me concept et les s&#233;ries entre concepts rapportent des points bonus.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Vous avez une partie sauvegard&#233;e.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">D&#233;marrer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; R&#233;f&#233;rence — tous les concepts</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Ma&#238;trise atteinte !</h2>
+        <p>Vous avez compl&#233;t&#233; tous les &#233;l&#233;ments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure s&#233;rie</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Fran&#231;ais C2 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "les-registres-de-langue-et-variation",
+  level: "c2",
+  title: "Les Registres de Langue et la Variation Stylistique",
+  storageKey: "wordplay_game_fr_c2_les-registres-de-langue-et-variation",
+  items: [
+    {id:"g8-cinq-registres", term:"les cinq registres du français", meaning:"soutenu, standard, courant, familier, vulgaire — hiérarchie des niveaux de langue", synonym:"le niveau de langue · les registres · la variation situationnelle", example:"Soutenu : 'Il a trépassé.' Standard : 'Il est décédé.' Courant : 'Il est mort.' Familier : 'Il a claqué.'", completion:"cinq registres = soutenu, standard, courant, familier, vulgaire", answer:"hiérarchie des cinq niveaux de langue du soutenu au vulgaire"},
+    {id:"g8-diaphasique", term:"la variation diaphasique", meaning:"variation de registre selon la situation de communication (formel vs intime)", synonym:"la variation situationnelle · le registre de politesse · la variation stylistique", example:"Parler à son patron en registre standard vs à ses amis en registre familier : variation diaphasique.", completion:"variation diaphasique = changement de registre selon la situation", answer:"variation de registre selon la situation de communication"},
+    {id:"g8-bathos", term:"le bathos", meaning:"descente comique brusque d'un registre solennel vers un registre trivial ou vulgaire", synonym:"la chute stylistique · le comique de registre · l'anticlimax de niveau", example:"'Il mourut pour la patrie, pour l'honneur, pour un sandwich.' — bathos par chute triviale finale.", completion:"bathos = descente brusque du solennel au trivial pour effet comique", answer:"descente brusque d'un registre solennel vers un registre trivial ou comique"},
+    {id:"g8-polyphonie", term:"la polyphonie textuelle", meaning:"coexistence de plusieurs voix à registres différents dans un même texte", synonym:"la pluralité de voix · Bakhtine · le dialogisme", example:"Zola : narrateur soutenu + dialogue ouvrier familier — polyphonie caractéristique du roman naturaliste.", completion:"polyphonie = coexistence de plusieurs voix à registres différents", answer:"coexistence de plusieurs voix à registres différents dans un même texte"},
+    {id:"g8-jargon", term:"le jargon de spécialité", meaning:"lexique et conventions discursives propres à un domaine professionnel ou académique", synonym:"la langue de spécialité · le lexique technique · le vocabulaire expert", example:"Le jargon juridique : 'la jurisprudence', 'la plaidoirie', 'le prononcé du jugement'.", completion:"jargon = lexique et conventions propres à un domaine de spécialité", answer:"lexique et conventions discursives propres à un domaine professionnel"},
+    {id:"g8-archaisme", term:"l'archaïsme stylistique", meaning:"emploi délibéré d'un mot ou d'une construction ancienne pour un effet de patine ou d'ironie", synonym:"le mot archaïque · naguère · moult · la patine littéraire", example:"'Moult fois il tenta de la convaincre.' — archaïsme pour effet de conte médiéval.", completion:"archaïsme stylistique = emploi délibéré de mots anciens pour un effet", answer:"emploi délibéré d'un mot ou d'une construction ancienne pour un effet"},
+    {id:"g8-diastratique", term:"la variation diastratique", meaning:"variation de registre liée à la position sociale du locuteur : sociolectes et argots", synonym:"le sociolecte · l'argot de classe · la variation sociale", example:"L'argot de banlieue (verlan, troncations) vs la langue de la bourgeoisie cultivée : variation diastratique.", completion:"variation diastratique = variation liée à la position sociale", answer:"variation de registre liée à la position sociale du locuteur"},
+    {id:"g8-diatopique", term:"la variation diatopique", meaning:"variation géographique du français : patois, régionalismes, français québécois, africain", synonym:"la variation régionale · les régionalismes · le français plurilingue", example:"Le français québécois 'magasiner' (= faire du shopping) vs le français hexagonal : variation diatopique.", completion:"variation diatopique = variation géographique du français", answer:"variation géographique du français incluant patois et régionalismes"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Syntaxe périodique — Jeu C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>
+  <a href="../../index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">Syntaxe périodique</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Le&#231;on</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimables</a>
+</nav>
+<div class="container">
+  <h1>Syntaxe périodique — Jeu de Ma&#238;trise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Ma&#238;trise</h2>
+        <p>Maîtrisez la syntaxe périodique et le style oratoire au C2</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Les r&#233;ponses cons&#233;cutives sur le m&#234;me concept et les s&#233;ries entre concepts rapportent des points bonus.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Vous avez une partie sauvegard&#233;e.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">D&#233;marrer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; R&#233;f&#233;rence — tous les concepts</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Ma&#238;trise atteinte !</h2>
+        <p>Vous avez compl&#233;t&#233; tous les &#233;l&#233;ments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure s&#233;rie</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Fran&#231;ais C2 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "la-syntaxe-periodique-et-style-oratoire",
+  level: "c2",
+  title: "La Syntaxe Périodique et le Style Oratoire",
+  storageKey: "wordplay_game_fr_c2_la-syntaxe-periodique-et-style-oratoire",
+  items: [
+    {id:"g4-periode", term:"la période", meaning:"longue phrase architecturée en protase (tension) + apodose (résolution)", synonym:"la phrase périodique · la phrase longue · l'architecture oratoire", example:"Si l'on considère… [protase], force est de reconnaître… [apodose] — période classique.", completion:"période = protase (tension) + apodose (résolution)", answer:"longue phrase avec protase créant l'attente et apodose la résolvant"},
+    {id:"g4-anaphore", term:"l'anaphore", meaning:"répétition d'un mot ou d'un groupe en tête de plusieurs propositions consécutives", synonym:"la répétition initiale · le retour en tête · le rythme incantatoire", example:"Nous lutterons sur les plages, nous lutterons dans les rues… — anaphore de 'nous lutterons'.", completion:"anaphore = répétition en tête de propositions consécutives", answer:"répétition d'un mot ou groupe en tête de propositions consécutives"},
+    {id:"g4-climax", term:"le climax", meaning:"gradation ascendante : accumulation d'éléments d'intensité croissante", synonym:"la gradation · l'intensification · la montée en puissance", example:"Il vint, il vit, il vainquit — trois étapes de force croissante (climax ternaire).", completion:"climax = gradation ascendante d'éléments d'intensité croissante", answer:"accumulation d'éléments d'intensité croissante vers un sommet"},
+    {id:"g4-tricolon", term:"le tricolon", meaning:"structure rhétorique groupant trois éléments parallèles de force croissante", synonym:"le ternaire · les trois membres · la structure en trois temps", example:"Liberté, égalité, fraternité — tricolon révolutionnaire à trois membres équilibrés.", completion:"tricolon = trois éléments parallèles de force croissante", answer:"structure groupant trois éléments parallèles de force croissante"},
+    {id:"g4-question-rhet", term:"la question rhétorique", meaning:"question posée sans attente de réponse, pour affirmer ou impliquer l'auditoire", synonym:"la question de rhétorique · l'interrogation oratoire · l'interpellation", example:"'Qui de nous ne ressent pas cette injustice ?' — question rhétorique affirmant le ressenti universel.", completion:"question rhétorique = question sans réponse attendue pour affirmer ou impliquer", answer:"question posée sans attente de réponse pour affirmer ou impliquer"},
+    {id:"g4-anticlimax", term:"l'anticlimax", meaning:"gradation descendante suivie d'une chute bathétique pour l'effet comique ou pathétique", synonym:"la chute · le bathétique · la gradation descendante", example:"Il avait tout planifié, tout organisé — et oublia la date. (anticlimax comique)", completion:"anticlimax = tension + chute bathétique pour effet comique ou pathétique", answer:"gradation descendante suivie d'une chute inattendue"},
+    {id:"g4-epiphore", term:"l'épiphore", meaning:"répétition d'un mot ou d'un groupe en fin de plusieurs propositions consécutives", synonym:"la répétition finale · l'épistrophe · la clôture répétée", example:"'Je l'ai voulu, je l'ai cherché, je l'ai obtenu.' — épiphore de 'je l'ai + verbe'.", completion:"épiphore = répétition en fin de propositions consécutives", answer:"répétition d'un mot ou groupe en fin de propositions consécutives"},
+    {id:"g4-style-coupe", term:"le style coupé vs périodique", meaning:"opposition entre phrases courtes et nerveuses (coupé) et phrases longues architecturées (périodique)", synonym:"le style court · le style bref · Pascal vs Bossuet", example:"Pascal : style coupé — phrases lapidaires. Bossuet : style périodique — phrases longues solennelles.", completion:"style coupé (court, nerveux) vs périodique (long, architecturé)", answer:"opposition entre phrases brèves nerveuses et phrases longues architecturées"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

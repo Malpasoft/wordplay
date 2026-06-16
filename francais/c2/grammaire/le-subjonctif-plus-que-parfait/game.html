@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Subjonctif plus-que-parfait — Jeu C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>
+  <a href="../../index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">Subjonctif plus-que-parfait</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Le&#231;on</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimables</a>
+</nav>
+<div class="container">
+  <h1>Subjonctif plus-que-parfait — Jeu de Ma&#238;trise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Ma&#238;trise</h2>
+        <p>Maîtrisez le subjonctif plus-que-parfait et la concordance absolue</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Les r&#233;ponses cons&#233;cutives sur le m&#234;me concept et les s&#233;ries entre concepts rapportent des points bonus.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Vous avez une partie sauvegard&#233;e.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">D&#233;marrer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; R&#233;f&#233;rence — tous les concepts</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Ma&#238;trise atteinte !</h2>
+        <p>Vous avez compl&#233;t&#233; tous les &#233;l&#233;ments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure s&#233;rie</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Fran&#231;ais C2 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "le-subjonctif-plus-que-parfait",
+  level: "c2",
+  title: "Le Subjonctif Plus-que-parfait",
+  storageKey: "wordplay_game_fr_c2_le-subjonctif-plus-que-parfait",
+  items: [
+    {id:"g1-subj-pqp", term:"le subjonctif plus-que-parfait", meaning:"temps du subjonctif exprimant l'antériorité par rapport à un verbe principal au passé", synonym:"eût parlé · fût venu · concordance du passé", example:"Je doutais qu'il eût déjà fini avant notre arrivée — subj. PQP après VP passé.", completion:"subjonctif PQP = auxiliaire au subj. imparfait + participe passé", answer:"temps exprimant l'antériorité par rapport à un verbe principal au passé"},
+    {id:"g1-concordance", term:"la concordance des temps", meaning:"règle ajustant le temps du verbe subordonné selon le temps du verbe principal", synonym:"l'ajustement temporel · l'accord des temps · la succession verbale", example:"VP présent → subj. présent ; VP passé → subj. imparfait (concordance soutenue).", completion:"concordance des temps = ajustement du verbe subordonné selon le VP", answer:"règle ajustant le temps du verbe subordonné selon le verbe principal"},
+    {id:"g1-eut-fut", term:"il eût / il fût (accent obligatoire)", meaning:"formes du subj. imparfait à la 3e pers. sg., distinguées par l'accent des formes du passé simple", synonym:"l'accent circonflexe · eût vs eut · fût vs fut", example:"Il eût voulu (subj. imp.) ≠ il eut voulu (ind. passé antérieur) — l'accent est distinctif.", completion:"il eût / fût = 3e pers. sg. subj. imparfait, accent obligatoire", answer:"formes du subj. imparfait 3e pers. sg. avec accent distinctif"},
+    {id:"g1-cond-passe-2", term:"le conditionnel passé 2e forme", meaning:"forme identique au subj. PQP employée dans les hypothèses irréelles du passé en registre soutenu", synonym:"l'autre conditionnel passé · eût parlé dans si… · le conditionnel littéraire", example:"S'il eût su, il ne fût pas venu — conditionnel 2e forme dans une hypothèse irréelle.", completion:"conditionnel passé 2e forme = subj. PQP dans les hypothèses irréelles du passé", answer:"forme identique au subj. PQP dans les hypothèses irréelles du passé"},
+    {id:"g1-subj-imparfait", term:"le subjonctif imparfait", meaning:"temps du subjonctif exprimant la simultanéité/postériorité par rapport à un VP au passé", synonym:"vînt · parlât · finît · concordance des temps soutenue", example:"Je voulais qu'il vînt — subj. imparfait pour simultanéité après VP passé.", completion:"subjonctif imparfait = simultanéité/postériorité après VP passé", answer:"simultanéité ou postériorité par rapport à un verbe principal au passé"},
+    {id:"g1-subj-parfait", term:"le subjonctif parfait", meaning:"temps du subjonctif exprimant l'antériorité par rapport à un VP au présent ou futur", synonym:"ait parlé · soit venu · antériorité présent · subj. composé", example:"Je doute qu'il ait déjà compris — subj. parfait pour antériorité après VP présent.", completion:"subjonctif parfait = antériorité par rapport à un VP présent ou futur", answer:"antériorité par rapport à un verbe principal au présent ou au futur"},
+    {id:"g1-avant-que", term:"avant que + subj. PQP", meaning:"conjonction de subordination temporelle exigeant le subj. PQP après VP au passé", synonym:"avant que fût · subordination temporelle · antériorité conjonctive", example:"Il sortit avant qu'elle fût revenue — avant que + subj. PQP après VP passé.", completion:"avant que + VP passé → subjonctif PQP", answer:"avant que exige le subj. PQP quand le verbe principal est au passé"},
+    {id:"g1-bien-que-pqp", term:"bien que + subj. PQP", meaning:"conjonction concessive exigeant le subj. PQP pour exprimer une antériorité concessée", synonym:"bien qu'il eût · quoiqu'il fût · concession au passé", example:"Bien qu'il eût tout perdu, il gardait sa sérénité — subj. PQP après bien que + VP passé.", completion:"bien que + VP passé → subjonctif PQP", answer:"bien que exige le subj. PQP pour exprimer une antériorité concessée"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

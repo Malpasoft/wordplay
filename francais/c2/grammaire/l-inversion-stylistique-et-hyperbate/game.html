@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Inversion stylistique — Jeu C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>
+  <a href="../../index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Grammaire</a><span>&#8250;</span>
+  <a href="index.html">Inversion stylistique</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Le&#231;on</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimables</a>
+</nav>
+<div class="container">
+  <h1>Inversion stylistique — Jeu de Ma&#238;trise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Ma&#238;trise</h2>
+        <p>Maîtrisez l'inversion stylistique et l'hyperbate au niveau C2</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Les r&#233;ponses cons&#233;cutives sur le m&#234;me concept et les s&#233;ries entre concepts rapportent des points bonus.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Vous avez une partie sauvegard&#233;e.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">D&#233;marrer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; R&#233;f&#233;rence — tous les concepts</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Ma&#238;trise atteinte !</h2>
+        <p>Vous avez compl&#233;t&#233; tous les &#233;l&#233;ments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure s&#233;rie</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Fran&#231;ais C2 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "l-inversion-stylistique-et-hyperbate",
+  level: "c2",
+  title: "L'Inversion Stylistique et l'Hyperbate",
+  storageKey: "wordplay_game_fr_c2_l-inversion-stylistique-et-hyperbate",
+  items: [
+    {id:"g2-inversion-adv", term:"l'inversion après adverbe initiaux", meaning:"inversion du sujet obligatoire ou recommandée après certains adverbes en tête de proposition", synonym:"aussi · à peine · sans doute · peut-être", example:"À peine était-il arrivé que la réunion commença — inversion obligatoire après 'à peine'.", completion:"inversion après adverbe = sujet inversé après aussi/à peine/peut-être en tête", answer:"inversion du sujet après certains adverbes placés en tête de proposition"},
+    {id:"g2-hyp-sans-si", term:"l'hypothétique sans si", meaning:"construction soutenue remplaçant si + PQP par inversion + subj. PQP", synonym:"eût-il su · fût-elle venue · le conditionnel littéraire", example:"Eût-il su la vérité, il aurait agi autrement — hypothétique sans si.", completion:"hypothétique sans si = inversion + subj. PQP en lieu de si + PQP", answer:"inversion + subjonctif PQP remplaçant si + plus-que-parfait"},
+    {id:"g2-hyperbate", term:"l'hyperbate", meaning:"ajout stylistique après la clôture logique d'une phrase pour créer emphase et suspension", synonym:"l'accumulation terminale · l'ajout après la clôture · l'emphase", example:"Il avait tout perdu — son argent, ses amis, sa sérénité. (hyperbate avec énumération terminale)", completion:"hyperbate = ajout après la clôture logique de la phrase", answer:"ajout après la clôture logique d'une phrase pour emphase et suspension"},
+    {id:"g2-tiret-eupho", term:"le tiret euphonique -t-", meaning:"insertion de -t- entre un verbe en voyelle et il/elle/on dans une inversion", synonym:"viendra-t-il · dit-il · -t- euphonique · liaison graphique", example:"Viendra-t-il ? / dit-il — le -t- est obligatoire pour faciliter la prononciation.", completion:"tiret euphonique = -t- entre verbe en voyelle et il/elle/on inversé", answer:"insertion de -t- entre verbe en voyelle et il/elle/on dans l'inversion"},
+    {id:"g2-inversion-incise", term:"l'inversion dans l'incise", meaning:"ordre verbe + sujet dans les propositions intercalées du dialogue littéraire", synonym:"dit-il · reprit-elle · s'exclama le narrateur", example:"'Je viendrai demain', dit-il en souriant — inversion obligatoire dans l'incise.", completion:"inversion dans l'incise = verbe + sujet dans le discours rapporté littéraire", answer:"ordre verbe + sujet dans les propositions intercalées du dialogue"},
+    {id:"g2-anacoluthe", term:"l'anacoluthe", meaning:"rupture syntaxique volontaire : début de phrase ne se prolongeant pas selon la construction attendue", synonym:"la rupture syntaxique · la dislocation · la phrase brisée", example:"Moi, mes amis, je les aime — le sujet nominal est repris par un pronom (anacoluthe par dislocation).", completion:"anacoluthe = rupture syntaxique volontaire en cours de phrase", answer:"rupture syntaxique volontaire changeant la construction en cours de phrase"},
+    {id:"g2-inversion-attribut", term:"l'inversion attribut + être", meaning:"construction soutenue plaçant l'attribut en tête : Grande est ma joie", synonym:"rares sont ceux qui · telle est ma conviction · style oratoire", example:"Rares sont ceux qui osent contredire — inversion attribut + être en style oratoire.", completion:"inversion attribut + être = attribut en tête de phrase (registre soutenu)", answer:"construction soutenue plaçant l'attribut avant être en tête de phrase"},
+    {id:"g2-aussi-inversion", term:"aussi (= c'est pourquoi) + inversion", meaning:"emploi de aussi en tête de proposition causale-conclusive exigeant l'inversion du sujet", synonym:"aussi décida-t-il · aussi est-il · donc soutenu", example:"Aussi décida-t-il de changer de stratégie — aussi (conclusif) exige l'inversion.", completion:"aussi conclusif + inversion = aussi (donc) en tête exige l'inversion", answer:"aussi en sens conclusif en tête de proposition exige l'inversion du sujet"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
