@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Épreuve de Synthèse — Jeu C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>
+  <a href="../../index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">R&#233;daction</a><span>&#8250;</span>
+  <a href="index.html">Épreuve de Synthèse</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Le&#231;on</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimables</a>
+</nav>
+<div class="container">
+  <h1>Épreuve de Synthèse — Jeu de Ma&#238;trise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Ma&#238;trise</h2>
+        <p>Maîtrisez la synthèse de documents de niveau C2</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Les r&#233;ponses cons&#233;cutives sur le m&#234;me concept et les s&#233;ries entre concepts rapportent des points bonus.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Vous avez une partie sauvegard&#233;e.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">D&#233;marrer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; R&#233;f&#233;rence — tous les concepts</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Ma&#238;trise atteinte !</h2>
+        <p>Vous avez compl&#233;t&#233; tous les &#233;l&#233;ments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure s&#233;rie</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Fran&#231;ais C2 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "l-epreuve-de-synthese",
+  level: "c2",
+  title: "L'Épreuve de Synthèse",
+  storageKey: "wordplay_game_fr_c2_l-epreuve-de-synthese",
+  items: [
+    {id:"synthese", term:"synthèse de documents", meaning:"texte objectif croisant plusieurs sources autour d'un thème", synonym:"compte-rendu thématique", example:"La synthèse requiert de croiser les documents sans exprimer d'opinion.", completion:"synthèse = texte objectif croisant plusieurs sources", answer:"synthèse"},
+    {id:"croisement", term:"croisement documentaire", meaning:"mise en relation des idées de plusieurs documents dans une même partie", synonym:"intégration thématique", example:"Le croisement est le cœur de la synthèse réussie.", completion:"croisement = mise en relation des idées de plusieurs documents", answer:"croisement"},
+    {id:"reformulation", term:"reformulation", meaning:"réécriture d'une idée avec ses propres mots sans en changer le sens", synonym:"paraphrase non plagiaire", example:"La reformulation évite le plagiat tout en conservant le sens original.", completion:"reformulation = réécriture sans plagiat", answer:"reformulation"},
+    {id:"neutralite", term:"neutralité", meaning:"absence de jugement de valeur ou d'opinion personnelle", synonym:"objectivité", example:"La neutralité absolue est exigée dans la synthèse de documents.", completion:"neutralité = absence de jugement personnel", answer:"neutralité"},
+    {id:"convergence", term:"convergence", meaning:"accord entre les positions de plusieurs documents", synonym:"point commun", example:"Les documents convergent sur l'importance du développement durable.", completion:"convergence = accord entre documents", answer:"convergence"},
+    {id:"divergence", term:"divergence", meaning:"désaccord ou nuance entre les positions de documents différents", synonym:"point de désaccord", example:"La divergence entre les deux textes enrichit l'analyse.", completion:"divergence = désaccord entre documents", answer:"divergence"},
+    {id:"plagiat", term:"plagiat", meaning:"copie de phrases entières sans reformulation ni guillemets", synonym:"copie non signalée", example:"Le plagiat est sanctionné au DALF même sans intention.", completion:"plagiat = copie sans reformulation — à éviter", answer:"plagiat"},
+    {id:"plan-thematique", term:"plan thématique", meaning:"organisation de la synthèse par idées transversales plutôt que par document", synonym:"plan par enjeux", example:"Un plan thématique croise les documents et révèle les enjeux communs.", completion:"plan thématique = organisation par idées transversales", answer:"plan thématique"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

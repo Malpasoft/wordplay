@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Philosophie Contemporaine — Cartes | Fran&#231;ais C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<style>
+.fc-wrap{perspective:800px;margin:0 auto 20px;max-width:480px}
+.fc{width:100%;height:220px;position:relative;transform-style:preserve-3d;transition:transform .5s;cursor:pointer;border-radius:10px}
+.fc.flipped{transform:rotateY(180deg)}
+.fc-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;border:1px solid var(--hairline)}
+.fc-front,.fc-back{background:var(--paper)}
+.fc-back{transform:rotateY(180deg)}
+.fc-word{font-size:1.8rem;font-weight:700;color:var(--ink);margin-bottom:6px}
+.fc-ipa{font-family:var(--font-sans);font-size:.85rem;color:var(--muted);margin-bottom:8px}
+.fc-def{font-size:.95rem;color:var(--ink);margin-bottom:6px}
+.fc-ex{font-size:.82rem;color:var(--muted);font-style:italic}
+.fc-hint{font-family:var(--font-sans);font-size:.65rem;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:10px}
+.fc-audio{background:none;border:1px solid var(--hairline);border-radius:4px;padding:5px 12px;font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);cursor:pointer;margin-top:8px}
+.fc-audio:hover{border-color:var(--amber);color:var(--amber)}
+.fc-nav{display:flex;align-items:center;gap:16px;justify-content:center;margin-bottom:20px}
+.fc-btn{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:9px 18px;border-radius:4px;cursor:pointer;border:1.5px solid var(--hairline);background:transparent;color:var(--ink)}
+.fc-btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.fc-counter{font-family:var(--font-sans);font-size:.75rem;color:var(--muted);font-weight:600}
+.mastery-badge{display:inline-block;padding:8px 18px;background:rgba(184,134,11,.12);color:var(--amber);font-family:var(--font-sans);font-size:.78rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;border-radius:4px;margin-bottom:16px}
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.match-col{display:flex;flex-direction:column;gap:8px}
+.match-item{padding:12px 14px;border:1.5px solid var(--hairline);border-radius:6px;cursor:pointer;font-size:.9rem;color:var(--ink);transition:border-color .15s,background .15s;user-select:none;min-height:48px;display:flex;align-items:center}
+.match-item.selected{border-color:var(--amber);background:rgba(184,134,11,.08)}
+.match-item.correct{border-color:var(--green,#2E7D52);background:rgba(46,125,82,.08);pointer-events:none;color:var(--muted)}
+.match-item.wrong{border-color:var(--red,#C03A2B);background:rgba(192,57,43,.08)}
+.match-status{font-family:var(--font-sans);font-size:.85rem;color:var(--muted);text-align:center;margin-bottom:16px}
+.heart-row{display:flex;gap:6px;justify-content:center;margin-bottom:12px}
+.heart-svg{width:22px;height:22px}
+</style>
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="../index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="container">
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>
+  <a href="../../index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulaire</a><span>&#8250;</span>
+  <strong>Philosophie Contemporaine</strong>
+</div>
+<div class="chapter-num">V02</div>
+<h1>Philosophie Contemporaine</h1>
+<nav class="chapter-nav">
+  <a href="flashcards.html" class="chapter-nav-btn active">Cartes</a>
+  <a href="slides.html" class="chapter-nav-btn">Le&#231;on</a>
+  <a href="game.html" class="chapter-nav-btn">Jeu</a>
+  <a href="match.html" class="chapter-nav-btn">Relier</a>
+</nav>
+<div id="masteryBadge" style="margin:12px 0;display:none"><span class="mastery-badge">&#10003; Ma&#238;tris&#233;</span></div>
+<p style="font-family:var(--font-sans);font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:16px">15 mots &middot; appuyez sur la carte pour voir la d&#233;finition</p>
+<div class="fc-nav"><button class="fc-btn" onclick="prevCard()">&#8592; Pr&#233;c.</button><span class="fc-counter" id="fcCounter">1 / 15</span><button class="fc-btn primary" onclick="nextCard()">Suivant &#8594;</button></div>
+<div class="fc-wrap"><div class="fc" id="fcCard" onclick="flipCard()"><div class="fc-face fc-front"><div class="fc-word" id="fcWord"></div><div class="fc-ipa" id="fcIpa"></div><div class="fc-hint">Appuyez pour voir la d&#233;finition</div></div><div class="fc-face fc-back"><div class="fc-def" id="fcDef"></div><div class="fc-ex" id="fcEx"></div><button class="fc-audio" onclick="event.stopPropagation();speakWord()">&#9654; &#201;couter</button></div></div></div>
+<script>
+var WORDS = [{"word": "la phénoménologie", "ipa": "/fenɔmenɔlɔʒi/", "def": "courant philosophique étudiant les structures de l'expérience consciente (Husserl, Heidegger)", "ex": "La phénoménologie de Husserl part du vécu immédiat de la conscience pour reconstruire le monde."}, {"word": "l'herméneutique", "ipa": "/ɛʁmeneytik/", "def": "théorie et pratique de l'interprétation des textes et des actions humaines (Ricoeur, Gadamer)", "ex": "L'herméneutique de Ricoeur montre que comprendre un texte exige de saisir son horizon de sens."}, {"word": "la déconstruction", "ipa": "/dekɔ̃stʁyksjɔ̃/", "def": "méthode de lecture qui dévoile les tensions et contradictions internes d'un texte (Derrida)", "ex": "La déconstruction derridienne révèle comment tout texte mine sa propre prétention à l'unité."}, {"word": "l'épistémè", "ipa": "/epistemɛ/", "def": "configuration inconsciente de savoirs définissant ce qui est pensable à une époque (Foucault)", "ex": "Foucault montre que chaque époque possède une épistémè qui délimite le champ des discours possibles."}, {"word": "la biopouvoir", "ipa": "/bjopuvwaʁ/", "def": "forme de pouvoir qui s'exerce sur les populations par la régulation des corps et de la vie (Foucault)", "ex": "Le biopouvoir se manifeste dans les politiques de santé publique, de reproduction et de discipline sociale."}, {"word": "la trace", "ipa": "/tʁas/", "def": "concept derridien désignant la marque différentielle qui structure toute signification sans présence pleine", "ex": "Pour Derrida, la trace est ce qui reste quand la présence s'est effacée — le fondement de l'écriture."}, {"word": "l'altérité", "ipa": "/alteʁite/", "def": "qualité de ce qui est radicalement autre, irréductible au même — central chez Levinas, Derrida", "ex": "Levinas fonde l'éthique sur la responsabilité absolue envers l'altérité du visage de l'autre."}, {"word": "la déconstruction du sujet", "ipa": "/dekɔ̃stʁyksjɔ̃ dy syʒɛ/", "def": "remise en cause du sujet unitaire et autonome de la modernité, au profit d'un sujet fragmenté", "ex": "La déconstruction du sujet chez Lacan et Derrida révèle un 'je' fissuré, divisé par le langage."}, {"word": "le simulacre", "ipa": "/simylakʁ/", "def": "copie sans original, représentation qui se substitue au réel jusqu'à le remplacer (Baudrillard)", "ex": "Baudrillard voit la société contemporaine comme un univers de simulacres où le réel a disparu."}, {"word": "la rhizome", "ipa": "/ʁizɔm/", "def": "modèle de pensée non hiérarchique, à entrées multiples, sans centre ni racine (Deleuze-Guattari)", "ex": "Deleuze et Guattari opposent le rhizome à l'arbre : un réseau horizontal sans racine unique."}, {"word": "la biopolitique", "ipa": "/bjɔpɔlitik/", "def": "politique qui prend pour objet la vie biologique des populations plutôt que les individus (Foucault)", "ex": "La biopolitique du XIXe siècle invente la notion de 'race' et de 'population' comme objets de gouvernement."}, {"word": "l'intersubjectivité", "ipa": "/ɛ̃tɛʁsybʒɛktivite/", "def": "rapport entre sujets conscients qui se reconnaissent mutuellement comme sujets", "ex": "Habermas fonde l'éthique de la discussion sur l'intersubjectivité des participants au dialogue."}, {"word": "le signe (Saussure)", "ipa": "/siɲ/", "def": "unité linguistique composée d'un signifiant (image acoustique) et d'un signifié (concept)", "ex": "Pour Saussure, le rapport entre signifiant et signifié est arbitraire et conventionnel."}, {"word": "la différance", "ipa": "/difeʁɑ̃s/", "def": "néologisme de Derrida désignant le double mouvement de différence et de renvoi perpétuel dans le langage", "ex": "La 'différance' (avec a) joue sur différer/différer : le sens ne cesse de se déplacer."}, {"word": "la phronèsis", "ipa": "/fʁɔnezis/", "def": "sagesse pratique ou prudence — vertu aristotélicienne de discernement dans l'action contextuelle", "ex": "La phronèsis est la vertu du juge qui sait adapter les principes généraux aux cas particuliers."}];
+var STORAGE_KEY = "wordplay_vocab_mastered_fr_c2_la-philosophie-contemporaine";
+var LEVEL = "c2";
+</script>
+<script>
+var idx = 0, seen = new Set(), allDone = false;
+function showCard() {
+  var w = WORDS[idx];
+  document.getElementById('fcWord').textContent = w.word;
+  document.getElementById('fcIpa').textContent = w.ipa || '';
+  document.getElementById('fcDef').innerHTML = w.def;
+  document.getElementById('fcEx').innerHTML = w.ex || '';
+  document.getElementById('fcCard').classList.remove('flipped');
+  document.getElementById('fcCounter').textContent = (idx+1) + ' / ' + WORDS.length;
+  seen.add(idx);
+  if (seen.size === WORDS.length && !allDone) { allDone = true; saveMastery(); }
+}
+function flipCard() { document.getElementById('fcCard').classList.toggle('flipped'); }
+function prevCard() { idx = (idx - 1 + WORDS.length) % WORDS.length; showCard(); }
+function nextCard() { idx = (idx + 1) % WORDS.length; showCard(); }
+function speakWord() {
+  var u = new SpeechSynthesisUtterance(WORDS[idx].word);
+  u.lang = 'fr-FR'; u.rate = 0.85; speechSynthesis.speak(u);
+}
+function saveMastery() {
+  var prog = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+  if (!prog[LEVEL]) prog[LEVEL] = {};
+  prog[LEVEL][STORAGE_KEY] = {done: true, date: new Date().toISOString()};
+  localStorage.setItem('wordplay_progress', JSON.stringify(prog));
+  if (window.store && store.pushProgress) store.pushProgress();
+  document.getElementById('masteryBadge').style.display = 'block';
+}
+(function init() {
+  var prog = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
+  var lv = prog[LEVEL] || {};
+  if (lv[STORAGE_KEY] && lv[STORAGE_KEY].done) {
+    allDone = true;
+    document.getElementById('masteryBadge').style.display = 'block';
+  }
+  showCard();
+})();
+</script><footer class="site-footer">Word Play &middot; Fran&#231;ais C2 &middot; Vocabulaire</footer>
+</div></body>
+</html>

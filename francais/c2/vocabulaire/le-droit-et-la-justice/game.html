@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Droit et Justice — Jeu C2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>
+  <a href="../../index.html">C2</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulaire</a><span>&#8250;</span>
+  <a href="index.html">Droit et Justice</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Le&#231;on</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+</nav>
+<div class="container">
+  <h1>Droit et Justice — Jeu de Ma&#238;trise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Ma&#238;trise</h2>
+        <p>Maîtrisez le vocabulaire du droit et de la justice au niveau C2</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Les r&#233;ponses cons&#233;cutives sur le m&#234;me concept et les s&#233;ries entre concepts rapportent des points bonus.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Vous avez une partie sauvegard&#233;e.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">D&#233;marrer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; R&#233;f&#233;rence — tous les concepts</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Ma&#238;trise atteinte !</h2>
+        <p>Vous avez compl&#233;t&#233; tous les &#233;l&#233;ments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure s&#233;rie</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Fran&#231;ais C2 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "le-droit-et-la-justice",
+  level: "c2",
+  title: "Le Droit et la Justice",
+  storageKey: "wordplay_game_fr_c2_le-droit-et-la-justice",
+  items: [
+    {id:"dro-legitimite", term:"la légitimité", meaning:"qualité de ce qui est conforme à la justice ou à un droit reconnu — distinct de la légalité", synonym:"légal vs légitime · la justice perçue · la reconnaissance", example:"Une loi peut être légale sans être légitime si elle est perçue comme injuste.", completion:"légitimité = conformité à la justice ou à un droit reconnu, distinct de la légalité", answer:"qualité de ce qui est conforme à la justice ou à un droit reconnu"},
+    {id:"dro-etat-droit", term:"l'état de droit", meaning:"système où toutes les personnes et institutions, y compris l'État, sont soumises à la loi", synonym:"la primauté du droit · le Rule of Law · la légalité · l'égalité devant la loi", example:"L'état de droit garantit que le gouvernement agit dans le cadre légal, comme tout citoyen.", completion:"état de droit = système où tous, y compris l'État, sont soumis à la loi", answer:"système où toutes les personnes et institutions sont soumises à la loi"},
+    {id:"dro-justice-distributive", term:"la justice distributive", meaning:"principe de répartition équitable des biens, droits et obligations (Aristote, Rawls)", synonym:"Rawls · la répartition équitable · les inégalités justifiables", example:"Pour Rawls, les inégalités sont justes si elles profitent aux membres les plus défavorisés.", completion:"justice distributive = répartition équitable des biens et droits (Rawls)", answer:"principe de répartition équitable des biens, droits et obligations"},
+    {id:"dro-presomption", term:"la présomption d'innocence", meaning:"tout accusé est réputé innocent jusqu'à preuve du contraire", synonym:"la charge de la preuve · l'accusé non coupable · le procès équitable", example:"La présomption d'innocence impose à l'accusation de prouver la culpabilité.", completion:"présomption d'innocence = accusé innocent jusqu'à preuve contraire", answer:"principe selon lequel tout accusé est réputé innocent jusqu'à preuve du contraire"},
+    {id:"dro-jurisprudence", term:"la jurisprudence", meaning:"ensemble des décisions de justice constituant une référence pour les affaires similaires", synonym:"la décision de référence · la cour suprême · le précédent judiciaire", example:"La jurisprudence de la Cour de cassation s'impose aux juridictions inférieures.", completion:"jurisprudence = décisions de justice servant de référence aux affaires similaires", answer:"ensemble des décisions de justice constituant une référence pour les affaires similaires"},
+    {id:"dro-separation", term:"la séparation des pouvoirs", meaning:"principe répartissant les fonctions législative, exécutive et judiciaire entre organes distincts", synonym:"Montesquieu · le législatif · l'exécutif · le judiciaire", example:"Montesquieu a théorisé la séparation des pouvoirs comme garantie contre la tyrannie.", completion:"séparation des pouvoirs = répartition des fonctions entre organes distincts (Montesquieu)", answer:"principe répartissant les fonctions législative, exécutive et judiciaire"},
+    {id:"dro-imprescriptibilite", term:"l'imprescriptibilité", meaning:"caractère d'une infraction ne pouvant tomber dans l'oubli légal avec le temps", synonym:"les crimes contre l'humanité · la prescription · l'absence de délai", example:"L'imprescriptibilité des crimes contre l'humanité garantit qu'aucun auteur ne peut échapper à la justice.", completion:"imprescriptibilité = infraction ne tombant jamais dans l'oubli légal", answer:"caractère d'une infraction qui ne peut pas tomber dans l'oubli légal"},
+    {id:"dro-equite", term:"l'équité", meaning:"application nuancée de la justice tenant compte des circonstances particulières d'un cas", synonym:"la justice du cas particulier · l'aequitas · la rigueur tempérée", example:"L'équité permet de modérer la rigueur de la loi quand son application stricte produirait une injustice.", completion:"équité = application nuancée de la justice selon les circonstances particulières", answer:"application nuancée de la justice tenant compte des circonstances particulières"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
