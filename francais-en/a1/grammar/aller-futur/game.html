@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Aller + Infinitive (Near Future) — Game A1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>&#8250;</span>
+  <a href="../../../../francais-en/index.html">French for English speakers</a><span>&#8250;</span>
+  <a href="../../index.html">A1</a><span>&#8250;</span>
+  <a href="../index.html">Grammar</a><span>&#8250;</span>
+  <a href="index.html">Aller + Infinitive (Near Future)</a><span>&#8250;</span>
+  <strong>Game</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercises</a>
+  <a href="game.html" class="chapter-nav-btn active">Game</a>
+</nav>
+<div class="container">
+  <h1>Aller + Infinitive (Near Future) — Mastery Game</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Mastery Game</h2>
+        <p>Master aller in the present and futur proche — going to do things.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved game.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You've completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercises</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; French A1 &middot; Game</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "aller-futur",
+  level: "a1",
+  title: "Aller + Infinitive — Near Future",
+  storageKey: "wordplay_game_a1_aller-futur",
+  items: [
+    {id:"al1", term:"je vais", meaning:"I go / I am going", synonym:"I go", example:"Je vais à l'école. Je vais manger.", completion:"Complète: Je ___ partir. (I)", answer:"vais"},
+    {id:"al2", term:"tu vas / vous allez", meaning:"you go / you are going", synonym:"you go", example:"Tu vas bien ? Vous allez en France ?", completion:"Complète: Tu ___ étudier ? (tu)", answer:"vas"},
+    {id:"al3", term:"il / elle va", meaning:"he / she goes", synonym:"she goes", example:"Il va au cinéma. Elle va travailler.", completion:"Complète: Elle ___ venir. (she)", answer:"va"},
+    {id:"al4", term:"nous allons", meaning:"we go / we are going", synonym:"we go", example:"Nous allons au marché ce matin.", completion:"Complète: Nous ___ voyager. (we)", answer:"allons"},
+    {id:"al5", term:"ils / elles vont", meaning:"they go / are going", synonym:"they go", example:"Ils vont regarder un film ce soir.", completion:"Complète: Ils ___ arriver. (they)", answer:"vont"},
+    {id:"al6", term:"aller + infinitif", meaning:"futur proche (going to…)", synonym:"going to", example:"Elle va partir demain matin tôt.", completion:"Complète: Tu vas ___ ce soir. (étudier)", answer:"étudier"},
+    {id:"al7", term:"ne pas aller + infinitif", meaning:"not going to (negative futur proche)", synonym:"not going to", example:"Je ne vais pas manger ce soir.", completion:"Complète: Il ne ___ pas venir. (va)", answer:"va"},
+    {id:"al8", term:"Ça va ?", meaning:"How are you? / I'm fine", synonym:"fine", example:"Ça va ? — Oui, ça va bien, merci !", completion:"Complète: ___ va ? (Ça)", answer:"Ça"}
+  ]
+};
+</script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>Possessive Adjectives — Game A1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>&#8250;</span>
+  <a href="../../../../francais-en/index.html">French for English speakers</a><span>&#8250;</span>
+  <a href="../../index.html">A1</a><span>&#8250;</span>
+  <a href="../index.html">Grammar</a><span>&#8250;</span>
+  <a href="index.html">Possessive Adjectives</a><span>&#8250;</span>
+  <strong>Game</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercises</a>
+  <a href="game.html" class="chapter-nav-btn active">Game</a>
+</nav>
+<div class="container">
+  <h1>Possessive Adjectives — Mastery Game</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Mastery Game</h2>
+        <p>Practice possessive adjectives — mon/ma/mes, ton/ta/tes, son/sa/ses and more.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved game.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You've completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercises</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; French A1 &middot; Game</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "possessives",
+  level: "a1",
+  title: "Possessive Adjectives",
+  storageKey: "wordplay_game_a1_possessives",
+  items: [
+    {id:"poss1", term:"mon / ma / mes", meaning:"my (masc / fem / plural)", synonym:"my", example:"Mon frère, ma sœur, mes livres.", completion:"C'est ___ livre. (my, masc.)", answer:"mon"},
+    {id:"poss2", term:"ton / ta / tes", meaning:"your (tu form, masc / fem / plural)", synonym:"your", example:"Ton chien, ta voiture, tes amis.", completion:"C'est ___ école. (your, tu, vowel)", answer:"ton"},
+    {id:"poss3", term:"son / sa / ses", meaning:"his / her / its (masc / fem / plural)", synonym:"his/her", example:"Son frère, sa mère, ses parents.", completion:"C'est ___ amie. (her, vowel-initial)", answer:"son"},
+    {id:"poss4", term:"notre / nos", meaning:"our (sg / plural)", synonym:"our", example:"Notre maison, nos enfants.", completion:"C'est ___ professeur. (our, masc.)", answer:"notre"},
+    {id:"poss5", term:"votre / vos", meaning:"your (vous form, sg / plural)", synonym:"your (formal)", example:"Votre voiture, vos clés.", completion:"C'est ___ sac. (your, vous, masc.)", answer:"votre"},
+    {id:"poss6", term:"leur / leurs", meaning:"their (sg / plural)", synonym:"their", example:"Leur chien, leurs amis.", completion:"C'est ___ maison. (their, fem. sg)", answer:"leur"},
+    {id:"poss7", term:"mon amie", meaning:"my female friend (vowel rule)", synonym:"vowel rule", example:"Mon amie Marie est sympa.", completion:"Complète: ___ histoire est longue. (her)", answer:"son"},
+    {id:"poss8", term:"ses livres", meaning:"his/her books (plural)", synonym:"books", example:"Il range ses livres dans son sac.", completion:"Complète: Ce sont ___ enfants. (their, plural)", answer:"leurs"}
+  ]
+};
+</script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
