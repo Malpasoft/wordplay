@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>DELF B1 — Simulacre 1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<style>
+.mock-container{max-width:760px;margin:0 auto;padding:0 16px}
+.timer-bar{position:sticky;top:0;background:var(--ink);color:var(--paper);padding:12px 16px;border-radius:0 0 8px 8px;display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15);margin-bottom:24px}
+.timer-display{font-family:var(--font-sans);font-size:1.1rem;font-weight:700;letter-spacing:.5px}
+.timer-display.warning{color:#FFD700}
+.timer-display.critical{color:#FF6B6B;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.start-screen,.results-screen{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:28px;margin-bottom:24px}
+.start-screen h2,.results-screen h2{font-size:1.4rem;margin:0 0 12px}
+.start-btn{display:inline-block;padding:12px 28px;background:var(--ink);color:var(--paper);border:0;font-family:var(--font-sans);font-size:.82rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer;margin-top:12px}
+.start-btn:hover{opacity:.85}
+.exam-area{display:none}
+.exam-area.active{display:block}
+.part-section{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:24px;margin-bottom:28px}
+.part-header{font-family:var(--font-sans);font-size:.68rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.part-section h2{font-size:1.2rem;margin:0 0 8px;color:var(--ink)}
+.part-section .instructions{font-size:.85rem;color:var(--muted);margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--hairline)}
+.text-title{font-weight:700;text-align:center;font-size:1.05rem;margin:12px 0;color:var(--ink)}
+.text-content{font-size:.92rem;line-height:1.7;color:var(--ink);margin-bottom:18px;padding:14px;background:var(--cream-deep);border-radius:6px;border-left:3px solid var(--amber)}
+.text-content p{margin:0 0 10px}
+.text-content p:last-child{margin:0}
+.mc-q{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--hairline)}
+.mc-q .q-num{font-family:var(--font-sans);font-size:.85rem;font-weight:800;color:var(--amber);min-width:28px}
+.mc-q .opts{flex:1;display:flex;flex-direction:column;gap:4px}
+.mc-q .q-text{flex:1;font-size:.9rem;margin-bottom:6px}
+.opt{display:flex;gap:6px;align-items:flex-start;padding:4px 6px;cursor:pointer;font-size:.9rem;border-radius:3px}
+.opt:hover{background:rgba(184,134,11,.05)}
+.opt-letter{font-family:var(--font-sans);font-weight:700;color:var(--amber);min-width:18px}
+.opt input{margin-top:4px}
+.vfn-row{display:flex;gap:8px;align-items:center;padding:8px 0;border-top:1px solid var(--hairline);font-size:.9rem}
+.vfn-row .q-num{font-family:var(--font-sans);font-weight:800;color:var(--amber);min-width:28px}
+.vfn-row .q-text{flex:1}
+.vfn-opts{display:flex;gap:6px}
+.vfn-opt{padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-size:.75rem;font-weight:700;cursor:pointer;background:var(--paper);color:var(--ink)}
+.vfn-opt:hover{border-color:var(--amber)}
+.vfn-opt.selected{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.match-q{display:flex;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--hairline);font-size:.9rem}
+.match-q .q-num{font-family:var(--font-sans);font-weight:800;color:var(--amber);min-width:28px}
+.match-q .q-text{flex:1}
+.match-select{padding:5px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-weight:700;background:var(--cream-deep);color:var(--ink);cursor:pointer}
+.mm-block{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;margin:14px 0;padding:14px;background:var(--cream-deep);border-radius:6px}
+.mm-letter{font-family:var(--font-sans);font-weight:800;color:var(--amber);font-size:.95rem;padding-top:2px}
+.mm-body{font-size:.85rem;line-height:1.55;color:var(--ink)}
+.submit-area{background:var(--ink);color:var(--paper);border-radius:8px;padding:20px;text-align:center;margin:32px 0}
+.submit-area p{margin:0 0 12px;opacity:.9}
+.submit-btn{display:inline-block;padding:14px 36px;background:var(--amber);color:var(--ink);border:0;font-family:var(--font-sans);font-size:.9rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer}
+.submit-btn:hover{opacity:.9}
+.results-screen{display:none}
+.results-screen.active{display:block}
+.score-big{font-size:3rem;font-weight:800;color:var(--amber);text-align:center;font-family:Georgia,serif}
+.score-label{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:18px}
+.part-breakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:20px 0}
+.part-score{background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px;padding:12px;text-align:center}
+.part-score .name{font-family:var(--font-sans);font-size:.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.part-score .val{font-size:1.3rem;font-weight:700;color:var(--ink);margin-top:4px}
+.answer-key{margin-top:24px}
+.answer-key h3{font-size:.88rem;font-family:var(--font-sans);font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.ak-row{display:flex;gap:8px;flex-wrap:wrap}
+.ak-item{font-family:var(--font-sans);font-size:.8rem;padding:3px 8px;border-radius:3px;font-weight:700}
+.ak-item.correct{background:#d4edda;color:#155724}
+.ak-item.wrong{background:#f8d7da;color:#721c24}
+
+</style>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Retour"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button>
+</div></header>
+
+<div class="mock-container">
+  <div class="breadcrumb"><a href="../../../../index.html">Accueil</a><span>›</span><a href="../../../index.html">Français</a><span>›</span><a href="../../index.html">DELF</a><span>›</span><a href="../index.html">B1</a><span>›</span><strong>Simulacre 1</strong></div>
+
+  <div id="startScreen" class="start-screen">
+    <div class="part-header">DELF B1 &middot; Compréhension des écrits</div>
+    <h2>Simulacre 1</h2>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Durée :</strong> 35 minutes</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Questions :</strong> 25 (3 tâches)</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:16px">En cliquant sur <strong>Commencer</strong>, le chronomètre démarre. Le simulacre est soumis automatiquement lorsque le temps est écoulé.</p>
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:18px">Conseil : lisez les questions avant les textes pour mieux cibler votre lecture.</p>
+    <button class="start-btn" onclick="startExam(false)">Commencer (avec chronomètre)</button>
+    <button class="start-btn" onclick="startExam(true)" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Mode pratique (sans chronomètre)</button>
+    <div id="resumeSection" style="display:none;margin-top:18px;padding:14px 16px;background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--amber);margin-bottom:6px">Progression sauvegardée</div><div id="resumeInfo" style="font-size:.88rem;color:var(--ink);margin-bottom:10px"></div><button class="start-btn" onclick="resumeExam()" style="background:var(--amber);color:var(--ink)">Continuer</button><button class="start-btn" onclick="clearSave()" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Recommencer</button></div>
+    <div id="prevAttempt" style="display:none;margin-top:12px;font-family:var(--font-sans);font-size:.78rem;color:var(--muted)">Meilleur résultat précédent : <strong id="prevScore"></strong></div>
+  </div>
+
+  <div id="examArea" class="exam-area">
+    <div class="timer-bar">
+      <div class="timer-display" id="timerDisplay">35:00</div>
+      <div class="timer-meta">Temps restant</div>
+      <button onclick="saveProgress()" style="background:transparent;border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.85);font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border-radius:3px;cursor:pointer">Sauvegarder</button>
+    </div>
+
+<div class="part-section">
+  <div class="part-header">Tâche 1</div>
+  <h2>Questions 1–8</h2>
+  <p class="instructions">Lisez cet article de magazine. Indiquez si les affirmations (1–8) sont <strong>Vraies (V)</strong>, <strong>Fausses (F)</strong> ou si <strong>on ne sait pas (NSP)</strong>.</p>
+  <div class="text-title">Le covoiturage en France : une pratique en plein essor</div>
+  <div class="text-content"><p>Le covoiturage connaît une croissance spectaculaire en France depuis quelques années. En 2023, plus de 4 millions de trajets ont été effectués chaque mois via les différentes plateformes numériques, contre 1,5 million en 2019.</p>
+<p>Ce mode de transport séduit particulièrement les jeunes actifs et les étudiants, qui y voient une façon de réduire leurs dépenses de transport tout en rencontrant de nouvelles personnes. « Je fais le trajet Paris–Lyon deux fois par mois et j'économise environ 60 euros à chaque fois », témoigne Camille, 24 ans.</p>
+<p>Les avantages environnementaux sont également mis en avant par les défenseurs du covoiturage. Selon une étude de l'ADEME publiée en 2022, le covoiturage régulier permettrait de réduire les émissions de CO2 d'un trajet de 30 à 40%.</p>
+<p>Cependant, le développement du covoiturage n'est pas sans difficultés. La question de la sécurité des passagers reste un sujet sensible, même si les incidents sont rares. Par ailleurs, en milieu rural, l'offre reste encore insuffisante pour répondre à la demande croissante.</p>
+<p>Le gouvernement français a annoncé un plan de soutien au covoiturage, avec notamment une aide financière pour les nouveaux utilisateurs et des subventions pour les plateformes qui développent des services en zone rurale.</p></div>
+  <div class="vfn-row">
+    <div class="q-num">1</div>
+    <div class="q-text">Le nombre de trajets en covoiturage a plus que doublé entre 2019 et 2023.</div>
+    <div class="vfn-opts">
+      <button class="vfn-opt" onclick="selectVFN(this,1,'V')">V</button>
+      <button class="vfn-opt" onclick="selectVFN(this,1,'F')">F</button>
+      <button class="vfn-opt" onclick="selectVFN(this,1,'NSP')">NSP</button>
+    </div></div>
+  <div class="vfn-row">
+    <div class="q-num">2</div>
+    <div class="q-text">Le covoiturage est surtout utilisé par les personnes âgées.</div>
+    <div class="vfn-opts">
+      <button class="vfn-opt" onclick="selectVFN(this,2,'V')">V</button>
+      <button class="vfn-opt" onclick="selectVFN(this,2,'F')">F</button>
+      <button class="vfn-opt" onclick="selectVFN(this,2,'NSP')">NSP</button>
+    </div></div>
+  <div class="vfn-row">
+    <div class="q-num">3</div>
+    <div class="q-text">Camille utilise le covoiturage pour aller travailler tous les jours.</div>
+    <div class="vfn-opts">
+      <button class="vfn-opt" onclick="selectVFN(this,3,'V')">V</button>
+      <button class="vfn-opt" onclick="selectVFN(this,3,'F')">F</button>
+      <button class="vfn-opt" onclick="selectVFN(this,3,'NSP')">NSP</button>
+    </div></div>
+  <div class="vfn-row">
+    <div class="q-num">4</div>
+    <div class="q-text">Le covoiturage peut réduire les émissions de CO2 d'un trajet.</div>
+    <div class="vfn-opts">
+      <button class="vfn-opt" onclick="selectVFN(this,4,'V')">V</button>
+      <button class="vfn-opt" onclick="selectVFN(this,4,'F')">F</button>
+      <button class="vfn-opt" onclick="selectVFN(this,4,'NSP')">NSP</button>
+    </div></div>
+  <div class="vfn-row">
+    <div class="q-num">5</div>
+    <div class="q-text">L'étude de l'ADEME a été publiée en 2022.</div>
+    <div class="vfn-opts">
+      <button class="vfn-opt" onclick="selectVFN(this,5,'V')">V</button>
+      <button class="vfn-opt" onclick="selectVFN(this,5,'F')">F</button>
+      <button class="vfn-opt" onclick="selectVFN(this,5,'NSP')">NSP</button>
+    </div></div>
+  <div class="vfn-row">
+    <div class="q-num">6</div>
+    <div class="q-text">Les accidents liés au covoiturage sont très fréquents.</div>
+    <div class="vfn-opts">
+      <button class="vfn-opt" onclick="selectVFN(this,6,'V')">V</button>
+      <button class="vfn-opt" onclick="selectVFN(this,6,'F')">F</button>
+      <button class="vfn-opt" onclick="selectVFN(this,6,'NSP')">NSP</button>
+    </div></div>
+  <div class="vfn-row">
+    <div class="q-num">7</div>
+    <div class="q-text">L'offre de covoiturage est suffisante dans les campagnes.</div>
+    <div class="vfn-opts">
+      <button class="vfn-opt" onclick="selectVFN(this,7,'V')">V</button>
+      <button class="vfn-opt" onclick="selectVFN(this,7,'F')">F</button>
+      <button class="vfn-opt" onclick="selectVFN(this,7,'NSP')">NSP</button>
+    </div></div>
+  <div class="vfn-row">
+    <div class="q-num">8</div>
+    <div class="q-text">Le gouvernement prévoit de taxer les plateformes de covoiturage.</div>
+    <div class="vfn-opts">
+      <button class="vfn-opt" onclick="selectVFN(this,8,'V')">V</button>
+      <button class="vfn-opt" onclick="selectVFN(this,8,'F')">F</button>
+      <button class="vfn-opt" onclick="selectVFN(this,8,'NSP')">NSP</button>
+    </div></div>
+</div>
+<div class="part-section">
+  <div class="part-header">Tâche 2</div>
+  <h2>Questions 9–17</h2>
+  <p class="instructions">Lisez cet article et répondez aux questions (9–17) en choisissant la bonne réponse (A, B ou C).</p>
+  <div class="text-title">Le jardinage urbain : quand la ville se met au vert</div>
+  <div class="text-content"><p>Paris, Lyon, Bordeaux : de plus en plus de grandes villes françaises encouragent leurs habitants à cultiver des espaces verts dans le tissu urbain. Potagers sur les toits, jardins partagés dans les cours d'immeuble, bacs à fleurs sur les trottoirs — le jardinage urbain s'impose comme une tendance forte des années 2020.</p>
+<p>La Ville de Paris a lancé en 2016 le programme « Parisculteurs », qui a permis de végétaliser plus de 100 hectares de surfaces jusqu'alors inexploitées. Les participants — particuliers, associations, entreprises — peuvent soumettre un projet et recevoir un accompagnement technique et, dans certains cas, un soutien financier.</p>
+<p>Au-delà du plaisir de produire ses propres légumes, le jardinage urbain répond à des enjeux multiples. Sur le plan écologique, il contribue à la lutte contre les îlots de chaleur en ville, améliore la biodiversité et réduit le ruissellement des eaux de pluie. Sur le plan social, il favorise la création de liens entre voisins et peut contribuer à réduire les inégalités alimentaires dans certains quartiers défavorisés.</p>
+<p>Mais le jardinage urbain a aussi ses limites. La qualité des sols en milieu urbain peut être problématique en raison de la pollution. Il est donc conseillé de faire analyser la terre avant de planter des légumes destinés à la consommation. De plus, la gestion des espaces partagés nécessite une organisation rigoureuse pour éviter les conflits entre utilisateurs.</p></div>
+  <div class="mc-q">
+    <div class="q-num">9</div>
+    <div class="opts">
+      <div class="q-text">Quand le programme « Parisculteurs » a-t-il été lancé ?</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q9" value="A"> En 2016</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q9" value="B"> En 2020</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q9" value="C"> En 2023</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">10</div>
+    <div class="opts">
+      <div class="q-text">Combien d'hectares le programme a-t-il végétalisés ?</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q10" value="A"> Plus de 10 hectares</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q10" value="B"> Plus de 100 hectares</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q10" value="C"> Plus de 1 000 hectares</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">11</div>
+    <div class="opts">
+      <div class="q-text">Qui peut participer au programme Parisculteurs ?</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q11" value="A"> Seulement les entreprises</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q11" value="B"> Seulement les associations</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q11" value="C"> Les particuliers, associations et entreprises</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">12</div>
+    <div class="opts">
+      <div class="q-text">Comment le jardinage urbain aide-t-il l'environnement ?</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q12" value="A"> En augmentant la pollution</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q12" value="B"> En luttant contre les îlots de chaleur</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q12" value="C"> En réduisant la consommation d'eau</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">13</div>
+    <div class="opts">
+      <div class="q-text">Quel avantage social le texte mentionne-t-il ?</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q13" value="A"> Créer des emplois</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q13" value="B"> Favoriser les liens entre voisins</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q13" value="C"> Réduire les loyers</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">14</div>
+    <div class="opts">
+      <div class="q-text">Quel risque est mentionné concernant les sols urbains ?</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q14" value="A"> La sécheresse</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q14" value="B"> La pollution</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q14" value="C"> La pauvreté en nutriments</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">15</div>
+    <div class="opts">
+      <div class="q-text">Que conseille-t-on de faire avant de planter des légumes ?</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q15" value="A"> Acheter de la terre neuve</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q15" value="B"> Analyser la qualité du sol</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q15" value="C"> Demander une autorisation</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">16</div>
+    <div class="opts">
+      <div class="q-text">Quelle difficulté concerne les espaces partagés ?</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q16" value="A"> Le manque d'eau</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q16" value="B"> Le manque de lumière</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q16" value="C"> Les conflits entre utilisateurs</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">17</div>
+    <div class="opts">
+      <div class="q-text">Quel est le sujet principal de l'article ?</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q17" value="A"> Les problèmes environnementaux en ville</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q17" value="B"> Le développement du jardinage en milieu urbain</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q17" value="C"> Les politiques agricoles françaises</label>
+    </div></div>
+</div>
+<div class="part-section">
+  <div class="part-header">Tâche 3</div>
+  <h2>Questions 18–25</h2>
+  <p class="instructions">Vous allez lire huit avis de lecteurs (A–H) sur le même sujet. Associez chaque affirmation (18–25) à l'auteur correspondant.</p>
+  <div class="mm-block">
+    <div class="mm-letter">A</div><div class="mm-body">Je lis surtout des romans policiers. J'apprécie les histoires à suspense où l'on cherche à identifier le coupable jusqu'à la dernière page.</div>
+    <div class="mm-letter">B</div><div class="mm-body">La lecture m'a sauvé pendant mes longues hospitalisations. Les livres m'ont permis de voyager sans quitter ma chambre.</div>
+    <div class="mm-letter">C</div><div class="mm-body">Je suis contre les liseuses électroniques. Le papier, l'odeur du livre, le plaisir de tourner les pages — rien ne peut remplacer ça.</div>
+    <div class="mm-letter">D</div><div class="mm-body">Je lis principalement des essais politiques et économiques. Je pense que la fiction est une perte de temps pour les adultes.</div>
+    <div class="mm-letter">E</div><div class="mm-body">Je n'ai jamais aimé lire, jusqu'au jour où j'ai découvert les mangas. Aujourd'hui, je lis plus de 20 albums par mois.</div>
+    <div class="mm-letter">F</div><div class="mm-body">La bibliothèque municipale a changé ma vie. Enfant pauvre, c'était le seul endroit où j'avais accès aux livres gratuitement.</div>
+    <div class="mm-letter">G</div><div class="mm-body">Je préfère écouter les livres audio en conduisant. C'est une façon de profiter des histoires sans avoir à s'arrêter.</div>
+    <div class="mm-letter">H</div><div class="mm-body">J'organise un club de lecture avec des amies depuis dix ans. C'est une occasion de se retrouver et de partager nos impressions.</div>
+  </div>
+  <div class="match-q">
+    <div class="q-num">18</div>
+    <div class="q-text">Cette personne a découvert la lecture grâce à un format spécifique.</div>
+    <select class="match-select" id="q18" onchange="setAns(18,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">19</div>
+    <div class="q-text">Cette personne utilise la lecture pour se distraire en voyageant.</div>
+    <select class="match-select" id="q19" onchange="setAns(19,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">20</div>
+    <div class="q-text">Cette personne apprécie le livre comme objet physique.</div>
+    <select class="match-select" id="q20" onchange="setAns(20,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">21</div>
+    <div class="q-text">Cette personne a bénéficié d'un service public pour accéder aux livres.</div>
+    <select class="match-select" id="q21" onchange="setAns(21,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">22</div>
+    <div class="q-text">Cette personne aime les intrigues et les enquêtes.</div>
+    <select class="match-select" id="q22" onchange="setAns(22,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">23</div>
+    <div class="q-text">La lecture a aidé cette personne pendant une période difficile.</div>
+    <select class="match-select" id="q23" onchange="setAns(23,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">24</div>
+    <div class="q-text">Cette personne préfère les textes non fictionnels.</div>
+    <select class="match-select" id="q24" onchange="setAns(24,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">25</div>
+    <div class="q-text">La lecture est pour cette personne une activité sociale.</div>
+    <select class="match-select" id="q25" onchange="setAns(25,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option></select>
+  </div>
+</div>
+
+    <div class="submit-area">
+      <p>Vérifiez vos réponses avant de soumettre.</p>
+      <button class="submit-btn" onclick="submitExam()">Soumettre le simulacre</button>
+    </div>
+  </div>
+
+  <div id="resultsScreen" class="results-screen">
+    <div class="part-header">DELF B1 &middot; Résultats</div>
+    <h2>Simulacre 1 — Résultats</h2>
+    <div class="score-big" id="scoreDisplay">—</div>
+    <div class="score-label">Score / 25</div>
+    <div class="part-breakdown" id="partBreakdown"></div>
+    <div class="answer-key">
+      <h3>Corrigé</h3>
+      <div class="ak-row" id="akRow"></div>
+    </div>
+    <div style="text-align:center;margin-top:24px">
+      <button class="start-btn" onclick="restart()">Recommencer</button>
+      <a href="../index.html" class="start-btn" style="text-decoration:none;margin-left:8px;background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline)">Retour</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">Word Play &middot; DELF B1</footer>
+<script>
+const ANSWERS = {1: "V", 2: "F", 3: "F", 4: "V", 5: "V", 6: "F", 7: "F", 8: "NSP", 9: "A", 10: "B", 11: "C", 12: "B", 13: "B", 14: "B", 15: "B", 16: "C", 17: "B", 18: "E", 19: "G", 20: "C", 21: "F", 22: "A", 23: "B", 24: "D", 25: "H"};
+const TOTAL = 25;
+const DURATION = 35 * 60;
+const STORAGE_KEY = 'wp_delf_b1_mock1';
+let userAnswers = {};
+let timerInterval = null;
+let timeLeft = DURATION;
+let timerActive = false;
+let practiceMode = false;
+
+function selectVFN(btn, qNum, val) {
+  document.querySelectorAll(`[onclick*="selectVFN(this,${qNum},"]`).forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  userAnswers[qNum] = val;
+  saveProgress();
+}
+function setAns(qNum, val) { userAnswers[qNum] = val; saveProgress(); }
+
+function saveProgress() {
+  const data = { answers: userAnswers, timeLeft, saved: Date.now() };
+  localStorage.setItem(STORAGE_KEY + '_progress', JSON.stringify(data));
+}
+function clearSave() {
+  localStorage.removeItem(STORAGE_KEY + '_progress');
+  document.getElementById('resumeSection').style.display = 'none';
+  userAnswers = {};
+  timeLeft = DURATION;
+}
+
+function startExam(practice) {
+  practiceMode = practice;
+  document.getElementById('startScreen').style.display = 'none';
+  const ea = document.getElementById('examArea');
+  ea.classList.add('active');
+  document.getElementById('timerDisplay').textContent = fmtTime(timeLeft);
+  if (!practice) startTimer();
+}
+function resumeExam() {
+  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY + '_progress') || 'null');
+  if (!saved) return;
+  userAnswers = saved.answers || {};
+  timeLeft = saved.timeLeft || DURATION;
+  // restore VFN
+  Object.entries(userAnswers).forEach(([k,v]) => {
+    const btns = document.querySelectorAll(`[onclick*="selectVFN(this,${k},"]`);
+    btns.forEach(b => { if (b.textContent.trim() === v) b.classList.add('selected'); });
+    const sel = document.getElementById('q' + k);
+    if (sel && sel.tagName === 'SELECT') sel.value = v;
+    document.querySelectorAll(`input[name="q${k}"]`).forEach(r => { if (r.value === v) r.checked = true; });
+  });
+  startExam(false);
+}
+
+function startTimer() {
+  timerActive = true;
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    const d = document.getElementById('timerDisplay');
+    d.textContent = fmtTime(timeLeft);
+    d.className = 'timer-display' + (timeLeft < 60 ? ' critical' : timeLeft < 300 ? ' warning' : '');
+    if (timeLeft <= 0) { clearInterval(timerInterval); submitExam(); }
+  }, 1000);
+}
+function fmtTime(s) {
+  const m = Math.floor(s/60); return (m<10?'0'+m:m)+':'+(s%60<10?'0'+s%60:s%60);
+}
+
+function submitExam() {
+  if (timerInterval) clearInterval(timerInterval);
+  // collect MC radios
+  document.querySelectorAll('input[type=radio]:checked').forEach(r => {
+    const m = r.name.match(/^q(\d+)$/); if (m) userAnswers[parseInt(m[1])] = r.value;
+  });
+  // collect selects
+  document.querySelectorAll('select.match-select').forEach(s => {
+    const m = s.id.match(/^q(\d+)$/); if (m && s.value) userAnswers[parseInt(m[1])] = s.value;
+  });
+  let correct = 0;
+  const akRow = document.getElementById('akRow');
+  akRow.innerHTML = '';
+  Object.entries(ANSWERS).forEach(([k,ans]) => {
+    const given = userAnswers[parseInt(k)] || '';
+    const ok = given === ans;
+    if (ok) correct++;
+    const span = document.createElement('span');
+    span.className = 'ak-item ' + (ok ? 'correct' : 'wrong');
+    span.textContent = k + ': ' + (given || '—') + (ok ? ' ✓' : ' ✗ (' + ans + ')');
+    akRow.appendChild(span);
+  });
+  const pct = Math.round(correct/TOTAL*100);
+  document.getElementById('scoreDisplay').textContent = correct + '/' + TOTAL;
+  document.getElementById('examArea').classList.remove('active');
+  const rs = document.getElementById('resultsScreen');
+  rs.style.display = 'block'; rs.classList.add('active');
+  // save best
+  const prev = parseInt(localStorage.getItem(STORAGE_KEY + '_best') || '0');
+  if (correct > prev) localStorage.setItem(STORAGE_KEY + '_best', correct);
+  localStorage.removeItem(STORAGE_KEY + '_progress');
+}
+function restart() {
+  location.reload();
+}
+
+// Check for saved progress
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem(STORAGE_KEY + '_progress');
+  const best = localStorage.getItem(STORAGE_KEY + '_best');
+  if (saved) {
+    const d = JSON.parse(saved);
+    const mins = Math.round((Date.now() - d.saved) / 60000);
+    document.getElementById('resumeInfo').textContent = 'Sauvegardé il y a ' + mins + ' minute(s). Temps restant : ' + fmtTime(d.timeLeft || DURATION) + '.';
+    document.getElementById('resumeSection').style.display = 'block';
+  }
+  if (best) {
+    document.getElementById('prevAttempt').style.display = 'block';
+    document.getElementById('prevScore').textContent = best + '/' + TOTAL;
+  }
+});
+</script>
+</body>
+</html>

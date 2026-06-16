@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>DALF C1 — Simulacre 1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<style>
+.mock-container{max-width:760px;margin:0 auto;padding:0 16px}
+.timer-bar{position:sticky;top:0;background:var(--ink);color:var(--paper);padding:12px 16px;border-radius:0 0 8px 8px;display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15);margin-bottom:24px}
+.timer-display{font-family:var(--font-sans);font-size:1.1rem;font-weight:700;letter-spacing:.5px}
+.timer-display.warning{color:#FFD700}
+.timer-display.critical{color:#FF6B6B;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.start-screen,.results-screen{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:28px;margin-bottom:24px}
+.start-screen h2,.results-screen h2{font-size:1.4rem;margin:0 0 12px}
+.start-btn{display:inline-block;padding:12px 28px;background:var(--ink);color:var(--paper);border:0;font-family:var(--font-sans);font-size:.82rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer;margin-top:12px}
+.start-btn:hover{opacity:.85}
+.exam-area{display:none}
+.exam-area.active{display:block}
+.part-section{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:24px;margin-bottom:28px}
+.part-header{font-family:var(--font-sans);font-size:.68rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.part-section h2{font-size:1.2rem;margin:0 0 8px;color:var(--ink)}
+.part-section .instructions{font-size:.85rem;color:var(--muted);margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--hairline)}
+.text-title{font-weight:700;text-align:center;font-size:1.05rem;margin:12px 0;color:var(--ink)}
+.text-content{font-size:.92rem;line-height:1.7;color:var(--ink);margin-bottom:18px;padding:14px;background:var(--cream-deep);border-radius:6px;border-left:3px solid var(--amber)}
+.text-content p{margin:0 0 10px}
+.text-content p:last-child{margin:0}
+.mc-q{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--hairline)}
+.mc-q .q-num{font-family:var(--font-sans);font-size:.85rem;font-weight:800;color:var(--amber);min-width:28px}
+.mc-q .opts{flex:1;display:flex;flex-direction:column;gap:4px}
+.mc-q .q-text{flex:1;font-size:.9rem;margin-bottom:6px}
+.opt{display:flex;gap:6px;align-items:flex-start;padding:4px 6px;cursor:pointer;font-size:.9rem;border-radius:3px}
+.opt:hover{background:rgba(184,134,11,.05)}
+.opt-letter{font-family:var(--font-sans);font-weight:700;color:var(--amber);min-width:18px}
+.opt input{margin-top:4px}
+.vfn-row{display:flex;gap:8px;align-items:center;padding:8px 0;border-top:1px solid var(--hairline);font-size:.9rem}
+.vfn-row .q-num{font-family:var(--font-sans);font-weight:800;color:var(--amber);min-width:28px}
+.vfn-row .q-text{flex:1}
+.vfn-opts{display:flex;gap:6px}
+.vfn-opt{padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-size:.75rem;font-weight:700;cursor:pointer;background:var(--paper);color:var(--ink)}
+.vfn-opt:hover{border-color:var(--amber)}
+.vfn-opt.selected{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.match-q{display:flex;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--hairline);font-size:.9rem}
+.match-q .q-num{font-family:var(--font-sans);font-weight:800;color:var(--amber);min-width:28px}
+.match-q .q-text{flex:1}
+.match-select{padding:5px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-weight:700;background:var(--cream-deep);color:var(--ink);cursor:pointer}
+.mm-block{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;margin:14px 0;padding:14px;background:var(--cream-deep);border-radius:6px}
+.mm-letter{font-family:var(--font-sans);font-weight:800;color:var(--amber);font-size:.95rem;padding-top:2px}
+.mm-body{font-size:.85rem;line-height:1.55;color:var(--ink)}
+.submit-area{background:var(--ink);color:var(--paper);border-radius:8px;padding:20px;text-align:center;margin:32px 0}
+.submit-area p{margin:0 0 12px;opacity:.9}
+.submit-btn{display:inline-block;padding:14px 36px;background:var(--amber);color:var(--ink);border:0;font-family:var(--font-sans);font-size:.9rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer}
+.submit-btn:hover{opacity:.9}
+.results-screen{display:none}
+.results-screen.active{display:block}
+.score-big{font-size:3rem;font-weight:800;color:var(--amber);text-align:center;font-family:Georgia,serif}
+.score-label{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:18px}
+.part-breakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:20px 0}
+.part-score{background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px;padding:12px;text-align:center}
+.part-score .name{font-family:var(--font-sans);font-size:.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.part-score .val{font-size:1.3rem;font-weight:700;color:var(--ink);margin-top:4px}
+.answer-key{margin-top:24px}
+.answer-key h3{font-size:.88rem;font-family:var(--font-sans);font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.ak-row{display:flex;gap:8px;flex-wrap:wrap}
+.ak-item{font-family:var(--font-sans);font-size:.8rem;padding:3px 8px;border-radius:3px;font-weight:700}
+.ak-item.correct{background:#d4edda;color:#155724}
+.ak-item.wrong{background:#f8d7da;color:#721c24}
+
+</style>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Retour"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button>
+</div></header>
+
+<div class="mock-container">
+  <div class="breadcrumb"><a href="../../../../index.html">Accueil</a><span>›</span><a href="../../../index.html">Français</a><span>›</span><a href="../../index.html">DALF</a><span>›</span><a href="../index.html">C1</a><span>›</span><strong>Simulacre 1</strong></div>
+
+  <div id="startScreen" class="start-screen">
+    <div class="part-header">DALF C1 &middot; Compréhension des écrits</div>
+    <h2>Simulacre 1</h2>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Durée :</strong> 50 minutes</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Questions :</strong> 20 (2 tâches)</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:16px">En cliquant sur <strong>Commencer</strong>, le chronomètre démarre. Le simulacre est soumis automatiquement lorsque le temps est écoulé.</p>
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:18px">Conseil : lisez les questions avant les textes pour mieux cibler votre lecture.</p>
+    <button class="start-btn" onclick="startExam(false)">Commencer (avec chronomètre)</button>
+    <button class="start-btn" onclick="startExam(true)" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Mode pratique (sans chronomètre)</button>
+    <div id="resumeSection" style="display:none;margin-top:18px;padding:14px 16px;background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--amber);margin-bottom:6px">Progression sauvegardée</div><div id="resumeInfo" style="font-size:.88rem;color:var(--ink);margin-bottom:10px"></div><button class="start-btn" onclick="resumeExam()" style="background:var(--amber);color:var(--ink)">Continuer</button><button class="start-btn" onclick="clearSave()" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Recommencer</button></div>
+    <div id="prevAttempt" style="display:none;margin-top:12px;font-family:var(--font-sans);font-size:.78rem;color:var(--muted)">Meilleur résultat précédent : <strong id="prevScore"></strong></div>
+  </div>
+
+  <div id="examArea" class="exam-area">
+    <div class="timer-bar">
+      <div class="timer-display" id="timerDisplay">50:00</div>
+      <div class="timer-meta">Temps restant</div>
+      <button onclick="saveProgress()" style="background:transparent;border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.85);font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border-radius:3px;cursor:pointer">Sauvegarder</button>
+    </div>
+
+<div class="part-section">
+  <div class="part-header">Tâche 1</div>
+  <h2>Questions 1–10</h2>
+  <p class="instructions">Lisez cet essai et répondez aux questions (1–10) en choisissant la bonne réponse (A, B ou C).</p>
+  <div class="text-title">La mémoire à l'ère numérique : amnésie choisie ou libération cognitive ?</div>
+  <div class="text-content"><p>L'essor des technologies numériques a profondément transformé notre rapport à la mémoire. Là où nos ancêtres mémorisaient poèmes, calculs et itinéraires, nous délégons désormais ces tâches à nos appareils. Ce phénomène, que le psychologue Betsy Sparrow a nommé « effet Google » en 2011, pose une question fondamentale : sommes-nous en train de nous abêtir, ou au contraire de libérer notre cognition pour des tâches plus complexes ?</p>
+<p>Les partisans de la thèse de l'appauvrissement cognitif pointent une évidence : si nous ne mémorisons plus les informations, nous perdons la capacité de les relier entre elles pour former des raisonnements originaux. La mémoire n'est pas un simple disque dur externe ; elle structure la pensée elle-même. Comme l'écrivait Montaigne, « mieux vaut une tête bien faite qu'une tête bien pleine » — mais encore faut-il que cette tête soit faite de quelque chose.</p>
+<p>Pourtant, les défenseurs du numérique rétorquent que l'humanité a toujours externalisé sa mémoire : de l'écriture aux bibliothèques, en passant par l'imprimerie. Chaque innovation a été accompagnée de lamentations similaires. Socrate lui-même déplorait que l'écriture affaiblirait la mémoire des hommes — et il n'avait pas tort. Mais l'écriture a également rendu possible des formes de pensée inédites.</p>
+<p>La question est peut-être moins celle de la quantité de mémoire que de sa qualité. Ce qui compte n'est pas de se souvenir de tout, mais de savoir quoi chercher, comment évaluer la fiabilité des sources, et comment articuler des informations issues de contextes différents. Ces compétences méta-cognitives, qui conditionnent l'usage intelligent du numérique, ne sont pas innées — elles s'acquièrent et doivent être enseignées.</p></div>
+  <div class="mc-q">
+    <div class="q-num">1</div>
+    <div class="opts">
+      <div class="q-text">Qu'est-ce que l' « effet Google » selon le texte ?</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q1" value="A"> La tendance à chercher des informations sur Google</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q1" value="B"> La délégation de la mémoire aux appareils numériques</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q1" value="C"> La dépendance aux réseaux sociaux</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">2</div>
+    <div class="opts">
+      <div class="q-text">Quelle est la question centrale posée par l'auteur ?</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q2" value="A"> Le numérique appauvrit-il notre intelligence ?</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q2" value="B"> Devons-nous interdire les téléphones dans les écoles ?</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q2" value="C"> Comment mémoriser plus efficacement ?</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">3</div>
+    <div class="opts">
+      <div class="q-text">Selon les partisans de la thèse de l'appauvrissement, la mémoire…</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q3" value="A"> est inutile à l'ère numérique</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q3" value="B"> structure la pensée elle-même</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q3" value="C"> doit être remplacée par l'IA</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">4</div>
+    <div class="opts">
+      <div class="q-text">La citation de Montaigne est utilisée pour…</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q4" value="A"> critiquer l'éducation moderne</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q4" value="B"> nuancer l'idée d'une tête bien faite</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q4" value="C"> défendre l'enseignement de la mémoire</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">5</div>
+    <div class="opts">
+      <div class="q-text">Quel argument les défenseurs du numérique avancent-ils ?</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q5" value="A"> Le numérique améliore la mémoire</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q5" value="B"> L'humanité a toujours externalisé la mémoire</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q5" value="C"> Socrate avait tort de critiquer l'écriture</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">6</div>
+    <div class="opts">
+      <div class="q-text">Selon le texte, que craignait Socrate ?</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q6" value="A"> Que l'imprimerie détruise la culture</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q6" value="B"> Que l'écriture affaiblisse la mémoire</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q6" value="C"> Que le calcul remplace la réflexion</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">7</div>
+    <div class="opts">
+      <div class="q-text">L'auteur conclut que ce qui importe, c'est…</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q7" value="A"> de mémoriser un maximum d'informations</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q7" value="B"> d'utiliser les bons outils numériques</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q7" value="C"> de savoir chercher, évaluer et articuler des informations</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">8</div>
+    <div class="opts">
+      <div class="q-text">Que sont les « compétences méta-cognitives » selon le texte ?</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q8" value="A"> Des compétences innées</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q8" value="B"> Des compétences qui s'acquièrent et doivent être enseignées</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q8" value="C"> Des compétences liées à l'usage des moteurs de recherche</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">9</div>
+    <div class="opts">
+      <div class="q-text">Quel est le ton général de cet essai ?</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q9" value="A"> Catastrophiste et alarmiste</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q9" value="B"> Favorabler à la technologie sans réserves</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q9" value="C"> Nuancé et dialectique</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">10</div>
+    <div class="opts">
+      <div class="q-text">Selon l'auteur, l'écriture a…</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q10" value="A"> affaibli la mémoire sans apporter de bénéfices</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q10" value="B"> rendu possible des formes de pensée inédites</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q10" value="C"> été rejetée par Socrate à juste titre</label>
+    </div></div>
+</div>
+<div class="part-section">
+  <div class="part-header">Tâche 2</div>
+  <h2>Questions 11–20</h2>
+  <p class="instructions">Vous allez lire dix extraits d'articles sur la ville de demain (A–J). Associez chaque affirmation (11–20) au texte correspondant.</p>
+  <div class="mm-block">
+    <div class="mm-letter">A</div><div class="mm-body">La végétalisation des façades n'est pas qu'esthétique : elle réduit la température intérieure des bâtiments de 2 à 4 degrés en été, diminuant ainsi la consommation de climatisation.</div>
+    <div class="mm-letter">B</div><div class="mm-body">Certaines municipalités expérimentent des « zones sans voiture » permanentes dans leurs centres historiques. Les commerçants, d'abord réticents, constatent généralement une augmentation du chiffre d'affaires.</div>
+    <div class="mm-letter">C</div><div class="mm-body">L'éclairage public représente 37% de la consommation électrique des communes françaises. Le remplacement systématique par des LED connectées permettrait de réduire ce poste de 60%.</div>
+    <div class="mm-letter">D</div><div class="mm-body">Les capteurs installés dans les poubelles intelligentes signalent en temps réel leur niveau de remplissage, optimisant ainsi les tournées de collecte et réduisant les coûts de 25%.</div>
+    <div class="mm-letter">E</div><div class="mm-body">La mixité fonctionnelle — habiter, travailler et se détendre dans le même quartier — réduit les déplacements et crée des communautés plus résilientes face aux crises.</div>
+    <div class="mm-letter">F</div><div class="mm-body">Des chercheurs ont démontré que les espaces verts en milieu urbain réduisent le stress, améliorent la santé mentale et favorisent les interactions sociales entre résidents.</div>
+    <div class="mm-letter">G</div><div class="mm-body">Les toitures solaires des bâtiments publics pourraient couvrir jusqu'à 30% des besoins énergétiques d'une ville de taille moyenne, selon une étude récente.</div>
+    <div class="mm-letter">H</div><div class="mm-body">L'agriculture urbaine ne peut pas remplacer l'agriculture conventionnelle en termes de volume, mais elle joue un rôle crucial dans l'éducation alimentaire et le renforcement du lien social.</div>
+    <div class="mm-letter">I</div><div class="mm-body">Les systèmes de gestion du trafic basés sur l'IA réduisent les embouteillages de 15 à 30% dans les villes qui les ont adoptés, diminuant également les émissions de CO2.</div>
+    <div class="mm-letter">J</div><div class="mm-body">Le bruit est le deuxième facteur environnemental de maladie en Europe après la pollution de l'air. L'isolation phonique des logements reste un défi majeur pour les villes denses.</div>
+  </div>
+  <div class="match-q">
+    <div class="q-num">11</div>
+    <div class="q-text">Ce texte parle de l'impact de la végétation sur l'énergie utilisée dans les bâtiments.</div>
+    <select class="match-select" id="q11" onchange="setAns(11,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">12</div>
+    <div class="q-text">Ce texte évoque les bénéfices économiques inattendusd'une restriction de la circulation.</div>
+    <select class="match-select" id="q12" onchange="setAns(12,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">13</div>
+    <div class="q-text">Ce texte concerne la gestion des déchets par la technologie.</div>
+    <select class="match-select" id="q13" onchange="setAns(13,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">14</div>
+    <div class="q-text">Ce texte aborde l'impact psychologique des espaces naturels en ville.</div>
+    <select class="match-select" id="q14" onchange="setAns(14,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">15</div>
+    <div class="q-text">Ce texte traite de la production d'énergie renouvelable en milieu urbain.</div>
+    <select class="match-select" id="q15" onchange="setAns(15,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">16</div>
+    <div class="q-text">Ce texte présente les limites de l'agriculture en ville.</div>
+    <select class="match-select" id="q16" onchange="setAns(16,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">17</div>
+    <div class="q-text">Ce texte porte sur l'optimisation de la circulation par les nouvelles technologies.</div>
+    <select class="match-select" id="q17" onchange="setAns(17,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">18</div>
+    <div class="q-text">Ce texte concerne la consommation électrique liée à l'éclairage public.</div>
+    <select class="match-select" id="q18" onchange="setAns(18,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">19</div>
+    <div class="q-text">Ce texte aborde un risque sanitaire lié à l'environnement sonore.</div>
+    <select class="match-select" id="q19" onchange="setAns(19,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">20</div>
+    <div class="q-text">Ce texte décrit un modèle d'urbanisme favorisant la proximité des fonctions.</div>
+    <select class="match-select" id="q20" onchange="setAns(20,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select>
+  </div>
+</div>
+
+    <div class="submit-area">
+      <p>Vérifiez vos réponses avant de soumettre.</p>
+      <button class="submit-btn" onclick="submitExam()">Soumettre le simulacre</button>
+    </div>
+  </div>
+
+  <div id="resultsScreen" class="results-screen">
+    <div class="part-header">DALF C1 &middot; Résultats</div>
+    <h2>Simulacre 1 — Résultats</h2>
+    <div class="score-big" id="scoreDisplay">—</div>
+    <div class="score-label">Score / 20</div>
+    <div class="part-breakdown" id="partBreakdown"></div>
+    <div class="answer-key">
+      <h3>Corrigé</h3>
+      <div class="ak-row" id="akRow"></div>
+    </div>
+    <div style="text-align:center;margin-top:24px">
+      <button class="start-btn" onclick="restart()">Recommencer</button>
+      <a href="../index.html" class="start-btn" style="text-decoration:none;margin-left:8px;background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline)">Retour</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">Word Play &middot; DALF C1</footer>
+<script>
+const ANSWERS = {1: "B", 2: "A", 3: "B", 4: "B", 5: "B", 6: "B", 7: "C", 8: "B", 9: "C", 10: "B", 11: "A", 12: "B", 13: "D", 14: "F", 15: "G", 16: "H", 17: "I", 18: "C", 19: "J", 20: "E"};
+const TOTAL = 20;
+const DURATION = 50 * 60;
+const STORAGE_KEY = 'wp_delf_c1_mock1';
+let userAnswers = {};
+let timerInterval = null;
+let timeLeft = DURATION;
+let timerActive = false;
+let practiceMode = false;
+
+function selectVFN(btn, qNum, val) {
+  document.querySelectorAll(`[onclick*="selectVFN(this,${qNum},"]`).forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  userAnswers[qNum] = val;
+  saveProgress();
+}
+function setAns(qNum, val) { userAnswers[qNum] = val; saveProgress(); }
+
+function saveProgress() {
+  const data = { answers: userAnswers, timeLeft, saved: Date.now() };
+  localStorage.setItem(STORAGE_KEY + '_progress', JSON.stringify(data));
+}
+function clearSave() {
+  localStorage.removeItem(STORAGE_KEY + '_progress');
+  document.getElementById('resumeSection').style.display = 'none';
+  userAnswers = {};
+  timeLeft = DURATION;
+}
+
+function startExam(practice) {
+  practiceMode = practice;
+  document.getElementById('startScreen').style.display = 'none';
+  const ea = document.getElementById('examArea');
+  ea.classList.add('active');
+  document.getElementById('timerDisplay').textContent = fmtTime(timeLeft);
+  if (!practice) startTimer();
+}
+function resumeExam() {
+  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY + '_progress') || 'null');
+  if (!saved) return;
+  userAnswers = saved.answers || {};
+  timeLeft = saved.timeLeft || DURATION;
+  // restore VFN
+  Object.entries(userAnswers).forEach(([k,v]) => {
+    const btns = document.querySelectorAll(`[onclick*="selectVFN(this,${k},"]`);
+    btns.forEach(b => { if (b.textContent.trim() === v) b.classList.add('selected'); });
+    const sel = document.getElementById('q' + k);
+    if (sel && sel.tagName === 'SELECT') sel.value = v;
+    document.querySelectorAll(`input[name="q${k}"]`).forEach(r => { if (r.value === v) r.checked = true; });
+  });
+  startExam(false);
+}
+
+function startTimer() {
+  timerActive = true;
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    const d = document.getElementById('timerDisplay');
+    d.textContent = fmtTime(timeLeft);
+    d.className = 'timer-display' + (timeLeft < 60 ? ' critical' : timeLeft < 300 ? ' warning' : '');
+    if (timeLeft <= 0) { clearInterval(timerInterval); submitExam(); }
+  }, 1000);
+}
+function fmtTime(s) {
+  const m = Math.floor(s/60); return (m<10?'0'+m:m)+':'+(s%60<10?'0'+s%60:s%60);
+}
+
+function submitExam() {
+  if (timerInterval) clearInterval(timerInterval);
+  // collect MC radios
+  document.querySelectorAll('input[type=radio]:checked').forEach(r => {
+    const m = r.name.match(/^q(\d+)$/); if (m) userAnswers[parseInt(m[1])] = r.value;
+  });
+  // collect selects
+  document.querySelectorAll('select.match-select').forEach(s => {
+    const m = s.id.match(/^q(\d+)$/); if (m && s.value) userAnswers[parseInt(m[1])] = s.value;
+  });
+  let correct = 0;
+  const akRow = document.getElementById('akRow');
+  akRow.innerHTML = '';
+  Object.entries(ANSWERS).forEach(([k,ans]) => {
+    const given = userAnswers[parseInt(k)] || '';
+    const ok = given === ans;
+    if (ok) correct++;
+    const span = document.createElement('span');
+    span.className = 'ak-item ' + (ok ? 'correct' : 'wrong');
+    span.textContent = k + ': ' + (given || '—') + (ok ? ' ✓' : ' ✗ (' + ans + ')');
+    akRow.appendChild(span);
+  });
+  const pct = Math.round(correct/TOTAL*100);
+  document.getElementById('scoreDisplay').textContent = correct + '/' + TOTAL;
+  document.getElementById('examArea').classList.remove('active');
+  const rs = document.getElementById('resultsScreen');
+  rs.style.display = 'block'; rs.classList.add('active');
+  // save best
+  const prev = parseInt(localStorage.getItem(STORAGE_KEY + '_best') || '0');
+  if (correct > prev) localStorage.setItem(STORAGE_KEY + '_best', correct);
+  localStorage.removeItem(STORAGE_KEY + '_progress');
+}
+function restart() {
+  location.reload();
+}
+
+// Check for saved progress
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem(STORAGE_KEY + '_progress');
+  const best = localStorage.getItem(STORAGE_KEY + '_best');
+  if (saved) {
+    const d = JSON.parse(saved);
+    const mins = Math.round((Date.now() - d.saved) / 60000);
+    document.getElementById('resumeInfo').textContent = 'Sauvegardé il y a ' + mins + ' minute(s). Temps restant : ' + fmtTime(d.timeLeft || DURATION) + '.';
+    document.getElementById('resumeSection').style.display = 'block';
+  }
+  if (best) {
+    document.getElementById('prevAttempt').style.display = 'block';
+    document.getElementById('prevScore').textContent = best + '/' + TOTAL;
+  }
+});
+</script>
+</body>
+</html>

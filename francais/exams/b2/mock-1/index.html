@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>DELF B2 — Simulacre 1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<style>
+.mock-container{max-width:760px;margin:0 auto;padding:0 16px}
+.timer-bar{position:sticky;top:0;background:var(--ink);color:var(--paper);padding:12px 16px;border-radius:0 0 8px 8px;display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15);margin-bottom:24px}
+.timer-display{font-family:var(--font-sans);font-size:1.1rem;font-weight:700;letter-spacing:.5px}
+.timer-display.warning{color:#FFD700}
+.timer-display.critical{color:#FF6B6B;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.start-screen,.results-screen{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:28px;margin-bottom:24px}
+.start-screen h2,.results-screen h2{font-size:1.4rem;margin:0 0 12px}
+.start-btn{display:inline-block;padding:12px 28px;background:var(--ink);color:var(--paper);border:0;font-family:var(--font-sans);font-size:.82rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer;margin-top:12px}
+.start-btn:hover{opacity:.85}
+.exam-area{display:none}
+.exam-area.active{display:block}
+.part-section{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:24px;margin-bottom:28px}
+.part-header{font-family:var(--font-sans);font-size:.68rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.part-section h2{font-size:1.2rem;margin:0 0 8px;color:var(--ink)}
+.part-section .instructions{font-size:.85rem;color:var(--muted);margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--hairline)}
+.text-title{font-weight:700;text-align:center;font-size:1.05rem;margin:12px 0;color:var(--ink)}
+.text-content{font-size:.92rem;line-height:1.7;color:var(--ink);margin-bottom:18px;padding:14px;background:var(--cream-deep);border-radius:6px;border-left:3px solid var(--amber)}
+.text-content p{margin:0 0 10px}
+.text-content p:last-child{margin:0}
+.mc-q{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--hairline)}
+.mc-q .q-num{font-family:var(--font-sans);font-size:.85rem;font-weight:800;color:var(--amber);min-width:28px}
+.mc-q .opts{flex:1;display:flex;flex-direction:column;gap:4px}
+.mc-q .q-text{flex:1;font-size:.9rem;margin-bottom:6px}
+.opt{display:flex;gap:6px;align-items:flex-start;padding:4px 6px;cursor:pointer;font-size:.9rem;border-radius:3px}
+.opt:hover{background:rgba(184,134,11,.05)}
+.opt-letter{font-family:var(--font-sans);font-weight:700;color:var(--amber);min-width:18px}
+.opt input{margin-top:4px}
+.vfn-row{display:flex;gap:8px;align-items:center;padding:8px 0;border-top:1px solid var(--hairline);font-size:.9rem}
+.vfn-row .q-num{font-family:var(--font-sans);font-weight:800;color:var(--amber);min-width:28px}
+.vfn-row .q-text{flex:1}
+.vfn-opts{display:flex;gap:6px}
+.vfn-opt{padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-size:.75rem;font-weight:700;cursor:pointer;background:var(--paper);color:var(--ink)}
+.vfn-opt:hover{border-color:var(--amber)}
+.vfn-opt.selected{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.match-q{display:flex;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--hairline);font-size:.9rem}
+.match-q .q-num{font-family:var(--font-sans);font-weight:800;color:var(--amber);min-width:28px}
+.match-q .q-text{flex:1}
+.match-select{padding:5px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-weight:700;background:var(--cream-deep);color:var(--ink);cursor:pointer}
+.mm-block{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;margin:14px 0;padding:14px;background:var(--cream-deep);border-radius:6px}
+.mm-letter{font-family:var(--font-sans);font-weight:800;color:var(--amber);font-size:.95rem;padding-top:2px}
+.mm-body{font-size:.85rem;line-height:1.55;color:var(--ink)}
+.submit-area{background:var(--ink);color:var(--paper);border-radius:8px;padding:20px;text-align:center;margin:32px 0}
+.submit-area p{margin:0 0 12px;opacity:.9}
+.submit-btn{display:inline-block;padding:14px 36px;background:var(--amber);color:var(--ink);border:0;font-family:var(--font-sans);font-size:.9rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer}
+.submit-btn:hover{opacity:.9}
+.results-screen{display:none}
+.results-screen.active{display:block}
+.score-big{font-size:3rem;font-weight:800;color:var(--amber);text-align:center;font-family:Georgia,serif}
+.score-label{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:18px}
+.part-breakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:20px 0}
+.part-score{background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px;padding:12px;text-align:center}
+.part-score .name{font-family:var(--font-sans);font-size:.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.part-score .val{font-size:1.3rem;font-weight:700;color:var(--ink);margin-top:4px}
+.answer-key{margin-top:24px}
+.answer-key h3{font-size:.88rem;font-family:var(--font-sans);font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.ak-row{display:flex;gap:8px;flex-wrap:wrap}
+.ak-item{font-family:var(--font-sans);font-size:.8rem;padding:3px 8px;border-radius:3px;font-weight:700}
+.ak-item.correct{background:#d4edda;color:#155724}
+.ak-item.wrong{background:#f8d7da;color:#721c24}
+
+</style>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Retour"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button>
+</div></header>
+
+<div class="mock-container">
+  <div class="breadcrumb"><a href="../../../../index.html">Accueil</a><span>›</span><a href="../../../index.html">Français</a><span>›</span><a href="../../index.html">DELF</a><span>›</span><a href="../index.html">B2</a><span>›</span><strong>Simulacre 1</strong></div>
+
+  <div id="startScreen" class="start-screen">
+    <div class="part-header">DELF B2 &middot; Compréhension des écrits</div>
+    <h2>Simulacre 1</h2>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Durée :</strong> 60 minutes</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Questions :</strong> 28 (3 tâches)</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:16px">En cliquant sur <strong>Commencer</strong>, le chronomètre démarre. Le simulacre est soumis automatiquement lorsque le temps est écoulé.</p>
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:18px">Conseil : lisez les questions avant les textes pour mieux cibler votre lecture.</p>
+    <button class="start-btn" onclick="startExam(false)">Commencer (avec chronomètre)</button>
+    <button class="start-btn" onclick="startExam(true)" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Mode pratique (sans chronomètre)</button>
+    <div id="resumeSection" style="display:none;margin-top:18px;padding:14px 16px;background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--amber);margin-bottom:6px">Progression sauvegardée</div><div id="resumeInfo" style="font-size:.88rem;color:var(--ink);margin-bottom:10px"></div><button class="start-btn" onclick="resumeExam()" style="background:var(--amber);color:var(--ink)">Continuer</button><button class="start-btn" onclick="clearSave()" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Recommencer</button></div>
+    <div id="prevAttempt" style="display:none;margin-top:12px;font-family:var(--font-sans);font-size:.78rem;color:var(--muted)">Meilleur résultat précédent : <strong id="prevScore"></strong></div>
+  </div>
+
+  <div id="examArea" class="exam-area">
+    <div class="timer-bar">
+      <div class="timer-display" id="timerDisplay">60:00</div>
+      <div class="timer-meta">Temps restant</div>
+      <button onclick="saveProgress()" style="background:transparent;border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.85);font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border-radius:3px;cursor:pointer">Sauvegarder</button>
+    </div>
+
+<div class="part-section">
+  <div class="part-header">Tâche 1</div>
+  <h2>Questions 1–10</h2>
+  <p class="instructions">Lisez cet article et répondez aux questions (1–10) en choisissant la bonne réponse (A, B ou C).</p>
+  <div class="text-title">L'intelligence artificielle dans l'enseignement : promesses et inquiétudes</div>
+  <div class="text-content"><p>L'intégration de l'intelligence artificielle dans les systèmes éducatifs soulève des questions qui dépassent largement le cadre technologique. Si les partisans de ces nouveaux outils mettent en avant leurs capacités à personnaliser les apprentissages et à alléger la charge administrative des enseignants, leurs détracteurs soulignent des risques bien réels pour l'autonomie intellectuelle des élèves et pour l'emploi dans le secteur éducatif.</p>
+<p>Des expériences pilotes menées dans plusieurs lycées français depuis 2022 ont montré des résultats contrastés. D'un côté, des élèves en difficulté ont bénéficié d'un soutien individualisé grâce à des systèmes d'IA capables d'adapter les exercices à leur niveau et à leur rythme d'apprentissage. De l'autre, certains enseignants ont constaté une dépendance croissante des élèves à ces outils, au détriment du développement de leur capacité de réflexion autonome.</p>
+<p>La question de l'évaluation est particulièrement sensible. Les outils d'IA générative permettent désormais de produire en quelques secondes des dissertations ou des résumés de qualité honorable. Face à ce défi, certains établissements ont choisi d'interdire purement et simplement l'usage de ces outils, tandis que d'autres ont préféré intégrer leur utilisation dans les pratiques pédagogiques tout en révisant les modalités d'évaluation.</p>
+<p>Pour Michel Lambert, chercheur en sciences de l'éducation, la dichotomie « pour ou contre l'IA » est un faux débat : « La vraie question est de savoir comment former les enseignants à utiliser ces outils de façon critique et créative, et comment remettre les compétences de pensée complexe au cœur des apprentissages. »</p></div>
+  <div class="mc-q">
+    <div class="q-num">1</div>
+    <div class="opts">
+      <div class="q-text">Selon le texte, les partisans de l'IA dans l'éducation soulignent…</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q1" value="A"> les risques pour l'emploi des enseignants</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q1" value="B"> la personnalisation des apprentissages</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q1" value="C"> la dépendance des élèves aux outils</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">2</div>
+    <div class="opts">
+      <div class="q-text">Les expériences pilotes ont commencé…</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q2" value="A"> en 2019</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q2" value="B"> en 2022</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q2" value="C"> en 2024</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">3</div>
+    <div class="opts">
+      <div class="q-text">Quel problème certains enseignants ont-ils observé ?</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q3" value="A"> Les élèves refusent d'utiliser l'IA</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q3" value="B"> L'IA n'adapte pas les exercices</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q3" value="C"> Les élèves deviennent trop dépendants des outils</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">4</div>
+    <div class="opts">
+      <div class="q-text">Pourquoi l'évaluation est-elle particulièrement sensible ?</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q4" value="A"> Les élèves ne veulent plus être évalués</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q4" value="B"> L'IA peut produire des rédactions de qualité</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q4" value="C"> Les enseignants manquent de temps pour corriger</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">5</div>
+    <div class="opts">
+      <div class="q-text">Comment certains établissements ont-ils réagi face à l'IA générative ?</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q5" value="A"> En l'imposant à tous les élèves</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q5" value="B"> En ignorant le problème</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q5" value="C"> En l'interdisant ou en l'intégrant différemment</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">6</div>
+    <div class="opts">
+      <div class="q-text">Selon Michel Lambert, quel est le vrai défi ?</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q6" value="A"> Interdire l'IA dans les écoles</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q6" value="B"> Former les enseignants à utiliser l'IA de façon critique</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q6" value="C"> Développer une meilleure IA pour l'éducation</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">7</div>
+    <div class="opts">
+      <div class="q-text">Lambert qualifie le débat « pour ou contre l'IA » de…</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q7" value="A"> stimulant intellectuellement</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q7" value="B"> inévitable</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q7" value="C"> faux débat</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">8</div>
+    <div class="opts">
+      <div class="q-text">Quelle compétence Lambert veut-il remettre au cœur des apprentissages ?</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q8" value="A"> La mémorisation</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q8" value="B"> La pensée complexe</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q8" value="C"> La vitesse de lecture</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">9</div>
+    <div class="opts">
+      <div class="q-text">Quel ton adopte cet article ?</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q9" value="A"> Entièrement favorable à l'IA</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q9" value="B"> Entièrement opposé à l'IA</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q9" value="C"> Nuancé, présentant des arguments des deux côtés</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">10</div>
+    <div class="opts">
+      <div class="q-text">Qu'est-ce que l'IA peut faire pour les élèves en difficulté, selon le texte ?</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q10" value="A"> Remplacer les enseignants</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q10" value="B"> Adapter les exercices à leur niveau</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q10" value="C"> Rédiger leurs devoirs à leur place</label>
+    </div></div>
+</div>
+<div class="part-section">
+  <div class="part-header">Tâche 2</div>
+  <h2>Questions 11–18</h2>
+  <p class="instructions">Lisez ce texte et indiquez si les affirmations (11–18) sont <strong>Vraies (V)</strong>, <strong>Fausses (F)</strong> ou si <strong>on ne sait pas (NSP)</strong>.</p>
+  <div class="text-title">Le retour en grâce du train de nuit en Europe</div>
+  <div class="text-content"><p>Après des décennies de déclin marquées par la concurrence des vols low-cost et la montée des lignes à grande vitesse, le train de nuit connaît un remarquable regain d'intérêt en Europe. En 2022, les compagnies ferroviaires autrichiennes (ÖBB) ont lancé de nouvelles liaisons entre Vienne et plusieurs capitales européennes, avec un succès commercial qui a surpris les observateurs les plus optimistes.</p>
+<p>Ce retour s'explique en grande partie par la prise de conscience écologique. Face à l'empreinte carbone de l'avion — un trajet en avion émet environ 50 fois plus de CO2 par passager qu'un trajet en train équivalent — de nombreux voyageurs européens optent désormais pour des alternatives ferroviaires, même lorsqu'elles impliquent des temps de trajet plus longs.</p>
+<p>En France, la SNCF a relancé plusieurs lignes de nuit entre 2021 et 2023, notamment Paris–Nice et Paris–Tarbes, après une interruption de plus de dix ans. Les résultats sont encourageants : les trains affichent régulièrement des taux de remplissage supérieurs à 80%, et de nouvelles lignes sont à l'étude, notamment vers l'Espagne et l'Italie.</p>
+<p>Mais le train de nuit doit encore relever plusieurs défis pour s'imposer durablement. Le confort des couchettes reste un point sensible : si les compartiments modernes des ÖBB offrent des prestations comparables à un hôtel économique, certaines lignes françaises fonctionnent encore avec un matériel vieillissant. Le prix, enfin, peut constituer un frein : si le train de nuit est souvent moins cher que l'avion pour des réservations anticipées, il reste plus onéreux que le bus longue distance.</p></div>
+  <div class="vfn-row">
+    <div class="q-num">11</div>
+    <div class="q-text">Les trains de nuit ont été en déclin pendant plusieurs décennies.</div>
+    <div class="vfn-opts">
+      <button class="vfn-opt" onclick="selectVFN(this,11,'V')">V</button>
+      <button class="vfn-opt" onclick="selectVFN(this,11,'F')">F</button>
+      <button class="vfn-opt" onclick="selectVFN(this,11,'NSP')">NSP</button>
+    </div></div>
+  <div class="vfn-row">
+    <div class="q-num">12</div>
+    <div class="q-text">Les ÖBB sont une compagnie ferroviaire autrichienne.</div>
+    <div class="vfn-opts">
+      <button class="vfn-opt" onclick="selectVFN(this,12,'V')">V</button>
+      <button class="vfn-opt" onclick="selectVFN(this,12,'F')">F</button>
+      <button class="vfn-opt" onclick="selectVFN(this,12,'NSP')">NSP</button>
+    </div></div>
+  <div class="vfn-row">
+    <div class="q-num">13</div>
+    <div class="q-text">Le succès des nouvelles liaisons des ÖBB était attendu par tous.</div>
+    <div class="vfn-opts">
+      <button class="vfn-opt" onclick="selectVFN(this,13,'V')">V</button>
+      <button class="vfn-opt" onclick="selectVFN(this,13,'F')">F</button>
+      <button class="vfn-opt" onclick="selectVFN(this,13,'NSP')">NSP</button>
+    </div></div>
+  <div class="vfn-row">
+    <div class="q-num">14</div>
+    <div class="q-text">Un avion émet environ 50 fois plus de CO2 qu'un train par passager.</div>
+    <div class="vfn-opts">
+      <button class="vfn-opt" onclick="selectVFN(this,14,'V')">V</button>
+      <button class="vfn-opt" onclick="selectVFN(this,14,'F')">F</button>
+      <button class="vfn-opt" onclick="selectVFN(this,14,'NSP')">NSP</button>
+    </div></div>
+  <div class="vfn-row">
+    <div class="q-num">15</div>
+    <div class="q-text">La SNCF a relancé des trains de nuit vers l'Espagne.</div>
+    <div class="vfn-opts">
+      <button class="vfn-opt" onclick="selectVFN(this,15,'V')">V</button>
+      <button class="vfn-opt" onclick="selectVFN(this,15,'F')">F</button>
+      <button class="vfn-opt" onclick="selectVFN(this,15,'NSP')">NSP</button>
+    </div></div>
+  <div class="vfn-row">
+    <div class="q-num">16</div>
+    <div class="q-text">Les trains de nuit français affichent des taux de remplissage supérieurs à 80%.</div>
+    <div class="vfn-opts">
+      <button class="vfn-opt" onclick="selectVFN(this,16,'V')">V</button>
+      <button class="vfn-opt" onclick="selectVFN(this,16,'F')">F</button>
+      <button class="vfn-opt" onclick="selectVFN(this,16,'NSP')">NSP</button>
+    </div></div>
+  <div class="vfn-row">
+    <div class="q-num">17</div>
+    <div class="q-text">Le confort des trains de nuit est partout excellent.</div>
+    <div class="vfn-opts">
+      <button class="vfn-opt" onclick="selectVFN(this,17,'V')">V</button>
+      <button class="vfn-opt" onclick="selectVFN(this,17,'F')">F</button>
+      <button class="vfn-opt" onclick="selectVFN(this,17,'NSP')">NSP</button>
+    </div></div>
+  <div class="vfn-row">
+    <div class="q-num">18</div>
+    <div class="q-text">Le train de nuit est toujours moins cher que l'avion.</div>
+    <div class="vfn-opts">
+      <button class="vfn-opt" onclick="selectVFN(this,18,'V')">V</button>
+      <button class="vfn-opt" onclick="selectVFN(this,18,'F')">F</button>
+      <button class="vfn-opt" onclick="selectVFN(this,18,'NSP')">NSP</button>
+    </div></div>
+</div>
+<div class="part-section">
+  <div class="part-header">Tâche 3</div>
+  <h2>Questions 19–28</h2>
+  <p class="instructions">Vous allez lire dix avis de personnes sur le télétravail (A–J). Associez chaque affirmation (19–28) à l'auteur correspondant.</p>
+  <div class="mm-block">
+    <div class="mm-letter">A</div><div class="mm-body">Le télétravail m'a permis de déménager à la campagne. Je n'aurais jamais pu me le permettre si j'avais dû aller au bureau tous les jours.</div>
+    <div class="mm-letter">B</div><div class="mm-body">Je travaille mieux au bureau. Chez moi, les distractions sont trop nombreuses — les enfants, la cuisine, la télévision. Ma productivité a chuté.</div>
+    <div class="mm-letter">C</div><div class="mm-body">En tant que manager, je trouve difficile d'évaluer le travail de mon équipe à distance. Le manque de visibilité sur ce que font les employés me préoccupe.</div>
+    <div class="mm-letter">D</div><div class="mm-body">Le télétravail a aggravé mes problèmes de dos. Je n'ai pas de bureau ergonomique chez moi et je travaille sur ma table de cuisine depuis un an.</div>
+    <div class="mm-letter">E</div><div class="mm-body">Je fais des économies considérables sur les transports et les repas. En calculant, c'est presque 300 euros de moins par mois.</div>
+    <div class="mm-letter">F</div><div class="mm-body">Mon entreprise a pu réduire la taille de ses bureaux et économiser sur le loyer. Ces économies ont été partiellement redistribuées aux employés.</div>
+    <div class="mm-letter">G</div><div class="mm-body">Je souffre de l'isolement. Le café du matin avec les collègues, les déjeuners en équipe — tout ça me manque terriblement.</div>
+    <div class="mm-letter">H</div><div class="mm-body">Le télétravail a rendu possible le recrutement de talents dans d'autres régions, voire d'autres pays. Notre équipe est maintenant internationale.</div>
+    <div class="mm-letter">I</div><div class="mm-body">La frontière entre vie professionnelle et vie personnelle a disparu. Je réponds aux e-mails le soir, le week-end. Je n'arrive plus à décrocher.</div>
+    <div class="mm-letter">J</div><div class="mm-body">Pour les personnes handicapées, le télétravail est une révolution. Je n'ai plus les difficultés liées aux transports et aux locaux non adaptés.</div>
+  </div>
+  <div class="match-q">
+    <div class="q-num">19</div>
+    <div class="q-text">Cette personne évoque un avantage financier pour l'employeur.</div>
+    <select class="match-select" id="q19" onchange="setAns(19,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">20</div>
+    <div class="q-text">Cette personne souffre d'un problème de santé lié au télétravail.</div>
+    <select class="match-select" id="q20" onchange="setAns(20,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">21</div>
+    <div class="q-text">Cette personne apprécie le télétravail pour une raison liée au handicap.</div>
+    <select class="match-select" id="q21" onchange="setAns(21,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">22</div>
+    <div class="q-text">Cette personne a des difficultés à gérer son équipe à distance.</div>
+    <select class="match-select" id="q22" onchange="setAns(22,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">23</div>
+    <div class="q-text">Cette personne a changé de lieu de résidence grâce au télétravail.</div>
+    <select class="match-select" id="q23" onchange="setAns(23,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">24</div>
+    <div class="q-text">Cette personne évoque des économies personnelles.</div>
+    <select class="match-select" id="q24" onchange="setAns(24,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">25</div>
+    <div class="q-text">Cette personne ne peut pas séparer travail et vie privée.</div>
+    <select class="match-select" id="q25" onchange="setAns(25,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">26</div>
+    <div class="q-text">Cette personne est moins efficace à la maison qu'au bureau.</div>
+    <select class="match-select" id="q26" onchange="setAns(26,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">27</div>
+    <div class="q-text">Cette personne souffre du manque de contact humain.</div>
+    <select class="match-select" id="q27" onchange="setAns(27,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">28</div>
+    <div class="q-text">Le télétravail a permis à cette entreprise de recruter plus largement.</div>
+    <select class="match-select" id="q28" onchange="setAns(28,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option><option value="I">I</option><option value="J">J</option></select>
+  </div>
+</div>
+
+    <div class="submit-area">
+      <p>Vérifiez vos réponses avant de soumettre.</p>
+      <button class="submit-btn" onclick="submitExam()">Soumettre le simulacre</button>
+    </div>
+  </div>
+
+  <div id="resultsScreen" class="results-screen">
+    <div class="part-header">DELF B2 &middot; Résultats</div>
+    <h2>Simulacre 1 — Résultats</h2>
+    <div class="score-big" id="scoreDisplay">—</div>
+    <div class="score-label">Score / 28</div>
+    <div class="part-breakdown" id="partBreakdown"></div>
+    <div class="answer-key">
+      <h3>Corrigé</h3>
+      <div class="ak-row" id="akRow"></div>
+    </div>
+    <div style="text-align:center;margin-top:24px">
+      <button class="start-btn" onclick="restart()">Recommencer</button>
+      <a href="../index.html" class="start-btn" style="text-decoration:none;margin-left:8px;background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline)">Retour</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">Word Play &middot; DELF B2</footer>
+<script>
+const ANSWERS = {1: "B", 2: "B", 3: "C", 4: "B", 5: "C", 6: "B", 7: "C", 8: "B", 9: "C", 10: "B", 11: "V", 12: "V", 13: "F", 14: "V", 15: "NSP", 16: "V", 17: "F", 18: "F", 19: "F", 20: "D", 21: "J", 22: "C", 23: "A", 24: "E", 25: "I", 26: "B", 27: "G", 28: "H"};
+const TOTAL = 28;
+const DURATION = 60 * 60;
+const STORAGE_KEY = 'wp_delf_b2_mock1';
+let userAnswers = {};
+let timerInterval = null;
+let timeLeft = DURATION;
+let timerActive = false;
+let practiceMode = false;
+
+function selectVFN(btn, qNum, val) {
+  document.querySelectorAll(`[onclick*="selectVFN(this,${qNum},"]`).forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  userAnswers[qNum] = val;
+  saveProgress();
+}
+function setAns(qNum, val) { userAnswers[qNum] = val; saveProgress(); }
+
+function saveProgress() {
+  const data = { answers: userAnswers, timeLeft, saved: Date.now() };
+  localStorage.setItem(STORAGE_KEY + '_progress', JSON.stringify(data));
+}
+function clearSave() {
+  localStorage.removeItem(STORAGE_KEY + '_progress');
+  document.getElementById('resumeSection').style.display = 'none';
+  userAnswers = {};
+  timeLeft = DURATION;
+}
+
+function startExam(practice) {
+  practiceMode = practice;
+  document.getElementById('startScreen').style.display = 'none';
+  const ea = document.getElementById('examArea');
+  ea.classList.add('active');
+  document.getElementById('timerDisplay').textContent = fmtTime(timeLeft);
+  if (!practice) startTimer();
+}
+function resumeExam() {
+  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY + '_progress') || 'null');
+  if (!saved) return;
+  userAnswers = saved.answers || {};
+  timeLeft = saved.timeLeft || DURATION;
+  // restore VFN
+  Object.entries(userAnswers).forEach(([k,v]) => {
+    const btns = document.querySelectorAll(`[onclick*="selectVFN(this,${k},"]`);
+    btns.forEach(b => { if (b.textContent.trim() === v) b.classList.add('selected'); });
+    const sel = document.getElementById('q' + k);
+    if (sel && sel.tagName === 'SELECT') sel.value = v;
+    document.querySelectorAll(`input[name="q${k}"]`).forEach(r => { if (r.value === v) r.checked = true; });
+  });
+  startExam(false);
+}
+
+function startTimer() {
+  timerActive = true;
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    const d = document.getElementById('timerDisplay');
+    d.textContent = fmtTime(timeLeft);
+    d.className = 'timer-display' + (timeLeft < 60 ? ' critical' : timeLeft < 300 ? ' warning' : '');
+    if (timeLeft <= 0) { clearInterval(timerInterval); submitExam(); }
+  }, 1000);
+}
+function fmtTime(s) {
+  const m = Math.floor(s/60); return (m<10?'0'+m:m)+':'+(s%60<10?'0'+s%60:s%60);
+}
+
+function submitExam() {
+  if (timerInterval) clearInterval(timerInterval);
+  // collect MC radios
+  document.querySelectorAll('input[type=radio]:checked').forEach(r => {
+    const m = r.name.match(/^q(\d+)$/); if (m) userAnswers[parseInt(m[1])] = r.value;
+  });
+  // collect selects
+  document.querySelectorAll('select.match-select').forEach(s => {
+    const m = s.id.match(/^q(\d+)$/); if (m && s.value) userAnswers[parseInt(m[1])] = s.value;
+  });
+  let correct = 0;
+  const akRow = document.getElementById('akRow');
+  akRow.innerHTML = '';
+  Object.entries(ANSWERS).forEach(([k,ans]) => {
+    const given = userAnswers[parseInt(k)] || '';
+    const ok = given === ans;
+    if (ok) correct++;
+    const span = document.createElement('span');
+    span.className = 'ak-item ' + (ok ? 'correct' : 'wrong');
+    span.textContent = k + ': ' + (given || '—') + (ok ? ' ✓' : ' ✗ (' + ans + ')');
+    akRow.appendChild(span);
+  });
+  const pct = Math.round(correct/TOTAL*100);
+  document.getElementById('scoreDisplay').textContent = correct + '/' + TOTAL;
+  document.getElementById('examArea').classList.remove('active');
+  const rs = document.getElementById('resultsScreen');
+  rs.style.display = 'block'; rs.classList.add('active');
+  // save best
+  const prev = parseInt(localStorage.getItem(STORAGE_KEY + '_best') || '0');
+  if (correct > prev) localStorage.setItem(STORAGE_KEY + '_best', correct);
+  localStorage.removeItem(STORAGE_KEY + '_progress');
+}
+function restart() {
+  location.reload();
+}
+
+// Check for saved progress
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem(STORAGE_KEY + '_progress');
+  const best = localStorage.getItem(STORAGE_KEY + '_best');
+  if (saved) {
+    const d = JSON.parse(saved);
+    const mins = Math.round((Date.now() - d.saved) / 60000);
+    document.getElementById('resumeInfo').textContent = 'Sauvegardé il y a ' + mins + ' minute(s). Temps restant : ' + fmtTime(d.timeLeft || DURATION) + '.';
+    document.getElementById('resumeSection').style.display = 'block';
+  }
+  if (best) {
+    document.getElementById('prevAttempt').style.display = 'block';
+    document.getElementById('prevScore').textContent = best + '/' + TOTAL;
+  }
+});
+</script>
+</body>
+</html>

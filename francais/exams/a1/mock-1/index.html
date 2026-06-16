@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>DELF A1 — Simulacre 1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+<style>
+.mock-container{max-width:760px;margin:0 auto;padding:0 16px}
+.timer-bar{position:sticky;top:0;background:var(--ink);color:var(--paper);padding:12px 16px;border-radius:0 0 8px 8px;display:flex;justify-content:space-between;align-items:center;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.15);margin-bottom:24px}
+.timer-display{font-family:var(--font-sans);font-size:1.1rem;font-weight:700;letter-spacing:.5px}
+.timer-display.warning{color:#FFD700}
+.timer-display.critical{color:#FF6B6B;animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.start-screen,.results-screen{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:28px;margin-bottom:24px}
+.start-screen h2,.results-screen h2{font-size:1.4rem;margin:0 0 12px}
+.start-btn{display:inline-block;padding:12px 28px;background:var(--ink);color:var(--paper);border:0;font-family:var(--font-sans);font-size:.82rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer;margin-top:12px}
+.start-btn:hover{opacity:.85}
+.exam-area{display:none}
+.exam-area.active{display:block}
+.part-section{background:var(--paper);border:1px solid var(--hairline);border-radius:8px;padding:24px;margin-bottom:28px}
+.part-header{font-family:var(--font-sans);font-size:.68rem;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:6px}
+.part-section h2{font-size:1.2rem;margin:0 0 8px;color:var(--ink)}
+.part-section .instructions{font-size:.85rem;color:var(--muted);margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid var(--hairline)}
+.text-title{font-weight:700;text-align:center;font-size:1.05rem;margin:12px 0;color:var(--ink)}
+.text-content{font-size:.92rem;line-height:1.7;color:var(--ink);margin-bottom:18px;padding:14px;background:var(--cream-deep);border-radius:6px;border-left:3px solid var(--amber)}
+.text-content p{margin:0 0 10px}
+.text-content p:last-child{margin:0}
+.mc-q{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--hairline)}
+.mc-q .q-num{font-family:var(--font-sans);font-size:.85rem;font-weight:800;color:var(--amber);min-width:28px}
+.mc-q .opts{flex:1;display:flex;flex-direction:column;gap:4px}
+.mc-q .q-text{flex:1;font-size:.9rem;margin-bottom:6px}
+.opt{display:flex;gap:6px;align-items:flex-start;padding:4px 6px;cursor:pointer;font-size:.9rem;border-radius:3px}
+.opt:hover{background:rgba(184,134,11,.05)}
+.opt-letter{font-family:var(--font-sans);font-weight:700;color:var(--amber);min-width:18px}
+.opt input{margin-top:4px}
+.vfn-row{display:flex;gap:8px;align-items:center;padding:8px 0;border-top:1px solid var(--hairline);font-size:.9rem}
+.vfn-row .q-num{font-family:var(--font-sans);font-weight:800;color:var(--amber);min-width:28px}
+.vfn-row .q-text{flex:1}
+.vfn-opts{display:flex;gap:6px}
+.vfn-opt{padding:4px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-size:.75rem;font-weight:700;cursor:pointer;background:var(--paper);color:var(--ink)}
+.vfn-opt:hover{border-color:var(--amber)}
+.vfn-opt.selected{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.match-q{display:flex;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--hairline);font-size:.9rem}
+.match-q .q-num{font-family:var(--font-sans);font-weight:800;color:var(--amber);min-width:28px}
+.match-q .q-text{flex:1}
+.match-select{padding:5px 10px;border:1.5px solid var(--hairline);border-radius:3px;font-family:var(--font-sans);font-weight:700;background:var(--cream-deep);color:var(--ink);cursor:pointer}
+.mm-block{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;margin:14px 0;padding:14px;background:var(--cream-deep);border-radius:6px}
+.mm-letter{font-family:var(--font-sans);font-weight:800;color:var(--amber);font-size:.95rem;padding-top:2px}
+.mm-body{font-size:.85rem;line-height:1.55;color:var(--ink)}
+.submit-area{background:var(--ink);color:var(--paper);border-radius:8px;padding:20px;text-align:center;margin:32px 0}
+.submit-area p{margin:0 0 12px;opacity:.9}
+.submit-btn{display:inline-block;padding:14px 36px;background:var(--amber);color:var(--ink);border:0;font-family:var(--font-sans);font-size:.9rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;border-radius:4px;cursor:pointer}
+.submit-btn:hover{opacity:.9}
+.results-screen{display:none}
+.results-screen.active{display:block}
+.score-big{font-size:3rem;font-weight:800;color:var(--amber);text-align:center;font-family:Georgia,serif}
+.score-label{font-family:var(--font-sans);font-size:.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:18px}
+.part-breakdown{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:20px 0}
+.part-score{background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px;padding:12px;text-align:center}
+.part-score .name{font-family:var(--font-sans);font-size:.6rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--muted)}
+.part-score .val{font-size:1.3rem;font-weight:700;color:var(--ink);margin-top:4px}
+.answer-key{margin-top:24px}
+.answer-key h3{font-size:.88rem;font-family:var(--font-sans);font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.ak-row{display:flex;gap:8px;flex-wrap:wrap}
+.ak-item{font-family:var(--font-sans);font-size:.8rem;padding:3px 8px;border-radius:3px;font-weight:700}
+.ak-item.correct{background:#d4edda;color:#155724}
+.ak-item.wrong{background:#f8d7da;color:#721c24}
+
+</style>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner">
+  <a href="../index.html" class="back back-link" aria-label="Retour"></a>
+  <a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a>
+  <button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button>
+</div></header>
+
+<div class="mock-container">
+  <div class="breadcrumb"><a href="../../../../index.html">Accueil</a><span>›</span><a href="../../../index.html">Français</a><span>›</span><a href="../../index.html">DELF</a><span>›</span><a href="../index.html">A1</a><span>›</span><strong>Simulacre 1</strong></div>
+
+  <div id="startScreen" class="start-screen">
+    <div class="part-header">DELF A1 &middot; Compréhension des écrits</div>
+    <h2>Simulacre 1</h2>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Durée :</strong> 30 minutes</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:8px"><strong>Questions :</strong> 15 (3 tâches)</p>
+    <p style="font-size:.95rem;color:var(--ink);margin-bottom:16px">En cliquant sur <strong>Commencer</strong>, le chronomètre démarre. Le simulacre est soumis automatiquement lorsque le temps est écoulé.</p>
+    <p style="font-size:.85rem;color:var(--muted);margin-bottom:18px">Conseil : lisez les questions avant les textes pour mieux cibler votre lecture.</p>
+    <button class="start-btn" onclick="startExam(false)">Commencer (avec chronomètre)</button>
+    <button class="start-btn" onclick="startExam(true)" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Mode pratique (sans chronomètre)</button>
+    <div id="resumeSection" style="display:none;margin-top:18px;padding:14px 16px;background:var(--cream-deep);border:1px solid var(--hairline);border-radius:6px"><div style="font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--amber);margin-bottom:6px">Progression sauvegardée</div><div id="resumeInfo" style="font-size:.88rem;color:var(--ink);margin-bottom:10px"></div><button class="start-btn" onclick="resumeExam()" style="background:var(--amber);color:var(--ink)">Continuer</button><button class="start-btn" onclick="clearSave()" style="background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline);margin-left:8px">Recommencer</button></div>
+    <div id="prevAttempt" style="display:none;margin-top:12px;font-family:var(--font-sans);font-size:.78rem;color:var(--muted)">Meilleur résultat précédent : <strong id="prevScore"></strong></div>
+  </div>
+
+  <div id="examArea" class="exam-area">
+    <div class="timer-bar">
+      <div class="timer-display" id="timerDisplay">30:00</div>
+      <div class="timer-meta">Temps restant</div>
+      <button onclick="saveProgress()" style="background:transparent;border:1px solid rgba(255,255,255,.3);color:rgba(255,255,255,.85);font-family:var(--font-sans);font-size:.65rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border-radius:3px;cursor:pointer">Sauvegarder</button>
+    </div>
+
+<div class="part-section">
+  <div class="part-header">Tâche 1</div>
+  <h2>Questions 1–5</h2>
+  <p class="instructions">Vous allez lire une annonce. Lisez les affirmations (1–5) et indiquez si elles sont <strong>Vraies (V)</strong>, <strong>Fausses (F)</strong> ou si <strong>on ne sait pas (NSP)</strong>.</p>
+  <div class="text-title">École de langues Étoile — Rentrée septembre</div>
+  <div class="text-content"><p>L'école de langues Étoile ouvre ses portes du lundi au vendredi de 9h à 19h. Les samedis, les cours ont lieu de 10h à 13h. Le dimanche, l'école est fermée.</p>
+<p>Nous proposons des cours de français, d'anglais et d'espagnol pour adultes et enfants à partir de 8 ans. Les cours sont disponibles le matin, l'après-midi et le soir.</p>
+<p>Pour vous inscrire, appelez le 01 23 45 67 89 ou envoyez un e-mail à inscription@etoile-langues.fr. Les inscriptions pour septembre sont ouvertes jusqu'au 31 août.</p></div>
+  <div class="vfn-row">
+    <div class="q-num">1</div>
+    <div class="q-text">L'école est ouverte le dimanche.</div>
+    <div class="vfn-opts">
+      <button class="vfn-opt" onclick="selectVFN(this,1,'V')">V</button>
+      <button class="vfn-opt" onclick="selectVFN(this,1,'F')">F</button>
+      <button class="vfn-opt" onclick="selectVFN(this,1,'NSP')">NSP</button>
+    </div></div>
+  <div class="vfn-row">
+    <div class="q-num">2</div>
+    <div class="q-text">On peut apprendre l'espagnol à l'école Étoile.</div>
+    <div class="vfn-opts">
+      <button class="vfn-opt" onclick="selectVFN(this,2,'V')">V</button>
+      <button class="vfn-opt" onclick="selectVFN(this,2,'F')">F</button>
+      <button class="vfn-opt" onclick="selectVFN(this,2,'NSP')">NSP</button>
+    </div></div>
+  <div class="vfn-row">
+    <div class="q-num">3</div>
+    <div class="q-text">Les enfants de 6 ans peuvent suivre des cours.</div>
+    <div class="vfn-opts">
+      <button class="vfn-opt" onclick="selectVFN(this,3,'V')">V</button>
+      <button class="vfn-opt" onclick="selectVFN(this,3,'F')">F</button>
+      <button class="vfn-opt" onclick="selectVFN(this,3,'NSP')">NSP</button>
+    </div></div>
+  <div class="vfn-row">
+    <div class="q-num">4</div>
+    <div class="q-text">Les cours du soir sont disponibles.</div>
+    <div class="vfn-opts">
+      <button class="vfn-opt" onclick="selectVFN(this,4,'V')">V</button>
+      <button class="vfn-opt" onclick="selectVFN(this,4,'F')">F</button>
+      <button class="vfn-opt" onclick="selectVFN(this,4,'NSP')">NSP</button>
+    </div></div>
+  <div class="vfn-row">
+    <div class="q-num">5</div>
+    <div class="q-text">Le prix des cours est indiqué dans l'annonce.</div>
+    <div class="vfn-opts">
+      <button class="vfn-opt" onclick="selectVFN(this,5,'V')">V</button>
+      <button class="vfn-opt" onclick="selectVFN(this,5,'F')">F</button>
+      <button class="vfn-opt" onclick="selectVFN(this,5,'NSP')">NSP</button>
+    </div></div>
+</div>
+<div class="part-section">
+  <div class="part-header">Tâche 2</div>
+  <h2>Questions 6–10</h2>
+  <p class="instructions">Lisez ce message et répondez aux questions (6–10) en choisissant la bonne réponse (A, B ou C).</p>
+  <div class="text-title">Message de Marie à son amie Lucie</div>
+  <div class="text-content"><p>Bonjour Lucie,</p>
+<p>Je t'écris pour te donner des nouvelles. Je suis arrivée à Paris vendredi dernier. J'habite maintenant dans un petit appartement près de la station de métro Bastille. C'est pratique pour aller travailler !</p>
+<p>Mon nouveau bureau est au centre-ville. Je commence à 8h30 le matin et je finis à 17h30. Le trajet dure environ 20 minutes en métro.</p>
+<p>Le week-end, j'aime visiter les musées et les marchés. Samedi dernier, je suis allée au marché d'Aligre — il y a des fruits et légumes très frais et des prix raisonnables.</p>
+<p>Est-ce que tu peux venir me rendre visite en octobre ? Je serai très contente de te montrer la ville.</p>
+<p>À bientôt, Marie</p></div>
+  <div class="mc-q">
+    <div class="q-num">6</div>
+    <div class="opts">
+      <div class="q-text">Marie habite à Paris depuis…</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q6" value="A"> lundi</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q6" value="B"> vendredi</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q6" value="C"> samedi</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">7</div>
+    <div class="opts">
+      <div class="q-text">Marie va au travail…</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q7" value="A"> à pied</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q7" value="B"> en voiture</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q7" value="C"> en métro</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">8</div>
+    <div class="opts">
+      <div class="q-text">Le trajet pour aller au bureau dure…</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q8" value="A"> 8 minutes</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q8" value="B"> 20 minutes</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q8" value="C"> 30 minutes</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">9</div>
+    <div class="opts">
+      <div class="q-text">Le samedi, Marie est allée…</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q9" value="A"> au musée</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q9" value="B"> au marché</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q9" value="C"> au cinéma</label>
+    </div></div>
+  <div class="mc-q">
+    <div class="q-num">10</div>
+    <div class="opts">
+      <div class="q-text">Marie invite Lucie à Paris…</div>
+      <label class="opt"><span class="opt-letter">A</span><input type="radio" name="q10" value="A"> en septembre</label>
+      <label class="opt"><span class="opt-letter">B</span><input type="radio" name="q10" value="B"> en octobre</label>
+      <label class="opt"><span class="opt-letter">C</span><input type="radio" name="q10" value="C"> en novembre</label>
+    </div></div>
+</div>
+<div class="part-section">
+  <div class="part-header">Tâche 3</div>
+  <h2>Questions 11–15</h2>
+  <p class="instructions">Vous allez lire cinq messages courts (A–E). Associez chaque message à la bonne situation (11–15).</p>
+  <div class="mm-block">
+    <div class="mm-letter">A</div><div class="mm-body">Ouvert tous les jours de 10h à 18h. Entrée gratuite le premier dimanche du mois. Café et boutique au rez-de-chaussée.</div>
+    <div class="mm-letter">B</div><div class="mm-body">Fermé pour travaux jusqu'au 15 septembre. Merci de votre compréhension. Réouverture le 16 septembre à 9h.</div>
+    <div class="mm-letter">C</div><div class="mm-body">Réservez votre billet en ligne et bénéficiez de 20% de réduction. Valable jusqu'au 30 juin. Code : ETE2024</div>
+    <div class="mm-letter">D</div><div class="mm-body">Dernière commande avant 21h. Livraison gratuite à partir de 25 euros. Délai : 30 à 45 minutes.</div>
+    <div class="mm-letter">E</div><div class="mm-body">Accès réservé aux résidents. Merci de présenter votre badge à l'entrée. Interdit aux visiteurs sans autorisation.</div>
+  </div>
+  <div class="match-q">
+    <div class="q-num">11</div>
+    <div class="q-text">Un musée annonce ses horaires.</div>
+    <select class="match-select" id="q11" onchange="setAns(11,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">12</div>
+    <div class="q-text">Un magasin est temporairement fermé.</div>
+    <select class="match-select" id="q12" onchange="setAns(12,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">13</div>
+    <div class="q-text">Un site internet propose une promotion.</div>
+    <select class="match-select" id="q13" onchange="setAns(13,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">14</div>
+    <div class="q-text">Un restaurant propose la livraison à domicile.</div>
+    <select class="match-select" id="q14" onchange="setAns(14,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option></select>
+  </div>
+  <div class="match-q">
+    <div class="q-num">15</div>
+    <div class="q-text">Un bâtiment est réservé à certaines personnes.</div>
+    <select class="match-select" id="q15" onchange="setAns(15,this.value)"><option value="">—</option><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option><option value="E">E</option></select>
+  </div>
+</div>
+
+    <div class="submit-area">
+      <p>Vérifiez vos réponses avant de soumettre.</p>
+      <button class="submit-btn" onclick="submitExam()">Soumettre le simulacre</button>
+    </div>
+  </div>
+
+  <div id="resultsScreen" class="results-screen">
+    <div class="part-header">DELF A1 &middot; Résultats</div>
+    <h2>Simulacre 1 — Résultats</h2>
+    <div class="score-big" id="scoreDisplay">—</div>
+    <div class="score-label">Score / 15</div>
+    <div class="part-breakdown" id="partBreakdown"></div>
+    <div class="answer-key">
+      <h3>Corrigé</h3>
+      <div class="ak-row" id="akRow"></div>
+    </div>
+    <div style="text-align:center;margin-top:24px">
+      <button class="start-btn" onclick="restart()">Recommencer</button>
+      <a href="../index.html" class="start-btn" style="text-decoration:none;margin-left:8px;background:var(--paper);color:var(--ink);border:1.5px solid var(--hairline)">Retour</a>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">Word Play &middot; DELF A1</footer>
+<script>
+const ANSWERS = {1: "F", 2: "V", 3: "F", 4: "V", 5: "NSP", 6: "B", 7: "C", 8: "B", 9: "B", 10: "B", 11: "A", 12: "B", 13: "C", 14: "D", 15: "E"};
+const TOTAL = 15;
+const DURATION = 30 * 60;
+const STORAGE_KEY = 'wp_delf_a1_mock1';
+let userAnswers = {};
+let timerInterval = null;
+let timeLeft = DURATION;
+let timerActive = false;
+let practiceMode = false;
+
+function selectVFN(btn, qNum, val) {
+  document.querySelectorAll(`[onclick*="selectVFN(this,${qNum},"]`).forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  userAnswers[qNum] = val;
+  saveProgress();
+}
+function setAns(qNum, val) { userAnswers[qNum] = val; saveProgress(); }
+
+function saveProgress() {
+  const data = { answers: userAnswers, timeLeft, saved: Date.now() };
+  localStorage.setItem(STORAGE_KEY + '_progress', JSON.stringify(data));
+}
+function clearSave() {
+  localStorage.removeItem(STORAGE_KEY + '_progress');
+  document.getElementById('resumeSection').style.display = 'none';
+  userAnswers = {};
+  timeLeft = DURATION;
+}
+
+function startExam(practice) {
+  practiceMode = practice;
+  document.getElementById('startScreen').style.display = 'none';
+  const ea = document.getElementById('examArea');
+  ea.classList.add('active');
+  document.getElementById('timerDisplay').textContent = fmtTime(timeLeft);
+  if (!practice) startTimer();
+}
+function resumeExam() {
+  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY + '_progress') || 'null');
+  if (!saved) return;
+  userAnswers = saved.answers || {};
+  timeLeft = saved.timeLeft || DURATION;
+  // restore VFN
+  Object.entries(userAnswers).forEach(([k,v]) => {
+    const btns = document.querySelectorAll(`[onclick*="selectVFN(this,${k},"]`);
+    btns.forEach(b => { if (b.textContent.trim() === v) b.classList.add('selected'); });
+    const sel = document.getElementById('q' + k);
+    if (sel && sel.tagName === 'SELECT') sel.value = v;
+    document.querySelectorAll(`input[name="q${k}"]`).forEach(r => { if (r.value === v) r.checked = true; });
+  });
+  startExam(false);
+}
+
+function startTimer() {
+  timerActive = true;
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    const d = document.getElementById('timerDisplay');
+    d.textContent = fmtTime(timeLeft);
+    d.className = 'timer-display' + (timeLeft < 60 ? ' critical' : timeLeft < 300 ? ' warning' : '');
+    if (timeLeft <= 0) { clearInterval(timerInterval); submitExam(); }
+  }, 1000);
+}
+function fmtTime(s) {
+  const m = Math.floor(s/60); return (m<10?'0'+m:m)+':'+(s%60<10?'0'+s%60:s%60);
+}
+
+function submitExam() {
+  if (timerInterval) clearInterval(timerInterval);
+  // collect MC radios
+  document.querySelectorAll('input[type=radio]:checked').forEach(r => {
+    const m = r.name.match(/^q(\d+)$/); if (m) userAnswers[parseInt(m[1])] = r.value;
+  });
+  // collect selects
+  document.querySelectorAll('select.match-select').forEach(s => {
+    const m = s.id.match(/^q(\d+)$/); if (m && s.value) userAnswers[parseInt(m[1])] = s.value;
+  });
+  let correct = 0;
+  const akRow = document.getElementById('akRow');
+  akRow.innerHTML = '';
+  Object.entries(ANSWERS).forEach(([k,ans]) => {
+    const given = userAnswers[parseInt(k)] || '';
+    const ok = given === ans;
+    if (ok) correct++;
+    const span = document.createElement('span');
+    span.className = 'ak-item ' + (ok ? 'correct' : 'wrong');
+    span.textContent = k + ': ' + (given || '—') + (ok ? ' ✓' : ' ✗ (' + ans + ')');
+    akRow.appendChild(span);
+  });
+  const pct = Math.round(correct/TOTAL*100);
+  document.getElementById('scoreDisplay').textContent = correct + '/' + TOTAL;
+  document.getElementById('examArea').classList.remove('active');
+  const rs = document.getElementById('resultsScreen');
+  rs.style.display = 'block'; rs.classList.add('active');
+  // save best
+  const prev = parseInt(localStorage.getItem(STORAGE_KEY + '_best') || '0');
+  if (correct > prev) localStorage.setItem(STORAGE_KEY + '_best', correct);
+  localStorage.removeItem(STORAGE_KEY + '_progress');
+}
+function restart() {
+  location.reload();
+}
+
+// Check for saved progress
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem(STORAGE_KEY + '_progress');
+  const best = localStorage.getItem(STORAGE_KEY + '_best');
+  if (saved) {
+    const d = JSON.parse(saved);
+    const mins = Math.round((Date.now() - d.saved) / 60000);
+    document.getElementById('resumeInfo').textContent = 'Sauvegardé il y a ' + mins + ' minute(s). Temps restant : ' + fmtTime(d.timeLeft || DURATION) + '.';
+    document.getElementById('resumeSection').style.display = 'block';
+  }
+  if (best) {
+    document.getElementById('prevAttempt').style.display = 'block';
+    document.getElementById('prevScore').textContent = best + '/' + TOTAL;
+  }
+});
+</script>
+</body>
+</html>
