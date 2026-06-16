@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>La Littérature — Jeu B2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>
+  <a href="../../index.html">B2</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulaire</a><span>&#8250;</span>
+  <a href="index.html">La Littérature</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Le&#231;on</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+</nav>
+<div class="container">
+  <h1>La Littérature — Jeu de Ma&#238;trise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Ma&#238;trise</h2>
+        <p>Maîtrisez le vocabulaire de l'analyse littéraire</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Les r&#233;ponses cons&#233;cutives sur le m&#234;me concept et les s&#233;ries entre concepts rapportent des points bonus.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Vous avez une partie sauvegard&#233;e.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">D&#233;marrer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; R&#233;f&#233;rence — tous les concepts</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Ma&#238;trise atteinte !</h2>
+        <p>Vous avez compl&#233;t&#233; tous les &#233;l&#233;ments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure s&#233;rie</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Fran&#231;ais B2 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "la-litterature",
+  level: "b2",
+  title: "La Littérature",
+  storageKey: "wordplay_game_fr_b2_la-litterature",
+  items: [
+    {id:"litt-metaphore", term:"la métaphore", meaning:"figure de style identifiant deux réalités sans comparaison", synonym:"image · style · analogie", example:"« Le temps est un fleuve » est une métaphore du passage de la vie.", completion:"métaphore = identification directe sans comparaison", answer:"figure de style identifiant deux réalités sans comparaison"},
+    {id:"litt-allegorie", term:"l'allégorie", meaning:"représentation d'une idée abstraite par un récit concret", synonym:"symbole · image · abstraction", example:"La fable de La Fontaine est souvent lue comme une allégorie morale.", completion:"allégorie = idée abstraite représentée concrètement", answer:"représentation d'une idée abstraite par un récit concret"},
+    {id:"litt-ironie", term:"l'ironie", meaning:"dire le contraire de ce qu'on veut faire comprendre", synonym:"sarcasme · sous-entendu · dérision", example:"Voltaire use d'ironie pour critiquer le fanatisme sans le nommer.", completion:"ironie = dire le contraire de ce qu'on pense", answer:"dire le contraire de ce qu'on veut faire comprendre"},
+    {id:"litt-catharsis", term:"la catharsis", meaning:"purification des émotions par une œuvre tragique", synonym:"émotion · tragédie · Aristote", example:"Le spectateur ressort purifié après avoir vécu la catharsis de la tragédie.", completion:"catharsis = purification par les émotions tragiques", answer:"purification des émotions par une œuvre tragique"},
+    {id:"litt-intertextualite", term:"l'intertextualité", meaning:"réseau de références entre différents textes", synonym:"citation · référence · dialogue", example:"L'intertextualité enrichit un texte de multiples couches de sens.", completion:"intertextualité = dialogue entre textes littéraires", answer:"réseau de références entre différents textes"},
+    {id:"litt-registre", term:"le registre", meaning:"ton général d'un texte littéraire", synonym:"ton · style · comique", example:"Choisir le bon registre est essentiel pour l'effet voulu sur le lecteur.", completion:"registre = ton général d'un texte", answer:"ton général d'un texte littéraire"},
+    {id:"litt-denouement", term:"le dénouement", meaning:"résolution finale de l'intrigue d'une œuvre", synonym:"fin · conclusion · résolution", example:"Le dénouement d'une pièce classique résout toutes les tensions de l'intrigue.", completion:"dénouement = résolution finale de l'intrigue", answer:"résolution finale de l'intrigue d'une œuvre"},
+    {id:"litt-point-de-vue", term:"le point de vue", meaning:"perspective depuis laquelle le récit est raconté", synonym:"narrateur · interne · externe", example:"Un point de vue interne nous plonge dans la conscience du personnage.", completion:"point de vue = perspective narrative du récit", answer:"perspective depuis laquelle le récit est raconté"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

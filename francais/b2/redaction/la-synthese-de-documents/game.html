@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>La Synth&egrave;se de Documents — Jeu B2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>
+  <a href="../../index.html">B2</a><span>&#8250;</span>
+  <a href="../index.html">R&#233;daction</a><span>&#8250;</span>
+  <a href="index.html">La Synth&egrave;se de Documents</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Le&#231;on</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+  <a href="printables.html" class="chapter-nav-btn">Imprimables</a>
+</nav>
+<div class="container">
+  <h1>La Synth&egrave;se de Documents — Jeu de Ma&#238;trise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Ma&#238;trise</h2>
+        <p>Ma&icirc;trisez la m&eacute;thode de la synth&egrave;se de documents</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Les r&#233;ponses cons&#233;cutives sur le m&#234;me concept et les s&#233;ries entre concepts rapportent des points bonus.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Vous avez une partie sauvegard&#233;e.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">D&#233;marrer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; R&#233;f&#233;rence — tous les concepts</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Ma&#238;trise atteinte !</h2>
+        <p>Vous avez compl&#233;t&#233; tous les &#233;l&#233;ments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure s&#233;rie</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Fran&#231;ais B2 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "la-synthese-de-documents",
+  level: "b2",
+  title: "La Synth&egrave;se de Documents",
+  storageKey: "wordplay_game_fr_b2_la-synthese-de-documents",
+  items: [
+    {id:"synt-plan-thematique", term:"le plan th&eacute;matique", meaning:"organisation par th&egrave;mes transversaux, pas document par document", synonym:"th&egrave;mes · croisement · organisation", example:"Un plan th&eacute;matique montre les liens entre les sources mieux qu'un plan par document.", completion:"plan th&eacute;matique = organisation par th&egrave;mes transversaux", answer:"organisation par th&egrave;mes transversaux"},
+    {id:"synt-convergence", term:"la convergence", meaning:"accord ou point commun entre plusieurs documents", synonym:"accord · point commun · s'accordent", example:"La convergence montre que plusieurs sources partagent la m&ecirc;me id&eacute;e.", completion:"convergence = accord entre documents", answer:"accord ou point commun entre plusieurs documents"},
+    {id:"synt-divergence", term:"la divergence", meaning:"d&eacute;saccord ou point de diff&eacute;rence entre des documents", synonym:"opposition · diff&eacute;rence · en revanche", example:"La divergence enrichit la synth&egrave;se en montrant les tensions entre les sources.", completion:"divergence = d&eacute;saccord entre documents", answer:"d&eacute;saccord ou point de diff&eacute;rence entre des documents"},
+    {id:"synt-neutralite", term:"la neutralit&eacute;", meaning:"absence d'opinion personnelle dans la synth&egrave;se", synonym:"objectivit&eacute; · impersonnel · sans avis", example:"La neutralit&eacute; exige d'&eacute;viter les formules &agrave; la premi&egrave;re personne.", completion:"neutralit&eacute; = &eacute;criture sans avis personnel", answer:"absence d'opinion personnelle dans la synth&egrave;se"},
+    {id:"synt-paraphrase", term:"la paraphrase", meaning:"reformulation d'une id&eacute;e avec ses propres mots", synonym:"reformulation · ses mots · pr&eacute;cis", example:"La paraphrase &eacute;vite la copie directe tout en restant fid&egrave;le &agrave; l'id&eacute;e.", completion:"paraphrase = reformuler avec ses propres mots", answer:"reformulation d'une id&eacute;e avec ses propres mots"},
+    {id:"synt-formule-renvoi", term:"la formule de renvoi", meaning:"expression attributant une id&eacute;e &agrave; sa source", synonym:"selon · comme le souligne · d'apr&egrave;s", example:"Utiliser des formules de renvoi est obligatoire pour attribuer chaque id&eacute;e &agrave; son document.", completion:"formule de renvoi = attribuer une id&eacute;e &agrave; sa source", answer:"expression attributant une id&eacute;e &agrave; sa source"},
+    {id:"synt-problematique", term:"la probl&eacute;matique commune", meaning:"question centrale partag&eacute;e par tous les documents", synonym:"fil directeur · enjeu · question", example:"La probl&eacute;matique commune guide la lecture et l'organisation de la synth&egrave;se.", completion:"probl&eacute;matique commune = fil conducteur de la synth&egrave;se", answer:"question centrale partag&eacute;e par tous les documents"},
+    {id:"synt-complementarite", term:"la compl&eacute;mentarit&eacute;", meaning:"situation o&ugrave; les documents s'enrichissent mutuellement", synonym:"compl&egrave;te · enrichit · abonde", example:"La compl&eacute;mentarit&eacute; montre comment les sources apportent des &eacute;clairages diff&eacute;rents.", completion:"compl&eacute;mentarit&eacute; = les documents s'enrichissent mutuellement", answer:"situation o&ugrave; les documents s'enrichissent mutuellement"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

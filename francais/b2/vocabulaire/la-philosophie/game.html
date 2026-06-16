@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>La Philosophie — Jeu B2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Retour"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Basculer mode sombre" onclick="toggleDark()">&#9680; Sombre</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Accueil</a><span>&#8250;</span>
+  <a href="../../../../francais/index.html">Fran&#231;ais</a><span>&#8250;</span>
+  <a href="../../index.html">B2</a><span>&#8250;</span>
+  <a href="../index.html">Vocabulaire</a><span>&#8250;</span>
+  <a href="index.html">La Philosophie</a><span>&#8250;</span>
+  <strong>Jeu</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Le&#231;on</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercices</a>
+  <a href="game.html" class="chapter-nav-btn active">Jeu</a>
+</nav>
+<div class="container">
+  <h1>La Philosophie — Jeu de Ma&#238;trise</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Jeu de Ma&#238;trise</h2>
+        <p>Maîtrisez le vocabulaire philosophique avancé</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Les r&#233;ponses cons&#233;cutives sur le m&#234;me concept et les s&#233;ries entre concepts rapportent des points bonus.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Vous avez une partie sauvegard&#233;e.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Reprendre</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nouvelle partie</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">D&#233;marrer</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; R&#233;f&#233;rence — tous les concepts</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Ma&#238;trise atteinte !</h2>
+        <p>Vous avez compl&#233;t&#233; tous les &#233;l&#233;ments de ce chapitre.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Meilleure s&#233;rie</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Ma&#238;tris&#233;s</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercices</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; Fran&#231;ais B2 &middot; Jeu</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "la-philosophie",
+  level: "b2",
+  title: "La Philosophie",
+  storageKey: "wordplay_game_fr_b2_la-philosophie",
+  items: [
+    {id:"philo-empirisme", term:"l'empirisme", meaning:"connaissance fondée sur l'expérience sensible", synonym:"expérience · sens · observation", example:"Pour l'empiriste, toute idée vient d'abord des sens.", completion:"empirisme = connaissance par l'expérience", answer:"connaissance fondée sur l'expérience sensible"},
+    {id:"philo-dialectique", term:"la dialectique", meaning:"raisonnement par opposition de contraires", synonym:"thèse · antithèse · synthèse", example:"La dialectique hégélienne mène à une synthèse dépassant les contradictions.", completion:"dialectique = raisonnement par opposition", answer:"raisonnement par opposition de contraires"},
+    {id:"philo-ethique", term:"l'éthique", meaning:"réflexion sur les valeurs morales et la conduite", synonym:"morale · valeurs · bien et mal", example:"L'éthique nous pousse à réfléchir avant d'agir.", completion:"éthique = réflexion sur les valeurs morales", answer:"réflexion sur les valeurs morales et la conduite"},
+    {id:"philo-determinisme", term:"le déterminisme", meaning:"doctrine où tout événement est causalement déterminé", synonym:"cause · effet · liberté", example:"Le déterminisme suppose que nos actes sont dictés par des causes antérieures.", completion:"déterminisme = tout est déterminé par des causes", answer:"doctrine où tout événement est causalement déterminé"},
+    {id:"philo-nihilisme", term:"le nihilisme", meaning:"rejet de toute valeur morale absolue", synonym:"néant · rejet · valeurs", example:"Le nihilisme remet en cause le fondement même de la morale.", completion:"nihilisme = rejet de toute valeur absolue", answer:"rejet de toute valeur morale absolue"},
+    {id:"philo-utilitarisme", term:"l'utilitarisme", meaning:"morale fondée sur le bonheur du plus grand nombre", synonym:"bonheur · conséquences · collectif", example:"L'utilitarisme évalue une action à l'aune de ses effets sur le bien commun.", completion:"utilitarisme = bonheur du plus grand nombre", answer:"morale fondée sur le bonheur du plus grand nombre"},
+    {id:"philo-alienation", term:"l'aliénation", meaning:"dépossession de soi, sentiment d'être étranger à sa vie", synonym:"dépossession · travail · Marx", example:"L'aliénation au travail est un thème central de la philosophie marxiste.", completion:"aliénation = sentiment d'être étranger à soi", answer:"dépossession de soi, sentiment d'être étranger à sa vie"},
+    {id:"philo-existentialisme", term:"l'existentialisme", meaning:"courant philosophique centré sur la liberté individuelle", synonym:"liberté · choix · Sartre", example:"L'existentialisme insiste sur la responsabilité de chacun face à ses actes.", completion:"existentialisme = liberté et responsabilité individuelles", answer:"courant philosophique centré sur la liberté individuelle"}
+  ]
+};
+</script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
