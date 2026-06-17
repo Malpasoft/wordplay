@@ -331,6 +331,7 @@ def render_flashcards(d, slug):
           f'<div class="chapter-num">{d["num"]}</div>\n'
           f'<h1>{d["short"]}</h1>\n'
           '<nav class="chapter-nav">\n'
+          '  <a href="slides.html" class="chapter-nav-btn">Word List</a>\n'
           '  <a href="flashcards.html" class="chapter-nav-btn active">Flashcards</a>\n'
           '  <a href="game.html" class="chapter-nav-btn">Mastery Game</a>\n'
           '  <a href="match.html" class="chapter-nav-btn">Match</a>\n</nav>\n'
@@ -404,6 +405,66 @@ def render_flashcards(d, slug):
     return s
 
 
+def render_vocab_slides(d, slug):
+    """Bilingual word-list lesson: one slide per word, FR term + IPA + EN gloss + FR example."""
+    words = d['words']
+    level = d['level']
+    slides_html = []
+    for w, ipa, df, ex in words:
+        ipa_part = f'<p class="slide-sub">{ipa}</p>' if ipa else ''
+        slides_html.append(
+            f'<div class="slide"><div class="slide-card">\n'
+            f'<h2 class="slide-h2">{w}</h2>{ipa_part}\n'
+            f'<p style="font-size:1.1rem;color:var(--ink);margin-bottom:10px"><strong>{df}</strong></p>\n'
+            f'<p style="font-size:.9rem;color:var(--muted);font-style:italic">{ex}</p>\n'
+            f'<button onclick="speakWord({json.dumps(w, ensure_ascii=False)})" '
+            f'style="margin-top:12px;background:none;border:1px solid var(--hairline);border-radius:4px;'
+            f'padding:5px 12px;font-family:var(--font-sans);font-size:.65rem;font-weight:700;'
+            f'letter-spacing:1px;text-transform:uppercase;color:var(--muted);cursor:pointer">'
+            f'&#9654; Listen</button>\n'
+            f'</div></div>\n'
+        )
+    s = HEAD.format(
+        title=f'{d["short"]} — Word List {level.upper()} | Word Play',
+        extra_css='<link rel="stylesheet" href="../../../../shared/slides.css?v=v115">\n')
+    s += f'<body class="deck-body">\n'
+    s += '<div class="deck-progress"><div class="deck-progress-fill" id="deck-progress-fill"></div></div>\n'
+    s += HEADER
+    s += (f'<div class="breadcrumb">\n'
+          f'  <a href="../../../../index.html">Home</a><span>&#8250;</span>\n'
+          f'  <a href="../../../../francais-en/index.html">French for English speakers</a><span>&#8250;</span>\n'
+          f'  <a href="../../index.html">{level.upper()}</a><span>&#8250;</span>\n'
+          f'  <a href="../index.html">Vocabulary</a><span>&#8250;</span>\n'
+          f'  <a href="index.html">{d["short"]}</a><span>&#8250;</span>\n'
+          f'  <strong>Word List</strong>\n</div>\n')
+    s += ('<nav class="chapter-nav">\n'
+          '  <a href="slides.html" class="chapter-nav-btn active">Word List</a>\n'
+          '  <a href="flashcards.html" class="chapter-nav-btn">Flashcards</a>\n'
+          '  <a href="game.html" class="chapter-nav-btn">Mastery Game</a>\n'
+          '  <a href="match.html" class="chapter-nav-btn">Match</a>\n</nav>\n')
+    s += (f'<div class="chapter-num">{d["num"]} &middot; Vocabulary</div>\n'
+          f'<h1>{d["short"]}</h1>\n'
+          f'<p class="chapter-subtitle">{d["subtitle"]}</p>\n'
+          f'<div class="slide-deck" id="slide-deck">\n{"".join(slides_html)}\n</div>\n'
+          '<div class="deck-nav">'
+          '<button class="deck-btn" id="deck-prev" aria-label="Previous slide">&#9664; Prev</button>'
+          '<div class="counter" id="slide-counter"></div>'
+          '<button class="deck-btn" id="deck-next" aria-label="Next slide">Next &#9654;</button></div>\n'
+          f'<script>\nwindow.CHAPTER_ID = {jd(slug)};\nwindow.LEVEL = {jd(level)};\n'
+          f'window.SECTION = "vocabulary";\n'
+          f'function speakWord(w) {{\n'
+          f'  const u = new SpeechSynthesisUtterance(w);\n'
+          f'  u.lang = "fr-FR"; u.rate = 0.9;\n'
+          f'  speechSynthesis.speak(u);\n'
+          f'}}\n'
+          '</script>\n'
+          '<script src="../../../../shared/store.js?v=v107"></script>\n'
+          '<script src="../../../../shared/deck.js?v=v114"></script>\n'
+          f'<footer class="site-footer">Word Play &middot; French {level.upper()} &middot; Vocabulary</footer>\n'
+          '</body>\n</html>\n')
+    return s
+
+
 def render_match_vocab(d, slug):
     words = d['words'][:10]  # match uses first 10 words
     mastery_key = f'wordplay_vocab_{d["level"]}_{slug}_mastered'
@@ -426,6 +487,7 @@ def render_match_vocab(d, slug):
           f'<div class="chapter-num">{d["num"]}</div>\n'
           f'<h1>{d["short"]} — Match</h1>\n'
           '<nav class="chapter-nav">\n'
+          '  <a href="slides.html" class="chapter-nav-btn">Word List</a>\n'
           '  <a href="flashcards.html" class="chapter-nav-btn">Flashcards</a>\n'
           '  <a href="game.html" class="chapter-nav-btn">Mastery Game</a>\n'
           '  <a href="match.html" class="chapter-nav-btn active">Match</a>\n</nav>\n'
@@ -538,6 +600,10 @@ def render_vocab_hub(d, slug):
           f'  <h1 class="chapter-h1">{d["short"]}</h1>\n'
           f'  <p style="color:var(--muted);font-size:.9rem;margin-bottom:24px">{d["subtitle"]}</p>\n'
           '  <div class="activity-grid">\n'
+          '    <a href="slides.html" class="activity-card" data-activity="lesson">\n'
+          '      <span class="ac-title">Word List</span>\n'
+          f'      <p class="ac-desc">{len(d["words"])} words — bilingual slides with pronunciation</p>\n'
+          '      <span class="ac-arrow">&#8594;</span>\n    </a>\n'
           '    <a href="flashcards.html" class="activity-card" data-activity="lesson">\n'
           '      <span class="ac-title">Flashcards</span>\n'
           f'      <p class="ac-desc">{len(d["words"])} words — tap to flip, listen to pronunciation</p>\n'
@@ -560,11 +626,12 @@ def render(slug, d):
     out_dir = os.path.join(ROOT, 'francais-en', d['level'], d['section'], slug)
     os.makedirs(out_dir, exist_ok=True)
     if d['section'] == 'vocabulary':
-        files = [('flashcards.html', render_flashcards),
+        files = [('slides.html', render_vocab_slides),
+                 ('flashcards.html', render_flashcards),
                  ('match.html', render_match_vocab),
                  ('game.html', render_game),
                  ('index.html', render_vocab_hub)]
-        validate_files = ('flashcards.html', 'game.html', 'match.html', 'index.html')
+        validate_files = ('slides.html', 'flashcards.html', 'game.html', 'match.html', 'index.html')
     else:
         files = [('slides.html', render_slides), ('worksheet.html', render_worksheet),
                  ('game.html', render_game), ('index.html', render_hub)]
