@@ -80,18 +80,19 @@ window.GAME_DATA = {
   title: "Indirect Speech — Le Discours Indirect",
   storageKey: "wordplay_game_b1_indirect-speech",
   items: [
-    {id:"dire-que", term:"dire que + clause", meaning:"reporting statements: dire/affirmer/expliquer + que + reported clause", synonym:"that (statements)", example:"Il a dit qu'il était fatigué.", completion:"dire que = reporting a statement", answer:"que"},
-    {id:"pres-imp", term:"présent → imparfait", meaning:"tense shift 1: direct présent becomes imparfait in past indirect speech", synonym:"shift 1", example:"«Je viens.» → Il a dit qu'il venait.", completion:"présent shifts to ___ in past indirect speech", answer:"imparfait"},
-    {id:"pc-pqp", term:"PC → plus-que-parfait", meaning:"tense shift 2: direct PC becomes PQP in past indirect speech", synonym:"shift 2", example:"«J'ai fini.» → Elle a dit qu'elle avait fini.", completion:"PC shifts to ___ in past indirect speech", answer:"plus-que-parfait"},
-    {id:"fut-cond", term:"futur → conditionnel", meaning:"tense shift 3: direct future becomes conditionnel in past indirect speech", synonym:"shift 3", example:"«Je partirai.» → Il a dit qu'il partirait.", completion:"futur shifts to ___ in past indirect speech", answer:"conditionnel"},
-    {id:"si-yon", term:"si + clause", meaning:"yes/no questions become si + clause (no inversion, no est-ce que)", synonym:"if / whether", example:"Il a demandé si elle venait.", completion:"yes/no question → ___ + clause (no inversion)", answer:"si"},
-    {id:"ce-que", term:"ce que", meaning:"qu'est-ce que becomes ce que in indirect speech", synonym:"what (object)", example:"Il a demandé ce que je voulais.", completion:"qu'est-ce que → ___ in indirect speech", answer:"ce que"},
-    {id:"cmd-de", term:"de + infinitif", meaning:"commands become de + infinitif in indirect speech", synonym:"to do (command)", example:"Elle m'a dit de fermer la porte.", completion:"command → de + ___ in indirect speech", answer:"infinitif"},
-    {id:"demain-lend", term:"demain → le lendemain", meaning:"time word shift: demain (tomorrow) → le lendemain (the next day)", synonym:"time shift", example:"«Je pars demain.» → Il a dit qu'il partait le lendemain.", completion:"demain → ___ in past indirect speech", answer:"le lendemain"}
+    {id:"dire-que", term:"dire que + clause", meaning:"reporting statements: dire/affirmer/expliquer + que + reported clause", synonym:"that (statements)", example:"Il a dit qu'il était fatigué.", completion:"Il a dit qu'il était fatigué.", answer:"que"},
+    {id:"pres-imp", term:"présent → imparfait", meaning:"tense shift 1: direct présent becomes imparfait in past indirect speech", synonym:"shift 1", example:"«Je viens.» → Il a dit qu'il venait.", completion:"«Je viens.» → Il a dit qu'il venait.", answer:"imparfait"},
+    {id:"pc-pqp", term:"PC → plus-que-parfait", meaning:"tense shift 2: direct PC becomes PQP in past indirect speech", synonym:"shift 2", example:"«J'ai fini.» → Elle a dit qu'elle avait fini.", completion:"«J'ai fini.» → Elle a dit qu'elle avait fini.", answer:"plus-que-parfait"},
+    {id:"fut-cond", term:"futur → conditionnel", meaning:"tense shift 3: direct future becomes conditionnel in past indirect speech", synonym:"shift 3", example:"«Je partirai.» → Il a dit qu'il partirait.", completion:"«Je partirai.» → Il a dit qu'il partirait.", answer:"conditionnel"},
+    {id:"si-yon", term:"si + clause", meaning:"yes/no questions become si + clause (no inversion, no est-ce que)", synonym:"if / whether", example:"Il a demandé si elle venait.", completion:"Il a demandé _____ elle venait.", answer:"si"},
+    {id:"ce-que", term:"ce que", meaning:"qu'est-ce que becomes ce que in indirect speech", synonym:"what (object)", example:"Il a demandé ce que je voulais.", completion:"Il a demandé _____ je voulais.", answer:"ce que"},
+    {id:"cmd-de", term:"de + infinitif", meaning:"commands become de + infinitif in indirect speech", synonym:"to do (command)", example:"Elle m'a dit de fermer la porte.", completion:"Elle m'a dit de fermer la porte.", answer:"infinitif"},
+    {id:"demain-lend", term:"demain → le lendemain", meaning:"time word shift: demain (tomorrow) → le lendemain (the next day)", synonym:"time shift", example:"«Je pars demain.» → Il a dit qu'il partait le lendemain.", completion:"«Je pars demain.» → Il a dit qu'il partait _____.", answer:"le lendemain"}
   ]
 };
 </script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
-<script src="../../../../shared/game.js?v=v111"></script>
+<script src="../../../../shared/game.js?v=v112"></script>
 </body>
 </html>

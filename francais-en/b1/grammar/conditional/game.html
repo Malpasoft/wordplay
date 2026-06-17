@@ -80,18 +80,19 @@ window.GAME_DATA = {
   title: "Conditionnel présent — The Conditional",
   storageKey: "wordplay_game_b1_conditional",
   items: [
-    {id:"cond-stem", term:"futur stem + endings", meaning:"conditional = future stem + imparfait endings (-ais/-ais/-ait/-ions/-iez/-aient)", synonym:"stem + endings", example:"parler → je parlerais, tu parlerais, il parlerait", completion:"conditional: future stem + -ais/-ais/-ait/-ions/-iez/-aient", answer:"parlerais"},
-    {id:"serait", term:"serait", meaning:"conditional of être (il/elle form) — irregular stem: ser-", synonym:"would be", example:"Si j'étais riche, je serais heureux.", completion:"être → ser- → il serait", answer:"serait"},
-    {id:"aurait", term:"aurait", meaning:"conditional of avoir (il/elle form) — irregular stem: aur-", synonym:"would have", example:"Il aurait raison si tu l'écoutais.", completion:"avoir → aur- → il aurait", answer:"aurait"},
-    {id:"voudrais", term:"voudrais", meaning:"conditional of vouloir (je form) — polite request", synonym:"would like", example:"Je voudrais un thé, s'il vous plaît.", completion:"vouloir → voudr- → je voudrais (polite)", answer:"voudrais"},
-    {id:"devrais", term:"devrais", meaning:"conditional of devoir — means 'should' (advice)", synonym:"should", example:"Tu devrais dormir plus. (You should sleep more.)", completion:"devoir → devr- → tu devrais = you should", answer:"devrais"},
-    {id:"pourrait", term:"pourrait", meaning:"conditional of pouvoir — could / might", synonym:"could", example:"On pourrait aller au cinéma. (We could go to the cinema.)", completion:"pouvoir → pourr- → il pourrait = could", answer:"pourrait"},
-    {id:"si-imparfait", term:"si + imparfait", meaning:"hypothetical si clause: always imparfait (never conditional)", synonym:"if (hypothetical)", example:"Si j'avais de l'argent, j'achèterais une voiture.", completion:"si + imparfait (NEVER conditional) + result: conditional", answer:"avais"},
-    {id:"irait", term:"irait", meaning:"conditional of aller — irregular stem: ir-", synonym:"would go", example:"Elle irait en France si elle pouvait.", completion:"aller → ir- → il irait = would go", answer:"irait"}
+    {id:"cond-stem", term:"futur stem + endings", meaning:"conditional = future stem + imparfait endings (-ais/-ais/-ait/-ions/-iez/-aient)", synonym:"stem + endings", example:"parler → je parlerais, tu parlerais, il parlerait", completion:"parler → je _____, tu parlerais, il parlerait", answer:"parlerais"},
+    {id:"serait", term:"serait", meaning:"conditional of être (il/elle form) — irregular stem: ser-", synonym:"would be", example:"Si j'étais riche, je serais heureux.", completion:"Si j'étais riche, je serais heureux.", answer:"serait"},
+    {id:"aurait", term:"aurait", meaning:"conditional of avoir (il/elle form) — irregular stem: aur-", synonym:"would have", example:"Il aurait raison si tu l'écoutais.", completion:"Il _____ raison si tu l'écoutais.", answer:"aurait"},
+    {id:"voudrais", term:"voudrais", meaning:"conditional of vouloir (je form) — polite request", synonym:"would like", example:"Je voudrais un thé, s'il vous plaît.", completion:"Je _____ un thé, s'il vous plaît.", answer:"voudrais"},
+    {id:"devrais", term:"devrais", meaning:"conditional of devoir — means 'should' (advice)", synonym:"should", example:"Tu devrais dormir plus. (You should sleep more.)", completion:"Tu _____ dormir plus. (You should sleep more.)", answer:"devrais"},
+    {id:"pourrait", term:"pourrait", meaning:"conditional of pouvoir — could / might", synonym:"could", example:"On pourrait aller au cinéma. (We could go to the cinema.)", completion:"On _____ aller au cinéma. (We could go to the cinema.)", answer:"pourrait"},
+    {id:"si-imparfait", term:"si + imparfait", meaning:"hypothetical si clause: always imparfait (never conditional)", synonym:"if (hypothetical)", example:"Si j'avais de l'argent, j'achèterais une voiture.", completion:"Si j'_____ de l'argent, j'achèterais une voiture.", answer:"avais"},
+    {id:"irait", term:"irait", meaning:"conditional of aller — irregular stem: ir-", synonym:"would go", example:"Elle irait en France si elle pouvait.", completion:"Elle _____ en France si elle pouvait.", answer:"irait"}
   ]
 };
 </script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
-<script src="../../../../shared/game.js?v=v111"></script>
+<script src="../../../../shared/game.js?v=v112"></script>
 </body>
 </html>

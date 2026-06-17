@@ -80,18 +80,19 @@ window.GAME_DATA = {
   title: "Passé composé with avoir — Le Passé Composé avec Avoir",
   storageKey: "wordplay_game_a2_passe-compose-avoir",
   items: [
-    {id:"avoir-aux", term:"avoir + participe", meaning:"auxiliary for most verbs in the passé composé", synonym:"to have (aux.)", example:"J'ai mangé une pomme. (I ate an apple.)", completion:"avoir + participe passé = passé composé", answer:"ai"},
-    {id:"er-e", term:"-er → -é", meaning:"regular -er past participle ending", synonym:"-é ending", example:"parler → parlé — J'ai parlé avec elle.", completion:"-er verbs: drop -er, add -é", answer:"parlé"},
-    {id:"ir-i", term:"-ir → -i", meaning:"regular -ir past participle ending", synonym:"-i ending", example:"finir → fini — Elle a fini. (She finished.)", completion:"-ir verbs: drop -ir, add -i", answer:"fini"},
-    {id:"re-u", term:"-re → -u", meaning:"regular -re past participle ending", synonym:"-u ending", example:"vendre → vendu — Nous avons vendu la voiture.", completion:"-re verbs: drop -re, add -u", answer:"vendu"},
-    {id:"fait", term:"fait", meaning:"irregular past participle of faire (to do/make)", synonym:"done", example:"Tu as fait quoi? (What did you do?)", completion:"faire → fait (irregular)", answer:"fait"},
-    {id:"pris", term:"pris", meaning:"irregular past participle of prendre (to take)", synonym:"taken", example:"Elle a pris le train. (She took the train.)", completion:"prendre → pris (irregular)", answer:"pris"},
-    {id:"vu", term:"vu", meaning:"irregular past participle of voir (to see)", synonym:"seen", example:"Nous avons vu ce film. (We saw that film.)", completion:"voir → vu (irregular)", answer:"vu"},
-    {id:"no-agree-avoir", term:"pas d'accord", meaning:"past participle with avoir does not agree with the subject", synonym:"no agreement", example:"Elles ont mangé. (not mangées)", completion:"avec avoir: pas d'accord avec le sujet", answer:"mangé"}
+    {id:"avoir-aux", term:"avoir + participe", meaning:"auxiliary for most verbs in the passé composé", synonym:"to have (aux.)", example:"J'ai mangé une pomme. (I ate an apple.)", completion:"J'_____ mangé une pomme. (I ate an apple.)", answer:"ai"},
+    {id:"er-e", term:"-er → -é", meaning:"regular -er past participle ending", synonym:"-é ending", example:"parler → parlé — J'ai parlé avec elle.", completion:"parler → _____ — J'ai parlé avec elle.", answer:"parlé"},
+    {id:"ir-i", term:"-ir → -i", meaning:"regular -ir past participle ending", synonym:"-i ending", example:"finir → fini — Elle a fini. (She finished.)", completion:"finir → _____ — Elle a fini. (She finished.)", answer:"fini"},
+    {id:"re-u", term:"-re → -u", meaning:"regular -re past participle ending", synonym:"-u ending", example:"vendre → vendu — Nous avons vendu la voiture.", completion:"vendre → _____ — Nous avons vendu la voiture.", answer:"vendu"},
+    {id:"fait", term:"fait", meaning:"irregular past participle of faire (to do/make)", synonym:"done", example:"Tu as fait quoi? (What did you do?)", completion:"Tu as _____ quoi? (What did you do?)", answer:"fait"},
+    {id:"pris", term:"pris", meaning:"irregular past participle of prendre (to take)", synonym:"taken", example:"Elle a pris le train. (She took the train.)", completion:"Elle a _____ le train. (She took the train.)", answer:"pris"},
+    {id:"vu", term:"vu", meaning:"irregular past participle of voir (to see)", synonym:"seen", example:"Nous avons vu ce film. (We saw that film.)", completion:"Nous avons _____ ce film. (We saw that film.)", answer:"vu"},
+    {id:"no-agree-avoir", term:"pas d'accord", meaning:"past participle with avoir does not agree with the subject", synonym:"no agreement", example:"Elles ont mangé. (not mangées)", completion:"Elles ont _____. (not mangées)", answer:"mangé"}
   ]
 };
 </script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
-<script src="../../../../shared/game.js?v=v111"></script>
+<script src="../../../../shared/game.js?v=v112"></script>
 </body>
 </html>

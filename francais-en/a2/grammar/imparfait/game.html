@@ -80,18 +80,19 @@ window.GAME_DATA = {
   title: "Imparfait — L'Imparfait",
   storageKey: "wordplay_game_a2_imparfait",
   items: [
-    {id:"imparfait-stem", term:"nous – ons", meaning:"take the nous-present form and drop -ons to get the imparfait stem", synonym:"stem rule", example:"parler → nous parlons → parl- → je parlais", completion:"imparfait stem = nous present minus -ons", answer:"parl-"},
-    {id:"ais-ait", term:"-ais / -ait", meaning:"imparfait endings for je, tu (-ais) and il/elle (-ait)", synonym:"past endings", example:"je parlais, tu parlais, il parlait", completion:"-ais (je/tu), -ait (il/elle) in imparfait", answer:"parlais"},
-    {id:"ions-iez", term:"-ions / -iez", meaning:"imparfait endings for nous (-ions) and vous (-iez)", synonym:"past endings", example:"nous parlions, vous parliez", completion:"-ions (nous), -iez (vous) in imparfait", answer:"parlions"},
-    {id:"aient", term:"-aient", meaning:"imparfait ending for ils/elles — silent -ent as usual", synonym:"past ending", example:"ils parlaient (sounds like: parlais)", completion:"-aient = ils/elles imparfait (silent -ent)", answer:"parlaient"},
-    {id:"etais", term:"j'étais", meaning:"imparfait of être (irregular stem: ét-)", synonym:"I was", example:"J'étais fatigué. (I was tired.)", completion:"être → j'étais (irregular stem ét-)", answer:"étais"},
-    {id:"habitude", term:"toujours / souvent", meaning:"time markers that signal the imparfait (habit/repetition)", synonym:"habit signals", example:"Je jouais toujours au foot. (I always played football.)", completion:"toujours/souvent/chaque → imparfait", answer:"jouais"},
-    {id:"background", term:"pendant que / quand", meaning:"imparfait for background action while something else happened", synonym:"while / when", example:"Je lisais quand il a téléphoné.", completion:"background action → imparfait", answer:"lisais"},
-    {id:"etat", term:"état / description", meaning:"use imparfait for states, feelings, and descriptions in the past", synonym:"state", example:"Il faisait beau. Elle était heureuse.", completion:"state/feeling/description → imparfait", answer:"était"}
+    {id:"imparfait-stem", term:"nous – ons", meaning:"take the nous-present form and drop -ons to get the imparfait stem", synonym:"stem rule", example:"parler → nous parlons → parl- → je parlais", completion:"parler → nous parlons → _____ → je parlais", answer:"parl-"},
+    {id:"ais-ait", term:"-ais / -ait", meaning:"imparfait endings for je, tu (-ais) and il/elle (-ait)", synonym:"past endings", example:"je parlais, tu parlais, il parlait", completion:"je _____, tu parlais, il parlait", answer:"parlais"},
+    {id:"ions-iez", term:"-ions / -iez", meaning:"imparfait endings for nous (-ions) and vous (-iez)", synonym:"past endings", example:"nous parlions, vous parliez", completion:"nous _____, vous parliez", answer:"parlions"},
+    {id:"aient", term:"-aient", meaning:"imparfait ending for ils/elles — silent -ent as usual", synonym:"past ending", example:"ils parlaient (sounds like: parlais)", completion:"ils _____ (sounds like: parlais)", answer:"parlaient"},
+    {id:"etais", term:"j'étais", meaning:"imparfait of être (irregular stem: ét-)", synonym:"I was", example:"J'étais fatigué. (I was tired.)", completion:"J'_____ fatigué. (I was tired.)", answer:"étais"},
+    {id:"habitude", term:"toujours / souvent", meaning:"time markers that signal the imparfait (habit/repetition)", synonym:"habit signals", example:"Je jouais toujours au foot. (I always played football.)", completion:"Je _____ toujours au foot. (I always played football.)", answer:"jouais"},
+    {id:"background", term:"pendant que / quand", meaning:"imparfait for background action while something else happened", synonym:"while / when", example:"Je lisais quand il a téléphoné.", completion:"Je _____ quand il a téléphoné.", answer:"lisais"},
+    {id:"etat", term:"état / description", meaning:"use imparfait for states, feelings, and descriptions in the past", synonym:"state", example:"Il faisait beau. Elle était heureuse.", completion:"Il faisait beau. Elle _____ heureuse.", answer:"était"}
   ]
 };
 </script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
-<script src="../../../../shared/game.js?v=v111"></script>
+<script src="../../../../shared/game.js?v=v112"></script>
 </body>
 </html>

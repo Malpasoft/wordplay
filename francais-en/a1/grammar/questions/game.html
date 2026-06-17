@@ -80,18 +80,19 @@ window.GAME_DATA = {
   title: "Asking Questions — Poser des Questions",
   storageKey: "wordplay_game_a1_questions",
   items: [
-    {id:"intonation", term:"rising intonation", meaning:"informal question: keep statement word order, raise voice at end", synonym:"informal ?", example:"Tu parles français? (Do you speak French?)", completion:"rising intonation = statement + ? (spoken)", answer:"Tu parles?"},
-    {id:"est-ce-que", term:"est-ce que", meaning:"neutral question: add est-ce que before statement", synonym:"question prefix", example:"Est-ce que vous parlez anglais? (Do you speak English?)", completion:"est-ce que = neutral question prefix", answer:"est-ce que"},
-    {id:"est-ce-qu", term:"est-ce qu'", meaning:"est-ce que elides before a vowel", synonym:"elision", example:"Est-ce qu'il est là? (Is he there?)", completion:"est-ce qu' = est-ce que before vowel", answer:"est-ce qu'"},
-    {id:"inversion", term:"inversion", meaning:"formal question: swap verb and subject pronoun", synonym:"formal ?", example:"Parlez-vous français? (Do you speak French?)", completion:"inversion = verb-pronoun (formal)", answer:"Parlez-vous?"},
-    {id:"t-insertion", term:"-t- insertion", meaning:"add -t- in inversion when verb ends in vowel + il/elle/on", synonym:"liaison -t-", example:"Parle-t-il? Mange-t-elle?", completion:"-t- insertion = verb(vowel) + t + il/elle/on", answer:"Parle-t-il"},
-    {id:"ou", term:"où", meaning:"where", synonym:"question word", example:"Où habitez-vous? (Where do you live?)", completion:"où = where", answer:"où"},
-    {id:"quand", term:"quand", meaning:"when", synonym:"question word", example:"Quand est-ce qu'il arrive? (When does he arrive?)", completion:"quand = when", answer:"quand"},
-    {id:"qu-est-ce-que", term:"qu'est-ce que", meaning:"what (as object of question)", synonym:"what", example:"Qu'est-ce que tu fais? (What are you doing?)", completion:"qu'est-ce que = what (object)", answer:"qu'est-ce que"}
+    {id:"intonation", term:"rising intonation", meaning:"informal question: keep statement word order, raise voice at end", synonym:"informal ?", example:"Tu parles français? (Do you speak French?)", completion:"Tu parles français? (Do you speak French?)", answer:"Tu parles?"},
+    {id:"est-ce-que", term:"est-ce que", meaning:"neutral question: add est-ce que before statement", synonym:"question prefix", example:"Est-ce que vous parlez anglais? (Do you speak English?)", completion:"_____ vous parlez anglais? (Do you speak English?)", answer:"est-ce que"},
+    {id:"est-ce-qu", term:"est-ce qu'", meaning:"est-ce que elides before a vowel", synonym:"elision", example:"Est-ce qu'il est là? (Is he there?)", completion:"Est-ce qu'il est là? (Is he there?)", answer:"est-ce qu'"},
+    {id:"inversion", term:"inversion", meaning:"formal question: swap verb and subject pronoun", synonym:"formal ?", example:"Parlez-vous français? (Do you speak French?)", completion:"Parlez-vous français? (Do you speak French?)", answer:"Parlez-vous?"},
+    {id:"t-insertion", term:"-t- insertion", meaning:"add -t- in inversion when verb ends in vowel + il/elle/on", synonym:"liaison -t-", example:"Parle-t-il? Mange-t-elle?", completion:"_____? Mange-t-elle?", answer:"Parle-t-il"},
+    {id:"ou", term:"où", meaning:"where", synonym:"question word", example:"Où habitez-vous? (Where do you live?)", completion:"_____ habitez-vous? (Where do you live?)", answer:"où"},
+    {id:"quand", term:"quand", meaning:"when", synonym:"question word", example:"Quand est-ce qu'il arrive? (When does he arrive?)", completion:"_____ est-ce qu'il arrive? (When does he arrive?)", answer:"quand"},
+    {id:"qu-est-ce-que", term:"qu'est-ce que", meaning:"what (as object of question)", synonym:"what", example:"Qu'est-ce que tu fais? (What are you doing?)", completion:"_____ tu fais? (What are you doing?)", answer:"qu'est-ce que"}
   ]
 };
 </script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
-<script src="../../../../shared/game.js?v=v111"></script>
+<script src="../../../../shared/game.js?v=v112"></script>
 </body>
 </html>

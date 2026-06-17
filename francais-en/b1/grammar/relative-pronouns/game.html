@@ -80,18 +80,19 @@ window.GAME_DATA = {
   title: "Relative Pronouns — Les Pronoms Relatifs",
   storageKey: "wordplay_game_b1_relative-pronouns",
   items: [
-    {id:"qui-subj", term:"qui", meaning:"subject relative pronoun — replaces the subject of the relative clause", synonym:"who / that (subj.)", example:"Le prof qui parle vite est mon préféré.", completion:"qui = subject pronoun (doing the action in the clause)", answer:"qui"},
-    {id:"que-obj", term:"que / qu'", meaning:"object relative pronoun — replaces the direct object", synonym:"that / whom (obj.)", example:"Le film que j'ai vu était excellent.", completion:"que = direct object (receiving the action)", answer:"que"},
-    {id:"dont-de", term:"dont", meaning:"replaces de + noun — used with verbs taking de", synonym:"of which / whose", example:"C'est le livre dont j'ai besoin.", completion:"dont = de + noun (parler de, avoir besoin de, se souvenir de...)", answer:"dont"},
-    {id:"dont-poss", term:"dont (possession)", meaning:"dont expresses whose — replaces de + possessor", synonym:"whose", example:"La femme dont le fils est médecin.", completion:"dont = whose (possession)", answer:"dont"},
-    {id:"ou-place", term:"où (place)", meaning:"replaces a place expression — where", synonym:"where", example:"La ville où j'habite est belle.", completion:"où = place (where)", answer:"où"},
-    {id:"ou-time", term:"où (time)", meaning:"replaces a time expression — when/on which", synonym:"when (time)", example:"Le jour où il est arrivé était pluvieux.", completion:"où = time (when)", answer:"où"},
-    {id:"lequel-prep", term:"lequel / laquelle", meaning:"replaces thing after a preposition (not de)", synonym:"which (after prep.)", example:"Le stylo avec lequel j'écris est rouge.", completion:"lequel = thing after preposition (not de)", answer:"lequel"},
-    {id:"auquel", term:"auquel / à laquelle", meaning:"à + lequel/laquelle — for verbs taking à + thing", synonym:"to which", example:"Le projet auquel je participe est intéressant.", completion:"auquel = à + lequel (verb + à + thing)", answer:"auquel"}
+    {id:"qui-subj", term:"qui", meaning:"subject relative pronoun — replaces the subject of the relative clause", synonym:"who / that (subj.)", example:"Le prof qui parle vite est mon préféré.", completion:"Le prof _____ parle vite est mon préféré.", answer:"qui"},
+    {id:"que-obj", term:"que / qu'", meaning:"object relative pronoun — replaces the direct object", synonym:"that / whom (obj.)", example:"Le film que j'ai vu était excellent.", completion:"Le film _____ j'ai vu était excellent.", answer:"que"},
+    {id:"dont-de", term:"dont", meaning:"replaces de + noun — used with verbs taking de", synonym:"of which / whose", example:"C'est le livre dont j'ai besoin.", completion:"C'est le livre _____ j'ai besoin.", answer:"dont"},
+    {id:"dont-poss", term:"dont (possession)", meaning:"dont expresses whose — replaces de + possessor", synonym:"whose", example:"La femme dont le fils est médecin.", completion:"La femme _____ le fils est médecin.", answer:"dont"},
+    {id:"ou-place", term:"où (place)", meaning:"replaces a place expression — where", synonym:"where", example:"La ville où j'habite est belle.", completion:"La ville _____ j'habite est belle.", answer:"où"},
+    {id:"ou-time", term:"où (time)", meaning:"replaces a time expression — when/on which", synonym:"when (time)", example:"Le jour où il est arrivé était pluvieux.", completion:"Le jour _____ il est arrivé était pluvieux.", answer:"où"},
+    {id:"lequel-prep", term:"lequel / laquelle", meaning:"replaces thing after a preposition (not de)", synonym:"which (after prep.)", example:"Le stylo avec lequel j'écris est rouge.", completion:"Le stylo avec _____ j'écris est rouge.", answer:"lequel"},
+    {id:"auquel", term:"auquel / à laquelle", meaning:"à + lequel/laquelle — for verbs taking à + thing", synonym:"to which", example:"Le projet auquel je participe est intéressant.", completion:"Le projet _____ je participe est intéressant.", answer:"auquel"}
   ]
 };
 </script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
-<script src="../../../../shared/game.js?v=v111"></script>
+<script src="../../../../shared/game.js?v=v112"></script>
 </body>
 </html>

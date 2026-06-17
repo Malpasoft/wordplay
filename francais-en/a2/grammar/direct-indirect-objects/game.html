@@ -80,18 +80,19 @@ window.GAME_DATA = {
   title: "Object Pronouns — Les Pronoms Objets",
   storageKey: "wordplay_game_a2_direct-indirect-objects",
   items: [
-    {id:"le-la-les", term:"le / la / les", meaning:"direct object pronouns: him/it (m.) / her/it (f.) / them", synonym:"direct obj.", example:"Je le vois. Je la connais. Je les adore.", completion:"le/la/les = direct object (replaces à + noun? → no)", answer:"le"},
-    {id:"lui-leur", term:"lui / leur", meaning:"indirect object pronouns: to him/her / to them", synonym:"indirect obj.", example:"Je lui parle. Je leur écris.", completion:"lui/leur = indirect object (replaces à + person)", answer:"lui"},
-    {id:"me-te", term:"me / te", meaning:"1st and 2nd person object pronouns (direct and indirect)", synonym:"me/you", example:"Il me voit. Je te téléphone.", completion:"me = me / te = you (direct and indirect)", answer:"me"},
-    {id:"nous-vous-obj", term:"nous / vous", meaning:"1st and 2nd plural object pronouns (direct and indirect)", synonym:"us/you", example:"Il nous écoute. Elle vous répond.", completion:"nous/vous = us/you (object)", answer:"nous"},
-    {id:"before-verb", term:"avant le verbe", meaning:"object pronouns go before the conjugated verb in French", synonym:"placement", example:"Je le mange. (not Je mange le.)", completion:"pronoun comes BEFORE the conjugated verb", answer:"le"},
-    {id:"neg-order", term:"ne + pron + verbe + pas", meaning:"in negation, ne comes before the pronoun", synonym:"neg. placement", example:"Je ne le vois pas. (I don't see him.)", completion:"negation: ne + pronoun + verb + pas", answer:"ne le"},
-    {id:"inf-order", term:"pron. before infinitif", meaning:"with an infinitive, pronoun goes before the infinitive", synonym:"infinitive", example:"Je veux le voir. (not Je le veux voir.)", completion:"infinitive: pronoun before the infinitive", answer:"le voir"},
-    {id:"double-order", term:"COD avant COI (3e pers.)", meaning:"with two pronouns: le/la/les come before lui/leur", synonym:"double order", example:"Je le lui dis. (I tell it to him.)", completion:"double pronoun: le/la/les before lui/leur", answer:"le lui"}
+    {id:"le-la-les", term:"le / la / les", meaning:"direct object pronouns: him/it (m.) / her/it (f.) / them", synonym:"direct obj.", example:"Je le vois. Je la connais. Je les adore.", completion:"Je _____ vois. Je la connais. Je les adore.", answer:"le"},
+    {id:"lui-leur", term:"lui / leur", meaning:"indirect object pronouns: to him/her / to them", synonym:"indirect obj.", example:"Je lui parle. Je leur écris.", completion:"Je _____ parle. Je leur écris.", answer:"lui"},
+    {id:"me-te", term:"me / te", meaning:"1st and 2nd person object pronouns (direct and indirect)", synonym:"me/you", example:"Il me voit. Je te téléphone.", completion:"Il _____ voit. Je te téléphone.", answer:"me"},
+    {id:"nous-vous-obj", term:"nous / vous", meaning:"1st and 2nd plural object pronouns (direct and indirect)", synonym:"us/you", example:"Il nous écoute. Elle vous répond.", completion:"Il _____ écoute. Elle vous répond.", answer:"nous"},
+    {id:"before-verb", term:"avant le verbe", meaning:"object pronouns go before the conjugated verb in French", synonym:"placement", example:"Je le mange. (not Je mange le.)", completion:"Je _____ mange. (not Je mange le.)", answer:"le"},
+    {id:"neg-order", term:"ne + pron + verbe + pas", meaning:"in negation, ne comes before the pronoun", synonym:"neg. placement", example:"Je ne le vois pas. (I don't see him.)", completion:"Je _____ vois pas. (I don't see him.)", answer:"ne le"},
+    {id:"inf-order", term:"pron. before infinitif", meaning:"with an infinitive, pronoun goes before the infinitive", synonym:"infinitive", example:"Je veux le voir. (not Je le veux voir.)", completion:"Je veux _____. (not Je le veux voir.)", answer:"le voir"},
+    {id:"double-order", term:"COD avant COI (3e pers.)", meaning:"with two pronouns: le/la/les come before lui/leur", synonym:"double order", example:"Je le lui dis. (I tell it to him.)", completion:"Je _____ dis. (I tell it to him.)", answer:"le lui"}
   ]
 };
 </script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
-<script src="../../../../shared/game.js?v=v111"></script>
+<script src="../../../../shared/game.js?v=v112"></script>
 </body>
 </html>

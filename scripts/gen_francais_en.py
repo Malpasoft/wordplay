@@ -22,7 +22,7 @@ Content modules expose CHAPTERS = { slug: {...} } with the same shape as gen_fr.
 
 Usage: python3 scripts/gen_francais_en.py scripts/content/francais_en_a1_g1.py
 """
-import importlib.util, json, os, subprocess, sys
+import importlib.util, json, os, re, subprocess, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -33,7 +33,7 @@ HEAD = '''<!DOCTYPE html>
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
 <title>{title}</title>
-<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/base.css?v=v125">
 {extra_css}<script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
 </head>
@@ -46,6 +46,39 @@ SECTION_EN = {'grammar': 'Grammar', 'writing': 'Writing', 'vocabulary': 'Vocabul
 
 def jd(o):
     return json.dumps(o, ensure_ascii=False)
+
+
+# French word-ish characters, used to approximate word boundaries that respect
+# accents, apostrophes and hyphens in answers like "l'", "est-ce que".
+_FR_W = "\\wàâäéèêëïîôöùûüçœæÀÂÄÉÈÊËÏÎÔÖÙÛÜÇŒÆ"
+
+
+def gap_from_example(example, answer):
+    """Return the example sentence with the first whole-word occurrence of the
+    answer replaced by the '_____' gap marker the game engine splits on, or None
+    if the answer doesn't appear as a standalone token in the example."""
+    example = str(example or "")
+    answer = str(answer or "").strip()
+    if not example or not answer:
+        return None
+    pat = re.compile(rf'(?<![{_FR_W}]){re.escape(answer)}(?![{_FR_W}])', re.IGNORECASE)
+    m = pat.search(example)
+    if not m:
+        return None
+    return example[:m.start()] + '_____' + example[m.end():]
+
+
+def fix_grammar_completion(d, it):
+    """For grammar game items whose completion lacks a gap marker, derive a
+    gapped sentence from the validated French example so the 'contexto' question
+    is a real fill-in-the-blank (matching every other course track) instead of a
+    rule that may show the answer. Falls back to the plain example sentence when
+    the answer isn't a surface token in it."""
+    iid, term, meaning, syn, ex, comp, ans = it
+    if d.get('section') == 'grammar' and '_____' not in str(comp):
+        gapped = gap_from_example(ex, ans)
+        comp = gapped if gapped is not None else ex
+    return (iid, term, meaning, syn, ex, comp, ans)
 
 
 def crumb(d, page_en):
@@ -173,7 +206,7 @@ def render_worksheet(d, slug):
     expl_js = ',\n'.join(f'  {jd(k)}: {jd(v)}' for k, v in expl.items())
 
     s = HEAD.format(title=f'{d["short"]} — Exercises {d["level"].upper()} | Word Play',
-                    extra_css='<link rel="stylesheet" href="../../../../shared/worksheet.css?v=v106">\n'
+                    extra_css='<link rel="stylesheet" href="../../../../shared/worksheet.css?v=v107">\n'
                               '<link rel="stylesheet" href="../../../../shared/game.css?v=v112">\n')
     s += '<body>\n' + HEADER + crumb(d, 'Exercises') + nav('worksheet.html')
     s += (f'<h1>{d["title"]}</h1>\n'
@@ -188,6 +221,7 @@ def render_worksheet(d, slug):
           f'window.EXPLANATIONS = {{\n{expl_js}\n}};\n'
           f'window.EXERCISE_TITLES = {{ex1:{jd("Exercise 1 — " + e1t)},ex2:{jd("Exercise 2 — " + e2t)},ex3:{jd("Exercise 3 — " + e3t)}}};\n'
           '</script>\n'
+          '<script src="../../../../shared/i18n.js?v=v124"></script>\n'
           '<script src="../../../../shared/store.js?v=v107"></script>\n'
           '<script src="../../../../shared/worksheet.js?v=v108"></script>\n'
           f'<footer class="site-footer">Word Play &middot; French {d["level"].upper()} &middot; Exercises</footer>\n'
@@ -198,7 +232,7 @@ def render_worksheet(d, slug):
 def render_game(d, slug):
     items = ',\n'.join(
         '    {id:%s, term:%s, meaning:%s, synonym:%s, example:%s, completion:%s, answer:%s}'
-        % tuple(jd(v) for v in it) for it in d['items'])
+        % tuple(jd(v) for v in fix_grammar_completion(d, it)) for it in d['items'])
     s = HEAD.format(title=f'{d["short"]} — Game {d["level"].upper()} | Word Play',
                     extra_css='<link rel="stylesheet" href="../../../../shared/game.css?v=v112">\n')
     is_vocab = d['section'] == 'vocabulary'
@@ -245,8 +279,9 @@ def render_game(d, slug):
           f'  title: {jd(d["title"])},\n  storageKey: {jd("wordplay_game_" + d["level"] + "_" + slug)},\n'
           f'  items: [\n{items}\n  ]\n}};\n'
           '</script>\n'
+          '<script src="../../../../shared/i18n.js?v=v124"></script>\n'
           '<script src="../../../../shared/store.js?v=v107"></script>\n'
-          '<script src="../../../../shared/game.js?v=v111"></script>\n'
+          '<script src="../../../../shared/game.js?v=v112"></script>\n'
           '</body>\n</html>\n')
     return s
 

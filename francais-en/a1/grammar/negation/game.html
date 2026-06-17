@@ -80,18 +80,19 @@ window.GAME_DATA = {
   title: "Negation — La Négation",
   storageKey: "wordplay_game_a1_negation",
   items: [
-    {id:"ne-pas", term:"ne...pas", meaning:"basic negation: not", synonym:"pas (spoken)", example:"Je ne parle pas anglais. (I don't speak English.)", completion:"ne...pas = wrap around verb for 'not'", answer:"ne...pas"},
-    {id:"n-apos", term:"n'...pas", meaning:"ne elides to n' before a vowel or silent h", synonym:"ne before vowel", example:"Il n'est pas là. (He isn't there.)", completion:"n'...pas = ne...pas before vowel", answer:"n'"},
-    {id:"ne-jamais", term:"ne...jamais", meaning:"never; not ever", synonym:"jamais seul", example:"Elle ne mange jamais de viande. (She never eats meat.)", completion:"ne...jamais = never", answer:"jamais"},
-    {id:"ne-plus", term:"ne...plus", meaning:"no longer; not any more", synonym:"plus", example:"Il ne travaille plus. (He doesn't work any more.)", completion:"ne...plus = no longer", answer:"plus"},
-    {id:"ne-rien", term:"ne...rien", meaning:"nothing; not anything", synonym:"rien", example:"Je ne dis rien. (I say nothing.)", completion:"ne...rien = nothing", answer:"rien"},
-    {id:"ne-personne", term:"ne...personne", meaning:"nobody; no one; not anyone", synonym:"personne", example:"Il ne voit personne. (He sees nobody.)", completion:"ne...personne = nobody", answer:"personne"},
-    {id:"de-after-neg", term:"de / d' after negation", meaning:"un/une/des change to de/d' after a negation", synonym:"article change", example:"Je n'ai pas de voiture. (I don't have a car.)", completion:"after negation: un/une/des → de/d'", answer:"de"},
-    {id:"le-la-les-stay", term:"le/la/les stay", meaning:"definite articles do not change after negation", synonym:"no change", example:"Je n'aime pas le café. (I don't like coffee.)", completion:"after negation: le/la/les unchanged", answer:"le/la/les"}
+    {id:"ne-pas", term:"ne...pas", meaning:"basic negation: not", synonym:"pas (spoken)", example:"Je ne parle pas anglais. (I don't speak English.)", completion:"Je ne parle pas anglais. (I don't speak English.)", answer:"ne...pas"},
+    {id:"n-apos", term:"n'...pas", meaning:"ne elides to n' before a vowel or silent h", synonym:"ne before vowel", example:"Il n'est pas là. (He isn't there.)", completion:"Il n'est pas là. (He isn't there.)", answer:"n'"},
+    {id:"ne-jamais", term:"ne...jamais", meaning:"never; not ever", synonym:"jamais seul", example:"Elle ne mange jamais de viande. (She never eats meat.)", completion:"Elle ne mange _____ de viande. (She never eats meat.)", answer:"jamais"},
+    {id:"ne-plus", term:"ne...plus", meaning:"no longer; not any more", synonym:"plus", example:"Il ne travaille plus. (He doesn't work any more.)", completion:"Il ne travaille _____. (He doesn't work any more.)", answer:"plus"},
+    {id:"ne-rien", term:"ne...rien", meaning:"nothing; not anything", synonym:"rien", example:"Je ne dis rien. (I say nothing.)", completion:"Je ne dis _____. (I say nothing.)", answer:"rien"},
+    {id:"ne-personne", term:"ne...personne", meaning:"nobody; no one; not anyone", synonym:"personne", example:"Il ne voit personne. (He sees nobody.)", completion:"Il ne voit _____. (He sees nobody.)", answer:"personne"},
+    {id:"de-after-neg", term:"de / d' after negation", meaning:"un/une/des change to de/d' after a negation", synonym:"article change", example:"Je n'ai pas de voiture. (I don't have a car.)", completion:"Je n'ai pas _____ voiture. (I don't have a car.)", answer:"de"},
+    {id:"le-la-les-stay", term:"le/la/les stay", meaning:"definite articles do not change after negation", synonym:"no change", example:"Je n'aime pas le café. (I don't like coffee.)", completion:"Je n'aime pas le café. (I don't like coffee.)", answer:"le/la/les"}
   ]
 };
 </script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
-<script src="../../../../shared/game.js?v=v111"></script>
+<script src="../../../../shared/game.js?v=v112"></script>
 </body>
 </html>

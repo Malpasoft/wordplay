@@ -80,18 +80,19 @@ window.GAME_DATA = {
   title: "Causative Faire — Faire + Infinitif",
   storageKey: "wordplay_game_b1_causative-faire",
   items: [
-    {id:"faire-inf", term:"faire + infinitif", meaning:"causative: have something done / make someone do something", synonym:"have done", example:"Je fais réparer ma voiture. (I'm having my car repaired.)", completion:"causative: faire + ___ = have done", answer:"infinitif"},
-    {id:"faire-par", term:"faire + inf + par", meaning:"have done by: introduce the agent with par when there is also a direct object", synonym:"by (agent)", example:"Il fait laver la voiture par le mécanicien.", completion:"faire + inf + [thing] + par + [person who does it]", answer:"par"},
-    {id:"se-faire", term:"se faire + inf", meaning:"have something done to oneself — subject is recipient", synonym:"have done to self", example:"Je me suis fait couper les cheveux.", completion:"se faire + inf = have ___ done to oneself", answer:"se faire"},
-    {id:"se-faire-inv", term:"se faire (invariable)", meaning:"se faire is invariable in the PC — no agreement with subject", synonym:"no agreement", example:"Elle s'est fait voler son sac. (not volée)", completion:"se faire PC: always ___ (no gender/number agreement)", answer:"invariable"},
-    {id:"pron-before", term:"pronom avant faire", meaning:"object pronouns go BEFORE faire, not before the infinitive", synonym:"pronoun placement", example:"Je la fais réparer. (not Je fais la réparer.)", completion:"pronoun goes ___ faire (not before infinitive)", answer:"avant"},
-    {id:"laisser", term:"laisser + inf", meaning:"let/allow someone to do — permission (contrast: faire = make/cause)", synonym:"let / allow", example:"Elle laisse les enfants jouer dehors.", completion:"laisser + inf = ___ someone do (permission)", answer:"laisser"},
-    {id:"obj-after", term:"objet après l'infinitif", meaning:"in causative, the object comes after the infinitive (unlike regular verbs)", synonym:"object after inf.", example:"Elle fait travailler les étudiants. (not Elle fait les étudiants travailler.)", completion:"causative: object comes ___ the infinitive", answer:"après"},
-    {id:"faire-faire", term:"faire faire", meaning:"have something done (general): double faire structure is perfectly correct", synonym:"have done", example:"Il fait faire les courses. (He has the shopping done.)", completion:"faire + ___ + [task] = have the task done", answer:"faire"}
+    {id:"faire-inf", term:"faire + infinitif", meaning:"causative: have something done / make someone do something", synonym:"have done", example:"Je fais réparer ma voiture. (I'm having my car repaired.)", completion:"Je fais réparer ma voiture. (I'm having my car repaired.)", answer:"infinitif"},
+    {id:"faire-par", term:"faire + inf + par", meaning:"have done by: introduce the agent with par when there is also a direct object", synonym:"by (agent)", example:"Il fait laver la voiture par le mécanicien.", completion:"Il fait laver la voiture _____ le mécanicien.", answer:"par"},
+    {id:"se-faire", term:"se faire + inf", meaning:"have something done to oneself — subject is recipient", synonym:"have done to self", example:"Je me suis fait couper les cheveux.", completion:"Je me suis fait couper les cheveux.", answer:"se faire"},
+    {id:"se-faire-inv", term:"se faire (invariable)", meaning:"se faire is invariable in the PC — no agreement with subject", synonym:"no agreement", example:"Elle s'est fait voler son sac. (not volée)", completion:"Elle s'est fait voler son sac. (not volée)", answer:"invariable"},
+    {id:"pron-before", term:"pronom avant faire", meaning:"object pronouns go BEFORE faire, not before the infinitive", synonym:"pronoun placement", example:"Je la fais réparer. (not Je fais la réparer.)", completion:"Je la fais réparer. (not Je fais la réparer.)", answer:"avant"},
+    {id:"laisser", term:"laisser + inf", meaning:"let/allow someone to do — permission (contrast: faire = make/cause)", synonym:"let / allow", example:"Elle laisse les enfants jouer dehors.", completion:"Elle laisse les enfants jouer dehors.", answer:"laisser"},
+    {id:"obj-after", term:"objet après l'infinitif", meaning:"in causative, the object comes after the infinitive (unlike regular verbs)", synonym:"object after inf.", example:"Elle fait travailler les étudiants. (not Elle fait les étudiants travailler.)", completion:"Elle fait travailler les étudiants. (not Elle fait les étudiants travailler.)", answer:"après"},
+    {id:"faire-faire", term:"faire faire", meaning:"have something done (general): double faire structure is perfectly correct", synonym:"have done", example:"Il fait faire les courses. (He has the shopping done.)", completion:"Il fait _____ les courses. (He has the shopping done.)", answer:"faire"}
   ]
 };
 </script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
-<script src="../../../../shared/game.js?v=v111"></script>
+<script src="../../../../shared/game.js?v=v112"></script>
 </body>
 </html>

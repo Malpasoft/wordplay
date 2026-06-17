@@ -80,18 +80,19 @@ window.GAME_DATA = {
   title: "Time Expressions — Depuis, Pendant, Il y a",
   storageKey: "wordplay_game_a2_depuis-pendant-il-y-a",
   items: [
-    {id:"depuis-ongoing", term:"depuis", meaning:"for/since — ongoing action still happening now, used with present tense", synonym:"since/for (now)", example:"J'habite ici depuis trois ans. (I've lived here for three years.)", completion:"depuis + present = ongoing duration", answer:"depuis"},
-    {id:"pendant-completed", term:"pendant", meaning:"for — completed duration, used with past or future tense", synonym:"for (done)", example:"J'ai dormi pendant huit heures. (I slept for eight hours.)", completion:"pendant + PC = completed duration", answer:"pendant"},
-    {id:"il-y-a", term:"il y a", meaning:"ago — indicates when something happened in the past", synonym:"ago", example:"Il a appelé il y a une heure. (He called an hour ago.)", completion:"il y a = ago (with PC)", answer:"il y a"},
-    {id:"ca-fait-que", term:"ça fait…que", meaning:"it's been… since — alternative to depuis for ongoing situations", synonym:"it's been", example:"Ça fait six mois que j'apprends le français.", completion:"ça fait + time + que = it's been (ongoing)", answer:"ça fait"},
-    {id:"present-avec-depuis", term:"présent + depuis", meaning:"key rule: ongoing action = present tense + depuis (NOT passé composé)", synonym:"present ongoing", example:"J'attends depuis 20 minutes. (I've been waiting for 20 min.)", completion:"ongoing since/for → présent + depuis", answer:"j'attends"},
-    {id:"il-y-a-vs-depuis", term:"il y a vs depuis", meaning:"il y a = ago (completed point); depuis = since/for (ongoing)", synonym:"ago vs since", example:"Il est parti il y a 2 ans. / Il est là depuis 2 ans.", completion:"il y a = ago; depuis = still now", answer:"il y a"},
-    {id:"combien-depuis", term:"depuis combien de temps", meaning:"question: how long have you been doing X? (ongoing)", synonym:"how long?", example:"Depuis combien de temps tu travailles ici?", completion:"depuis combien de temps = how long? (ongoing)", answer:"depuis combien"},
-    {id:"ca-fait-combien", term:"ça fait combien de temps que", meaning:"question: how long has it been? (alternative form)", synonym:"how long? (alt.)", example:"Ça fait combien de temps que tu attends?", completion:"ça fait combien de temps que = how long? (alt.)", answer:"ça fait combien"}
+    {id:"depuis-ongoing", term:"depuis", meaning:"for/since — ongoing action still happening now, used with present tense", synonym:"since/for (now)", example:"J'habite ici depuis trois ans. (I've lived here for three years.)", completion:"J'habite ici _____ trois ans. (I've lived here for three years.)", answer:"depuis"},
+    {id:"pendant-completed", term:"pendant", meaning:"for — completed duration, used with past or future tense", synonym:"for (done)", example:"J'ai dormi pendant huit heures. (I slept for eight hours.)", completion:"J'ai dormi _____ huit heures. (I slept for eight hours.)", answer:"pendant"},
+    {id:"il-y-a", term:"il y a", meaning:"ago — indicates when something happened in the past", synonym:"ago", example:"Il a appelé il y a une heure. (He called an hour ago.)", completion:"Il a appelé _____ une heure. (He called an hour ago.)", answer:"il y a"},
+    {id:"ca-fait-que", term:"ça fait…que", meaning:"it's been… since — alternative to depuis for ongoing situations", synonym:"it's been", example:"Ça fait six mois que j'apprends le français.", completion:"_____ six mois que j'apprends le français.", answer:"ça fait"},
+    {id:"present-avec-depuis", term:"présent + depuis", meaning:"key rule: ongoing action = present tense + depuis (NOT passé composé)", synonym:"present ongoing", example:"J'attends depuis 20 minutes. (I've been waiting for 20 min.)", completion:"_____ depuis 20 minutes. (I've been waiting for 20 min.)", answer:"j'attends"},
+    {id:"il-y-a-vs-depuis", term:"il y a vs depuis", meaning:"il y a = ago (completed point); depuis = since/for (ongoing)", synonym:"ago vs since", example:"Il est parti il y a 2 ans. / Il est là depuis 2 ans.", completion:"Il est parti _____ 2 ans. / Il est là depuis 2 ans.", answer:"il y a"},
+    {id:"combien-depuis", term:"depuis combien de temps", meaning:"question: how long have you been doing X? (ongoing)", synonym:"how long?", example:"Depuis combien de temps tu travailles ici?", completion:"_____ de temps tu travailles ici?", answer:"depuis combien"},
+    {id:"ca-fait-combien", term:"ça fait combien de temps que", meaning:"question: how long has it been? (alternative form)", synonym:"how long? (alt.)", example:"Ça fait combien de temps que tu attends?", completion:"_____ de temps que tu attends?", answer:"ça fait combien"}
   ]
 };
 </script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
-<script src="../../../../shared/game.js?v=v111"></script>
+<script src="../../../../shared/game.js?v=v112"></script>
 </body>
 </html>

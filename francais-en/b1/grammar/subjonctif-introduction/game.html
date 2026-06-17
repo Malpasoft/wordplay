@@ -80,18 +80,19 @@ window.GAME_DATA = {
   title: "Introduction to the Subjunctive — Le Subjonctif",
   storageKey: "wordplay_game_b1_subjonctif-introduction",
   items: [
-    {id:"subj-form", term:"ils – ent + endings", meaning:"subjunctive stem: drop -ent from ils/elles present", synonym:"subj. stem rule", example:"parler → ils parlent → parl- → qu'il parle", completion:"subjunctive: ils form minus -ent, add -e/-es/-e/-ions/-iez/-ent", answer:"parle"},
-    {id:"subj-soit", term:"soit", meaning:"subjunctive of être (il/elle form) — must be memorised", synonym:"be (subj.)", example:"Il faut qu'il soit là. (He must be there.)", completion:"être subjunctive: sois/sois/soit/soyons/soyez/soient", answer:"soit"},
-    {id:"subj-ait", term:"ait", meaning:"subjunctive of avoir (il/elle form) — must be memorised", synonym:"have (subj.)", example:"Je doute qu'elle ait raison. (I doubt she is right.)", completion:"avoir subjunctive: aie/aies/ait/ayons/ayez/aient", answer:"ait"},
-    {id:"vouloir-que", term:"vouloir que", meaning:"trigger: to want (someone) to — requires subjunctive", synonym:"want s.o. to", example:"Je veux qu'il parte maintenant.", completion:"vouloir que + subjunctive", answer:"parte"},
-    {id:"il-faut-que", term:"il faut que", meaning:"trigger: it is necessary that / must — requires subjunctive", synonym:"must (subj.)", example:"Il faut que tu sois à l'heure.", completion:"il faut que + subjunctive", answer:"sois"},
-    {id:"douter-que", term:"douter que", meaning:"trigger: to doubt that — requires subjunctive", synonym:"doubt that", example:"Je doute qu'ils sachent la réponse.", completion:"douter que + subjunctive", answer:"sachent"},
-    {id:"two-subjects", term:"2 subjects → subj.", meaning:"different subjects in main and subordinate clause → subjunctive", synonym:"2 subjects", example:"Je veux qu'elle parte. (not: Je veux qu'elle part.)", completion:"2 different subjects → que + subjunctive", answer:"parte"},
-    {id:"same-subject", term:"1 subject → infin.", meaning:"same subject in both clauses → infinitive (not subjunctive)", synonym:"1 subject", example:"Je veux partir. (not: Je veux que je parte.)", completion:"same subject → infinitive", answer:"partir"}
+    {id:"subj-form", term:"ils – ent + endings", meaning:"subjunctive stem: drop -ent from ils/elles present", synonym:"subj. stem rule", example:"parler → ils parlent → parl- → qu'il parle", completion:"parler → ils parlent → parl- → qu'il _____", answer:"parle"},
+    {id:"subj-soit", term:"soit", meaning:"subjunctive of être (il/elle form) — must be memorised", synonym:"be (subj.)", example:"Il faut qu'il soit là. (He must be there.)", completion:"Il faut qu'il _____ là. (He must be there.)", answer:"soit"},
+    {id:"subj-ait", term:"ait", meaning:"subjunctive of avoir (il/elle form) — must be memorised", synonym:"have (subj.)", example:"Je doute qu'elle ait raison. (I doubt she is right.)", completion:"Je doute qu'elle _____ raison. (I doubt she is right.)", answer:"ait"},
+    {id:"vouloir-que", term:"vouloir que", meaning:"trigger: to want (someone) to — requires subjunctive", synonym:"want s.o. to", example:"Je veux qu'il parte maintenant.", completion:"Je veux qu'il _____ maintenant.", answer:"parte"},
+    {id:"il-faut-que", term:"il faut que", meaning:"trigger: it is necessary that / must — requires subjunctive", synonym:"must (subj.)", example:"Il faut que tu sois à l'heure.", completion:"Il faut que tu _____ à l'heure.", answer:"sois"},
+    {id:"douter-que", term:"douter que", meaning:"trigger: to doubt that — requires subjunctive", synonym:"doubt that", example:"Je doute qu'ils sachent la réponse.", completion:"Je doute qu'ils _____ la réponse.", answer:"sachent"},
+    {id:"two-subjects", term:"2 subjects → subj.", meaning:"different subjects in main and subordinate clause → subjunctive", synonym:"2 subjects", example:"Je veux qu'elle parte. (not: Je veux qu'elle part.)", completion:"Je veux qu'elle _____. (not: Je veux qu'elle part.)", answer:"parte"},
+    {id:"same-subject", term:"1 subject → infin.", meaning:"same subject in both clauses → infinitive (not subjunctive)", synonym:"1 subject", example:"Je veux partir. (not: Je veux que je parte.)", completion:"Je veux _____. (not: Je veux que je parte.)", answer:"partir"}
   ]
 };
 </script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
-<script src="../../../../shared/game.js?v=v111"></script>
+<script src="../../../../shared/game.js?v=v112"></script>
 </body>
 </html>

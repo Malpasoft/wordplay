@@ -80,18 +80,19 @@ window.GAME_DATA = {
   title: "The Gerundive — En + Participe Présent",
   storageKey: "wordplay_game_b1_gerondif",
   items: [
-    {id:"gerondif-form", term:"en + -ant", meaning:"gérondif = en + present participle (nous form minus -ons + ant)", synonym:"while / by doing", example:"Il travaille en écoutant de la musique.", completion:"gérondif = en + present participle (___ + ant)", answer:"-ant"},
-    {id:"simultaneous", term:"en + -ant (simultaneous)", meaning:"two actions at the same time by the same subject", synonym:"while doing", example:"Elle écoute la radio en conduisant.", completion:"simultaneous action: ___ + gérondif = while doing", answer:"en"},
-    {id:"manner", term:"en + -ant (manner)", meaning:"how something is done — by doing / doing", synonym:"by doing", example:"J'ai appris le français en regardant des films.", completion:"manner: en + gérondif = ___ doing", answer:"by"},
-    {id:"condition", term:"en + -ant (condition)", meaning:"by doing X, Y will happen — if/by doing", synonym:"if / by doing", example:"En partant tôt, tu éviteras les bouchons.", completion:"condition: en + gérondif → by ___ this, that happens", answer:"doing"},
-    {id:"tout-en", term:"tout en + -ant", meaning:"concession/paradox — even though / while at the same time", synonym:"even though", example:"Tout en comprenant, je ne suis pas d'accord.", completion:"tout en + gérondif = ___ though doing", answer:"even"},
-    {id:"same-subject", term:"même sujet obligatoire", meaning:"the subject of the gérondif MUST match the main clause subject", synonym:"same subject", example:"En arrivant, il a vu Marie. (il does both)", completion:"gérondif rule: ___ subject as main verb required", answer:"same"},
-    {id:"invariable", term:"invariable (pas d'accord)", meaning:"the present participle in a gérondif does not agree in gender/number", synonym:"no agreement", example:"Elle a répondu en souriant. (not souriante)", completion:"gérondif is ___ (no gender/number change)", answer:"invariable"},
-    {id:"etre-avoir-irr", term:"étant / ayant / sachant", meaning:"irregular present participles: être → étant, avoir → ayant, savoir → sachant", synonym:"irregular", example:"En étant patient, on réussit.", completion:"être → ___, avoir → ayant, savoir → sachant", answer:"étant"}
+    {id:"gerondif-form", term:"en + -ant", meaning:"gérondif = en + present participle (nous form minus -ons + ant)", synonym:"while / by doing", example:"Il travaille en écoutant de la musique.", completion:"Il travaille en écoutant de la musique.", answer:"-ant"},
+    {id:"simultaneous", term:"en + -ant (simultaneous)", meaning:"two actions at the same time by the same subject", synonym:"while doing", example:"Elle écoute la radio en conduisant.", completion:"Elle écoute la radio _____ conduisant.", answer:"en"},
+    {id:"manner", term:"en + -ant (manner)", meaning:"how something is done — by doing / doing", synonym:"by doing", example:"J'ai appris le français en regardant des films.", completion:"J'ai appris le français en regardant des films.", answer:"by"},
+    {id:"condition", term:"en + -ant (condition)", meaning:"by doing X, Y will happen — if/by doing", synonym:"if / by doing", example:"En partant tôt, tu éviteras les bouchons.", completion:"En partant tôt, tu éviteras les bouchons.", answer:"doing"},
+    {id:"tout-en", term:"tout en + -ant", meaning:"concession/paradox — even though / while at the same time", synonym:"even though", example:"Tout en comprenant, je ne suis pas d'accord.", completion:"Tout en comprenant, je ne suis pas d'accord.", answer:"even"},
+    {id:"same-subject", term:"même sujet obligatoire", meaning:"the subject of the gérondif MUST match the main clause subject", synonym:"same subject", example:"En arrivant, il a vu Marie. (il does both)", completion:"En arrivant, il a vu Marie. (il does both)", answer:"same"},
+    {id:"invariable", term:"invariable (pas d'accord)", meaning:"the present participle in a gérondif does not agree in gender/number", synonym:"no agreement", example:"Elle a répondu en souriant. (not souriante)", completion:"Elle a répondu en souriant. (not souriante)", answer:"invariable"},
+    {id:"etre-avoir-irr", term:"étant / ayant / sachant", meaning:"irregular present participles: être → étant, avoir → ayant, savoir → sachant", synonym:"irregular", example:"En étant patient, on réussit.", completion:"En _____ patient, on réussit.", answer:"étant"}
   ]
 };
 </script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
-<script src="../../../../shared/game.js?v=v111"></script>
+<script src="../../../../shared/game.js?v=v112"></script>
 </body>
 </html>

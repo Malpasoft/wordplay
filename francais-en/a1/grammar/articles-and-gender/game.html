@@ -80,18 +80,19 @@ window.GAME_DATA = {
   title: "Articles and Gender — Les Articles et le Genre",
   storageKey: "wordplay_game_a1_articles-and-gender",
   items: [
-    {id:"le", term:"le", meaning:"definite article for masculine singular nouns", synonym:"masc. 'the'", example:"Le chat dort. (The cat sleeps.)", completion:"le = definite article for masculine nouns", answer:"le"},
-    {id:"la", term:"la", meaning:"definite article for feminine singular nouns", synonym:"fem. 'the'", example:"La maison est grande. (The house is big.)", completion:"la = definite article for feminine nouns", answer:"la"},
-    {id:"l-apos", term:"l'", meaning:"definite article before vowel or silent h", synonym:"elided 'the'", example:"L'ami arrive. (The friend is arriving.)", completion:"l' = le/la before vowel or silent h", answer:"l'"},
-    {id:"les", term:"les", meaning:"definite article for all plural nouns", synonym:"plural 'the'", example:"Les livres sont ici. (The books are here.)", completion:"les = definite article for plural nouns", answer:"les"},
-    {id:"un", term:"un", meaning:"indefinite article for masculine singular nouns", synonym:"masc. 'a'", example:"J'ai un chat. (I have a cat.)", completion:"un = indefinite article for masculine nouns", answer:"un"},
-    {id:"une", term:"une", meaning:"indefinite article for feminine singular nouns", synonym:"fem. 'a'", example:"C'est une fleur. (It's a flower.)", completion:"une = indefinite article for feminine nouns", answer:"une"},
-    {id:"des", term:"des", meaning:"indefinite article for all plural nouns", synonym:"plural (some)", example:"Il a des amis. (He has friends.)", completion:"des = indefinite article for plural nouns", answer:"des"},
-    {id:"au", term:"au", meaning:"contraction of à + le before masculine nouns", synonym:"à + le", example:"Je vais au cinéma. (I'm going to the cinema.)", completion:"au = à + le (contraction)", answer:"au"}
+    {id:"le", term:"le", meaning:"definite article for masculine singular nouns", synonym:"masc. 'the'", example:"Le chat dort. (The cat sleeps.)", completion:"_____ chat dort. (The cat sleeps.)", answer:"le"},
+    {id:"la", term:"la", meaning:"definite article for feminine singular nouns", synonym:"fem. 'the'", example:"La maison est grande. (The house is big.)", completion:"_____ maison est grande. (The house is big.)", answer:"la"},
+    {id:"l-apos", term:"l'", meaning:"definite article before vowel or silent h", synonym:"elided 'the'", example:"L'ami arrive. (The friend is arriving.)", completion:"L'ami arrive. (The friend is arriving.)", answer:"l'"},
+    {id:"les", term:"les", meaning:"definite article for all plural nouns", synonym:"plural 'the'", example:"Les livres sont ici. (The books are here.)", completion:"_____ livres sont ici. (The books are here.)", answer:"les"},
+    {id:"un", term:"un", meaning:"indefinite article for masculine singular nouns", synonym:"masc. 'a'", example:"J'ai un chat. (I have a cat.)", completion:"J'ai _____ chat. (I have a cat.)", answer:"un"},
+    {id:"une", term:"une", meaning:"indefinite article for feminine singular nouns", synonym:"fem. 'a'", example:"C'est une fleur. (It's a flower.)", completion:"C'est _____ fleur. (It's a flower.)", answer:"une"},
+    {id:"des", term:"des", meaning:"indefinite article for all plural nouns", synonym:"plural (some)", example:"Il a des amis. (He has friends.)", completion:"Il a _____ amis. (He has friends.)", answer:"des"},
+    {id:"au", term:"au", meaning:"contraction of à + le before masculine nouns", synonym:"à + le", example:"Je vais au cinéma. (I'm going to the cinema.)", completion:"Je vais _____ cinéma. (I'm going to the cinema.)", answer:"au"}
   ]
 };
 </script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
-<script src="../../../../shared/game.js?v=v111"></script>
+<script src="../../../../shared/game.js?v=v112"></script>
 </body>
 </html>

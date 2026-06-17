@@ -80,18 +80,19 @@ window.GAME_DATA = {
   title: "Adjective Agreement — L'Accord des Adjectifs",
   storageKey: "wordplay_game_a1_adjective-agreement",
   items: [
-    {id:"grand-grande", term:"grand / grande", meaning:"tall / big (BAGS: size, before noun)", synonym:"haut/haute", example:"un grand homme, une grande femme", completion:"grand (m.) → grande (f.) — BAGS: before noun", answer:"grande"},
-    {id:"petit-petite", term:"petit / petite", meaning:"small / little (BAGS: size)", synonym:"minuscule", example:"un petit chat, une petite maison", completion:"petit (m.) → petite (f.) — BAGS: before noun", answer:"petite"},
-    {id:"beau-belle", term:"beau / belle", meaning:"beautiful / handsome (BAGS: beauty, before noun; bel before vowel)", synonym:"joli/jolie", example:"un beau jour, une belle maison, un bel homme", completion:"beau (m.) → belle (f.) — BAGS: beauty", answer:"belle"},
-    {id:"nouveau-nouvelle", term:"nouveau / nouvelle", meaning:"new (BAGS: age, before noun; nouvel before vowel)", synonym:"récent/récente", example:"un nouveau livre, une nouvelle voiture", completion:"nouveau (m.) → nouvelle (f.) — BAGS: age", answer:"nouvelle"},
-    {id:"vieux-vieille", term:"vieux / vieille", meaning:"old (BAGS: age, before noun; vieil before vowel)", synonym:"ancien/ancienne", example:"un vieux film, une vieille maison", completion:"vieux (m.) → vieille (f.) — BAGS: age", answer:"vieille"},
-    {id:"bon-bonne", term:"bon / bonne", meaning:"good (BAGS: goodness, before noun)", synonym:"excellent", example:"un bon repas, une bonne idée", completion:"bon (m.) → bonne (f.) — BAGS: goodness", answer:"bonne"},
-    {id:"rouge", term:"rouge", meaning:"red (colour adjective, after noun)", synonym:"écarlate, cramoisi", example:"une voiture rouge, des fleurs rouges", completion:"rouge → rouge (f. same) — AFTER noun", answer:"rouge"},
-    {id:"bags", term:"BAGS", meaning:"rule for adjectives that go before the noun: Beauty, Age, Goodness, Size", synonym:"pre-nominal", example:"belle, jeune, bon, grand", completion:"BAGS = Beauty Age Goodness Size → BEFORE noun", answer:"BAGS"}
+    {id:"grand-grande", term:"grand / grande", meaning:"tall / big (BAGS: size, before noun)", synonym:"haut/haute", example:"un grand homme, une grande femme", completion:"un grand homme, une _____ femme", answer:"grande"},
+    {id:"petit-petite", term:"petit / petite", meaning:"small / little (BAGS: size)", synonym:"minuscule", example:"un petit chat, une petite maison", completion:"un petit chat, une _____ maison", answer:"petite"},
+    {id:"beau-belle", term:"beau / belle", meaning:"beautiful / handsome (BAGS: beauty, before noun; bel before vowel)", synonym:"joli/jolie", example:"un beau jour, une belle maison, un bel homme", completion:"un beau jour, une _____ maison, un bel homme", answer:"belle"},
+    {id:"nouveau-nouvelle", term:"nouveau / nouvelle", meaning:"new (BAGS: age, before noun; nouvel before vowel)", synonym:"récent/récente", example:"un nouveau livre, une nouvelle voiture", completion:"un nouveau livre, une _____ voiture", answer:"nouvelle"},
+    {id:"vieux-vieille", term:"vieux / vieille", meaning:"old (BAGS: age, before noun; vieil before vowel)", synonym:"ancien/ancienne", example:"un vieux film, une vieille maison", completion:"un vieux film, une _____ maison", answer:"vieille"},
+    {id:"bon-bonne", term:"bon / bonne", meaning:"good (BAGS: goodness, before noun)", synonym:"excellent", example:"un bon repas, une bonne idée", completion:"un bon repas, une _____ idée", answer:"bonne"},
+    {id:"rouge", term:"rouge", meaning:"red (colour adjective, after noun)", synonym:"écarlate, cramoisi", example:"une voiture rouge, des fleurs rouges", completion:"une voiture _____, des fleurs rouges", answer:"rouge"},
+    {id:"bags", term:"BAGS", meaning:"rule for adjectives that go before the noun: Beauty, Age, Goodness, Size", synonym:"pre-nominal", example:"belle, jeune, bon, grand", completion:"belle, jeune, bon, grand", answer:"BAGS"}
   ]
 };
 </script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
-<script src="../../../../shared/game.js?v=v111"></script>
+<script src="../../../../shared/game.js?v=v112"></script>
 </body>
 </html>

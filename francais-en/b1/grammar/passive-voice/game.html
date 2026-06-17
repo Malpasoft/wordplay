@@ -80,18 +80,19 @@ window.GAME_DATA = {
   title: "Voix passive — The Passive Voice",
   storageKey: "wordplay_game_b1_passive-voice",
   items: [
-    {id:"passive-form", term:"être + participe (accordé)", meaning:"passive = être (any tense) + past participle agreeing with subject", synonym:"être + PP", example:"La lettre est écrite par Paul.", completion:"passive: être (conjugated) + PP agreeing with subject", answer:"est écrite"},
-    {id:"passive-agree", term:"accord obligatoire", meaning:"past participle in passive ALWAYS agrees with the passive subject", synonym:"agreement", example:"Les lettres sont écrites. / Les livres sont écrits.", completion:"PP agrees with passive subject in gender/number", answer:"écrites"},
-    {id:"passive-par", term:"par (agent actif)", meaning:"agent introduced by par for active, specific doers", synonym:"by (agent)", example:"Le film a été réalisé par Spielberg.", completion:"agent = par + doer (specific action)", answer:"par"},
-    {id:"passive-de", term:"de (état/émotion)", meaning:"agent introduced by de for states, emotions, habitual relationships", synonym:"by (state)", example:"Elle est aimée de tous. (She is loved by all.)", completion:"de used with: aimer, respecter, admirer, entourer…", answer:"de"},
-    {id:"passive-pc", term:"a été + PP", meaning:"passive passé composé: avoir + été + past participle (agreed)", synonym:"was done (PC)", example:"Le pont a été construit en 1902.", completion:"passive PC: a/ont été + PP (agreed)", answer:"a été construit"},
-    {id:"passive-on", term:"on (alternative)", meaning:"on + active verb = informal/spoken alternative to the passive", synonym:"they / people", example:"On parle français ici. = Le français est parlé ici.", completion:"on = avoids passive (informal/spoken)", answer:"on parle"},
-    {id:"passive-convert", term:"objet → sujet", meaning:"converting: active object becomes passive subject; verb → être + PP", synonym:"convert rule", example:"Elle écrit la lettre. → La lettre est écrite (par elle).", completion:"active object → passive subject + être + PP", answer:"est écrite"},
-    {id:"passive-agreement-f", term:"accord féminin", meaning:"feminine passive subject: add -e to the past participle", synonym:"fem. agreement", example:"La porte est fermée. / Les portes sont fermées.", completion:"feminine subject → -e on past participle in passive", answer:"fermée"}
+    {id:"passive-form", term:"être + participe (accordé)", meaning:"passive = être (any tense) + past participle agreeing with subject", synonym:"être + PP", example:"La lettre est écrite par Paul.", completion:"La lettre _____ par Paul.", answer:"est écrite"},
+    {id:"passive-agree", term:"accord obligatoire", meaning:"past participle in passive ALWAYS agrees with the passive subject", synonym:"agreement", example:"Les lettres sont écrites. / Les livres sont écrits.", completion:"Les lettres sont _____. / Les livres sont écrits.", answer:"écrites"},
+    {id:"passive-par", term:"par (agent actif)", meaning:"agent introduced by par for active, specific doers", synonym:"by (agent)", example:"Le film a été réalisé par Spielberg.", completion:"Le film a été réalisé _____ Spielberg.", answer:"par"},
+    {id:"passive-de", term:"de (état/émotion)", meaning:"agent introduced by de for states, emotions, habitual relationships", synonym:"by (state)", example:"Elle est aimée de tous. (She is loved by all.)", completion:"Elle est aimée _____ tous. (She is loved by all.)", answer:"de"},
+    {id:"passive-pc", term:"a été + PP", meaning:"passive passé composé: avoir + été + past participle (agreed)", synonym:"was done (PC)", example:"Le pont a été construit en 1902.", completion:"Le pont _____ en 1902.", answer:"a été construit"},
+    {id:"passive-on", term:"on (alternative)", meaning:"on + active verb = informal/spoken alternative to the passive", synonym:"they / people", example:"On parle français ici. = Le français est parlé ici.", completion:"_____ français ici. = Le français est parlé ici.", answer:"on parle"},
+    {id:"passive-convert", term:"objet → sujet", meaning:"converting: active object becomes passive subject; verb → être + PP", synonym:"convert rule", example:"Elle écrit la lettre. → La lettre est écrite (par elle).", completion:"Elle écrit la lettre. → La lettre _____ (par elle).", answer:"est écrite"},
+    {id:"passive-agreement-f", term:"accord féminin", meaning:"feminine passive subject: add -e to the past participle", synonym:"fem. agreement", example:"La porte est fermée. / Les portes sont fermées.", completion:"La porte est _____. / Les portes sont fermées.", answer:"fermée"}
   ]
 };
 </script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
-<script src="../../../../shared/game.js?v=v111"></script>
+<script src="../../../../shared/game.js?v=v112"></script>
 </body>
 </html>
