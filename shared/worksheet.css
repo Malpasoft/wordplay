@@ -86,7 +86,7 @@ input[type="text"] {
   min-height: 44px;
   padding: 10px 12px;
   font-size: 1rem;
-  border: 1px solid #C8D4E0;
+  border: 1px solid var(--hairline);
   border-radius: 4px;
   background: var(--offwhite);
   color: var(--navy);
@@ -127,7 +127,7 @@ select {
   min-height: 44px;
   padding: 10px 12px;
   font-size: 1rem;
-  border: 1px solid #C8D4E0;
+  border: 1px solid var(--hairline);
   border-radius: 4px;
   background: var(--offwhite);
   color: var(--navy);
@@ -144,7 +144,7 @@ textarea {
   min-height: 72px;
   padding: 10px 12px;
   font-size: 1rem;
-  border: 1px solid #C8D4E0;
+  border: 1px solid var(--hairline);
   border-radius: 4px;
   background: var(--offwhite);
   color: var(--navy);
@@ -177,7 +177,7 @@ textarea:focus { outline: none; border-color: var(--accent); background: var(--p
   border-radius: 4px;
   font-size: 0.85rem;
   line-height: 1.8;
-  color: #444;
+  color: var(--ink);
 }
 .match-options strong { color: var(--accent); }
 
@@ -190,7 +190,7 @@ textarea:focus { outline: none; border-color: var(--accent); background: var(--p
   border-radius: 6px;
   text-align: center;
 }
-.submit-wrap p { color: #A8B4C6; font-size: 0.88rem; margin-bottom: 16px; }
+.submit-wrap p { color: rgba(255,255,255,.55); font-size: 0.88rem; margin-bottom: 16px; }
 button.submit {
   background: var(--accent);
   color: white;
@@ -207,8 +207,8 @@ button.submit {
 button.submit:active { background: var(--accent-dark); }
 button.reset {
   background: transparent;
-  color: #A8B4C6;
-  border: 1px solid #3A4A6A;
+  color: rgba(255,255,255,.55);
+  border: 1px solid rgba(255,255,255,.2);
   padding: 10px 20px;
   font-size: 0.85rem;
   border-radius: 4px;
@@ -246,7 +246,7 @@ button.reset {
   font-size: 0.8rem;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #A8B4C6;
+  color: rgba(255,255,255,.55);
   font-family: var(--font-sans);
 }
 .score-display .pct { font-size: 1.1rem; margin-top: 12px; color: var(--accent); font-weight: 700; }
@@ -369,8 +369,8 @@ body.dark .exercise {
 }
 body.dark .ex-head    { color: var(--amber) !important; }
 body.dark .ex-title   { color: #FFFFFF !important; }
-body.dark .ex-meta    { color: #98A8B8 !important; }
-body.dark .ex-instruct { color: #C8D4E0 !important; }
+body.dark .ex-meta    { color: var(--muted) !important; }
+body.dark .ex-instruct { color: #D0D0D0 !important; }
 body.dark .q          { border-bottom-color: rgba(255,255,255,.08) !important; }
 body.dark .q-num      { color: var(--amber) !important; }
 body.dark .q-text     { color: #FFFFFF !important; }
@@ -406,9 +406,9 @@ body.dark textarea {
 body.dark .text-input:focus,
 body.dark input[type="text"]:focus,
 body.dark textarea:focus { border-color: var(--amber) !important; }
-body.dark .text-input::placeholder { color: #808890 !important; }
+body.dark .text-input::placeholder { color: var(--muted) !important; }
 
-body.dark .ws-feedback { color: #C8D4E0 !important; }
+body.dark .ws-feedback { color: #D0D0D0 !important; }
 body.dark .ws-feedback strong { color: #FFFFFF !important; }
 
 body.dark .results-panel {
@@ -435,8 +435,13 @@ body.dark .secondary-btn {
   color: #F0F0F0 !important;
 }
 
-body.dark .intro-meta { color: #98A8B8 !important; }
+body.dark .intro-meta { color: var(--muted) !important; }
 body.dark .submit-wrap { border-top-color: rgba(255,255,255,.1) !important; }
+
+/* Submitted answer state backgrounds — dark mode overrides */
+body.dark .submitted .q.correct { background: rgba(39,174,96,.1) !important; }
+body.dark .submitted .q.wrong   { background: rgba(192,57,43,.1) !important; }
+body.dark .submitted .choice-btn.wrong-answer { background: rgba(192,57,43,.2) !important; }
 
 /* Wrong-answer explanation panels */
 body.dark .q .q-explanation,
@@ -682,13 +687,13 @@ body.dark .ce-card {
   border-color: rgba(255,255,255,.1) !important;
 }
 body.dark .ce-question-text { color: #F0F0F0 !important; }
-body.dark .ce-question-num  { color: #808890 !important; }
-body.dark .ce-counter        { color: #707880 !important; }
+body.dark .ce-question-num  { color: var(--amber) !important; }
+body.dark .ce-counter        { color: var(--muted) !important; }
 body.dark .ce-progress-bar   { background: rgba(255,255,255,.1) !important; }
 body.dark .ce-context {
   background: rgba(255,255,255,.05) !important;
   border-color: rgba(255,255,255,.12) !important;
-  color: #C8D4E0 !important;
+  color: #D0D0D0 !important;
 }
 body.dark .ce-option-btn {
   background: rgba(255,255,255,.06) !important;

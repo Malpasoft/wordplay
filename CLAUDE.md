@@ -186,7 +186,7 @@ the ONLY way to force a cache refresh.
    without version bumps
 
 **Current versions (this list is canonical; kept in sync by the hook):**
-- `base.css`: v124
+- `base.css`: v125
 - `dark-init.js`: v112
 - `store.js`: v107
 - `game.js`: v111
@@ -197,7 +197,7 @@ the ONLY way to force a cache refresh.
 - `sentence-grader.js`: v104
 - `mascot.js`: v3
 - `slides.css`: v115
-- `worksheet.css`: v106
+- `worksheet.css`: v107
 - `print.css`: v102
 - `i18n.js`: v124
 - `print.js`: v102

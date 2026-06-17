@@ -816,7 +816,7 @@ body.dark .sr-item:hover { background: rgba(201,160,80,.1); }
   margin: 32px 0 14px;
 }
 .progress-strip {
-  background: white;
+  background: var(--surface-2);
   border: 1px solid rgba(26,26,26,0.12);
   border-radius: 8px;
   padding: 16px 20px;
