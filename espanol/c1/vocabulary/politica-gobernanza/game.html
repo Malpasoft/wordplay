@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V09</div>
 <h1>Política y Gobernanza</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "politica-gobernanza",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_c1_politica-gobernanza",
   section: 'vocabulary',
   items: [
-    {id:"democracia-deliberativa", term:"democracia deliberativa", meaning:"modelo democrático en el que las decisiones colectivas se basan en el debate razonado", synonym:"Espa&#241;ol para: modelo democrático en el que las decisiones colectivas se basan en el debate razonado", example:"La <b>democracia deliberativa</b> otorga gran peso a la participación ciudadana.", completion:"La ______ otorga gran peso a la participación ciudadana.", answer:"democracia deliberativa"},
-    {id:"populismo", term:"populismo", meaning:"corriente política que apela directamente al pueblo en contraposición a las élites", synonym:"Espa&#241;ol para: corriente política que apela directamente al pueblo en contraposición a las élites", example:"El <b>populismo</b> puede minar la confianza en las instituciones democráticas.", completion:"El ______ puede minar la confianza en las instituciones democráticas.", answer:"populismo"},
-    {id:"rendicion-de-cuentas", term:"rendición de cuentas", meaning:"obligación de los gobiernos y funcionarios de justificar sus decisiones ante los ciudadanos", synonym:"Espa&#241;ol para: obligación de los gobiernos y funcionarios de justificar sus decisiones ante los ciudadanos", example:"La <b>rendición de cuentas</b> es un pilar de la buena gobernanza.", completion:"La ______ es un pilar de la buena gobernanza.", answer:"rendición de cuentas", accept:["rendicion de cuentas"]},
-    {id:"separacion-de-poderes", term:"separación de poderes", meaning:"principio constitucional que distribuye el poder del Estado entre ejecutivo, legislativo y judicial", synonym:"Espa&#241;ol para: principio constitucional que distribuye el poder del Estado entre ejecutivo, legislativo y judicial", example:"La <b>separación de poderes</b> garantiza el equilibrio y evita los abusos.", completion:"La ______ garantiza el equilibrio y evita los abusos.", answer:"separación de poderes", accept:["separacion de poderes"]},
-    {id:"geopolitica", term:"geopolítica", meaning:"disciplina que analiza la influencia de los factores geográficos en la política internacional", synonym:"Espa&#241;ol para: disciplina que analiza la influencia de los factores geográficos en la política internacional", example:"La <b>geopolítica</b> explica muchos de los conflictos por los recursos energéticos.", completion:"La ______ explica muchos de los conflictos por los recursos energéticos.", answer:"geopolítica", accept:["geopolitica"]},
-    {id:"lobbismo", term:"lobbismo", meaning:"práctica de influir en las decisiones políticas en nombre de grupos de interés", synonym:"Espa&#241;ol para: práctica de influir en las decisiones políticas en nombre de grupos de interés", example:"El <b>lobbismo</b> farmacéutico presionó para retrasar la regulación del medicamento.", completion:"El ______ farmacéutico presionó para retrasar la regulación del medicamento.", answer:"lobbismo"},
-    {id:"clientelismo", term:"clientelismo", meaning:"intercambio de favores políticos por apoyo electoral o lealtad personal", synonym:"Espa&#241;ol para: intercambio de favores políticos por apoyo electoral o lealtad personal", example:"El <b>clientelismo</b> corroe la meritocracia y daña la confianza pública.", completion:"El ______ corroe la meritocracia y daña la confianza pública.", answer:"clientelismo"},
-    {id:"tecnocracia", term:"tecnocracia", meaning:"sistema en el que las decisiones políticas las toman técnicos y expertos en lugar de representantes elegidos", synonym:"Espa&#241;ol para: sistema en el que las decisiones políticas las toman técnicos y expertos en lugar de representantes elegidos", example:"La <b>tecnocracia</b> puede ser eficiente pero carece de legitimidad democrática.", completion:"La ______ puede ser eficiente pero carece de legitimidad democrática.", answer:"tecnocracia"}
+    {id:"democracia-deliberativa", term:"democracia deliberativa", meaning:"modelo democrático en el que las decisiones colectivas se basan en el debate razonado", synonym:"Espa&#241;ol para: modelo democrático en el que las decisiones colectivas se basan en el debate razonado", example:"La <b>democracia deliberativa</b> otorga gran peso a la participación ciudadana.", completion:"La _____ otorga gran peso a la participación ciudadana.", answer:"democracia deliberativa"},
+    {id:"populismo", term:"populismo", meaning:"corriente política que apela directamente al pueblo en contraposición a las élites", synonym:"Espa&#241;ol para: corriente política que apela directamente al pueblo en contraposición a las élites", example:"El <b>populismo</b> puede minar la confianza en las instituciones democráticas.", completion:"El _____ puede minar la confianza en las instituciones democráticas.", answer:"populismo"},
+    {id:"rendicion-de-cuentas", term:"rendición de cuentas", meaning:"obligación de los gobiernos y funcionarios de justificar sus decisiones ante los ciudadanos", synonym:"Espa&#241;ol para: obligación de los gobiernos y funcionarios de justificar sus decisiones ante los ciudadanos", example:"La <b>rendición de cuentas</b> es un pilar de la buena gobernanza.", completion:"La _____ es un pilar de la buena gobernanza.", answer:"rendición de cuentas", accept:["rendicion de cuentas"]},
+    {id:"separacion-de-poderes", term:"separación de poderes", meaning:"principio constitucional que distribuye el poder del Estado entre ejecutivo, legislativo y judicial", synonym:"Espa&#241;ol para: principio constitucional que distribuye el poder del Estado entre ejecutivo, legislativo y judicial", example:"La <b>separación de poderes</b> garantiza el equilibrio y evita los abusos.", completion:"La _____ garantiza el equilibrio y evita los abusos.", answer:"separación de poderes", accept:["separacion de poderes"]},
+    {id:"geopolitica", term:"geopolítica", meaning:"disciplina que analiza la influencia de los factores geográficos en la política internacional", synonym:"Espa&#241;ol para: disciplina que analiza la influencia de los factores geográficos en la política internacional", example:"La <b>geopolítica</b> explica muchos de los conflictos por los recursos energéticos.", completion:"La _____ explica muchos de los conflictos por los recursos energéticos.", answer:"geopolítica", accept:["geopolitica"]},
+    {id:"lobbismo", term:"lobbismo", meaning:"práctica de influir en las decisiones políticas en nombre de grupos de interés", synonym:"Espa&#241;ol para: práctica de influir en las decisiones políticas en nombre de grupos de interés", example:"El <b>lobbismo</b> farmacéutico presionó para retrasar la regulación del medicamento.", completion:"El _____ farmacéutico presionó para retrasar la regulación del medicamento.", answer:"lobbismo"},
+    {id:"clientelismo", term:"clientelismo", meaning:"intercambio de favores políticos por apoyo electoral o lealtad personal", synonym:"Espa&#241;ol para: intercambio de favores políticos por apoyo electoral o lealtad personal", example:"El <b>clientelismo</b> corroe la meritocracia y daña la confianza pública.", completion:"El _____ corroe la meritocracia y daña la confianza pública.", answer:"clientelismo"},
+    {id:"tecnocracia", term:"tecnocracia", meaning:"sistema en el que las decisiones políticas las toman técnicos y expertos en lugar de representantes elegidos", synonym:"Espa&#241;ol para: sistema en el que las decisiones políticas las toman técnicos y expertos en lugar de representantes elegidos", example:"La <b>tecnocracia</b> puede ser eficiente pero carece de legitimidad democrática.", completion:"La _____ puede ser eficiente pero carece de legitimidad democrática.", answer:"tecnocracia"}
   ]
 };
 </script>

@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V10</div>
 <h1>Lingüística Textual</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "linguistica-textual",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_c2_linguistica-textual",
   section: 'vocabulary',
   items: [
-    {id:"cohesion-textual", term:"cohesión textual", meaning:"conjunto de mecanismos léxicos y gramaticales que conectan las partes de un texto y le dan unidad", synonym:"Espa&#241;ol para: conjunto de mecanismos léxicos y gramaticales que conectan las partes de un texto y le dan unidad", example:"La <b>cohesión textual</b> se logra mediante la correferencia, la elipsis y los conectores.", completion:"La ______ se logra mediante la correferencia, la elipsis y los conectores.", answer:"cohesión textual", accept:["cohesion textual"]},
-    {id:"coherencia-pragmatica", term:"coherencia pragmática", meaning:"propiedad del discurso que asegura que el texto tiene sentido global en su contexto de uso", synonym:"Espa&#241;ol para: propiedad del discurso que asegura que el texto tiene sentido global en su contexto de uso", example:"La <b>coherencia pragmática</b> depende tanto de la estructura del texto como de los conocimientos compartidos.", completion:"La ______ depende tanto de la estructura del texto como de los conocimientos compartidos.", answer:"coherencia pragmática", accept:["coherencia pragmatica"]},
-    {id:"progresion-tematica", term:"progresión temática", meaning:"modo en que se introduce y desarrolla la información nueva a lo largo de un texto", synonym:"Espa&#241;ol para: modo en que se introduce y desarrolla la información nueva a lo largo de un texto", example:"Una buena <b>progresión temática</b> evita las repeticiones innecesarias y guía al lector.", completion:"Una buena ______ evita las repeticiones innecesarias y guía al lector.", answer:"progresión temática", accept:["progresion tematica"]},
-    {id:"isotopia", term:"isotopía", meaning:"recurrencia de rasgos semánticos a lo largo de un texto que crea su unidad temática", synonym:"Espa&#241;ol para: recurrencia de rasgos semánticos a lo largo de un texto que crea su unidad temática", example:"La <b>isotopía</b> del fuego en el poema refuerza el tema de la pasión destructiva.", completion:"La ______ del fuego en el poema refuerza el tema de la pasión destructiva.", answer:"isotopía", accept:["isotopia"]},
-    {id:"tipologia-textual", term:"tipología textual", meaning:"clasificación de los textos según su función comunicativa dominante: narrar, describir, argumentar, etc.", synonym:"Espa&#241;ol para: clasificación de los textos según su función comunicativa dominante: narrar, describir, argumentar, etc.", example:"Dominar la <b>tipología textual</b> permite elegir la estructura adecuada para cada propósito.", completion:"Dominar la ______ permite elegir la estructura adecuada para cada propósito.", answer:"tipología textual", accept:["tipologia textual"]},
-    {id:"deixis-textual", term:"deixis textual", meaning:"uso de expresiones que remiten a elementos del propio texto en lugar de a la realidad externa", synonym:"Espa&#241;ol para: uso de expresiones que remiten a elementos del propio texto en lugar de a la realidad externa", example:"La expresión «como veremos más adelante» es un ejemplo de <b>deixis textual</b> anafórica.", completion:"La expresión «como veremos más adelante» es un ejemplo de ______ anafórica.", answer:"deixis textual"},
-    {id:"macroestructura", term:"macroestructura", meaning:"organización semántica global de un texto que resume su contenido esencial", synonym:"Espa&#241;ol para: organización semántica global de un texto que resume su contenido esencial", example:"Van Dijk distingue la <b>macroestructura</b> semántica de la superestructura formal del texto.", completion:"Van Dijk distingue la ______ semántica de la superestructura formal del texto.", answer:"macroestructura"},
-    {id:"superestructura", term:"superestructura", meaning:"esquema formal convencional que organiza los textos de un tipo determinado", synonym:"Espa&#241;ol para: esquema formal convencional que organiza los textos de un tipo determinado", example:"La <b>superestructura</b> de la noticia incluye el titular, el lead y el cuerpo informativo.", completion:"La ______ de la noticia incluye el titular, el lead y el cuerpo informativo.", answer:"superestructura"}
+    {id:"cohesion-textual", term:"cohesión textual", meaning:"conjunto de mecanismos léxicos y gramaticales que conectan las partes de un texto y le dan unidad", synonym:"Espa&#241;ol para: conjunto de mecanismos léxicos y gramaticales que conectan las partes de un texto y le dan unidad", example:"La <b>cohesión textual</b> se logra mediante la correferencia, la elipsis y los conectores.", completion:"La _____ se logra mediante la correferencia, la elipsis y los conectores.", answer:"cohesión textual", accept:["cohesion textual"]},
+    {id:"coherencia-pragmatica", term:"coherencia pragmática", meaning:"propiedad del discurso que asegura que el texto tiene sentido global en su contexto de uso", synonym:"Espa&#241;ol para: propiedad del discurso que asegura que el texto tiene sentido global en su contexto de uso", example:"La <b>coherencia pragmática</b> depende tanto de la estructura del texto como de los conocimientos compartidos.", completion:"La _____ depende tanto de la estructura del texto como de los conocimientos compartidos.", answer:"coherencia pragmática", accept:["coherencia pragmatica"]},
+    {id:"progresion-tematica", term:"progresión temática", meaning:"modo en que se introduce y desarrolla la información nueva a lo largo de un texto", synonym:"Espa&#241;ol para: modo en que se introduce y desarrolla la información nueva a lo largo de un texto", example:"Una buena <b>progresión temática</b> evita las repeticiones innecesarias y guía al lector.", completion:"Una buena _____ evita las repeticiones innecesarias y guía al lector.", answer:"progresión temática", accept:["progresion tematica"]},
+    {id:"isotopia", term:"isotopía", meaning:"recurrencia de rasgos semánticos a lo largo de un texto que crea su unidad temática", synonym:"Espa&#241;ol para: recurrencia de rasgos semánticos a lo largo de un texto que crea su unidad temática", example:"La <b>isotopía</b> del fuego en el poema refuerza el tema de la pasión destructiva.", completion:"La _____ del fuego en el poema refuerza el tema de la pasión destructiva.", answer:"isotopía", accept:["isotopia"]},
+    {id:"tipologia-textual", term:"tipología textual", meaning:"clasificación de los textos según su función comunicativa dominante: narrar, describir, argumentar, etc.", synonym:"Espa&#241;ol para: clasificación de los textos según su función comunicativa dominante: narrar, describir, argumentar, etc.", example:"Dominar la <b>tipología textual</b> permite elegir la estructura adecuada para cada propósito.", completion:"Dominar la _____ permite elegir la estructura adecuada para cada propósito.", answer:"tipología textual", accept:["tipologia textual"]},
+    {id:"deixis-textual", term:"deixis textual", meaning:"uso de expresiones que remiten a elementos del propio texto en lugar de a la realidad externa", synonym:"Espa&#241;ol para: uso de expresiones que remiten a elementos del propio texto en lugar de a la realidad externa", example:"La expresión «como veremos más adelante» es un ejemplo de <b>deixis textual</b> anafórica.", completion:"La expresión «como veremos más adelante» es un ejemplo de _____ anafórica.", answer:"deixis textual"},
+    {id:"macroestructura", term:"macroestructura", meaning:"organización semántica global de un texto que resume su contenido esencial", synonym:"Espa&#241;ol para: organización semántica global de un texto que resume su contenido esencial", example:"Van Dijk distingue la <b>macroestructura</b> semántica de la superestructura formal del texto.", completion:"Van Dijk distingue la _____ semántica de la superestructura formal del texto.", answer:"macroestructura"},
+    {id:"superestructura", term:"superestructura", meaning:"esquema formal convencional que organiza los textos de un tipo determinado", synonym:"Espa&#241;ol para: esquema formal convencional que organiza los textos de un tipo determinado", example:"La <b>superestructura</b> de la noticia incluye el titular, el lead y el cuerpo informativo.", completion:"La _____ de la noticia incluye el titular, el lead y el cuerpo informativo.", answer:"superestructura"}
   ]
 };
 </script>

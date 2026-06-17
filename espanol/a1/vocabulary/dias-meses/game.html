@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V09</div>
 <h1>Días y Meses</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "dias-meses",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_a1_dias-meses",
   section: 'vocabulary',
   items: [
-    {id:"lunes", term:"lunes", meaning:"primer día de la semana laboral", synonym:"Espa&#241;ol para: primer día de la semana laboral", example:"El <b>lunes</b> empieza la semana de trabajo.", completion:"El ______ empieza la semana de trabajo.", answer:"lunes"},
-    {id:"martes", term:"martes", meaning:"segundo día de la semana", synonym:"Espa&#241;ol para: segundo día de la semana", example:"Los <b>martes</b> tengo clase de español.", completion:"Los ______ tengo clase de español.", answer:"martes"},
-    {id:"miercoles", term:"miércoles", meaning:"tercer día de la semana", synonym:"Espa&#241;ol para: tercer día de la semana", example:"El <b>miércoles</b> quedamos para comer.", completion:"El ______ quedamos para comer.", answer:"miércoles", accept:["miercoles"]},
-    {id:"viernes", term:"viernes", meaning:"quinto día de la semana, antes del fin de semana", synonym:"Espa&#241;ol para: quinto día de la semana, antes del fin de semana", example:"El <b>viernes</b> salimos a celebrar el fin de semana.", completion:"El ______ salimos a celebrar el fin de semana.", answer:"viernes"},
-    {id:"sabado", term:"sábado", meaning:"sexto día de la semana, primer día del fin de semana", synonym:"Espa&#241;ol para: sexto día de la semana, primer día del fin de semana", example:"El <b>sábado</b> voy al mercado por la mañana.", completion:"El ______ voy al mercado por la mañana.", answer:"sábado", accept:["sabado"]},
-    {id:"domingo", term:"domingo", meaning:"séptimo día de la semana, día de descanso", synonym:"Espa&#241;ol para: séptimo día de la semana, día de descanso", example:"El <b>domingo</b> me quedo en casa y descanso.", completion:"El ______ me quedo en casa y descanso.", answer:"domingo"},
-    {id:"enero", term:"enero", meaning:"primer mes del año", synonym:"Espa&#241;ol para: primer mes del año", example:"En <b>enero</b> hace mucho frío en Madrid.", completion:"En ______ hace mucho frío en Madrid.", answer:"enero"},
-    {id:"marzo", term:"marzo", meaning:"tercer mes del año, inicio de la primavera", synonym:"Espa&#241;ol para: tercer mes del año, inicio de la primavera", example:"En <b>marzo</b> empiezan a florecer los árboles.", completion:"En ______ empiezan a florecer los árboles.", answer:"marzo"}
+    {id:"lunes", term:"lunes", meaning:"primer día de la semana laboral", synonym:"Espa&#241;ol para: primer día de la semana laboral", example:"El <b>lunes</b> empieza la semana de trabajo.", completion:"El _____ empieza la semana de trabajo.", answer:"lunes"},
+    {id:"martes", term:"martes", meaning:"segundo día de la semana", synonym:"Espa&#241;ol para: segundo día de la semana", example:"Los <b>martes</b> tengo clase de español.", completion:"Los _____ tengo clase de español.", answer:"martes"},
+    {id:"miercoles", term:"miércoles", meaning:"tercer día de la semana", synonym:"Espa&#241;ol para: tercer día de la semana", example:"El <b>miércoles</b> quedamos para comer.", completion:"El _____ quedamos para comer.", answer:"miércoles", accept:["miercoles"]},
+    {id:"viernes", term:"viernes", meaning:"quinto día de la semana, antes del fin de semana", synonym:"Espa&#241;ol para: quinto día de la semana, antes del fin de semana", example:"El <b>viernes</b> salimos a celebrar el fin de semana.", completion:"El _____ salimos a celebrar el fin de semana.", answer:"viernes"},
+    {id:"sabado", term:"sábado", meaning:"sexto día de la semana, primer día del fin de semana", synonym:"Espa&#241;ol para: sexto día de la semana, primer día del fin de semana", example:"El <b>sábado</b> voy al mercado por la mañana.", completion:"El _____ voy al mercado por la mañana.", answer:"sábado", accept:["sabado"]},
+    {id:"domingo", term:"domingo", meaning:"séptimo día de la semana, día de descanso", synonym:"Espa&#241;ol para: séptimo día de la semana, día de descanso", example:"El <b>domingo</b> me quedo en casa y descanso.", completion:"El _____ me quedo en casa y descanso.", answer:"domingo"},
+    {id:"enero", term:"enero", meaning:"primer mes del año", synonym:"Espa&#241;ol para: primer mes del año", example:"En <b>enero</b> hace mucho frío en Madrid.", completion:"En _____ hace mucho frío en Madrid.", answer:"enero"},
+    {id:"marzo", term:"marzo", meaning:"tercer mes del año, inicio de la primavera", synonym:"Espa&#241;ol para: tercer mes del año, inicio de la primavera", example:"En <b>marzo</b> empiezan a florecer los árboles.", completion:"En _____ empiezan a florecer los árboles.", answer:"marzo"}
   ]
 };
 </script>

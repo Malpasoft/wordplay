@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V12</div>
 <h1>Estética y Crítica Cultural</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "estetica-critica-cultural",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_c2_estetica-critica-cultural",
   section: 'vocabulary',
   items: [
-    {id:"industria-cultural", term:"industria cultural", meaning:"sistema capitalista de producción y distribución masiva de bienes culturales que homogeniza y mercantiliza la cultura", synonym:"Espa&#241;ol para: sistema capitalista de producción y distribución masiva de bienes culturales que homogeniza y mercantiliza la cultura", example:"Adorno denunció la <b>industria cultural</b> por convertir el arte en mercancía de consumo.", completion:"Adorno denunció la ______ por convertir el arte en mercancía de consumo.", answer:"industria cultural"},
-    {id:"espectacularizacion", term:"espectacularización", meaning:"proceso por el que la realidad social se transforma en representación mediática consumible", synonym:"Espa&#241;ol para: proceso por el que la realidad social se transforma en representación mediática consumible", example:"Debord denunció la <b>espectacularización</b> como sustitución de la vida real por su imagen.", completion:"Debord denunció la ______ como sustitución de la vida real por su imagen.", answer:"espectacularización", accept:["espectacularizacion"]},
-    {id:"kitsch", term:"kitsch", meaning:"estética de mal gusto que recurre a la imitación barata de formas artísticas y la sentimentalidad fácil", synonym:"Espa&#241;ol para: estética de mal gusto que recurre a la imitación barata de formas artísticas y la sentimentalidad fácil", example:"El <b>kitsch</b> no es involuntario: algunos artistas lo reivindican críticamente.", completion:"El ______ no es involuntario: algunos artistas lo reivindican críticamente.", answer:"kitsch"},
-    {id:"camp", term:"camp", meaning:"sensibilidad estética que celebra lo exagerado, lo artificial y lo teatral como forma de subversión", synonym:"Espa&#241;ol para: sensibilidad estética que celebra lo exagerado, lo artificial y lo teatral como forma de subversión", example:"Susan Sontag definió el <b>camp</b> como amor a lo poco natural, a las técnicas artificiales.", completion:"Susan Sontag definió el ______ como amor a lo poco natural, a las técnicas artificiales.", answer:"camp"},
-    {id:"cultura-de-masas", term:"cultura de masas", meaning:"conjunto de manifestaciones culturales producidas para el consumo de grandes audiencias homogéneas", synonym:"Espa&#241;ol para: conjunto de manifestaciones culturales producidas para el consumo de grandes audiencias homogéneas", example:"La <b>cultura de masas</b> ha democratizado el acceso cultural pero también ha uniformizado el gusto.", completion:"La ______ ha democratizado el acceso cultural pero también ha uniformizado el gusto.", answer:"cultura de masas"},
-    {id:"apropiacion-cultural", term:"apropiación cultural", meaning:"adopción de elementos de una cultura ajena sin el reconocimiento ni el consentimiento de esa comunidad", synonym:"Espa&#241;ol para: adopción de elementos de una cultura ajena sin el reconocimiento ni el consentimiento de esa comunidad", example:"El debate sobre la <b>apropiación cultural</b> cuestiona quién tiene derecho a representar qué identidades.", completion:"El debate sobre la ______ cuestiona quién tiene derecho a representar qué identidades.", answer:"apropiación cultural", accept:["apropiacion cultural"]},
-    {id:"poscolonialismo", term:"poscolonialismo", meaning:"corriente crítica que analiza los legados culturales, políticos e identitarios del colonialismo en las sociedades poscoloniales", synonym:"Espa&#241;ol para: corriente crítica que analiza los legados culturales, políticos e identitarios del colonialismo en las sociedades poscoloniales", example:"Bhabha y Spivak desarrollaron el <b>poscolonialismo</b> como herramienta de descolonización epistémica.", completion:"Bhabha y Spivak desarrollaron el ______ como herramienta de descolonización epistémica.", answer:"poscolonialismo"},
-    {id:"subalternidad", term:"subalternidad", meaning:"condición de los grupos sociales excluidos del poder que no tienen voz en el discurso dominante", synonym:"Espa&#241;ol para: condición de los grupos sociales excluidos del poder que no tienen voz en el discurso dominante", example:"Spivak pregunta si el sujeto <b>subalterno</b> puede hablar dentro de las estructuras que lo excluyen.", completion:"Spivak pregunta si el sujeto ______ puede hablar dentro de las estructuras que lo excluyen.", answer:"subalternidad"}
+    {id:"industria-cultural", term:"industria cultural", meaning:"sistema capitalista de producción y distribución masiva de bienes culturales que homogeniza y mercantiliza la cultura", synonym:"Espa&#241;ol para: sistema capitalista de producción y distribución masiva de bienes culturales que homogeniza y mercantiliza la cultura", example:"Adorno denunció la <b>industria cultural</b> por convertir el arte en mercancía de consumo.", completion:"Adorno denunció la _____ por convertir el arte en mercancía de consumo.", answer:"industria cultural"},
+    {id:"espectacularizacion", term:"espectacularización", meaning:"proceso por el que la realidad social se transforma en representación mediática consumible", synonym:"Espa&#241;ol para: proceso por el que la realidad social se transforma en representación mediática consumible", example:"Debord denunció la <b>espectacularización</b> como sustitución de la vida real por su imagen.", completion:"Debord denunció la _____ como sustitución de la vida real por su imagen.", answer:"espectacularización", accept:["espectacularizacion"]},
+    {id:"kitsch", term:"kitsch", meaning:"estética de mal gusto que recurre a la imitación barata de formas artísticas y la sentimentalidad fácil", synonym:"Espa&#241;ol para: estética de mal gusto que recurre a la imitación barata de formas artísticas y la sentimentalidad fácil", example:"El <b>kitsch</b> no es involuntario: algunos artistas lo reivindican críticamente.", completion:"El _____ no es involuntario: algunos artistas lo reivindican críticamente.", answer:"kitsch"},
+    {id:"camp", term:"camp", meaning:"sensibilidad estética que celebra lo exagerado, lo artificial y lo teatral como forma de subversión", synonym:"Espa&#241;ol para: sensibilidad estética que celebra lo exagerado, lo artificial y lo teatral como forma de subversión", example:"Susan Sontag definió el <b>camp</b> como amor a lo poco natural, a las técnicas artificiales.", completion:"Susan Sontag definió el _____ como amor a lo poco natural, a las técnicas artificiales.", answer:"camp"},
+    {id:"cultura-de-masas", term:"cultura de masas", meaning:"conjunto de manifestaciones culturales producidas para el consumo de grandes audiencias homogéneas", synonym:"Espa&#241;ol para: conjunto de manifestaciones culturales producidas para el consumo de grandes audiencias homogéneas", example:"La <b>cultura de masas</b> ha democratizado el acceso cultural pero también ha uniformizado el gusto.", completion:"La _____ ha democratizado el acceso cultural pero también ha uniformizado el gusto.", answer:"cultura de masas"},
+    {id:"apropiacion-cultural", term:"apropiación cultural", meaning:"adopción de elementos de una cultura ajena sin el reconocimiento ni el consentimiento de esa comunidad", synonym:"Espa&#241;ol para: adopción de elementos de una cultura ajena sin el reconocimiento ni el consentimiento de esa comunidad", example:"El debate sobre la <b>apropiación cultural</b> cuestiona quién tiene derecho a representar qué identidades.", completion:"El debate sobre la _____ cuestiona quién tiene derecho a representar qué identidades.", answer:"apropiación cultural", accept:["apropiacion cultural"]},
+    {id:"poscolonialismo", term:"poscolonialismo", meaning:"corriente crítica que analiza los legados culturales, políticos e identitarios del colonialismo en las sociedades poscoloniales", synonym:"Espa&#241;ol para: corriente crítica que analiza los legados culturales, políticos e identitarios del colonialismo en las sociedades poscoloniales", example:"Bhabha y Spivak desarrollaron el <b>poscolonialismo</b> como herramienta de descolonización epistémica.", completion:"Bhabha y Spivak desarrollaron el _____ como herramienta de descolonización epistémica.", answer:"poscolonialismo"},
+    {id:"subalternidad", term:"subalternidad", meaning:"condición de los grupos sociales excluidos del poder que no tienen voz en el discurso dominante", synonym:"Espa&#241;ol para: condición de los grupos sociales excluidos del poder que no tienen voz en el discurso dominante", example:"Spivak pregunta si el sujeto <b>subalterno</b> puede hablar dentro de las estructuras que lo excluyen.", completion:"Spivak pregunta si el sujeto _____ puede hablar dentro de las estructuras que lo excluyen.", answer:"subalternidad"}
   ]
 };
 </script>

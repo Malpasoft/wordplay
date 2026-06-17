@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V09</div>
 <h1>Deportes y Actividad Física</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "deportes-actividad-fisica",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_b1_deportes-actividad-fisica",
   section: 'vocabulary',
   items: [
-    {id:"campeon", term:"campeón", meaning:"Persona o equipo que gana una competición o torneo deportivo.", synonym:"Espa&#241;ol para: Persona o equipo que gana una competición o torneo deportivo.", example:"El equipo local se proclamó <b>campeón</b> de la liga nacional por tercer año consecutivo.", completion:"El equipo local se proclamó ______ de la liga nacional por tercer año consecutivo.", answer:"campeón", accept:["campeon"]},
-    {id:"competicion", term:"competición", meaning:"Enfrentamiento deportivo entre personas o equipos para determinar quién es el mejor.", synonym:"Espa&#241;ol para: Enfrentamiento deportivo entre personas o equipos para determinar quién es el mejor.", example:"La <b>competición</b> de atletismo reúne a los mejores deportistas de toda la región.", completion:"La ______ de atletismo reúne a los mejores deportistas de toda la región.", answer:"competición", accept:["competicion"]},
-    {id:"entrenamiento", term:"entrenamiento", meaning:"Práctica sistemática y regular de ejercicios para mejorar el rendimiento deportivo.", synonym:"Espa&#241;ol para: Práctica sistemática y regular de ejercicios para mejorar el rendimiento deportivo.", example:"El equipo realiza dos sesiones de <b>entrenamiento</b> al día durante la semana.", completion:"El equipo realiza dos sesiones de ______ al día durante la semana.", answer:"entrenamiento"},
-    {id:"equipo", term:"equipo", meaning:"Conjunto de personas que compiten juntas bajo un mismo nombre en un deporte.", synonym:"Espa&#241;ol para: Conjunto de personas que compiten juntas bajo un mismo nombre en un deporte.", example:"Nuestro <b>equipo</b> ganó el partido gracias a un gol en el último minuto.", completion:"Nuestro ______ ganó el partido gracias a un gol en el último minuto.", answer:"equipo"},
-    {id:"arbitro", term:"árbitro", meaning:"Persona encargada de hacer cumplir las reglas durante un partido o competición deportiva.", synonym:"Espa&#241;ol para: Persona encargada de hacer cumplir las reglas durante un partido o competición deportiva.", example:"El <b>árbitro</b> señaló un penalti que cambió el resultado del partido.", completion:"El ______ señaló un penalti que cambió el resultado del partido.", answer:"árbitro", accept:["arbitro"]},
-    {id:"estadio", term:"estadio", meaning:"Instalación deportiva de grandes dimensiones con graderías para el público.", synonym:"Espa&#241;ol para: Instalación deportiva de grandes dimensiones con graderías para el público.", example:"El <b>estadio</b> estaba lleno de aficionados que animaban a su equipo.", completion:"El ______ estaba lleno de aficionados que animaban a su equipo.", answer:"estadio"},
-    {id:"marcador", term:"marcador", meaning:"Resultado numérico que muestra los puntos o goles obtenidos por cada equipo durante un partido.", synonym:"Espa&#241;ol para: Resultado numérico que muestra los puntos o goles obtenidos por cada equipo durante un partido.", example:"El <b>marcador</b> al final del partido fue de tres a uno a favor del equipo visitante.", completion:"El ______ al final del partido fue de tres a uno a favor del equipo visitante.", answer:"marcador"},
-    {id:"lesion", term:"lesión", meaning:"Daño físico sufrido por un deportista que le impide practicar su deporte con normalidad.", synonym:"Espa&#241;ol para: Daño físico sufrido por un deportista que le impide practicar su deporte con normalidad.", example:"El delantero sufrió una <b>lesión</b> de rodilla y tendrá que descansar varias semanas.", completion:"El delantero sufrió una ______ de rodilla y tendrá que descansar varias semanas.", answer:"lesión", accept:["lesion"]}
+    {id:"campeon", term:"campeón", meaning:"Persona o equipo que gana una competición o torneo deportivo.", synonym:"Espa&#241;ol para: Persona o equipo que gana una competición o torneo deportivo.", example:"El equipo local se proclamó <b>campeón</b> de la liga nacional por tercer año consecutivo.", completion:"El equipo local se proclamó _____ de la liga nacional por tercer año consecutivo.", answer:"campeón", accept:["campeon"]},
+    {id:"competicion", term:"competición", meaning:"Enfrentamiento deportivo entre personas o equipos para determinar quién es el mejor.", synonym:"Espa&#241;ol para: Enfrentamiento deportivo entre personas o equipos para determinar quién es el mejor.", example:"La <b>competición</b> de atletismo reúne a los mejores deportistas de toda la región.", completion:"La _____ de atletismo reúne a los mejores deportistas de toda la región.", answer:"competición", accept:["competicion"]},
+    {id:"entrenamiento", term:"entrenamiento", meaning:"Práctica sistemática y regular de ejercicios para mejorar el rendimiento deportivo.", synonym:"Espa&#241;ol para: Práctica sistemática y regular de ejercicios para mejorar el rendimiento deportivo.", example:"El equipo realiza dos sesiones de <b>entrenamiento</b> al día durante la semana.", completion:"El equipo realiza dos sesiones de _____ al día durante la semana.", answer:"entrenamiento"},
+    {id:"equipo", term:"equipo", meaning:"Conjunto de personas que compiten juntas bajo un mismo nombre en un deporte.", synonym:"Espa&#241;ol para: Conjunto de personas que compiten juntas bajo un mismo nombre en un deporte.", example:"Nuestro <b>equipo</b> ganó el partido gracias a un gol en el último minuto.", completion:"Nuestro _____ ganó el partido gracias a un gol en el último minuto.", answer:"equipo"},
+    {id:"arbitro", term:"árbitro", meaning:"Persona encargada de hacer cumplir las reglas durante un partido o competición deportiva.", synonym:"Espa&#241;ol para: Persona encargada de hacer cumplir las reglas durante un partido o competición deportiva.", example:"El <b>árbitro</b> señaló un penalti que cambió el resultado del partido.", completion:"El _____ señaló un penalti que cambió el resultado del partido.", answer:"árbitro", accept:["arbitro"]},
+    {id:"estadio", term:"estadio", meaning:"Instalación deportiva de grandes dimensiones con graderías para el público.", synonym:"Espa&#241;ol para: Instalación deportiva de grandes dimensiones con graderías para el público.", example:"El <b>estadio</b> estaba lleno de aficionados que animaban a su equipo.", completion:"El _____ estaba lleno de aficionados que animaban a su equipo.", answer:"estadio"},
+    {id:"marcador", term:"marcador", meaning:"Resultado numérico que muestra los puntos o goles obtenidos por cada equipo durante un partido.", synonym:"Espa&#241;ol para: Resultado numérico que muestra los puntos o goles obtenidos por cada equipo durante un partido.", example:"El <b>marcador</b> al final del partido fue de tres a uno a favor del equipo visitante.", completion:"El _____ al final del partido fue de tres a uno a favor del equipo visitante.", answer:"marcador"},
+    {id:"lesion", term:"lesión", meaning:"Daño físico sufrido por un deportista que le impide practicar su deporte con normalidad.", synonym:"Espa&#241;ol para: Daño físico sufrido por un deportista que le impide practicar su deporte con normalidad.", example:"El delantero sufrió una <b>lesión</b> de rodilla y tendrá que descansar varias semanas.", completion:"El delantero sufrió una _____ de rodilla y tendrá que descansar varias semanas.", answer:"lesión", accept:["lesion"]}
   ]
 };
 </script>

@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V02</div>
 <h1>Trabajo y Carrera</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "trabajo-carrera",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_b1_trabajo-carrera",
   section: 'vocabulary',
   items: [
-    {id:"entrevista", term:"entrevista", meaning:"Conversación formal entre un candidato y un empleador para evaluar si el candidato es adecuado para un puesto.", synonym:"Espa&#241;ol para: Conversación formal entre un candidato y un empleador para evaluar si el candidato es adecuado para un puesto.", example:"Mañana tengo una <b>entrevista</b> de trabajo en una empresa multinacional.", completion:"Mañana tengo una ______ de trabajo en una empresa multinacional.", answer:"entrevista"},
-    {id:"curriculo", term:"currículo", meaning:"Documento que resume la formación académica, la experiencia laboral y las habilidades de una persona.", synonym:"Espa&#241;ol para: Documento que resume la formación académica, la experiencia laboral y las habilidades de una persona.", example:"Actualicé mi <b>currículo</b> antes de enviar las solicitudes de empleo.", completion:"Actualicé mi ______ antes de enviar las solicitudes de empleo.", answer:"currículo", accept:["curriculo"]},
-    {id:"ascenso", term:"ascenso", meaning:"Avance a un puesto de mayor rango o responsabilidad dentro de una empresa.", synonym:"Espa&#241;ol para: Avance a un puesto de mayor rango o responsabilidad dentro de una empresa.", example:"Después de tres años de trabajo excelente, le ofrecieron un <b>ascenso</b>.", completion:"Después de tres años de trabajo excelente, le ofrecieron un ______.", answer:"ascenso"},
-    {id:"colega", term:"colega", meaning:"Persona con quien se trabaja en el mismo lugar o en la misma profesión.", synonym:"Espa&#241;ol para: Persona con quien se trabaja en el mismo lugar o en la misma profesión.", example:"Mi <b>colega</b> me ayudó a terminar el informe antes de la reunión.", completion:"Mi ______ me ayudó a terminar el informe antes de la reunión.", answer:"colega"},
-    {id:"salario", term:"salario", meaning:"Cantidad de dinero que recibe un trabajador a cambio de sus servicios de forma periódica.", synonym:"Espa&#241;ol para: Cantidad de dinero que recibe un trabajador a cambio de sus servicios de forma periódica.", example:"Negocié un <b>salario</b> más alto durante la entrevista con el director.", completion:"Negocié un ______ más alto durante la entrevista con el director.", answer:"salario"},
-    {id:"plazo", term:"plazo", meaning:"Período de tiempo máximo establecido para completar una tarea o entregar un trabajo.", synonym:"Espa&#241;ol para: Período de tiempo máximo establecido para completar una tarea o entregar un trabajo.", example:"El <b>plazo</b> para entregar el proyecto es el próximo viernes por la tarde.", completion:"El ______ para entregar el proyecto es el próximo viernes por la tarde.", answer:"plazo"},
-    {id:"responsabilidad", term:"responsabilidad", meaning:"Obligación de cumplir con las tareas y deberes propios del cargo que se ocupa.", synonym:"Espa&#241;ol para: Obligación de cumplir con las tareas y deberes propios del cargo que se ocupa.", example:"Una de sus principales <b>responsabilidades</b> es supervisar al equipo de ventas.", completion:"Una de sus principales ______ es supervisar al equipo de ventas.", answer:"responsabilidad"},
-    {id:"reunion", term:"reunión", meaning:"Encuentro entre varias personas para tratar asuntos de trabajo o tomar decisiones en común.", synonym:"Espa&#241;ol para: Encuentro entre varias personas para tratar asuntos de trabajo o tomar decisiones en común.", example:"La <b>reunión</b> del departamento empieza a las nueve de la mañana.", completion:"La ______ del departamento empieza a las nueve de la mañana.", answer:"reunión", accept:["reunion"]}
+    {id:"entrevista", term:"entrevista", meaning:"Conversación formal entre un candidato y un empleador para evaluar si el candidato es adecuado para un puesto.", synonym:"Espa&#241;ol para: Conversación formal entre un candidato y un empleador para evaluar si el candidato es adecuado para un puesto.", example:"Mañana tengo una <b>entrevista</b> de trabajo en una empresa multinacional.", completion:"Mañana tengo una _____ de trabajo en una empresa multinacional.", answer:"entrevista"},
+    {id:"curriculo", term:"currículo", meaning:"Documento que resume la formación académica, la experiencia laboral y las habilidades de una persona.", synonym:"Espa&#241;ol para: Documento que resume la formación académica, la experiencia laboral y las habilidades de una persona.", example:"Actualicé mi <b>currículo</b> antes de enviar las solicitudes de empleo.", completion:"Actualicé mi _____ antes de enviar las solicitudes de empleo.", answer:"currículo", accept:["curriculo"]},
+    {id:"ascenso", term:"ascenso", meaning:"Avance a un puesto de mayor rango o responsabilidad dentro de una empresa.", synonym:"Espa&#241;ol para: Avance a un puesto de mayor rango o responsabilidad dentro de una empresa.", example:"Después de tres años de trabajo excelente, le ofrecieron un <b>ascenso</b>.", completion:"Después de tres años de trabajo excelente, le ofrecieron un _____.", answer:"ascenso"},
+    {id:"colega", term:"colega", meaning:"Persona con quien se trabaja en el mismo lugar o en la misma profesión.", synonym:"Espa&#241;ol para: Persona con quien se trabaja en el mismo lugar o en la misma profesión.", example:"Mi <b>colega</b> me ayudó a terminar el informe antes de la reunión.", completion:"Mi _____ me ayudó a terminar el informe antes de la reunión.", answer:"colega"},
+    {id:"salario", term:"salario", meaning:"Cantidad de dinero que recibe un trabajador a cambio de sus servicios de forma periódica.", synonym:"Espa&#241;ol para: Cantidad de dinero que recibe un trabajador a cambio de sus servicios de forma periódica.", example:"Negocié un <b>salario</b> más alto durante la entrevista con el director.", completion:"Negocié un _____ más alto durante la entrevista con el director.", answer:"salario"},
+    {id:"plazo", term:"plazo", meaning:"Período de tiempo máximo establecido para completar una tarea o entregar un trabajo.", synonym:"Espa&#241;ol para: Período de tiempo máximo establecido para completar una tarea o entregar un trabajo.", example:"El <b>plazo</b> para entregar el proyecto es el próximo viernes por la tarde.", completion:"El _____ para entregar el proyecto es el próximo viernes por la tarde.", answer:"plazo"},
+    {id:"responsabilidad", term:"responsabilidad", meaning:"Obligación de cumplir con las tareas y deberes propios del cargo que se ocupa.", synonym:"Espa&#241;ol para: Obligación de cumplir con las tareas y deberes propios del cargo que se ocupa.", example:"Una de sus principales <b>responsabilidades</b> es supervisar al equipo de ventas.", completion:"Una de sus principales _____ es supervisar al equipo de ventas.", answer:"responsabilidad"},
+    {id:"reunion", term:"reunión", meaning:"Encuentro entre varias personas para tratar asuntos de trabajo o tomar decisiones en común.", synonym:"Espa&#241;ol para: Encuentro entre varias personas para tratar asuntos de trabajo o tomar decisiones en común.", example:"La <b>reunión</b> del departamento empieza a las nueve de la mañana.", completion:"La _____ del departamento empieza a las nueve de la mañana.", answer:"reunión", accept:["reunion"]}
   ]
 };
 </script>

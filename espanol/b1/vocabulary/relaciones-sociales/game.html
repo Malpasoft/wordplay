@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V10</div>
 <h1>Relaciones Sociales</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "relaciones-sociales",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_b1_relaciones-sociales",
   section: 'vocabulary',
   items: [
-    {id:"amistad", term:"amistad", meaning:"Relación afectiva de confianza y afecto mutuo entre dos o más personas.", synonym:"Espa&#241;ol para: Relación afectiva de confianza y afecto mutuo entre dos o más personas.", example:"La <b>amistad</b> verdadera se demuestra en los momentos difíciles de la vida.", completion:"La ______ verdadera se demuestra en los momentos difíciles de la vida.", answer:"amistad"},
-    {id:"relacion", term:"relación", meaning:"Vínculo o conexión que existe entre dos o más personas en distintos ámbitos de la vida.", synonym:"Espa&#241;ol para: Vínculo o conexión que existe entre dos o más personas en distintos ámbitos de la vida.", example:"Mantiene una buena <b>relación</b> con todos sus compañeros de trabajo.", completion:"Mantiene una buena ______ con todos sus compañeros de trabajo.", answer:"relación", accept:["relacion"]},
-    {id:"confianza", term:"confianza", meaning:"Seguridad y fe que se tiene en la honestidad o capacidad de otra persona.", synonym:"Espa&#241;ol para: Seguridad y fe que se tiene en la honestidad o capacidad de otra persona.", example:"La <b>confianza</b> es la base de cualquier relación sana y duradera.", completion:"La ______ es la base de cualquier relación sana y duradera.", answer:"confianza"},
-    {id:"conflicto", term:"conflicto", meaning:"Situación de enfrentamiento o desacuerdo entre dos o más personas o grupos.", synonym:"Espa&#241;ol para: Situación de enfrentamiento o desacuerdo entre dos o más personas o grupos.", example:"Resolvieron el <b>conflicto</b> mediante el diálogo y el respeto mutuo.", completion:"Resolvieron el ______ mediante el diálogo y el respeto mutuo.", answer:"conflicto"},
-    {id:"compromiso", term:"compromiso", meaning:"Acuerdo o solución a la que llegan dos o más partes cediendo cada una en algo.", synonym:"Espa&#241;ol para: Acuerdo o solución a la que llegan dos o más partes cediendo cada una en algo.", example:"Llegaron a un <b>compromiso</b> que satisfizo a todos los miembros del grupo.", completion:"Llegaron a un ______ que satisfizo a todos los miembros del grupo.", answer:"compromiso"},
-    {id:"discusion", term:"discusión", meaning:"Intercambio de opiniones o argumentos contrarios entre dos o más personas sobre algo.", synonym:"Espa&#241;ol para: Intercambio de opiniones o argumentos contrarios entre dos o más personas sobre algo.", example:"Tuvieron una <b>discusión</b> seria pero lograron aclarar sus diferencias al final.", completion:"Tuvieron una ______ seria pero lograron aclarar sus diferencias al final.", answer:"discusión", accept:["discusion"]},
-    {id:"apoyo", term:"apoyo", meaning:"Ayuda, respaldo o aliento que se ofrece a alguien en situaciones difíciles.", synonym:"Espa&#241;ol para: Ayuda, respaldo o aliento que se ofrece a alguien en situaciones difíciles.", example:"El <b>apoyo</b> de su familia fue fundamental durante los momentos más difíciles.", completion:"El ______ de su familia fue fundamental durante los momentos más difíciles.", answer:"apoyo"},
-    {id:"lealtad", term:"lealtad", meaning:"Fidelidad y compromiso constante hacia una persona, grupo o causa.", synonym:"Espa&#241;ol para: Fidelidad y compromiso constante hacia una persona, grupo o causa.", example:"Demostró su <b>lealtad</b> al amigo cuando más lo necesitaba.", completion:"Demostró su ______ al amigo cuando más lo necesitaba.", answer:"lealtad"}
+    {id:"amistad", term:"amistad", meaning:"Relación afectiva de confianza y afecto mutuo entre dos o más personas.", synonym:"Espa&#241;ol para: Relación afectiva de confianza y afecto mutuo entre dos o más personas.", example:"La <b>amistad</b> verdadera se demuestra en los momentos difíciles de la vida.", completion:"La _____ verdadera se demuestra en los momentos difíciles de la vida.", answer:"amistad"},
+    {id:"relacion", term:"relación", meaning:"Vínculo o conexión que existe entre dos o más personas en distintos ámbitos de la vida.", synonym:"Espa&#241;ol para: Vínculo o conexión que existe entre dos o más personas en distintos ámbitos de la vida.", example:"Mantiene una buena <b>relación</b> con todos sus compañeros de trabajo.", completion:"Mantiene una buena _____ con todos sus compañeros de trabajo.", answer:"relación", accept:["relacion"]},
+    {id:"confianza", term:"confianza", meaning:"Seguridad y fe que se tiene en la honestidad o capacidad de otra persona.", synonym:"Espa&#241;ol para: Seguridad y fe que se tiene en la honestidad o capacidad de otra persona.", example:"La <b>confianza</b> es la base de cualquier relación sana y duradera.", completion:"La _____ es la base de cualquier relación sana y duradera.", answer:"confianza"},
+    {id:"conflicto", term:"conflicto", meaning:"Situación de enfrentamiento o desacuerdo entre dos o más personas o grupos.", synonym:"Espa&#241;ol para: Situación de enfrentamiento o desacuerdo entre dos o más personas o grupos.", example:"Resolvieron el <b>conflicto</b> mediante el diálogo y el respeto mutuo.", completion:"Resolvieron el _____ mediante el diálogo y el respeto mutuo.", answer:"conflicto"},
+    {id:"compromiso", term:"compromiso", meaning:"Acuerdo o solución a la que llegan dos o más partes cediendo cada una en algo.", synonym:"Espa&#241;ol para: Acuerdo o solución a la que llegan dos o más partes cediendo cada una en algo.", example:"Llegaron a un <b>compromiso</b> que satisfizo a todos los miembros del grupo.", completion:"Llegaron a un _____ que satisfizo a todos los miembros del grupo.", answer:"compromiso"},
+    {id:"discusion", term:"discusión", meaning:"Intercambio de opiniones o argumentos contrarios entre dos o más personas sobre algo.", synonym:"Espa&#241;ol para: Intercambio de opiniones o argumentos contrarios entre dos o más personas sobre algo.", example:"Tuvieron una <b>discusión</b> seria pero lograron aclarar sus diferencias al final.", completion:"Tuvieron una _____ seria pero lograron aclarar sus diferencias al final.", answer:"discusión", accept:["discusion"]},
+    {id:"apoyo", term:"apoyo", meaning:"Ayuda, respaldo o aliento que se ofrece a alguien en situaciones difíciles.", synonym:"Espa&#241;ol para: Ayuda, respaldo o aliento que se ofrece a alguien en situaciones difíciles.", example:"El <b>apoyo</b> de su familia fue fundamental durante los momentos más difíciles.", completion:"El _____ de su familia fue fundamental durante los momentos más difíciles.", answer:"apoyo"},
+    {id:"lealtad", term:"lealtad", meaning:"Fidelidad y compromiso constante hacia una persona, grupo o causa.", synonym:"Espa&#241;ol para: Fidelidad y compromiso constante hacia una persona, grupo o causa.", example:"Demostró su <b>lealtad</b> al amigo cuando más lo necesitaba.", completion:"Demostró su _____ al amigo cuando más lo necesitaba.", answer:"lealtad"}
   ]
 };
 </script>

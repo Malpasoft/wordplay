@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V12</div>
 <h1>Lenguaje y Lingüística</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "lenguaje-linguistica",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_b2_lenguaje-linguistica",
   section: 'vocabulary',
   items: [
-    {id:"fonema", term:"fonema", meaning:"unidad mínima del sistema sonoro de una lengua que distingue significados", synonym:"Espa&#241;ol para: unidad mínima del sistema sonoro de una lengua que distingue significados", example:"El <b>fonema</b> /p/ distingue «paso» de «baso».", completion:"El ______ /p/ distingue «paso» de «baso».", answer:"fonema"},
-    {id:"morfema", term:"morfema", meaning:"unidad mínima de una lengua que tiene significado gramatical o léxico", synonym:"Espa&#241;ol para: unidad mínima de una lengua que tiene significado gramatical o léxico", example:"El sufijo <em>-ción</em> es un <b>morfema</b> que forma sustantivos.", completion:"El sufijo <em>-ción</em> es un ______ que forma sustantivos.", answer:"morfema"},
-    {id:"sintaxis", term:"sintaxis", meaning:"parte de la gramática que estudia cómo se combinan las palabras para formar oraciones", synonym:"Espa&#241;ol para: parte de la gramática que estudia cómo se combinan las palabras para formar oraciones", example:"La <b>sintaxis</b> del español permite un orden de palabras flexible.", completion:"La ______ del español permite un orden de palabras flexible.", answer:"sintaxis"},
-    {id:"pragmatica", term:"pragmática", meaning:"rama de la lingüística que estudia el uso del lenguaje en contexto", synonym:"Espa&#241;ol para: rama de la lingüística que estudia el uso del lenguaje en contexto", example:"La <b>pragmática</b> explica por qué un mismo enunciado puede tener significados distintos.", completion:"La ______ explica por qué un mismo enunciado puede tener significados distintos.", answer:"pragmática", accept:["pragmatica"]},
-    {id:"semantica", term:"semántica", meaning:"rama de la lingüística que estudia el significado de las palabras", synonym:"Espa&#241;ol para: rama de la lingüística que estudia el significado de las palabras", example:"La <b>semántica</b> analiza las relaciones entre las palabras y los conceptos.", completion:"La ______ analiza las relaciones entre las palabras y los conceptos.", answer:"semántica", accept:["semantica"]},
-    {id:"bilinguismo", term:"bilingüismo", meaning:"capacidad de hablar con fluidez dos lenguas", synonym:"Espa&#241;ol para: capacidad de hablar con fluidez dos lenguas", example:"El <b>bilingüismo</b> desde la infancia favorece el desarrollo cognitivo.", completion:"El ______ desde la infancia favorece el desarrollo cognitivo.", answer:"bilingüismo", accept:["bilinguismo"]},
-    {id:"registro", term:"registro", meaning:"variedad de lengua usada según la situación comunicativa", synonym:"Espa&#241;ol para: variedad de lengua usada según la situación comunicativa", example:"Usa un <b>registro</b> formal en la entrevista de trabajo.", completion:"Usa un ______ formal en la entrevista de trabajo.", answer:"registro"},
-    {id:"dialecto", term:"dialecto", meaning:"variedad regional de una lengua con rasgos propios de fonología, vocabulario y gramática", synonym:"Espa&#241;ol para: variedad regional de una lengua con rasgos propios de fonología, vocabulario y gramática", example:"El <b>dialecto</b> andaluz tiene características fonéticas muy particulares.", completion:"El ______ andaluz tiene características fonéticas muy particulares.", answer:"dialecto"}
+    {id:"fonema", term:"fonema", meaning:"unidad mínima del sistema sonoro de una lengua que distingue significados", synonym:"Espa&#241;ol para: unidad mínima del sistema sonoro de una lengua que distingue significados", example:"El <b>fonema</b> /p/ distingue «paso» de «baso».", completion:"El _____ /p/ distingue «paso» de «baso».", answer:"fonema"},
+    {id:"morfema", term:"morfema", meaning:"unidad mínima de una lengua que tiene significado gramatical o léxico", synonym:"Espa&#241;ol para: unidad mínima de una lengua que tiene significado gramatical o léxico", example:"El sufijo <em>-ción</em> es un <b>morfema</b> que forma sustantivos.", completion:"El sufijo <em>-ción</em> es un _____ que forma sustantivos.", answer:"morfema"},
+    {id:"sintaxis", term:"sintaxis", meaning:"parte de la gramática que estudia cómo se combinan las palabras para formar oraciones", synonym:"Espa&#241;ol para: parte de la gramática que estudia cómo se combinan las palabras para formar oraciones", example:"La <b>sintaxis</b> del español permite un orden de palabras flexible.", completion:"La _____ del español permite un orden de palabras flexible.", answer:"sintaxis"},
+    {id:"pragmatica", term:"pragmática", meaning:"rama de la lingüística que estudia el uso del lenguaje en contexto", synonym:"Espa&#241;ol para: rama de la lingüística que estudia el uso del lenguaje en contexto", example:"La <b>pragmática</b> explica por qué un mismo enunciado puede tener significados distintos.", completion:"La _____ explica por qué un mismo enunciado puede tener significados distintos.", answer:"pragmática", accept:["pragmatica"]},
+    {id:"semantica", term:"semántica", meaning:"rama de la lingüística que estudia el significado de las palabras", synonym:"Espa&#241;ol para: rama de la lingüística que estudia el significado de las palabras", example:"La <b>semántica</b> analiza las relaciones entre las palabras y los conceptos.", completion:"La _____ analiza las relaciones entre las palabras y los conceptos.", answer:"semántica", accept:["semantica"]},
+    {id:"bilinguismo", term:"bilingüismo", meaning:"capacidad de hablar con fluidez dos lenguas", synonym:"Espa&#241;ol para: capacidad de hablar con fluidez dos lenguas", example:"El <b>bilingüismo</b> desde la infancia favorece el desarrollo cognitivo.", completion:"El _____ desde la infancia favorece el desarrollo cognitivo.", answer:"bilingüismo", accept:["bilinguismo"]},
+    {id:"registro", term:"registro", meaning:"variedad de lengua usada según la situación comunicativa", synonym:"Espa&#241;ol para: variedad de lengua usada según la situación comunicativa", example:"Usa un <b>registro</b> formal en la entrevista de trabajo.", completion:"Usa un _____ formal en la entrevista de trabajo.", answer:"registro"},
+    {id:"dialecto", term:"dialecto", meaning:"variedad regional de una lengua con rasgos propios de fonología, vocabulario y gramática", synonym:"Espa&#241;ol para: variedad regional de una lengua con rasgos propios de fonología, vocabulario y gramática", example:"El <b>dialecto</b> andaluz tiene características fonéticas muy particulares.", completion:"El _____ andaluz tiene características fonéticas muy particulares.", answer:"dialecto"}
   ]
 };
 </script>

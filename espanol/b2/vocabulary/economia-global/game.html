@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V01</div>
 <h1>Economía Global</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "economia-global",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_b2_economia-global",
   section: 'vocabulary',
   items: [
-    {id:"globalizacion", term:"globalización", meaning:"proceso de integración económica, cultural y política entre países del mundo", synonym:"Espa&#241;ol para: proceso de integración económica, cultural y política entre países del mundo", example:"La <b>globalización</b> ha cambiado el modelo económico mundial.", completion:"La ______ ha cambiado el modelo económico mundial.", answer:"globalización", accept:["globalizacion"]},
-    {id:"mercado", term:"mercado", meaning:"entorno en el que se intercambian bienes y servicios entre compradores y vendedores", synonym:"Espa&#241;ol para: entorno en el que se intercambian bienes y servicios entre compradores y vendedores", example:"El <b>mercado</b> laboral exige cada vez más formación.", completion:"El ______ laboral exige cada vez más formación.", answer:"mercado"},
-    {id:"exportacion", term:"exportación", meaning:"venta de bienes o servicios producidos en un país a otro país", synonym:"Espa&#241;ol para: venta de bienes o servicios producidos en un país a otro país", example:"Las <b>exportaciones</b> de vino español han crecido este año.", completion:"Las ______ de vino español han crecido este año.", answer:"exportación", accept:["exportacion"]},
-    {id:"importacion", term:"importación", meaning:"compra de bienes o servicios de otro país", synonym:"Espa&#241;ol para: compra de bienes o servicios de otro país", example:"La <b>importación</b> de petróleo encarece los precios.", completion:"La ______ de petróleo encarece los precios.", answer:"importación", accept:["importacion"]},
-    {id:"deficit", term:"déficit", meaning:"situación en la que los gastos superan a los ingresos", synonym:"Espa&#241;ol para: situación en la que los gastos superan a los ingresos", example:"El <b>déficit</b> presupuestario obliga a recortar gastos.", completion:"El ______ presupuestario obliga a recortar gastos.", answer:"déficit", accept:["deficit"]},
-    {id:"inversion", term:"inversión", meaning:"acción de destinar dinero a un negocio o activo esperando beneficio", synonym:"Espa&#241;ol para: acción de destinar dinero a un negocio o activo esperando beneficio", example:"La <b>inversión</b> en tecnología es clave para el futuro.", completion:"La ______ en tecnología es clave para el futuro.", answer:"inversión", accept:["inversion"]},
-    {id:"inflacion", term:"inflación", meaning:"aumento generalizado y sostenido de los precios", synonym:"Espa&#241;ol para: aumento generalizado y sostenido de los precios", example:"La alta <b>inflación</b> reduce el poder adquisitivo.", completion:"La alta ______ reduce el poder adquisitivo.", answer:"inflación", accept:["inflacion"]},
-    {id:"recesion", term:"recesión", meaning:"período de disminución de la actividad económica", synonym:"Espa&#241;ol para: período de disminución de la actividad económica", example:"La pandemia provocó una grave <b>recesión</b> mundial.", completion:"La pandemia provocó una grave ______ mundial.", answer:"recesión", accept:["recesion"]}
+    {id:"globalizacion", term:"globalización", meaning:"proceso de integración económica, cultural y política entre países del mundo", synonym:"Espa&#241;ol para: proceso de integración económica, cultural y política entre países del mundo", example:"La <b>globalización</b> ha cambiado el modelo económico mundial.", completion:"La _____ ha cambiado el modelo económico mundial.", answer:"globalización", accept:["globalizacion"]},
+    {id:"mercado", term:"mercado", meaning:"entorno en el que se intercambian bienes y servicios entre compradores y vendedores", synonym:"Espa&#241;ol para: entorno en el que se intercambian bienes y servicios entre compradores y vendedores", example:"El <b>mercado</b> laboral exige cada vez más formación.", completion:"El _____ laboral exige cada vez más formación.", answer:"mercado"},
+    {id:"exportacion", term:"exportación", meaning:"venta de bienes o servicios producidos en un país a otro país", synonym:"Espa&#241;ol para: venta de bienes o servicios producidos en un país a otro país", example:"Las <b>exportaciones</b> de vino español han crecido este año.", completion:"Las _____ de vino español han crecido este año.", answer:"exportación", accept:["exportacion"]},
+    {id:"importacion", term:"importación", meaning:"compra de bienes o servicios de otro país", synonym:"Espa&#241;ol para: compra de bienes o servicios de otro país", example:"La <b>importación</b> de petróleo encarece los precios.", completion:"La _____ de petróleo encarece los precios.", answer:"importación", accept:["importacion"]},
+    {id:"deficit", term:"déficit", meaning:"situación en la que los gastos superan a los ingresos", synonym:"Espa&#241;ol para: situación en la que los gastos superan a los ingresos", example:"El <b>déficit</b> presupuestario obliga a recortar gastos.", completion:"El _____ presupuestario obliga a recortar gastos.", answer:"déficit", accept:["deficit"]},
+    {id:"inversion", term:"inversión", meaning:"acción de destinar dinero a un negocio o activo esperando beneficio", synonym:"Espa&#241;ol para: acción de destinar dinero a un negocio o activo esperando beneficio", example:"La <b>inversión</b> en tecnología es clave para el futuro.", completion:"La _____ en tecnología es clave para el futuro.", answer:"inversión", accept:["inversion"]},
+    {id:"inflacion", term:"inflación", meaning:"aumento generalizado y sostenido de los precios", synonym:"Espa&#241;ol para: aumento generalizado y sostenido de los precios", example:"La alta <b>inflación</b> reduce el poder adquisitivo.", completion:"La alta _____ reduce el poder adquisitivo.", answer:"inflación", accept:["inflacion"]},
+    {id:"recesion", term:"recesión", meaning:"período de disminución de la actividad económica", synonym:"Espa&#241;ol para: período de disminución de la actividad económica", example:"La pandemia provocó una grave <b>recesión</b> mundial.", completion:"La pandemia provocó una grave _____ mundial.", answer:"recesión", accept:["recesion"]}
   ]
 };
 </script>

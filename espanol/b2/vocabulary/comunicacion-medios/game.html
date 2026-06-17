@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V04</div>
 <h1>Comunicación y Medios</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "comunicacion-medios",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_b2_comunicacion-medios",
   section: 'vocabulary',
   items: [
-    {id:"periodismo", term:"periodismo", meaning:"actividad profesional de buscar, verificar y difundir noticias", synonym:"Espa&#241;ol para: actividad profesional de buscar, verificar y difundir noticias", example:"El <b>periodismo</b> de investigación es esencial para la democracia.", completion:"El ______ de investigación es esencial para la democracia.", answer:"periodismo"},
-    {id:"desinformacion", term:"desinformación", meaning:"difusión deliberada de información falsa para engañar", synonym:"Espa&#241;ol para: difusión deliberada de información falsa para engañar", example:"La <b>desinformación</b> se extiende rápidamente por las redes sociales.", completion:"La ______ se extiende rápidamente por las redes sociales.", answer:"desinformación", accept:["desinformacion"]},
-    {id:"libertad-de-prensa", term:"libertad de prensa", meaning:"derecho a publicar información y opiniones sin censura", synonym:"Espa&#241;ol para: derecho a publicar información y opiniones sin censura", example:"La <b>libertad de prensa</b> es un pilar de la democracia.", completion:"La ______ es un pilar de la democracia.", answer:"libertad de prensa"},
-    {id:"algoritmo", term:"algoritmo", meaning:"sistema automatizado que selecciona el contenido que el usuario ve", synonym:"Espa&#241;ol para: sistema automatizado que selecciona el contenido que el usuario ve", example:"El <b>algoritmo</b> determina qué noticias aparecen primero.", completion:"El ______ determina qué noticias aparecen primero.", answer:"algoritmo"},
-    {id:"sesgo", term:"sesgo", meaning:"tendencia o inclinación que distorsiona la objetividad", synonym:"Espa&#241;ol para: tendencia o inclinación que distorsiona la objetividad", example:"El artículo muestra un claro <b>sesgo</b> político.", completion:"El artículo muestra un claro ______ político.", answer:"sesgo"},
-    {id:"fuente", term:"fuente", meaning:"persona o documento del que se obtiene la información", synonym:"Espa&#241;ol para: persona o documento del que se obtiene la información", example:"El periodista no reveló la identidad de su <b>fuente</b>.", completion:"El periodista no reveló la identidad de su ______.", answer:"fuente"},
-    {id:"plataforma", term:"plataforma", meaning:"empresa o sistema digital que sirve de intermediario entre usuarios", synonym:"Espa&#241;ol para: empresa o sistema digital que sirve de intermediario entre usuarios", example:"Las grandes <b>plataformas</b> controlan la mayor parte del tráfico de información.", completion:"Las grandes ______ controlan la mayor parte del tráfico de información.", answer:"plataforma"},
-    {id:"viralidad", term:"viralidad", meaning:"capacidad de un contenido para difundirse masiva y rápidamente", synonym:"Espa&#241;ol para: capacidad de un contenido para difundirse masiva y rápidamente", example:"La <b>viralidad</b> de un vídeo puede generar millones de vistas en horas.", completion:"La ______ de un vídeo puede generar millones de vistas en horas.", answer:"viralidad"}
+    {id:"periodismo", term:"periodismo", meaning:"actividad profesional de buscar, verificar y difundir noticias", synonym:"Espa&#241;ol para: actividad profesional de buscar, verificar y difundir noticias", example:"El <b>periodismo</b> de investigación es esencial para la democracia.", completion:"El _____ de investigación es esencial para la democracia.", answer:"periodismo"},
+    {id:"desinformacion", term:"desinformación", meaning:"difusión deliberada de información falsa para engañar", synonym:"Espa&#241;ol para: difusión deliberada de información falsa para engañar", example:"La <b>desinformación</b> se extiende rápidamente por las redes sociales.", completion:"La _____ se extiende rápidamente por las redes sociales.", answer:"desinformación", accept:["desinformacion"]},
+    {id:"libertad-de-prensa", term:"libertad de prensa", meaning:"derecho a publicar información y opiniones sin censura", synonym:"Espa&#241;ol para: derecho a publicar información y opiniones sin censura", example:"La <b>libertad de prensa</b> es un pilar de la democracia.", completion:"La _____ es un pilar de la democracia.", answer:"libertad de prensa"},
+    {id:"algoritmo", term:"algoritmo", meaning:"sistema automatizado que selecciona el contenido que el usuario ve", synonym:"Espa&#241;ol para: sistema automatizado que selecciona el contenido que el usuario ve", example:"El <b>algoritmo</b> determina qué noticias aparecen primero.", completion:"El _____ determina qué noticias aparecen primero.", answer:"algoritmo"},
+    {id:"sesgo", term:"sesgo", meaning:"tendencia o inclinación que distorsiona la objetividad", synonym:"Espa&#241;ol para: tendencia o inclinación que distorsiona la objetividad", example:"El artículo muestra un claro <b>sesgo</b> político.", completion:"El artículo muestra un claro _____ político.", answer:"sesgo"},
+    {id:"fuente", term:"fuente", meaning:"persona o documento del que se obtiene la información", synonym:"Espa&#241;ol para: persona o documento del que se obtiene la información", example:"El periodista no reveló la identidad de su <b>fuente</b>.", completion:"El periodista no reveló la identidad de su _____.", answer:"fuente"},
+    {id:"plataforma", term:"plataforma", meaning:"empresa o sistema digital que sirve de intermediario entre usuarios", synonym:"Espa&#241;ol para: empresa o sistema digital que sirve de intermediario entre usuarios", example:"Las grandes <b>plataformas</b> controlan la mayor parte del tráfico de información.", completion:"Las grandes _____ controlan la mayor parte del tráfico de información.", answer:"plataforma"},
+    {id:"viralidad", term:"viralidad", meaning:"capacidad de un contenido para difundirse masiva y rápidamente", synonym:"Espa&#241;ol para: capacidad de un contenido para difundirse masiva y rápidamente", example:"La <b>viralidad</b> de un vídeo puede generar millones de vistas en horas.", completion:"La _____ de un vídeo puede generar millones de vistas en horas.", answer:"viralidad"}
   ]
 };
 </script>

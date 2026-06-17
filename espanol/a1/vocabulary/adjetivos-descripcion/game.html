@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V12</div>
 <h1>Adjetivos Básicos</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "adjetivos-descripcion",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_a1_adjetivos-descripcion",
   section: 'vocabulary',
   items: [
-    {id:"grande", term:"grande", meaning:"que tiene un tamaño mayor de lo normal", synonym:"Espa&#241;ol para: que tiene un tamaño mayor de lo normal", example:"Vivo en un piso muy <b>grande</b>.", completion:"Vivo en un piso muy ______.", answer:"grande"},
-    {id:"pequeno", term:"pequeño", meaning:"que tiene un tamaño menor de lo normal", synonym:"Espa&#241;ol para: que tiene un tamaño menor de lo normal", example:"Tengo un perro <b>pequeño</b> y adorable.", completion:"Tengo un perro ______ y adorable.", answer:"pequeño", accept:["pequeno"]},
-    {id:"alto", term:"alto", meaning:"que mide más de lo normal de pie a cabeza", synonym:"Espa&#241;ol para: que mide más de lo normal de pie a cabeza", example:"Mi hermano es muy <b>alto</b>, mide dos metros.", completion:"Mi hermano es muy ______, mide dos metros.", answer:"alto"},
-    {id:"bajo", term:"bajo", meaning:"que tiene poca estatura o altura", synonym:"Espa&#241;ol para: que tiene poca estatura o altura", example:"El niño es todavía <b>bajo</b> para su edad.", completion:"El niño es todavía ______ para su edad.", answer:"bajo"},
-    {id:"gordo", term:"gordo", meaning:"que tiene mucho peso o volumen en el cuerpo", synonym:"Espa&#241;ol para: que tiene mucho peso o volumen en el cuerpo", example:"El gato está muy <b>gordo</b> porque come mucho.", completion:"El gato está muy ______ porque come mucho.", answer:"gordo"},
-    {id:"delgado", term:"delgado", meaning:"que tiene poco peso o volumen en el cuerpo", synonym:"Espa&#241;ol para: que tiene poco peso o volumen en el cuerpo", example:"Está muy <b>delgada</b> porque hace mucho deporte.", completion:"Está muy ______ porque hace mucho deporte.", answer:"delgado"},
-    {id:"joven", term:"joven", meaning:"que tiene poca edad", synonym:"Espa&#241;ol para: que tiene poca edad", example:"Es muy <b>joven</b>, solo tiene veinte años.", completion:"Es muy ______, solo tiene veinte años.", answer:"joven"},
-    {id:"viejo", term:"viejo", meaning:"que tiene mucha edad", synonym:"Espa&#241;ol para: que tiene mucha edad", example:"El edificio es muy <b>viejo</b>, tiene cien años.", completion:"El edificio es muy ______, tiene cien años.", answer:"viejo"}
+    {id:"grande", term:"grande", meaning:"que tiene un tamaño mayor de lo normal", synonym:"Espa&#241;ol para: que tiene un tamaño mayor de lo normal", example:"Vivo en un piso muy <b>grande</b>.", completion:"Vivo en un piso muy _____.", answer:"grande"},
+    {id:"pequeno", term:"pequeño", meaning:"que tiene un tamaño menor de lo normal", synonym:"Espa&#241;ol para: que tiene un tamaño menor de lo normal", example:"Tengo un perro <b>pequeño</b> y adorable.", completion:"Tengo un perro _____ y adorable.", answer:"pequeño", accept:["pequeno"]},
+    {id:"alto", term:"alto", meaning:"que mide más de lo normal de pie a cabeza", synonym:"Espa&#241;ol para: que mide más de lo normal de pie a cabeza", example:"Mi hermano es muy <b>alto</b>, mide dos metros.", completion:"Mi hermano es muy _____, mide dos metros.", answer:"alto"},
+    {id:"bajo", term:"bajo", meaning:"que tiene poca estatura o altura", synonym:"Espa&#241;ol para: que tiene poca estatura o altura", example:"El niño es todavía <b>bajo</b> para su edad.", completion:"El niño es todavía _____ para su edad.", answer:"bajo"},
+    {id:"gordo", term:"gordo", meaning:"que tiene mucho peso o volumen en el cuerpo", synonym:"Espa&#241;ol para: que tiene mucho peso o volumen en el cuerpo", example:"El gato está muy <b>gordo</b> porque come mucho.", completion:"El gato está muy _____ porque come mucho.", answer:"gordo"},
+    {id:"delgado", term:"delgado", meaning:"que tiene poco peso o volumen en el cuerpo", synonym:"Espa&#241;ol para: que tiene poco peso o volumen en el cuerpo", example:"Está muy <b>delgada</b> porque hace mucho deporte.", completion:"Está muy _____ porque hace mucho deporte.", answer:"delgado"},
+    {id:"joven", term:"joven", meaning:"que tiene poca edad", synonym:"Espa&#241;ol para: que tiene poca edad", example:"Es muy <b>joven</b>, solo tiene veinte años.", completion:"Es muy _____, solo tiene veinte años.", answer:"joven"},
+    {id:"viejo", term:"viejo", meaning:"que tiene mucha edad", synonym:"Espa&#241;ol para: que tiene mucha edad", example:"El edificio es muy <b>viejo</b>, tiene cien años.", completion:"El edificio es muy _____, tiene cien años.", answer:"viejo"}
   ]
 };
 </script>

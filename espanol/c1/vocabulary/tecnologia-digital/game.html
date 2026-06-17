@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V10</div>
 <h1>Tecnología Digital</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "tecnologia-digital",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_c1_tecnologia-digital",
   section: 'vocabulary',
   items: [
-    {id:"inteligencia-artificial", term:"inteligencia artificial", meaning:"sistema informático capaz de realizar tareas que normalmente requieren inteligencia humana", synonym:"Espa&#241;ol para: sistema informático capaz de realizar tareas que normalmente requieren inteligencia humana", example:"La <b>inteligencia artificial</b> ya diagnostica enfermedades con mayor precisión que algunos médicos.", completion:"La ______ ya diagnostica enfermedades con mayor precisión que algunos médicos.", answer:"inteligencia artificial"},
-    {id:"aprendizaje-automatico", term:"aprendizaje automático", meaning:"técnica de IA en la que un sistema aprende de los datos sin ser programado explícitamente", synonym:"Espa&#241;ol para: técnica de IA en la que un sistema aprende de los datos sin ser programado explícitamente", example:"El <b>aprendizaje automático</b> permite que los algoritmos mejoren solos con el tiempo.", completion:"El ______ permite que los algoritmos mejoren solos con el tiempo.", answer:"aprendizaje automático", accept:["aprendizaje automatico"]},
-    {id:"algoritmo-de-recomendacion", term:"algoritmo de recomendación", meaning:"sistema que analiza el comportamiento del usuario para sugerirle contenido personalizado", synonym:"Espa&#241;ol para: sistema que analiza el comportamiento del usuario para sugerirle contenido personalizado", example:"El <b>algoritmo de recomendación</b> de las plataformas moldea lo que vemos.", completion:"El ______ de las plataformas moldea lo que vemos.", answer:"algoritmo de recomendación", accept:["algoritmo de recomendacion"]},
-    {id:"nube", term:"nube", meaning:"infraestructura de servidores remotos para almacenar y procesar datos a través de internet", synonym:"Espa&#241;ol para: infraestructura de servidores remotos para almacenar y procesar datos a través de internet", example:"Toda la documentación de la empresa está en la <b>nube</b>.", completion:"Toda la documentación de la empresa está en la ______.", answer:"nube"},
-    {id:"ciberseguridad", term:"ciberseguridad", meaning:"conjunto de medidas para proteger sistemas y datos frente a ataques informáticos", synonym:"Espa&#241;ol para: conjunto de medidas para proteger sistemas y datos frente a ataques informáticos", example:"La inversión en <b>ciberseguridad</b> es imprescindible para cualquier empresa digital.", completion:"La inversión en ______ es imprescindible para cualquier empresa digital.", answer:"ciberseguridad"},
-    {id:"mineria-de-datos", term:"minería de datos", meaning:"proceso de extraer patrones y conocimiento útil de grandes conjuntos de datos", synonym:"Espa&#241;ol para: proceso de extraer patrones y conocimiento útil de grandes conjuntos de datos", example:"La <b>minería de datos</b> permitió detectar el fraude antes de que se produjera el daño.", completion:"La ______ permitió detectar el fraude antes de que se produjera el daño.", answer:"minería de datos", accept:["mineria de datos"]},
-    {id:"internet-de-las-cosas", term:"internet de las cosas", meaning:"red de dispositivos físicos conectados a internet que intercambian datos entre sí", synonym:"Espa&#241;ol para: red de dispositivos físicos conectados a internet que intercambian datos entre sí", example:"El <b>internet de las cosas</b> convierte el hogar en un entorno inteligente.", completion:"El ______ convierte el hogar en un entorno inteligente.", answer:"internet de las cosas"},
-    {id:"criptografia", term:"criptografía", meaning:"técnica de codificar la información para que solo puedan leerla los destinatarios autorizados", synonym:"Espa&#241;ol para: técnica de codificar la información para que solo puedan leerla los destinatarios autorizados", example:"La <b>criptografía</b> de extremo a extremo protege los mensajes privados.", completion:"La ______ de extremo a extremo protege los mensajes privados.", answer:"criptografía", accept:["criptografia"]}
+    {id:"inteligencia-artificial", term:"inteligencia artificial", meaning:"sistema informático capaz de realizar tareas que normalmente requieren inteligencia humana", synonym:"Espa&#241;ol para: sistema informático capaz de realizar tareas que normalmente requieren inteligencia humana", example:"La <b>inteligencia artificial</b> ya diagnostica enfermedades con mayor precisión que algunos médicos.", completion:"La _____ ya diagnostica enfermedades con mayor precisión que algunos médicos.", answer:"inteligencia artificial"},
+    {id:"aprendizaje-automatico", term:"aprendizaje automático", meaning:"técnica de IA en la que un sistema aprende de los datos sin ser programado explícitamente", synonym:"Espa&#241;ol para: técnica de IA en la que un sistema aprende de los datos sin ser programado explícitamente", example:"El <b>aprendizaje automático</b> permite que los algoritmos mejoren solos con el tiempo.", completion:"El _____ permite que los algoritmos mejoren solos con el tiempo.", answer:"aprendizaje automático", accept:["aprendizaje automatico"]},
+    {id:"algoritmo-de-recomendacion", term:"algoritmo de recomendación", meaning:"sistema que analiza el comportamiento del usuario para sugerirle contenido personalizado", synonym:"Espa&#241;ol para: sistema que analiza el comportamiento del usuario para sugerirle contenido personalizado", example:"El <b>algoritmo de recomendación</b> de las plataformas moldea lo que vemos.", completion:"El _____ de las plataformas moldea lo que vemos.", answer:"algoritmo de recomendación", accept:["algoritmo de recomendacion"]},
+    {id:"nube", term:"nube", meaning:"infraestructura de servidores remotos para almacenar y procesar datos a través de internet", synonym:"Espa&#241;ol para: infraestructura de servidores remotos para almacenar y procesar datos a través de internet", example:"Toda la documentación de la empresa está en la <b>nube</b>.", completion:"Toda la documentación de la empresa está en la _____.", answer:"nube"},
+    {id:"ciberseguridad", term:"ciberseguridad", meaning:"conjunto de medidas para proteger sistemas y datos frente a ataques informáticos", synonym:"Espa&#241;ol para: conjunto de medidas para proteger sistemas y datos frente a ataques informáticos", example:"La inversión en <b>ciberseguridad</b> es imprescindible para cualquier empresa digital.", completion:"La inversión en _____ es imprescindible para cualquier empresa digital.", answer:"ciberseguridad"},
+    {id:"mineria-de-datos", term:"minería de datos", meaning:"proceso de extraer patrones y conocimiento útil de grandes conjuntos de datos", synonym:"Espa&#241;ol para: proceso de extraer patrones y conocimiento útil de grandes conjuntos de datos", example:"La <b>minería de datos</b> permitió detectar el fraude antes de que se produjera el daño.", completion:"La _____ permitió detectar el fraude antes de que se produjera el daño.", answer:"minería de datos", accept:["mineria de datos"]},
+    {id:"internet-de-las-cosas", term:"internet de las cosas", meaning:"red de dispositivos físicos conectados a internet que intercambian datos entre sí", synonym:"Espa&#241;ol para: red de dispositivos físicos conectados a internet que intercambian datos entre sí", example:"El <b>internet de las cosas</b> convierte el hogar en un entorno inteligente.", completion:"El _____ convierte el hogar en un entorno inteligente.", answer:"internet de las cosas"},
+    {id:"criptografia", term:"criptografía", meaning:"técnica de codificar la información para que solo puedan leerla los destinatarios autorizados", synonym:"Espa&#241;ol para: técnica de codificar la información para que solo puedan leerla los destinatarios autorizados", example:"La <b>criptografía</b> de extremo a extremo protege los mensajes privados.", completion:"La _____ de extremo a extremo protege los mensajes privados.", answer:"criptografía", accept:["criptografia"]}
   ]
 };
 </script>

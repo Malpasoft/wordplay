@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V09</div>
 <h1>Arquitectura y Diseño</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "arquitectura-diseno",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_b2_arquitectura-diseno",
   section: 'vocabulary',
   items: [
-    {id:"plano", term:"plano", meaning:"representación gráfica de un edificio o espacio a escala reducida", synonym:"Espa&#241;ol para: representación gráfica de un edificio o espacio a escala reducida", example:"El arquitecto presentó los <b>planos</b> del nuevo edificio.", completion:"El arquitecto presentó los ______ del nuevo edificio.", answer:"plano"},
-    {id:"fachada", term:"fachada", meaning:"parte exterior y frontal de un edificio", synonym:"Espa&#241;ol para: parte exterior y frontal de un edificio", example:"La <b>fachada</b> del museo fue diseñada por un arquitecto famoso.", completion:"La ______ del museo fue diseñada por un arquitecto famoso.", answer:"fachada"},
-    {id:"estructura", term:"estructura", meaning:"sistema de elementos que sostiene y da forma a una construcción", synonym:"Espa&#241;ol para: sistema de elementos que sostiene y da forma a una construcción", example:"La <b>estructura</b> metálica permite grandes alturas.", completion:"La ______ metálica permite grandes alturas.", answer:"estructura"},
-    {id:"rehabilitacion", term:"rehabilitación", meaning:"proceso de restaurar o reformar un edificio para mejorar su estado", synonym:"Espa&#241;ol para: proceso de restaurar o reformar un edificio para mejorar su estado", example:"La <b>rehabilitación</b> del casco histórico duró tres años.", completion:"La ______ del casco histórico duró tres años.", answer:"rehabilitación", accept:["rehabilitacion"]},
-    {id:"sostenible", term:"sostenible", meaning:"que está diseñado para minimizar el impacto ambiental", synonym:"Espa&#241;ol para: que está diseñado para minimizar el impacto ambiental", example:"Diseñaron un edificio <b>sostenible</b> con energía solar.", completion:"Diseñaron un edificio ______ con energía solar.", answer:"sostenible"},
-    {id:"urbanismo", term:"urbanismo", meaning:"disciplina que planifica la organización de los espacios y servicios en las ciudades", synonym:"Espa&#241;ol para: disciplina que planifica la organización de los espacios y servicios en las ciudades", example:"El <b>urbanismo</b> moderno da prioridad al peatón.", completion:"El ______ moderno da prioridad al peatón.", answer:"urbanismo"},
-    {id:"vanguardia", term:"vanguardia", meaning:"tendencia artística o cultural más innovadora de un período", synonym:"Espa&#241;ol para: tendencia artística o cultural más innovadora de un período", example:"El arquitecto siempre trabaja en la <b>vanguardia</b> del diseño.", completion:"El arquitecto siempre trabaja en la ______ del diseño.", answer:"vanguardia"},
-    {id:"patrimonio", term:"patrimonio", meaning:"conjunto de bienes históricos y culturales que una sociedad preserva", synonym:"Espa&#241;ol para: conjunto de bienes históricos y culturales que una sociedad preserva", example:"El ayuntamiento protege el <b>patrimonio</b> arquitectónico de la ciudad.", completion:"El ayuntamiento protege el ______ arquitectónico de la ciudad.", answer:"patrimonio"}
+    {id:"plano", term:"plano", meaning:"representación gráfica de un edificio o espacio a escala reducida", synonym:"Espa&#241;ol para: representación gráfica de un edificio o espacio a escala reducida", example:"El arquitecto presentó los <b>planos</b> del nuevo edificio.", completion:"El arquitecto presentó los _____ del nuevo edificio.", answer:"plano"},
+    {id:"fachada", term:"fachada", meaning:"parte exterior y frontal de un edificio", synonym:"Espa&#241;ol para: parte exterior y frontal de un edificio", example:"La <b>fachada</b> del museo fue diseñada por un arquitecto famoso.", completion:"La _____ del museo fue diseñada por un arquitecto famoso.", answer:"fachada"},
+    {id:"estructura", term:"estructura", meaning:"sistema de elementos que sostiene y da forma a una construcción", synonym:"Espa&#241;ol para: sistema de elementos que sostiene y da forma a una construcción", example:"La <b>estructura</b> metálica permite grandes alturas.", completion:"La _____ metálica permite grandes alturas.", answer:"estructura"},
+    {id:"rehabilitacion", term:"rehabilitación", meaning:"proceso de restaurar o reformar un edificio para mejorar su estado", synonym:"Espa&#241;ol para: proceso de restaurar o reformar un edificio para mejorar su estado", example:"La <b>rehabilitación</b> del casco histórico duró tres años.", completion:"La _____ del casco histórico duró tres años.", answer:"rehabilitación", accept:["rehabilitacion"]},
+    {id:"sostenible", term:"sostenible", meaning:"que está diseñado para minimizar el impacto ambiental", synonym:"Espa&#241;ol para: que está diseñado para minimizar el impacto ambiental", example:"Diseñaron un edificio <b>sostenible</b> con energía solar.", completion:"Diseñaron un edificio _____ con energía solar.", answer:"sostenible"},
+    {id:"urbanismo", term:"urbanismo", meaning:"disciplina que planifica la organización de los espacios y servicios en las ciudades", synonym:"Espa&#241;ol para: disciplina que planifica la organización de los espacios y servicios en las ciudades", example:"El <b>urbanismo</b> moderno da prioridad al peatón.", completion:"El _____ moderno da prioridad al peatón.", answer:"urbanismo"},
+    {id:"vanguardia", term:"vanguardia", meaning:"tendencia artística o cultural más innovadora de un período", synonym:"Espa&#241;ol para: tendencia artística o cultural más innovadora de un período", example:"El arquitecto siempre trabaja en la <b>vanguardia</b> del diseño.", completion:"El arquitecto siempre trabaja en la _____ del diseño.", answer:"vanguardia"},
+    {id:"patrimonio", term:"patrimonio", meaning:"conjunto de bienes históricos y culturales que una sociedad preserva", synonym:"Espa&#241;ol para: conjunto de bienes históricos y culturales que una sociedad preserva", example:"El ayuntamiento protege el <b>patrimonio</b> arquitectónico de la ciudad.", completion:"El ayuntamiento protege el _____ arquitectónico de la ciudad.", answer:"patrimonio"}
   ]
 };
 </script>

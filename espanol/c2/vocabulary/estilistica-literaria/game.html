@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V01</div>
 <h1>Estilística Literaria</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "estilistica-literaria",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_c2_estilistica-literaria",
   section: 'vocabulary',
   items: [
-    {id:"estilistica", term:"estilística", meaning:"Disciplina que estudia los recursos expresivos y el estilo de una obra literaria o de un autor determinado.", synonym:"Espa&#241;ol para: Disciplina que estudia los recursos expresivos y el estilo de una obra literaria o de un autor determinado.", example:"La <b>estilística</b> de Rulfo se caracteriza por una sintaxis fragmentaria que imita el habla rural mexicana.", completion:"La ______ de Rulfo se caracteriza por una sintaxis fragmentaria que imita el habla rural mexicana.", answer:"estilística", accept:["estilistica"]},
-    {id:"voz-narrativa", term:"voz narrativa", meaning:"Instancia enunciadora que relata los hechos en un texto literario, con sus propias características, perspectivas y limitaciones.", synonym:"Espa&#241;ol para: Instancia enunciadora que relata los hechos en un texto literario, con sus propias características, perspectivas y limitaciones.", example:"La <b>voz narrativa</b> de esta novela oscila entre la omnisciencia y la ignorancia deliberada, generando una ambigüedad inquietante.", completion:"La ______ de esta novela oscila entre la omnisciencia y la ignorancia deliberada, generando una ambigüedad inquietante.", answer:"voz narrativa"},
-    {id:"intertextualidad", term:"intertextualidad", meaning:"Relación que mantiene un texto con otros textos anteriores, ya sea por cita explícita, alusión o transformación.", synonym:"Espa&#241;ol para: Relación que mantiene un texto con otros textos anteriores, ya sea por cita explícita, alusión o transformación.", example:"La <b>intertextualidad</b> en la obra de Borges es tan densa que cada cuento parece una red de referencias a la tradición literaria universal.", completion:"La ______ en la obra de Borges es tan densa que cada cuento parece una red de referencias a la tradición literaria universal.", answer:"intertextualidad"},
-    {id:"polifonia", term:"polifonía", meaning:"Presencia de múltiples voces o conciencias independientes dentro de un texto narrativo, sin que ninguna sea subordinada a la del autor.", synonym:"Espa&#241;ol para: Presencia de múltiples voces o conciencias independientes dentro de un texto narrativo, sin que ninguna sea subordinada a la del autor.", example:"Bajtín vio en Dostoievski el modelo de la <b>polifonía</b> novelesca, donde cada personaje habla desde una perspectiva irreductible a las demás.", completion:"Bajtín vio en Dostoievski el modelo de la ______ novelesca, donde cada personaje habla desde una perspectiva irreductible a las demás.", answer:"polifonía", accept:["polifonia"]},
-    {id:"ecfrasis", term:"écfrasis", meaning:"Descripción literaria detallada de una obra de arte visual, que busca traducir en palabras los efectos plásticos de la imagen.", synonym:"Espa&#241;ol para: Descripción literaria detallada de una obra de arte visual, que busca traducir en palabras los efectos plásticos de la imagen.", example:"La <b>écfrasis</b> del escudo de Aquiles en la Ilíada es uno de los ejemplos más celebrados de esta técnica en la literatura occidental.", completion:"La ______ del escudo de Aquiles en la Ilíada es uno de los ejemplos más celebrados de esta técnica en la literatura occidental.", answer:"écfrasis", accept:["ecfrasis"]},
-    {id:"etopeya", term:"etopeya", meaning:"Figura retórica que consiste en la descripción de los rasgos morales, psicológicos y de carácter de una persona o personaje.", synonym:"Espa&#241;ol para: Figura retórica que consiste en la descripción de los rasgos morales, psicológicos y de carácter de una persona o personaje.", example:"La <b>etopeya</b> del protagonista ocupa el segundo capítulo entero, revelando sus contradicciones internas antes de que actúe.", completion:"La ______ del protagonista ocupa el segundo capítulo entero, revelando sus contradicciones internas antes de que actúe.", answer:"etopeya"},
-    {id:"catarsis", term:"catarsis", meaning:"Proceso de purificación o liberación emocional que experimenta el espectador o lector ante la representación de conflictos intensos.", synonym:"Espa&#241;ol para: Proceso de purificación o liberación emocional que experimenta el espectador o lector ante la representación de conflictos intensos.", example:"La escena final produce una <b>catarsis</b> tan poderosa que el público permanece en silencio durante varios minutos tras el telón.", completion:"La escena final produce una ______ tan poderosa que el público permanece en silencio durante varios minutos tras el telón.", answer:"catarsis"},
-    {id:"diegesis", term:"diégesis", meaning:"Universo narrativo interno de una obra; el mundo ficticio donde ocurren los hechos relatados por el narrador.", synonym:"Espa&#241;ol para: Universo narrativo interno de una obra; el mundo ficticio donde ocurren los hechos relatados por el narrador.", example:"El personaje que lee un libro dentro de la novela habita la misma <b>diégesis</b> que los demás, pero su lectura introduce otra capa ficcional.", completion:"El personaje que lee un libro dentro de la novela habita la misma ______ que los demás, pero su lectura introduce otra capa ficcional.", answer:"diégesis", accept:["diegesis"]}
+    {id:"estilistica", term:"estilística", meaning:"Disciplina que estudia los recursos expresivos y el estilo de una obra literaria o de un autor determinado.", synonym:"Espa&#241;ol para: Disciplina que estudia los recursos expresivos y el estilo de una obra literaria o de un autor determinado.", example:"La <b>estilística</b> de Rulfo se caracteriza por una sintaxis fragmentaria que imita el habla rural mexicana.", completion:"La _____ de Rulfo se caracteriza por una sintaxis fragmentaria que imita el habla rural mexicana.", answer:"estilística", accept:["estilistica"]},
+    {id:"voz-narrativa", term:"voz narrativa", meaning:"Instancia enunciadora que relata los hechos en un texto literario, con sus propias características, perspectivas y limitaciones.", synonym:"Espa&#241;ol para: Instancia enunciadora que relata los hechos en un texto literario, con sus propias características, perspectivas y limitaciones.", example:"La <b>voz narrativa</b> de esta novela oscila entre la omnisciencia y la ignorancia deliberada, generando una ambigüedad inquietante.", completion:"La _____ de esta novela oscila entre la omnisciencia y la ignorancia deliberada, generando una ambigüedad inquietante.", answer:"voz narrativa"},
+    {id:"intertextualidad", term:"intertextualidad", meaning:"Relación que mantiene un texto con otros textos anteriores, ya sea por cita explícita, alusión o transformación.", synonym:"Espa&#241;ol para: Relación que mantiene un texto con otros textos anteriores, ya sea por cita explícita, alusión o transformación.", example:"La <b>intertextualidad</b> en la obra de Borges es tan densa que cada cuento parece una red de referencias a la tradición literaria universal.", completion:"La _____ en la obra de Borges es tan densa que cada cuento parece una red de referencias a la tradición literaria universal.", answer:"intertextualidad"},
+    {id:"polifonia", term:"polifonía", meaning:"Presencia de múltiples voces o conciencias independientes dentro de un texto narrativo, sin que ninguna sea subordinada a la del autor.", synonym:"Espa&#241;ol para: Presencia de múltiples voces o conciencias independientes dentro de un texto narrativo, sin que ninguna sea subordinada a la del autor.", example:"Bajtín vio en Dostoievski el modelo de la <b>polifonía</b> novelesca, donde cada personaje habla desde una perspectiva irreductible a las demás.", completion:"Bajtín vio en Dostoievski el modelo de la _____ novelesca, donde cada personaje habla desde una perspectiva irreductible a las demás.", answer:"polifonía", accept:["polifonia"]},
+    {id:"ecfrasis", term:"écfrasis", meaning:"Descripción literaria detallada de una obra de arte visual, que busca traducir en palabras los efectos plásticos de la imagen.", synonym:"Espa&#241;ol para: Descripción literaria detallada de una obra de arte visual, que busca traducir en palabras los efectos plásticos de la imagen.", example:"La <b>écfrasis</b> del escudo de Aquiles en la Ilíada es uno de los ejemplos más celebrados de esta técnica en la literatura occidental.", completion:"La _____ del escudo de Aquiles en la Ilíada es uno de los ejemplos más celebrados de esta técnica en la literatura occidental.", answer:"écfrasis", accept:["ecfrasis"]},
+    {id:"etopeya", term:"etopeya", meaning:"Figura retórica que consiste en la descripción de los rasgos morales, psicológicos y de carácter de una persona o personaje.", synonym:"Espa&#241;ol para: Figura retórica que consiste en la descripción de los rasgos morales, psicológicos y de carácter de una persona o personaje.", example:"La <b>etopeya</b> del protagonista ocupa el segundo capítulo entero, revelando sus contradicciones internas antes de que actúe.", completion:"La _____ del protagonista ocupa el segundo capítulo entero, revelando sus contradicciones internas antes de que actúe.", answer:"etopeya"},
+    {id:"catarsis", term:"catarsis", meaning:"Proceso de purificación o liberación emocional que experimenta el espectador o lector ante la representación de conflictos intensos.", synonym:"Espa&#241;ol para: Proceso de purificación o liberación emocional que experimenta el espectador o lector ante la representación de conflictos intensos.", example:"La escena final produce una <b>catarsis</b> tan poderosa que el público permanece en silencio durante varios minutos tras el telón.", completion:"La escena final produce una _____ tan poderosa que el público permanece en silencio durante varios minutos tras el telón.", answer:"catarsis"},
+    {id:"diegesis", term:"diégesis", meaning:"Universo narrativo interno de una obra; el mundo ficticio donde ocurren los hechos relatados por el narrador.", synonym:"Espa&#241;ol para: Universo narrativo interno de una obra; el mundo ficticio donde ocurren los hechos relatados por el narrador.", example:"El personaje que lee un libro dentro de la novela habita la misma <b>diégesis</b> que los demás, pero su lectura introduce otra capa ficcional.", completion:"El personaje que lee un libro dentro de la novela habita la misma _____ que los demás, pero su lectura introduce otra capa ficcional.", answer:"diégesis", accept:["diegesis"]}
   ]
 };
 </script>

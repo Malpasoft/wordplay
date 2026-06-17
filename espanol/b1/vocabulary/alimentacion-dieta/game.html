@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V06</div>
 <h1>Alimentación y Dieta</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "alimentacion-dieta",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_b1_alimentacion-dieta",
   section: 'vocabulary',
   items: [
-    {id:"dieta", term:"dieta", meaning:"Conjunto de alimentos que consume habitualmente una persona, o régimen alimenticio con un fin específico.", synonym:"Espa&#241;ol para: Conjunto de alimentos que consume habitualmente una persona, o régimen alimenticio con un fin específico.", example:"El médico le recomendó seguir una <b>dieta</b> baja en grasas saturadas.", completion:"El médico le recomendó seguir una ______ baja en grasas saturadas.", answer:"dieta"},
-    {id:"nutricion", term:"nutrición", meaning:"Proceso mediante el cual el organismo obtiene y utiliza los nutrientes de los alimentos para funcionar.", synonym:"Espa&#241;ol para: Proceso mediante el cual el organismo obtiene y utiliza los nutrientes de los alimentos para funcionar.", example:"Una buena <b>nutrición</b> es fundamental para mantener la salud y el bienestar.", completion:"Una buena ______ es fundamental para mantener la salud y el bienestar.", answer:"nutrición", accept:["nutricion"]},
-    {id:"caloria", term:"caloría", meaning:"Unidad que mide la cantidad de energía que aportan los alimentos al organismo.", synonym:"Espa&#241;ol para: Unidad que mide la cantidad de energía que aportan los alimentos al organismo.", example:"Ese refresco tiene más de ciento cincuenta <b>calorías</b> por cada cien mililitros.", completion:"Ese refresco tiene más de ciento cincuenta ______ por cada cien mililitros.", answer:"caloría", accept:["caloria"]},
-    {id:"proteina", term:"proteína", meaning:"Nutriente esencial formado por aminoácidos que el cuerpo necesita para construir y reparar tejidos.", synonym:"Espa&#241;ol para: Nutriente esencial formado por aminoácidos que el cuerpo necesita para construir y reparar tejidos.", example:"Las legumbres son una fuente excelente de <b>proteína</b> para las personas vegetarianas.", completion:"Las legumbres son una fuente excelente de ______ para las personas vegetarianas.", answer:"proteína", accept:["proteina"]},
-    {id:"vitamina", term:"vitamina", meaning:"Sustancia orgánica esencial en pequeñas cantidades para el correcto funcionamiento del organismo.", synonym:"Espa&#241;ol para: Sustancia orgánica esencial en pequeñas cantidades para el correcto funcionamiento del organismo.", example:"La <b>vitamina</b> C, presente en los cítricos, refuerza el sistema inmunitario.", completion:"La ______ C, presente en los cítricos, refuerza el sistema inmunitario.", answer:"vitamina"},
-    {id:"vegetariano", term:"vegetariano", meaning:"Que no incluye carne ni pescado en la alimentación, basándose principalmente en productos de origen vegetal.", synonym:"Espa&#241;ol para: Que no incluye carne ni pescado en la alimentación, basándose principalmente en productos de origen vegetal.", example:"Desde hace un año lleva una dieta <b>vegetariana</b> por razones éticas y de salud.", completion:"Desde hace un año lleva una dieta ______ por razones éticas y de salud.", answer:"vegetariano"},
-    {id:"ingrediente", term:"ingrediente", meaning:"Cada uno de los elementos que forman parte de un plato o receta.", synonym:"Espa&#241;ol para: Cada uno de los elementos que forman parte de un plato o receta.", example:"El aceite de oliva es el <b>ingrediente</b> principal de muchas recetas mediterráneas.", completion:"El aceite de oliva es el ______ principal de muchas recetas mediterráneas.", answer:"ingrediente"},
-    {id:"receta", term:"receta", meaning:"Conjunto de instrucciones que explica cómo preparar un plato con ingredientes y cantidades específicos.", synonym:"Espa&#241;ol para: Conjunto de instrucciones que explica cómo preparar un plato con ingredientes y cantidades específicos.", example:"Mi abuela me enseñó la <b>receta</b> tradicional del cocido madrileño.", completion:"Mi abuela me enseñó la ______ tradicional del cocido madrileño.", answer:"receta"}
+    {id:"dieta", term:"dieta", meaning:"Conjunto de alimentos que consume habitualmente una persona, o régimen alimenticio con un fin específico.", synonym:"Espa&#241;ol para: Conjunto de alimentos que consume habitualmente una persona, o régimen alimenticio con un fin específico.", example:"El médico le recomendó seguir una <b>dieta</b> baja en grasas saturadas.", completion:"El médico le recomendó seguir una _____ baja en grasas saturadas.", answer:"dieta"},
+    {id:"nutricion", term:"nutrición", meaning:"Proceso mediante el cual el organismo obtiene y utiliza los nutrientes de los alimentos para funcionar.", synonym:"Espa&#241;ol para: Proceso mediante el cual el organismo obtiene y utiliza los nutrientes de los alimentos para funcionar.", example:"Una buena <b>nutrición</b> es fundamental para mantener la salud y el bienestar.", completion:"Una buena _____ es fundamental para mantener la salud y el bienestar.", answer:"nutrición", accept:["nutricion"]},
+    {id:"caloria", term:"caloría", meaning:"Unidad que mide la cantidad de energía que aportan los alimentos al organismo.", synonym:"Espa&#241;ol para: Unidad que mide la cantidad de energía que aportan los alimentos al organismo.", example:"Ese refresco tiene más de ciento cincuenta <b>calorías</b> por cada cien mililitros.", completion:"Ese refresco tiene más de ciento cincuenta _____ por cada cien mililitros.", answer:"caloría", accept:["caloria"]},
+    {id:"proteina", term:"proteína", meaning:"Nutriente esencial formado por aminoácidos que el cuerpo necesita para construir y reparar tejidos.", synonym:"Espa&#241;ol para: Nutriente esencial formado por aminoácidos que el cuerpo necesita para construir y reparar tejidos.", example:"Las legumbres son una fuente excelente de <b>proteína</b> para las personas vegetarianas.", completion:"Las legumbres son una fuente excelente de _____ para las personas vegetarianas.", answer:"proteína", accept:["proteina"]},
+    {id:"vitamina", term:"vitamina", meaning:"Sustancia orgánica esencial en pequeñas cantidades para el correcto funcionamiento del organismo.", synonym:"Espa&#241;ol para: Sustancia orgánica esencial en pequeñas cantidades para el correcto funcionamiento del organismo.", example:"La <b>vitamina</b> C, presente en los cítricos, refuerza el sistema inmunitario.", completion:"La _____ C, presente en los cítricos, refuerza el sistema inmunitario.", answer:"vitamina"},
+    {id:"vegetariano", term:"vegetariano", meaning:"Que no incluye carne ni pescado en la alimentación, basándose principalmente en productos de origen vegetal.", synonym:"Espa&#241;ol para: Que no incluye carne ni pescado en la alimentación, basándose principalmente en productos de origen vegetal.", example:"Desde hace un año lleva una dieta <b>vegetariana</b> por razones éticas y de salud.", completion:"Desde hace un año lleva una dieta _____ por razones éticas y de salud.", answer:"vegetariano"},
+    {id:"ingrediente", term:"ingrediente", meaning:"Cada uno de los elementos que forman parte de un plato o receta.", synonym:"Espa&#241;ol para: Cada uno de los elementos que forman parte de un plato o receta.", example:"El aceite de oliva es el <b>ingrediente</b> principal de muchas recetas mediterráneas.", completion:"El aceite de oliva es el _____ principal de muchas recetas mediterráneas.", answer:"ingrediente"},
+    {id:"receta", term:"receta", meaning:"Conjunto de instrucciones que explica cómo preparar un plato con ingredientes y cantidades específicos.", synonym:"Espa&#241;ol para: Conjunto de instrucciones que explica cómo preparar un plato con ingredientes y cantidades específicos.", example:"Mi abuela me enseñó la <b>receta</b> tradicional del cocido madrileño.", completion:"Mi abuela me enseñó la _____ tradicional del cocido madrileño.", answer:"receta"}
   ]
 };
 </script>

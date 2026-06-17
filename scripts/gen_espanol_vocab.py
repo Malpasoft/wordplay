@@ -34,7 +34,7 @@ HEAD = """\
 <meta name="theme-color" content="#1A1A1A">
 <link rel="icon" href="{rel}favicon.svg" type="image/svg+xml">
 <title>{title}</title>
-<link rel="stylesheet" href="{rel}shared/base.css?v=v124">
+<link rel="stylesheet" href="{rel}shared/base.css?v=v125">
 {extra_css}\
 <script src="/shared/auth.js?v=1"></script>
 <script src="{rel}shared/dark-init.js?v=v112"></script>
@@ -65,7 +65,7 @@ def strip_b(s):
 def blank_ex(ex):
     i = ex.index('<b>')
     j = ex.index('</b>')
-    return ex[:i] + '______' + ex[j + 4:]
+    return ex[:i] + '_____' + ex[j + 4:]
 
 
 def rel_path(level):
@@ -296,6 +296,7 @@ def render_game(d, slug):
             f'<link rel="stylesheet" href="{rel}shared/game.css?v=v112">\n'
         ),
     )
+    s += f'<script src="{rel}shared/i18n.js?v=v124"></script>\n'
     s += f'<script src="{rel}shared/store.js?v=v107"></script>\n'
     s += f'<script src="{rel}shared/game.js?v=v112"></script>\n</head>\n'
     s += '<body>\n' + HEADER_NAV
@@ -303,7 +304,40 @@ def render_game(d, slug):
     s += crumb(level, lv, short, 'Juego')
     s += f'<div class="chapter-num">{num}</div>\n<h1>{short}</h1>\n'
     s += chapter_nav('game.html')
-    s += '<div id="game-root"></div>\n'
+    s += ('  <div class="game-wrap">\n'
+          '    <div id="gameStart" class="game-screen active">\n      <div class="game-start">\n'
+          '        <h2>Juego de Dominio</h2>\n'
+          '        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>\n'
+          '        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>\n'
+          '        <div class="game-stats-row">\n'
+          '          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>\n'
+          '          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>\n'
+          '        </div>\n'
+          '        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">\n'
+          '          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>\n'
+          '          <div class="game-btn-row">\n'
+          '            <button id="gBtnResume" class="game-btn primary">Continuar</button>\n'
+          '            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>\n'
+          '          </div>\n        </div>\n'
+          '        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>\n'
+          '      </div>\n'
+          '      <div class="game-ref-panel" style="margin-top:20px;">\n'
+          '        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>\n'
+          '        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>\n'
+          '      </div>\n    </div>\n'
+          '    <div id="gamePlay" class="game-screen">\n      <div class="game-play"></div>\n    </div>\n'
+          '    <div id="gameCompletion" class="game-screen">\n      <div class="game-completion">\n'
+          '        <h2>&#161;Dominio alcanzado!</h2>\n        <p>Has completado todas las palabras de este cap&#237;tulo.</p>\n'
+          '        <div class="game-stats-row" style="margin:20px 0;">\n'
+          '          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>\n'
+          '          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>\n'
+          '          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>\n'
+          '        </div>\n        <div id="gMasteryMap"></div>\n'
+          '        <div class="game-btn-row">\n'
+          '          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>\n'
+          '          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>\n'
+          '        </div>\n      </div>\n    </div>\n  </div>\n'
+          '<div class="game-toast" id="gToast"></div>\n')
     items_block = ',\n'.join(items_js)
     s += f"""<script>
 window.GAME_DATA = {{

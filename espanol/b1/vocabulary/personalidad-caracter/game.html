@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V12</div>
 <h1>Personalidad y Carácter</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "personalidad-caracter",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_b1_personalidad-caracter",
   section: 'vocabulary',
   items: [
-    {id:"personalidad", term:"personalidad", meaning:"Conjunto de rasgos y características psicológicas que definen el modo de ser de una persona.", synonym:"Espa&#241;ol para: Conjunto de rasgos y características psicológicas que definen el modo de ser de una persona.", example:"Tiene una <b>personalidad</b> muy abierta que le facilita hacer amigos con facilidad.", completion:"Tiene una ______ muy abierta que le facilita hacer amigos con facilidad.", answer:"personalidad"},
-    {id:"caracter", term:"carácter", meaning:"Conjunto de rasgos habituales que definen el comportamiento y las reacciones de una persona.", synonym:"Espa&#241;ol para: Conjunto de rasgos habituales que definen el comportamiento y las reacciones de una persona.", example:"Su <b>carácter</b> tranquilo le ayuda a mantener la calma en situaciones de estrés.", completion:"Su ______ tranquilo le ayuda a mantener la calma en situaciones de estrés.", answer:"carácter", accept:["caracter"]},
-    {id:"creativo", term:"creativo", meaning:"Que tiene facilidad para generar ideas originales y encontrar soluciones nuevas a los problemas.", synonym:"Espa&#241;ol para: Que tiene facilidad para generar ideas originales y encontrar soluciones nuevas a los problemas.", example:"Es muy <b>creativo</b> y siempre propone ideas innovadoras en las reuniones de equipo.", completion:"Es muy ______ y siempre propone ideas innovadoras en las reuniones de equipo.", answer:"creativo"},
-    {id:"responsable", term:"responsable", meaning:"Que cumple con sus obligaciones y asume las consecuencias de sus actos.", synonym:"Espa&#241;ol para: Que cumple con sus obligaciones y asume las consecuencias de sus actos.", example:"Es una persona muy <b>responsable</b> que siempre entrega su trabajo a tiempo.", completion:"Es una persona muy ______ que siempre entrega su trabajo a tiempo.", answer:"responsable"},
-    {id:"ambicioso", term:"ambicioso", meaning:"Que tiene deseos intensos de lograr el éxito, el poder o el reconocimiento.", synonym:"Espa&#241;ol para: Que tiene deseos intensos de lograr el éxito, el poder o el reconocimiento.", example:"Es tan <b>ambicioso</b> que trabaja doce horas al día para alcanzar sus metas.", completion:"Es tan ______ que trabaja doce horas al día para alcanzar sus metas.", answer:"ambicioso"},
-    {id:"generoso", term:"generoso", meaning:"Que comparte con los demás sin esperar nada a cambio, ofreciendo tiempo, dinero o ayuda.", synonym:"Espa&#241;ol para: Que comparte con los demás sin esperar nada a cambio, ofreciendo tiempo, dinero o ayuda.", example:"Es muy <b>generoso</b> y siempre está dispuesto a ayudar a quienes lo necesitan.", completion:"Es muy ______ y siempre está dispuesto a ayudar a quienes lo necesitan.", answer:"generoso"},
-    {id:"paciente", term:"paciente", meaning:"Que sabe esperar sin alterarse y soporta las dificultades con calma y tranquilidad.", synonym:"Espa&#241;ol para: Que sabe esperar sin alterarse y soporta las dificultades con calma y tranquilidad.", example:"Hay que ser muy <b>paciente</b> para enseñar a niños pequeños a leer y escribir.", completion:"Hay que ser muy ______ para enseñar a niños pequeños a leer y escribir.", answer:"paciente"},
-    {id:"honesto", term:"honesto", meaning:"Que actúa con sinceridad, integridad y respeto a la verdad en sus relaciones con los demás.", synonym:"Espa&#241;ol para: Que actúa con sinceridad, integridad y respeto a la verdad en sus relaciones con los demás.", example:"Es una persona <b>honesta</b> que siempre dice la verdad aunque sea difícil escucharla.", completion:"Es una persona ______ que siempre dice la verdad aunque sea difícil escucharla.", answer:"honesto"}
+    {id:"personalidad", term:"personalidad", meaning:"Conjunto de rasgos y características psicológicas que definen el modo de ser de una persona.", synonym:"Espa&#241;ol para: Conjunto de rasgos y características psicológicas que definen el modo de ser de una persona.", example:"Tiene una <b>personalidad</b> muy abierta que le facilita hacer amigos con facilidad.", completion:"Tiene una _____ muy abierta que le facilita hacer amigos con facilidad.", answer:"personalidad"},
+    {id:"caracter", term:"carácter", meaning:"Conjunto de rasgos habituales que definen el comportamiento y las reacciones de una persona.", synonym:"Espa&#241;ol para: Conjunto de rasgos habituales que definen el comportamiento y las reacciones de una persona.", example:"Su <b>carácter</b> tranquilo le ayuda a mantener la calma en situaciones de estrés.", completion:"Su _____ tranquilo le ayuda a mantener la calma en situaciones de estrés.", answer:"carácter", accept:["caracter"]},
+    {id:"creativo", term:"creativo", meaning:"Que tiene facilidad para generar ideas originales y encontrar soluciones nuevas a los problemas.", synonym:"Espa&#241;ol para: Que tiene facilidad para generar ideas originales y encontrar soluciones nuevas a los problemas.", example:"Es muy <b>creativo</b> y siempre propone ideas innovadoras en las reuniones de equipo.", completion:"Es muy _____ y siempre propone ideas innovadoras en las reuniones de equipo.", answer:"creativo"},
+    {id:"responsable", term:"responsable", meaning:"Que cumple con sus obligaciones y asume las consecuencias de sus actos.", synonym:"Espa&#241;ol para: Que cumple con sus obligaciones y asume las consecuencias de sus actos.", example:"Es una persona muy <b>responsable</b> que siempre entrega su trabajo a tiempo.", completion:"Es una persona muy _____ que siempre entrega su trabajo a tiempo.", answer:"responsable"},
+    {id:"ambicioso", term:"ambicioso", meaning:"Que tiene deseos intensos de lograr el éxito, el poder o el reconocimiento.", synonym:"Espa&#241;ol para: Que tiene deseos intensos de lograr el éxito, el poder o el reconocimiento.", example:"Es tan <b>ambicioso</b> que trabaja doce horas al día para alcanzar sus metas.", completion:"Es tan _____ que trabaja doce horas al día para alcanzar sus metas.", answer:"ambicioso"},
+    {id:"generoso", term:"generoso", meaning:"Que comparte con los demás sin esperar nada a cambio, ofreciendo tiempo, dinero o ayuda.", synonym:"Espa&#241;ol para: Que comparte con los demás sin esperar nada a cambio, ofreciendo tiempo, dinero o ayuda.", example:"Es muy <b>generoso</b> y siempre está dispuesto a ayudar a quienes lo necesitan.", completion:"Es muy _____ y siempre está dispuesto a ayudar a quienes lo necesitan.", answer:"generoso"},
+    {id:"paciente", term:"paciente", meaning:"Que sabe esperar sin alterarse y soporta las dificultades con calma y tranquilidad.", synonym:"Espa&#241;ol para: Que sabe esperar sin alterarse y soporta las dificultades con calma y tranquilidad.", example:"Hay que ser muy <b>paciente</b> para enseñar a niños pequeños a leer y escribir.", completion:"Hay que ser muy _____ para enseñar a niños pequeños a leer y escribir.", answer:"paciente"},
+    {id:"honesto", term:"honesto", meaning:"Que actúa con sinceridad, integridad y respeto a la verdad en sus relaciones con los demás.", synonym:"Espa&#241;ol para: Que actúa con sinceridad, integridad y respeto a la verdad en sus relaciones con los demás.", example:"Es una persona <b>honesta</b> que siempre dice la verdad aunque sea difícil escucharla.", completion:"Es una persona _____ que siempre dice la verdad aunque sea difícil escucharla.", answer:"honesto"}
   ]
 };
 </script>

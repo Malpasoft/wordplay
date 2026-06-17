@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V07</div>
 <h1>Historia y Civilización</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "historia-civilizacion",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_b2_historia-civilizacion",
   section: 'vocabulary',
   items: [
-    {id:"civilizacion", term:"civilización", meaning:"sociedad humana con alto grado de desarrollo cultural, político y tecnológico", synonym:"Espa&#241;ol para: sociedad humana con alto grado de desarrollo cultural, político y tecnológico", example:"La <b>civilización</b> maya alcanzó un gran desarrollo astronómico.", completion:"La ______ maya alcanzó un gran desarrollo astronómico.", answer:"civilización", accept:["civilizacion"]},
-    {id:"imperio", term:"imperio", meaning:"Estado extenso formado por varios territorios bajo el gobierno de un único poder", synonym:"Espa&#241;ol para: Estado extenso formado por varios territorios bajo el gobierno de un único poder", example:"El <b>Imperio</b> Romano duró varios siglos.", completion:"El ______ Romano duró varios siglos.", answer:"imperio"},
-    {id:"revolucion", term:"revolución", meaning:"cambio radical y profundo en el orden político, social o económico de un país", synonym:"Espa&#241;ol para: cambio radical y profundo en el orden político, social o económico de un país", example:"La <b>Revolución</b> Industrial transformó la sociedad europea.", completion:"La ______ Industrial transformó la sociedad europea.", answer:"revolución", accept:["revolucion"]},
-    {id:"colonia", term:"colonia", meaning:"territorio dominado y explotado por un estado extranjero", synonym:"Espa&#241;ol para: territorio dominado y explotado por un estado extranjero", example:"España tuvo muchas <b>colonias</b> en América y Asia.", completion:"España tuvo muchas ______ en América y Asia.", answer:"colonia"},
-    {id:"independencia", term:"independencia", meaning:"situación de un pueblo o estado que no está sometido a otro", synonym:"Espa&#241;ol para: situación de un pueblo o estado que no está sometido a otro", example:"Las colonias americanas lograron su <b>independencia</b> en el siglo XIX.", completion:"Las colonias americanas lograron su ______ en el siglo XIX.", answer:"independencia"},
-    {id:"hegemonia", term:"hegemonía", meaning:"dominio o predominio de una potencia sobre otras", synonym:"Espa&#241;ol para: dominio o predominio de una potencia sobre otras", example:"Estados Unidos mantiene su <b>hegemonía</b> económica y militar.", completion:"Estados Unidos mantiene su ______ económica y militar.", answer:"hegemonía", accept:["hegemonia"]},
-    {id:"legado", term:"legado", meaning:"conjunto de bienes, obras o ideas que una civilización deja a las generaciones futuras", synonym:"Espa&#241;ol para: conjunto de bienes, obras o ideas que una civilización deja a las generaciones futuras", example:"El <b>legado</b> cultural de la antigua Grecia sigue vigente.", completion:"El ______ cultural de la antigua Grecia sigue vigente.", answer:"legado"},
-    {id:"arqueologia", term:"arqueología", meaning:"ciencia que estudia las culturas antiguas a través de sus restos materiales", synonym:"Espa&#241;ol para: ciencia que estudia las culturas antiguas a través de sus restos materiales", example:"La <b>arqueología</b> descubrió una ciudad romana bajo el centro de la ciudad.", completion:"La ______ descubrió una ciudad romana bajo el centro de la ciudad.", answer:"arqueología", accept:["arqueologia"]}
+    {id:"civilizacion", term:"civilización", meaning:"sociedad humana con alto grado de desarrollo cultural, político y tecnológico", synonym:"Espa&#241;ol para: sociedad humana con alto grado de desarrollo cultural, político y tecnológico", example:"La <b>civilización</b> maya alcanzó un gran desarrollo astronómico.", completion:"La _____ maya alcanzó un gran desarrollo astronómico.", answer:"civilización", accept:["civilizacion"]},
+    {id:"imperio", term:"imperio", meaning:"Estado extenso formado por varios territorios bajo el gobierno de un único poder", synonym:"Espa&#241;ol para: Estado extenso formado por varios territorios bajo el gobierno de un único poder", example:"El <b>Imperio</b> Romano duró varios siglos.", completion:"El _____ Romano duró varios siglos.", answer:"imperio"},
+    {id:"revolucion", term:"revolución", meaning:"cambio radical y profundo en el orden político, social o económico de un país", synonym:"Espa&#241;ol para: cambio radical y profundo en el orden político, social o económico de un país", example:"La <b>Revolución</b> Industrial transformó la sociedad europea.", completion:"La _____ Industrial transformó la sociedad europea.", answer:"revolución", accept:["revolucion"]},
+    {id:"colonia", term:"colonia", meaning:"territorio dominado y explotado por un estado extranjero", synonym:"Espa&#241;ol para: territorio dominado y explotado por un estado extranjero", example:"España tuvo muchas <b>colonias</b> en América y Asia.", completion:"España tuvo muchas _____ en América y Asia.", answer:"colonia"},
+    {id:"independencia", term:"independencia", meaning:"situación de un pueblo o estado que no está sometido a otro", synonym:"Espa&#241;ol para: situación de un pueblo o estado que no está sometido a otro", example:"Las colonias americanas lograron su <b>independencia</b> en el siglo XIX.", completion:"Las colonias americanas lograron su _____ en el siglo XIX.", answer:"independencia"},
+    {id:"hegemonia", term:"hegemonía", meaning:"dominio o predominio de una potencia sobre otras", synonym:"Espa&#241;ol para: dominio o predominio de una potencia sobre otras", example:"Estados Unidos mantiene su <b>hegemonía</b> económica y militar.", completion:"Estados Unidos mantiene su _____ económica y militar.", answer:"hegemonía", accept:["hegemonia"]},
+    {id:"legado", term:"legado", meaning:"conjunto de bienes, obras o ideas que una civilización deja a las generaciones futuras", synonym:"Espa&#241;ol para: conjunto de bienes, obras o ideas que una civilización deja a las generaciones futuras", example:"El <b>legado</b> cultural de la antigua Grecia sigue vigente.", completion:"El _____ cultural de la antigua Grecia sigue vigente.", answer:"legado"},
+    {id:"arqueologia", term:"arqueología", meaning:"ciencia que estudia las culturas antiguas a través de sus restos materiales", synonym:"Espa&#241;ol para: ciencia que estudia las culturas antiguas a través de sus restos materiales", example:"La <b>arqueología</b> descubrió una ciudad romana bajo el centro de la ciudad.", completion:"La _____ descubrió una ciudad romana bajo el centro de la ciudad.", answer:"arqueología", accept:["arqueologia"]}
   ]
 };
 </script>

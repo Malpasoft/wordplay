@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V09</div>
 <h1>El Restaurante y la Cafetería</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "restaurante-cafeteria",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_a2_restaurante-cafeteria",
   section: 'vocabulary',
   items: [
-    {id:"mesa", term:"mesa", meaning:"mueble donde se sirve y come la comida en un restaurante", synonym:"Espa&#241;ol para: mueble donde se sirve y come la comida en un restaurante", example:"¿Tienen una <b>mesa</b> para dos personas?", completion:"¿Tienen una ______ para dos personas?", answer:"mesa"},
-    {id:"carta", term:"carta", meaning:"lista de platos y bebidas disponibles en un restaurante", synonym:"Espa&#241;ol para: lista de platos y bebidas disponibles en un restaurante", example:"¿Me trae la <b>carta</b>, por favor?", completion:"¿Me trae la ______, por favor?", answer:"carta"},
-    {id:"plato", term:"plato", meaning:"preparación culinaria que se sirve como parte de una comida", synonym:"Espa&#241;ol para: preparación culinaria que se sirve como parte de una comida", example:"¿Cuál es el <b>plato</b> del día?", completion:"¿Cuál es el ______ del día?", answer:"plato"},
-    {id:"primer-plato", term:"primer plato", meaning:"plato que se sirve al principio de la comida", synonym:"Espa&#241;ol para: plato que se sirve al principio de la comida", example:"De <b>primer plato</b> tomaré sopa.", completion:"De ______ tomaré sopa.", answer:"primer plato"},
-    {id:"segundo-plato", term:"segundo plato", meaning:"plato principal que se sirve después del primero", synonym:"Espa&#241;ol para: plato principal que se sirve después del primero", example:"De <b>segundo plato</b> quiero carne asada.", completion:"De ______ quiero carne asada.", answer:"segundo plato"},
-    {id:"postre", term:"postre", meaning:"alimento dulce que se toma al final de la comida", synonym:"Espa&#241;ol para: alimento dulce que se toma al final de la comida", example:"De <b>postre</b> tomaré un flan de vainilla.", completion:"De ______ tomaré un flan de vainilla.", answer:"postre"},
-    {id:"cuenta", term:"cuenta", meaning:"documento con el total a pagar en un restaurante", synonym:"Espa&#241;ol para: documento con el total a pagar en un restaurante", example:"Por favor, ¿nos puede traer la <b>cuenta</b>?", completion:"Por favor, ¿nos puede traer la ______?", answer:"cuenta"},
-    {id:"propina", term:"propina", meaning:"dinero extra que se da al camarero como agradecimiento", synonym:"Espa&#241;ol para: dinero extra que se da al camarero como agradecimiento", example:"Dejamos una <b>propina</b> porque el servicio fue excelente.", completion:"Dejamos una ______ porque el servicio fue excelente.", answer:"propina"}
+    {id:"mesa", term:"mesa", meaning:"mueble donde se sirve y come la comida en un restaurante", synonym:"Espa&#241;ol para: mueble donde se sirve y come la comida en un restaurante", example:"¿Tienen una <b>mesa</b> para dos personas?", completion:"¿Tienen una _____ para dos personas?", answer:"mesa"},
+    {id:"carta", term:"carta", meaning:"lista de platos y bebidas disponibles en un restaurante", synonym:"Espa&#241;ol para: lista de platos y bebidas disponibles en un restaurante", example:"¿Me trae la <b>carta</b>, por favor?", completion:"¿Me trae la _____, por favor?", answer:"carta"},
+    {id:"plato", term:"plato", meaning:"preparación culinaria que se sirve como parte de una comida", synonym:"Espa&#241;ol para: preparación culinaria que se sirve como parte de una comida", example:"¿Cuál es el <b>plato</b> del día?", completion:"¿Cuál es el _____ del día?", answer:"plato"},
+    {id:"primer-plato", term:"primer plato", meaning:"plato que se sirve al principio de la comida", synonym:"Espa&#241;ol para: plato que se sirve al principio de la comida", example:"De <b>primer plato</b> tomaré sopa.", completion:"De _____ tomaré sopa.", answer:"primer plato"},
+    {id:"segundo-plato", term:"segundo plato", meaning:"plato principal que se sirve después del primero", synonym:"Espa&#241;ol para: plato principal que se sirve después del primero", example:"De <b>segundo plato</b> quiero carne asada.", completion:"De _____ quiero carne asada.", answer:"segundo plato"},
+    {id:"postre", term:"postre", meaning:"alimento dulce que se toma al final de la comida", synonym:"Espa&#241;ol para: alimento dulce que se toma al final de la comida", example:"De <b>postre</b> tomaré un flan de vainilla.", completion:"De _____ tomaré un flan de vainilla.", answer:"postre"},
+    {id:"cuenta", term:"cuenta", meaning:"documento con el total a pagar en un restaurante", synonym:"Espa&#241;ol para: documento con el total a pagar en un restaurante", example:"Por favor, ¿nos puede traer la <b>cuenta</b>?", completion:"Por favor, ¿nos puede traer la _____?", answer:"cuenta"},
+    {id:"propina", term:"propina", meaning:"dinero extra que se da al camarero como agradecimiento", synonym:"Espa&#241;ol para: dinero extra que se da al camarero como agradecimiento", example:"Dejamos una <b>propina</b> porque el servicio fue excelente.", completion:"Dejamos una _____ porque el servicio fue excelente.", answer:"propina"}
   ]
 };
 </script>

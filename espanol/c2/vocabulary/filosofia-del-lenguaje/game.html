@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V03</div>
 <h1>Filosofía del Lenguaje</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "filosofia-del-lenguaje",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_c2_filosofia-del-lenguaje",
   section: 'vocabulary',
   items: [
-    {id:"teoria-referencial", term:"teoría referencial", meaning:"Doctrina filosófica que sostiene que el significado de una expresión lingüística es el objeto o entidad a la que dicha expresión se refiere.", synonym:"Espa&#241;ol para: Doctrina filosófica que sostiene que el significado de una expresión lingüística es el objeto o entidad a la que dicha expresión se refiere.", example:"La <b>teoría referencial</b> enfrenta el problema de las expresiones sin referente actual, como «el unicornio» o «el rey de Francia».", completion:"La ______ enfrenta el problema de las expresiones sin referente actual, como «el unicornio» o «el rey de Francia».", answer:"teoría referencial", accept:["teoria referencial"]},
-    {id:"condiciones-de-verdad", term:"condiciones de verdad", meaning:"Circunstancias o estados del mundo que, de darse, harían verdadero un enunciado; base de la semántica formal de inspiración tarskiana.", synonym:"Espa&#241;ol para: Circunstancias o estados del mundo que, de darse, harían verdadero un enunciado; base de la semántica formal de inspiración tarskiana.", example:"Conocer las <b>condiciones de verdad</b> de «está lloviendo» equivale a saber qué situación meteorológica haría verdadera esa oración.", completion:"Conocer las ______ de «está lloviendo» equivale a saber qué situación meteorológica haría verdadera esa oración.", answer:"condiciones de verdad"},
-    {id:"holismo-semantico", term:"holismo semántico", meaning:"Tesis según la cual el significado de cualquier expresión lingüística depende de su relación con el conjunto total de creencias o del lenguaje.", synonym:"Espa&#241;ol para: Tesis según la cual el significado de cualquier expresión lingüística depende de su relación con el conjunto total de creencias o del lenguaje.", example:"El <b>holismo semántico</b> de Quine implica que no podemos cambiar el significado de un término sin alterar toda la red de nuestras creencias.", completion:"El ______ de Quine implica que no podemos cambiar el significado de un término sin alterar toda la red de nuestras creencias.", answer:"holismo semántico", accept:["holismo semantico"]},
-    {id:"sentido-y-referencia", term:"sentido y referencia", meaning:"Distinción fregeana entre el modo de presentación de un objeto (sentido) y el objeto mismo al que apunta una expresión (referencia).", synonym:"Espa&#241;ol para: Distinción fregeana entre el modo de presentación de un objeto (sentido) y el objeto mismo al que apunta una expresión (referencia).", example:"«Lucero del alba» y «estrella vespertina» tienen la misma referencia —Venus— pero distinto <b>sentido y referencia</b> en la teoría de Frege.", completion:"«Lucero del alba» y «estrella vespertina» tienen la misma referencia —Venus— pero distinto ______ en la teoría de Frege.", answer:"sentido y referencia"},
-    {id:"metalenguaje", term:"metalenguaje", meaning:"Lenguaje de orden superior que se usa para hablar o describir otro lenguaje —el lenguaje objeto— sin confundirse con él.", synonym:"Espa&#241;ol para: Lenguaje de orden superior que se usa para hablar o describir otro lenguaje —el lenguaje objeto— sin confundirse con él.", example:"Cuando decimos que «gato» tiene cinco letras, usamos el español como <b>metalenguaje</b> para hablar sobre la palabra, no sobre el animal.", completion:"Cuando decimos que «gato» tiene cinco letras, usamos el español como ______ para hablar sobre la palabra, no sobre el animal.", answer:"metalenguaje"},
-    {id:"enunciado-performativo", term:"enunciado performativo", meaning:"Enunciado que no describe una realidad sino que la constituye o realiza mediante su propia pronunciación en el contexto adecuado.", synonym:"Espa&#241;ol para: Enunciado que no describe una realidad sino que la constituye o realiza mediante su propia pronunciación en el contexto adecuado.", example:"«Los declaro marido y mujer» es un clásico <b>enunciado performativo</b> de Austin: no informa sobre un matrimonio, sino que lo instaura.", completion:"«Los declaro marido y mujer» es un clásico ______ de Austin: no informa sobre un matrimonio, sino que lo instaura.", answer:"enunciado performativo"},
-    {id:"hermeneutica", term:"hermenéutica", meaning:"Teoría y práctica de la interpretación de textos, discursos y acciones humanas, con especial atención al papel del contexto y la tradición.", synonym:"Espa&#241;ol para: Teoría y práctica de la interpretación de textos, discursos y acciones humanas, con especial atención al papel del contexto y la tradición.", example:"La <b>hermenéutica</b> de Gadamer sostiene que toda interpretación está mediada por un horizonte histórico que no podemos abandonar del todo.", completion:"La ______ de Gadamer sostiene que toda interpretación está mediada por un horizonte histórico que no podemos abandonar del todo.", answer:"hermenéutica", accept:["hermeneutica"]},
-    {id:"juegos-de-lenguaje", term:"juegos de lenguaje", meaning:"Concepto wittgensteiniano que designa las múltiples prácticas lingüísticas entretejidas con formas de vida, cada una con sus propias reglas.", synonym:"Espa&#241;ol para: Concepto wittgensteiniano que designa las múltiples prácticas lingüísticas entretejidas con formas de vida, cada una con sus propias reglas.", example:"Según Wittgenstein, la metafísica surge de confundir <b>juegos de lenguaje</b> distintos, tomando preguntas gramaticales por preguntas empíricas.", completion:"Según Wittgenstein, la metafísica surge de confundir ______ distintos, tomando preguntas gramaticales por preguntas empíricas.", answer:"juegos de lenguaje"}
+    {id:"teoria-referencial", term:"teoría referencial", meaning:"Doctrina filosófica que sostiene que el significado de una expresión lingüística es el objeto o entidad a la que dicha expresión se refiere.", synonym:"Espa&#241;ol para: Doctrina filosófica que sostiene que el significado de una expresión lingüística es el objeto o entidad a la que dicha expresión se refiere.", example:"La <b>teoría referencial</b> enfrenta el problema de las expresiones sin referente actual, como «el unicornio» o «el rey de Francia».", completion:"La _____ enfrenta el problema de las expresiones sin referente actual, como «el unicornio» o «el rey de Francia».", answer:"teoría referencial", accept:["teoria referencial"]},
+    {id:"condiciones-de-verdad", term:"condiciones de verdad", meaning:"Circunstancias o estados del mundo que, de darse, harían verdadero un enunciado; base de la semántica formal de inspiración tarskiana.", synonym:"Espa&#241;ol para: Circunstancias o estados del mundo que, de darse, harían verdadero un enunciado; base de la semántica formal de inspiración tarskiana.", example:"Conocer las <b>condiciones de verdad</b> de «está lloviendo» equivale a saber qué situación meteorológica haría verdadera esa oración.", completion:"Conocer las _____ de «está lloviendo» equivale a saber qué situación meteorológica haría verdadera esa oración.", answer:"condiciones de verdad"},
+    {id:"holismo-semantico", term:"holismo semántico", meaning:"Tesis según la cual el significado de cualquier expresión lingüística depende de su relación con el conjunto total de creencias o del lenguaje.", synonym:"Espa&#241;ol para: Tesis según la cual el significado de cualquier expresión lingüística depende de su relación con el conjunto total de creencias o del lenguaje.", example:"El <b>holismo semántico</b> de Quine implica que no podemos cambiar el significado de un término sin alterar toda la red de nuestras creencias.", completion:"El _____ de Quine implica que no podemos cambiar el significado de un término sin alterar toda la red de nuestras creencias.", answer:"holismo semántico", accept:["holismo semantico"]},
+    {id:"sentido-y-referencia", term:"sentido y referencia", meaning:"Distinción fregeana entre el modo de presentación de un objeto (sentido) y el objeto mismo al que apunta una expresión (referencia).", synonym:"Espa&#241;ol para: Distinción fregeana entre el modo de presentación de un objeto (sentido) y el objeto mismo al que apunta una expresión (referencia).", example:"«Lucero del alba» y «estrella vespertina» tienen la misma referencia —Venus— pero distinto <b>sentido y referencia</b> en la teoría de Frege.", completion:"«Lucero del alba» y «estrella vespertina» tienen la misma referencia —Venus— pero distinto _____ en la teoría de Frege.", answer:"sentido y referencia"},
+    {id:"metalenguaje", term:"metalenguaje", meaning:"Lenguaje de orden superior que se usa para hablar o describir otro lenguaje —el lenguaje objeto— sin confundirse con él.", synonym:"Espa&#241;ol para: Lenguaje de orden superior que se usa para hablar o describir otro lenguaje —el lenguaje objeto— sin confundirse con él.", example:"Cuando decimos que «gato» tiene cinco letras, usamos el español como <b>metalenguaje</b> para hablar sobre la palabra, no sobre el animal.", completion:"Cuando decimos que «gato» tiene cinco letras, usamos el español como _____ para hablar sobre la palabra, no sobre el animal.", answer:"metalenguaje"},
+    {id:"enunciado-performativo", term:"enunciado performativo", meaning:"Enunciado que no describe una realidad sino que la constituye o realiza mediante su propia pronunciación en el contexto adecuado.", synonym:"Espa&#241;ol para: Enunciado que no describe una realidad sino que la constituye o realiza mediante su propia pronunciación en el contexto adecuado.", example:"«Los declaro marido y mujer» es un clásico <b>enunciado performativo</b> de Austin: no informa sobre un matrimonio, sino que lo instaura.", completion:"«Los declaro marido y mujer» es un clásico _____ de Austin: no informa sobre un matrimonio, sino que lo instaura.", answer:"enunciado performativo"},
+    {id:"hermeneutica", term:"hermenéutica", meaning:"Teoría y práctica de la interpretación de textos, discursos y acciones humanas, con especial atención al papel del contexto y la tradición.", synonym:"Espa&#241;ol para: Teoría y práctica de la interpretación de textos, discursos y acciones humanas, con especial atención al papel del contexto y la tradición.", example:"La <b>hermenéutica</b> de Gadamer sostiene que toda interpretación está mediada por un horizonte histórico que no podemos abandonar del todo.", completion:"La _____ de Gadamer sostiene que toda interpretación está mediada por un horizonte histórico que no podemos abandonar del todo.", answer:"hermenéutica", accept:["hermeneutica"]},
+    {id:"juegos-de-lenguaje", term:"juegos de lenguaje", meaning:"Concepto wittgensteiniano que designa las múltiples prácticas lingüísticas entretejidas con formas de vida, cada una con sus propias reglas.", synonym:"Espa&#241;ol para: Concepto wittgensteiniano que designa las múltiples prácticas lingüísticas entretejidas con formas de vida, cada una con sus propias reglas.", example:"Según Wittgenstein, la metafísica surge de confundir <b>juegos de lenguaje</b> distintos, tomando preguntas gramaticales por preguntas empíricas.", completion:"Según Wittgenstein, la metafísica surge de confundir _____ distintos, tomando preguntas gramaticales por preguntas empíricas.", answer:"juegos de lenguaje"}
   ]
 };
 </script>

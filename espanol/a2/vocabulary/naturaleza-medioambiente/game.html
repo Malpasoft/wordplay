@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V10</div>
 <h1>La Naturaleza y el Medioambiente</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "naturaleza-medioambiente",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_a2_naturaleza-medioambiente",
   section: 'vocabulary',
   items: [
-    {id:"arbol", term:"árbol", meaning:"planta grande con tronco, ramas y hojas", synonym:"Espa&#241;ol para: planta grande con tronco, ramas y hojas", example:"El <b>árbol</b> del jardín da mucha sombra en verano.", completion:"El ______ del jardín da mucha sombra en verano.", answer:"árbol", accept:["arbol"]},
-    {id:"flor", term:"flor", meaning:"parte de la planta de colores vivos y buen olor", synonym:"Espa&#241;ol para: parte de la planta de colores vivos y buen olor", example:"Las <b>flores</b> del jardín huelen muy bien.", completion:"Las ______ del jardín huelen muy bien.", answer:"flor"},
-    {id:"rio", term:"río", meaning:"corriente de agua natural que fluye hasta el mar", synonym:"Espa&#241;ol para: corriente de agua natural que fluye hasta el mar", example:"El <b>río</b> que pasa por nuestra ciudad es muy largo.", completion:"El ______ que pasa por nuestra ciudad es muy largo.", answer:"río", accept:["rio"]},
-    {id:"mar", term:"mar", meaning:"gran masa de agua salada que cubre gran parte de la Tierra", synonym:"Espa&#241;ol para: gran masa de agua salada que cubre gran parte de la Tierra", example:"Vamos al <b>mar</b> en verano.", completion:"Vamos al ______ en verano.", answer:"mar"},
-    {id:"montana", term:"montaña", meaning:"elevación grande del terreno", synonym:"Espa&#241;ol para: elevación grande del terreno", example:"En invierno hay nieve en la <b>montaña</b>.", completion:"En invierno hay nieve en la ______.", answer:"montaña", accept:["montana"]},
-    {id:"bosque", term:"bosque", meaning:"zona grande cubierta de árboles", synonym:"Espa&#241;ol para: zona grande cubierta de árboles", example:"Paseamos por el <b>bosque</b> durante el fin de semana.", completion:"Paseamos por el ______ durante el fin de semana.", answer:"bosque"},
-    {id:"playa", term:"playa", meaning:"zona de arena o piedras junto al mar", synonym:"Espa&#241;ol para: zona de arena o piedras junto al mar", example:"Pasé las vacaciones en la <b>playa</b>.", completion:"Pasé las vacaciones en la ______.", answer:"playa"},
-    {id:"campo", term:"campo", meaning:"zona rural fuera de la ciudad con cultivos o naturaleza", synonym:"Espa&#241;ol para: zona rural fuera de la ciudad con cultivos o naturaleza", example:"Me gusta dar paseos por el <b>campo</b>.", completion:"Me gusta dar paseos por el ______.", answer:"campo"}
+    {id:"arbol", term:"árbol", meaning:"planta grande con tronco, ramas y hojas", synonym:"Espa&#241;ol para: planta grande con tronco, ramas y hojas", example:"El <b>árbol</b> del jardín da mucha sombra en verano.", completion:"El _____ del jardín da mucha sombra en verano.", answer:"árbol", accept:["arbol"]},
+    {id:"flor", term:"flor", meaning:"parte de la planta de colores vivos y buen olor", synonym:"Espa&#241;ol para: parte de la planta de colores vivos y buen olor", example:"Las <b>flores</b> del jardín huelen muy bien.", completion:"Las _____ del jardín huelen muy bien.", answer:"flor"},
+    {id:"rio", term:"río", meaning:"corriente de agua natural que fluye hasta el mar", synonym:"Espa&#241;ol para: corriente de agua natural que fluye hasta el mar", example:"El <b>río</b> que pasa por nuestra ciudad es muy largo.", completion:"El _____ que pasa por nuestra ciudad es muy largo.", answer:"río", accept:["rio"]},
+    {id:"mar", term:"mar", meaning:"gran masa de agua salada que cubre gran parte de la Tierra", synonym:"Espa&#241;ol para: gran masa de agua salada que cubre gran parte de la Tierra", example:"Vamos al <b>mar</b> en verano.", completion:"Vamos al _____ en verano.", answer:"mar"},
+    {id:"montana", term:"montaña", meaning:"elevación grande del terreno", synonym:"Espa&#241;ol para: elevación grande del terreno", example:"En invierno hay nieve en la <b>montaña</b>.", completion:"En invierno hay nieve en la _____.", answer:"montaña", accept:["montana"]},
+    {id:"bosque", term:"bosque", meaning:"zona grande cubierta de árboles", synonym:"Espa&#241;ol para: zona grande cubierta de árboles", example:"Paseamos por el <b>bosque</b> durante el fin de semana.", completion:"Paseamos por el _____ durante el fin de semana.", answer:"bosque"},
+    {id:"playa", term:"playa", meaning:"zona de arena o piedras junto al mar", synonym:"Espa&#241;ol para: zona de arena o piedras junto al mar", example:"Pasé las vacaciones en la <b>playa</b>.", completion:"Pasé las vacaciones en la _____.", answer:"playa"},
+    {id:"campo", term:"campo", meaning:"zona rural fuera de la ciudad con cultivos o naturaleza", synonym:"Espa&#241;ol para: zona rural fuera de la ciudad con cultivos o naturaleza", example:"Me gusta dar paseos por el <b>campo</b>.", completion:"Me gusta dar paseos por el _____.", answer:"campo"}
   ]
 };
 </script>

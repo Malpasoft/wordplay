@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V07</div>
 <h1>Sociedad Contemporánea</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "sociedad-contemporanea",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_c1_sociedad-contemporanea",
   section: 'vocabulary',
   items: [
-    {id:"globalizacion", term:"globalización", meaning:"proceso de integración económica, cultural y política que interconecta a todos los países", synonym:"Espa&#241;ol para: proceso de integración económica, cultural y política que interconecta a todos los países", example:"La <b>globalización</b> ha acelerado la circulación de bienes, ideas y personas.", completion:"La ______ ha acelerado la circulación de bienes, ideas y personas.", answer:"globalización", accept:["globalizacion"]},
-    {id:"desigualdad-estructural", term:"desigualdad estructural", meaning:"diferencia de oportunidades y recursos que está integrada en el sistema social", synonym:"Espa&#241;ol para: diferencia de oportunidades y recursos que está integrada en el sistema social", example:"La <b>desigualdad estructural</b> limita la movilidad social de amplios sectores.", completion:"La ______ limita la movilidad social de amplios sectores.", answer:"desigualdad estructural"},
-    {id:"polarizacion", term:"polarización", meaning:"división extrema de una sociedad o grupo en posiciones opuestas y difícilmente conciliables", synonym:"Espa&#241;ol para: división extrema de una sociedad o grupo en posiciones opuestas y difícilmente conciliables", example:"La <b>polarización</b> política dificulta el diálogo y los acuerdos.", completion:"La ______ política dificulta el diálogo y los acuerdos.", answer:"polarización", accept:["polarizacion"]},
-    {id:"cohesion-social", term:"cohesión social", meaning:"grado de solidaridad, confianza y sentido de pertenencia entre los miembros de una sociedad", synonym:"Espa&#241;ol para: grado de solidaridad, confianza y sentido de pertenencia entre los miembros de una sociedad", example:"Sin <b>cohesión social</b> se debilitan las instituciones democráticas.", completion:"Sin ______ se debilitan las instituciones democráticas.", answer:"cohesión social", accept:["cohesion social"]},
-    {id:"gentrificacion", term:"gentrificación", meaning:"transformación de barrios populares que expulsa a sus habitantes originales por el alza de precios", synonym:"Espa&#241;ol para: transformación de barrios populares que expulsa a sus habitantes originales por el alza de precios", example:"La <b>gentrificación</b> del casco antiguo ha desplazado a familias con pocos recursos.", completion:"La ______ del casco antiguo ha desplazado a familias con pocos recursos.", answer:"gentrificación", accept:["gentrificacion"]},
-    {id:"movilidad-social", term:"movilidad social", meaning:"capacidad de una persona o grupo de cambiar su posición en la jerarquía social", synonym:"Espa&#241;ol para: capacidad de una persona o grupo de cambiar su posición en la jerarquía social", example:"La educación es uno de los principales motores de la <b>movilidad social</b>.", completion:"La educación es uno de los principales motores de la ______.", answer:"movilidad social"},
-    {id:"burocracia", term:"burocracia", meaning:"sistema administrativo complejo con normas y procedimientos que a veces ralentizan la gestión", synonym:"Espa&#241;ol para: sistema administrativo complejo con normas y procedimientos que a veces ralentizan la gestión", example:"La <b>burocracia</b> excesiva frena la innovación en el sector público.", completion:"La ______ excesiva frena la innovación en el sector público.", answer:"burocracia"},
-    {id:"estado-del-bienestar", term:"estado del bienestar", meaning:"sistema en el que el Estado garantiza servicios sociales básicos a todos los ciudadanos", synonym:"Espa&#241;ol para: sistema en el que el Estado garantiza servicios sociales básicos a todos los ciudadanos", example:"El <b>estado del bienestar</b> incluye sanidad, educación y pensiones públicas.", completion:"El ______ incluye sanidad, educación y pensiones públicas.", answer:"estado del bienestar"}
+    {id:"globalizacion", term:"globalización", meaning:"proceso de integración económica, cultural y política que interconecta a todos los países", synonym:"Espa&#241;ol para: proceso de integración económica, cultural y política que interconecta a todos los países", example:"La <b>globalización</b> ha acelerado la circulación de bienes, ideas y personas.", completion:"La _____ ha acelerado la circulación de bienes, ideas y personas.", answer:"globalización", accept:["globalizacion"]},
+    {id:"desigualdad-estructural", term:"desigualdad estructural", meaning:"diferencia de oportunidades y recursos que está integrada en el sistema social", synonym:"Espa&#241;ol para: diferencia de oportunidades y recursos que está integrada en el sistema social", example:"La <b>desigualdad estructural</b> limita la movilidad social de amplios sectores.", completion:"La _____ limita la movilidad social de amplios sectores.", answer:"desigualdad estructural"},
+    {id:"polarizacion", term:"polarización", meaning:"división extrema de una sociedad o grupo en posiciones opuestas y difícilmente conciliables", synonym:"Espa&#241;ol para: división extrema de una sociedad o grupo en posiciones opuestas y difícilmente conciliables", example:"La <b>polarización</b> política dificulta el diálogo y los acuerdos.", completion:"La _____ política dificulta el diálogo y los acuerdos.", answer:"polarización", accept:["polarizacion"]},
+    {id:"cohesion-social", term:"cohesión social", meaning:"grado de solidaridad, confianza y sentido de pertenencia entre los miembros de una sociedad", synonym:"Espa&#241;ol para: grado de solidaridad, confianza y sentido de pertenencia entre los miembros de una sociedad", example:"Sin <b>cohesión social</b> se debilitan las instituciones democráticas.", completion:"Sin _____ se debilitan las instituciones democráticas.", answer:"cohesión social", accept:["cohesion social"]},
+    {id:"gentrificacion", term:"gentrificación", meaning:"transformación de barrios populares que expulsa a sus habitantes originales por el alza de precios", synonym:"Espa&#241;ol para: transformación de barrios populares que expulsa a sus habitantes originales por el alza de precios", example:"La <b>gentrificación</b> del casco antiguo ha desplazado a familias con pocos recursos.", completion:"La _____ del casco antiguo ha desplazado a familias con pocos recursos.", answer:"gentrificación", accept:["gentrificacion"]},
+    {id:"movilidad-social", term:"movilidad social", meaning:"capacidad de una persona o grupo de cambiar su posición en la jerarquía social", synonym:"Espa&#241;ol para: capacidad de una persona o grupo de cambiar su posición en la jerarquía social", example:"La educación es uno de los principales motores de la <b>movilidad social</b>.", completion:"La educación es uno de los principales motores de la _____.", answer:"movilidad social"},
+    {id:"burocracia", term:"burocracia", meaning:"sistema administrativo complejo con normas y procedimientos que a veces ralentizan la gestión", synonym:"Espa&#241;ol para: sistema administrativo complejo con normas y procedimientos que a veces ralentizan la gestión", example:"La <b>burocracia</b> excesiva frena la innovación en el sector público.", completion:"La _____ excesiva frena la innovación en el sector público.", answer:"burocracia"},
+    {id:"estado-del-bienestar", term:"estado del bienestar", meaning:"sistema en el que el Estado garantiza servicios sociales básicos a todos los ciudadanos", synonym:"Espa&#241;ol para: sistema en el que el Estado garantiza servicios sociales básicos a todos los ciudadanos", example:"El <b>estado del bienestar</b> incluye sanidad, educación y pensiones públicas.", completion:"El _____ incluye sanidad, educación y pensiones públicas.", answer:"estado del bienestar"}
   ]
 };
 </script>

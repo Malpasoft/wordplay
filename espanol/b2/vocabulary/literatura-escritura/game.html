@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V05</div>
 <h1>Literatura y Escritura</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "literatura-escritura",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_b2_literatura-escritura",
   section: 'vocabulary',
   items: [
-    {id:"narrador", term:"narrador", meaning:"voz que cuenta la historia dentro de una obra literaria", synonym:"Espa&#241;ol para: voz que cuenta la historia dentro de una obra literaria", example:"El <b>narrador</b> omnisciente conoce los pensamientos de todos los personajes.", completion:"El ______ omnisciente conoce los pensamientos de todos los personajes.", answer:"narrador"},
-    {id:"protagonista", term:"protagonista", meaning:"personaje principal de una obra literaria o cinematográfica", synonym:"Espa&#241;ol para: personaje principal de una obra literaria o cinematográfica", example:"El <b>protagonista</b> de la novela viaja por toda Europa.", completion:"El ______ de la novela viaja por toda Europa.", answer:"protagonista"},
-    {id:"argumento", term:"argumento", meaning:"secuencia de los hechos principales que ocurren en una obra", synonym:"Espa&#241;ol para: secuencia de los hechos principales que ocurren en una obra", example:"El <b>argumento</b> de la novela es muy original.", completion:"El ______ de la novela es muy original.", answer:"argumento"},
-    {id:"metafora", term:"metáfora", meaning:"figura retórica que describe algo comparándolo con otra cosa diferente", synonym:"Espa&#241;ol para: figura retórica que describe algo comparándolo con otra cosa diferente", example:"«El tiempo es oro» es una <b>metáfora</b> muy conocida.", completion:"«El tiempo es oro» es una ______ muy conocida.", answer:"metáfora", accept:["metafora"]},
-    {id:"ironia", term:"ironía", meaning:"figura retórica que expresa lo contrario de lo que se quiere decir", synonym:"Espa&#241;ol para: figura retórica que expresa lo contrario de lo que se quiere decir", example:"El autor usa la <b>ironía</b> para criticar la sociedad.", completion:"El autor usa la ______ para criticar la sociedad.", answer:"ironía", accept:["ironia"]},
-    {id:"genero-literario", term:"género literario", meaning:"categoría en que se clasifica una obra literaria según su forma y contenido", synonym:"Espa&#241;ol para: categoría en que se clasifica una obra literaria según su forma y contenido", example:"La novela negra es un <b>género literario</b> muy popular.", completion:"La novela negra es un ______ muy popular.", answer:"género literario", accept:["genero literario"]},
-    {id:"estilo", term:"estilo", meaning:"manera propia de un autor de usar el lenguaje", synonym:"Espa&#241;ol para: manera propia de un autor de usar el lenguaje", example:"El <b>estilo</b> de García Márquez es inconfundible.", completion:"El ______ de García Márquez es inconfundible.", answer:"estilo"},
-    {id:"ensayo", term:"ensayo", meaning:"texto en prosa que desarrolla una opinión o análisis sobre un tema", synonym:"Espa&#241;ol para: texto en prosa que desarrolla una opinión o análisis sobre un tema", example:"Escribió un <b>ensayo</b> brillante sobre la identidad nacional.", completion:"Escribió un ______ brillante sobre la identidad nacional.", answer:"ensayo"}
+    {id:"narrador", term:"narrador", meaning:"voz que cuenta la historia dentro de una obra literaria", synonym:"Espa&#241;ol para: voz que cuenta la historia dentro de una obra literaria", example:"El <b>narrador</b> omnisciente conoce los pensamientos de todos los personajes.", completion:"El _____ omnisciente conoce los pensamientos de todos los personajes.", answer:"narrador"},
+    {id:"protagonista", term:"protagonista", meaning:"personaje principal de una obra literaria o cinematográfica", synonym:"Espa&#241;ol para: personaje principal de una obra literaria o cinematográfica", example:"El <b>protagonista</b> de la novela viaja por toda Europa.", completion:"El _____ de la novela viaja por toda Europa.", answer:"protagonista"},
+    {id:"argumento", term:"argumento", meaning:"secuencia de los hechos principales que ocurren en una obra", synonym:"Espa&#241;ol para: secuencia de los hechos principales que ocurren en una obra", example:"El <b>argumento</b> de la novela es muy original.", completion:"El _____ de la novela es muy original.", answer:"argumento"},
+    {id:"metafora", term:"metáfora", meaning:"figura retórica que describe algo comparándolo con otra cosa diferente", synonym:"Espa&#241;ol para: figura retórica que describe algo comparándolo con otra cosa diferente", example:"«El tiempo es oro» es una <b>metáfora</b> muy conocida.", completion:"«El tiempo es oro» es una _____ muy conocida.", answer:"metáfora", accept:["metafora"]},
+    {id:"ironia", term:"ironía", meaning:"figura retórica que expresa lo contrario de lo que se quiere decir", synonym:"Espa&#241;ol para: figura retórica que expresa lo contrario de lo que se quiere decir", example:"El autor usa la <b>ironía</b> para criticar la sociedad.", completion:"El autor usa la _____ para criticar la sociedad.", answer:"ironía", accept:["ironia"]},
+    {id:"genero-literario", term:"género literario", meaning:"categoría en que se clasifica una obra literaria según su forma y contenido", synonym:"Espa&#241;ol para: categoría en que se clasifica una obra literaria según su forma y contenido", example:"La novela negra es un <b>género literario</b> muy popular.", completion:"La novela negra es un _____ muy popular.", answer:"género literario", accept:["genero literario"]},
+    {id:"estilo", term:"estilo", meaning:"manera propia de un autor de usar el lenguaje", synonym:"Espa&#241;ol para: manera propia de un autor de usar el lenguaje", example:"El <b>estilo</b> de García Márquez es inconfundible.", completion:"El _____ de García Márquez es inconfundible.", answer:"estilo"},
+    {id:"ensayo", term:"ensayo", meaning:"texto en prosa que desarrolla una opinión o análisis sobre un tema", synonym:"Espa&#241;ol para: texto en prosa que desarrolla una opinión o análisis sobre un tema", example:"Escribió un <b>ensayo</b> brillante sobre la identidad nacional.", completion:"Escribió un _____ brillante sobre la identidad nacional.", answer:"ensayo"}
   ]
 };
 </script>

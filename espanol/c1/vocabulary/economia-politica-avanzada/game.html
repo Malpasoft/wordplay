@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V03</div>
 <h1>Economía Política Avanzada</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "economia-politica-avanzada",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_c1_economia-politica-avanzada",
   section: 'vocabulary',
   items: [
-    {id:"oligopolio", term:"oligopolio", meaning:"mercado dominado por un pequeño número de grandes empresas", synonym:"Espa&#241;ol para: mercado dominado por un pequeño número de grandes empresas", example:"El sector energético opera en un <b>oligopolio</b> difícil de regular.", completion:"El sector energético opera en un ______ difícil de regular.", answer:"oligopolio"},
-    {id:"especulacion", term:"especulación", meaning:"operación financiera que busca beneficio aprovechando variaciones futuras de precios", synonym:"Espa&#241;ol para: operación financiera que busca beneficio aprovechando variaciones futuras de precios", example:"La <b>especulación</b> inmobiliaria disparó el precio de la vivienda.", completion:"La ______ inmobiliaria disparó el precio de la vivienda.", answer:"especulación", accept:["especulacion"]},
-    {id:"redistribucion", term:"redistribución", meaning:"proceso de asignar de nuevo los recursos o la renta entre los miembros de una sociedad", synonym:"Espa&#241;ol para: proceso de asignar de nuevo los recursos o la renta entre los miembros de una sociedad", example:"La <b>redistribución</b> fiscal reduce las desigualdades sociales.", completion:"La ______ fiscal reduce las desigualdades sociales.", answer:"redistribución", accept:["redistribucion"]},
-    {id:"austeridad", term:"austeridad", meaning:"política económica que reduce el gasto público para equilibrar las cuentas del Estado", synonym:"Espa&#241;ol para: política económica que reduce el gasto público para equilibrar las cuentas del Estado", example:"Las medidas de <b>austeridad</b> generaron protestas en todo el país.", completion:"Las medidas de ______ generaron protestas en todo el país.", answer:"austeridad"},
-    {id:"proteccionismo", term:"proteccionismo", meaning:"política económica que protege la industria nacional frente a la competencia extranjera", synonym:"Espa&#241;ol para: política económica que protege la industria nacional frente a la competencia extranjera", example:"El <b>proteccionismo</b> genera tensiones en el comercio internacional.", completion:"El ______ genera tensiones en el comercio internacional.", answer:"proteccionismo"},
-    {id:"productividad", term:"productividad", meaning:"relación entre la producción obtenida y los recursos empleados", synonym:"Espa&#241;ol para: relación entre la producción obtenida y los recursos empleados", example:"El aumento de la <b>productividad</b> permite crecer sin incrementar costes.", completion:"El aumento de la ______ permite crecer sin incrementar costes.", answer:"productividad"},
-    {id:"monopolio", term:"monopolio", meaning:"situación de mercado en la que una sola empresa controla la oferta de un bien o servicio", synonym:"Espa&#241;ol para: situación de mercado en la que una sola empresa controla la oferta de un bien o servicio", example:"Las autoridades disolvieron el <b>monopolio</b> por atentar contra la competencia.", completion:"Las autoridades disolvieron el ______ por atentar contra la competencia.", answer:"monopolio"},
-    {id:"capitalismo", term:"capitalismo", meaning:"sistema económico basado en la propiedad privada y la libre competencia de mercado", synonym:"Espa&#241;ol para: sistema económico basado en la propiedad privada y la libre competencia de mercado", example:"El <b>capitalismo</b> moderno ha adoptado distintos modelos sociales.", completion:"El ______ moderno ha adoptado distintos modelos sociales.", answer:"capitalismo"}
+    {id:"oligopolio", term:"oligopolio", meaning:"mercado dominado por un pequeño número de grandes empresas", synonym:"Espa&#241;ol para: mercado dominado por un pequeño número de grandes empresas", example:"El sector energético opera en un <b>oligopolio</b> difícil de regular.", completion:"El sector energético opera en un _____ difícil de regular.", answer:"oligopolio"},
+    {id:"especulacion", term:"especulación", meaning:"operación financiera que busca beneficio aprovechando variaciones futuras de precios", synonym:"Espa&#241;ol para: operación financiera que busca beneficio aprovechando variaciones futuras de precios", example:"La <b>especulación</b> inmobiliaria disparó el precio de la vivienda.", completion:"La _____ inmobiliaria disparó el precio de la vivienda.", answer:"especulación", accept:["especulacion"]},
+    {id:"redistribucion", term:"redistribución", meaning:"proceso de asignar de nuevo los recursos o la renta entre los miembros de una sociedad", synonym:"Espa&#241;ol para: proceso de asignar de nuevo los recursos o la renta entre los miembros de una sociedad", example:"La <b>redistribución</b> fiscal reduce las desigualdades sociales.", completion:"La _____ fiscal reduce las desigualdades sociales.", answer:"redistribución", accept:["redistribucion"]},
+    {id:"austeridad", term:"austeridad", meaning:"política económica que reduce el gasto público para equilibrar las cuentas del Estado", synonym:"Espa&#241;ol para: política económica que reduce el gasto público para equilibrar las cuentas del Estado", example:"Las medidas de <b>austeridad</b> generaron protestas en todo el país.", completion:"Las medidas de _____ generaron protestas en todo el país.", answer:"austeridad"},
+    {id:"proteccionismo", term:"proteccionismo", meaning:"política económica que protege la industria nacional frente a la competencia extranjera", synonym:"Espa&#241;ol para: política económica que protege la industria nacional frente a la competencia extranjera", example:"El <b>proteccionismo</b> genera tensiones en el comercio internacional.", completion:"El _____ genera tensiones en el comercio internacional.", answer:"proteccionismo"},
+    {id:"productividad", term:"productividad", meaning:"relación entre la producción obtenida y los recursos empleados", synonym:"Espa&#241;ol para: relación entre la producción obtenida y los recursos empleados", example:"El aumento de la <b>productividad</b> permite crecer sin incrementar costes.", completion:"El aumento de la _____ permite crecer sin incrementar costes.", answer:"productividad"},
+    {id:"monopolio", term:"monopolio", meaning:"situación de mercado en la que una sola empresa controla la oferta de un bien o servicio", synonym:"Espa&#241;ol para: situación de mercado en la que una sola empresa controla la oferta de un bien o servicio", example:"Las autoridades disolvieron el <b>monopolio</b> por atentar contra la competencia.", completion:"Las autoridades disolvieron el _____ por atentar contra la competencia.", answer:"monopolio"},
+    {id:"capitalismo", term:"capitalismo", meaning:"sistema económico basado en la propiedad privada y la libre competencia de mercado", synonym:"Espa&#241;ol para: sistema económico basado en la propiedad privada y la libre competencia de mercado", example:"El <b>capitalismo</b> moderno ha adoptado distintos modelos sociales.", completion:"El _____ moderno ha adoptado distintos modelos sociales.", answer:"capitalismo"}
   ]
 };
 </script>

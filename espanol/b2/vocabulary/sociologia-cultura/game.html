@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V11</div>
 <h1>Sociología y Cultura</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "sociologia-cultura",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_b2_sociologia-cultura",
   section: 'vocabulary',
   items: [
-    {id:"identidad", term:"identidad", meaning:"conjunto de rasgos y características que definen a una persona o grupo", synonym:"Espa&#241;ol para: conjunto de rasgos y características que definen a una persona o grupo", example:"La <b>identidad</b> cultural se forma a través de la historia y las tradiciones.", completion:"La ______ cultural se forma a través de la historia y las tradiciones.", answer:"identidad"},
-    {id:"diversidad", term:"diversidad", meaning:"variedad de características, culturas, ideas o personas en un grupo", synonym:"Espa&#241;ol para: variedad de características, culturas, ideas o personas en un grupo", example:"La <b>diversidad</b> cultural enriquece a la sociedad.", completion:"La ______ cultural enriquece a la sociedad.", answer:"diversidad"},
-    {id:"integracion", term:"integración", meaning:"proceso por el que personas de distintos orígenes conviven en una misma sociedad", synonym:"Espa&#241;ol para: proceso por el que personas de distintos orígenes conviven en una misma sociedad", example:"La <b>integración</b> de los inmigrantes requiere políticas activas.", completion:"La ______ de los inmigrantes requiere políticas activas.", answer:"integración", accept:["integracion"]},
-    {id:"estereotipo", term:"estereotipo", meaning:"imagen simplificada y generalizada sobre un grupo de personas", synonym:"Espa&#241;ol para: imagen simplificada y generalizada sobre un grupo de personas", example:"Los <b>estereotipos</b> de género limitan el desarrollo personal.", completion:"Los ______ de género limitan el desarrollo personal.", answer:"estereotipo"},
-    {id:"discriminacion", term:"discriminación", meaning:"trato desigual e injusto a una persona por razón de raza, sexo u otros factores", synonym:"Espa&#241;ol para: trato desigual e injusto a una persona por razón de raza, sexo u otros factores", example:"La <b>discriminación</b> laboral por edad sigue siendo un problema.", completion:"La ______ laboral por edad sigue siendo un problema.", answer:"discriminación", accept:["discriminacion"]},
-    {id:"empoderamiento", term:"empoderamiento", meaning:"proceso por el que una persona o grupo adquiere poder e influencia", synonym:"Espa&#241;ol para: proceso por el que una persona o grupo adquiere poder e influencia", example:"El <b>empoderamiento</b> femenino avanza gracias a nuevas políticas.", completion:"El ______ femenino avanza gracias a nuevas políticas.", answer:"empoderamiento"},
-    {id:"cohesion-social", term:"cohesión social", meaning:"grado de unidad y solidaridad que existe entre los miembros de una sociedad", synonym:"Espa&#241;ol para: grado de unidad y solidaridad que existe entre los miembros de una sociedad", example:"La <b>cohesión social</b> se debilita con la desigualdad extrema.", completion:"La ______ se debilita con la desigualdad extrema.", answer:"cohesión social", accept:["cohesion social"]},
-    {id:"multiculturalismo", term:"multiculturalismo", meaning:"convivencia de diferentes culturas en un mismo espacio social", synonym:"Espa&#241;ol para: convivencia de diferentes culturas en un mismo espacio social", example:"El <b>multiculturalismo</b> enriquece la sociedad pero también plantea desafíos.", completion:"El ______ enriquece la sociedad pero también plantea desafíos.", answer:"multiculturalismo"}
+    {id:"identidad", term:"identidad", meaning:"conjunto de rasgos y características que definen a una persona o grupo", synonym:"Espa&#241;ol para: conjunto de rasgos y características que definen a una persona o grupo", example:"La <b>identidad</b> cultural se forma a través de la historia y las tradiciones.", completion:"La _____ cultural se forma a través de la historia y las tradiciones.", answer:"identidad"},
+    {id:"diversidad", term:"diversidad", meaning:"variedad de características, culturas, ideas o personas en un grupo", synonym:"Espa&#241;ol para: variedad de características, culturas, ideas o personas en un grupo", example:"La <b>diversidad</b> cultural enriquece a la sociedad.", completion:"La _____ cultural enriquece a la sociedad.", answer:"diversidad"},
+    {id:"integracion", term:"integración", meaning:"proceso por el que personas de distintos orígenes conviven en una misma sociedad", synonym:"Espa&#241;ol para: proceso por el que personas de distintos orígenes conviven en una misma sociedad", example:"La <b>integración</b> de los inmigrantes requiere políticas activas.", completion:"La _____ de los inmigrantes requiere políticas activas.", answer:"integración", accept:["integracion"]},
+    {id:"estereotipo", term:"estereotipo", meaning:"imagen simplificada y generalizada sobre un grupo de personas", synonym:"Espa&#241;ol para: imagen simplificada y generalizada sobre un grupo de personas", example:"Los <b>estereotipos</b> de género limitan el desarrollo personal.", completion:"Los _____ de género limitan el desarrollo personal.", answer:"estereotipo"},
+    {id:"discriminacion", term:"discriminación", meaning:"trato desigual e injusto a una persona por razón de raza, sexo u otros factores", synonym:"Espa&#241;ol para: trato desigual e injusto a una persona por razón de raza, sexo u otros factores", example:"La <b>discriminación</b> laboral por edad sigue siendo un problema.", completion:"La _____ laboral por edad sigue siendo un problema.", answer:"discriminación", accept:["discriminacion"]},
+    {id:"empoderamiento", term:"empoderamiento", meaning:"proceso por el que una persona o grupo adquiere poder e influencia", synonym:"Espa&#241;ol para: proceso por el que una persona o grupo adquiere poder e influencia", example:"El <b>empoderamiento</b> femenino avanza gracias a nuevas políticas.", completion:"El _____ femenino avanza gracias a nuevas políticas.", answer:"empoderamiento"},
+    {id:"cohesion-social", term:"cohesión social", meaning:"grado de unidad y solidaridad que existe entre los miembros de una sociedad", synonym:"Espa&#241;ol para: grado de unidad y solidaridad que existe entre los miembros de una sociedad", example:"La <b>cohesión social</b> se debilita con la desigualdad extrema.", completion:"La _____ se debilita con la desigualdad extrema.", answer:"cohesión social", accept:["cohesion social"]},
+    {id:"multiculturalismo", term:"multiculturalismo", meaning:"convivencia de diferentes culturas en un mismo espacio social", synonym:"Espa&#241;ol para: convivencia de diferentes culturas en un mismo espacio social", example:"El <b>multiculturalismo</b> enriquece la sociedad pero también plantea desafíos.", completion:"El _____ enriquece la sociedad pero también plantea desafíos.", answer:"multiculturalismo"}
   ]
 };
 </script>

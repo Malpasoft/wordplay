@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V08</div>
 <h1>Ciencia y Tecnología</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "ciencia-tecnologia",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_b1_ciencia-tecnologia",
   section: 'vocabulary',
   items: [
-    {id:"experimento", term:"experimento", meaning:"Prueba controlada que se realiza para comprobar o descubrir algo mediante la observación.", synonym:"Espa&#241;ol para: Prueba controlada que se realiza para comprobar o descubrir algo mediante la observación.", example:"Los estudiantes realizaron un <b>experimento</b> en el laboratorio para estudiar la reacción química.", completion:"Los estudiantes realizaron un ______ en el laboratorio para estudiar la reacción química.", answer:"experimento"},
-    {id:"investigacion", term:"investigación", meaning:"Proceso sistemático de búsqueda y análisis de información para ampliar el conocimiento.", synonym:"Espa&#241;ol para: Proceso sistemático de búsqueda y análisis de información para ampliar el conocimiento.", example:"El equipo de <b>investigación</b> lleva años estudiando una posible cura para la enfermedad.", completion:"El equipo de ______ lleva años estudiando una posible cura para la enfermedad.", answer:"investigación", accept:["investigacion"]},
-    {id:"descubrimiento", term:"descubrimiento", meaning:"Hallazgo de algo desconocido o nuevo mediante la observación o el estudio.", synonym:"Espa&#241;ol para: Hallazgo de algo desconocido o nuevo mediante la observación o el estudio.", example:"El <b>descubrimiento</b> de la penicilina cambió para siempre la medicina moderna.", completion:"El ______ de la penicilina cambió para siempre la medicina moderna.", answer:"descubrimiento"},
-    {id:"invento", term:"invento", meaning:"Objeto, proceso o idea creado por primera vez mediante el ingenio y el trabajo.", synonym:"Espa&#241;ol para: Objeto, proceso o idea creado por primera vez mediante el ingenio y el trabajo.", example:"El <b>invento</b> de la imprenta permitió difundir el conocimiento a gran escala.", completion:"El ______ de la imprenta permitió difundir el conocimiento a gran escala.", answer:"invento"},
-    {id:"evolucion", term:"evolución", meaning:"Proceso gradual de cambio y desarrollo de los seres vivos a lo largo del tiempo.", synonym:"Espa&#241;ol para: Proceso gradual de cambio y desarrollo de los seres vivos a lo largo del tiempo.", example:"La teoría de la <b>evolución</b> de Darwin revolucionó la biología en el siglo XIX.", completion:"La teoría de la ______ de Darwin revolucionó la biología en el siglo XIX.", answer:"evolución", accept:["evolucion"]},
-    {id:"atomo", term:"átomo", meaning:"Unidad más pequeña de un elemento químico que conserva sus propiedades.", synonym:"Espa&#241;ol para: Unidad más pequeña de un elemento químico que conserva sus propiedades.", example:"Un <b>átomo</b> está compuesto por un núcleo y una nube de electrones a su alrededor.", completion:"Un ______ está compuesto por un núcleo y una nube de electrones a su alrededor.", answer:"átomo", accept:["atomo"]},
-    {id:"molecula", term:"molécula", meaning:"Agrupación de dos o más átomos unidos mediante enlaces químicos.", synonym:"Espa&#241;ol para: Agrupación de dos o más átomos unidos mediante enlaces químicos.", example:"El agua está formada por una <b>molécula</b> de dos átomos de hidrógeno y uno de oxígeno.", completion:"El agua está formada por una ______ de dos átomos de hidrógeno y uno de oxígeno.", answer:"molécula", accept:["molecula"]},
-    {id:"laboratorio", term:"laboratorio", meaning:"Lugar equipado con instrumentos y materiales para realizar experimentos científicos.", synonym:"Espa&#241;ol para: Lugar equipado con instrumentos y materiales para realizar experimentos científicos.", example:"Los investigadores pasaron toda la semana en el <b>laboratorio</b> analizando las muestras.", completion:"Los investigadores pasaron toda la semana en el ______ analizando las muestras.", answer:"laboratorio"}
+    {id:"experimento", term:"experimento", meaning:"Prueba controlada que se realiza para comprobar o descubrir algo mediante la observación.", synonym:"Espa&#241;ol para: Prueba controlada que se realiza para comprobar o descubrir algo mediante la observación.", example:"Los estudiantes realizaron un <b>experimento</b> en el laboratorio para estudiar la reacción química.", completion:"Los estudiantes realizaron un _____ en el laboratorio para estudiar la reacción química.", answer:"experimento"},
+    {id:"investigacion", term:"investigación", meaning:"Proceso sistemático de búsqueda y análisis de información para ampliar el conocimiento.", synonym:"Espa&#241;ol para: Proceso sistemático de búsqueda y análisis de información para ampliar el conocimiento.", example:"El equipo de <b>investigación</b> lleva años estudiando una posible cura para la enfermedad.", completion:"El equipo de _____ lleva años estudiando una posible cura para la enfermedad.", answer:"investigación", accept:["investigacion"]},
+    {id:"descubrimiento", term:"descubrimiento", meaning:"Hallazgo de algo desconocido o nuevo mediante la observación o el estudio.", synonym:"Espa&#241;ol para: Hallazgo de algo desconocido o nuevo mediante la observación o el estudio.", example:"El <b>descubrimiento</b> de la penicilina cambió para siempre la medicina moderna.", completion:"El _____ de la penicilina cambió para siempre la medicina moderna.", answer:"descubrimiento"},
+    {id:"invento", term:"invento", meaning:"Objeto, proceso o idea creado por primera vez mediante el ingenio y el trabajo.", synonym:"Espa&#241;ol para: Objeto, proceso o idea creado por primera vez mediante el ingenio y el trabajo.", example:"El <b>invento</b> de la imprenta permitió difundir el conocimiento a gran escala.", completion:"El _____ de la imprenta permitió difundir el conocimiento a gran escala.", answer:"invento"},
+    {id:"evolucion", term:"evolución", meaning:"Proceso gradual de cambio y desarrollo de los seres vivos a lo largo del tiempo.", synonym:"Espa&#241;ol para: Proceso gradual de cambio y desarrollo de los seres vivos a lo largo del tiempo.", example:"La teoría de la <b>evolución</b> de Darwin revolucionó la biología en el siglo XIX.", completion:"La teoría de la _____ de Darwin revolucionó la biología en el siglo XIX.", answer:"evolución", accept:["evolucion"]},
+    {id:"atomo", term:"átomo", meaning:"Unidad más pequeña de un elemento químico que conserva sus propiedades.", synonym:"Espa&#241;ol para: Unidad más pequeña de un elemento químico que conserva sus propiedades.", example:"Un <b>átomo</b> está compuesto por un núcleo y una nube de electrones a su alrededor.", completion:"Un _____ está compuesto por un núcleo y una nube de electrones a su alrededor.", answer:"átomo", accept:["atomo"]},
+    {id:"molecula", term:"molécula", meaning:"Agrupación de dos o más átomos unidos mediante enlaces químicos.", synonym:"Espa&#241;ol para: Agrupación de dos o más átomos unidos mediante enlaces químicos.", example:"El agua está formada por una <b>molécula</b> de dos átomos de hidrógeno y uno de oxígeno.", completion:"El agua está formada por una _____ de dos átomos de hidrógeno y uno de oxígeno.", answer:"molécula", accept:["molecula"]},
+    {id:"laboratorio", term:"laboratorio", meaning:"Lugar equipado con instrumentos y materiales para realizar experimentos científicos.", synonym:"Espa&#241;ol para: Lugar equipado con instrumentos y materiales para realizar experimentos científicos.", example:"Los investigadores pasaron toda la semana en el <b>laboratorio</b> analizando las muestras.", completion:"Los investigadores pasaron toda la semana en el _____ analizando las muestras.", answer:"laboratorio"}
   ]
 };
 </script>

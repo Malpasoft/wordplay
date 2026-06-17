@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V04</div>
 <h1>Cultura y Arte</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "cultura-arte",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_b1_cultura-arte",
   section: 'vocabulary',
   items: [
-    {id:"pintura", term:"pintura", meaning:"Obra de arte creada aplicando pigmentos sobre una superficie, o la técnica usada para crearla.", synonym:"Espa&#241;ol para: Obra de arte creada aplicando pigmentos sobre una superficie, o la técnica usada para crearla.", example:"La <b>pintura</b> de Frida Kahlo refleja su vida personal con gran intensidad.", completion:"La ______ de Frida Kahlo refleja su vida personal con gran intensidad.", answer:"pintura"},
-    {id:"escultura", term:"escultura", meaning:"Obra de arte tridimensional creada moldeando, tallando o ensamblando materiales como piedra, madera o metal.", synonym:"Espa&#241;ol para: Obra de arte tridimensional creada moldeando, tallando o ensamblando materiales como piedra, madera o metal.", example:"La <b>escultura</b> en el centro de la plaza representa a un héroe nacional.", completion:"La ______ en el centro de la plaza representa a un héroe nacional.", answer:"escultura"},
-    {id:"arquitectura", term:"arquitectura", meaning:"Arte y técnica de diseñar y construir edificios y otras estructuras habitables.", synonym:"Espa&#241;ol para: Arte y técnica de diseñar y construir edificios y otras estructuras habitables.", example:"La <b>arquitectura</b> colonial de la ciudad fue declarada Patrimonio de la Humanidad.", completion:"La ______ colonial de la ciudad fue declarada Patrimonio de la Humanidad.", answer:"arquitectura"},
-    {id:"exposicion", term:"exposición", meaning:"Muestra pública de obras de arte, fotografías u objetos en un espacio determinado.", synonym:"Espa&#241;ol para: Muestra pública de obras de arte, fotografías u objetos en un espacio determinado.", example:"La <b>exposición</b> de fotografía contemporánea estuvo abierta durante todo el mes.", completion:"La ______ de fotografía contemporánea estuvo abierta durante todo el mes.", answer:"exposición", accept:["exposicion"]},
-    {id:"museo", term:"museo", meaning:"Institución que conserva, estudia y exhibe colecciones de objetos artísticos, históricos o científicos.", synonym:"Espa&#241;ol para: Institución que conserva, estudia y exhibe colecciones de objetos artísticos, históricos o científicos.", example:"El <b>museo</b> nacional ofrece entrada gratuita los domingos por la mañana.", completion:"El ______ nacional ofrece entrada gratuita los domingos por la mañana.", answer:"museo"},
-    {id:"concierto", term:"concierto", meaning:"Actuación musical en directo ante un público, interpretada por uno o varios músicos.", synonym:"Espa&#241;ol para: Actuación musical en directo ante un público, interpretada por uno o varios músicos.", example:"Asistimos a un <b>concierto</b> de jazz en el auditorio al aire libre.", completion:"Asistimos a un ______ de jazz en el auditorio al aire libre.", answer:"concierto"},
-    {id:"espectaculo", term:"espectáculo", meaning:"Función o representación artística que se presenta ante un público.", synonym:"Espa&#241;ol para: Función o representación artística que se presenta ante un público.", example:"El <b>espectáculo</b> de danza flamenca duró más de dos horas y fue impresionante.", completion:"El ______ de danza flamenca duró más de dos horas y fue impresionante.", answer:"espectáculo", accept:["espectaculo"]},
-    {id:"literatura", term:"literatura", meaning:"Conjunto de obras escritas que tienen valor artístico o cultural, como novelas, poemas y cuentos.", synonym:"Espa&#241;ol para: Conjunto de obras escritas que tienen valor artístico o cultural, como novelas, poemas y cuentos.", example:"La <b>literatura</b> latinoamericana del siglo XX es reconocida en todo el mundo.", completion:"La ______ latinoamericana del siglo XX es reconocida en todo el mundo.", answer:"literatura"}
+    {id:"pintura", term:"pintura", meaning:"Obra de arte creada aplicando pigmentos sobre una superficie, o la técnica usada para crearla.", synonym:"Espa&#241;ol para: Obra de arte creada aplicando pigmentos sobre una superficie, o la técnica usada para crearla.", example:"La <b>pintura</b> de Frida Kahlo refleja su vida personal con gran intensidad.", completion:"La _____ de Frida Kahlo refleja su vida personal con gran intensidad.", answer:"pintura"},
+    {id:"escultura", term:"escultura", meaning:"Obra de arte tridimensional creada moldeando, tallando o ensamblando materiales como piedra, madera o metal.", synonym:"Espa&#241;ol para: Obra de arte tridimensional creada moldeando, tallando o ensamblando materiales como piedra, madera o metal.", example:"La <b>escultura</b> en el centro de la plaza representa a un héroe nacional.", completion:"La _____ en el centro de la plaza representa a un héroe nacional.", answer:"escultura"},
+    {id:"arquitectura", term:"arquitectura", meaning:"Arte y técnica de diseñar y construir edificios y otras estructuras habitables.", synonym:"Espa&#241;ol para: Arte y técnica de diseñar y construir edificios y otras estructuras habitables.", example:"La <b>arquitectura</b> colonial de la ciudad fue declarada Patrimonio de la Humanidad.", completion:"La _____ colonial de la ciudad fue declarada Patrimonio de la Humanidad.", answer:"arquitectura"},
+    {id:"exposicion", term:"exposición", meaning:"Muestra pública de obras de arte, fotografías u objetos en un espacio determinado.", synonym:"Espa&#241;ol para: Muestra pública de obras de arte, fotografías u objetos en un espacio determinado.", example:"La <b>exposición</b> de fotografía contemporánea estuvo abierta durante todo el mes.", completion:"La _____ de fotografía contemporánea estuvo abierta durante todo el mes.", answer:"exposición", accept:["exposicion"]},
+    {id:"museo", term:"museo", meaning:"Institución que conserva, estudia y exhibe colecciones de objetos artísticos, históricos o científicos.", synonym:"Espa&#241;ol para: Institución que conserva, estudia y exhibe colecciones de objetos artísticos, históricos o científicos.", example:"El <b>museo</b> nacional ofrece entrada gratuita los domingos por la mañana.", completion:"El _____ nacional ofrece entrada gratuita los domingos por la mañana.", answer:"museo"},
+    {id:"concierto", term:"concierto", meaning:"Actuación musical en directo ante un público, interpretada por uno o varios músicos.", synonym:"Espa&#241;ol para: Actuación musical en directo ante un público, interpretada por uno o varios músicos.", example:"Asistimos a un <b>concierto</b> de jazz en el auditorio al aire libre.", completion:"Asistimos a un _____ de jazz en el auditorio al aire libre.", answer:"concierto"},
+    {id:"espectaculo", term:"espectáculo", meaning:"Función o representación artística que se presenta ante un público.", synonym:"Espa&#241;ol para: Función o representación artística que se presenta ante un público.", example:"El <b>espectáculo</b> de danza flamenca duró más de dos horas y fue impresionante.", completion:"El _____ de danza flamenca duró más de dos horas y fue impresionante.", answer:"espectáculo", accept:["espectaculo"]},
+    {id:"literatura", term:"literatura", meaning:"Conjunto de obras escritas que tienen valor artístico o cultural, como novelas, poemas y cuentos.", synonym:"Espa&#241;ol para: Conjunto de obras escritas que tienen valor artístico o cultural, como novelas, poemas y cuentos.", example:"La <b>literatura</b> latinoamericana del siglo XX es reconocida en todo el mundo.", completion:"La _____ latinoamericana del siglo XX es reconocida en todo el mundo.", answer:"literatura"}
   ]
 };
 </script>

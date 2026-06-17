@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V08</div>
 <h1>Psicología y Conducta</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "psicologia-conducta",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_b2_psicologia-conducta",
   section: 'vocabulary',
   items: [
-    {id:"conducta", term:"conducta", meaning:"manera en que una persona actúa o se comporta", synonym:"Espa&#241;ol para: manera en que una persona actúa o se comporta", example:"El psicólogo estudia la <b>conducta</b> del paciente.", completion:"El psicólogo estudia la ______ del paciente.", answer:"conducta"},
-    {id:"motivacion", term:"motivación", meaning:"conjunto de razones o estímulos que impulsan a una persona a actuar", synonym:"Espa&#241;ol para: conjunto de razones o estímulos que impulsan a una persona a actuar", example:"La <b>motivación</b> es clave para alcanzar los objetivos.", completion:"La ______ es clave para alcanzar los objetivos.", answer:"motivación", accept:["motivacion"]},
-    {id:"autoestima", term:"autoestima", meaning:"valoración que una persona tiene de sí misma", synonym:"Espa&#241;ol para: valoración que una persona tiene de sí misma", example:"Una buena <b>autoestima</b> es fundamental para el bienestar.", completion:"Una buena ______ es fundamental para el bienestar.", answer:"autoestima"},
-    {id:"ansiedad", term:"ansiedad", meaning:"estado de inquietud o angustia ante una amenaza real o imaginaria", synonym:"Espa&#241;ol para: estado de inquietud o angustia ante una amenaza real o imaginaria", example:"La <b>ansiedad</b> puede afectar al rendimiento laboral.", completion:"La ______ puede afectar al rendimiento laboral.", answer:"ansiedad"},
-    {id:"depresion", term:"depresión", meaning:"trastorno mental caracterizado por tristeza profunda y falta de energía", synonym:"Espa&#241;ol para: trastorno mental caracterizado por tristeza profunda y falta de energía", example:"La <b>depresión</b> es una de las enfermedades mentales más comunes.", completion:"La ______ es una de las enfermedades mentales más comunes.", answer:"depresión", accept:["depresion"]},
-    {id:"resiliencia", term:"resiliencia", meaning:"capacidad de recuperarse ante las adversidades y adaptarse a ellas", synonym:"Espa&#241;ol para: capacidad de recuperarse ante las adversidades y adaptarse a ellas", example:"La <b>resiliencia</b> le permitió superar momentos muy difíciles.", completion:"La ______ le permitió superar momentos muy difíciles.", answer:"resiliencia"},
-    {id:"sesgo-cognitivo", term:"sesgo cognitivo", meaning:"error sistemático de pensamiento que influye en la percepción y los juicios", synonym:"Espa&#241;ol para: error sistemático de pensamiento que influye en la percepción y los juicios", example:"El <b>sesgo cognitivo</b> de confirmación nos lleva a buscar lo que ya creemos.", completion:"El ______ de confirmación nos lleva a buscar lo que ya creemos.", answer:"sesgo cognitivo"},
-    {id:"inconsciente", term:"inconsciente", meaning:"parte de la mente que contiene pensamientos y emociones de los que no somos conscientes", synonym:"Espa&#241;ol para: parte de la mente que contiene pensamientos y emociones de los que no somos conscientes", example:"Freud creía que el <b>inconsciente</b> gobierna gran parte del comportamiento.", completion:"Freud creía que el ______ gobierna gran parte del comportamiento.", answer:"inconsciente"}
+    {id:"conducta", term:"conducta", meaning:"manera en que una persona actúa o se comporta", synonym:"Espa&#241;ol para: manera en que una persona actúa o se comporta", example:"El psicólogo estudia la <b>conducta</b> del paciente.", completion:"El psicólogo estudia la _____ del paciente.", answer:"conducta"},
+    {id:"motivacion", term:"motivación", meaning:"conjunto de razones o estímulos que impulsan a una persona a actuar", synonym:"Espa&#241;ol para: conjunto de razones o estímulos que impulsan a una persona a actuar", example:"La <b>motivación</b> es clave para alcanzar los objetivos.", completion:"La _____ es clave para alcanzar los objetivos.", answer:"motivación", accept:["motivacion"]},
+    {id:"autoestima", term:"autoestima", meaning:"valoración que una persona tiene de sí misma", synonym:"Espa&#241;ol para: valoración que una persona tiene de sí misma", example:"Una buena <b>autoestima</b> es fundamental para el bienestar.", completion:"Una buena _____ es fundamental para el bienestar.", answer:"autoestima"},
+    {id:"ansiedad", term:"ansiedad", meaning:"estado de inquietud o angustia ante una amenaza real o imaginaria", synonym:"Espa&#241;ol para: estado de inquietud o angustia ante una amenaza real o imaginaria", example:"La <b>ansiedad</b> puede afectar al rendimiento laboral.", completion:"La _____ puede afectar al rendimiento laboral.", answer:"ansiedad"},
+    {id:"depresion", term:"depresión", meaning:"trastorno mental caracterizado por tristeza profunda y falta de energía", synonym:"Espa&#241;ol para: trastorno mental caracterizado por tristeza profunda y falta de energía", example:"La <b>depresión</b> es una de las enfermedades mentales más comunes.", completion:"La _____ es una de las enfermedades mentales más comunes.", answer:"depresión", accept:["depresion"]},
+    {id:"resiliencia", term:"resiliencia", meaning:"capacidad de recuperarse ante las adversidades y adaptarse a ellas", synonym:"Espa&#241;ol para: capacidad de recuperarse ante las adversidades y adaptarse a ellas", example:"La <b>resiliencia</b> le permitió superar momentos muy difíciles.", completion:"La _____ le permitió superar momentos muy difíciles.", answer:"resiliencia"},
+    {id:"sesgo-cognitivo", term:"sesgo cognitivo", meaning:"error sistemático de pensamiento que influye en la percepción y los juicios", synonym:"Espa&#241;ol para: error sistemático de pensamiento que influye en la percepción y los juicios", example:"El <b>sesgo cognitivo</b> de confirmación nos lleva a buscar lo que ya creemos.", completion:"El _____ de confirmación nos lleva a buscar lo que ya creemos.", answer:"sesgo cognitivo"},
+    {id:"inconsciente", term:"inconsciente", meaning:"parte de la mente que contiene pensamientos y emociones de los que no somos conscientes", synonym:"Espa&#241;ol para: parte de la mente que contiene pensamientos y emociones de los que no somos conscientes", example:"Freud creía que el <b>inconsciente</b> gobierna gran parte del comportamiento.", completion:"Freud creía que el _____ gobierna gran parte del comportamiento.", answer:"inconsciente"}
   ]
 };
 </script>

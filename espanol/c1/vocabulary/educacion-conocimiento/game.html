@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V12</div>
 <h1>Educación y Conocimiento</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "educacion-conocimiento",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_c1_educacion-conocimiento",
   section: 'vocabulary',
   items: [
-    {id:"pedagogia-critica", term:"pedagogía crítica", meaning:"enfoque educativo que invita a cuestionar las estructuras de poder y fomenta el pensamiento emancipador", synonym:"Espa&#241;ol para: enfoque educativo que invita a cuestionar las estructuras de poder y fomenta el pensamiento emancipador", example:"La <b>pedagogía crítica</b> de Freire transformó la educación en América Latina.", completion:"La ______ de Freire transformó la educación en América Latina.", answer:"pedagogía crítica", accept:["pedagogia critica"]},
-    {id:"aprendizaje-significativo", term:"aprendizaje significativo", meaning:"proceso en el que el estudiante conecta el nuevo conocimiento con lo que ya sabe", synonym:"Espa&#241;ol para: proceso en el que el estudiante conecta el nuevo conocimiento con lo que ya sabe", example:"El <b>aprendizaje significativo</b> favorece la retención a largo plazo.", completion:"El ______ favorece la retención a largo plazo.", answer:"aprendizaje significativo"},
-    {id:"curriculo-oculto", term:"currículo oculto", meaning:"normas, valores y actitudes que se transmiten en la escuela sin que estén en el programa oficial", synonym:"Espa&#241;ol para: normas, valores y actitudes que se transmiten en la escuela sin que estén en el programa oficial", example:"El <b>currículo oculto</b> puede reforzar estereotipos de género sin que nadie lo advierta.", completion:"El ______ puede reforzar estereotipos de género sin que nadie lo advierta.", answer:"currículo oculto", accept:["curriculo oculto"]},
-    {id:"evaluacion-formativa", term:"evaluación formativa", meaning:"tipo de evaluación continua que orienta el proceso de aprendizaje en lugar de calificarlo", synonym:"Espa&#241;ol para: tipo de evaluación continua que orienta el proceso de aprendizaje en lugar de calificarlo", example:"La <b>evaluación formativa</b> da retroalimentación constante al estudiante.", completion:"La ______ da retroalimentación constante al estudiante.", answer:"evaluación formativa", accept:["evaluacion formativa"]},
-    {id:"brecha-de-rendimiento", term:"brecha de rendimiento", meaning:"diferencia sistemática en los resultados académicos entre distintos grupos sociales o étnicos", synonym:"Espa&#241;ol para: diferencia sistemática en los resultados académicos entre distintos grupos sociales o étnicos", example:"La <b>brecha de rendimiento</b> entre alumnos según el nivel socioeconómico es preocupante.", completion:"La ______ entre alumnos según el nivel socioeconómico es preocupante.", answer:"brecha de rendimiento"},
-    {id:"alfabetizacion-mediatica", term:"alfabetización mediática", meaning:"capacidad de analizar, evaluar y crear contenidos en medios de comunicación e internet", synonym:"Espa&#241;ol para: capacidad de analizar, evaluar y crear contenidos en medios de comunicación e internet", example:"La <b>alfabetización mediática</b> es fundamental para combatir la desinformación.", completion:"La ______ es fundamental para combatir la desinformación.", answer:"alfabetización mediática", accept:["alfabetizacion mediatica"]},
-    {id:"autonomia-del-aprendiz", term:"autonomía del aprendiz", meaning:"capacidad del estudiante de gestionar su propio proceso de aprendizaje sin depender del profesor", synonym:"Espa&#241;ol para: capacidad del estudiante de gestionar su propio proceso de aprendizaje sin depender del profesor", example:"Fomentar la <b>autonomía del aprendiz</b> prepara a los estudiantes para el aprendizaje continuo.", completion:"Fomentar la ______ prepara a los estudiantes para el aprendizaje continuo.", answer:"autonomía del aprendiz", accept:["autonomia del aprendiz"]},
-    {id:"pensamiento-critico", term:"pensamiento crítico", meaning:"capacidad de analizar la información de forma objetiva para emitir juicios fundamentados", synonym:"Espa&#241;ol para: capacidad de analizar la información de forma objetiva para emitir juicios fundamentados", example:"El <b>pensamiento crítico</b> es la habilidad más demandada por las universidades.", completion:"El ______ es la habilidad más demandada por las universidades.", answer:"pensamiento crítico", accept:["pensamiento critico"]}
+    {id:"pedagogia-critica", term:"pedagogía crítica", meaning:"enfoque educativo que invita a cuestionar las estructuras de poder y fomenta el pensamiento emancipador", synonym:"Espa&#241;ol para: enfoque educativo que invita a cuestionar las estructuras de poder y fomenta el pensamiento emancipador", example:"La <b>pedagogía crítica</b> de Freire transformó la educación en América Latina.", completion:"La _____ de Freire transformó la educación en América Latina.", answer:"pedagogía crítica", accept:["pedagogia critica"]},
+    {id:"aprendizaje-significativo", term:"aprendizaje significativo", meaning:"proceso en el que el estudiante conecta el nuevo conocimiento con lo que ya sabe", synonym:"Espa&#241;ol para: proceso en el que el estudiante conecta el nuevo conocimiento con lo que ya sabe", example:"El <b>aprendizaje significativo</b> favorece la retención a largo plazo.", completion:"El _____ favorece la retención a largo plazo.", answer:"aprendizaje significativo"},
+    {id:"curriculo-oculto", term:"currículo oculto", meaning:"normas, valores y actitudes que se transmiten en la escuela sin que estén en el programa oficial", synonym:"Espa&#241;ol para: normas, valores y actitudes que se transmiten en la escuela sin que estén en el programa oficial", example:"El <b>currículo oculto</b> puede reforzar estereotipos de género sin que nadie lo advierta.", completion:"El _____ puede reforzar estereotipos de género sin que nadie lo advierta.", answer:"currículo oculto", accept:["curriculo oculto"]},
+    {id:"evaluacion-formativa", term:"evaluación formativa", meaning:"tipo de evaluación continua que orienta el proceso de aprendizaje en lugar de calificarlo", synonym:"Espa&#241;ol para: tipo de evaluación continua que orienta el proceso de aprendizaje en lugar de calificarlo", example:"La <b>evaluación formativa</b> da retroalimentación constante al estudiante.", completion:"La _____ da retroalimentación constante al estudiante.", answer:"evaluación formativa", accept:["evaluacion formativa"]},
+    {id:"brecha-de-rendimiento", term:"brecha de rendimiento", meaning:"diferencia sistemática en los resultados académicos entre distintos grupos sociales o étnicos", synonym:"Espa&#241;ol para: diferencia sistemática en los resultados académicos entre distintos grupos sociales o étnicos", example:"La <b>brecha de rendimiento</b> entre alumnos según el nivel socioeconómico es preocupante.", completion:"La _____ entre alumnos según el nivel socioeconómico es preocupante.", answer:"brecha de rendimiento"},
+    {id:"alfabetizacion-mediatica", term:"alfabetización mediática", meaning:"capacidad de analizar, evaluar y crear contenidos en medios de comunicación e internet", synonym:"Espa&#241;ol para: capacidad de analizar, evaluar y crear contenidos en medios de comunicación e internet", example:"La <b>alfabetización mediática</b> es fundamental para combatir la desinformación.", completion:"La _____ es fundamental para combatir la desinformación.", answer:"alfabetización mediática", accept:["alfabetizacion mediatica"]},
+    {id:"autonomia-del-aprendiz", term:"autonomía del aprendiz", meaning:"capacidad del estudiante de gestionar su propio proceso de aprendizaje sin depender del profesor", synonym:"Espa&#241;ol para: capacidad del estudiante de gestionar su propio proceso de aprendizaje sin depender del profesor", example:"Fomentar la <b>autonomía del aprendiz</b> prepara a los estudiantes para el aprendizaje continuo.", completion:"Fomentar la _____ prepara a los estudiantes para el aprendizaje continuo.", answer:"autonomía del aprendiz", accept:["autonomia del aprendiz"]},
+    {id:"pensamiento-critico", term:"pensamiento crítico", meaning:"capacidad de analizar la información de forma objetiva para emitir juicios fundamentados", synonym:"Espa&#241;ol para: capacidad de analizar la información de forma objetiva para emitir juicios fundamentados", example:"El <b>pensamiento crítico</b> es la habilidad más demandada por las universidades.", completion:"El _____ es la habilidad más demandada por las universidades.", answer:"pensamiento crítico", accept:["pensamiento critico"]}
   ]
 };
 </script>

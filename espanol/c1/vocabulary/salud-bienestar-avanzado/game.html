@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../../../../shared/game.css?v=v112">
 <script src="/shared/auth.js?v=1"></script>
 <script src="../../../../shared/dark-init.js?v=v112"></script>
+<script src="../../../../shared/i18n.js?v=v124"></script>
 <script src="../../../../shared/store.js?v=v107"></script>
 <script src="../../../../shared/game.js?v=v112"></script>
 </head>
@@ -29,7 +30,51 @@
 <div class="chapter-num">V11</div>
 <h1>Salud y Bienestar Avanzado</h1>
 <nav class="chapter-nav"><a href="flashcards.html" class="chapter-nav-btn">Tarjetas</a><a href="slides.html" class="chapter-nav-btn">Lecci&#243;n</a><a href="game.html" class="chapter-nav-btn active">Juego</a><a href="match.html" class="chapter-nav-btn">Relacionar</a></nav>
-<div id="game-root"></div>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Juego de Dominio</h2>
+        <p>4 palabras clave &middot; 3 rondas cada una &middot; llega a 100 puntos para ganar.</p>
+        <p style="font-size:0.8rem;color:var(--muted);margin-top:8px">Aciertos consecutivos de la misma palabra y rachas entre palabras a&#241;aden puntos extra.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Dominadas</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">Tienes una partida guardada.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Continuar</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">Nueva partida</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Empezar</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; Referencia — todas las palabras</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>&#161;Dominio alcanzado!</h2>
+        <p>Has completado todas las palabras de este cap&#237;tulo.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Puntuaci&#243;n</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Mejor racha</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Dominadas</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Jugar de nuevo</button>
+          <a href="flashcards.html" class="game-btn secondary">Tarjetas</a>
+        </div>
+      </div>
+    </div>
+  </div>
+<div class="game-toast" id="gToast"></div>
 <script>
 window.GAME_DATA = {
   chapterId: "salud-bienestar-avanzado",
@@ -38,14 +83,14 @@ window.GAME_DATA = {
   storageKey: "wordplay_game_es_c1_salud-bienestar-avanzado",
   section: 'vocabulary',
   items: [
-    {id:"epidemiologia", term:"epidemiología", meaning:"ciencia que estudia la distribución y los factores determinantes de las enfermedades en la población", synonym:"Espa&#241;ol para: ciencia que estudia la distribución y los factores determinantes de las enfermedades en la población", example:"La <b>epidemiología</b> permitió rastrear el origen del brote infeccioso.", completion:"La ______ permitió rastrear el origen del brote infeccioso.", answer:"epidemiología", accept:["epidemiologia"]},
-    {id:"comorbilidad", term:"comorbilidad", meaning:"presencia simultánea de dos o más enfermedades o trastornos en un mismo paciente", synonym:"Espa&#241;ol para: presencia simultánea de dos o más enfermedades o trastornos en un mismo paciente", example:"La <b>comorbilidad</b> entre diabetes e hipertensión agrava el pronóstico.", completion:"La ______ entre diabetes e hipertensión agrava el pronóstico.", answer:"comorbilidad"},
-    {id:"prevencion-primaria", term:"prevención primaria", meaning:"medidas para evitar que aparezca una enfermedad antes de que se produzca", synonym:"Espa&#241;ol para: medidas para evitar que aparezca una enfermedad antes de que se produzca", example:"Las vacunas son el instrumento más eficaz de <b>prevención primaria</b>.", completion:"Las vacunas son el instrumento más eficaz de ______.", answer:"prevención primaria", accept:["prevencion primaria"]},
-    {id:"cronicidad", term:"cronicidad", meaning:"carácter de larga duración o permanente de una enfermedad que no tiene cura completa", synonym:"Espa&#241;ol para: carácter de larga duración o permanente de una enfermedad que no tiene cura completa", example:"La <b>cronicidad</b> de la depresión exige un tratamiento continuado y multidisciplinar.", completion:"La ______ de la depresión exige un tratamiento continuado y multidisciplinar.", answer:"cronicidad"},
-    {id:"adherencia-terapeutica", term:"adherencia terapéutica", meaning:"grado en que un paciente sigue las instrucciones médicas", synonym:"Espa&#241;ol para: grado en que un paciente sigue las instrucciones médicas", example:"La baja <b>adherencia terapéutica</b> reduce la efectividad de los tratamientos crónicos.", completion:"La baja ______ reduce la efectividad de los tratamientos crónicos.", answer:"adherencia terapéutica", accept:["adherencia terapeutica"]},
-    {id:"atencion-primaria", term:"atención primaria", meaning:"primer nivel de contacto del ciudadano con el sistema sanitario", synonym:"Espa&#241;ol para: primer nivel de contacto del ciudadano con el sistema sanitario", example:"Un sistema de <b>atención primaria</b> fuerte descarga la presión sobre los hospitales.", completion:"Un sistema de ______ fuerte descarga la presión sobre los hospitales.", answer:"atención primaria", accept:["atencion primaria"]},
-    {id:"medicina-de-precision", term:"medicina de precisión", meaning:"enfoque que adapta el tratamiento a las características genéticas y clínicas de cada paciente", synonym:"Espa&#241;ol para: enfoque que adapta el tratamiento a las características genéticas y clínicas de cada paciente", example:"La <b>medicina de precisión</b> permite tratamientos oncológicos más eficaces.", completion:"La ______ permite tratamientos oncológicos más eficaces.", answer:"medicina de precisión", accept:["medicina de precision"]},
-    {id:"salud-mental", term:"salud mental", meaning:"estado de bienestar psicológico y emocional que permite a una persona funcionar con normalidad", synonym:"Espa&#241;ol para: estado de bienestar psicológico y emocional que permite a una persona funcionar con normalidad", example:"El estigma en torno a la <b>salud mental</b> impide que muchas personas busquen ayuda.", completion:"El estigma en torno a la ______ impide que muchas personas busquen ayuda.", answer:"salud mental"}
+    {id:"epidemiologia", term:"epidemiología", meaning:"ciencia que estudia la distribución y los factores determinantes de las enfermedades en la población", synonym:"Espa&#241;ol para: ciencia que estudia la distribución y los factores determinantes de las enfermedades en la población", example:"La <b>epidemiología</b> permitió rastrear el origen del brote infeccioso.", completion:"La _____ permitió rastrear el origen del brote infeccioso.", answer:"epidemiología", accept:["epidemiologia"]},
+    {id:"comorbilidad", term:"comorbilidad", meaning:"presencia simultánea de dos o más enfermedades o trastornos en un mismo paciente", synonym:"Espa&#241;ol para: presencia simultánea de dos o más enfermedades o trastornos en un mismo paciente", example:"La <b>comorbilidad</b> entre diabetes e hipertensión agrava el pronóstico.", completion:"La _____ entre diabetes e hipertensión agrava el pronóstico.", answer:"comorbilidad"},
+    {id:"prevencion-primaria", term:"prevención primaria", meaning:"medidas para evitar que aparezca una enfermedad antes de que se produzca", synonym:"Espa&#241;ol para: medidas para evitar que aparezca una enfermedad antes de que se produzca", example:"Las vacunas son el instrumento más eficaz de <b>prevención primaria</b>.", completion:"Las vacunas son el instrumento más eficaz de _____.", answer:"prevención primaria", accept:["prevencion primaria"]},
+    {id:"cronicidad", term:"cronicidad", meaning:"carácter de larga duración o permanente de una enfermedad que no tiene cura completa", synonym:"Espa&#241;ol para: carácter de larga duración o permanente de una enfermedad que no tiene cura completa", example:"La <b>cronicidad</b> de la depresión exige un tratamiento continuado y multidisciplinar.", completion:"La _____ de la depresión exige un tratamiento continuado y multidisciplinar.", answer:"cronicidad"},
+    {id:"adherencia-terapeutica", term:"adherencia terapéutica", meaning:"grado en que un paciente sigue las instrucciones médicas", synonym:"Espa&#241;ol para: grado en que un paciente sigue las instrucciones médicas", example:"La baja <b>adherencia terapéutica</b> reduce la efectividad de los tratamientos crónicos.", completion:"La baja _____ reduce la efectividad de los tratamientos crónicos.", answer:"adherencia terapéutica", accept:["adherencia terapeutica"]},
+    {id:"atencion-primaria", term:"atención primaria", meaning:"primer nivel de contacto del ciudadano con el sistema sanitario", synonym:"Espa&#241;ol para: primer nivel de contacto del ciudadano con el sistema sanitario", example:"Un sistema de <b>atención primaria</b> fuerte descarga la presión sobre los hospitales.", completion:"Un sistema de _____ fuerte descarga la presión sobre los hospitales.", answer:"atención primaria", accept:["atencion primaria"]},
+    {id:"medicina-de-precision", term:"medicina de precisión", meaning:"enfoque que adapta el tratamiento a las características genéticas y clínicas de cada paciente", synonym:"Espa&#241;ol para: enfoque que adapta el tratamiento a las características genéticas y clínicas de cada paciente", example:"La <b>medicina de precisión</b> permite tratamientos oncológicos más eficaces.", completion:"La _____ permite tratamientos oncológicos más eficaces.", answer:"medicina de precisión", accept:["medicina de precision"]},
+    {id:"salud-mental", term:"salud mental", meaning:"estado de bienestar psicológico y emocional que permite a una persona funcionar con normalidad", synonym:"Espa&#241;ol para: estado de bienestar psicológico y emocional que permite a una persona funcionar con normalidad", example:"El estigma en torno a la <b>salud mental</b> impide que muchas personas busquen ayuda.", completion:"El estigma en torno a la _____ impide que muchas personas busquen ayuda.", answer:"salud mental"}
   ]
 };
 </script>
