@@ -42,6 +42,8 @@ def resolve(page_path, link):
     link = unquote(link)
     if link == '':
         return None
+    if link.startswith('/'):
+        return os.path.normpath(os.path.join(BASE, link.lstrip('/')))
     page_dir = os.path.dirname(page_path)
     target = os.path.normpath(os.path.join(page_dir, link))
     return target
