@@ -26,6 +26,17 @@ worth adding if activity-card templates are regenerated at scale.
 `CREATE … IF NOT EXISTS`), but the numbering is ambiguous. Renumber sequentially next time the
 schema is touched so the apply order is unambiguous.
 
+### D5 — espanol-en/a1 grammar missing Common Mistakes (trap-row) slides
+All 24 espanol-en/a1 grammar chapters (adjective-agreement, ser-estar, gustar, reflexive-verbs,
+etc.) are missing the Common Mistakes slide that A2/B1/B2 all have. pedagogy_check.py produces
+24 warnings. Fix by adding `traps` data to the espanol-en content scripts and regenerating.
+Priority chapters: ser-estar, gustar, reflexive-verbs, adjective-agreement.
+
+### D6 — DELF exam prep is thin and French-UI for English learners
+francais-en/index.html advertises "DELF preparation from A1" but links to francais/exams/ which:
+(a) has French-language UI, (b) only has about/ + mock-1/ per level (no strategy, no per-part
+breakdowns, no mock-2/mock-3). Add English-language strategy pages and mocks 2–3 per level.
+
 ### D4 — Printables / review pages not wired into the student flow
 Printable pages exist for many grammar chapters but aren't consistently surfaced in chapter
 hubs; there is no `review.html` step. Decide whether printables get an activity card everywhere
