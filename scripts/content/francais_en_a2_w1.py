@@ -179,7 +179,7 @@ CHAPTERS = {
                 [
                     ("It was raining. → background description:", ["Il a plu.", "Il pleuvait.", "Il pleure.", "Il pleut."], "Il pleuvait.",
                      "Background description → imparfait."),
-                    ("Suddenly she screamed. → plot action:", ["Soudain elle criait.", "Soudain elle a crié.", "Soudain elle crie.", "Soudain elle criait."], "Soudain elle a crié.",
+                    ("Suddenly she screamed. → plot action:", ["Soudain elle criait.", "Soudain elle a crié.", "Soudain elle crie.", "Soudain elle crierait."], "Soudain elle a crié.",
                      "Sudden plot action → passé composé."),
                     ("The children were playing (when...) → background:", ["Les enfants ont joué.", "Les enfants jouaient.", "Les enfants jouent.", "Les enfants ont été jouant."], "Les enfants jouaient.",
                      "Ongoing background activity → imparfait."),

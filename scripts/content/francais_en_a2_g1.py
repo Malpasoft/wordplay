@@ -103,7 +103,7 @@ CHAPTERS = {
             "Choose the correct past participle for each irregular verb.",
             [
                 ("avoir → ___", ["avé", "eu", "avu", "aué"], "eu", "Avoir is completely irregular: past participle = <em>eu</em>. J'ai eu de la chance."),
-                ("être → ___", ["éé", "été", "été", "est"], "été", "Être → <em>été</em>. Il a été malade. (Careful: 'a été' uses avoir as auxiliary here.)"),
+                ("être → ___", ["éé", "été", "étais", "est"], "été", "Être → <em>été</em>. Il a été malade. (Careful: 'a été' uses avoir as auxiliary here.)"),
                 ("mettre → ___", ["mettit", "mis", "mettu", "mettré"], "mis", "Mettre → <em>mis</em>. J'ai mis mon manteau."),
                 ("savoir → ___", ["savé", "su", "savi", "savait"], "su", "Savoir → <em>su</em>. Elle a su la vérité."),
                 ("dire → ___", ["diré", "dit", "diru", "dis"], "dit", "Dire → <em>dit</em>. Il a dit bonjour."),
@@ -343,7 +343,7 @@ CHAPTERS = {
             [
                 ("Quand j\'étais jeune, je ___ (jouer) au foot.", ["jouais", "jouait", "jouions", "ai joué"], "jouais", "Jouer: stem = jou- (from jouons). Je → -ais: je jouais."),
                 ("Elle ___ (habiter) à Lyon à l\'époque.", ["habitait", "habitais", "habitaient", "a habité"], "habitait", "Habiter: stem = habit-. Elle → -ait: elle habitait."),
-                ("Nous ___ (finir) toujours nos devoirs.", ["finissions", "finissions", "finisiez", "avons fini"], "finissions", "Finir: nous finissons → stem finiss-. Nous → -ions: finissions."),
+                ("Nous ___ (finir) toujours nos devoirs.", ["finissions", "finissait", "finisiez", "avons fini"], "finissions", "Finir: nous finissons → stem finiss-. Nous → -ions: finissions."),
                 ("Ils ___ (être) très contents.", ["étaient", "étais", "étions", "ont été"], "étaient", "Être is irregular: ét-. Ils → -aient: étaient."),
                 ("Vous ___ (manger) souvent ici?", ["mangiez", "mangeais", "mangions", "avez mangé"], "mangiez", "Manger: nous mangeons → stem mange-. Vous → -iez: mangiez."),
                 ("Tu ___ (savoir) déjà la réponse.", ["savais", "savait", "sache", "as su"], "savais", "Savoir: nous savons → stem sav-. Tu → -ais: savais. (Knowing something = imparfait.)"),
@@ -684,11 +684,11 @@ CHAPTERS = {
             "Form the Adverb",
             "Choose the correct adverb form.",
             [
-                ("lent → ___", ["lentement", "lentement", "lentément", "lentomment"], "lentement", "Lent → lente (f.) + -ment = lentement (slowly)."),
+                ("lent → ___", ["lentement", "lent", "lentément", "lentomment"], "lentement", "Lent → lente (f.) + -ment = lentement (slowly)."),
                 ("heureux → ___", ["heureusement", "heureuxment", "heureusément", "heureusament"], "heureusement", "Heureux → heureuse (f.) + -ment = heureusement (happily/fortunately)."),
                 ("courant → ___", ["courantement", "courantment", "couramment", "couramentement"], "couramment", "-ant adjective → -amment: courant → couramment (fluently)."),
                 ("évident → ___", ["évidemment", "évidentement", "évidemtement", "évidemament"], "évidemment", "-ent adjective → -emment: évident → évidemment (obviously)."),
-                ("vrai → ___", ["vraiment", "vraiment", "vraiement", "vraiément"], "vraiment", "Vrai ends in a vowel (m. form) → add -ment directly: vraiment (truly)."),
+                ("vrai → ___", ["vraiment", "vrai", "vraiement", "vraiément"], "vraiment", "Vrai ends in a vowel (m. form) → add -ment directly: vraiment (truly)."),
                 ("fréquent → ___", ["fréquentement", "fréquemment", "fréquentment", "fréquamment"], "fréquemment", "-ent adjective → -emment: fréquent → fréquemment (frequently)."),
             ]
         ),

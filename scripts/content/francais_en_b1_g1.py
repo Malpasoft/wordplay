@@ -80,7 +80,7 @@ CHAPTERS = {
             "Choose the correct subjunctive form to complete the sentence.",
             [
                 ("Il faut que tu ___ (partir) avant midi.", ["pars", "partes", "parte", "partais"], "partes", "Partir: ils partent → stem: part-. Tu + -es: partes. Il faut que triggers subjunctive."),
-                ("Je veux qu\'elle ___ (finir) ce travail.", ["finit", "finisse", "finit", "finira"], "finisse", "Finir: ils finissent → stem: finiss-. Elle + -e: finisse. Vouloir que triggers subjunctive."),
+                ("Je veux qu\'elle ___ (finir) ce travail.", ["finit", "finisse", "finissait", "finira"], "finisse", "Finir: ils finissent → stem: finiss-. Elle + -e: finisse. Vouloir que triggers subjunctive."),
                 ("Il est important que vous ___ (être) à l\'heure.", ["êtes", "soyez", "étiez", "serez"], "soyez", "Être is irregular in subjunctive: vous → soyez."),
                 ("Elle préfère que nous ___ (attendre).", ["attendons", "attendrions", "attendions", "attendent"], "attendions", "Attendre: ils attendent → stem: attend-. Nous + -ions: attendions."),
                 ("J\'ai peur qu\'il ___ (avoir) des problèmes.", ["a", "ait", "avait", "aura"], "ait", "Avoir is irregular in subjunctive: il → ait."),
@@ -200,7 +200,7 @@ CHAPTERS = {
             "Forming the Conditional",
             "Choose the correct conditional form.",
             [
-                ("Si j\'avais le temps, je ___ (voyager) plus.", ["voyagerai", "voyagerais", "voyagerais", "voyagiais"], "voyagerais", "Hypothetical: si + imparfait → conditional. Voyager: stem voyager- + -ais: je voyagerais."),
+                ("Si j\'avais le temps, je ___ (voyager) plus.", ["voyagerai", "voyagerais", "voyagerait", "voyagiais"], "voyagerais", "Hypothetical: si + imparfait → conditional. Voyager: stem voyager- + -ais: je voyagerais."),
                 ("Elle ___ (vouloir) un café, s\'il vous plaît.", ["veut", "voulait", "voudrait", "voudra"], "voudrait", "Polite request: vouloir → irregular stem voudr- + -ait: voudrait."),
                 ("Si vous ___ (avoir) un problème, appelez-moi.", ["avez", "auriez", "aurez", "aviez"], "aviez", "Si clause (hypothetical) → imparfait, not conditional: si vous aviez (avoir imparfait)."),
                 ("Tu ___ (devoir) te reposer davantage.", ["dois", "devais", "devrais", "devras"], "devrais", "Advice/should: devoir → irregular stem devr- + -ais: tu devrais."),
@@ -224,7 +224,7 @@ CHAPTERS = {
             [
                 ("Si elle ___ (être) là, je serais content.", ["serait", "était", "est", "sera"], "était", "Si clause (hypothetical) → imparfait: était. Never use conditional after si."),
                 ("Si tu pouvais, tu ___ (aider) ton ami.", ["aideras", "aides", "aiderais", "aidais"], "aiderais", "Result clause (after si + imparfait) → conditional: tu aiderais."),
-                ("Si nous avions le temps, nous ___ (faire) une promenade.", ["ferions", "faisions", "ferons", "faisions"], "ferions", "Result clause → conditional: faire → fer- + -ions: ferions."),
+                ("Si nous avions le temps, nous ___ (faire) une promenade.", ["ferions", "faisions", "ferons", "feraient"], "ferions", "Result clause → conditional: faire → fer- + -ions: ferions."),
                 ("Si j\'___ (aller) à Paris, je visiterais le Louvre.", ["irais", "allais", "irai", "vais"], "allais", "Si clause → imparfait: aller → j'allais (not conditional)."),
             ]
         ),
@@ -423,7 +423,7 @@ CHAPTERS = {
             "Forming the Passive",
             "Choose the correct passive construction.",
             [
-                ("La maison ___ (construire) par des architectes. (present)", ["est construite", "est construit", "a construite", "est construite"], "est construite", "Construire passive present: est + construite. La maison is feminine → construite."),
+                ("La maison ___ (construire) par des architectes. (present)", ["est construite", "est construit", "a construite", "sont construites"], "est construite", "Construire passive present: est + construite. La maison is feminine → construite."),
                 ("Le film ___ (tourner) en 1999. (PC)", ["a été tourné", "a été tournée", "est tourné", "était tourné"], "a été tourné", "Passive PC: a été + past participle. Le film is masculine → tourné."),
                 ("Les résultats ___ (annoncer) demain. (future)", ["seront annoncés", "sont annoncés", "ont été annoncés", "seraient annoncés"], "seront annoncés", "Passive future: seront + annoncés. Les résultats = masculine plural → annoncés."),
                 ("La lettre ___ (écrire) par Marie. (imparfait)", ["était écrite", "était écrit", "a été écrite", "sera écrite"], "était écrite", "Passive imparfait: était + écrite. La lettre = feminine → écrite."),
@@ -928,8 +928,8 @@ CHAPTERS = {
             [
                 ("Si tu viens demain, je ___ content. (real — tomorrow)", ["suis", "serais", "serai", "sois"], "serai", "Type 1 (real/possible): si + présent → futur. Je serai content."),
                 ("Si j'avais plus de temps, je ___ davantage. (hypothetical)", ["lis", "lirais", "lirai", "aie lu"], "lirais", "Type 2 (hypothetical): si + imparfait → conditionnel présent. Je lirais."),
-                ("Si tu m'avais appelé, je ___ venu. (past impossible)", ["suis", "serais", "serai", "serais"], "serais", "Type 3: si + PQP → conditionnel passé. Je serais venu."),
-                ("Si elle est fatiguée, elle ___ se reposer. (general truth)", ["devra", "devrait", "devra", "doit"], "doit", "Type 1 (general/factual): si + présent → présent. Elle doit se reposer."),
+                ("Si tu m'avais appelé, je ___ venu. (past impossible)", ["suis", "serais", "serai", "serait"], "serais", "Type 3: si + PQP → conditionnel passé. Je serais venu."),
+                ("Si elle est fatiguée, elle ___ se reposer. (general truth)", ["devra", "devrait", "devait", "doit"], "doit", "Type 1 (general/factual): si + présent → présent. Elle doit se reposer."),
                 ("Si vous ___ plus tôt, vous n'auriez pas raté le train. (past regret)", ["êtes partis", "partiez", "étiez partis", "partirez"], "étiez partis", "Type 3: si + PQP (être verbe → étiez partis). Result: conditionnel passé."),
             ]
         ),

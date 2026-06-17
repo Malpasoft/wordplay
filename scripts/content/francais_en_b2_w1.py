@@ -480,7 +480,7 @@ CHAPTERS = {
                 ),
                 (
                     "Which recommendation uses the correct subjunctive form?",
-                    ["Nous recommandons que le personnel améliore ses compétences.", "Nous recommandons que le personnel améliorait ses compétences.", "Nous recommandons que le personnel améliorer ses compétences.", "Nous recommandons que le personnel améliorait ses compétences."],
+                    ["Nous recommandons que le personnel améliore ses compétences.", "Nous recommandons que le personnel améliorait ses compétences.", "Nous recommandons que le personnel améliorer ses compétences.", "Nous recommandons que le personnel améliorerait ses compétences."],
                     "Nous recommandons que le personnel améliore ses compétences.",
                     "After 'recommander que', the verb must be in the present subjunctive. 'Améliore' is the correct subjunctive form of 'améliorer'. Other forms use imperfect or infinitive — both incorrect here."
                 ),
