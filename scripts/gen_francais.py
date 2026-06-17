@@ -264,7 +264,7 @@ def render_game(d, slug):
           '</script>\n'
           '<script src="../../../../shared/i18n.js?v=v124"></script>\n'
           '<script src="../../../../shared/store.js?v=v107"></script>\n'
-          '<script src="../../../../shared/game.js?v=v111"></script>\n'
+          '<script src="../../../../shared/game.js?v=v112"></script>\n'
           '</body>\n</html>\n')
     return s
 

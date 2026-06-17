@@ -297,7 +297,7 @@ def render_game(d, slug):
         ),
     )
     s += f'<script src="{rel}shared/store.js?v=v107"></script>\n'
-    s += f'<script src="{rel}shared/game.js?v=v111"></script>\n</head>\n'
+    s += f'<script src="{rel}shared/game.js?v=v112"></script>\n</head>\n'
     s += '<body>\n' + HEADER_NAV
     s += '<div class="container">\n'
     s += crumb(level, lv, short, 'Juego')

@@ -189,7 +189,7 @@ the ONLY way to force a cache refresh.
 - `base.css`: v125
 - `dark-init.js`: v112
 - `store.js`: v107
-- `game.js`: v111
+- `game.js`: v112
 - `worksheet.js`: v108
 - `deck.js`: v114
 - `game.css`: v112

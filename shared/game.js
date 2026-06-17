@@ -509,7 +509,12 @@ window.GAME_CONFIG = {
       var qItem  = currentQItem;
       var item   = getItem(qItem.itemId);
       var type   = qItem.qtype;
-      var correct = (type === 'contexto') ? (item.answer || item.term) : item.term;
+      // significado renders item.meaning as the correct MC option (term → pick
+      // meaning), so it must be graded against meaning — not term. contexto
+      // grades the gap answer; produccion types the term.
+      var correct = type === 'contexto'    ? (item.answer || item.term)
+                  : type === 'significado' ? item.meaning
+                  :                          item.term;
 
       var isCorrect = false;
       if (type === 'produccion') {
