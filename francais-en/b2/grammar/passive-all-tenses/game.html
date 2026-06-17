@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>passive-all-tenses — Game B2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>&#8250;</span>
+  <a href="../../../../francais-en/index.html">French for English speakers</a><span>&#8250;</span>
+  <a href="../../index.html">B2</a><span>&#8250;</span>
+  <a href="../index.html">Grammar</a><span>&#8250;</span>
+  <a href="index.html">passive-all-tenses</a><span>&#8250;</span>
+  <strong>Game</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercises</a>
+  <a href="game.html" class="chapter-nav-btn active">Game</a>
+</nav>
+<div class="container">
+  <h1>passive-all-tenses — Mastery Game</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Mastery Game</h2>
+        <p>Master the French passive in all tenses — par vs de, on and pronominal alternatives</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved game.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You've completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercises</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; French B2 &middot; Game</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "passive-all-tenses",
+  level: "b2",
+  title: "Passive Voice — All Tenses",
+  storageKey: "wordplay_game_b2_passive-all-tenses",
+  items: [
+    {id:"present-passif", term:"est + PP (présent)", meaning:"present passive: être (présent) + past participle (agree with subject)", synonym:"is done", example:"La lettre est écrite par Paul.", completion:"present passive: ___ + PP (agreement)", answer:"est"},
+    {id:"pc-passif", term:"a été + PP", meaning:"PC passive: avoir (conjugated) + été + past participle", synonym:"was done (PC)", example:"La ville a été détruite par le séisme.", completion:"PC passive: a ___ + PP", answer:"été"},
+    {id:"fut-passif", term:"sera + PP", meaning:"future passive: être (futur) + past participle", synonym:"will be done", example:"La lettre sera envoyée demain.", completion:"future passive: ___ + PP", answer:"sera"},
+    {id:"par-agent", term:"par (agent actif)", meaning:"par = active, specific agent performing a deliberate action", synonym:"by (active)", example:"Le livre a été écrit par Camus.", completion:"par = active ___ (deliberate action)", answer:"agent"},
+    {id:"de-etat", term:"de (état/émotion)", meaning:"de = state, emotion, habitual accompaniment — not a deliberate act", synonym:"by (state)", example:"Elle est aimée de tous.", completion:"de = state/emotion after: aimer, entourer, ___ de", answer:"respecter"},
+    {id:"on-alt", term:"on + actif", meaning:"on + active verb = informal alternative to passive; no agent needed", synonym:"on = they", example:"On parle français ici.", completion:"on = avoids ___ (informal)", answer:"passive"},
+    {id:"se-passif", term:"se + verbe (passif pronominal)", meaning:"pronominal passive: inanimate subject + se + 3rd person verb", synonym:"is/are done (pron.)", example:"Ces produits se vendent bien.", completion:"pronominal passive: ___ + verb (inanimate subject)", answer:"se"},
+    {id:"accord-pp", term:"accord obligatoire", meaning:"PP always agrees with passive subject in gender and number", synonym:"agreement", example:"Les portes ont été fermées. (f. pl.)", completion:"passive: PP always ___ with the subject", answer:"agrees"}
+  ]
+};
+</script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
