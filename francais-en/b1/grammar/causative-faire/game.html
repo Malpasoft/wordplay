@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>causative-faire — Game B1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>&#8250;</span>
+  <a href="../../../../francais-en/index.html">French for English speakers</a><span>&#8250;</span>
+  <a href="../../index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Grammar</a><span>&#8250;</span>
+  <a href="index.html">causative-faire</a><span>&#8250;</span>
+  <strong>Game</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercises</a>
+  <a href="game.html" class="chapter-nav-btn active">Game</a>
+</nav>
+<div class="container">
+  <h1>causative-faire — Mastery Game</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Mastery Game</h2>
+        <p>Master the French causative construction faire + infinitif</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved game.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You've completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercises</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; French B1 &middot; Game</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "causative-faire",
+  level: "b1",
+  title: "Causative Faire — Faire + Infinitif",
+  storageKey: "wordplay_game_b1_causative-faire",
+  items: [
+    {id:"faire-inf", term:"faire + infinitif", meaning:"causative: have something done / make someone do something", synonym:"have done", example:"Je fais réparer ma voiture. (I'm having my car repaired.)", completion:"causative: faire + ___ = have done", answer:"infinitif"},
+    {id:"faire-par", term:"faire + inf + par", meaning:"have done by: introduce the agent with par when there is also a direct object", synonym:"by (agent)", example:"Il fait laver la voiture par le mécanicien.", completion:"faire + inf + [thing] + par + [person who does it]", answer:"par"},
+    {id:"se-faire", term:"se faire + inf", meaning:"have something done to oneself — subject is recipient", synonym:"have done to self", example:"Je me suis fait couper les cheveux.", completion:"se faire + inf = have ___ done to oneself", answer:"se faire"},
+    {id:"se-faire-inv", term:"se faire (invariable)", meaning:"se faire is invariable in the PC — no agreement with subject", synonym:"no agreement", example:"Elle s'est fait voler son sac. (not volée)", completion:"se faire PC: always ___ (no gender/number agreement)", answer:"invariable"},
+    {id:"pron-before", term:"pronom avant faire", meaning:"object pronouns go BEFORE faire, not before the infinitive", synonym:"pronoun placement", example:"Je la fais réparer. (not Je fais la réparer.)", completion:"pronoun goes ___ faire (not before infinitive)", answer:"avant"},
+    {id:"laisser", term:"laisser + inf", meaning:"let/allow someone to do — permission (contrast: faire = make/cause)", synonym:"let / allow", example:"Elle laisse les enfants jouer dehors.", completion:"laisser + inf = ___ someone do (permission)", answer:"laisser"},
+    {id:"obj-after", term:"objet après l'infinitif", meaning:"in causative, the object comes after the infinitive (unlike regular verbs)", synonym:"object after inf.", example:"Elle fait travailler les étudiants. (not Elle fait les étudiants travailler.)", completion:"causative: object comes ___ the infinitive", answer:"après"},
+    {id:"faire-faire", term:"faire faire", meaning:"have something done (general): double faire structure is perfectly correct", synonym:"have done", example:"Il fait faire les courses. (He has the shopping done.)", completion:"faire + ___ + [task] = have the task done", answer:"faire"}
+  ]
+};
+</script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

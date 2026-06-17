@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>relative-pronouns — Game B1 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>&#8250;</span>
+  <a href="../../../../francais-en/index.html">French for English speakers</a><span>&#8250;</span>
+  <a href="../../index.html">B1</a><span>&#8250;</span>
+  <a href="../index.html">Grammar</a><span>&#8250;</span>
+  <a href="index.html">relative-pronouns</a><span>&#8250;</span>
+  <strong>Game</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercises</a>
+  <a href="game.html" class="chapter-nav-btn active">Game</a>
+</nav>
+<div class="container">
+  <h1>relative-pronouns — Mastery Game</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Mastery Game</h2>
+        <p>Master French relative pronouns qui, que, dont, où and lequel</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved game.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You've completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercises</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; French B1 &middot; Game</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "relative-pronouns",
+  level: "b1",
+  title: "Relative Pronouns — Les Pronoms Relatifs",
+  storageKey: "wordplay_game_b1_relative-pronouns",
+  items: [
+    {id:"qui-subj", term:"qui", meaning:"subject relative pronoun — replaces the subject of the relative clause", synonym:"who / that (subj.)", example:"Le prof qui parle vite est mon préféré.", completion:"qui = subject pronoun (doing the action in the clause)", answer:"qui"},
+    {id:"que-obj", term:"que / qu'", meaning:"object relative pronoun — replaces the direct object", synonym:"that / whom (obj.)", example:"Le film que j'ai vu était excellent.", completion:"que = direct object (receiving the action)", answer:"que"},
+    {id:"dont-de", term:"dont", meaning:"replaces de + noun — used with verbs taking de", synonym:"of which / whose", example:"C'est le livre dont j'ai besoin.", completion:"dont = de + noun (parler de, avoir besoin de, se souvenir de...)", answer:"dont"},
+    {id:"dont-poss", term:"dont (possession)", meaning:"dont expresses whose — replaces de + possessor", synonym:"whose", example:"La femme dont le fils est médecin.", completion:"dont = whose (possession)", answer:"dont"},
+    {id:"ou-place", term:"où (place)", meaning:"replaces a place expression — where", synonym:"where", example:"La ville où j'habite est belle.", completion:"où = place (where)", answer:"où"},
+    {id:"ou-time", term:"où (time)", meaning:"replaces a time expression — when/on which", synonym:"when (time)", example:"Le jour où il est arrivé était pluvieux.", completion:"où = time (when)", answer:"où"},
+    {id:"lequel-prep", term:"lequel / laquelle", meaning:"replaces thing after a preposition (not de)", synonym:"which (after prep.)", example:"Le stylo avec lequel j'écris est rouge.", completion:"lequel = thing after preposition (not de)", answer:"lequel"},
+    {id:"auquel", term:"auquel / à laquelle", meaning:"à + lequel/laquelle — for verbs taking à + thing", synonym:"to which", example:"Le projet auquel je participe est intéressant.", completion:"auquel = à + lequel (verb + à + thing)", answer:"auquel"}
+  ]
+};
+</script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>

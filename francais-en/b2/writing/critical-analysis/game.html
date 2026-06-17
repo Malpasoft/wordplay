@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="../../../../favicon.svg" type="image/svg+xml">
+<title>critical-analysis — Game B2 | Word Play</title>
+<link rel="stylesheet" href="../../../../shared/base.css?v=v124">
+<link rel="stylesheet" href="../../../../shared/game.css?v=v112">
+<script src="/shared/auth.js?v=1"></script>
+<script src="../../../../shared/dark-init.js?v=v112"></script>
+</head>
+<body>
+<header class="site-header"><div class="site-header-inner"><a href="index.html" class="back back-link" aria-label="Back"></a><a href="/" class="brand"><svg width="20" height="20" viewBox="0 0 32 32" style="vertical-align:middle;margin-right:8px"><rect width="32" height="32" rx="4" fill="currentColor"/><text x="16" y="22" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="15" fill="white" letter-spacing="-0.5">WP</text></svg>Word Play</a><button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button></div></header>
+<div class="breadcrumb">
+  <a href="../../../../index.html">Home</a><span>&#8250;</span>
+  <a href="../../../../francais-en/index.html">French for English speakers</a><span>&#8250;</span>
+  <a href="../../index.html">B2</a><span>&#8250;</span>
+  <a href="../index.html">Writing</a><span>&#8250;</span>
+  <a href="index.html">critical-analysis</a><span>&#8250;</span>
+  <strong>Game</strong>
+</div>
+<nav class="chapter-nav">
+  <a href="slides.html" class="chapter-nav-btn">Lesson</a>
+  <a href="worksheet.html" class="chapter-nav-btn">Exercises</a>
+  <a href="game.html" class="chapter-nav-btn active">Game</a>
+</nav>
+<div class="container">
+  <h1>critical-analysis — Mastery Game</h1>
+  <div class="game-wrap">
+    <div id="gameStart" class="game-screen active">
+      <div class="game-start">
+        <h2>Mastery Game</h2>
+        <p>Master the key vocabulary and structures of French critical analysis — from identifying the thesis to challenging arguments and stating your position.</p>
+        <div class="game-stats-row">
+          <div class="game-stat"><div class="game-stat-val" id="gStartMastered">0</div><div class="game-stat-label">Mastered</div></div>
+          <div class="game-stat"><div class="game-stat-val">/ <span id="gStartTotal">0</span></div><div class="game-stat-label">Total</div></div>
+        </div>
+        <div id="gResumeSection" style="display:none;background:var(--cream-deep);border-radius:4px;padding:14px;margin-bottom:16px;">
+          <p style="font-size:0.9rem;margin-bottom:10px;">You have a saved game.</p>
+          <div class="game-btn-row">
+            <button id="gBtnResume" class="game-btn primary">Resume</button>
+            <button id="gBtnNewFromResume" class="game-btn ghost small">New game</button>
+          </div>
+        </div>
+        <div class="game-btn-row"><button id="gBtnStart" class="game-btn primary">Start</button></div>
+      </div>
+      <div class="game-ref-panel" style="margin-top:20px;">
+        <div class="game-ref-head" id="gRefToggle">&#9660; All items — reference</div>
+        <div class="game-ref-body" id="gRefBody"><div id="gRefList"></div></div>
+      </div>
+    </div>
+    <div id="gamePlay" class="game-screen">
+      <div class="game-play"></div>
+    </div>
+    <div id="gameCompletion" class="game-screen">
+      <div class="game-completion">
+        <h2>Mastered!</h2>
+        <p>You've completed all items in this chapter.</p>
+        <div class="game-stats-row" style="margin:20px 0;">
+          <div class="game-stat"><div class="game-stat-val" id="gFinalScore">0</div><div class="game-stat-label">Score</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalStreak">0</div><div class="game-stat-label">Best streak</div></div>
+          <div class="game-stat"><div class="game-stat-val" id="gFinalPct">0%</div><div class="game-stat-label">Mastered</div></div>
+        </div>
+        <div id="gMasteryMap"></div>
+        <div class="game-btn-row">
+          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>
+          <a href="worksheet.html" class="game-btn secondary">Exercises</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="game-toast" id="gToast"></div>
+<footer class="site-footer">Word Play &middot; French B2 &middot; Game</footer>
+<script>
+window.GAME_DATA = {
+  chapterId: "critical-analysis",
+  level: "b2",
+  title: "Critical Analysis — Analyse Critique",
+  storageKey: "wordplay_game_b2_critical-analysis",
+  items: [
+    {id:"ca-01", term:"soutenir", meaning:"to argue / to maintain (a claim)", synonym:"affirmer, avancer", example:"L'auteur soutient que la mondialisation profite à tous.", completion:"L'auteur ___ que la mondialisation profite à tous.", answer:"soutient"},
+    {id:"ca-02", term:"remettre en question", meaning:"to call into question", synonym:"contester, mettre en doute", example:"On peut remettre en question la fiabilité de ces statistiques.", completion:"On peut ___ la fiabilité de ces statistiques.", answer:"remettre en question"},
+    {id:"ca-03", term:"discutable", meaning:"debatable / questionable", synonym:"contestable, litigieux", example:"Cette affirmation est discutable car elle manque de preuves.", completion:"Cette affirmation est ___ car elle manque de preuves.", answer:"discutable"},
+    {id:"ca-04", term:"biais", meaning:"bias / slant", synonym:"parti pris, distorsion", example:"On décèle un biais idéologique dans le choix des exemples.", completion:"On décèle un ___ idéologique dans le choix des exemples.", answer:"biais"},
+    {id:"ca-05", term:"faille logique", meaning:"logical flaw", synonym:"erreur de raisonnement, sophisme", example:"L'auteur commet une faille logique en généralisant à partir d'un seul cas.", completion:"L'auteur commet une ___ en généralisant à partir d'un seul cas.", answer:"faille logique"},
+    {id:"ca-06", term:"prise de position", meaning:"statement of one's position / stance", synonym:"point de vue, parti pris", example:"La prise de position doit être argumentée et nuancée.", completion:"La ___ doit être argumentée et nuancée.", answer:"prise de position"},
+    {id:"ca-07", term:"contradiction", meaning:"contradiction / inconsistency", synonym:"incohérence, paradoxe", example:"Cette contradiction affaiblit la cohérence de l'argumentation.", completion:"Cette ___ affaiblit la cohérence de l'argumentation.", answer:"contradiction"},
+    {id:"ca-08", term:"prétendre", meaning:"to claim (with implied doubt)", synonym:"alléguer, avancer", example:"L'auteur prétend que la situation s'améliore, sans fournir de données récentes.", completion:"L'auteur ___ que la situation s'améliore, sans fournir de données récentes.", answer:"prétend"}
+  ]
+};
+</script>
+<script src="../../../../shared/store.js?v=v107"></script>
+<script src="../../../../shared/game.js?v=v111"></script>
+</body>
+</html>
