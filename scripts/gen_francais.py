@@ -67,10 +67,14 @@ def crumb(d, page_fr):
 
 
 def nav(active, section):
-    has_print = section in ('grammaire', 'redaction')
-    items = [('slides.html', 'Le&#231;on'), ('worksheet.html', 'Exercices'), ('game.html', 'Jeu')]
-    if has_print:
-        items.append(('printables.html', 'Imprimables'))
+    if section == 'vocabulaire':
+        items = [('flashcards.html', 'Cartes'), ('slides.html', 'Le&#231;on'),
+                 ('game.html', 'Jeu'), ('match.html', 'Relier')]
+    else:
+        has_print = section in ('grammaire', 'redaction')
+        items = [('slides.html', 'Le&#231;on'), ('worksheet.html', 'Exercices'), ('game.html', 'Jeu')]
+        if has_print:
+            items.append(('printables.html', 'Imprimables'))
     btns = ''.join(
         f'  <a href="{h}" class="chapter-nav-btn{" active" if h == active else ""}">{l}</a>\n'
         for h, l in items)
@@ -211,6 +215,9 @@ def render_game(d, slug):
         % tuple(jd(v) for v in it) for it in d['items'])
     sec_label = SECTION_FR[d['section']]
     lv = d['level'].upper()
+    is_vocab = d['section'] == 'vocabulaire'
+    second_btn_href = 'flashcards.html' if is_vocab else 'worksheet.html'
+    second_btn_label = 'Cartes' if is_vocab else 'Exercices'
     s = HEAD.format(title=f'{d["short"]} — Jeu {lv} | Word Play',
                     extra_css='<link rel="stylesheet" href="../../../../shared/game.css?v=v112">\n')
     s += '<body>\n' + HEADER + crumb(d, 'Jeu') + nav('game.html', d['section'])
@@ -246,7 +253,7 @@ def render_game(d, slug):
           '        </div>\n        <div id="gMasteryMap"></div>\n'
           '        <div class="game-btn-row">\n'
           '          <button id="gBtnPlayAgain" class="game-btn primary">Rejouer</button>\n'
-          '          <a href="worksheet.html" class="game-btn secondary">Exercices</a>\n'
+          f'          <a href="{second_btn_href}" class="game-btn secondary">{second_btn_label}</a>\n'
           '        </div>\n      </div>\n    </div>\n  </div>\n</div>\n'
           '<div class="game-toast" id="gToast"></div>\n'
           f'<footer class="site-footer">Word Play &middot; Fran&#231;ais {lv} &middot; Jeu</footer>\n'

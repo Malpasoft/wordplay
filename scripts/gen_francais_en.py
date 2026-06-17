@@ -59,8 +59,12 @@ def crumb(d, page_en):
             f'  <strong>{page_en}</strong>\n</div>\n')
 
 
-def nav(active):
-    items = [('slides.html', 'Lesson'), ('worksheet.html', 'Exercises'), ('game.html', 'Game')]
+def nav(active, section='grammar'):
+    if section == 'vocabulary':
+        items = [('slides.html', 'Word List'), ('flashcards.html', 'Flashcards'),
+                 ('game.html', 'Mastery Game'), ('match.html', 'Match')]
+    else:
+        items = [('slides.html', 'Lesson'), ('worksheet.html', 'Exercises'), ('game.html', 'Game')]
     btns = ''.join(f'  <a href="{h}" class="chapter-nav-btn{" active" if h == active else ""}">{l}</a>\n'
                    for h, l in items)
     return f'<nav class="chapter-nav">\n{btns}</nav>\n'
@@ -197,7 +201,10 @@ def render_game(d, slug):
         % tuple(jd(v) for v in it) for it in d['items'])
     s = HEAD.format(title=f'{d["short"]} — Game {d["level"].upper()} | Word Play',
                     extra_css='<link rel="stylesheet" href="../../../../shared/game.css?v=v112">\n')
-    s += '<body>\n' + HEADER + crumb(d, 'Game') + nav('game.html')
+    is_vocab = d['section'] == 'vocabulary'
+    second_btn_href = 'flashcards.html' if is_vocab else 'worksheet.html'
+    second_btn_label = 'Flashcards' if is_vocab else 'Exercises'
+    s += '<body>\n' + HEADER + crumb(d, 'Game') + nav('game.html', d['section'])
     s += (f'<div class="container">\n  <h1>{d["short"]} — Mastery Game</h1>\n'
           '  <div class="game-wrap">\n'
           '    <div id="gameStart" class="game-screen active">\n      <div class="game-start">\n'
@@ -229,7 +236,7 @@ def render_game(d, slug):
           '        </div>\n        <div id="gMasteryMap"></div>\n'
           '        <div class="game-btn-row">\n'
           '          <button id="gBtnPlayAgain" class="game-btn primary">Play again</button>\n'
-          '          <a href="worksheet.html" class="game-btn secondary">Exercises</a>\n'
+          f'          <a href="{second_btn_href}" class="game-btn secondary">{second_btn_label}</a>\n'
           '        </div>\n      </div>\n    </div>\n  </div>\n</div>\n'
           '<div class="game-toast" id="gToast"></div>\n'
           f'<footer class="site-footer">Word Play &middot; French {d["level"].upper()} &middot; Game</footer>\n'
