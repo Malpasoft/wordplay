@@ -37,6 +37,12 @@ francais-en/index.html advertises "DELF preparation from A1" but links to franca
 (a) has French-language UI, (b) only has about/ + mock-1/ per level (no strategy, no per-part
 breakdowns, no mock-2/mock-3). Add English-language strategy pages and mocks 2–3 per level.
 
+### D7 — `fr/` vocab slides are English-only (not bilingual)
+The legacy `fr/` track (French for English speakers) has vocab `slides.html` word-lists with
+English-only descriptions, unlike `es/` and the newer `francais-en/` which are bilingual
+(target term + L1 gloss + target example). Regenerate `fr/` vocab slides bilingually, or
+retire `fr/` in favour of `francais-en/` if it is the canonical French-for-English track.
+
 ### D4 — Printables / review pages not wired into the student flow
 Printable pages exist for many grammar chapters but aren't consistently surfaced in chapter
 hubs; there is no `review.html` step. Decide whether printables get an activity card everywhere

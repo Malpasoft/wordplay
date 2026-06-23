@@ -40,8 +40,8 @@ Homepage = 3 language cards → language hub → courses for that language.
 | `/english/` | English for French speakers | `fr/` | fr | A1–B2 | — |
 | `/espanol/` | Main Spanish | `espanol/` | es | A1–C2 ✅ | DELE ✅ |
 | `/espanol/` | Spanish for English speakers | `espanol-en/` | en | A1–B2 | — |
-| `/francais/` | Main French | `francais/` | fr | A1–C2 (planned) | DELF/DALF |
-| `/francais/` | French for EN / ES speakers | `francais-en/ francais-es/` | en / es | A1–B2 (planned) | — |
+| `/francais/` | Main French | `francais/` | fr | A1–C2 ✅ | DELF/DALF |
+| `/francais/` | French for EN / ES speakers | `francais-en/ ✅ · francais-es/ (planned)` | en / es | A1–B2 | — |
 
 **Rule: L1-mediated courses run A1–B2 only.** At C1+, learners continue in the main course
 taught in the target language (each L1 landing page has a handoff card). es/ and espanol-en/
@@ -63,11 +63,16 @@ C1+C2 were deleted June 2026; `_redirects` covers old URLs.
   vocab games ✅.
 - **`espanol-en/`** — A1 + A2 complete; B1+B2 complete (June 2026). C1/C2 removed (L1 rule).
 - **`fr/`** — A1+A2+B1+B2 complete. Vocab slides use English-only descriptions (not yet
-  bilingual like `es/`) — tracked in TECH_DEBT.md.
+  bilingual like `es/`) — tracked in TECH_DEBT.md (D7).
 - **`espanol/`** — A1–C2 complete ✅; DELE exam prep A1–C2 (hub + about + mock-1 each) ✅.
-- **`francais/`, `francais-en/`, `francais-es/`** — planned (see roadmap in plan docs).
+- **`francais/`** — A1–C2 complete ✅ (grammar, vocab, writing; 146 chapters).
+- **`francais-en/`** — A1–B2 complete ✅ (grammar, vocab, writing; 98 chapters). Vocab
+  has bilingual `slides.html` word-lists; grammar games gap the answer from the French
+  example (contexto), and all game/worksheet/slides load `i18n.js` for English UI labels.
+- **`francais-es/`** — planned (only the landing page exists; A1–B2 levels not yet built).
 - **Exam prep** — KET (a2) and PET (b1) fully rebuilt (graded parts + writing-overview +
-  3 mocks each); FCE complete; CAE/CPE mocks 1–3 complete ✅; DELE A1–C2 complete ✅.
+  3 mocks each); FCE complete; CAE/CPE mocks 1–3 complete ✅ and linked from the C1/C2
+  hubs (`c/c1/cae/`, `c/c2/cpe/`); DELE A1–C2 complete ✅.
 
 ---
 
