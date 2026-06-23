@@ -3,7 +3,9 @@
 Bump cache-bust versions for modified shared files.
 
 Files that were modified and need version bumps:
-- i18n.js: v123 → v124 (French language support for the fr/ track)
+- store.js:     v107 → v108 (recordMistakes() for mistake analytics)
+- worksheet.js: v108 → v109 (capture wrong answers)
+- game.js:      v112 → v113 (capture wrong answers)
 """
 
 import os
@@ -12,7 +14,9 @@ from pathlib import Path
 
 # Version bumps: old → new
 BUMPS = {
-    ('i18n.js', 'v123'): 'v124',
+    ('store.js', 'v107'): 'v108',
+    ('worksheet.js', 'v108'): 'v109',
+    ('game.js', 'v112'): 'v113',
 }
 
 def bump_file(filepath):

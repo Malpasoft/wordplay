@@ -66,6 +66,7 @@
   // ── Extract questions from existing HTML form ────────────────────
   var questions = [];
   var sectionMeta = {};
+  var mistakeBuffer = [];   // wrong answers captured for analytics (synced on finish)
 
   document.querySelectorAll('section.exercise').forEach(function (section) {
     var sId = section.id;
@@ -399,6 +400,17 @@
       autoTimer = setTimeout(function () { elNext.click(); }, 1500);
     } else {
       lives--;
+      // Capture the mistake for weakness analytics (skill = section title)
+      var givenVal = q.type === 'mc'
+        ? (selBtn ? selBtn.dataset.v : '')
+        : elInput.value;
+      mistakeBuffer.push({
+        questionId: q.qKey,
+        skillTag: (sectionMeta[q.sectionId] && sectionMeta[q.sectionId].title) || q.sectionId,
+        expected: q.correct,
+        given: givenVal,
+        source: 'worksheet'
+      });
       var idx2 = queue.indexOf(q);
       if (idx2 !== -1) { queue.splice(idx2, 1); queue.push(q); }
       if (lives <= 0) elNext.textContent = L.seeResults;
@@ -429,6 +441,10 @@
       });
       try { FCEStore.saveResult(window.CHAPTER_ID, firstPassOK, totalQ, pEx); } catch (e) {}
       if (success && pct >= 50) try { FCEStore.addXP(20); } catch (e) {}
+      // Flush captured mistakes for weakness analytics
+      if (mistakeBuffer.length && FCEStore.recordMistakes) {
+        try { FCEStore.recordMistakes(window.CHAPTER_ID, mistakeBuffer); } catch (e) {}
+      }
     }
 
     var pctColor = pct >= 80 ? 'var(--green)' : pct >= 50 ? 'var(--amber)' : 'var(--red)';

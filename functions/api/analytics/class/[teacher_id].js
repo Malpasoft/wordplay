@@ -109,7 +109,30 @@ export async function onRequestGet(context) {
         .slice(0, 5)
     }));
 
-    return json({ students: students });
+    // Class-wide common mistakes (top skills + chapters across all students)
+    const mistakesBySkill = await context.env.DB.prepare(
+      `SELECT ml.skill_tag, COUNT(*) AS count
+       FROM mistake_log ml
+       INNER JOIN student_teachers st ON ml.user_id = st.student_id
+       WHERE st.teacher_id = ? AND ml.skill_tag IS NOT NULL
+       GROUP BY ml.skill_tag ORDER BY count DESC LIMIT 10`
+    ).bind(teacherId).all();
+
+    const mistakesByChapter = await context.env.DB.prepare(
+      `SELECT ml.level, ml.chapter_slug, COUNT(*) AS count
+       FROM mistake_log ml
+       INNER JOIN student_teachers st ON ml.user_id = st.student_id
+       WHERE st.teacher_id = ?
+       GROUP BY ml.level, ml.chapter_slug ORDER BY count DESC LIMIT 10`
+    ).bind(teacherId).all();
+
+    return json({
+      students: students,
+      commonMistakes: {
+        bySkill: mistakesBySkill.results || [],
+        byChapter: mistakesByChapter.results || []
+      }
+    });
   } catch (error) {
     console.error('Analytics fetch error:', error);
     return json({ error: 'Failed to fetch analytics' }, 500);

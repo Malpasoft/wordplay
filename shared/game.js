@@ -86,6 +86,14 @@ window.GAME_CONFIG = {
 
     var STORAGE_KEY = DATA.storageKey || ('game_' + (DATA.level || '') + '_' + (DATA.chapterId || ''));
     var SCORE_GOAL  = window.GAME_CONFIG.SCORE_GOAL;
+    var gameMistakes = [];  // wrong answers captured for analytics (synced on win)
+    // Stable English skill labels for analytics (independent of UI language)
+    function labelForType(t) {
+      return t === 'significado' ? 'Meaning'
+           : t === 'contexto'    ? 'Context'
+           : t === 'produccion'  ? 'Production'
+           : t;
+    }
 
     // ── Language (via i18n module) ────────────────────────────────
     // window.i18n.isSpanish() checks DATA.level or html lang attribute
@@ -571,6 +579,14 @@ window.GAME_CONFIG = {
         state.score        = Math.max(0, state.score - 3);
         state.crossStreak  = 0;
         state.sameRunCount = 0;
+        // Capture mistake for weakness analytics (skill = question type)
+        gameMistakes.push({
+          questionId: item.id + '_' + type,
+          skillTag: labelForType(type),
+          expected: correct,
+          given: userVal,
+          source: 'game'
+        });
         // Requeue at end
         var idx2 = state.queue.indexOf(qItem);
         if (idx2 !== -1) { state.queue.splice(idx2, 1); state.queue.push(qItem); }
@@ -615,6 +631,10 @@ window.GAME_CONFIG = {
         if (window.FCEStore && DATA.chapterId && DATA.level) {
           try { FCEStore.saveGameResult(DATA.chapterId, ITEMS.length, ITEMS.length); } catch(e) {}
           try { FCEStore.addXP(30); } catch(e) {}
+          if (gameMistakes.length && FCEStore.recordMistakes) {
+            try { FCEStore.recordMistakes(DATA.chapterId, gameMistakes); } catch(e) {}
+            gameMistakes = [];
+          }
         }
         saveState();
         autoTimer = setTimeout(function() {

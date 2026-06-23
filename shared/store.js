@@ -128,6 +128,45 @@
       schedulePush();
     },
 
+    // Record wrong answers for mistake analytics. Buffers locally and pushes
+    // to D1 when signed-in. No-op fallback for logged-out users (no PII stored).
+    // mistakes: [{ questionId, skillTag, expected, given, source }]
+    recordMistakes: function(chapterId, mistakes) {
+      if (!mistakes || !mistakes.length) return;
+      var level;
+      if (window.LEVEL && CHAPTERS[window.LEVEL]) {
+        level = window.LEVEL;
+      } else {
+        var info = findChapter(chapterId);
+        level = info ? info.level : (window.LEVEL || '');
+      }
+      var token = (typeof getAuthToken === 'function') ? getAuthToken() : null;
+      if (!token) return; // only sync for signed-in students
+
+      var payload = {
+        mistakes: mistakes.map(function(m) {
+          return {
+            level: level,
+            chapter_slug: chapterId,
+            question_id: m.questionId || null,
+            skill_tag: m.skillTag || null,
+            expected: m.expected || null,
+            given: m.given || null,
+            source: m.source || null
+          };
+        })
+      };
+
+      try {
+        fetch('/api/student/mistakes', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+          body: JSON.stringify(payload),
+          keepalive: true
+        }).catch(function(e) { console.warn('[WordPlay] mistake sync failed:', e.message); });
+      } catch (e) { /* fail silently — analytics must never break a lesson */ }
+    },
+
     // XP system
     addXP: function(n) {
       var data = load();
