@@ -1,7 +1,9 @@
 // Word Play Auth API — Signup endpoint
 // POST /api/auth/signup
-// Request: { email, password, level }
+// Request: { email, password, level, privacy_consent }
 // Response: { token, user_id, email, role, level } or { error }
+
+import { sendEmail } from '../_lib/email.js';
 
 // PBKDF2 password hash using Web Crypto API (Cloudflare Workers)
 async function hashPassword(password, salt) {
@@ -91,11 +93,15 @@ function json(data, status = 200) {
 export async function onRequestPost(context) {
   try {
     const body = await context.request.json();
-    const { email, password, level } = body;
+    const { email, password, level, privacy_consent } = body;
 
     // Validate inputs
     if (!email || !password || !level) {
       return json({ error: 'Email, password, and level are required.' }, 400);
+    }
+
+    if (!privacy_consent) {
+      return json({ error: 'You must accept the Privacy Policy to create an account.' }, 400);
     }
 
     if (!isValidEmail(email)) {
@@ -146,10 +152,11 @@ export async function onRequestPost(context) {
     const passwordHash = hash + ':' + salt;
 
     // Create user (always as 'student' role)
+    const consentAt = Date.now();
     const userResult = await context.env.DB.prepare(
-      'INSERT INTO users (email, password_hash, role) VALUES (?, ?, ?)'
+      'INSERT INTO users (email, password_hash, role, privacy_consent, consent_at) VALUES (?, ?, ?, ?, ?)'
     )
-      .bind(emailLower, passwordHash, 'student')
+      .bind(emailLower, passwordHash, 'student', 1, consentAt)
       .run();
 
     const userId = userResult.meta.last_row_id;
@@ -171,6 +178,36 @@ export async function onRequestPost(context) {
     )
       .bind(userId, token, expiresAt)
       .run();
+
+    // Send verification email (non-blocking — don't fail signup if email fails)
+    try {
+      const verifyToken = generateToken();
+      const verifyExpiry = Date.now() + 72 * 60 * 60 * 1000; // 72 hours
+      await context.env.DB.prepare(
+        'INSERT INTO password_resets (user_id, token, expires_at) VALUES (?, ?, ?)'
+      ).bind(userId, verifyToken, verifyExpiry).run();
+
+      const baseUrl = context.env.SITE_URL || 'https://wordplay-38t.pages.dev';
+      const verifyUrl = `${baseUrl}/api/auth/verify-email?token=${verifyToken}`;
+      await sendEmail({
+        to: emailLower,
+        subject: 'Verify your Word Play email',
+        html: `
+          <div style="font-family:system-ui,sans-serif;max-width:480px;margin:0 auto;padding:32px 24px">
+            <h2 style="font-size:1.4rem;margin:0 0 16px;color:#1A1A1A">Welcome to Word Play</h2>
+            <p style="color:#444;line-height:1.6;margin:0 0 24px">
+              Click below to verify your email address. This link expires in 72 hours.
+            </p>
+            <a href="${verifyUrl}" style="display:inline-block;padding:12px 24px;background:#B8860B;color:#fff;text-decoration:none;border-radius:4px;font-weight:600">
+              Verify email
+            </a>
+          </div>
+        `,
+        env: context.env
+      });
+    } catch (emailErr) {
+      console.warn('Verification email failed:', emailErr.message);
+    }
 
     // Return success
     return json({

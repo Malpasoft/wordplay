@@ -232,6 +232,16 @@
         <div class="form-group-hint">Your teacher will give you a code to join their class</div>
       </div>
 
+      <div class="form-group" style="display:flex;gap:10px;align-items:flex-start">
+        <input type="checkbox" id="consent" name="consent" required style="width:auto;margin-top:3px;flex-shrink:0" />
+        <label for="consent" style="font-size:var(--fs-small);color:var(--muted);font-weight:normal;line-height:1.5;margin-bottom:0">
+          I have read and agree to the
+          <a href="/privacy.html" target="_blank" style="color:var(--amber)">Privacy Policy</a>
+          and
+          <a href="/terms.html" target="_blank" style="color:var(--amber)">Terms of Service</a>.
+        </label>
+      </div>
+
       <div class="signup-error" id="error"></div>
 
       <button type="submit" class="signup-btn" id="signup-btn">Create Account</button>
@@ -262,10 +272,17 @@
       var confirm = document.getElementById('confirm').value;
       var level = document.getElementById('level').value;
       var teacherCode = document.getElementById('teacherCode').value.trim();
+      var consent = document.getElementById('consent').checked;
 
       // Validation
       if (!email || !password || !confirm || !level) {
         error.textContent = 'Please fill in all required fields.';
+        error.style.display = 'block';
+        return;
+      }
+
+      if (!consent) {
+        error.textContent = 'Please accept the Privacy Policy and Terms to continue.';
         error.style.display = 'block';
         return;
       }
@@ -294,7 +311,8 @@
           body: JSON.stringify({
             email: email,
             password: password,
-            level: level
+            level: level,
+            privacy_consent: true
           })
         });
 
@@ -352,5 +370,9 @@
       }
     });
   </script>
+  <footer style="text-align:center;padding:24px 16px;font-size:.75rem;color:var(--muted)">
+    <a href="/privacy.html" style="color:var(--muted)">Privacy Policy</a> &middot;
+    <a href="/terms.html" style="color:var(--muted)">Terms of Service</a>
+  </footer>
 </body>
 </html>

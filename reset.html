@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Word Play — Reset Password</title>
+  <link rel="stylesheet" href="/shared/base.css?v=v125" />
+  <script src="/shared/dark-init.js?v=v112"></script>
+  <style>
+    .reset-container {
+      max-width: 420px;
+      margin: 60px auto;
+      padding: 2rem;
+      border: 1px solid var(--hairline);
+      border-radius: 8px;
+      background: var(--paper);
+    }
+    .reset-container h1 {
+      font-size: var(--fs-h2);
+      margin-bottom: 0.5rem;
+      text-align: center;
+      color: var(--ink);
+    }
+    .reset-subtitle {
+      text-align: center;
+      font-size: var(--fs-small);
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-size: var(--fs-body);
+      font-weight: var(--fw-medium);
+      color: var(--ink);
+    }
+    .form-group input {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: var(--fs-body);
+      border: 1px solid var(--hairline);
+      border-radius: 4px;
+      background: var(--paper);
+      color: var(--ink);
+      box-sizing: border-box;
+    }
+    .form-group input:focus {
+      outline: 2px solid var(--amber);
+      outline-offset: 2px;
+      border-color: var(--amber);
+    }
+    .submit-btn {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: var(--fs-body);
+      font-weight: var(--fw-medium);
+      background: var(--amber);
+      color: var(--paper);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .submit-btn:hover { opacity: 0.85; }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .msg {
+      font-size: var(--fs-small);
+      margin-top: 0.75rem;
+      padding: 0.6rem 0.8rem;
+      border-radius: 4px;
+      display: none;
+    }
+    .msg.error { color: #b00020; background: rgba(176,0,32,.07); }
+    .msg.success { color: #1a6b2a; background: rgba(26,107,42,.07); }
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 1.2rem;
+      font-size: var(--fs-small);
+      color: var(--amber);
+      text-decoration: none;
+    }
+    .back-link:hover { text-decoration: underline; }
+    @media (max-width: 480px) {
+      .reset-container { margin: 30px auto; padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="/" class="brand">Word Play</a>
+      <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+    </div>
+  </header>
+
+  <!-- Request reset form (shown when no token in URL) -->
+  <div class="reset-container" id="requestPane">
+    <h1>Forgot password?</h1>
+    <p class="reset-subtitle">Enter your email and we'll send you a reset link.</p>
+    <form id="requestForm">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="you@example.com" required autofocus />
+      </div>
+      <div class="msg error" id="reqError"></div>
+      <div class="msg success" id="reqSuccess"></div>
+      <button type="submit" class="submit-btn" id="reqBtn">Send reset link</button>
+    </form>
+    <a href="/login.html" class="back-link">Back to sign in</a>
+  </div>
+
+  <!-- New password form (shown when token present in URL) -->
+  <div class="reset-container" id="newPwPane" style="display:none">
+    <h1>Set new password</h1>
+    <p class="reset-subtitle">Choose a new password for your account.</p>
+    <form id="newPwForm">
+      <div class="form-group">
+        <label for="pw1">New password</label>
+        <input type="password" id="pw1" placeholder="At least 8 characters" required />
+      </div>
+      <div class="form-group">
+        <label for="pw2">Confirm password</label>
+        <input type="password" id="pw2" placeholder="Repeat password" required />
+      </div>
+      <div class="msg error" id="pwError"></div>
+      <div class="msg success" id="pwSuccess"></div>
+      <button type="submit" class="submit-btn" id="pwBtn">Set password</button>
+    </form>
+  </div>
+
+  <script>
+  (function() {
+    var params = new URLSearchParams(location.search);
+    var token = params.get('token');
+
+    if (token) {
+      document.getElementById('requestPane').style.display = 'none';
+      document.getElementById('newPwPane').style.display = 'block';
+    }
+
+    // ── Request reset ──────────────────────────────────────────────
+    document.getElementById('requestForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      var btn = document.getElementById('reqBtn');
+      var errEl = document.getElementById('reqError');
+      var okEl = document.getElementById('reqSuccess');
+      var email = document.getElementById('email').value.trim();
+
+      errEl.style.display = 'none';
+      okEl.style.display = 'none';
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      try {
+        await fetch('/api/auth/request-reset', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email })
+        });
+        // Always show the same success message (prevent enumeration)
+        okEl.textContent = 'If that email has an account, a reset link is on its way. Check your inbox.';
+        okEl.style.display = 'block';
+        btn.textContent = 'Sent';
+      } catch (err) {
+        errEl.textContent = 'Network error. Please try again.';
+        errEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Send reset link';
+      }
+    });
+
+    // ── Set new password ───────────────────────────────────────────
+    document.getElementById('newPwForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      var btn = document.getElementById('pwBtn');
+      var errEl = document.getElementById('pwError');
+      var okEl = document.getElementById('pwSuccess');
+      var pw1 = document.getElementById('pw1').value;
+      var pw2 = document.getElementById('pw2').value;
+
+      errEl.style.display = 'none';
+      okEl.style.display = 'none';
+
+      if (pw1.length < 8) {
+        errEl.textContent = 'Password must be at least 8 characters.';
+        errEl.style.display = 'block';
+        return;
+      }
+      if (pw1 !== pw2) {
+        errEl.textContent = 'Passwords do not match.';
+        errEl.style.display = 'block';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Saving…';
+
+      try {
+        var res = await fetch('/api/auth/reset', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ token: token, password: pw1 })
+        });
+        var data = await res.json();
+        if (!res.ok) {
+          errEl.textContent = data.error || 'Could not reset password.';
+          errEl.style.display = 'block';
+          btn.disabled = false;
+          btn.textContent = 'Set password';
+          return;
+        }
+        okEl.textContent = 'Password updated. Redirecting to sign in…';
+        okEl.style.display = 'block';
+        btn.style.display = 'none';
+        setTimeout(function() { location.href = '/login.html'; }, 2000);
+      } catch (err) {
+        errEl.textContent = 'Network error. Please try again.';
+        errEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Set password';
+      }
+    });
+  })();
+  </script>
+</body>
+</html>

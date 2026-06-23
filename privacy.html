@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Privacy Policy | Word Play</title>
+  <link rel="stylesheet" href="/shared/base.css?v=v125" />
+  <script src="/shared/dark-init.js?v=v112"></script>
+  <style>
+    .legal-page {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+    }
+    .legal-page h1 {
+      font-family: var(--font-serif);
+      font-size: 2rem;
+      margin-bottom: 0.4rem;
+    }
+    .legal-meta {
+      font-size: var(--fs-small);
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+    }
+    .legal-page h2 {
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin: 2rem 0 0.6rem;
+      color: var(--ink);
+    }
+    .legal-page p, .legal-page li {
+      font-size: 0.93rem;
+      line-height: 1.7;
+      color: var(--ink);
+      margin-bottom: 0.6rem;
+    }
+    .legal-page ul {
+      padding-left: 1.4rem;
+      margin-bottom: 0.6rem;
+    }
+    .legal-page a { color: var(--amber); }
+    .legal-page table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      margin-bottom: 1rem;
+    }
+    .legal-page th, .legal-page td {
+      text-align: left;
+      padding: 8px 12px;
+      border: 1px solid var(--hairline);
+    }
+    .legal-page th {
+      background: var(--cream);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="/" class="brand">Word Play</a>
+      <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+    </div>
+  </header>
+
+  <div class="legal-page">
+    <h1>Privacy Policy</h1>
+    <p class="legal-meta">Last updated: June 2026 &middot; <a href="/terms.html">Terms of Service</a></p>
+
+    <p>
+      Word Play ("the service", "we") is operated by Em (sole trader, Catalunya, Spain). This policy
+      explains what personal data we collect, why we collect it, and your rights under the EU General
+      Data Protection Regulation (GDPR, Regulation 2016/679).
+    </p>
+
+    <h2>1. Who is the data controller?</h2>
+    <p>
+      Em, operating Word Play. Contact:
+      <a href="mailto:emi.dom123@gmail.com">emi.dom123@gmail.com</a>
+    </p>
+
+    <h2>2. What data we collect and why</h2>
+    <table>
+      <tr>
+        <th>Data</th>
+        <th>Purpose</th>
+        <th>Legal basis</th>
+      </tr>
+      <tr>
+        <td>Email address</td>
+        <td>Account login, password reset, service emails</td>
+        <td>Contract (Art. 6(1)(b))</td>
+      </tr>
+      <tr>
+        <td>Password (hashed, PBKDF2)</td>
+        <td>Authentication</td>
+        <td>Contract (Art. 6(1)(b))</td>
+      </tr>
+      <tr>
+        <td>Learning level, L1 language</td>
+        <td>Personalise course content</td>
+        <td>Contract (Art. 6(1)(b))</td>
+      </tr>
+      <tr>
+        <td>Progress (chapter scores, XP, streak)</td>
+        <td>Show your progress, enable cross-device sync</td>
+        <td>Contract (Art. 6(1)(b))</td>
+      </tr>
+      <tr>
+        <td>Lesson bookings</td>
+        <td>Schedule private lessons with the teacher</td>
+        <td>Contract (Art. 6(1)(b))</td>
+      </tr>
+      <tr>
+        <td>IP address</td>
+        <td>Rate-limiting to prevent abuse</td>
+        <td>Legitimate interests (Art. 6(1)(f))</td>
+      </tr>
+      <tr>
+        <td>Cloudflare infrastructure logs</td>
+        <td>Security and uptime monitoring (processed by Cloudflare)</td>
+        <td>Legitimate interests (Art. 6(1)(f))</td>
+      </tr>
+    </table>
+    <p>We do not use tracking cookies, advertising, or analytics services that share data with third parties.</p>
+
+    <h2>3. Local storage</h2>
+    <p>
+      Progress data is also stored in your browser's <code>localStorage</code>. This is first-party
+      functional storage necessary for the service to work offline. No consent banner is required for
+      strictly necessary functional storage under the ePrivacy Directive.
+    </p>
+
+    <h2>4. Who sees your data</h2>
+    <ul>
+      <li><strong>Your teacher (Em)</strong> can see your email, level, lesson bookings, and progress scores
+        for the purpose of teaching you.</li>
+      <li><strong>Cloudflare, Inc.</strong> stores and processes data as our infrastructure provider
+        (Pages hosting, D1 database). Data is stored in the EU (Dublin region where available).
+        Cloudflare is our data processor under a <a href="https://www.cloudflare.com/cloudflare-customer-dpa/" rel="noopener">DPA</a>.
+      </li>
+      <li>We do not sell data or share it with any other third parties.</li>
+    </ul>
+
+    <h2>5. Retention</h2>
+    <p>
+      Account data is retained while your account is active. You can delete your account at any time
+      (see Section 7). Rate-limiting logs are purged automatically after 24 hours.
+      After account deletion, backups are removed within 30 days.
+    </p>
+
+    <h2>6. Transfers outside the EU</h2>
+    <p>
+      Cloudflare may process some data outside the EEA. They rely on Standard Contractual Clauses (SCCs)
+      for such transfers. See Cloudflare's <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">privacy policy</a>.
+    </p>
+
+    <h2>7. Your rights (GDPR)</h2>
+    <ul>
+      <li><strong>Access</strong> — download all your data: sign in and go to
+        <a href="/dashboard.html">Dashboard &rarr; Account settings &rarr; Download my data</a>.</li>
+      <li><strong>Deletion</strong> — delete your account and all data from the same settings page.</li>
+      <li><strong>Correction</strong> — contact us to correct inaccurate data.</li>
+      <li><strong>Portability</strong> — your data export is in machine-readable JSON.</li>
+      <li><strong>Object / Restrict</strong> — contact us to restrict processing based on legitimate interests.</li>
+      <li><strong>Complaint</strong> — you have the right to lodge a complaint with the Spanish data
+        protection authority (AEPD): <a href="https://www.aepd.es" rel="noopener">aepd.es</a>.</li>
+    </ul>
+    <p>
+      To exercise any right, email <a href="mailto:emi.dom123@gmail.com">emi.dom123@gmail.com</a>.
+      We respond within 30 days.
+    </p>
+
+    <h2>8. Children</h2>
+    <p>
+      Word Play is not directed at children under 16. If you believe a child has created an account,
+      contact us and we will delete it.
+    </p>
+
+    <h2>9. Changes to this policy</h2>
+    <p>
+      Material changes will be notified by email at least 14 days in advance. The "Last updated" date
+      at the top of this page indicates the current version.
+    </p>
+  </div>
+
+  <footer class="site-footer">
+    Word Play &middot; <a href="/privacy.html">Privacy</a> &middot; <a href="/terms.html">Terms</a>
+  </footer>
+</body>
+</html>

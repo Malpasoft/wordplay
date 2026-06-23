@@ -100,11 +100,33 @@ binding is dashboard-only unless you add one.)
 
 ---
 
+## Environment variables / secrets (new — Phase 1)
+
+Two secrets are needed for email (password reset + verification). Add them in:
+**Workers & Pages → wordplay-38t → Settings → Environment variables → Add secret**
+
+| Variable | Value | Notes |
+|----------|-------|-------|
+| `RESEND_API_KEY` | `re_xxxx…` | Get from resend.com (free tier: 3k/mo). Create an account, add a domain or use `onboarding@resend.dev` for testing. |
+| `RESEND_FROM` | `Word Play <noreply@yourdomain.com>` | Must match a verified sender in Resend. For testing use `onboarding@resend.dev`. |
+| `SITE_URL` | `https://wordplay-38t.pages.dev` | Used to build reset/verify links in emails. |
+
+Until `RESEND_API_KEY` is set, email calls are skipped (logged as a warning) — signup, login, and
+password requests still work without email, but no emails will be sent.
+
+---
+
 ## Adding new migrations
 
-Number them sequentially (`0003_*.sql`). Run them the same way (dashboard console or
+Number them sequentially (next is `0009_*.sql`). Run them the same way (dashboard console or
 `wrangler d1 execute`). Always `CREATE TABLE IF NOT EXISTS` / `CREATE INDEX IF NOT EXISTS`
 so re-running is safe.
+
+**New migration to apply (Phase 1):**
+```bash
+npx wrangler d1 execute wordplay_db --remote --file=migrations/0009_password_resets.sql
+```
+Or paste the contents into the D1 dashboard console.
 
 ---
 
