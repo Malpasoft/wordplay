@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Bookings | Word Play</title>
+<link rel="stylesheet" href="/shared/base.css?v=v125">
+<script src="/shared/auth.js?v=1"></script>
+<script src="/shared/dark-init.js?v=v112"></script>
+<style>
+.tb-page { max-width: 880px; margin: 0 auto; padding: 24px 20px 60px; }
+.tb-page h1 { font-family: var(--font-serif); font-size: 2.2rem; margin: 0 0 6px; }
+.tb-sub { color: var(--muted); font-size: .9rem; margin-bottom: 28px; }
+.sec-head { font-family: var(--font-sans); font-size: .65rem; font-weight: 800; letter-spacing: 2.5px; text-transform: uppercase; color: var(--amber); margin: 28px 0 14px; }
+.avail-row { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr auto; gap: 8px; align-items: center; margin-bottom: 8px; }
+.avail-row select, .avail-row input { padding: 7px 8px; border: 1.5px solid var(--hairline); border-radius: 5px; background: var(--paper); color: var(--ink); font-family: var(--font-sans); font-size: .82rem; }
+.btn { font-family: var(--font-sans); font-size: .75rem; font-weight: 700; letter-spacing: .5px; padding: 8px 16px; border-radius: 5px; cursor: pointer; border: 1.5px solid var(--hairline); background: transparent; color: var(--ink); }
+.btn.primary { background: var(--amber); color: #1A1A1A; border-color: var(--amber); }
+.btn.del { color: #b00020; border: none; padding: 8px 10px; }
+.req-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 14px; border: 1.5px solid var(--hairline); border-radius: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+.req-when { font-family: var(--font-sans); font-size: .88rem; color: var(--ink); font-weight: 600; }
+.req-who { font-family: var(--font-sans); font-size: .78rem; color: var(--muted); }
+.badge { font-family: var(--font-sans); font-size: .62rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; padding: 4px 9px; border-radius: 4px; }
+.badge.pending { background: rgba(184,134,11,.14); color: var(--amber); }
+.badge.confirmed { background: rgba(46,125,82,.14); color: #2E7D52; }
+.badge.declined, .badge.cancelled { background: rgba(0,0,0,.07); color: var(--muted); }
+.empty { color: var(--muted); font-size: .88rem; padding: 16px 0; }
+.toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--ink); color: var(--paper); padding: 12px 22px; border-radius: 6px; font-family: var(--font-sans); font-size: .85rem; display: none; z-index: 100; }
+@media (max-width:600px){ .avail-row { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a href="/teacher.html" class="brand">Word Play</a>
+    <span style="margin-left:auto"></span>
+    <button class="dark-toggle" aria-label="Toggle dark mode" onclick="toggleDark()">&#9680; Dark</button>
+    <button class="logout-btn" onclick="logout()" style="margin-left:8px;background:transparent;border:1.5px solid var(--hairline);color:var(--muted);font-family:var(--font-sans);font-size:.68rem;font-weight:600;padding:5px 12px;border-radius:3px;cursor:pointer">Logout</button>
+  </div>
+</header>
+
+<div class="tb-page">
+  <h1>Bookings</h1>
+  <p class="tb-sub">Publish your weekly availability, then confirm or decline incoming lesson requests.</p>
+
+  <div class="sec-head">Incoming requests</div>
+  <div id="requests"><div class="empty">Loading…</div></div>
+
+  <div class="sec-head">Weekly availability</div>
+  <p style="font-size:.82rem;color:var(--muted);margin:-6px 0 14px">Each window generates bookable slots of the chosen length. Students see the next 3 weeks.</p>
+  <div id="availRows"></div>
+  <div style="display:flex;gap:8px;margin-top:12px">
+    <button class="btn" onclick="addRow()">+ Add window</button>
+    <button class="btn primary" onclick="saveAvailability()">Save availability</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<footer class="site-footer">Word Play</footer>
+
+<script>
+requireTeacher();
+
+var token = localStorage.getItem('wp_token');
+var WEEKDAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+function authHeaders(){ return { 'Content-Type':'application/json', 'Authorization':'Bearer '+token }; }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];}); }
+function toast(m){ var t=document.getElementById('toast'); t.textContent=m; t.style.display='block'; setTimeout(function(){t.style.display='none';},2600); }
+
+// ── Availability editor ──────────────────────────────────────────
+function rowHtml(w) {
+  w = w || { weekday: 1, start_time: '17:00', end_time: '20:00', slot_minutes: 60 };
+  var days = WEEKDAYS.map(function(d,i){ return '<option value="'+i+'"'+(i===w.weekday?' selected':'')+'>'+d+'</option>'; }).join('');
+  var slotOpts = [30,45,60,90].map(function(m){ return '<option value="'+m+'"'+(m===w.slot_minutes?' selected':'')+'>'+m+' min</option>'; }).join('');
+  return '<div class="avail-row">' +
+    '<select class="wd">'+days+'</select>' +
+    '<input class="st" type="time" value="'+esc(w.start_time)+'">' +
+    '<input class="et" type="time" value="'+esc(w.end_time)+'">' +
+    '<select class="sl">'+slotOpts+'</select>' +
+    '<button class="btn del" onclick="this.parentNode.remove()">Remove</button>' +
+  '</div>';
+}
+function addRow(w){ document.getElementById('availRows').insertAdjacentHTML('beforeend', rowHtml(w)); }
+
+function loadAvailability() {
+  fetch('/api/availability', { headers: authHeaders() })
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      var rows = data.windows || [];
+      document.getElementById('availRows').innerHTML = '';
+      if (!rows.length) { addRow(); }
+      else rows.forEach(function(w){ addRow(w); });
+    });
+}
+
+function saveAvailability() {
+  var windows = [].map.call(document.querySelectorAll('.avail-row'), function(row){
+    return {
+      weekday: parseInt(row.querySelector('.wd').value),
+      start_time: row.querySelector('.st').value,
+      end_time: row.querySelector('.et').value,
+      slot_minutes: parseInt(row.querySelector('.sl').value)
+    };
+  });
+  fetch('/api/availability', { method:'POST', headers: authHeaders(), body: JSON.stringify({ windows: windows }) })
+    .then(function(r){ return r.json().then(function(d){ return {ok:r.ok,d:d}; }); })
+    .then(function(res){ toast(res.ok ? 'Availability saved ('+res.d.inserted+' windows).' : (res.d.error||'Save failed.')); })
+    .catch(function(){ toast('Network error.'); });
+}
+
+// ── Incoming requests ────────────────────────────────────────────
+function loadRequests() {
+  fetch('/api/bookings', { headers: authHeaders() })
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      var box = document.getElementById('requests');
+      var list = (data.bookings || []);
+      // Show pending first, then recent confirmed/declined
+      list.sort(function(a,b){ if(a.status===b.status) return 0; return a.status==='pending'?-1:1; });
+      if (!list.length) { box.innerHTML = '<div class="empty">No booking requests yet.</div>'; return; }
+      box.innerHTML = list.map(function(b){
+        var actions = b.status === 'pending'
+          ? '<button class="btn primary" onclick="setStatus('+b.id+',\'confirmed\')">Confirm</button> ' +
+            '<button class="btn" onclick="setStatus('+b.id+',\'declined\')">Decline</button>'
+          : '<span class="badge '+b.status+'">'+b.status+'</span>';
+        return '<div class="req-row">' +
+          '<span><span class="req-when">'+esc(b.date)+' &middot; '+esc(b.start_time)+'–'+esc(b.end_time)+'</span><br>' +
+          '<span class="req-who">'+esc(b.student_email||'student')+(b.note?(' — '+esc(b.note)):'')+'</span></span>' +
+          '<span style="display:flex;gap:8px;align-items:center">'+actions+'</span>' +
+        '</div>';
+      }).join('');
+    });
+}
+
+function setStatus(id, status) {
+  fetch('/api/bookings/' + id, { method:'PUT', headers: authHeaders(), body: JSON.stringify({ status: status }) })
+    .then(function(r){ return r.json().then(function(d){ return {ok:r.ok,d:d}; }); })
+    .then(function(res){
+      if (!res.ok) { toast(res.d.error||'Failed.'); return; }
+      toast(status === 'confirmed' ? 'Confirmed — student notified by email.' : 'Marked '+status+'.');
+      loadRequests();
+    })
+    .catch(function(){ toast('Network error.'); });
+}
+
+loadRequests();
+loadAvailability();
+</script>
+</body>
+</html>
