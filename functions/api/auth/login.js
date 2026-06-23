@@ -93,7 +93,9 @@ export async function onRequestPost(context) {
         token: token,
         user_id: user.id,
         email: user.email,
-        role: user.role
+        role: user.role,
+        target_lang: user.target_lang || null,
+        l1: user.l1 || null
       }),
       { status: 200, headers: { 'Content-Type': 'application/json' } }
     );

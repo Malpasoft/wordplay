@@ -338,6 +338,12 @@ body.dark .reset-btn:hover { border-color: var(--amber); color: var(--amber); }
   </div>
   <div style="height:24px"></div>
 
+  <!-- My courses (personalised by L1 + target language) -->
+  <div id="myCourses" style="display:none;margin-bottom:28px">
+    <div class="sec-head" style="margin-top:0">My courses</div>
+    <div id="courseCards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px"></div>
+  </div>
+
   <!-- XP / Level banner -->
   <div class="xp-banner">
     <div class="xp-row">
@@ -939,7 +945,51 @@ function resetAll() {
   switchLevel(firstLevel);
   drawRadar();
   loadWeakSpots();
+  renderMyCourses();
 })();
+
+// ── My courses navigator (personalised) ──────────────────────────
+function renderMyCourses() {
+  var user = (typeof getCurrentUser === 'function') ? getCurrentUser() : null;
+  if (!user) return;
+  var target = user.target_lang || 'en';
+  var l1 = user.l1 || null;
+  var cards = [];
+
+  function card(title, desc, href) {
+    return '<a href="' + href + '" class="chapter-card" style="display:block">' +
+      '<div class="chap-name" style="font-weight:700;margin-bottom:4px">' + esc(title) + '</div>' +
+      '<div style="font-size:.78rem;color:var(--muted);line-height:1.4">' + esc(desc) + '</div></a>';
+  }
+
+  if (target === 'es') {
+    // Learning Spanish
+    if (l1 === 'en') cards.push(card('Spanish for English speakers', 'A1–B2, taught in English', '/espanol-en/'));
+    cards.push(card('Spanish course', 'Full A1–C2 grammar, vocab & writing', '/espanol/'));
+    cards.push(card('DELE exam prep', 'Official Spanish exam practice', '/espanol/exams/'));
+  } else {
+    // Learning English (default)
+    cards.push(card('English course', 'Full A1–C2 — your progress is tracked below', '/english/'));
+    if (l1 === 'es') cards.push(card('English for Spanish speakers', 'A1–B2, explained in Spanish', '/es/'));
+    if (l1 === 'fr') cards.push(card('English for French speakers', 'A1–B2, explained in French', '/fr/'));
+    cards.push(card('Exam prep', 'KET · PET · FCE · CAE · CPE', '/english/'));
+  }
+
+  if (!cards.length) return;
+  document.getElementById('courseCards').innerHTML = cards.join('');
+  document.getElementById('myCourses').style.display = 'block';
+
+  // The detailed progress tracker below is English-only. For Spanish learners,
+  // hide the English-specific charts to avoid showing empty/irrelevant data.
+  if (target === 'es') {
+    ['.pillars-grid', '.hero-grid', '.level-overview', '#levelDetail'].forEach(function(sel) {
+      var el = document.querySelector(sel);
+      if (el) el.style.display = 'none';
+    });
+    var h1 = document.querySelector('.dash-page h1');
+    if (h1) h1.textContent = 'Your account';
+  }
+}
 
 // ── Weak spots (mistake analytics) ───────────────────────────────
 var BAND = {a1:'a',a2:'a',b1:'b',b2:'b',c1:'c',c2:'c'};

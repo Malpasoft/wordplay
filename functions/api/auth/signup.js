@@ -93,7 +93,7 @@ function json(data, status = 200) {
 export async function onRequestPost(context) {
   try {
     const body = await context.request.json();
-    const { email, password, level, privacy_consent } = body;
+    const { email, password, level, privacy_consent, target_lang, l1 } = body;
 
     // Validate inputs
     if (!email || !password || !level) {
@@ -153,10 +153,12 @@ export async function onRequestPost(context) {
 
     // Create user (always as 'student' role)
     const consentAt = Date.now();
+    const targetLang = (target_lang === 'es' || target_lang === 'en') ? target_lang : 'en';
+    const l1Lang = ['es', 'en', 'fr', 'other'].includes(l1) ? l1 : null;
     const userResult = await context.env.DB.prepare(
-      'INSERT INTO users (email, password_hash, role, privacy_consent, consent_at) VALUES (?, ?, ?, ?, ?)'
+      'INSERT INTO users (email, password_hash, role, privacy_consent, consent_at, target_lang, l1) VALUES (?, ?, ?, ?, ?, ?, ?)'
     )
-      .bind(emailLower, passwordHash, 'student', 1, consentAt)
+      .bind(emailLower, passwordHash, 'student', 1, consentAt, targetLang, l1Lang)
       .run();
 
     const userId = userResult.meta.last_row_id;
@@ -215,7 +217,9 @@ export async function onRequestPost(context) {
       user_id: userId,
       email: emailLower,
       role: 'student',
-      level: level.toLowerCase()
+      level: level.toLowerCase(),
+      target_lang: targetLang,
+      l1: l1Lang
     }, 201);
   } catch (error) {
     console.error('Signup error:', error);
