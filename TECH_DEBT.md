@@ -16,6 +16,23 @@ The three Spanish-related tracks are easy to confuse — kept distinct throughou
 
 ## Open debt
 
+### D8 — Dashboard progress engine is English-only (multi-course unification)
+`shared/store.js` `CHAPTERS` only registers the main English course (a1–c2), so the
+`dashboard.html` progress charts (pillars, radar, level tiles, per-chapter cards) track English
+only. The June-2026 "My courses" navigator personalises *links* by `users.target_lang`/`l1`, and
+Spanish-target learners have the English-only charts hidden — but Spanish/L1-course progress is
+not yet visualised on the dashboard. To unify: register the Spanish (`espanol/`, `espanol-en/`)
+and other tracks in a course-aware registry keyed by `course+level`, and make the dashboard
+render the active course. Medium effort; needed before marketing the dashboard to Spanish learners.
+
+### D9 — Booking is not integrated with the legacy lessons calendar
+The new booking system (`availability` + `booking_requests`, `book.html`,
+`teacher-bookings.html`) is self-contained. Confirmed bookings are **not** written into the
+`lessons` table that `calendar.html` reads, so a confirmed lesson doesn't appear on the teacher's
+main calendar automatically. Either write a `lessons` row on confirm in
+`functions/api/bookings/[id].js`, or surface bookings inside `calendar.html`. Also: no timezone
+handling (assumes Europe/Madrid) and no automated reminders.
+
 ### D2 — `design-check.sh` doesn't catch inline `--ac-color:#hex`
 The design hook flags emoji and off-palette colours but misses hardcoded `--ac-color:#hex` in
 inline styles. Low priority (the one historical batch of hardcoded amber is already fixed), but
@@ -23,8 +40,10 @@ worth adding if activity-card templates are regenerated at scale.
 
 ### D3 — Duplicate migration numbers
 `migrations/` has two `0006_*.sql` and two `0007_*.sql` files. They apply cleanly (all use
-`CREATE … IF NOT EXISTS`), but the numbering is ambiguous. Renumber sequentially next time the
-schema is touched so the apply order is unambiguous.
+`CREATE … IF NOT EXISTS`), but the numbering is ambiguous. New migrations 0009–0012
+(password_resets, mistake_log, booking, user_profile) continue cleanly from 0008. Renumber the
+duplicate 0006/0007 pair only with care — they are already applied in production; renaming files
+won't re-run them, so this is cosmetic. Leave unless a fresh DB rebuild is needed.
 
 ### D5 — espanol-en/a1 grammar missing Common Mistakes (trap-row) slides
 All 24 espanol-en/a1 grammar chapters (adjective-agreement, ser-estar, gustar, reflexive-verbs,

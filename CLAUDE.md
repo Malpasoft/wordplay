@@ -85,16 +85,27 @@ code itself: `wrangler.jsonc`, `migrations/*.sql`, `functions/api/`, `shared/sto
 
 - **D1 binding:** `DB` → database `wordplay_db` (id in `wrangler.jsonc`). Schema lives in
   `migrations/*.sql` (apply via the Cloudflare dashboard console or `wrangler d1 execute`;
-  always `CREATE TABLE IF NOT EXISTS` so re-runs are safe). Core tables: `users`,
-  `auth_tokens`, `chapter_results`, `user_xp`, `students`, `classes`, `class_enrollments`,
-  `lessons`, `invite_codes`, `rate_limit_log`, plus the legacy `teacher_profiles`.
+  always `CREATE TABLE IF NOT EXISTS` so re-runs are safe). Core tables: `users`
+  (incl. `email_verified`, `privacy_consent`, `consent_at`, `l1`, `target_lang`, `goal`),
+  `auth_tokens`, `password_resets`, `chapter_results`, `mistake_log`, `user_xp`, `students`,
+  `classes`, `class_enrollments`, `lessons`, `invite_codes`, `availability`,
+  `booking_requests`, `rate_limit_log`, plus the legacy `teacher_profiles`.
 - **Auth (`shared/auth.js`, loaded as `/shared/auth.js?v=1`):** email + password accounts.
   Passwords stored as PBKDF2 `hash:salt` in `users.password_hash`. Login/signup issue a
   7-day **bearer token** persisted in `auth_tokens`. Client caches token + user in
   localStorage keys `wp_token` / `wp_user`. Helpers: `getAuthToken`, `getCurrentUser`,
   `isLoggedIn`, `isAdmin/isTeacher/isStudent`, `setAuthState`, `clearAuthState`,
-  `authenticatedFetch` (adds `Authorization: Bearer …`), `requireAuth`/`requireRole`, `logout`.
+  `authenticatedFetch` (adds `Authorization: Bearer …`), `requireAuth`/`requireTeacher`/
+  `requireStudent`/`requireAdmin`, `logout`.
   Roles: `admin` · `teacher` · `student`.
+- **Email (`functions/api/_lib/email.js`):** thin Resend wrapper used for password reset
+  and signup verification (and booking-confirmation emails). Needs Cloudflare secrets
+  `RESEND_API_KEY`, `RESEND_FROM`, `SITE_URL` (see `CLOUDFLARE_SETUP.md`). If unset, email is
+  skipped (logged) — auth still works. Signup records `privacy_consent`; GDPR export/delete
+  endpoints back the dashboard's "Your data" panel.
+- **Student-facing pages:** `dashboard.html` (progress + "My courses" navigator + weak-spots
+  analytics + WhatsApp + GDPR), `book.html` (lesson booking), `login`/`signup`/`reset.html`,
+  `privacy.html` / `terms.html`. Teacher booking lives in `teacher-bookings.html`.
 - **Progress sync (`shared/store.js`):** localStorage is a write-through cache. Every result
   writes `wordplay_progress` locally, then a debounced (~1.5s) push plus a `pagehide` flush
   send progress to the API. On page load, signed-in users auto-pull and merge. Conflict
@@ -108,9 +119,15 @@ All non-auth routes require `Authorization: Bearer <token>`. JSON in/out.
 | Method · Path | Purpose |
 |---|---|
 | `POST /api/auth/signup` | Create account (email, password, level); PBKDF2 hash; returns token + user. Rate-limited per IP. |
-| `POST /api/auth/login` | Verify password; returns token + `{user_id,email,role}`. |
+| `POST /api/auth/login` | Verify password; returns token + `{user_id,email,role,l1,target_lang}`. |
 | `POST /api/auth/logout` | Revoke the bearer token. |
+| `POST /api/auth/request-reset` · `POST /api/auth/reset` | Forgot-password: email a 1-hour reset link, then set new password (revokes sessions). |
+| `GET /api/auth/verify-email` | Mark email verified via a signup-issued token. |
 | `GET·POST /api/student/progress` | Pull / push normalized progress (chapter_results + user_xp). Preferred sync route. |
+| `GET·POST /api/student/mistakes` | Batch-record wrong answers; aggregated weakness report (by skill/chapter). |
+| `GET /api/student/export` · `DELETE /api/student/delete-account` | GDPR: download all data / delete account (password-confirmed). |
+| `GET·POST /api/availability` | Teacher weekly booking windows (POST replaces all; teacher only). |
+| `GET·POST /api/bookings` · `PUT /api/bookings/[id]` | Student requests a slot; teacher confirms/declines (emails student); cancel. |
 | `GET·POST /api/progress/[user_id]` | Legacy per-user progress (array or nested object). |
 | `GET·POST /api/teacher/students` · `DELETE /api/teacher/students/[id]` | Teacher's student roster. |
 | `POST /api/teacher/invite-code` · `POST /api/student/join-teacher` | Invite-code enrolment. |
@@ -193,9 +210,9 @@ the ONLY way to force a cache refresh.
 **Current versions (this list is canonical; kept in sync by the hook):**
 - `base.css`: v125
 - `dark-init.js`: v112
-- `store.js`: v107
-- `game.js`: v112
-- `worksheet.js`: v108
+- `store.js`: v108
+- `game.js`: v113
+- `worksheet.js`: v109
 - `deck.js`: v114
 - `game.css`: v112
 - `writing-grader.js`: v105

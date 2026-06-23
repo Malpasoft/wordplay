@@ -122,11 +122,17 @@ Number them sequentially (next is `0009_*.sql`). Run them the same way (dashboar
 `wrangler d1 execute`). Always `CREATE TABLE IF NOT EXISTS` / `CREATE INDEX IF NOT EXISTS`
 so re-running is safe.
 
-**New migration to apply (Phase 1):**
+**New migrations to apply (Phases 1–4) — run in order:**
 ```bash
 npx wrangler d1 execute wordplay_db --remote --file=migrations/0009_password_resets.sql
+npx wrangler d1 execute wordplay_db --remote --file=migrations/0010_mistake_log.sql
+npx wrangler d1 execute wordplay_db --remote --file=migrations/0011_booking.sql
+npx wrangler d1 execute wordplay_db --remote --file=migrations/0012_user_profile.sql
 ```
-Or paste the contents into the D1 dashboard console.
+Or paste each file's contents into the D1 dashboard console. They add: password-reset +
+email-verification + consent + learner-profile columns, the mistake-analytics table, and the
+booking tables. (The `ALTER TABLE` lines run once; re-running them errors harmlessly if the
+column already exists.)
 
 ---
 

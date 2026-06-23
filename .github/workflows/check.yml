@@ -17,6 +17,11 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
       # Hard gate — pedagogy must stay at 0 failures.
       - name: Pedagogy check
         run: |
@@ -25,6 +30,10 @@ jobs:
             echo "Pedagogy check failed — see output above"
             exit 1
           fi
+
+      # Hard gate — API functions must parse and export a handler.
+      - name: API smoke check
+        run: python3 scripts/check_api.py
 
       # Informational for now — a known backlog of vocab-nav links and ES
       # flashcard stubs is still being cleared (Phase 2). These steps post a
