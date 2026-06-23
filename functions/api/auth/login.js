@@ -65,6 +65,16 @@ export async function onRequestPost(context) {
       );
     }
 
+    // Account may have no password set (e.g. teacher-created student, or a
+    // legacy account). Guard before split so we return a clean 401 instead of
+    // a 500, and point the user at the password-reset flow.
+    if (!user.password_hash || user.password_hash.indexOf(':') === -1) {
+      return new Response(
+        JSON.stringify({ error: 'This account has no password set. Use "Forgot password?" to create one.' }),
+        { status: 401, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
+
     // Verify password (stored as "hash:salt" in password_hash column)
     const [hash, salt] = user.password_hash.split(':');
     const isValid = await verifyPassword(password, hash, salt);

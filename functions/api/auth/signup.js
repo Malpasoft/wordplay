@@ -151,15 +151,27 @@ export async function onRequestPost(context) {
     const hash = await hashPassword(password, salt);
     const passwordHash = hash + ':' + salt;
 
-    // Create user (always as 'student' role)
+    // Create user (always as 'student' role).
+    // Try the full insert (new profile columns); fall back to the minimal insert
+    // if migrations 0009/0012 haven't been applied yet, so signup never 500s.
     const consentAt = Date.now();
     const targetLang = (target_lang === 'es' || target_lang === 'en') ? target_lang : 'en';
     const l1Lang = ['es', 'en', 'fr', 'other'].includes(l1) ? l1 : null;
-    const userResult = await context.env.DB.prepare(
-      'INSERT INTO users (email, password_hash, role, privacy_consent, consent_at, target_lang, l1) VALUES (?, ?, ?, ?, ?, ?, ?)'
-    )
-      .bind(emailLower, passwordHash, 'student', 1, consentAt, targetLang, l1Lang)
-      .run();
+    let userResult;
+    try {
+      userResult = await context.env.DB.prepare(
+        'INSERT INTO users (email, password_hash, role, privacy_consent, consent_at, target_lang, l1) VALUES (?, ?, ?, ?, ?, ?, ?)'
+      )
+        .bind(emailLower, passwordHash, 'student', 1, consentAt, targetLang, l1Lang)
+        .run();
+    } catch (colErr) {
+      console.warn('Full signup insert failed (migrations may be pending); falling back:', colErr.message);
+      userResult = await context.env.DB.prepare(
+        'INSERT INTO users (email, password_hash, role) VALUES (?, ?, ?)'
+      )
+        .bind(emailLower, passwordHash, 'student')
+        .run();
+    }
 
     const userId = userResult.meta.last_row_id;
 
