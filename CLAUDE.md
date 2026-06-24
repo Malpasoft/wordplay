@@ -88,8 +88,9 @@ code itself: `wrangler.jsonc`, `migrations/*.sql`, `functions/api/`, `shared/sto
   always `CREATE TABLE IF NOT EXISTS` so re-runs are safe). Core tables: `users`
   (incl. `email_verified`, `privacy_consent`, `consent_at`, `l1`, `target_lang`, `goal`),
   `auth_tokens`, `password_resets`, `chapter_results`, `mistake_log`, `user_xp`, `students`,
-  `classes`, `class_enrollments`, `lessons`, `invite_codes`, `availability`,
-  `booking_requests`, `rate_limit_log`, plus the legacy `teacher_profiles`.
+  `classes`, `class_enrollments`, `lessons`, `invite_codes` (teacher-based),
+  `class_invite_codes` (class-based), `availability`, `booking_requests`,
+  `rate_limit_log`, plus the legacy `teacher_profiles`.
 - **Auth (`shared/auth.js`, loaded as `/shared/auth.js?v=1`):** email + password accounts.
   Passwords stored as PBKDF2 `hash:salt` in `users.password_hash`. Login/signup issue a
   7-day **bearer token** persisted in `auth_tokens`. Client caches token + user in

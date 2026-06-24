@@ -33,6 +33,19 @@ main calendar automatically. Either write a `lessons` row on confirm in
 `functions/api/bookings/[id].js`, or surface bookings inside `calendar.html`. Also: no timezone
 handling (assumes Europe/Madrid) and no automated reminders.
 
+### D10 — Inline-style sprawl on new app pages (maintainability)
+`dashboard.html`, `book.html`, `teacher-bookings.html`, `login.html`, `signup.html` are built
+from many inline `style=` attributes. They use design tokens (so dark mode + 360px work and the
+design-check hook passes), but the styling isn't reusable. Extract a `shared/components.css`
+(`.btn`, `.card`, `.badge`, `.wa-btn` + `--amber-dim`, `--whatsapp` tokens) and replace the
+inline styles. Not a user-facing defect — DX/maintainability only.
+
+> **Resolved June 2026:** the `invite_codes` column conflict (`used_count` vs `uses_count`)
+> — class-based invites now live in their own `class_invite_codes` table (migration 0013);
+> `Math.random()` codes replaced with `crypto.getRandomValues`; in-memory rate limits moved to
+> D1; booking past-date/availability validation + unique-slot index (0014); `user-scalable=no`
+> removed site-wide (a11y). See git history.
+
 ### D2 — `design-check.sh` doesn't catch inline `--ac-color:#hex`
 The design hook flags emoji and off-palette colours but misses hardcoded `--ac-color:#hex` in
 inline styles. Low priority (the one historical batch of hardcoded amber is already fixed), but
