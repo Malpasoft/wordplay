@@ -22,10 +22,14 @@ checked = 0
 # Pages that legitimately have no breadcrumb (top-level / utility).
 EXEMPT_BREADCRUMB = {
     'index.html', '404.html', 'test-grader.html',
-    'progress-certificate.html', 'placement-test.html', 'dashboard.html',
+    'progress-certificate.html', 'placement-test.html', 'placement-test-v2.html',
+    'diagnostic.html', 'dashboard.html',
+    # Auth / account / legal — top-level utility pages with header/back nav, no breadcrumb.
+    'login.html', 'signup.html', 'reset.html', 'privacy.html', 'terms.html', 'book.html',
     # Teacher tools — top-level utility pages with hub/back navigation, no breadcrumb.
     'teacher.html', 'dev-hub.html', 'ai-prompts.html', 'coverage.html', 'profile.html',
-    'calendar.html', 'builder.html',
+    'calendar.html', 'builder.html', 'link-generator.html',
+    'teacher-analytics.html', 'teacher-bookings.html', 'teacher-class.html', 'teacher-classes.html',
 }
 
 
