@@ -176,12 +176,18 @@ export async function onRequestPost(context) {
 
     const userId = userResult.meta.last_row_id;
 
-    // Initialize XP record (uses normalized schema, not legacy blob)
-    await context.env.DB.prepare(
-      'INSERT INTO user_xp (user_id, xp, streak) VALUES (?, ?, ?)'
-    )
-      .bind(userId, 0, 0)
-      .run();
+    // Initialize XP record (uses normalized schema, not legacy blob).
+    // Non-critical: fail open if user_xp is missing so signup still succeeds;
+    // the row is created lazily on first progress sync.
+    try {
+      await context.env.DB.prepare(
+        'INSERT INTO user_xp (user_id, xp, streak) VALUES (?, ?, ?)'
+      )
+        .bind(userId, 0, 0)
+        .run();
+    } catch (xpErr) {
+      console.warn('user_xp init skipped (table may be missing):', xpErr.message);
+    }
 
     // Generate token (7 days = 604800 seconds)
     const token = generateToken();
@@ -236,6 +242,6 @@ export async function onRequestPost(context) {
     }, 201);
   } catch (error) {
     console.error('Signup error:', error);
-    return json({ error: 'Internal server error.', _debug: String(error && error.message || error) }, 500);
+    return json({ error: 'Internal server error.' }, 500);
   }
 }
