@@ -3,6 +3,8 @@
 // POST /api/teacher/invite-code — generate new invite code
 // DELETE /api/teacher/invite-code/[code_id] — revoke a code
 
+import { checkRateLimit } from '../_shared.js';
+
 function verifyToken(token, db) {
   return db.prepare('SELECT user_id FROM auth_tokens WHERE token = ? AND expires_at > ?')
     .bind(token, Date.now())
@@ -81,31 +83,6 @@ export async function onRequestGet(context) {
   }
 }
 
-// Rate limiting: max 10 codes per minute per teacher
-const rateLimitStore = new Map();
-
-function checkRateLimit(teacherId) {
-  const now = Date.now();
-  const key = `teacher_${teacherId}_invites`;
-
-  if (!rateLimitStore.has(key)) {
-    rateLimitStore.set(key, []);
-  }
-
-  const timestamps = rateLimitStore.get(key);
-
-  // Remove timestamps older than 60 seconds
-  const recentTimestamps = timestamps.filter(t => now - t < 60000);
-
-  if (recentTimestamps.length >= 10) {
-    return false; // Rate limit exceeded
-  }
-
-  recentTimestamps.push(now);
-  rateLimitStore.set(key, recentTimestamps);
-  return true;
-}
-
 export async function onRequestPost(context) {
   try {
     const authHeader = context.request.headers.get('Authorization');
@@ -124,8 +101,8 @@ export async function onRequestPost(context) {
       return json({ error: 'Teacher access required' }, 403);
     }
 
-    // Rate limiting
-    if (!checkRateLimit(teacherId)) {
+    // Rate limiting (D1-backed): max 10 codes per minute per teacher
+    if (!(await checkRateLimit(context.env.DB, 'teacher_' + teacherId, 'invite-code', 10, 60000))) {
       return json({ error: 'Rate limit exceeded: max 10 codes per minute' }, 429);
     }
 

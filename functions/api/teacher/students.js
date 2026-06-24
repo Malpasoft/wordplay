@@ -3,6 +3,8 @@
 // POST /api/teacher/students — create new student (rate-limited)
 // DELETE /api/teacher/students/[student_id] — remove student from teacher's class
 
+import { checkRateLimit } from '../_shared.js';
+
 async function hashPassword(password, salt) {
   const encoder = new TextEncoder();
   const keyMaterial = await crypto.subtle.importKey(
@@ -87,31 +89,6 @@ export async function onRequestGet(context) {
   }
 }
 
-// Rate limiting: max 5 students per minute per teacher
-const rateLimitStore = new Map();
-
-function checkRateLimit(teacherId) {
-  const now = Date.now();
-  const key = `teacher_${teacherId}_students`;
-
-  if (!rateLimitStore.has(key)) {
-    rateLimitStore.set(key, []);
-  }
-
-  const timestamps = rateLimitStore.get(key);
-
-  // Remove timestamps older than 60 seconds
-  const recentTimestamps = timestamps.filter(t => now - t < 60000);
-
-  if (recentTimestamps.length >= 5) {
-    return false; // Rate limit exceeded
-  }
-
-  recentTimestamps.push(now);
-  rateLimitStore.set(key, recentTimestamps);
-  return true;
-}
-
 export async function onRequestPost(context) {
   try {
     const authHeader = context.request.headers.get('Authorization');
@@ -130,8 +107,8 @@ export async function onRequestPost(context) {
       return json({ error: 'Teacher access required' }, 403);
     }
 
-    // Rate limiting: 5 students per minute
-    if (!checkRateLimit(teacherId)) {
+    // Rate limiting (D1-backed): 5 students per minute
+    if (!(await checkRateLimit(context.env.DB, 'teacher_' + teacherId, 'students', 5, 60000))) {
       return json({ error: 'Rate limit exceeded: max 5 students per minute' }, 429);
     }
 

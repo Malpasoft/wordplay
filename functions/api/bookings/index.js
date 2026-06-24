@@ -54,6 +54,10 @@ export async function onRequestPost(context) {
     }
     if (end_time <= start_time) return json({ error: 'End time must be after start time.' }, 400);
 
+    // Reject past dates (no same-day or earlier; compares YYYY-MM-DD lexically — safe)
+    const today = new Date().toISOString().slice(0, 10);
+    if (date <= today) return json({ error: 'Please pick a future date.' }, 400);
+
     const db = context.env.DB;
     // Resolve the student's teacher
     const link = await db.prepare(
@@ -61,7 +65,19 @@ export async function onRequestPost(context) {
     ).bind(user.id).first();
     if (!link) return json({ error: 'You are not linked to a teacher yet. Use your teacher\'s invite code first.' }, 400);
 
-    // Prevent duplicate pending/confirmed request for the same slot
+    // Validate the requested slot falls inside one of the teacher's published windows.
+    // weekday: JS getUTCDay() 0=Sun..6=Sat (matches availability.weekday convention).
+    const weekday = new Date(date + 'T00:00:00Z').getUTCDay();
+    const windows = await db.prepare(
+      'SELECT start_time, end_time FROM availability WHERE teacher_id = ? AND weekday = ?'
+    ).bind(link.teacher_id, weekday).all();
+    const fits = (windows.results || []).some(function (w) {
+      return start_time >= w.start_time && end_time <= w.end_time;
+    });
+    if (!fits) return json({ error: 'That time is outside your teacher\'s available hours.' }, 400);
+
+    // Prevent duplicate pending/confirmed request for the same slot.
+    // (A UNIQUE index on booking_requests also guards the check-then-insert race.)
     const dupe = await db.prepare(
       `SELECT id FROM booking_requests
        WHERE teacher_id = ? AND date = ? AND start_time = ? AND status IN ('pending','confirmed')`
@@ -69,10 +85,19 @@ export async function onRequestPost(context) {
     if (dupe) return json({ error: 'That slot is already requested or booked.' }, 409);
 
     const now = Date.now();
-    const res = await db.prepare(
-      `INSERT INTO booking_requests (student_id, teacher_id, date, start_time, end_time, note, status, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, 'pending', ?, ?)`
-    ).bind(user.id, link.teacher_id, date, start_time, end_time, (note || '').slice(0, 300), now, now).run();
+    let res;
+    try {
+      res = await db.prepare(
+        `INSERT INTO booking_requests (student_id, teacher_id, date, start_time, end_time, note, status, created_at, updated_at)
+         VALUES (?, ?, ?, ?, ?, ?, 'pending', ?, ?)`
+      ).bind(user.id, link.teacher_id, date, start_time, end_time, (note || '').slice(0, 300), now, now).run();
+    } catch (e) {
+      // Unique-index violation = another request grabbed the slot first
+      if (/UNIQUE|constraint/i.test(e.message || '')) {
+        return json({ error: 'That slot was just taken. Please pick another.' }, 409);
+      }
+      throw e;
+    }
 
     return json({ ok: true, id: res.meta.last_row_id, status: 'pending' }, 201);
   } catch (err) {

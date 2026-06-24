@@ -2,6 +2,15 @@
 
 import { verifyToken, json, requireRole } from '../../_shared.js';
 
+// Cryptographically-random alphanumeric code (uppercase + digits).
+function generateCode(len) {
+  const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const bytes = crypto.getRandomValues(new Uint8Array(len));
+  let out = '';
+  for (let i = 0; i < len; i++) out += chars[bytes[i] % chars.length];
+  return out;
+}
+
 export async function onRequest(context) {
   const { request, env, params } = context;
   const token = request.headers.get('Authorization')?.replace('Bearer ', '');
@@ -33,13 +42,13 @@ export async function onRequest(context) {
     return json({ error: 'Access denied' }, 403);
   }
 
-  // Generate unique code (6 alphanumeric chars)
-  const code = Math.random().toString(36).substring(2, 8).toUpperCase();
+  // Generate unique code (10 alphanumeric chars, cryptographically random)
+  const code = generateCode(10);
   const expiresAt = Date.now() + (30 * 24 * 60 * 60 * 1000); // 30 days
 
   try {
     const result = await db.prepare(`
-      INSERT INTO invite_codes (class_id, code, created_at, expires_at, max_uses, used_count)
+      INSERT INTO class_invite_codes (class_id, code, created_at, expires_at, max_uses, used_count)
       VALUES (?, ?, ?, ?, -1, 0)
     `).bind(classId, code, Date.now(), expiresAt).run();
 

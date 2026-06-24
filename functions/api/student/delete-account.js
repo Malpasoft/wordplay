@@ -39,6 +39,11 @@ export async function onRequestDelete(context) {
 
     if (!userRow) return json({ error: 'User not found.' }, 404);
 
+    // Guard against null/malformed hash (legacy or passwordless accounts)
+    if (!userRow.password_hash || userRow.password_hash.indexOf(':') === -1) {
+      return json({ error: 'This account has no password set; cannot confirm deletion.' }, 400);
+    }
+
     const [hash, salt] = userRow.password_hash.split(':');
     const computed = await hashPassword(password, salt);
     if (computed !== hash) {

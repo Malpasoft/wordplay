@@ -22,10 +22,10 @@ export async function onRequest(context) {
 
   const db = env.DB;
 
-  // Find and validate code
+  // Find and validate code (class-based invite system)
   const inviteData = await db.prepare(`
     SELECT ic.id, ic.class_id, ic.expires_at, ic.max_uses, ic.used_count
-    FROM invite_codes ic
+    FROM class_invite_codes ic
     WHERE ic.code = ? AND (ic.expires_at IS NULL OR ic.expires_at > ?)
     LIMIT 1
   `).bind(code, Date.now()).first();
@@ -74,7 +74,7 @@ export async function onRequest(context) {
 
   // Increment usage
   await db.prepare(`
-    UPDATE invite_codes SET used_count = used_count + 1 WHERE id = ?
+    UPDATE class_invite_codes SET used_count = used_count + 1 WHERE id = ?
   `).bind(inviteData.id).run();
 
   return json({ class_id: inviteData.class_id, student_id: studentId }, 200);

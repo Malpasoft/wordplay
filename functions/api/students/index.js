@@ -45,9 +45,13 @@ async function handleGetStudents(user, env) {
   return json(students.results || []);
 }
 
-// Generate a random 6-character alphanumeric passcode
+// Generate a cryptographically-random 10-character alphanumeric passcode
 function generatePasscode() {
-  return Math.random().toString(36).substring(2, 8).toUpperCase();
+  const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const bytes = crypto.getRandomValues(new Uint8Array(10));
+  let out = '';
+  for (let i = 0; i < 10; i++) out += chars[bytes[i] % chars.length];
+  return out;
 }
 
 // Hash a password using simple PBKDF2 (Cloudflare Workers has built-in crypto)
