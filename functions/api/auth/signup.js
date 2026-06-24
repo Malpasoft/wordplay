@@ -235,6 +235,6 @@ export async function onRequestPost(context) {
     }, 201);
   } catch (error) {
     console.error('Signup error:', error);
-    return json({ error: 'Internal server error.' }, 500);
+    return json({ error: 'Internal server error.', _debug: String(error && error.message || error) }, 500);
   }
 }
