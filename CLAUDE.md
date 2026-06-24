@@ -38,7 +38,7 @@ Homepage = 3 language cards → language hub → courses for that language.
 | `/english/` | Main English | `a/ b/ c/` | en | A1–C2 | KET PET FCE CAE CPE |
 | `/english/` | English for Spanish speakers | `es/` | es | A1–B2 | — |
 | `/english/` | English for French speakers | `fr/` | fr | A1–B2 | — |
-| `/espanol/` | Main Spanish | `espanol/` | es | A1–C2 ✅ | DELE ✅ |
+| `/espanol/` | Main Spanish | `espanol/` | es | A1–C2 ✅ | DELE (mock-1) |
 | `/espanol/` | Spanish for English speakers | `espanol-en/` | en | A1–B2 | — |
 | `/francais/` | Main French | `francais/` | fr | A1–C2 ✅ | DELF/DALF |
 | `/francais/` | French for EN / ES speakers | `francais-en/ ✅ · francais-es/ (planned)` | en / es | A1–B2 | — |
@@ -72,7 +72,9 @@ C1+C2 were deleted June 2026; `_redirects` covers old URLs.
 - **`francais-es/`** — planned (only the landing page exists; A1–B2 levels not yet built).
 - **Exam prep** — KET (a2) and PET (b1) fully rebuilt (graded parts + writing-overview +
   3 mocks each); FCE complete; CAE/CPE mocks 1–3 complete ✅ and linked from the C1/C2
-  hubs (`c/c1/cae/`, `c/c2/cpe/`); DELE A1–C2 complete ✅.
+  hubs (`c/c1/cae/`, `c/c2/cpe/`). **DELE/DELF: partial** — each level has hub + about +
+  **mock-1 only** (no strategy pages, no mocks 2–3 yet). English-mediated DELF prep
+  (`francais-en/exams/`) is not built. Tracked as a content backlog item, not "complete".
 
 ---
 
