@@ -46,29 +46,30 @@ async function checkRateLimit(ip, db) {
   const now = Date.now();
   const oneHourAgo = now - 3600000;
 
-  // Count attempts in the last hour
-  const result = await db.prepare(
-    'SELECT COUNT(*) as count FROM rate_limit_log WHERE ip = ? AND endpoint = ? AND timestamp > ?'
-  )
-    .bind(ip, 'signup', oneHourAgo)
-    .first();
-
-  const recentCount = result?.count || 0;
-
-  if (recentCount >= 5) {
-    return false; // Rate limit exceeded
-  }
-
-  // Log this attempt
   try {
+    // Count attempts in the last hour
+    const result = await db.prepare(
+      'SELECT COUNT(*) as count FROM rate_limit_log WHERE ip = ? AND endpoint = ? AND timestamp > ?'
+    )
+      .bind(ip, 'signup', oneHourAgo)
+      .first();
+
+    const recentCount = result?.count || 0;
+
+    if (recentCount >= 5) {
+      return false; // Rate limit exceeded
+    }
+
+    // Log this attempt
     await db.prepare(
       'INSERT INTO rate_limit_log (ip, endpoint, timestamp) VALUES (?, ?, ?)'
     )
       .bind(ip, 'signup', now)
       .run();
   } catch (e) {
-    // If logging fails, don't block the request (fail open for availability)
-    console.warn('Rate limit logging failed:', e.message);
+    // Fail open for availability — e.g. if the rate_limit_log table is missing,
+    // don't block signup. Logged for visibility.
+    console.warn('Rate limit check failed (allowing signup):', e.message);
   }
 
   return true;
@@ -235,6 +236,6 @@ export async function onRequestPost(context) {
     }, 201);
   } catch (error) {
     console.error('Signup error:', error);
-    return json({ error: 'Internal server error.', _debug: String(error && error.message || error) }, 500);
+    return json({ error: 'Internal server error.' }, 500);
   }
 }
