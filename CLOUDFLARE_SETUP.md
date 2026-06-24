@@ -130,6 +130,7 @@ npx wrangler d1 execute wordplay_db --remote --file=migrations/0011_booking.sql
 npx wrangler d1 execute wordplay_db --remote --file=migrations/0012_user_profile.sql
 npx wrangler d1 execute wordplay_db --remote --file=migrations/0013_class_invite_codes.sql
 npx wrangler d1 execute wordplay_db --remote --file=migrations/0014_booking_unique_slot.sql
+npx wrangler d1 execute wordplay_db --remote --file=migrations/0015_error_log.sql
 ```
 Or paste each file's contents into the D1 dashboard console. They add: password-reset +
 email-verification + consent + learner-profile columns, the mistake-analytics table, and the
