@@ -4,18 +4,7 @@
 // student_teachers, class_enrollments, students (linked record). (GDPR Art. 17)
 
 import { verifyToken, json } from '../_shared.js';
-
-async function hashPassword(password, salt) {
-  const encoder = new TextEncoder();
-  const keyMaterial = await crypto.subtle.importKey(
-    'raw', encoder.encode(password), { name: 'PBKDF2' }, false, ['deriveBits']
-  );
-  const bits = await crypto.subtle.deriveBits(
-    { name: 'PBKDF2', hash: 'SHA-256', salt: encoder.encode(salt), iterations: 100000 },
-    keyMaterial, 256
-  );
-  return Array.from(new Uint8Array(bits)).map(b => b.toString(16).padStart(2, '0')).join('');
-}
+import { verifyPassword } from '../_lib/crypto.js';
 
 export async function onRequestDelete(context) {
   try {
@@ -44,9 +33,7 @@ export async function onRequestDelete(context) {
       return json({ error: 'This account has no password set; cannot confirm deletion.' }, 400);
     }
 
-    const [hash, salt] = userRow.password_hash.split(':');
-    const computed = await hashPassword(password, salt);
-    if (computed !== hash) {
+    if (!(await verifyPassword(password, userRow.password_hash))) {
       return json({ error: 'Incorrect password.' }, 403);
     }
 

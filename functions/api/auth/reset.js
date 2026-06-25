@@ -2,28 +2,13 @@
 // Body: { token, password }
 // Consumes a valid reset token and sets a new PBKDF2 password hash.
 
+import { makePasswordHash } from '../_lib/crypto.js';
+
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
     headers: { 'Content-Type': 'application/json' }
   });
-}
-
-async function hashPassword(password, salt) {
-  const encoder = new TextEncoder();
-  const keyMaterial = await crypto.subtle.importKey(
-    'raw',
-    encoder.encode(password),
-    { name: 'PBKDF2' },
-    false,
-    ['deriveBits']
-  );
-  const bits = await crypto.subtle.deriveBits(
-    { name: 'PBKDF2', hash: 'SHA-256', salt: encoder.encode(salt), iterations: 100000 },
-    keyMaterial,
-    256
-  );
-  return Array.from(new Uint8Array(bits)).map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
 export async function onRequestPost(context) {
@@ -47,14 +32,8 @@ export async function onRequestPost(context) {
       return json({ error: 'This reset link is invalid or has expired.' }, 400);
     }
 
-    // Generate new salt + hash
-    const saltChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let salt = '';
-    const saltBytes = crypto.getRandomValues(new Uint8Array(8));
-    for (let i = 0; i < 8; i++) salt += saltChars[saltBytes[i] % saltChars.length];
-
-    const hash = await hashPassword(password, salt);
-    const passwordHash = hash + ':' + salt;
+    // Generate new salt + PBKDF2 hash
+    const passwordHash = await makePasswordHash(password);
 
     // Update password and mark token used in one go
     await context.env.DB.prepare(

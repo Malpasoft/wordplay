@@ -3,41 +3,7 @@
 // Request: { email, password }
 // Response: { token, user_id, email, role } or { error }
 
-// PBKDF2 password hash using Web Crypto API (Cloudflare Workers)
-async function hashPassword(password, salt) {
-  const encoder = new TextEncoder();
-  const keyMaterial = await crypto.subtle.importKey(
-    'raw',
-    encoder.encode(password),
-    { name: 'PBKDF2' },
-    false,
-    ['deriveBits']
-  );
-  const bits = await crypto.subtle.deriveBits(
-    {
-      name: 'PBKDF2',
-      hash: 'SHA-256',
-      salt: encoder.encode(salt),
-      iterations: 100000
-    },
-    keyMaterial,
-    256
-  );
-  const view = new Uint8Array(bits);
-  return Array.from(view).map(b => b.toString(16).padStart(2, '0')).join('');
-}
-
-// Verify password
-async function verifyPassword(password, hash, salt) {
-  const computed = await hashPassword(password, salt);
-  return computed === hash;
-}
-
-// Generate random 32-byte hex token
-function generateToken() {
-  const bytes = crypto.getRandomValues(new Uint8Array(32));
-  return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
-}
+import { verifyPassword, generateToken } from '../_lib/crypto.js';
 
 export async function onRequestPost(context) {
   try {
@@ -66,8 +32,7 @@ export async function onRequestPost(context) {
     }
 
     // Account may have no password set (e.g. teacher-created student, or a
-    // legacy account). Guard before split so we return a clean 401 instead of
-    // a 500, and point the user at the password-reset flow.
+    // legacy account). Return a clean 401 and point at the password-reset flow.
     if (!user.password_hash || user.password_hash.indexOf(':') === -1) {
       return new Response(
         JSON.stringify({ error: 'This account has no password set. Use "Forgot password?" to create one.' }),
@@ -76,8 +41,7 @@ export async function onRequestPost(context) {
     }
 
     // Verify password (stored as "hash:salt" in password_hash column)
-    const [hash, salt] = user.password_hash.split(':');
-    const isValid = await verifyPassword(password, hash, salt);
+    const isValid = await verifyPassword(password, user.password_hash);
 
     if (!isValid) {
       return new Response(

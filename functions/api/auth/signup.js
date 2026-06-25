@@ -4,36 +4,7 @@
 // Response: { token, user_id, email, role, level } or { error }
 
 import { sendEmail } from '../_lib/email.js';
-
-// PBKDF2 password hash using Web Crypto API (Cloudflare Workers)
-async function hashPassword(password, salt) {
-  const encoder = new TextEncoder();
-  const keyMaterial = await crypto.subtle.importKey(
-    'raw',
-    encoder.encode(password),
-    { name: 'PBKDF2' },
-    false,
-    ['deriveBits']
-  );
-  const bits = await crypto.subtle.deriveBits(
-    {
-      name: 'PBKDF2',
-      hash: 'SHA-256',
-      salt: encoder.encode(salt),
-      iterations: 100000
-    },
-    keyMaterial,
-    256
-  );
-  const view = new Uint8Array(bits);
-  return Array.from(view).map(b => b.toString(16).padStart(2, '0')).join('');
-}
-
-// Generate random 32-byte hex token
-function generateToken() {
-  const bytes = crypto.getRandomValues(new Uint8Array(32));
-  return Array.from(bytes).map(b => b.toString(16).padStart(2, '0')).join('');
-}
+import { makePasswordHash, generateToken } from '../_lib/crypto.js';
 
 // Validate email format
 function isValidEmail(email) {
@@ -141,16 +112,8 @@ export async function onRequestPost(context) {
       return json({ error: 'That email is already in use.' }, 400);
     }
 
-    // Generate salt and hash password
-    const saltChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let salt = '';
-    const saltBytes = crypto.getRandomValues(new Uint8Array(8));
-    for (let i = 0; i < 8; i++) {
-      salt += saltChars[saltBytes[i] % saltChars.length];
-    }
-
-    const hash = await hashPassword(password, salt);
-    const passwordHash = hash + ':' + salt;
+    // Generate salt + PBKDF2 hash (stored as "hash:salt")
+    const passwordHash = await makePasswordHash(password);
 
     // Create user (always as 'student' role).
     // Try the full insert (new profile columns); fall back to the minimal insert
