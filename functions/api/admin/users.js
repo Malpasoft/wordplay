@@ -64,11 +64,15 @@ export async function onRequestGet(context) {
       return json({ error: 'Admin access required' }, 403);
     }
 
-    const users = await context.env.DB.prepare(
-      'SELECT id, email, role, created_at FROM users ORDER BY created_at DESC'
-    ).all();
+    const url = new URL(context.request.url);
+    const limit = Math.min(200, Math.max(1, parseInt(url.searchParams.get('limit') || '100')));
+    const offset = Math.max(0, parseInt(url.searchParams.get('offset') || '0'));
 
-    return json({ users: users.results || [] });
+    const users = await context.env.DB.prepare(
+      'SELECT id, email, role, created_at FROM users ORDER BY created_at DESC LIMIT ? OFFSET ?'
+    ).bind(limit, offset).all();
+
+    return json({ users: users.results || [], limit: limit, offset: offset });
   } catch (error) {
     console.error('User list error:', error);
     return json({ error: 'Failed to fetch users' }, 500);

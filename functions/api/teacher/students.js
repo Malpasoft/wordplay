@@ -68,13 +68,16 @@ export async function onRequestGet(context) {
     }
 
     // Fetch teacher's students (via student_teachers join table)
+    const url = new URL(context.request.url);
+    const limit = Math.min(500, Math.max(1, parseInt(url.searchParams.get('limit') || '200')));
+    const offset = Math.max(0, parseInt(url.searchParams.get('offset') || '0'));
     const students = await context.env.DB.prepare(
       `SELECT u.id, u.email, u.created_at
        FROM users u
        INNER JOIN student_teachers st ON u.id = st.student_id
        WHERE st.teacher_id = ? AND u.role = 'student'
-       ORDER BY u.email`
-    ).bind(teacherId).all();
+       ORDER BY u.email LIMIT ? OFFSET ?`
+    ).bind(teacherId, limit, offset).all();
 
     const result = (students.results || []).map(s => ({
       id: s.id,
