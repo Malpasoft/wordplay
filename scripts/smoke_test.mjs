@@ -86,7 +86,29 @@ async function main() {
   r = await api('POST', '/api/auth/login', { body: { email: EMAIL, password: PASS } });
   assert(r.status === 401, 'login fails after deletion', `got ${r.status}`);
 
-  console.log(`\n${passed} passed, ${failed} failed`);
+  // ── Optional teacher/admin journey (gated on env creds, no secrets in repo) ──
+  const aEmail = process.env.SMOKE_ADMIN_EMAIL, aPass = process.env.SMOKE_ADMIN_PASSWORD;
+  if (aEmail && aPass) {
+    console.log('\n  -- teacher/admin journey --');
+    let a = await api('POST', '/api/auth/login', { body: { email: aEmail, password: aPass } });
+    assert(a.status === 200 && a.json?.token, 'admin login', `got ${a.status}`);
+    const aTok = a.json?.token;
+    a = await api('GET', '/api/admin/users?limit=5', { token: aTok });
+    assert(a.status === 200 && Array.isArray(a.json?.users), 'admin/users paginated list', `got ${a.status}`);
+    a = await api('GET', '/api/teacher/students', { token: aTok });
+    assert(a.status === 200, 'teacher/students list', `got ${a.status}`);
+    a = await api('POST', '/api/teacher/invite-code', { token: aTok, body: {} });
+    assert((a.status === 200 || a.status === 201) && a.json?.code, 'teacher invite-code generate', `got ${a.status} ${JSON.stringify(a.json)}`);
+    a = await api('GET', '/api/bookings', { token: aTok });
+    assert(a.status === 200 && Array.isArray(a.json?.bookings), 'teacher bookings list', `got ${a.status}`);
+    a = await api('GET', '/api/availability', { token: aTok });
+    assert(a.status === 200, 'teacher availability', `got ${a.status}`);
+    console.log(`\n${passed} passed, ${failed} failed (incl. admin journey)`);
+  } else {
+    console.log(`\n${passed} passed, ${failed} failed`);
+    console.log('(skip admin journey — set SMOKE_ADMIN_EMAIL/SMOKE_ADMIN_PASSWORD to enable)');
+  }
+
   if (failed) process.exit(1);
 }
 
