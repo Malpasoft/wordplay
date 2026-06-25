@@ -344,6 +344,12 @@ body.dark .reset-btn:hover { border-color: var(--amber); color: var(--amber); }
     <div id="courseCards" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px"></div>
   </div>
 
+  <!-- Spanish-track course progress (rendered for target_lang='es' learners) -->
+  <div id="courseProgress" style="display:none;margin-bottom:28px">
+    <div class="level-overview" id="courseLevelOverview"></div>
+    <div id="courseDetail"></div>
+  </div>
+
   <!-- XP / Level banner -->
   <div class="xp-banner">
     <div class="xp-row">
@@ -493,6 +499,7 @@ body.dark .reset-btn:hover { border-color: var(--amber); color: var(--amber); }
 </footer>
 
 <script src="shared/store.js?v=v108"></script>
+<script src="shared/courses.js?v=v1"></script>
 <script>
 // ── Authentication requirement ────────────────────────────────────
 // Redirect to login if not authenticated
@@ -979,16 +986,111 @@ function renderMyCourses() {
   document.getElementById('courseCards').innerHTML = cards.join('');
   document.getElementById('myCourses').style.display = 'block';
 
-  // The detailed progress tracker below is English-only. For Spanish learners,
-  // hide the English-specific charts to avoid showing empty/irrelevant data.
+  // The English progress engine below only tracks the main English course. For
+  // Spanish learners, hide it and render their Spanish course's progress instead.
   if (target === 'es') {
     ['.pillars-grid', '.hero-grid', '.level-overview', '#levelDetail'].forEach(function(sel) {
       var el = document.querySelector(sel);
       if (el) el.style.display = 'none';
     });
-    var h1 = document.querySelector('.dash-page h1');
-    if (h1) h1.textContent = 'Your account';
+    var course = (l1 === 'en') ? 'espanol-en' : 'espanol';
+    renderCourseProgress(course);
   }
+}
+
+// ── Spanish-track course progress ────────────────────────────────
+// Progress for Spanish courses is already saved under wordplay_progress[level]
+// by unique Spanish slugs, so we read the same buckets and render this course's
+// chapter list with course-specific URLs. (See plan D5.)
+var COURSE_KEY = null;
+function courseResults(level) {
+  try { return (JSON.parse(localStorage.getItem('wordplay_progress') || '{}')[level]) || {}; }
+  catch (e) { return {}; }
+}
+function courseChapterPct(results, slug) {
+  var d = 0;
+  if (isLessonDone(results, slug)) d++;
+  if (isWorksheetDone(results, slug)) d++;
+  if (isGameDone(results, slug)) d++;
+  return Math.round((d / 3) * 100);
+}
+function courseLevelStats(course, level) {
+  var lv = (WP_COURSES[course].chapters || {})[level] || {};
+  var chs = (lv.grammar || []).concat(lv.vocabulary || [], lv.writing || []);
+  var results = courseResults(level);
+  var total = 0, attempted = 0;
+  chs.forEach(function(ch) {
+    var pct = courseChapterPct(results, ch.slug);
+    total += pct;
+    if (pct > 0) attempted++;
+  });
+  return { levelPct: chs.length ? Math.round(total / chs.length) : 0, attempted: attempted, total: chs.length };
+}
+function buildCourseSection(course, level, section, label, chapters, results) {
+  if (!chapters.length) return '';
+  var totalPct = 0;
+  chapters.forEach(function(ch) { totalPct += courseChapterPct(results, ch.slug); });
+  var sectionPct = Math.round(totalPct / chapters.length);
+  var html = '<div class="sec-head">' + esc(label) + ' (' + chapters.length + ')';
+  html += '<span class="sec-pct">' + sectionPct + '% complete</span></div><div class="chapter-grid">';
+  chapters.forEach(function(ch) {
+    var pct = courseChapterPct(results, ch.slug);
+    var pctClass = pct === 100 ? 'amber' : (pct > 0 ? '' : 'muted');
+    var cardClass = pct === 100 ? 'complete' : (pct > 0 ? 'in-progress' : '');
+    var sD = isLessonDone(results, ch.slug);
+    var wsRes = results[ch.slug];
+    var gRes = results['wordplay_game_' + ch.slug] || results['game_' + ch.slug];
+    var wsDone = wsRes && wsRes.pct >= 70, gameDone = gRes && gRes.pct >= 70;
+    var pillars = '<div class="chap-pillars">' +
+      '<div class="chap-pillar' + (sD ? ' done' : '') + '"><div class="chap-pillar-icon" style="font-weight:900;font-family:var(--font-sans)">L</div><div class="chap-pillar-val' + (sD ? '' : ' muted') + '">' + (sD ? 'Read' : '—') + '</div><div class="chap-pillar-label">Lesson</div></div>' +
+      '<div class="chap-pillar' + (wsDone ? ' done' : '') + '"><div class="chap-pillar-icon" style="font-weight:900;font-family:var(--font-sans)">P</div><div class="chap-pillar-val' + (wsDone ? '' : ' muted') + '">' + (wsRes && wsRes.pct !== undefined ? wsRes.pct + '%' : '—') + '</div><div class="chap-pillar-label">Practice</div></div>' +
+      '<div class="chap-pillar' + (gameDone ? ' done' : '') + '"><div class="chap-pillar-icon" style="font-weight:900;font-family:var(--font-sans)">G</div><div class="chap-pillar-val' + (gameDone ? '' : ' muted') + '">' + (gRes ? (gRes.mastered + '/' + gRes.total) : '—') + '</div><div class="chap-pillar-label">Game</div></div>' +
+    '</div>';
+    var href = course + '/' + level + '/' + section + '/' + ch.slug + '/index.html';
+    html += '<a href="' + href + '" class="chapter-card ' + cardClass + '">';
+    html += '<div class="chap-header"><div class="chap-name">' + esc(ch.label) + '</div>';
+    html += '<div class="chap-pct ' + pctClass + '">' + (pct === 0 ? '—' : pct + '%') + '</div></div>';
+    html += '<div class="chap-progress-bar"><div class="chap-progress-fill ' + (pct > 0 ? '' : 'muted') + '" style="width:' + pct + '%"></div></div>';
+    html += pillars + '</a>';
+  });
+  html += '</div>';
+  return html;
+}
+function renderCourseLevel(course, level) {
+  var lv = (WP_COURSES[course].chapters || {})[level] || {};
+  var results = courseResults(level);
+  var html = '';
+  html += buildCourseSection(course, level, 'grammar', 'Grammar', lv.grammar || [], results);
+  html += buildCourseSection(course, level, 'vocabulary', 'Vocabulary', lv.vocabulary || [], results);
+  html += buildCourseSection(course, level, 'writing', 'Writing', lv.writing || [], results);
+  document.getElementById('courseDetail').innerHTML = html || '<div class="empty"><p>Content coming soon.</p></div>';
+}
+function renderCourseLevelOverview(course, activeLevel) {
+  var html = '';
+  WP_COURSES[course].levels.forEach(function(lv) {
+    var s = courseLevelStats(course, lv);
+    var active = (lv === activeLevel) ? 'active' : '';
+    html += '<div class="lv-tile ' + active + '" onclick="switchCourseLevel(\'' + lv + '\')">';
+    html += '<div class="lv-tile-code">' + lv.toUpperCase() + '</div>';
+    html += '<div class="lv-tile-pct">' + s.levelPct + '%</div>';
+    html += '<div class="lv-tile-meta">' + s.attempted + '/' + s.total + ' tried</div></div>';
+  });
+  document.getElementById('courseLevelOverview').innerHTML = html;
+}
+function switchCourseLevel(level) {
+  renderCourseLevel(COURSE_KEY, level);
+  renderCourseLevelOverview(COURSE_KEY, level);
+}
+function renderCourseProgress(course) {
+  if (!window.WP_COURSES || !WP_COURSES[course]) return;
+  COURSE_KEY = course;
+  var levels = WP_COURSES[course].levels;
+  var first = levels[0];
+  for (var i = 0; i < levels.length; i++) {
+    if (courseLevelStats(course, levels[i]).attempted > 0) { first = levels[i]; break; }
+  }
+  switchCourseLevel(first);
+  document.getElementById('courseProgress').style.display = 'block';
 }
 
 // ── Weak spots (mistake analytics) ───────────────────────────────
