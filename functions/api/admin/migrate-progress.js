@@ -3,13 +3,8 @@
 // Admin-only. Converts all student_progress blobs to chapter_results + user_xp.
 // Idempotent: safe to run multiple times (updates existing, skips duplicates).
 
-function verifyToken(token, db) {
-  return db.prepare('SELECT user_id FROM auth_tokens WHERE token = ? AND expires_at > ?')
-    .bind(token, Date.now())
-    .first()
-    .then(row => row ? row.user_id : null);
-}
 
+import { verifyTokenId as verifyToken } from '../_shared.js';
 async function getUserRole(userId, db) {
   const user = await db.prepare('SELECT role FROM users WHERE id = ?')
     .bind(userId)

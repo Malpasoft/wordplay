@@ -13,6 +13,16 @@ export async function verifyToken(token, env) {
   return result;
 }
 
+// Legacy helper: resolve a bearer token to just its user_id (or null).
+// Signature-compatible with the old per-file inline copies. Prefer verifyToken
+// (returns the full {id,email,role}) for new code.
+export function verifyTokenId(token, db) {
+  return db.prepare('SELECT user_id FROM auth_tokens WHERE token = ? AND expires_at > ?')
+    .bind(token, Date.now())
+    .first()
+    .then(row => (row ? row.user_id : null));
+}
+
 export function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,

@@ -2,13 +2,8 @@
 // GET /api/progress/[user_id] — fetch user's progress from D1
 // POST /api/progress/[user_id] — save user's progress to D1 (last-write-wins merge)
 
-function verifyToken(token, db) {
-  return db.prepare('SELECT user_id FROM auth_tokens WHERE token = ? AND expires_at > ?')
-    .bind(token, Date.now())
-    .first()
-    .then(row => row ? row.user_id : null);
-}
 
+import { verifyTokenId as verifyToken } from '../_shared.js';
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,

@@ -2,6 +2,7 @@
 // GET /api/admin/users — list all users
 // POST /api/admin/users — create new user (admin only)
 
+import { verifyTokenId as verifyToken } from '../_shared.js';
 async function hashPassword(password, salt) {
   const encoder = new TextEncoder();
   const keyMaterial = await crypto.subtle.importKey(
@@ -25,12 +26,6 @@ async function hashPassword(password, salt) {
   return Array.from(view).map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-function verifyToken(token, db) {
-  return db.prepare('SELECT user_id FROM auth_tokens WHERE token = ? AND expires_at > ?')
-    .bind(token, Date.now())
-    .first()
-    .then(row => row ? row.user_id : null);
-}
 
 async function getUserRole(userId, db) {
   const user = await db.prepare('SELECT role FROM users WHERE id = ?')

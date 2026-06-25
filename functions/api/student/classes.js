@@ -2,13 +2,8 @@
 // GET /api/student/classes
 // Response: { classes: [{id, name, teacher_id, level, description, enrolled_at}, ...] } or { error }
 
-function verifyToken(token, db) {
-  return db.prepare('SELECT user_id FROM auth_tokens WHERE token = ? AND expires_at > ?')
-    .bind(token, Date.now())
-    .first()
-    .then(row => row ? row.user_id : null);
-}
 
+import { verifyTokenId as verifyToken } from '../_shared.js';
 async function getUserRole(userId, db) {
   const user = await db.prepare('SELECT role FROM users WHERE id = ?')
     .bind(userId)

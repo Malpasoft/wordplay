@@ -3,7 +3,7 @@
 // POST /api/teacher/students — create new student (rate-limited)
 // DELETE /api/teacher/students/[student_id] — remove student from teacher's class
 
-import { checkRateLimit } from '../_shared.js';
+import { checkRateLimit, verifyTokenId as verifyToken } from '../_shared.js';
 
 async function hashPassword(password, salt) {
   const encoder = new TextEncoder();
@@ -28,12 +28,6 @@ async function hashPassword(password, salt) {
   return Array.from(view).map(b => b.toString(16).padStart(2, '0')).join('');
 }
 
-function verifyToken(token, db) {
-  return db.prepare('SELECT user_id FROM auth_tokens WHERE token = ? AND expires_at > ?')
-    .bind(token, Date.now())
-    .first()
-    .then(row => row ? row.user_id : null);
-}
 
 async function getUserRole(userId, db) {
   const user = await db.prepare('SELECT role FROM users WHERE id = ?')

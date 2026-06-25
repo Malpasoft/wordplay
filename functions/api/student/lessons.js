@@ -3,13 +3,8 @@
 // Query params: ?class_id=<optional> to filter by specific class
 // Response: { lessons: [{id, class_id, date, time_start, time_end, title, type, level, location}, ...] } or { error }
 
-function verifyToken(token, db) {
-  return db.prepare('SELECT user_id FROM auth_tokens WHERE token = ? AND expires_at > ?')
-    .bind(token, Date.now())
-    .first()
-    .then(row => row ? row.user_id : null);
-}
 
+import { verifyTokenId as verifyToken } from '../_shared.js';
 async function getUserRole(userId, db) {
   const user = await db.prepare('SELECT role FROM users WHERE id = ?')
     .bind(userId)

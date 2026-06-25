@@ -5,13 +5,8 @@
 // This endpoint provides a simplified interface for client-side progress syncing.
 // It handles localStorage ↔ D1 synchronization with last-write-wins conflict resolution.
 
-function verifyToken(token, db) {
-  return db.prepare('SELECT user_id FROM auth_tokens WHERE token = ? AND expires_at > ?')
-    .bind(token, Date.now())
-    .first()
-    .then(row => row ? row.user_id : null);
-}
 
+import { verifyTokenId as verifyToken } from '../_shared.js';
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,

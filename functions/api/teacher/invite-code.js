@@ -3,14 +3,8 @@
 // POST /api/teacher/invite-code — generate new invite code
 // DELETE /api/teacher/invite-code/[code_id] — revoke a code
 
-import { checkRateLimit } from '../_shared.js';
+import { checkRateLimit, verifyTokenId as verifyToken } from '../_shared.js';
 
-function verifyToken(token, db) {
-  return db.prepare('SELECT user_id FROM auth_tokens WHERE token = ? AND expires_at > ?')
-    .bind(token, Date.now())
-    .first()
-    .then(row => row ? row.user_id : null);
-}
 
 async function getUserRole(userId, db) {
   const user = await db.prepare('SELECT role FROM users WHERE id = ?')
