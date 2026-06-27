@@ -2,6 +2,18 @@
 // raw status + body so we can see why delivery fails. DELETE after diagnosing.
 import { verifyTokenId as verifyToken } from '../_shared.js';
 
+// Mirror of the normalizer in _lib/email.js so this debug path exercises the fix.
+function normalizeFrom(raw) {
+  const s = (raw || '').trim();
+  const m = s.match(/<([^>]+)>/);
+  if (m) {
+    const email = m[1].trim();
+    const name = s.slice(0, s.indexOf('<')).trim();
+    return `${name || 'Word Play'} <${email}>`;
+  }
+  return s;
+}
+
 function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status, headers: { 'Content-Type': 'application/json' }
@@ -39,7 +51,7 @@ export async function onRequestPost(context) {
         'Authorization': `Bearer ${env.RESEND_API_KEY}`
       },
       body: JSON.stringify({
-        from: env.RESEND_FROM || 'Word Play <onboarding@resend.dev>',
+        from: normalizeFrom(env.RESEND_FROM) || 'Word Play <onboarding@resend.dev>',
         to,
         subject: 'Word Play email test',
         html: '<p>This is a Word Play email delivery test.</p>'
