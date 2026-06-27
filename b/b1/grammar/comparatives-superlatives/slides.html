@@ -93,8 +93,8 @@ try{localStorage.setItem('wordplay_last_chapter_b1',JSON.stringify({slug:'compar
   try{
     var p=JSON.parse(localStorage.getItem('wordplay_progress')||'{}');
     var lv=p['b1']||{};
-    if((lv['comparatives-superlatives']||{}).pct>=70){var pt=document.getElementById('nav-practice');if(pt)pt.textContent='Practice';}
-    if((lv['wordplay_game_comparatives-superlatives']||{}).pct>=70){var gt=document.querySelectorAll('.chapter-nav-btn')[2];if(gt)gt.textContent='Game';}
+    if((lv['comparatives-superlatives']||{}).pct>=70){var pt=document.getElementById('nav-practice');if(pt)pt.textContent='Review ✓';}
+    if((lv['wordplay_game_comparatives-superlatives']||{}).pct>=70){var gt=document.querySelectorAll('.chapter-nav-btn')[2];if(gt)gt.textContent='Game ✓';}
   }catch(e){}
 })();
 (function(){var dk=document.getElementById('slide-deck');if(dk)setTimeout(function(){dk.scrollIntoView({behavior:'smooth',block:'start'});},150);})();

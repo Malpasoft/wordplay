@@ -182,13 +182,13 @@ try {
     var ws = lvl['to-be'];
     if (ws && ws.pct >= 70) {
       var pt = document.getElementById('nav-practice');
-      if (pt) pt.textContent = 'Practice';
+      if (pt) pt.textContent = 'Review ✓';
     }
     // Game tab
     var gm = lvl['wordplay_game_to-be'];
     if (gm && gm.pct >= 70) {
       var gt = document.querySelectorAll('.chapter-nav-btn')[2];
-      if (gt) gt.textContent = 'Game';
+      if (gt) gt.textContent = 'Game ✓';
     }
   } catch(e) {}
 })();

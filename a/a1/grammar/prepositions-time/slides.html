@@ -95,9 +95,9 @@ try { localStorage.setItem('wordplay_last_chapter_a1', JSON.stringify({ slug: 'p
     var p = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
     var lv = p['a1'] || {};
     var ws = lv['prepositions-time'];
-    if (ws && ws.pct >= 70) { var pt = document.getElementById('nav-practice'); if (pt) pt.textContent = 'Practice'; }
+    if (ws && ws.pct >= 70) { var pt = document.getElementById('nav-practice'); if (pt) pt.textContent = 'Review ✓'; }
     var gm = lv['wordplay_game_prepositions-time'];
-    if (gm && gm.pct >= 70) { var gt = document.querySelectorAll('.chapter-nav-btn')[2]; if (gt) gt.textContent = 'Game'; }
+    if (gm && gm.pct >= 70) { var gt = document.querySelectorAll('.chapter-nav-btn')[2]; if (gt) gt.textContent = 'Game ✓'; }
   } catch(e) {}
 })();
 (function() {

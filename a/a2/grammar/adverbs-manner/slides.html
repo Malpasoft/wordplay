@@ -99,8 +99,8 @@ try{localStorage.setItem('wordplay_last_chapter_a2',JSON.stringify({slug:'adverb
   try{
     var p=JSON.parse(localStorage.getItem('wordplay_progress')||'{}');
     var lv=p['a2']||{};
-    if((lv['adverbs-manner']||{}).pct>=70){var pt=document.getElementById('nav-practice');if(pt)pt.textContent='Practice';}
-    if((lv['wordplay_game_adverbs-manner']||{}).pct>=70){var gt=document.querySelectorAll('.chapter-nav-btn')[2];if(gt)gt.textContent='Game';}
+    if((lv['adverbs-manner']||{}).pct>=70){var pt=document.getElementById('nav-practice');if(pt)pt.textContent='Review ✓';}
+    if((lv['wordplay_game_adverbs-manner']||{}).pct>=70){var gt=document.querySelectorAll('.chapter-nav-btn')[2];if(gt)gt.textContent='Game ✓';}
   }catch(e){}
 })();
 (function(){var dk=document.getElementById('slide-deck');if(dk)setTimeout(function(){dk.scrollIntoView({behavior:'smooth',block:'start'});},150);})();

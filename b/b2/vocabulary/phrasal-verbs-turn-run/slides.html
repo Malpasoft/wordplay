@@ -100,12 +100,12 @@
     var ws = lv['phrasal-verbs-turn-run'];
     if (ws && ws.pct >= 70) {
       var pt = document.querySelector('.chapter-nav-btn[href="index.html"]');
-      if (pt) pt.textContent = 'Practice';
+      if (pt) pt.textContent = 'Review ✓';
     }
     var gm = lv['wordplay_game_phrasal-verbs-turn-run'];
     if (gm && gm.pct >= 70) {
       var gt = document.querySelector('.chapter-nav-btn[href="game.html"]');
-      if (gt) gt.textContent = 'Game';
+      if (gt) gt.textContent = 'Game ✓';
     }
   } catch(e) {}
 })();
@@ -131,7 +131,7 @@ try {
     if(mastered){var ft=document.querySelector('.chapter-nav-btn[href="index.html"]');if(ft)ft.textContent='Flashcards';}
     var p=JSON.parse(localStorage.getItem('wordplay_progress')||'{}');
     var gm=(p['b2']||{})['wordplay_game_phrasal-verbs-turn-run'];
-    if(gm&&gm.pct>=70){var gt=document.querySelector('.chapter-nav-btn[href="game.html"]');if(gt)gt.textContent='Game';}
+    if(gm&&gm.pct>=70){var gt=document.querySelector('.chapter-nav-btn[href="game.html"]');if(gt)gt.textContent='Game ✓';}
   }catch(e){}
 })();
 </body>

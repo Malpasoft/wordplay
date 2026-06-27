@@ -109,9 +109,9 @@ try { localStorage.setItem('wordplay_last_chapter_a2', JSON.stringify({ slug: 'm
     var p = JSON.parse(localStorage.getItem('wordplay_progress') || '{}');
     var lv = p['a2'] || {};
     var ws = lv['modal-could-might'];
-    if (ws && ws.pct >= 70) { var pt = document.getElementById('nav-practice'); if (pt) pt.textContent = 'Practice'; }
+    if (ws && ws.pct >= 70) { var pt = document.getElementById('nav-practice'); if (pt) pt.textContent = 'Review ✓'; }
     var gm = lv['wordplay_game_modal-could-might'];
-    if (gm && gm.pct >= 70) { var gt = document.querySelectorAll('.chapter-nav-btn')[2]; if (gt) gt.textContent = 'Game'; }
+    if (gm && gm.pct >= 70) { var gt = document.querySelectorAll('.chapter-nav-btn')[2]; if (gt) gt.textContent = 'Game ✓'; }
   } catch(e) {}
 })();
 (function() {

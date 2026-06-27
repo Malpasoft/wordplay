@@ -49,12 +49,12 @@
     var ws = lv['health-and-body'];
     if (ws && ws.pct >= 70) {
       var pt = document.querySelector('.chapter-nav-btn[href="index.html"]');
-      if (pt) pt.textContent = 'Practice';
+      if (pt) pt.textContent = 'Review ✓';
     }
     var gm = lv['wordplay_game_health-and-body'];
     if (gm && gm.pct >= 70) {
       var gt = document.querySelector('.chapter-nav-btn[href="game.html"]');
-      if (gt) gt.textContent = 'Game';
+      if (gt) gt.textContent = 'Game ✓';
     }
   } catch(e) {}
 })();
@@ -65,7 +65,7 @@
     if(mastered){var ft=document.querySelector('.chapter-nav-btn[href="index.html"]');if(ft)ft.textContent='Flashcards';}
     var p=JSON.parse(localStorage.getItem('wordplay_progress')||'{}');
     var gm=(p['a2']||{})['wordplay_game_health-and-body'];
-    if(gm&&gm.pct>=70){var gt=document.querySelector('.chapter-nav-btn[href="game.html"]');if(gt)gt.textContent='Game';}
+    if(gm&&gm.pct>=70){var gt=document.querySelector('.chapter-nav-btn[href="game.html"]');if(gt)gt.textContent='Game ✓';}
   }catch(e){}
 })();
 </body></html>

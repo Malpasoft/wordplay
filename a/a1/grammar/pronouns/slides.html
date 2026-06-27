@@ -119,12 +119,12 @@ try {
     var ws = lv['pronouns'];
     if (ws && ws.pct >= 70) {
       var pt = document.getElementById('nav-practice');
-      if (pt) pt.textContent = 'Practice';
+      if (pt) pt.textContent = 'Review ✓';
     }
     var gm = lv['wordplay_game_pronouns'];
     if (gm && gm.pct >= 70) {
       var gt = document.querySelectorAll('.chapter-nav-btn')[2];
-      if (gt) gt.textContent = 'Game';
+      if (gt) gt.textContent = 'Game ✓';
     }
   } catch(e) {}
 })();

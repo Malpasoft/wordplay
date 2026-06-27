@@ -43,12 +43,12 @@
     var ws = lv['formal-letter'];
     if (ws && ws.pct >= 70) {
       var pt = document.querySelector('.chapter-nav-btn[href="worksheet.html"]');
-      if (pt) pt.textContent = 'Practice';
+      if (pt) pt.textContent = 'Review ✓';
     }
     var gm = lv['wordplay_game_formal-letter'];
     if (gm && gm.pct >= 70) {
       var gt = document.querySelector('.chapter-nav-btn[href="game.html"]');
-      if (gt) gt.textContent = 'Game';
+      if (gt) gt.textContent = 'Game ✓';
     }
   } catch(e) {}
 })();
