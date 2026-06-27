@@ -19,3 +19,4 @@ __pycache__/
 scratch/
 *_content*.json
 *_template.json
+*.docx
